@@ -2,79 +2,69 @@
   <div class="min-h-screen flex flex-col bg-gradient-to-t from-primary-500/20">
     <AppHeader />
 
-    <main class="flex-grow flex flex-col justify-center items-center relative">
-      <div class="w-full max-w-3xl px-4 sm:px-6 lg:px-8 text-center py-12">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
-          <span class="text-primary">EdAI Demo</span>
+    <main class="flex-grow flex flex-col  items-center relative">
+      <div>
+        <h1 class="text-2xl md:text-3xl lg:text-3xl font-extrabold mb-3">
+          <span class="text-primary">Generate Your Challenge</span>
           <br />
         </h1>
-      </div>
 
-      <div class="w-full px-1 sm:absolute inset-x-0 bottom-0">
-        <UContainer
-          class="flex justify-center sm:justify-between items-end min-h-20 sm:h-auto relative"
-        >
-          <h1 class="mb-5">
-            Generate Challenge
-          </h1>
-
-          <form class="mb-5" @submit.prevent="fetchAnswer">
-            <!-- Dropdown for Level -->
-            <div class="form-group">
-              <label for="level">Select Level</label>
-              <select id="level" v-model="selectedLevel" class="form-control">
-                <option value="" disabled>
-                  Select Level
-                </option>
-                <option v-for="level in levels" :key="level" :value="level">
-                  {{ level }}
-                </option>
-              </select>
-              <select id="innerLevel" v-model="selectedInnerLevel" class="form-control">
-                <option value="" disabled>
-                  Select Level
-                </option>
-                <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
-                  {{ innerLevel }}
-                </option>
-              </select>
-            </div>
-
-            <!-- Dropdown for Subject -->
-            <div class="form-group">
-              <label for="subject">Select Subject</label>
-              <select id="subject" v-model="selectedSubject" class="form-control">
-                <option value="" disabled>
-                  Select Subject
-                </option>
-                <option v-for="subject in filteredSubjects" :key="subject" :value="subject">
-                  {{ subject }}
-                </option>
-              </select>
-            </div>
-
-            <!-- Number of Questions -->
-            <div class="form-group">
-              <label for="numberInput">Enter the desired number of questions</label>
-              <input
-                  id="numberInput"
-                  v-model="numberInput"
-                  type="number"
-                  class="form-control"
-                  min="1"
-                  placeholder="Enter a number"
-              >
-            </div>
-
-            <button type="submit" :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading">
-              {{ isLoading ? 'Asking Gemini...' : 'Ask' }}
-            </button>
-          </form>
-
-          <div v-if="quiz" class="mb-10">
-            <QuizPage :quiz="quiz" />
+        <form class="mb-5" @submit.prevent="fetchAnswer">
+          <!-- Dropdown for Level -->
+          <div class="form-group">
+            <label for="level">Select Level</label>
+            <select id="level" v-model="selectedLevel" class="form-control">
+              <option value="" disabled>
+                Select Level
+              </option>
+              <option v-for="level in levels" :key="level" :value="level">
+                {{ level }}
+              </option>
+            </select>
+            <select id="innerLevel" v-model="selectedInnerLevel" class="form-control">
+              <option value="" disabled>
+                Select Level
+              </option>
+              <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
+                {{ innerLevel }}
+              </option>
+            </select>
           </div>
-        </UContainer>
+
+          <!-- Dropdown for Subject -->
+          <div class="form-group">
+            <label for="subject">Select Subject</label>
+            <select id="subject" v-model="selectedSubject" class="form-control">
+              <option value="" disabled>
+                Select Subject
+              </option>
+              <option v-for="subject in filteredSubjects" :key="subject" :value="subject">
+                {{ subject }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Number of Questions -->
+          <div class="form-group">
+            <label for="numberInput">Enter the desired number of questions</label>
+            <input
+                id="numberInput"
+                v-model="numberInput"
+                type="number"
+                class="form-control"
+                min="1"
+                placeholder="Enter a number"
+            >
+          </div>
+
+          <button type="submit" :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading">
+            {{ isLoading ? 'Asking Gemini...' : 'Ask' }}
+          </button>
+        </form>
+
+        <div v-if="quiz" class="mb-10">
+          <QuizPage :quiz="quiz" />
+        </div>
       </div>
     </main>
 
