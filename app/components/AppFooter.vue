@@ -1,7 +1,7 @@
 <template>
   <footer>
     <UContainer class="flex justify-center items-center gap-x-4 h-14">
-      <p>Made with ❤️ by Rajeev</p>
+      <p>EdAI</p>
       <UDivider
         orientation="vertical"
         class="h-6"
@@ -30,7 +30,7 @@ const socials = [
   {
     name: 'x',
     icon: 'i-simple-icons-x',
-    to: 'https://twitter.com/ra_jeeves',
+    to: '',
   },
 ];
 </script>
