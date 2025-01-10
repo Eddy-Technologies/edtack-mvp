@@ -95,6 +95,7 @@
 
         <div v-if="quiz" class="current-challenge-info">
           <p>Current challenge: {{ selectedLevel }} {{ selectedInnerLevel }} {{ selectedSubject }} ({{ numberInput }} questions)</p>
+          <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
         </div>
       </div>
 
@@ -121,6 +122,8 @@ export default {
     const selectedInnerLevel = ref('');
     const selectedSubject = ref('');
     const numberInput = ref(null);
+
+    const errorMsg = ref('');
 
     const levels = ['Primary', 'Secondary', 'Junior College'];
     const primaryLvls = [1, 2, 3, 4, 5, 6];
@@ -168,21 +171,31 @@ export default {
     const fetchAnswer = async () => {
       isLoading.value = true;
       quiz.value = '';
+      errorMsg.value = '';
 
       const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
       try {
         quiz.value = await useGetGenerativeModelGP(prompt);
-        saveToLocalStorage();
+        saveInputToLocalStorage();
+        if (quiz.value && quiz.value.length > 0) {
+          saveQuestionsToLocalStorage(quiz.value);
+        } else {
+          throw new Error('Exceeded limit');
+        }
       } catch (error) {
         console.error('Error fetching quiz:', error);
-        quiz.value = 'An error occurred while generating the quiz.';
+        if (error.message === 'Exceeded limit') {
+          errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
+        } else {
+          errorMsg.value = 'An error occurred while generating the quiz.';
+        }
       } finally {
         isLoading.value = false;
       }
     };
 
-    const saveToLocalStorage = () => {
+    const saveInputToLocalStorage = () => {
       const dataToSave = {
         selectedLevel: selectedLevel.value,
         selectedInnerLevel: selectedInnerLevel.value,
@@ -192,7 +205,12 @@ export default {
       localStorage.setItem('lastUsedInputs', JSON.stringify(dataToSave));
     };
 
+    const saveQuestionsToLocalStorage = (questions) => {
+      localStorage.setItem('savedQuestions', JSON.stringify(questions));
+    };
+
     const loadFromLocalStorage = () => {
+      errorMsg.value = '';
       const savedData = localStorage.getItem('lastUsedInputs');
       if (savedData) {
         const parsedData = JSON.parse(savedData);
@@ -201,6 +219,10 @@ export default {
         selectedSubject.value = parsedData.selectedSubject || '';
         numberInput.value = parsedData.numberInput || null;
       }
+      const savedQuestions = localStorage.getItem('savedQuestions');
+      if (savedQuestions) {
+        quiz.value = JSON.parse(savedQuestions);
+      }
     };
 
     onMounted(() => {
@@ -208,7 +230,7 @@ export default {
     });
 
     watch([selectedLevel, selectedInnerLevel, selectedSubject, numberInput], () => {
-      saveToLocalStorage();
+      saveInputToLocalStorage();
     });
 
     return {
@@ -414,5 +436,11 @@ export default {
   .submit-button {
     width: 100%;
   }
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-weight: bold;
+  margin-top: 0.5rem;
 }
 </style>
