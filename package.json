@@ -20,6 +20,7 @@
     "@octokit/rest": "^21.0.2",
     "nuxt": "^3.13.2",
     "nuxt-auth-utils": "^0.3.9",
+    "nuxt-gtag": "3.0.2",
     "openai": "^4.64.0",
     "vue": "^3.5.8",
     "vue-router": "^4.4.5"

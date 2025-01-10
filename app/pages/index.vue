@@ -128,6 +128,16 @@ export default {
   methods: {
     // Function to create a detailed prompt based on user input
     createPrompt(numberInput, selectedLevel, selectedInnerLvl, selectedSubject) {
+      if (import.meta.client && window.gtag) {
+        window.gtag('event', 'user-action', {
+          event_category: 'select-prompt',
+          event_label: 'prompt',
+          numberInput: this.numberInput,
+          selectedLevel: this.selectedLevel,
+          selectedInnerLvl: this.selectedInnerLvl,
+          selectedSubject: this.selectedSubject,
+        });
+      }
       return `You are an expert teacher skilled in producing detailed, authentic, and correct student examination questions.
         For the Singapore syllabus, how would you create ${numberInput} MCQ questions of 5 options without the alphabet index of about ${selectedLevel} ${selectedInnerLvl} ${selectedSubject}, with varying difficulties.
         Make it so there are matching options such as "statement 1, 2, 3 are true" or "all of the above are true" type of questions and give detailed steps on how to
