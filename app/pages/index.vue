@@ -130,7 +130,7 @@ export default {
     const secondaryLvls = [1, 2, 3, 4];
     const jcLvls = [1, 2];
     const primarySubjects = ['Math', 'Science', 'English'];
-    const secondarySubjects = ['E Math', 'A Math', 'Physics', 'Chemistry', 'Biology', 'Combined Physics', 'Combined Chemistry', 'Combined Biology', 'English', 'History', 'Geography', 'Social Studies', 'Combined History', 'Combined Geography', 'Combined Social Studies'];
+    const secondarySubjects = ['Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Social Studies'];
     const jcSubjects = ['H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry', 'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History', 'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'];
 
     const filteredInnerLevels = computed(() => {
