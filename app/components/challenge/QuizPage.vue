@@ -23,7 +23,6 @@
             <strong>{{ option }}</strong>
           </p>
         </div>
-        <p><strong>Your Answer:</strong> {{ userAnswers[index] || 'Not Answered' }}</p>
         <p><strong>Correct Answer:</strong> {{ question.correctAnswer }}</p>
         <p v-if="!isCorrect(index)">
           <strong>Explanation:</strong> {{ question.explanation }}

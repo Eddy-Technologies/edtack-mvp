@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-    this.content = this.question.title.replace(/\n/g, "<br />");
+    this.content = this.question ? this.question.title.replace(/\n/g, "<br />") : "";
   }
 }
 </script>
@@ -56,7 +56,7 @@ export default {
   color: #48bb78;
   font-weight: bold;
   display: block;
-  margin-top: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 /* Add any additional styling */

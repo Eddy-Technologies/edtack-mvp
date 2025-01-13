@@ -41,8 +41,13 @@
                 type="number"
                 class="form-control"
                 min="1"
+                max="99"
                 placeholder="Enter a number"
+                @input="validateInput"
               >
+              <div v-if="errorMessage" class="text-danger">
+                {{ errorMessage }}
+              </div>
             </div>
           </div>
 
@@ -122,6 +127,7 @@ export default {
     const selectedInnerLevel = ref('');
     const selectedSubject = ref('');
     const numberInput = ref(null);
+    const errorMessage = ref(null);
 
     const errorMsg = ref('');
 
@@ -162,10 +168,9 @@ export default {
           selectedSubject,
         });
       }
-      return `You are an expert teacher skilled in producing detailed, authentic, and correct student examination questions.
-        For the Singapore syllabus, how would you create ${numberInput} MCQ questions of 5 options without the alphabet index of about ${selectedLevel} ${selectedInnerLevel} ${selectedSubject}, with varying difficulties.
-        Make it so there are matching options such as "statement 1, 2, 3 are true" or "all of the above are true" type of questions and give detailed steps on how to
-        achieve the correct solution. Give the correct answer option in full.`;
+      return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions of 5 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
+      Make it so there are matching options such as "statement 1, 2, 3 are true" or "all of the above are true" type of questions and give detailed but concise steps on how to
+      achieve the correct solution.`;
     };
 
     const fetchAnswer = async () => {
@@ -254,8 +259,6 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #000000;
-  color: #e0e0e0;
 }
 
 .main-content {
