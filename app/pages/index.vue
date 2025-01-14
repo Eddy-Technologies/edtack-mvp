@@ -174,7 +174,7 @@ export default {
     const fetchAnswer = async () => {
       isLoading.value = true;
       quiz.value = '';
-      errorMsg.value = '';
+      errorMsg.value = null;
 
       const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
@@ -213,7 +213,7 @@ export default {
     };
 
     const loadFromLocalStorage = () => {
-      errorMsg.value = '';
+      errorMsg.value = null;
       const savedData = localStorage.getItem('lastUsedInputs');
       if (savedData) {
         const parsedData = JSON.parse(savedData);
