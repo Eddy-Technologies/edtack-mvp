@@ -12,12 +12,21 @@
             <AppIcon class="w-8 h-8" /> EdAI
           </ULink>
         </div>
-        <div class="flex items-center gap-x-4">
+        <div class="flex items-center gap-x-2">
           <UIcon
               name="i-heroicons-currency-dollar-16-solid"
-              class="flex-shrink-0 h-4 w-4 text-white-400 dark:text-white-500 ms-auto"
+              class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
           />
           <span>{{ credits }}</span>
+          <ULink
+              class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
+              to="/store"
+          >
+            <UIcon
+                name="i-heroicons-building-storefront-16-solid"
+                class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
+            />
+          </ULink>
           <ColorMode />
         </div>
       </UContainer>
