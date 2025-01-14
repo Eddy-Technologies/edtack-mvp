@@ -45,8 +45,8 @@
                 placeholder="Enter a number"
                 @input="validateInput"
               >
-              <div v-if="errorMessage" class="text-danger">
-                {{ errorMessage }}
+              <div v-if="errorMsg" class="text-danger">
+                {{ errorMsg }}
               </div>
             </div>
           </div>
@@ -127,9 +127,7 @@ export default {
     const selectedInnerLevel = ref('');
     const selectedSubject = ref('');
     const numberInput = ref(null);
-    const errorMessage = ref(null);
-
-    const errorMsg = ref('');
+    const errorMsg = ref(null);
 
     const levels = ['Primary', 'Secondary', 'Junior College'];
     const primaryLvls = [1, 2, 3, 4, 5, 6];
