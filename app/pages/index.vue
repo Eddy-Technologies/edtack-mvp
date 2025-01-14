@@ -166,9 +166,13 @@ export default {
           selectedSubject,
         });
       }
-      return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions of 5 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
-      Make it so there are matching options such as "statement 1, 2, 3 are true" or "all of the above are true" type of questions and give detailed but concise steps on how to
-      achieve the correct solution.`;
+      return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
+      of 4 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
+      Ensure there are questions with options such as "statement 1, 2, 3 are true" or "all of the above are true".
+      Provide detailed but concise steps on how to achieve the correct solution in the explanation.
+      Ensure that there must be a correct answer and only one correct answer for correctAnswer.
+      Ensure the correctAnswer is one of the option in the options array in the JSON schema for each question.
+      Ensure that the correctAnswer is given in full and is the same as one of the options in the options array.`;
     };
 
     const fetchAnswer = async () => {

@@ -23,7 +23,7 @@ export const useGetGenerativeModelGP = async (prompt) => {
                       type: SchemaType.STRING,
                       description: "Question option"
                     },
-                    description: "Question options",
+                    description: "Question options with correct answer of question",
                     nullable: false,
                 },
                 correctAnswer: {
@@ -40,7 +40,7 @@ export const useGetGenerativeModelGP = async (prompt) => {
             required: ["id", "title", "options", "correctAnswer"],
         },
     };
-    const model = await useGenAi('gemini-1.5-flash', schema);
+    const model = await useGenAi(schema);
     const result = await model.generateContent(prompt);
     const response = await result.response;
     console.log(JSON.parse(response.text()));
