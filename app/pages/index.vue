@@ -1,7 +1,27 @@
 <template>
   <div class="generate-challenge">
-    <AppHeader />
-
+    <header
+        class="bg-white/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
+    >
+      <UContainer class="flex flex-wrap items-center justify-between h-14">
+        <div class="flex items-center gap-x-4">
+          <ULink
+              class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
+              to="/"
+          >
+            <AppIcon class="w-8 h-8" /> EdAI
+          </ULink>
+        </div>
+        <div class="flex items-center gap-x-4">
+          <UIcon
+              name="i-heroicons-currency-dollar-16-solid"
+              class="flex-shrink-0 h-4 w-4 text-white-400 dark:text-white-500 ms-auto"
+          />
+          <span>{{ credits }}</span>
+          <ColorMode />
+        </div>
+      </UContainer>
+    </header>
     <main class="main-content">
       <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container">
         <h1 v-if="!quiz" class="title">
@@ -105,7 +125,7 @@
       </div>
 
       <div v-if="quiz" class="quiz-container">
-        <QuizPage :quiz="quiz" />
+        <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
       </div>
     </main>
 
@@ -128,6 +148,7 @@ export default {
     const selectedSubject = ref('');
     const numberInput = ref(null);
     const errorMsg = ref(null);
+    let credits = ref(0);
 
     const levels = ['Primary', 'Secondary', 'Junior College'];
     const primaryLvls = [1, 2, 3, 4, 5, 6];
@@ -231,9 +252,14 @@ export default {
         quiz.value = JSON.parse(savedQuestions);
       }
     };
+    const updateCredits = (newCredits) => {
+      credits.value = parseInt(localStorage.getItem('credits')) + newCredits;
+      localStorage.setItem('credits', credits.value); // Update local storage again just in case.
+    };
 
     onMounted(() => {
       loadFromLocalStorage();
+      credits.value = parseInt(localStorage.getItem('credits')) || 0
     });
 
     watch([selectedLevel, selectedInnerLevel, selectedSubject, numberInput], () => {
@@ -250,7 +276,9 @@ export default {
       levels,
       filteredInnerLevels,
       filteredSubjects,
-      fetchAnswer
+      credits,
+      fetchAnswer,
+      updateCredits
     };
   }
 };

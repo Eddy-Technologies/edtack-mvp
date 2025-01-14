@@ -78,6 +78,7 @@ export default {
     submitQuiz() {
       this.quizFinished = true;
       this.calculateScore();
+      this.$emit('quiz-submitted', this.score);
     },
     updateAnswer(index, answer) {
       this.userAnswers[index] = answer;

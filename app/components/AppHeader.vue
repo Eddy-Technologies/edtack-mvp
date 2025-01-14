@@ -12,6 +12,11 @@
         </ULink>
       </div>
       <div class="flex items-center gap-x-4">
+        <UIcon
+            name="i-heroicons-currency-dollar-16-solid"
+            class="flex-shrink-0 h-4 w-4 text-white-400 dark:text-white-500 ms-auto"
+        />
+        <span>0.00</span>
         <ColorMode />
       </div>
     </UContainer>
@@ -24,6 +29,7 @@ const { loggedIn } = useUserSession();
 defineEmits(['clear']);
 
 defineProps({
+
   hideClear: {
     type: Boolean,
     default: true,
