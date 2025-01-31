@@ -9,7 +9,7 @@
               class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
               to="/"
           >
-            <AppIcon class="w-8 h-8" /> EdAI
+            <AppIcon class="w-8 h-8" /> Eddy
           </ULink>
         </div>
         <div class="flex items-center gap-x-2">
@@ -146,6 +146,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import { useGetGenerativeModelGP } from '~/composables/useGetGenerativeModelGP.js';
+import data from '../../assets/questions.json';
 
 export default {
   components: { QuizPage },
@@ -213,7 +214,8 @@ export default {
       const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
       try {
-        quiz.value = await useGetGenerativeModelGP(prompt);
+        //quiz.value = await useGetGenerativeModelGP(prompt);
+        quiz.value = getRandomizedQuestions(data, numberInput.value);
         saveInputToLocalStorage();
         if (quiz.value && quiz.value.length > 0) {
           saveQuestionsToLocalStorage(quiz.value);
@@ -230,6 +232,23 @@ export default {
       } finally {
         isLoading.value = false;
       }
+    };
+
+    const getRandomizedQuestions = (data, numberOfQuestions) => {
+      // Step 1: Randomize the questions array
+      const shuffledQuestions = shuffleArray(data);
+
+      // Step 2: Slice the array to get the desired number of questions
+      return shuffledQuestions.slice(0, numberOfQuestions);
+    };
+
+    const shuffleArray = (array) => {
+      // Fisher-Yates algorithm to shuffle the array
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap
+      }
+      return array;
     };
 
     const saveInputToLocalStorage = () => {

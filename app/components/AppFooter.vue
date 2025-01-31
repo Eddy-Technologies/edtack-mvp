@@ -1,7 +1,7 @@
 <template>
   <footer>
     <UContainer class="flex justify-center items-center gap-x-4 h-14">
-      <p>EdAI</p>
+      <p>Eddy</p>
       <UDivider
         orientation="vertical"
         class="h-6"

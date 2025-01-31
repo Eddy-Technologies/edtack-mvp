@@ -8,7 +8,7 @@
           class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
           to="/"
         >
-          <AppIcon class="w-8 h-8" /> EdAI
+          <AppIcon class="w-8 h-8" /> Eddy
         </ULink>
       </div>
       <div class="flex items-center gap-x-4">

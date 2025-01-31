@@ -1,18 +1,18 @@
 <template>
   <div class="question">
-    <div v-html="content" />
+    <div v-html="content" ref="content" @DOMNodeInserted="renderMathJax" />
     <div class="explanation" @click="toggleExplain">
-      <div v-if="explanation" v-html="explanation" />
+      <div v-if="explanation" v-html="explanation" ref="explanation" @DOMNodeInserted="renderMathJax" />
       <span v-else class="explanation">Explain</span>
     </div>
     <div v-for="(option, index) in question.options" :key="index">
       <label>
         <input
-          type="radio"
-          :value="option"
-          :name="'question-' + questionIndex"
-          :checked="selectedAnswer === option"
-          @change="selectAnswer(option)"
+            type="radio"
+            :value="option"
+            :name="'question-' + questionIndex"
+            :checked="selectedAnswer === option"
+            @change="selectAnswer(option)"
         />
         {{ option }}
       </label>
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     selectAnswer(answer) {
-      this.$emit('answer-selected', answer) ;  // Emit the selected answer to the parent
+      this.$emit('answer-selected', answer);  // Emit the selected answer to the parent
     },
     toggleExplain() {
       if (this.explanation) {
@@ -43,10 +43,30 @@ export default {
       } else {
         this.explanation = this.question.explanation;
       }
+    },
+    renderMathJax() {
+      if (window.MathJax) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.$refs.content]);
+        if (this.$refs.explanation) {
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.$refs.explanation]);
+        }
+      }
     }
   },
   created() {
     this.content = this.question ? this.question.title.replace(/\n/g, "<br />") : "";
+  },
+  watch: {
+    content(newContent) {
+      this.$nextTick(() => {
+        this.renderMathJax();
+      });
+    },
+    explanation(newExplanation) {
+      this.$nextTick(() => {
+        this.renderMathJax();
+      });
+    }
   }
 }
 </script>

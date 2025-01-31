@@ -1,0 +1,5539 @@
+[
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $x$: $$x + 2 = 5$$",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "3",
+    "explanation": "Subtracting 2 from both sides of the equation, we get: $$x = 5 - 2 = 3$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $y$: $$2y - 4 = 8$$",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "answer": "6",
+    "explanation": "Adding 4 to both sides of the equation, we get: $$2y = 12$$, then dividing both sides by 2, we get: $$y = 6$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $z$: $$z/4 = 9$$",
+    "options": [
+      "36",
+      "40",
+      "44",
+      "48"
+    ],
+    "answer": "36",
+    "explanation": "Multiplying both sides of the equation by 4, we get: $$z = 36$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $x$: $$x - 3 = 7$$",
+    "options": [
+      "5",
+      "6",
+      "10",
+      "11"
+    ],
+    "answer": "10",
+    "explanation": "Adding 3 to both sides of the equation, we get: $$x = 10$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $y$: $$2y + 5 = 11$$",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": "3",
+    "explanation": "Subtracting 5 from both sides of the equation, we get: $$2y = 6$$, then dividing both sides by 2, we get: $$y = 3$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $z$: $$z + 2 = 9$$",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "11"
+    ],
+    "answer": "7",
+    "explanation": "Subtracting 2 from both sides of the equation, we get: $$z = 7$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $x$: $$x - 2 = 6$$",
+    "options": [
+      "4",
+      "6",
+      "8",
+      "10"
+    ],
+    "answer": "8",
+    "explanation": "Adding 2 to both sides of the equation, we get: $$x = 8$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $y$: $$2y - 3 = 7$$",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "answer": "5",
+    "explanation": "Adding 3 to both sides of the equation, we get: $$2y = 10$$, then dividing both sides by 2, we get: $$y = 5$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $z$: $$z/3 = 4$$",
+    "options": [
+      "10",
+      "12",
+      "14",
+      "16"
+    ],
+    "answer": "12",
+    "explanation": "Multiplying both sides of the equation by 3, we get: $$z = 12$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $x$: $$x + 4 = 9$$",
+    "options": [
+      "3",
+      "5",
+      "6",
+      "7"
+    ],
+    "answer": "5",
+    "explanation": "Subtracting 4 from both sides of the equation, we get: $$x = 5$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $y$: $$y - 2 = 7$$",
+    "options": [
+      "5",
+      "6",
+      "9",
+      "10"
+    ],
+    "answer": "9",
+    "explanation": "Adding 2 to both sides of the equation, we get: $$y = 9$$"
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and inequalities",
+    "title": "Solve for $z$: $$z/2 = 6$$",
+    "options": [
+      "10",
+      "12",
+      "14",
+      "16"
+    ],
+    "answer": "12",
+    "explanation": "Multiplying both sides of the equation by 2, we get: $$z = 12$$"
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of a line passing through points (2,3) and (4,5)?",
+    "options": [
+      "y = x + 1",
+      "y = x - 1",
+      "y = 2x - 1",
+      "y = 2x + 1"
+    ],
+    "answer": "y = x + 1",
+    "explanation": "Using the slope-intercept form, we find the slope and then the equation of the line."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the slope of a line passing through points (1,2) and (3,4)?",
+    "options": [
+      "1/2",
+      "2/3",
+      "3/4",
+      "1"
+    ],
+    "answer": "1/2",
+    "explanation": "Using the slope formula, we find the slope of the line."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of a line passing through point (2,3) with slope 2?",
+    "options": [
+      "y = 2x - 1",
+      "y = 2x + 1",
+      "y = 2x - 3",
+      "y = 2x + 3"
+    ],
+    "answer": "y = 2x - 1",
+    "explanation": "Using the point-slope form, we find the equation of the line."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the distance between points (1,2) and (4,6)?",
+    "options": [
+      "3sqrt(2)",
+      "4sqrt(2)",
+      "5sqrt(2)",
+      "6sqrt(2)"
+    ],
+    "answer": "5sqrt(2)",
+    "explanation": "Using the distance formula, we find the distance between the points."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the midpoint of the line segment joining points (2,3) and (4,5)?",
+    "options": [
+      "(3,4)",
+      "(3,5)",
+      "(4,4)",
+      "(4,5)"
+    ],
+    "answer": "(3,4)",
+    "explanation": "Using the midpoint formula, we find the midpoint of the line segment."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of the circle with center (2,3) and radius 4?",
+    "options": [
+      "(x-2)^2 + (y-3)^2 = 16",
+      "(x-2)^2 + (y-3)^2 = 20",
+      "(x-2)^2 + (y-3)^2 = 24",
+      "(x-2)^2 + (y-3)^2 = 28"
+    ],
+    "answer": "(x-2)^2 + (y-3)^2 = 16",
+    "explanation": "Using the equation of a circle, we find the equation of the circle."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the area of the triangle with vertices (1,2), (3,4), and (2,5)?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "answer": "3",
+    "explanation": "Using the formula for the area of a triangle, we find the area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the perimeter of the triangle with vertices (1,2), (3,4), and (2,5)?",
+    "options": [
+      "10",
+      "12",
+      "14",
+      "16"
+    ],
+    "answer": "12",
+    "explanation": "Using the distance formula, we find the lengths of the sides and add them up."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circles",
+    "title": "What is the equation of the circle with center (0,0) and radius 5?",
+    "options": [
+      "x^2 + y^2 = 25",
+      "x^2 + y^2 = 30",
+      "x^2 + y^2 = 35",
+      "x^2 + y^2 = 40"
+    ],
+    "answer": "x^2 + y^2 = 25",
+    "explanation": "Using the equation of a circle, we find the equation of the circle."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circles",
+    "title": "What is the circumference of the circle with radius 4?",
+    "options": [
+      "8π",
+      "10π",
+      "12π",
+      "16π"
+    ],
+    "answer": "8π",
+    "explanation": "Using the formula for the circumference of a circle, we find the circumference."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circles",
+    "title": "What is the area of the circle with radius 3?",
+    "options": [
+      "9π",
+      "12π",
+      "15π",
+      "18π"
+    ],
+    "answer": "9π",
+    "explanation": "Using the formula for the area of a circle, we find the area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the rectangular prism with length 5, width 3, and height 2?",
+    "options": [
+      "10",
+      "15",
+      "20",
+      "30"
+    ],
+    "answer": "30",
+    "explanation": "Using the formula for the volume of a rectangular prism, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the rectangular prism with length 5, width 3, and height 2?",
+    "options": [
+      "40",
+      "50",
+      "60",
+      "70"
+    ],
+    "answer": "62",
+    "explanation": "Using the formula for the surface area of a rectangular prism, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the sphere with radius 4?",
+    "options": [
+      "32π",
+      "64π",
+      "128π",
+      "256π"
+    ],
+    "answer": "256π/3",
+    "explanation": "Using the formula for the volume of a sphere, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the sphere with radius 3?",
+    "options": [
+      "36π",
+      "48π",
+      "60π",
+      "72π"
+    ],
+    "answer": "36π",
+    "explanation": "Using the formula for the surface area of a sphere, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the cone with radius 3 and height 5?",
+    "options": [
+      "15π",
+      "20π",
+      "25π",
+      "30π"
+    ],
+    "answer": "15π",
+    "explanation": "Using the formula for the volume of a cone, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the cone with radius 2 and height 4?",
+    "options": [
+      "8π",
+      "10π",
+      "12π",
+      "16π"
+    ],
+    "answer": "12π",
+    "explanation": "Using the formula for the surface area of a cone, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the cylinder with radius 2 and height 6?",
+    "options": [
+      "12π",
+      "16π",
+      "20π",
+      "24π"
+    ],
+    "answer": "24π",
+    "explanation": "Using the formula for the volume of a cylinder, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the cylinder with radius 3 and height 4?",
+    "options": [
+      "24π",
+      "30π",
+      "36π",
+      "48π"
+    ],
+    "answer": "48π",
+    "explanation": "Using the formula for the surface area of a cylinder, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the pyramid with base area 10 and height 4?",
+    "options": [
+      "20",
+      "30",
+      "40",
+      "50"
+    ],
+    "answer": "40/3",
+    "explanation": "Using the formula for the volume of a pyramid, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the pyramid with base area 10 and height 4?",
+    "options": [
+      "30",
+      "40",
+      "50",
+      "60"
+    ],
+    "answer": "30 + 10√2",
+    "explanation": "Using the formula for the surface area of a pyramid, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the prism with base area 12 and height 5?",
+    "options": [
+      "40",
+      "50",
+      "60",
+      "70"
+    ],
+    "answer": "60",
+    "explanation": "Using the formula for the volume of a prism, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the prism with base area 12 and height 5?",
+    "options": [
+      "50",
+      "60",
+      "70",
+      "80"
+    ],
+    "answer": "62",
+    "explanation": "Using the formula for the surface area of a prism, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the sphere with diameter 10?",
+    "options": [
+      "500π/3",
+      "1000π/3",
+      "1500π/3",
+      "2000π/3"
+    ],
+    "answer": "500π/3",
+    "explanation": "Using the formula for the volume of a sphere, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the sphere with diameter 8?",
+    "options": [
+      "64π",
+      "128π",
+      "256π",
+      "512π"
+    ],
+    "answer": "64π",
+    "explanation": "Using the formula for the surface area of a sphere, we find the surface area."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the volume of the sphere with radius 6?",
+    "options": [
+      "288π",
+      "324π",
+      "360π",
+      "432π"
+    ],
+    "answer": "288π",
+    "explanation": "Using the formula for the volume of a sphere, we find the volume."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "3D Geometry",
+    "title": "What is the surface area of the sphere with radius 5?",
+    "options": [
+      "50π",
+      "60π",
+      "75π",
+      "100π"
+    ],
+    "answer": "100π",
+    "explanation": "Using the formula for the surface area of a sphere, we find the surface area."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 2/3, what is the value of cos(x)?",
+    "options": [
+      "1/3",
+      "2/3",
+      "sqrt(5)/3",
+      "sqrt(5)/5"
+    ],
+    "answer": "sqrt(5)/3",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 3/4, what is the value of sin(x)?",
+    "options": [
+      "3/4",
+      "3/5",
+      "4/5",
+      "5/5"
+    ],
+    "answer": "3/5",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 4/5, what is the value of sin(x)?",
+    "options": [
+      "3/5",
+      "4/5",
+      "5/5",
+      "3/4"
+    ],
+    "answer": "3/5",
+    "explanation": "Using the Pythagorean identity, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 1/2, what is the value of cos(x)?",
+    "options": [
+      "1/2",
+      "sqrt(3)/2",
+      "sqrt(3)/4",
+      "1/4"
+    ],
+    "answer": "sqrt(3)/2",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 1/2, what is the value of sin(x)?",
+    "options": [
+      "1/2",
+      "1/3",
+      "1/4",
+      "1/5"
+    ],
+    "answer": "1/√5",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 3/5, what is the value of tan(x)?",
+    "options": [
+      "3/4",
+      "4/3",
+      "4/5",
+      "5/4"
+    ],
+    "answer": "4/3",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 2/3, what is the value of cos(x)?",
+    "options": [
+      "1/3",
+      "2/3",
+      "sqrt(5)/3",
+      "sqrt(5)/5"
+    ],
+    "answer": "sqrt(5)/3",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 2/3, what is the value of sin(x)?",
+    "options": [
+      "2/3",
+      "2/5",
+      "3/5",
+      "1/3"
+    ],
+    "answer": "2/√13",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 4/5, what is the value of tan(x)?",
+    "options": [
+      "3/4",
+      "4/3",
+      "4/5",
+      "5/4"
+    ],
+    "answer": "3/4",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 3/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "4/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 5/12, what is the value of sin(x)?",
+    "options": [
+      "5/12",
+      "5/13",
+      "12/13",
+      "13/12"
+    ],
+    "answer": "5/13",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 3/4, what is the value of tan(x)?",
+    "options": [
+      "3/4",
+      "4/3",
+      "sqrt(7)/4",
+      "4/sqrt(7)"
+    ],
+    "answer": "sqrt(7)/3",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 2/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "sqrt(21)/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 3/4, what is the value of sin(x)?",
+    "options": [
+      "3/4",
+      "3/5",
+      "4/5",
+      "5/5"
+    ],
+    "answer": "3/5",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 2/3, what is the value of tan(x)?",
+    "options": [
+      "1/2",
+      "2/3",
+      "sqrt(5)/2",
+      "sqrt(5)/3"
+    ],
+    "answer": "sqrt(5)/2",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 3/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "4/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 2/3, what is the value of sin(x)?",
+    "options": [
+      "2/3",
+      "2/5",
+      "3/5",
+      "1/3"
+    ],
+    "answer": "2/√13",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 3/5, what is the value of tan(x)?",
+    "options": [
+      "2/3",
+      "3/4",
+      "4/5",
+      "5/4"
+    ],
+    "answer": "4/3",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 2/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "sqrt(21)/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 5/12, what is the value of sin(x)?",
+    "options": [
+      "5/12",
+      "5/13",
+      "12/13",
+      "13/12"
+    ],
+    "answer": "5/13",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 4/5, what is the value of tan(x)?",
+    "options": [
+      "3/4",
+      "4/3",
+      "4/5",
+      "5/4"
+    ],
+    "answer": "3/4",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 3/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "4/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 2/3, what is the value of sin(x)?",
+    "options": [
+      "2/3",
+      "2/5",
+      "3/5",
+      "1/3"
+    ],
+    "answer": "2/√13",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 2/3, what is the value of tan(x)?",
+    "options": [
+      "1/2",
+      "2/3",
+      "sqrt(5)/2",
+      "sqrt(5)/3"
+    ],
+    "answer": "sqrt(5)/2",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 4/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "3/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 3/4, what is the value of sin(x)?",
+    "options": [
+      "3/4",
+      "3/5",
+      "4/5",
+      "5/5"
+    ],
+    "answer": "3/5",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If cos(x) = 3/5, what is the value of tan(x)?",
+    "options": [
+      "2/3",
+      "3/4",
+      "4/5",
+      "5/4"
+    ],
+    "answer": "4/3",
+    "explanation": "Using the definition of tangent, we find the value of tan(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If sin(x) = 2/5, what is the value of cos(x)?",
+    "options": [
+      "1/5",
+      "2/5",
+      "3/5",
+      "4/5"
+    ],
+    "answer": "sqrt(21)/5",
+    "explanation": "Using the Pythagorean identity, we find the value of cos(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Angles and Triangles",
+    "title": "If tan(x) = 5/12, what is the value of sin(x)?",
+    "options": [
+      "5/12",
+      "5/13",
+      "12/13",
+      "13/12"
+    ],
+    "answer": "5/13",
+    "explanation": "Using the definition of tangent, we find the value of sin(x)."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(2x)?",
+    "options": [
+      "π",
+      "2π",
+      "π/2",
+      "4π"
+    ],
+    "answer": "π",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2cos(x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(x - π/4)?",
+    "options": [
+      "π/4",
+      "-π/4",
+      "π/2",
+      "-π/2"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = cos(x) + 2?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(3x)?",
+    "options": [
+      "π/3",
+      "π/2",
+      "π",
+      "2π"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3sin(2x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(2x - π/2)?",
+    "options": [
+      "π/4",
+      "-π/4",
+      "π/2",
+      "-π/2"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2sin(x) + 1?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(x/2)?",
+    "options": [
+      "π",
+      "2π",
+      "4π",
+      "π/2"
+    ],
+    "answer": "2π",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4cos(3x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(2x + π/4)?",
+    "options": [
+      "-π/8",
+      "π/8",
+      "-π/4",
+      "π/4"
+    ],
+    "answer": "-π/8",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3tan(x) - 2?",
+    "options": [
+      "-2",
+      "-1",
+      "0",
+      "1"
+    ],
+    "answer": "-2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(4x)?",
+    "options": [
+      "π/2",
+      "π",
+      "2π",
+      "4π"
+    ],
+    "answer": "π/2",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2sin(2x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(3x - π/2)?",
+    "options": [
+      "π/6",
+      "-π/6",
+      "π/2",
+      "-π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 4cos(x) + 1?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(2x + π)?",
+    "options": [
+      "π",
+      "2π",
+      "π/2",
+      "2π/3"
+    ],
+    "answer": "π",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3sin(4x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(2x - π/3)?",
+    "options": [
+      "π/6",
+      "-π/6",
+      "π/3",
+      "-π/3"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2tan(x) - 1?",
+    "options": [
+      "-1",
+      "-2",
+      "0",
+      "1"
+    ],
+    "answer": "-1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(3x + π/2)?",
+    "options": [
+      "2π/3",
+      "π",
+      "2π",
+      "3π"
+    ],
+    "answer": "2π/3",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4cos(2x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(4x - π/4)?",
+    "options": [
+      "π/16",
+      "-π/16",
+      "π/4",
+      "-π/4"
+    ],
+    "answer": "π/16",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3sin(x) + 2?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(2x - π)?",
+    "options": [
+      "π",
+      "2π",
+      "π/2",
+      "2π/3"
+    ],
+    "answer": "π",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2tan(3x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(2x + π/6)?",
+    "options": [
+      "π/12",
+      "-π/12",
+      "π/6",
+      "-π/6"
+    ],
+    "answer": "-π/12",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 4cos(2x) - 3?",
+    "options": [
+      "-3",
+      "-2",
+      "-1",
+      "0"
+    ],
+    "answer": "-3",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(3x + π/4)?",
+    "options": [
+      "π/3",
+      "2π/3",
+      "3π/4",
+      "4π/3"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2sin(x/2)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(2x - 3π/4)?",
+    "options": [
+      "3π/8",
+      "-3π/8",
+      "3π/4",
+      "-3π/4"
+    ],
+    "answer": "3π/8",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3tan(x) + 2?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(4x + π/2)?",
+    "options": [
+      "π/2",
+      "π",
+      "2π",
+      "4π"
+    ],
+    "answer": "π/2",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4cos(3x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(2x + π/6)?",
+    "options": [
+      "π/12",
+      "-π/12",
+      "π/6",
+      "-π/6"
+    ],
+    "answer": "-π/12",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2sin(2x) - 4?",
+    "options": [
+      "-4",
+      "-2",
+      "-1",
+      "0"
+    ],
+    "answer": "-4",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(3x - π/3)?",
+    "options": [
+      "2π/3",
+      "π",
+      "2π",
+      "3π"
+    ],
+    "answer": "2π/3",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(3x - π/3)?",
+    "options": [
+      "2π/3",
+      "π",
+      "2π",
+      "3π"
+    ],
+    "answer": "2π/3",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2sin(4x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(2x + π/4)?",
+    "options": [
+      "π/8",
+      "-π/8",
+      "π/4",
+      "-π/4"
+    ],
+    "answer": "-π/8",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3cos(x) + 1?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(5x - π/2)?",
+    "options": [
+      "2π/5",
+      "π",
+      "2π",
+      "5π"
+    ],
+    "answer": "2π/5",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4tan(2x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(4x - π/3)?",
+    "options": [
+      "π/12",
+      "-π/12",
+      "π/3",
+      "-π/3"
+    ],
+    "answer": "π/12",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2sin(3x) - 3?",
+    "options": [
+      "-3",
+      "-2",
+      "-1",
+      "0"
+    ],
+    "answer": "-3",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(6x + π/2)?",
+    "options": [
+      "π/3",
+      "π/2",
+      "2π/3",
+      "3π"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3cos(2x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(3x - π/6)?",
+    "options": [
+      "π/18",
+      "-π/18",
+      "π/6",
+      "-π/6"
+    ],
+    "answer": "π/18",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2tan(x) + 1?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(2x + π/4)?",
+    "options": [
+      "π",
+      "2π",
+      "π/2",
+      "4π"
+    ],
+    "answer": "π",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4sin(3x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(4x - π/2)?",
+    "options": [
+      "π/8",
+      "-π/8",
+      "π/2",
+      "-π/2"
+    ],
+    "answer": "π/8",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3cos(x) - 2?",
+    "options": [
+      "-2",
+      "-1",
+      "0",
+      "1"
+    ],
+    "answer": "-2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(5x + π/3)?",
+    "options": [
+      "2π/5",
+      "π",
+      "2π",
+      "5π"
+    ],
+    "answer": "2π/5",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2tan(2x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(3x - 2π/3)?",
+    "options": [
+      "2π/9",
+      "-2π/9",
+      "2π/3",
+      "-2π/3"
+    ],
+    "answer": "2π/9",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 4sin(2x) + 3?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(2x + π/6)?",
+    "options": [
+      "π/2",
+      "π",
+      "2π",
+      "3π"
+    ],
+    "answer": "π",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3cos(4x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(2x - 5π/6)?",
+    "options": [
+      "5π/12",
+      "-5π/12",
+      "5π/6",
+      "-5π/6"
+    ],
+    "answer": "-5π/12",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2tan(x) - 4?",
+    "options": [
+      "-4",
+      "-2",
+      "0",
+      "2"
+    ],
+    "answer": "-4",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(4x + π/4)?",
+    "options": [
+      "π/2",
+      "π",
+      "2π",
+      "4π"
+    ],
+    "answer": "π/2",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 5sin(3x)?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "answer": "5",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(3x + 2π/3)?",
+    "options": [
+      "2π/9",
+      "-2π/9",
+      "2π/3",
+      "-2π/3"
+    ],
+    "answer": "-2π/9",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2cos(2x) + 1?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(5x - π/2)?",
+    "options": [
+      "2π/5",
+      "π",
+      "2π",
+      "5π"
+    ],
+    "answer": "2π/5",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3tan(4x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(2x + π/3)?",
+    "options": [
+      "π/6",
+      "-π/6",
+      "π/3",
+      "-π/3"
+    ],
+    "answer": "-π/6",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 4sin(x) - 2?",
+    "options": [
+      "-2",
+      "-1",
+      "0",
+      "1"
+    ],
+    "answer": "-2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(6x - π/4)?",
+    "options": [
+      "π/3",
+      "π/2",
+      "2π/3",
+      "3π"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2cos(3x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(4x + 2π/3)?",
+    "options": [
+      "π/6",
+      "-π/6",
+      "2π/3",
+      "-2π/3"
+    ],
+    "answer": "-π/6",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3tan(2x) + 1?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(5x - π/6)?",
+    "options": [
+      "2π/5",
+      "π",
+      "2π",
+      "5π"
+    ],
+    "answer": "2π/5",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4sin(2x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(3x + π/4)?",
+    "options": [
+      "π/12",
+      "-π/12",
+      "π/4",
+      "-π/4"
+    ],
+    "answer": "-π/12",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2cos(x) - 1?",
+    "options": [
+      "-1",
+      "-2",
+      "0",
+      "1"
+    ],
+    "answer": "-1",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(4x - π/2)?",
+    "options": [
+      "π/2",
+      "π",
+      "2π",
+      "4π"
+    ],
+    "answer": "π/2",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3tan(3x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = cos(2x - 3π/4)?",
+    "options": [
+      "3π/8",
+      "-3π/8",
+      "3π/4",
+      "-3π/4"
+    ],
+    "answer": "3π/8",
+    "explanation": "Using the formula for the phase shift of a cosine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 4sin(2x) + 2?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = tan(5x + π/3)?",
+    "options": [
+      "π/5",
+      "2π/5",
+      "3π/5",
+      "5π"
+    ],
+    "answer": "π/5",
+    "explanation": "Using the formula for the period of a tangent function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 2cos(5x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = sin(3x - 2π/3)?",
+    "options": [
+      "2π/9",
+      "-2π/9",
+      "2π/3",
+      "-2π/3"
+    ],
+    "answer": "2π/9",
+    "explanation": "Using the formula for the phase shift of a sine function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 3tan(x) - 2?",
+    "options": [
+      "-2",
+      "-1",
+      "0",
+      "1"
+    ],
+    "answer": "-2",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = cos(4x + π/6)?",
+    "options": [
+      "π/2",
+      "π",
+      "2π",
+      "4π"
+    ],
+    "answer": "π/2",
+    "explanation": "Using the formula for the period of a cosine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 4sin(3x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "4",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the phase shift of the function f(x) = tan(2x - π/4)?",
+    "options": [
+      "π/8",
+      "-π/8",
+      "π/4",
+      "-π/4"
+    ],
+    "answer": "-π/8",
+    "explanation": "Using the formula for the phase shift of a tangent function, we find the phase shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the vertical shift of the function f(x) = 2cos(2x) + 3?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of vertical shift, we find the vertical shift."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the period of the function f(x) = sin(6x - π/2)?",
+    "options": [
+      "π/3",
+      "π/2",
+      "2π/3",
+      "3π"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the formula for the period of a sine function, we find the period."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Graphs of Trigonometric Functions",
+    "title": "What is the amplitude of the function f(x) = 3tan(4x)?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": "3",
+    "explanation": "Using the definition of amplitude, we find the amplitude."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sin(x)cos(x)?",
+    "options": [
+      "sin(2x)",
+      "cos(2x)",
+      "sin(x)",
+      "cos(x)"
+    ],
+    "answer": "sin(2x)/2",
+    "explanation": "Using the double angle formula for sine, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression cos^2(x) + sin^2(x)?",
+    "options": [
+      "1",
+      "0",
+      "cos(x)",
+      "sin(x)"
+    ],
+    "answer": "1",
+    "explanation": "Using the Pythagorean identity, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression tan(x)sec(x)?",
+    "options": [
+      "sin(x)",
+      "cos(x)",
+      "tan(x)",
+      "sec(x)"
+    ],
+    "answer": "sec(x)/cos(x)",
+    "explanation": "Using the definition of secant, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sin(x)/cos(x)?",
+    "options": [
+      "tan(x)",
+      "cot(x)",
+      "sec(x)",
+      "csc(x)"
+    ],
+    "answer": "tan(x)",
+    "explanation": "Using the definition of tangent, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression cos(x)sin(x)?",
+    "options": [
+      "sin(2x)",
+      "cos(2x)",
+      "sin(x)",
+      "cos(x)"
+    ],
+    "answer": "sin(2x)/2",
+    "explanation": "Using the double angle formula for sine, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression tan^2(x) + 1?",
+    "options": [
+      "sec^2(x)",
+      "csc^2(x)",
+      "cot^2(x)",
+      "sin^2(x)"
+    ],
+    "answer": "sec^2(x)",
+    "explanation": "Using the Pythagorean identity, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sin(x)csc(x)?",
+    "options": [
+      "1",
+      "0",
+      "cos(x)",
+      "sin(x)"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of cosecant, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression cos(x)sec(x)?",
+    "options": [
+      "1",
+      "0",
+      "cos(x)",
+      "sin(x)"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of secant, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression tan(x)cot(x)?",
+    "options": [
+      "1",
+      "0",
+      "cos(x)",
+      "sin(x)"
+    ],
+    "answer": "1",
+    "explanation": "Using the definition of cotangent, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sin(2x)cos(x)?",
+    "options": [
+      "sin(3x)/2",
+      "sin(x)/2",
+      "cos(2x)",
+      "sin(2x)"
+    ],
+    "answer": "sin(3x)/2",
+    "explanation": "Using the double angle formula for sine, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression cos(2x) + 1?",
+    "options": [
+      "2cos^2(x)",
+      "2sin^2(x)",
+      "cos(x) + 1",
+      "sin(x) + 1"
+    ],
+    "answer": "2cos^2(x)",
+    "explanation": "Using the double angle formula for cosine, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression tan(x) + cot(x)?",
+    "options": [
+      "sec(x)csc(x)",
+      "sin(x)cos(x)",
+      "tan(x)cot(x)",
+      "sec(x) + csc(x)"
+    ],
+    "answer": "sec(x)csc(x)",
+    "explanation": "Using the definitions of secant and cosecant, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sin(x)cos(x) + cos(x)sin(x)?",
+    "options": [
+      "sin(2x)",
+      "cos(2x)",
+      "sin(x) + cos(x)",
+      "sin(x)cos(x)"
+    ],
+    "answer": "sin(2x)",
+    "explanation": "Using the double angle formula for sine, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression cos^2(x) - sin^2(x)?",
+    "options": [
+      "cos(2x)",
+      "sin(2x)",
+      "cos(x)",
+      "sin(x)"
+    ],
+    "answer": "cos(2x)",
+    "explanation": "Using the double angle formula for cosine, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression tan(2x) / (1 + tan^2(x))?",
+    "options": [
+      "tan(x)",
+      "tan(2x)",
+      "sec(x)",
+      "csc(x)"
+    ],
+    "answer": "tan(x)",
+    "explanation": "Using the double angle formula for tangent, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sin(x) / (1 + cos(x))?",
+    "options": [
+      "tan(x/2)",
+      "cot(x/2)",
+      "sec(x/2)",
+      "csc(x/2)"
+    ],
+    "answer": "tan(x/2)",
+    "explanation": "Using the half angle formula for tangent, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression cos(x) / (1 - sin(x))?",
+    "options": [
+      "tan(x/2)",
+      "cot(x/2)",
+      "sec(x/2)",
+      "csc(x/2)"
+    ],
+    "answer": "cot(x/2)",
+    "explanation": "Using the half angle formula for cotangent, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the simplified form of the expression sec(x) / tan(x)?",
+    "options": [
+      "csc(x)",
+      "sec(x)",
+      "tan(x)",
+      "cot(x)"
+    ],
+    "answer": "csc(x)",
+    "explanation": "Using the definitions of secant and cosecant, we can simplify the expression."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(x) = 1/cot(x) for x in the interval [0, 2π].",
+    "options": [
+      "π/4",
+      "π/2",
+      "3π/4",
+      "π"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the definition of cotangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin^2(x) = 1 - cos^2(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/4",
+      "π/2",
+      "3π/4"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the Pythagorean identity, we can simplify the equation and find that it is true for all real numbers."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(2x) = 2cos^2(x) - 1 for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/4",
+      "π/2",
+      "3π/4"
+    ],
+    "answer": "0",
+    "explanation": "Using the double angle formula for cosine, we can simplify the equation and find that it is true for all real numbers."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(x) = 2sin(x)cos(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/4",
+      "π/2",
+      "3π/4"
+    ],
+    "answer": "0",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(x) = 2tan(x) / (1 + tan^2(x)) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/4",
+      "π/2",
+      "3π/4"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the definition of tangent, we can simplify the equation and find that it is true for all real numbers."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(x) = sin(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(x) = cos(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/4",
+      "π/2",
+      "3π/4"
+    ],
+    "answer": "0",
+    "explanation": "Using the double angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(x) = tan(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/8",
+      "π/4",
+      "3π/8"
+    ],
+    "answer": "π/8",
+    "explanation": "Using the double angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(x)cos(x) = 1/2 for x in the interval [0, 2π].",
+    "options": [
+      "π/6",
+      "π/4",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the product-to-sum formula, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(3x) = cos(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(2x) = sin(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "0",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(4x) = tan(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/8",
+      "π/4",
+      "3π/8"
+    ],
+    "answer": "π/8",
+    "explanation": "Using the double angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(x) = cos(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the double angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(x) = sin(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(x) = cos(3x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(2x) = cos(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(x)cos(x) = 1/2 for x in the interval [0, 2π].",
+    "options": [
+      "π/6",
+      "π/4",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/4",
+    "explanation": "Using the product-to-sum formula, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(3x) = cos(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(2x) = sin(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "0",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(4x) = tan(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/8",
+      "π/4",
+      "3π/8"
+    ],
+    "answer": "π/8",
+    "explanation": "Using the double angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(x) = cos(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the double angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(x) = sin(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(x) = cos(3x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(2x) = cos(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/6",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(2x) = sin(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/3"
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(2x) = sin(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "π/3",
+    "explanation": "Using the double angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(3x) = tan(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/6",
+      "π/3",
+      "π/2"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(4x) = sin(2x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/8",
+      "π/4",
+      "3π/8"
+    ],
+    "answer": "π/8",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(5x) = cos(x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/10",
+      "π/5",
+      "3π/10"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(6x) = tan(3x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/12",
+      "π/6",
+      "π/4"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(7x) = sin(4x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/14",
+      "π/7",
+      "3π/14"
+    ],
+    "answer": "π/14",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(8x) = cos(5x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/16",
+      "π/8",
+      "3π/16"
+    ],
+    "answer": "π/16",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(9x) = tan(6x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/18",
+      "π/9",
+      "π/6"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(10x) = sin(7x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/20",
+      "π/10",
+      "3π/20"
+    ],
+    "answer": "π/20",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(11x) = cos(8x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/22",
+      "π/11",
+      "3π/22"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(12x) = tan(9x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/24",
+      "π/12",
+      "3π/24"
+    ],
+    "answer": "π/24",
+    "explanation": "Using the triple angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(13x) = sin(10x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/26",
+      "π/13",
+      "3π/26"
+    ],
+    "answer": "π/26",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(14x) = cos(11x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/28",
+      "π/14",
+      "3π/28"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation tan(15x) = tan(12x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/30",
+      "π/15",
+      "3π/30"
+    ],
+    "answer": "π/30",
+    "explanation": "Using the triple angle formula for tangent, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation sin(16x) = sin(13x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/32",
+      "π/16",
+      "3π/32"
+    ],
+    "answer": "π/32",
+    "explanation": "Using the double angle formula for sine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Equations",
+    "title": "Solve the equation cos(17x) = cos(14x) for x in the interval [0, 2π].",
+    "options": [
+      "0",
+      "π/34",
+      "π/17",
+      "3π/34"
+    ],
+    "answer": "0",
+    "explanation": "Using the triple angle formula for cosine, we can simplify the equation and find the values of x that satisfy it."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) > 0 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/2)",
+      "(π/2, 3π/2)",
+      "(3π/2, 2π)",
+      "(0, 2π)"
+    ],
+    "answer": "(0, π/2) ∪ (π, 3π/2)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) < 0 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/2)",
+      "(π/2, 3π/2)",
+      "(3π/2, 2π)",
+      "(0, 2π)"
+    ],
+    "answer": "(π/2, 3π/2)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) ≥ 0 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/4)",
+      "(π/4, 3π/4)",
+      "(3π/4, 5π/4)",
+      "(5π/4, 2π)"
+    ],
+    "answer": "(0, π/4) ∪ (3π/4, 5π/4) ∪ (5π/4, 2π)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) ≤ 1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/6)",
+      "(π/6, 5π/6)",
+      "(5π/6, 2π)",
+      "(0, 2π)"
+    ],
+    "answer": "(0, 5π/6) ∪ (7π/6, 2π)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) > -1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(0, 2π/3)",
+      "(2π/3, 4π/3)",
+      "(4π/3, 2π)",
+      "(0, 2π)"
+    ],
+    "answer": "(0, 2π/3) ∪ (4π/3, 2π)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) < √3 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/6)",
+      "(π/6, π/3)",
+      "(π/3, 2π/3)",
+      "(2π/3, π)"
+    ],
+    "answer": "(0, π/3) ∪ (2π/3, 4π/3) ∪ (4π/3, 5π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) ≥ -1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(0, 7π/6)",
+      "(7π/6, 3π/2)",
+      "(3π/2, 11π/6)",
+      "(11π/6, 2π)"
+    ],
+    "answer": "(0, 7π/6) ∪ (3π/2, 11π/6) ∪ (11π/6, 2π)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) < 1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/3)",
+      "(π/3, 2π/3)",
+      "(2π/3, 4π/3)",
+      "(4π/3, 5π/3)"
+    ],
+    "answer": "(π/3, 2π/3) ∪ (4π/3, 5π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) > -√3 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/6)",
+      "(π/6, π/3)",
+      "(π/3, 2π/3)",
+      "(2π/3, π)"
+    ],
+    "answer": "(π/6, π/3) ∪ (2π/3, 4π/3) ∪ (4π/3, 5π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) ≤ 0 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π)",
+      "(π, 2π)",
+      "(0, 2π)",
+      "(π/2, 3π/2)"
+    ],
+    "answer": "(π, 2π)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) ≥ 0 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/2)",
+      "(π/2, π)",
+      "(π, 3π/2)",
+      "(3π/2, 2π)"
+    ],
+    "answer": "(0, π/2) ∪ (3π/2, 2π)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) < 0 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/4)",
+      "(π/4, π/2)",
+      "(π/2, 3π/4)",
+      "(3π/4, π)"
+    ],
+    "answer": "(π/2, 3π/4) ∪ (3π/4, 5π/4) ∪ (5π/4, 7π/4)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) > 1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/6)",
+      "(π/6, 5π/6)",
+      "(5π/6, 2π)",
+      "(π/6, 5π/6)"
+    ],
+    "answer": "(π/6, 5π/6)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) < -1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(2π/3, 4π/3)",
+      "(4π/3, 5π/3)",
+      "(5π/3, 2π)",
+      "(2π/3, 4π/3)"
+    ],
+    "answer": "(2π/3, 4π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) ≥ √3 for x in the interval [0, 2π].",
+    "options": [
+      "(π/3, 2π/3)",
+      "(2π/3, π)",
+      "(π, 4π/3)",
+      "(4π/3, 5π/3)"
+    ],
+    "answer": "(π/3, 2π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) ≤ -1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(7π/6, 3π/2)",
+      "(3π/2, 11π/6)",
+      "(11π/6, 2π)",
+      "(7π/6, 11π/6)"
+    ],
+    "answer": "(7π/6, 11π/6)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) > 1/2 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/3)",
+      "(π/3, 2π/3)",
+      "(2π/3, π)",
+      "(0, π/3)"
+    ],
+    "answer": "(0, π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) < -√3 for x in the interval [0, 2π].",
+    "options": [
+      "(4π/3, 5π/3)",
+      "(5π/3, 2π)",
+      "(0, π/6)",
+      "(4π/3, 5π/3)"
+    ],
+    "answer": "(4π/3, 5π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) ≥ √3/2 for x in the interval [0, 2π].",
+    "options": [
+      "(π/3, π/2)",
+      "(π/2, 2π/3)",
+      "(2π/3, π)",
+      "(π/3, π/2)"
+    ],
+    "answer": "(π/3, π/2)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) < -√3/2 for x in the interval [0, 2π].",
+    "options": [
+      "(4π/3, 3π/2)",
+      "(3π/2, 5π/3)",
+      "(5π/3, 2π)",
+      "(4π/3, 5π/3)"
+    ],
+    "answer": "(4π/3, 5π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) > 1 for x in the interval [0, 2π].",
+    "options": [
+      "(π/4, π/2)",
+      "(π/2, 3π/4)",
+      "(3π/4, π)",
+      "(π/4, 3π/4)"
+    ],
+    "answer": "(π/4, π/2) ∪ (3π/4, 5π/4)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) < -1/4 for x in the interval [0, 2π].",
+    "options": [
+      "(5π/4, 7π/4)",
+      "(7π/4, 2π)",
+      "(0, π/4)",
+      "(5π/4, 7π/4)"
+    ],
+    "answer": "(5π/4, 7π/4)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) > 3/4 for x in the interval [0, 2π].",
+    "options": [
+      "(0, π/6)",
+      "(π/6, π/3)",
+      "(π/3, π/2)",
+      "(0, π/6)"
+    ],
+    "answer": "(0, π/6)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality tan(x) < -3/4 for x in the interval [0, 2π].",
+    "options": [
+      "(3π/4, 5π/4)",
+      "(5π/4, 7π/4)",
+      "(7π/4, 2π)",
+      "(3π/4, 5π/4)"
+    ],
+    "answer": "(3π/4, 5π/4)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality sin(x) ≥ 3/4 for x in the interval [0, 2π].",
+    "options": [
+      "(π/6, π/2)",
+      "(π/2, 5π/6)",
+      "(5π/6, 3π/2)",
+      "(π/6, π/2)"
+    ],
+    "answer": "(π/6, π/2)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Inequalities",
+    "title": "Solve the inequality cos(x) < -3/4 for x in the interval [0, 2π].",
+    "options": [
+      "(2π/3, 4π/3)",
+      "(4π/3, 5π/3)",
+      "(5π/3, 2π)",
+      "(2π/3, 4π/3)"
+    ],
+    "answer": "(2π/3, 4π/3)",
+    "explanation": "Using the unit circle, we can find the values of x that satisfy the inequality."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the equation of the line passing through the points (2,3) and (4,5)?",
+    "options": [
+      "y = x + 1",
+      "y = x - 1",
+      "y = 2x - 1",
+      "y = 2x + 1"
+    ],
+    "answer": "y = x + 1",
+    "explanation": "To find the equation of a line passing through two points, use the slope-intercept form and calculate the slope using the formula (y2 - y1)/(x2 - x1)."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the equation of the plane passing through the points (1,2,3), (4,5,6), and (7,8,9)?",
+    "options": [
+      "x + y + z = 6",
+      "2x + 2y + 2z = 12",
+      "3x + 3y + 3z = 18",
+      "x + 2y + 3z = 12"
+    ],
+    "answer": "x + y + z = 6",
+    "explanation": "To find the equation of a plane passing through three points, use the formula ax + by + cz = d and solve for a, b, c, and d using the coordinates of the points."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the distance from the point (3,4) to the line y = 2x - 1?",
+    "options": [
+      "√5",
+      "√10",
+      "√17",
+      "√26"
+    ],
+    "answer": "√5",
+    "explanation": "To find the distance from a point to a line, use the formula |Ax + By + C|/√(A^2 + B^2) where A, B, and C are the coefficients of the line equation."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the angle between the planes x + y + z = 1 and 2x + 2y + 2z = 2?",
+    "options": [
+      "0°",
+      "30°",
+      "45°",
+      "60°"
+    ],
+    "answer": "0°",
+    "explanation": "To find the angle between two planes, use the formula cos(θ) = |(A1A2 + B1B2 + C1C2)|/√((A1^2 + B1^2 + C1^2)(A2^2 + B2^2 + C2^2)) where A, B, and C are the coefficients of the plane equations."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the intersection of the lines y = 2x - 1 and y = -3x + 2?",
+    "options": [
+      "(1,1)",
+      "(2,3)",
+      "(3,5)",
+      "(4,7)"
+    ],
+    "answer": "(1,1)",
+    "explanation": "To find the intersection of two lines, set the two equations equal to each other and solve for x and y."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the equation of the line passing through the point (2,3) with a slope of 4?",
+    "options": [
+      "y = 4x - 5",
+      "y = 4x - 1",
+      "y = 4x + 1",
+      "y = 4x + 5"
+    ],
+    "answer": "y = 4x - 5",
+    "explanation": "To find the equation of a line passing through a point with a given slope, use the point-slope form of a line."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the distance from the point (1,2) to the plane 2x + 3y - z = 4?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": "3",
+    "explanation": "To find the distance from a point to a plane, use the formula |Ax + By + Cz + D|/√(A^2 + B^2 + C^2)."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the equation of the line passing through the points (1,1) and (2,3) in parametric form?",
+    "options": [
+      "x = t, y = t",
+      "x = t, y = 2t - 1",
+      "x = 2t - 1, y = t",
+      "x = t, y = 3t - 2"
+    ],
+    "answer": "x = t, y = 2t - 1",
+    "explanation": "To find the parametric form of a line passing through two points, use the formula x = x1 + t(x2 - x1), y = y1 + t(y2 - y1)."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the intersection of the planes x + y + z = 1 and 2x + 2y + 2z = 2?",
+    "options": [
+      "(1,0,0)",
+      "(0,1,0)",
+      "(0,0,1)",
+      "No intersection"
+    ],
+    "answer": "No intersection",
+    "explanation": "To find the intersection of two planes, solve the system of equations formed by the two planes."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the equation of the plane passing through the points (1,1,1), (2,2,2), and (3,3,3)?",
+    "options": [
+      "x + y + z = 3",
+      "2x + 2y + 2z = 6",
+      "3x + 3y + 3z = 9",
+      "x + y + z = 6"
+    ],
+    "answer": "x + y + z = 3",
+    "explanation": "To find the equation of a plane passing through three points, use the formula Ax + By + Cz = D and solve for A, B, C, and D using the coordinates of the points."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the distance from the point (2,3) to the line y = 2x - 1?",
+    "options": [
+      "√5",
+      "√10",
+      "√17",
+      "√26"
+    ],
+    "answer": "√5",
+    "explanation": "To find the distance from a point to a line, use the formula |Ax + By + C|/√(A^2 + B^2)."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the equation of the line passing through the point (1,2) with a slope of -3?",
+    "options": [
+      "y = -3x + 5",
+      "y = -3x + 1",
+      "y = -3x - 1",
+      "y = -3x - 5"
+    ],
+    "answer": "y = -3x + 5",
+    "explanation": "To find the equation of a line passing through a point with a given slope, use the point-slope form of a line."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Equations of Lines and Planes",
+    "title": "What is the distance from the point (3,4) to the plane 2x + 3y - z = 4?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": "3",
+    "explanation": "To find the distance from a point to a plane, use the formula |Ax + By + Cz + D|/√(A^2 + B^2 + C^2)."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Circles and Spheres",
+    "title": "What is the equation of the circle with center (2,3) and radius 4?",
+    "options": [
+      "(x - 2)^2 + (y - 3)^2 = 16",
+      "(x - 2)^2 + (y - 3)^2 = 8",
+      "(x - 2)^2 + (y - 3)^2 = 4",
+      "(x - 2)^2 + (y - 3)^2 = 2"
+    ],
+    "answer": "(x - 2)^2 + (y - 3)^2 = 16",
+    "explanation": "To find the equation of a circle, use the formula (x - h)^2 + (y - k)^2 = r^2 where (h,k) is the center and r is the radius."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Circles and Spheres",
+    "title": "What is the center of the circle with equation (x + 2)^2 + (y - 3)^2 = 9?",
+    "options": [
+      "(-2,3)",
+      "(2,-3)",
+      "(-2,-3)",
+      "(2,3)"
+    ],
+    "answer": "(-2,3)",
+    "explanation": "To find the center of a circle, look at the values being subtracted from x and y in the equation."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Circles and Spheres",
+    "title": "What is the radius of the circle with equation (x - 1)^2 + (y + 2)^2 = 4?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "To find the radius of a circle, take the square root of the value on the right side of the equation."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Circles and Spheres",
+    "title": "What is the equation of the sphere with center (1,2,3) and radius 2?",
+    "options": [
+      "(x - 1)^2 + (y - 2)^2 + (z - 3)^2 = 4",
+      "(x - 1)^2 + (y - 2)^2 + (z - 3)^2 = 2",
+      "(x - 1)^2 + (y - 2)^2 + (z - 3)^2 = 1",
+      "(x - 1)^2 + (y - 2)^2 + (z - 3)^2 = 0"
+    ],
+    "answer": "(x - 1)^2 + (y - 2)^2 + (z - 3)^2 = 4",
+    "explanation": "To find the equation of a sphere, use the formula (x - h)^2 + (y - k)^2 + (z - l)^2 = r^2 where (h,k,l) is the center and r is the radius."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Circles and Spheres",
+    "title": "What is the center of the sphere with equation (x + 1)^2 + (y - 2)^2 + (z + 3)^2 = 9?",
+    "options": [
+      "(-1,2,-3)",
+      "(1,-2,3)",
+      "(-1,-2,-3)",
+      "(1,2,3)"
+    ],
+    "answer": "(-1,2,-3)",
+    "explanation": "To find the center of a sphere, look at the values being subtracted from x, y, and z in the equation."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parabolas, Ellipses, and Hyperbolas",
+    "title": "What is the equation of the parabola with vertex (2,3) and focus (2,5)?",
+    "options": [
+      "(x - 2)^2 = 4(y - 3)",
+      "(x - 2)^2 = -4(y - 3)",
+      "(y - 3)^2 = 4(x - 2)",
+      "(y - 3)^2 = -4(x - 2)"
+    ],
+    "answer": "(x - 2)^2 = 4(y - 3)",
+    "explanation": "To find the equation of a parabola, use the formula (x - h)^2 = 4p(y - k) or (y - k)^2 = 4p(x - h) where (h,k) is the vertex and p is the distance from the vertex to the focus."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parabolas, Ellipses, and Hyperbolas",
+    "title": "What is the equation of the ellipse with center (1,2), vertex (1,4), and focus (1,3)?",
+    "options": [
+      "(x - 1)^2/3^2 + (y - 2)^2/2^2 = 1",
+      "(x - 1)^2/2^2 + (y - 2)^2/3^2 = 1",
+      "(x - 1)^2/4^2 + (y - 2)^2/3^2 = 1",
+      "(x - 1)^2/3^2 + (y - 2)^2/4^2 = 1"
+    ],
+    "answer": "(x - 1)^2/3^2 + (y - 2)^2/2^2 = 1",
+    "explanation": "To find the equation of an ellipse, use the formula (x - h)^2/a^2 + (y - k)^2/b^2 = 1 where (h,k) is the center, a is the distance from the center to the vertex, and b is the distance from the center to the co-vertex."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parabolas, Ellipses, and Hyperbolas",
+    "title": "What is the equation of the hyperbola with center (2,3), vertex (2,5), and focus (2,7)?",
+    "options": [
+      "(y - 3)^2/2^2 - (x - 2)^2/3^2 = 1",
+      "(y - 3)^2/3^2 - (x - 2)^2/2^2 = 1",
+      "(x - 2)^2/2^2 - (y - 3)^2/3^2 = 1",
+      "(x - 2)^2/3^2 - (y - 3)^2/2^2 = 1"
+    ],
+    "answer": "(y - 3)^2/2^2 - (x - 2)^2/3^2 = 1",
+    "explanation": "To find the equation of a hyperbola, use the formula (y - k)^2/a^2 - (x - h)^2/b^2 = 1 or (x - h)^2/a^2 - (y - k)^2/b^2 = 1 where (h,k) is the center, a is the distance from the center to the vertex, and b is the distance from the center to the co-vertex."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Polar Coordinates",
+    "title": "What is the polar equation of the circle with center (3,4) and radius 5?",
+    "options": [
+      "r^2 - 6rcos(θ) - 8rsin(θ) + 25 = 0",
+      "r^2 - 6rcos(θ) - 8rsin(θ) - 25 = 0",
+      "r^2 + 6rcos(θ) + 8rsin(θ) + 25 = 0",
+      "r^2 + 6rcos(θ) + 8rsin(θ) - 25 = 0"
+    ],
+    "answer": "r^2 - 6rcos(θ) - 8rsin(θ) + 25 = 0",
+    "explanation": "To find the polar equation of a circle, use the formula r^2 - 2rhcos(θ) - 2rksin(θ) + h^2 + k^2 - r^2 = 0 where (h,k) is the center and r is the radius."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Polar Coordinates",
+    "title": "What is the polar equation of the line passing through the point (3,4) with slope 2?",
+    "options": [
+      "rcos(θ) - 2rsin(θ) = 3 - 8",
+      "rcos(θ) + 2rsin(θ) = 3 + 8",
+      "rcos(θ) - 2rsin(θ) = 3 + 8",
+      "rcos(θ) + 2rsin(θ) = 3 - 8"
+    ],
+    "answer": "rcos(θ) - 2rsin(θ) = 3 - 8",
+    "explanation": "To find the polar equation of a line, use the formula rcos(θ) + mrsin(θ) = c where m is the slope and c is the y-intercept."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parametric and Vector Equations",
+    "title": "What is the parametric equation of the line passing through the point (2,3) with direction vector <1,2>?",
+    "options": [
+      "x = 2 + t, y = 3 + 2t",
+      "x = 2 + 2t, y = 3 + t",
+      "x = 2 - t, y = 3 - 2t",
+      "x = 2 - 2t, y = 3 - t"
+    ],
+    "answer": "x = 2 + t, y = 3 + 2t",
+    "explanation": "To find the parametric equation of a line, use the formula x = x0 + at, y = y0 + bt where (x0,y0) is the point and <a,b> is the direction vector."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parametric and Vector Equations",
+    "title": "What is the vector equation of the plane passing through the point (1,2,3) with normal vector <1,2,3>?",
+    "options": [
+      "<x,y,z> = <1,2,3> + s<1,0,0> + t<0,1,0>",
+      "<x,y,z> = <1,2,3> + s<1,2,3> + t<1,2,3>",
+      "<x,y,z> = <1,2,3> + s<0,0,1> + t<0,0,1>",
+      "<x,y,z> = <1,2,3> + s<1,0,0> + t<0,0,1>"
+    ],
+    "answer": "<x,y,z> = <1,2,3> + s<1,0,0> + t<0,1,0>",
+    "explanation": "To find the vector equation of a plane, use the formula <x,y,z> = <x0,y0,z0> + s<a,b,c> + t<d,e,f> where (x0,y0,z0) is the point and <a,b,c> and <d,e,f> are vectors parallel to the plane."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parametric and Vector Equations",
+    "title": "What is the parametric equation of the curve defined by x = 2 t^2, y = 3 t^3?",
+    "options": [
+      "x = 2 t^2, y = 3 t^3, z = 0",
+      "x = 2 t^2, y = 3 t^3, z = t",
+      "x = 2 t^2, y = 3 t^3, z = t^2",
+      "x = 2 t^2, y = 3 t^3, z = t^3"
+    ],
+    "answer": "x = 2 t^2, y = 3 t^3, z = 0",
+    "explanation": "To find the parametric equation of a curve, use the formulas x = f(t), y = g(t), z = h(t) where f, g, and h are functions of t."
+  },
+  {
+    "topic": "Analytic Geometry",
+    "subtopic": "Parametric and Vector Equations",
+    "title": "What is the vector equation of the line passing through the point (2,3) with direction vector <1,2>?",
+    "options": [
+      "<x,y> = <2,3> + t<1,2>",
+      "<x,y> = <2,3> + t<2,1>",
+      "<x,y> = <2,3> + t<-1,-2>",
+      "<x,y> = <2,3> + t<-2,-1>"
+    ],
+    "answer": "<x,y> = <2,3> + t<1,2>",
+    "explanation": "To find the vector equation of a line, use the formula <x,y> = <x0,y0> + t<a,b> where (x0,y0) is the point and <a,b> is the direction vector."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the expansion of (x + 2)^3?",
+    "options": [
+      "x^3 + 6x^2 + 12x + 8",
+      "x^3 + 3x^2 + 6x + 8",
+      "x^3 + 6x^2 + 12x + 4",
+      "x^3 + 3x^2 + 6x + 4"
+    ],
+    "answer": "x^3 + 6x^2 + 12x + 8",
+    "explanation": "To expand a binomial expression, use the binomial theorem."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the factorization of x^2 + 5x + 6?",
+    "options": [
+      "(x + 2)(x + 3)",
+      "(x + 1)(x + 6)",
+      "(x + 3)(x + 2)",
+      "(x + 6)(x + 1)"
+    ],
+    "answer": "(x + 2)(x + 3)",
+    "explanation": "To factorize a quadratic expression, look for two numbers whose product is the constant term and whose sum is the coefficient of the linear term."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the equation x^2 + 4x + 4 = 0?",
+    "options": [
+      "x = -2",
+      "x = -1",
+      "x = 0",
+      "x = 1"
+    ],
+    "answer": "x = -2",
+    "explanation": "To solve a quadratic equation, factorize the expression or use the quadratic formula."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the inequality 2x + 5 > 3?",
+    "options": [
+      "x > -1",
+      "x < -1",
+      "x > 1",
+      "x < 1"
+    ],
+    "answer": "x > -1",
+    "explanation": "To solve a linear inequality, isolate the variable and determine the direction of the inequality."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of the line passing through the points (2,3) and (4,5)?",
+    "options": [
+      "y = x + 1",
+      "y = x - 1",
+      "y = 2x + 1",
+      "y = 2x - 1"
+    ],
+    "answer": "y = x + 1",
+    "explanation": "To find the equation of a line passing through two points, use the slope-intercept form."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of the angle formed by the hands of a clock at 3 o'clock?",
+    "options": [
+      "30°",
+      "45°",
+      "60°",
+      "90°"
+    ],
+    "answer": "90°",
+    "explanation": "To find the measure of an angle formed by the hands of a clock, calculate the difference between the angles formed by each hand."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the perimeter of a rectangle with length 6 cm and width 4 cm?",
+    "options": [
+      "10 cm",
+      "12 cm",
+      "16 cm",
+      "20 cm"
+    ],
+    "answer": "20 cm",
+    "explanation": "To find the perimeter of a rectangle, add the lengths of all four sides."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the expansion of (x + 2)^3?",
+    "options": [
+      "x^3 + 6x^2 + 12x + 8",
+      "x^3 + 3x^2 + 6x + 8",
+      "x^3 + 6x^2 + 12x + 4",
+      "x^3 + 3x^2 + 6x + 4"
+    ],
+    "answer": "x^3 + 6x^2 + 12x + 8",
+    "explanation": "To expand a binomial expression, use the binomial theorem."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the factorization of x^2 + 5x + 6?",
+    "options": [
+      "(x + 2)(x + 3)",
+      "(x + 1)(x + 6)",
+      "(x + 3)(x + 2)",
+      "(x + 6)(x + 1)"
+    ],
+    "answer": "(x + 2)(x + 3)",
+    "explanation": "To factorize a quadratic expression, look for two numbers whose product is the constant term and whose sum is the coefficient of the linear term."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the equation x^2 + 4x + 4 = 0?",
+    "options": [
+      "x = -2",
+      "x = -1",
+      "x = 0",
+      "x = 1"
+    ],
+    "answer": "x = -2",
+    "explanation": "To solve a quadratic equation, factorize the expression or use the quadratic formula."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the inequality 2x + 5 > 3?",
+    "options": [
+      "x > -1",
+      "x < -1",
+      "x > 1",
+      "x < 1"
+    ],
+    "answer": "x > -1",
+    "explanation": "To solve a linear inequality, isolate the variable and determine the direction of the inequality."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of the line passing through the points (2,3) and (4,5)?",
+    "options": [
+      "y = x + 1",
+      "y = x - 1",
+      "y = 2x + 1",
+      "y = 2x - 1"
+    ],
+    "answer": "y = x + 1",
+    "explanation": "To find the equation of a line passing through two points, use the slope-intercept form."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of the angle formed by the hands of a clock at 3 o'clock?",
+    "options": [
+      "30°",
+      "45°",
+      "60°",
+      "90°"
+    ],
+    "answer": "90°",
+    "explanation": "To find the measure of an angle formed by the hands of a clock, calculate the difference between the angles formed by each hand."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the perimeter of a rectangle with length 6 cm and width 4 cm?",
+    "options": [
+      "10 cm",
+      "12 cm",
+      "16 cm",
+      "20 cm"
+    ],
+    "answer": "20 cm",
+    "explanation": "To find the perimeter of a rectangle, add the lengths of all four sides."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Ratios",
+    "title": "What is the value of sin(30°)?",
+    "options": [
+      "1/2",
+      "1/√3",
+      "√3/2",
+      "2/√3"
+    ],
+    "answer": "1/2",
+    "explanation": "To find the value of a trigonometric ratio, use the definition of the ratio or a trigonometric identity."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Graphs",
+    "title": "What is the period of the graph of y = sin(x)?",
+    "options": [
+      "π",
+      "2π",
+      "3π",
+      "4π"
+    ],
+    "answer": "2π",
+    "explanation": "The period of a trigonometric function is the distance between two consecutive points on the graph that have the same y-coordinate."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the value of cos(2x) in terms of sin(x) and cos(x)?",
+    "options": [
+      "cos^2(x) - sin^2(x)",
+      "cos^2(x) + sin^2(x)",
+      "2cos(x)sin(x)",
+      "2cos^2(x) - 1"
+    ],
+    "answer": "cos^2(x) - sin^2(x)",
+    "explanation": "To find the value of a trigonometric identity, use the definitions of the trigonometric ratios and algebraic manipulations."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Solving Trigonometric Equations",
+    "title": "What is the solution to the equation sin(x) = 1/2?",
+    "options": [
+      "x = 30°",
+      "x = 60°",
+      "x = 90°",
+      "x = 120°"
+    ],
+    "answer": "x = 30°",
+    "explanation": "To solve a trigonometric equation, use the inverse trigonometric functions or the unit circle."
+  },
+  {
+    "topic": "Number Patterns",
+    "subtopic": "Arithmetic Progressions",
+    "title": "What is the next term in the sequence 2, 5, 8, 11, ...?",
+    "options": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "answer": "14",
+    "explanation": "To find the next term in an arithmetic progression, add the common difference to the previous term."
+  },
+  {
+    "topic": "Number Patterns",
+    "subtopic": "Geometric Progressions",
+    "title": "What is the next term in the sequence 2, 6, 18, 54, ...?",
+    "options": [
+      "162",
+      "180",
+      "200",
+      "220"
+    ],
+    "answer": "162",
+    "explanation": "To find the next term in a geometric progression, multiply the previous term by the common ratio."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Descriptive Statistics",
+    "title": "What is the mean of the data set {2, 4, 6, 8, 10}?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "answer": "6",
+    "explanation": "To find the mean of a data set, add up all the values and divide by the number of values."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Inferential Statistics",
+    "title": "What is the purpose of a hypothesis test?",
+    "options": [
+      "To prove a theory",
+      "To disprove a theory",
+      "To determine the probability of a result",
+      "To make a prediction"
+    ],
+    "answer": "To determine the probability of a result",
+    "explanation": "A hypothesis test is used to determine whether a result is due to chance or if it is statistically significant."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the expansion of (x + 2)^3?",
+    "options": [
+      "x^3 + 6x^2 + 12x + 8",
+      "x^3 + 3x^2 + 6x + 8",
+      "x^3 + 6x^2 + 12x + 4",
+      "x^3 + 3x^2 + 6x + 4"
+    ],
+    "answer": "x^3 + 6x^2 + 12x + 8",
+    "explanation": "To expand a binomial expression, use the binomial theorem."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the factorization of x^2 + 5x + 6?",
+    "options": [
+      "(x + 2)(x + 3)",
+      "(x + 1)(x + 6)",
+      "(x + 3)(x + 2)",
+      "(x + 6)(x + 1)"
+    ],
+    "answer": "(x + 2)(x + 3)",
+    "explanation": "To factorize a quadratic expression, look for two numbers whose product is the constant term and whose sum is the coefficient of the linear term."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the expansion of (x - 3)^2?",
+    "options": [
+      "x^2 - 6x + 9",
+      "x^2 + 6x + 9",
+      "x^2 - 6x - 9",
+      "x^2 + 6x - 9"
+    ],
+    "answer": "x^2 - 6x + 9",
+    "explanation": "To expand a binomial expression, use the binomial theorem."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the factorization of x^2 - 4?",
+    "options": [
+      "(x - 2)(x + 2)",
+      "(x - 2)(x - 2)",
+      "(x + 2)(x + 2)",
+      "(x + 2)(x - 2)"
+    ],
+    "answer": "(x - 2)(x + 2)",
+    "explanation": "To factorize a quadratic expression, look for two numbers whose product is the constant term and whose sum is the coefficient of the linear term."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Expansions and Factorization",
+    "title": "What is the expansion of (2x + 3)^2?",
+    "options": [
+      "4x^2 + 12x + 9",
+      "4x^2 - 12x + 9",
+      "4x^2 + 12x - 9",
+      "4x^2 - 12x - 9"
+    ],
+    "answer": "4x^2 + 12x + 9",
+    "explanation": "To expand a binomial expression, use the binomial theorem."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the equation x^2 + 4x + 4 = 0?",
+    "options": [
+      "x = -2",
+      "x = -1",
+      "x = 0",
+      "x = 1"
+    ],
+    "answer": "x = -2",
+    "explanation": "To solve a quadratic equation, factorize the expression or use the quadratic formula."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the inequality 2x + 5 > 3?",
+    "options": [
+      "x > -1",
+      "x < -1",
+      "x > 1",
+      "x < 1"
+    ],
+    "answer": "x > -1",
+    "explanation": "To solve a linear inequality, isolate the variable and determine the direction of the inequality."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the equation x^2 - 4x - 3 = 0?",
+    "options": [
+      "x = -1 or x = 3",
+      "x = 1 or x = -3",
+      "x = -1 or x = -3",
+      "x = 1 or x = 3"
+    ],
+    "answer": "x = -1 or x = 3",
+    "explanation": "To solve a quadratic equation, factorize the expression or use the quadratic formula."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the inequality x^2 - 4x - 3 ≤ 0?",
+    "options": [
+      "-1 ≤ x ≤ 3",
+      "x ≤ -1 or x ≥ 3",
+      "x ≥ -1 and x ≤ 3",
+      "x ≤ -3 or x ≥ 1"
+    ],
+    "answer": "-1 ≤ x ≤ 3",
+    "explanation": "To solve a quadratic inequality, factorize the expression and determine the sign of the expression."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Equations and Inequalities",
+    "title": "What is the solution to the equation x^2 + 2x - 6 = 0?",
+    "options": [
+      "x = -3 or x = 2",
+      "x = -2 or x = 3",
+      "x = -3 or x = -2",
+      "x = 2 or x = 3"
+    ],
+    "answer": "x = -3 or x = 2",
+    "explanation": "To solve a quadratic equation, factorize the expression or use the quadratic formula."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of the line passing through the points (2,3) and (4,5)?",
+    "options": [
+      "y = x + 1",
+      "y = x - 1",
+      "y = 2x + 1",
+      "y = 2x - 1"
+    ],
+    "answer": "y = x + 1",
+    "explanation": "To find the equation of a line passing through two points, use the slope-intercept form."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the slope of the line passing through the points (1,2) and (3,4)?",
+    "options": [
+      "1/2",
+      "2",
+      "1",
+      "-1"
+    ],
+    "answer": "1/2",
+    "explanation": "To find the slope of a line passing through two points, use the formula (y2 - y1) / (x2 - x1)."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the equation of the line passing through the point (1,2) with slope 2?",
+    "options": [
+      "y = 2x + 0",
+      "y = 2x - 2",
+      "y = 2x + 2",
+      "y = 2x - 4"
+    ],
+    "answer": "y = 2x + 0",
+    "explanation": "To find the equation of a line passing through a point with a given slope, use the point-slope form."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the distance between the points (2,3) and (4,5)?",
+    "options": [
+      "√13",
+      "√17",
+      "√20",
+      "√25"
+    ],
+    "answer": "√13",
+    "explanation": "To find the distance between two points, use the distance formula."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Points, Lines, and Planes",
+    "title": "What is the midpoint of the line segment joining the points (1,2) and (3,4)?",
+    "options": [
+      "(2,3)",
+      "(2,4)",
+      "(3,3)",
+      "(3,4)"
+    ],
+    "answer": "(2,3)",
+    "explanation": "To find the midpoint of a line segment, average the x-coordinates and the y-coordinates."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of the angle formed by the hands of a clock at 3 o'clock?",
+    "options": [
+      "30°",
+      "45°",
+      "60°",
+      "90°"
+    ],
+    "answer": "90°",
+    "explanation": "To find the measure of an angle formed by the hands of a clock, calculate the difference between the angles formed by each hand."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of a right angle?",
+    "options": [
+      "30°",
+      "45°",
+      "60°",
+      "90°"
+    ],
+    "answer": "90°",
+    "explanation": "A right angle is an angle whose measure is 90°."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of a straight angle?",
+    "options": [
+      "180°",
+      "270°",
+      "360°",
+      "90°"
+    ],
+    "answer": "180°",
+    "explanation": "A straight angle is an angle whose measure is 180°."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of a reflex angle?",
+    "options": [
+      "more than 180°",
+      "less than 180°",
+      "equal to 180°",
+      "equal to 90°"
+    ],
+    "answer": "more than 180°",
+    "explanation": "A reflex angle is an angle whose measure is more than 180°."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Angles and Measurement",
+    "title": "What is the measure of an acute angle?",
+    "options": [
+      "less than 90°",
+      "more than 90°",
+      "equal to 90°",
+      "more than 180°"
+    ],
+    "answer": "less than 90°",
+    "explanation": "An acute angle is an angle whose measure is less than 90°."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the perimeter of a rectangle with length 6 cm and width 4 cm?",
+    "options": [
+      "10 cm",
+      "12 cm",
+      "16 cm",
+      "20 cm"
+    ],
+    "answer": "20 cm",
+    "explanation": "To find the perimeter of a rectangle, add the lengths of all four sides."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the area of a triangle with base 5 cm and height 6 cm?",
+    "options": [
+      "15 cm^2",
+      "20 cm^2",
+      "25 cm^2",
+      "30 cm^2"
+    ],
+    "answer": "15 cm^2",
+    "explanation": "To find the area of a triangle, use the formula (base × height) / 2."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the volume of a cube with edge length 4 cm?",
+    "options": [
+      "16 cm^3",
+      "32 cm^3",
+      "64 cm^3",
+      "128 cm^3"
+    ],
+    "answer": "64 cm^3",
+    "explanation": "To find the volume of a cube, cube the edge length."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the surface area of a sphere with radius 3 cm?",
+    "options": [
+      "36π cm^2",
+      "48π cm^2",
+      "60π cm^2",
+      "72π cm^2"
+    ],
+    "answer": "36π cm^2",
+    "explanation": "To find the surface area of a sphere, use the formula 4πr^2."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Properties of Shapes",
+    "title": "What is the circumference of a circle with radius 4 cm?",
+    "options": [
+      "8π cm",
+      "12π cm",
+      "16π cm",
+      "20π cm"
+    ],
+    "answer": "8π cm",
+    "explanation": "To find the circumference of a circle, use the formula 2πr."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Ratios",
+    "title": "What is the value of sin(30°)?",
+    "options": [
+      "1/2",
+      "1/√3",
+      "√3/2",
+      "2/√3"
+    ],
+    "answer": "1/2",
+    "explanation": "To find the value of a trigonometric ratio, use the definition of the ratio or a trigonometric identity."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Ratios",
+    "title": "What is the value of cos(60°)?",
+    "options": [
+      "1/2",
+      "1/√3",
+      "√3/2",
+      "2/√3"
+    ],
+    "answer": "1/2",
+    "explanation": "To find the value of a trigonometric ratio, use the definition of the ratio or a trigonometric identity."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Ratios",
+    "title": "What is the value of tan(45°)?",
+    "options": [
+      "1",
+      "1/√3",
+      "√3",
+      "2/√3"
+    ],
+    "answer": "1",
+    "explanation": "To find the value of a trigonometric ratio, use the definition of the ratio or a trigonometric identity."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Graphs",
+    "title": "What is the period of the graph of y = sin(x)?",
+    "options": [
+      "π",
+      "2π",
+      "3π",
+      "4π"
+    ],
+    "answer": "2π",
+    "explanation": "The period of a trigonometric function is the distance between two consecutive points on the graph that have the same y-coordinate."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Graphs",
+    "title": "What is the amplitude of the graph of y = 2sin(x)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "The amplitude of a trigonometric function is the maximum value of the function."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Trigonometric Identities",
+    "title": "What is the value of cos(2x) in terms of sin(x) and cos(x)?",
+    "options": [
+      "cos^2(x) - sin^2(x)",
+      "cos^2(x) + sin^2(x)",
+      "2cos(x)sin(x)",
+      "2cos^2(x) - 1"
+    ],
+    "answer": "cos^2(x) - sin^2(x)",
+    "explanation": "To find the value of a trigonometric identity, use the definitions of the trigonometric ratios and algebraic manipulations."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Solving Trigonometric Equations",
+    "title": "What is the solution to the equation sin(x) = 1/2?",
+    "options": [
+      "x = 30°",
+      "x = 60°",
+      "x = 90°",
+      "x = 120°"
+    ],
+    "answer": "x = 30°",
+    "explanation": "To solve a trigonometric equation, use the inverse trigonometric functions or the unit circle."
+  },
+  {
+    "topic": "Number Patterns",
+    "subtopic": "Arithmetic Progressions",
+    "title": "What is the next term in the sequence 2, 5, 8, 11, ...?",
+    "options": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "answer": "14",
+    "explanation": "To find the next term in an arithmetic progression, add the common difference to the previous term."
+  },
+  {
+    "topic": "Number Patterns",
+    "subtopic": "Geometric Progressions",
+    "title": "What is the next term in the sequence 2, 6, 18, 54, ...?",
+    "options": [
+      "162",
+      "180",
+      "200",
+      "220"
+    ],
+    "answer": "162",
+    "explanation": "To find the next term in a geometric progression, multiply the previous term by the common ratio."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Descriptive Statistics",
+    "title": "What is the mean of the data set {2, 4, 6, 8, 10}?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "answer": "6",
+    "explanation": "To find the mean of a data set, add up all the values and divide by the number of values."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Descriptive Statistics",
+    "title": "What is the median of the data set {1, 3, 5, 7, 9}?",
+    "options": [
+      "3",
+      "5",
+      "7",
+      "9"
+    ],
+    "answer": "5",
+    "explanation": "To find the median of a data set, arrange the values in order and find the middle value."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Descriptive Statistics",
+    "title": "What is the mode of the data set {2, 4, 4, 6, 8}?",
+    "options": [
+      "2",
+      "4",
+      "6",
+      "8"
+    ],
+    "answer": "4",
+    "explanation": "To find the mode of a data set, identify the value that appears most frequently."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Inferential Statistics",
+    "title": "What is the purpose of a hypothesis test?",
+    "options": [
+      "To prove a theory",
+      "To disprove a theory",
+      "To determine the probability of a result",
+      "To make a prediction"
+    ],
+    "answer": "To determine the probability of a result",
+    "explanation": "A hypothesis test is used to determine whether a result is due to chance or if it is statistically significant."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Inferential Statistics",
+    "title": "What is the difference between a population and a sample?",
+    "options": [
+      "A population is a small group, while a sample is a large group",
+      "A population is a large group, while a sample is a small group",
+      "A population is a group of people, while a sample is a group of objects",
+      "A population is a group of objects, while a sample is a group of people"
+    ],
+    "answer": "A population is a large group, while a sample is a small group",
+    "explanation": "A population is the entire group of individuals or objects that you want to study, while a sample is a smaller group of individuals or objects that are selected from the population."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Inferential Statistics",
+    "title": "What is the purpose of confidence intervals?",
+    "options": [
+      "To determine the probability of a result",
+      "To estimate a population parameter",
+      "To test a hypothesis",
+      "To make a prediction"
+    ],
+    "answer": "To estimate a population parameter",
+    "explanation": "A confidence interval is used to estimate a population parameter, such as a mean or proportion, based on a sample of data."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Inferential Statistics",
+    "title": "What is the difference between a Type I error and a Type II error?",
+    "options": [
+      "A Type I error is rejecting a true null hypothesis, while a Type II error is failing to reject a false null hypothesis",
+      "A Type I error is failing to reject a false null hypothesis, while a Type II error is rejecting a true null hypothesis",
+      "A Type I error is rejecting a false null hypothesis, while a Type II error is failing to reject a true null hypothesis",
+      "A Type I error is failing to reject a true null hypothesis, while a Type II error is rejecting a false null hypothesis"
+    ],
+    "answer": "A Type I error is rejecting a true null hypothesis, while a Type II error is failing to reject a false null hypothesis",
+    "explanation": "A Type I error occurs when a true null hypothesis is rejected, while a Type II error occurs when a false null hypothesis is failed to be rejected."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Inferential Statistics",
+    "title": "What is the purpose of regression analysis?",
+    "options": [
+      "To determine the probability of a result",
+      "To estimate a population parameter",
+      "To test a hypothesis",
+      "To model the relationship between variables"
+    ],
+    "answer": "To model the relationship between variables",
+    "explanation": "Regression analysis is used to model the relationship between a dependent variable and one or more independent variables."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Basic Concepts",
+    "title": "What is the probability of an event that is certain to occur?",
+    "options": [
+      "0",
+      "1/2",
+      "1",
+      "undefined"
+    ],
+    "answer": "1",
+    "explanation": "The probability of an event that is certain to occur is 1."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Basic Concepts",
+    "title": "What is the probability of an event that is impossible to occur?",
+    "options": [
+      "0",
+      "1/2",
+      "1",
+      "undefined"
+    ],
+    "answer": "0",
+    "explanation": "The probability of an event that is impossible to occur is 0."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Basic Concepts",
+    "title": "What is the probability of an event that occurs half of the time?",
+    "options": [
+      "0",
+      "1/2",
+      "1",
+      "undefined"
+    ],
+    "answer": "1/2",
+    "explanation": "The probability of an event that occurs half of the time is 1/2."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Conditional Probability",
+    "title": "What is the conditional probability of event A given event B?",
+    "options": [
+      "P(A)",
+      "P(B)",
+      "P(A and B)",
+      "P(A|B) = P(A and B) / P(B)"
+    ],
+    "answer": "P(A|B) = P(A and B) / P(B)",
+    "explanation": "The conditional probability of event A given event B is the probability of both events occurring divided by the probability of event B occurring."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Independent Events",
+    "title": "What is the probability of two independent events occurring?",
+    "options": [
+      "P(A) + P(B)",
+      "P(A) - P(B)",
+      "P(A) × P(B)",
+      "P(A) / P(B)"
+    ],
+    "answer": "P(A) × P(B)",
+    "explanation": "The probability of two independent events occurring is the product of the probabilities of each event occurring."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Random Variables",
+    "title": "What is the expected value of a random variable?",
+    "options": [
+      "The sum of the possible values",
+      "The product of the possible values",
+      "The average of the possible values weighted by their probabilities",
+      "The median of the possible values"
+    ],
+    "answer": "The average of the possible values weighted by their probabilities",
+    "explanation": "The expected value of a random variable is the average of the possible values weighted by their probabilities."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Normal Distribution",
+    "title": "What is the shape of the normal distribution curve?",
+    "options": [
+      "Symmetric and bell-shaped",
+      "Asymmetric and skewed",
+      "Uniform and flat",
+      "Bimodal and curved"
+    ],
+    "answer": "Symmetric and bell-shaped",
+    "explanation": "The normal distribution curve is symmetric and bell-shaped, with the majority of the data points clustered around the mean."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Normal Distribution",
+    "title": "What is the mean of the standard normal distribution?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "0",
+    "explanation": "The mean of the standard normal distribution is 0."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Normal Distribution",
+    "title": "What is the standard deviation of the standard normal distribution?",
+    "options": [
+      "0",
+      "1",
+      "2",
+      "3"
+    ],
+    "answer": "1",
+    "explanation": "The standard deviation of the standard normal distribution is 1."
+  },
+  {
+    "topic": "Calculus",
+    "subtopic": "Limits",
+    "title": "What is the limit of the function f(x) = 2x as x approaches infinity?",
+    "options": [
+      "2",
+      "4",
+      "6",
+      "infinity"
+    ],
+    "answer": "infinity",
+    "explanation": "The limit of the function f(x) = 2x as x approaches infinity is infinity."
+  },
+  {
+    "topic": "Calculus",
+    "subtopic": "Derivatives",
+    "title": "What is the derivative of the function f(x) = x^2?",
+    "options": [
+      "2x",
+      "x^2",
+      "2",
+      "x"
+    ],
+    "answer": "2x",
+    "explanation": "The derivative of the function f(x) = x^2 is 2x."
+  },
+  {
+    "topic": "Calculus",
+    "subtopic": "Integrals",
+    "title": "What is the definite integral of the function f(x) = x^2 from x = 0 to x = 2?",
+    "options": [
+      "2/3",
+      "4/3",
+      "8/3",
+      "16/3"
+    ],
+    "answer": "8/3",
+    "explanation": "The definite integral of the function f(x) = x^2 from x = 0 to x = 2 is 8/3."
+  },
+  {
+    "topic": "Calculus",
+    "subtopic": "Applications of Calculus",
+    "title": "What is the maximum value of the function f(x) = x^2 - 4x + 4?",
+    "options": [
+      "0",
+      "2",
+      "4",
+      "8"
+    ],
+    "answer": "4",
+    "explanation": "The maximum value of the function f(x) = x^2 - 4x + 4 occurs when x = 2, and the maximum value is 4."
+  },
+  {
+    "topic": "Calculus",
+    "subtopic": "Applications of Calculus",
+    "title": "What is the minimum value of the function f(x) = x^2 + 4x + 4?",
+    "options": [
+      "0",
+      "2",
+      "4",
+      "8"
+    ],
+    "answer": "0",
+    "explanation": "The minimum value of the function f(x) = x^2 + 4x + 4 occurs when x = -2, and the minimum value is 0."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circle Geometry",
+    "title": "What is the angle subtended by an arc at the center of a circle?",
+    "options": [
+      "half the angle at the circumference",
+      "equal to the angle at the circumference",
+      "twice the angle at the circumference",
+      "four times the angle at the circumference"
+    ],
+    "answer": "twice the angle at the circumference",
+    "explanation": "The angle subtended by an arc at the center of a circle is twice the angle at the circumference."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circle Geometry",
+    "title": "What is the theorem that states that the angle in a semicircle is always a right angle?",
+    "options": [
+      "Thales' Theorem",
+      "Pythagoras' Theorem",
+      "Euclid's Theorem",
+      "Archimedes' Theorem"
+    ],
+    "answer": "Thales' Theorem",
+    "explanation": "Thales' Theorem states that the angle in a semicircle is always a right angle."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circle Geometry",
+    "title": "What is the relationship between the radius and the tangent of a circle?",
+    "options": [
+      "the radius is perpendicular to the tangent",
+      "the radius is parallel to the tangent",
+      "the radius is equal to the tangent",
+      "the radius is twice the tangent"
+    ],
+    "answer": "the radius is perpendicular to the tangent",
+    "explanation": "The radius of a circle is perpendicular to the tangent at the point of contact."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circle Geometry",
+    "title": "What is the theorem that states that the angle between a tangent and a chord is equal to the angle in the alternate segment?",
+    "options": [
+      "Alternate Segment Theorem",
+      "Tangent-Chord Theorem",
+      "Chord-Tangent Theorem",
+      "Circle Theorem"
+    ],
+    "answer": "Alternate Segment Theorem",
+    "explanation": "The Alternate Segment Theorem states that the angle between a tangent and a chord is equal to the angle in the alternate segment."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circle Geometry",
+    "title": "What is the relationship between the angles in a cyclic quadrilateral?",
+    "options": [
+      "the sum of the opposite angles is 180°",
+      "the sum of the adjacent angles is 180°",
+      "the sum of the interior angles is 360°",
+      "the sum of the exterior angles is 360°"
+    ],
+    "answer": "the sum of the opposite angles is 180°",
+    "explanation": "In a cyclic quadrilateral, the sum of the opposite angles is 180°."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the equation of a circle with center (a, b) and radius r?",
+    "options": [
+      "(x - a)^2 + (y - b)^2 = r^2",
+      "(x - a)^2 - (y - b)^2 = r^2",
+      "(x - a)^2 + (y - b)^2 = -r^2",
+      "(x - a)^2 - (y - b)^2 = -r^2"
+    ],
+    "answer": "(x - a)^2 + (y - b)^2 = r^2",
+    "explanation": "The equation of a circle with center (a, b) and radius r is (x - a)^2 + (y - b)^2 = r^2."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the equation of the tangent to a circle at a given point?",
+    "options": [
+      "y - y1 = m(x - x1)",
+      "y - y1 = -m(x - x1)",
+      "y - y1 = m(x + x1)",
+      "y - y1 = -m(x + x1)"
+    ],
+    "answer": "y - y1 = m(x - x1)",
+    "explanation": "The equation of the tangent to a circle at a given point (x1, y1) is y - y1 = m(x - x1), where m is the slope of the tangent."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the equation of the normal to a circle at a given point?",
+    "options": [
+      "y - y1 = -1/m(x - x1)",
+      "y - y1 = 1/m(x - x1)",
+      "y - y1 = m(x - x1)",
+      "y - y1 = -m(x - x1)"
+    ],
+    "answer": "y - y1 = -1/m(x - x1)",
+    "explanation": "The equation of the normal to a circle at a given point (x1, y1) is y - y1 = -1/m(x - x1), where m is the slope of the tangent."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the locus of points equidistant from two fixed points?",
+    "options": [
+      "a circle",
+      "a straight line",
+      "a parabola",
+      "an ellipse"
+    ],
+    "answer": "a straight line",
+    "explanation": "The locus of points equidistant from two fixed points is a straight line perpendicular to the line segment joining the two points."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the equation of the locus of points satisfying the condition |PA| + |PB| = k, where P is a point on the locus and A and B are fixed points?",
+    "options": [
+      "an ellipse",
+      "a circle",
+      "a parabola",
+      "a hyperbola"
+    ],
+    "answer": "an ellipse",
+    "explanation": "The equation of the locus of points satisfying the condition |PA| + |PB| = k is an ellipse, where k is a constant."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the equation of the locus of points satisfying the condition |PA| - |PB| = k, where P is a point on the locus and A and B are fixed points?",
+    "options": [
+      "a hyperbola",
+      "an ellipse",
+      "a circle",
+      "a parabola"
+    ],
+    "answer": "a hyperbola",
+    "explanation": "The equation of the locus of points satisfying the condition |PA| - |PB| = k is a hyperbola, where k is a constant."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Coordinate Geometry",
+    "title": "What is the equation of the locus of points satisfying the condition |PA|^2 = k, where P is a point on the locus and A is a fixed point?",
+    "options": [
+      "a circle",
+      "an ellipse",
+      "a parabola",
+      "a hyperbola"
+    ],
+    "answer": "a circle",
+    "explanation": "The equation of the locus of points satisfying the condition |PA|^2 = k is a circle, where k is a constant."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the sum of two vectors?",
+    "options": [
+      "the sum of their magnitudes",
+      "the sum of their directions",
+      "the vector obtained by adding their corresponding components",
+      "the vector obtained by subtracting their corresponding components"
+    ],
+    "answer": "the vector obtained by adding their corresponding components",
+    "explanation": "The sum of two vectors is the vector obtained by adding their corresponding components."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the difference of two vectors?",
+    "options": [
+      "the difference of their magnitudes",
+      "the difference of their directions",
+      "the vector obtained by subtracting their corresponding components",
+      "the vector obtained by adding their corresponding components"
+    ],
+    "answer": "the vector obtained by subtracting their corresponding components",
+    "explanation": "The difference of two vectors is the vector obtained by subtracting their corresponding components."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the scalar product of two vectors?",
+    "options": [
+      "the product of their magnitudes",
+      "the product of their directions",
+      "the sum of their corresponding components",
+      "the dot product of their corresponding components"
+    ],
+    "answer": "the dot product of their corresponding components",
+    "explanation": "The scalar product of two vectors is the dot product of their corresponding components."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the magnitude of a vector?",
+    "options": [
+      "the sum of its components",
+      "the product of its components",
+      "the square root of the sum of the squares of its components",
+      "the square root of the product of the squares of its components"
+    ],
+    "answer": "the square root of the sum of the squares of its components",
+    "explanation": "The magnitude of a vector is the square root of the sum of the squares of its components."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the direction of a vector?",
+    "options": [
+      "the angle it makes with the positive x-axis",
+      "the angle it makes with the positive y-axis",
+      "the angle it makes with the positive z-axis",
+      "the sum of the angles it makes with the positive x, y, and z axes"
+    ],
+    "answer": "the angle it makes with the positive x-axis",
+    "explanation": "The direction of a vector is the angle it makes with the positive x-axis."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the result of multiplying a vector by a scalar?",
+    "options": [
+      "a new vector with the same direction and magnitude multiplied by the scalar",
+      "a new vector with the same direction and magnitude divided by the scalar",
+      "a new vector with the same magnitude and direction multiplied by the scalar",
+      "a new vector with the same magnitude and direction divided by the scalar"
+    ],
+    "answer": "a new vector with the same direction and magnitude multiplied by the scalar",
+    "explanation": "The result of multiplying a vector by a scalar is a new vector with the same direction and magnitude multiplied by the scalar."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the result of adding two parallel vectors?",
+    "options": [
+      "a new vector with the same direction and magnitude equal to the sum of the magnitudes of the two vectors",
+      "a new vector with the same direction and magnitude equal to the difference of the magnitudes of the two vectors",
+      "a new vector with the same magnitude and direction equal to the sum of the magnitudes of the two vectors",
+      "a new vector with the same magnitude and direction equal to the difference of the magnitudes of the two vectors"
+    ],
+    "answer": "a new vector with the same direction and magnitude equal to the sum of the magnitudes of the two vectors",
+    "explanation": "The result of adding two parallel vectors is a new vector with the same direction and magnitude equal to the sum of the magnitudes of the two vectors."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Vectors",
+    "title": "What is the result of subtracting two parallel vectors?",
+    "options": [
+      "a new vector with the same direction and magnitude equal to the difference of the magnitudes of the two vectors",
+      "a new vector with the same direction and magnitude equal to the sum of the magnitudes of the two vectors",
+      "a new vector with the same magnitude and direction equal to the difference of the magnitudes of the two vectors",
+      "a new vector with the same magnitude and direction equal to the sum of the magnitudes of the two vectors"
+    ],
+    "answer": "a new vector with the same direction and magnitude equal to the difference of the magnitudes of the two vectors",
+    "explanation": "The result of subtracting two parallel vectors is a new vector with the same direction and magnitude equal to the difference of the magnitudes of the two vectors."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the nth term of an arithmetic sequence?",
+    "options": [
+      "an = a1 + (n - 1)d",
+      "an = a1 - (n - 1)d",
+      "an = a1 + nd",
+      "an = a1 - nd"
+    ],
+    "answer": "an = a1 + (n - 1)d",
+    "explanation": "The formula for the nth term of an arithmetic sequence is an = a1 + (n - 1)d, where a1 is the first term and d is the common difference."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the sum of the first n terms of an arithmetic sequence?",
+    "options": [
+      "Sn = n/2(a1 + an)",
+      "Sn = n/2(a1 - an)",
+      "Sn = n(a1 + an)",
+      "Sn = n(a1 - an)"
+    ],
+    "answer": "Sn = n/2(a1 + an)",
+    "explanation": "The formula for the sum of the first n terms of an arithmetic sequence is Sn = n/2(a1 + an), where a1 is the first term and an is the nth term."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the nth term of a geometric sequence?",
+    "options": [
+      "an = a1 * r^(n-1)",
+      "an = a1 / r^(n-1)",
+      "an = a1 + r^(n-1)",
+      "an = a1 - r^(n-1)"
+    ],
+    "answer": "an = a1 * r^(n-1)",
+    "explanation": "The formula for the nth term of a geometric sequence is an = a1 * r^(n-1), where a1 is the first term and r is the common ratio."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the sum of the first n terms of a geometric sequence?",
+    "options": [
+      "Sn = a1 * (1 - r^n) / (1 - r)",
+      "Sn = a1 * (1 + r^n) / (1 + r)",
+      "Sn = a1 * (1 - r^n) / (1 + r)",
+      "Sn = a1 * (1 + r^n) / (1 - r)"
+    ],
+    "answer": "Sn = a1 * (1 - r^n) / (1 - r)",
+    "explanation": "The formula for the sum of the first n terms of a geometric sequence is Sn = a1 * (1 - r^n) / (1 - r), where a1 is the first term and r is the common ratio."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the sum of an infinite geometric series?",
+    "options": [
+      "S = a1 / (1 - r)",
+      "S = a1 / (1 + r)",
+      "S = a1 * (1 - r)",
+      "S = a1 * (1 + r)"
+    ],
+    "answer": "S = a1 / (1 - r)",
+    "explanation": "The formula for the sum of an infinite geometric series is S = a1 / (1 - r), where a1 is the first term and r is the common ratio."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the condition for an infinite geometric series to converge?",
+    "options": [
+      "|r| > 1",
+      "|r| < 1",
+      "|r| = 1",
+      "|r| ≠ 1"
+    ],
+    "answer": "|r| < 1",
+    "explanation": "An infinite geometric series converges if and only if |r| < 1, where r is the common ratio."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the nth term of a quadratic sequence?",
+    "options": [
+      "an = a1 + (n - 1)d",
+      "an = a1 + (n - 1)^2d",
+      "an = a1 * r^(n-1)",
+      "an = a1 + (n - 1)(n - 2)d"
+    ],
+    "answer": "an = a1 + (n - 1)(n - 2)d",
+    "explanation": "The formula for the nth term of a quadratic sequence is an = a1 + (n - 1)(n - 2)d, where a1 is the first term and d is the common difference."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the formula for the sum of the first n terms of a quadratic sequence?",
+    "options": [
+      "Sn = n/2(a1 + an)",
+      "Sn = n/2(a1 - an)",
+      "Sn = n(a1 + an)",
+      "Sn = n/6(a1 + 4a2 + an)"
+    ],
+    "answer": "Sn = n/6(a1 + 4a2 + an)",
+    "explanation": "The formula for the sum of the first n terms of a quadratic sequence is Sn = n/6(a1 + 4a2 + an), where a1 is the first term and an is the nth term."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 2, 5, 8, 11, ...?",
+    "options": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "answer": "14",
+    "explanation": "The sequence is formed by adding 3 to the previous term, so the next term is 14."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 1, 4, 9, 16, ...?",
+    "options": [
+      "25",
+      "26",
+      "27",
+      "28"
+    ],
+    "answer": "25",
+    "explanation": "The sequence is formed by squaring the next integer, so the next term is 25."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 2, 6, 12, 20, ...?",
+    "options": [
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "answer": "30",
+    "explanation": "The sequence is formed by adding 4, 6, 8, ... to the previous term, so the next term is 30."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 1, 2, 4, 8, ...?",
+    "options": [
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "answer": "16",
+    "explanation": "The sequence is formed by doubling the previous term, so the next term is 16."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 2, 5, 10, 17, ...?",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "answer": "26",
+    "explanation": "The sequence is formed by adding 3, 5, 7, ... to the previous term, so the next term is 26."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 1, 4, 7, 10, ...?",
+    "options": [
+      "13",
+      "14",
+      "15",
+      "16"
+    ],
+    "answer": "13",
+    "explanation": "The sequence is formed by adding 3 to the previous term, so the next term is 13."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 2, 6, 12, 20, ...?",
+    "options": [
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "answer": "30",
+    "explanation": "The sequence is formed by adding 4, 6, 8, ... to the previous term, so the next term is 30."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Number Patterns and Sequences",
+    "title": "What is the next term in the sequence 1, 3, 5, 7, ...?",
+    "options": [
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "answer": "9",
+    "explanation": "The sequence is formed by adding 2 to the previous term, so the next term is 9."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Basic Concepts",
+    "title": "What is the probability of an impossible event?",
+    "options": [
+      "0",
+      "1/2",
+      "1",
+      "undefined"
+    ],
+    "answer": "0",
+    "explanation": "The probability of an impossible event is 0."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Basic Concepts",
+    "title": "What is the probability of a certain event?",
+    "options": [
+      "0",
+      "1/2",
+      "1",
+      "undefined"
+    ],
+    "answer": "1",
+    "explanation": "The probability of a certain event is 1."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Conditional Probability",
+    "title": "What is the formula for conditional probability?",
+    "options": [
+      "P(A|B) = P(A ∩ B) / P(B)",
+      "P(A|B) = P(A ∪ B) / P(B)",
+      "P(A|B) = P(A) / P(B)",
+      "P(A|B) = P(B) / P(A)"
+    ],
+    "answer": "P(A|B) = P(A ∩ B) / P(B)",
+    "explanation": "The formula for conditional probability is P(A|B) = P(A ∩ B) / P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Independent Events",
+    "title": "What is the formula for the probability of two independent events?",
+    "options": [
+      "P(A ∩ B) = P(A) + P(B)",
+      "P(A ∩ B) = P(A) - P(B)",
+      "P(A ∩ B) = P(A) × P(B)",
+      "P(A ∩ B) = P(A) ÷ P(B)"
+    ],
+    "answer": "P(A ∩ B) = P(A) × P(B)",
+    "explanation": "The formula for the probability of two independent events is P(A ∩ B) = P(A) × P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Mutually Exclusive Events",
+    "title": "What is the formula for the probability of two mutually exclusive events?",
+    "options": [
+      "P(A ∪ B) = P(A) + P(B)",
+      "P(A ∪ B) = P(A) - P(B)",
+      "P(A ∪ B) = P(A) × P(B)",
+      "P(A ∪ B) = P(A) ÷ P(B)"
+    ],
+    "answer": "P(A ∪ B) = P(A) + P(B)",
+    "explanation": "The formula for the probability of two mutually exclusive events is P(A ∪ B) = P(A) + P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Mutually Exclusive Events",
+    "title": "What is the probability of the union of two mutually exclusive events A and B?",
+    "options": [
+      "P(A ∪ B) = P(A) + P(B)",
+      "P(A ∪ B) = P(A) - P(B)",
+      "P(A ∪ B) = P(A) × P(B)",
+      "P(A ∪ B) = P(A) ÷ P(B)"
+    ],
+    "answer": "P(A ∪ B) = P(A) + P(B)",
+    "explanation": "The probability of the union of two mutually exclusive events A and B is P(A ∪ B) = P(A) + P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Independent Events",
+    "title": "What is the probability of the intersection of two independent events A and B?",
+    "options": [
+      "P(A ∩ B) = P(A) + P(B)",
+      "P(A ∩ B) = P(A) - P(B)",
+      "P(A ∩ B) = P(A) × P(B)",
+      "P(A ∩ B) = P(A) ÷ P(B)"
+    ],
+    "answer": "P(A ∩ B) = P(A) × P(B)",
+    "explanation": "The probability of the intersection of two independent events A and B is P(A ∩ B) = P(A) × P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Conditional Probability",
+    "title": "What is the formula for the conditional probability of event A given event B?",
+    "options": [
+      "P(A|B) = P(A ∩ B) / P(B)",
+      "P(A|B) = P(A ∪ B) / P(B)",
+      "P(A|B) = P(A) / P(B)",
+      "P(A|B) = P(B) / P(A)"
+    ],
+    "answer": "P(A|B) = P(A ∩ B) / P(B)",
+    "explanation": "The formula for the conditional probability of event A given event B is P(A|B) = P(A ∩ B) / P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Bayes' Theorem",
+    "title": "What is the formula for Bayes' Theorem?",
+    "options": [
+      "P(A|B) = P(B|A) × P(A) / P(B)",
+      "P(A|B) = P(B|A) × P(B) / P(A)",
+      "P(A|B) = P(A|B) × P(B) / P(A)",
+      "P(A|B) = P(A) × P(B) / P(A|B)"
+    ],
+    "answer": "P(A|B) = P(B|A) × P(A) / P(B)",
+    "explanation": "The formula for Bayes' Theorem is P(A|B) = P(B|A) × P(A) / P(B)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Random Variables",
+    "title": "What is the expected value of a discrete random variable?",
+    "options": [
+      "E(X) = ∑xP(X=x)",
+      "E(X) = ∑xP(X≠x)",
+      "E(X) = ∑xP(X>x)",
+      "E(X) = ∑xP(X<x)"
+    ],
+    "answer": "E(X) = ∑xP(X=x)",
+    "explanation": "The expected value of a discrete random variable is E(X) = ∑xP(X=x)."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Central Tendency",
+    "title": "What is the mean of a set of numbers?",
+    "options": [
+      "the sum of the numbers divided by the number of items",
+      "the sum of the numbers multiplied by the number of items",
+      "the sum of the numbers minus the number of items",
+      "the sum of the numbers plus the number of items"
+    ],
+    "answer": "the sum of the numbers divided by the number of items",
+    "explanation": "The mean of a set of numbers is the sum of the numbers divided by the number of items."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Central Tendency",
+    "title": "What is the median of a set of numbers?",
+    "options": [
+      "the middle value when the numbers are arranged in order",
+      "the mean of the numbers",
+      "the mode of the numbers",
+      "the range of the numbers"
+    ],
+    "answer": "the middle value when the numbers are arranged in order",
+    "explanation": "The median of a set of numbers is the middle value when the numbers are arranged in order."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Central Tendency",
+    "title": "What is the mode of a set of numbers?",
+    "options": [
+      "the number that appears most frequently",
+      "the mean of the numbers",
+      "the median of the numbers",
+      "the range of the numbers"
+    ],
+    "answer": "the number that appears most frequently",
+    "explanation": "The mode of a set of numbers is the number that appears most frequently."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Dispersion",
+    "title": "What is the range of a set of numbers?",
+    "options": [
+      "the difference between the largest and smallest numbers",
+      "the mean of the numbers",
+      "the median of the numbers",
+      "the mode of the numbers"
+    ],
+    "answer": "the difference between the largest and smallest numbers",
+    "explanation": "The range of a set of numbers is the difference between the largest and smallest numbers."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Dispersion",
+    "title": "What is the interquartile range (IQR) of a set of numbers?",
+    "options": [
+      "the difference between the first and third quartiles",
+      "the mean of the numbers",
+      "the median of the numbers",
+      "the range of the numbers"
+    ],
+    "answer": "the difference between the first and third quartiles",
+    "explanation": "The interquartile range (IQR) of a set of numbers is the difference between the first and third quartiles."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Central Tendency",
+    "title": "What is the mean of a set of numbers?",
+    "options": [
+      "the sum of the numbers divided by the number of items",
+      "the sum of the numbers multiplied by the number of items",
+      "the sum of the numbers minus the number of items",
+      "the sum of the numbers plus the number of items"
+    ],
+    "answer": "the sum of the numbers divided by the number of items",
+    "explanation": "The mean of a set of numbers is the sum of the numbers divided by the number of items."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Central Tendency",
+    "title": "What is the median of a set of numbers?",
+    "options": [
+      "the middle value when the numbers are arranged in order",
+      "the mean of the numbers",
+      "the mode of the numbers",
+      "the range of the numbers"
+    ],
+    "answer": "the middle value when the numbers are arranged in order",
+    "explanation": "The median of a set of numbers is the middle value when the numbers are arranged in order."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Measures of Dispersion",
+    "title": "What is the range of a set of numbers?",
+    "options": [
+      "the difference between the largest and smallest numbers",
+      "the mean of the numbers",
+      "the median of the numbers",
+      "the mode of the numbers"
+    ],
+    "answer": "the difference between the largest and smallest numbers",
+    "explanation": "The range of a set of numbers is the difference between the largest and smallest numbers."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Representation of Data",
+    "title": "What is a pie chart used for?",
+    "options": [
+      "to compare the distribution of a categorical variable",
+      "to show the trend of a time series data",
+      "to display the relationship between two continuous variables",
+      "to show the distribution of a continuous variable"
+    ],
+    "answer": "to compare the distribution of a categorical variable",
+    "explanation": "A pie chart is used to compare the distribution of a categorical variable."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Representation of Data",
+    "title": "What is a bar chart used for?",
+    "options": [
+      "to compare the distribution of a categorical variable",
+      "to show the trend of a time series data",
+      "to display the relationship between two continuous variables",
+      "to show the distribution of a continuous variable"
+    ],
+    "answer": "to compare the distribution of a categorical variable",
+    "explanation": "A bar chart is used to compare the distribution of a categorical variable."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Representation of Data",
+    "title": "What is a histogram used for?",
+    "options": [
+      "to compare the distribution of a categorical variable",
+      "to show the trend of a time series data",
+      "to display the relationship between two continuous variables",
+      "to show the distribution of a continuous variable"
+    ],
+    "answer": "to show the distribution of a continuous variable",
+    "explanation": "A histogram is used to show the distribution of a continuous variable."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Simultaneous Equations",
+    "title": "Solve the simultaneous equations: \\(2x + y = 7\\) and \\(x - y = 3\\).",
+    "options": [
+      "\\(x = 2, y = 3\\)",
+      "\\(x = 3, y = 1\\)",
+      "\\(x = 4, y = -1\\)",
+      "\\(x = 1, y = 2\\)"
+    ],
+    "answer": "\\(x = 3, y = 1\\)",
+    "explanation": "From \\(x - y = 3\\), we get \\(x = y + 3\\). Substituting into \\(2x + y = 7\\): \\(2(y + 3) + y = 7\\), which simplifies to \\(3y + 6 = 7\\). Solving, \\(y = 1\\), and thus \\(x = 3\\)."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Circles",
+    "title": "A circle has a diameter of 14 cm. What is its circumference?",
+    "options": [
+      "44 cm",
+      "28 cm",
+      "22 cm",
+      "56 cm"
+    ],
+    "answer": "44 cm",
+    "explanation": "The circumference of a circle is \\(\\pi d\\), where \\(d\\) is the diameter. Substituting \\(d = 14\\), we get \\(\\pi \\times 14 \\approx 44\\) cm."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Tangent Rule",
+    "title": "Find \\(\\tan \\theta\\) if \\(\\sin \\theta = \frac{4}{5}\\) and \\(\\cos \\theta = \frac{3}{5}\\).",
+    "options": [
+      "\\(\frac{4}{3}\\)",
+      "\\(\frac{3}{4}\\)",
+      "\\(\frac{5}{4}\\)",
+      "\\(\frac{4}{5}\\)"
+    ],
+    "answer": "\\(\frac{4}{3}\\)",
+    "explanation": "\\(\\tan \\theta = \frac{\\sin \\theta}{\\cos \\theta} = \frac{4/5}{3/5} = \frac{4}{3}\\)."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Independent Events",
+    "title": "A coin is flipped twice. What is the probability of getting two heads?",
+    "options": [
+      "\\(\frac{1}{4}\\)",
+      "\\(\frac{1}{2}\\)",
+      "\\(\frac{1}{3}\\)",
+      "\\(\frac{2}{3}\\)"
+    ],
+    "answer": "\\(\frac{1}{4}\\)",
+    "explanation": "The probability of getting heads on one flip is \\(\frac{1}{2}\\). For two flips, \\(\frac{1}{2} \\times \frac{1}{2} = \frac{1}{4}\\)."
+  },
+  {
+    "topic": "Functions",
+    "subtopic": "Quadratic Functions",
+    "title": "What is the axis of symmetry of the quadratic function \\(y = x^2 - 4x + 3\\)?",
+    "options": [
+      "\\(x = 2\\)",
+      "\\(x = -2\\)",
+      "\\(x = 3\\)",
+      "\\(x = 0\\)"
+    ],
+    "answer": "\\(x = 2\\)",
+    "explanation": "The axis of symmetry for a quadratic \\(y = ax^2 + bx + c\\) is given by \\(x = -\frac{b}{2a}\\). Here, \\(a = 1, b = -4\\), so \\(x = -\frac{-4}{2 \\times 1} = 2\\)."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Mode",
+    "title": "What is the mode of the dataset: 3, 7, 7, 8, 9, 9, 9, 10?",
+    "options": [
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "answer": "9",
+    "explanation": "The mode is the value that appears most frequently. Here, 9 appears 3 times, more than any other value."
+  },
+  {
+    "topic": "Quadratic Equations",
+    "subtopic": "Nature of Roots",
+    "title": "For the quadratic equation \\(x^2 - 4x + 5 = 0\\), determine the nature of its roots.",
+    "options": [
+      "Real and equal",
+      "Real and distinct",
+      "Complex",
+      "None of the above"
+    ],
+    "answer": "Complex",
+    "explanation": "The discriminant \\(b^2 - 4ac\\) determines the nature of roots. Here, \\(a = 1, b = -4, c = 5\\), so \\((-4)^2 - 4 \\times 1 \\times 5 = 16 - 20 = -4\\). A negative discriminant implies complex roots."
+  },
+  {
+    "topic": "Mensuration",
+    "subtopic": "Volume",
+    "title": "Find the volume of a sphere with radius 3 cm (use \\(\\pi = 3.14\\)).",
+    "options": [
+      "113.04 cm^3",
+      "28.26 cm^3",
+      "36 cm^3",
+      "226.08 cm^3"
+    ],
+    "answer": "113.04 cm^3",
+    "explanation": "The volume of a sphere is \\(\frac{4}{3}\\pi r^3\\). Substituting \\(r = 3\\): \\(\frac{4}{3} \\times 3.14 \\times 3^3 = 113.04\\)."
+  },
+  {
+    "topic": "Transformation Geometry",
+    "subtopic": "Reflections",
+    "title": "A point (2, 3) is reflected across the y-axis. What are the new coordinates?",
+    "options": [
+      "(-2, 3)",
+      "(2, -3)",
+      "(-2, -3)",
+      "(3, 2)"
+    ],
+    "answer": "(-2, 3)",
+    "explanation": "Reflection across the y-axis changes the sign of the x-coordinate. Thus, (2, 3) becomes (-2, 3)."
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Exponential Graphs",
+    "title": "Which of the following is the graph of \\(y = 2^x\\)?",
+    "options": [
+      "Increasing curve passing through (0, 1)",
+      "Decreasing curve passing through (0, 1)",
+      "Horizontal line at y = 1",
+      "Vertical line at x = 0"
+    ],
+    "answer": "Increasing curve passing through (0, 1)",
+    "explanation": "The graph of \\(y = 2^x\\) is an increasing exponential curve passing through (0, 1), as \\(2^0 = 1\\)."
+  },
+  {
+    "topic": "Algebra",
+    "subtopic": "Quadratic Equations",
+    "title": "Solve for \\(x\\): \\(x^2 - 5x + 6 = 0\\).",
+    "options": [
+      "1 and 6",
+      "2 and 3",
+      "3 and 5",
+      "1 and 5"
+    ],
+    "answer": "2 and 3",
+    "explanation": "Factoring \\(x^2 - 5x + 6\\), we get \\((x - 2)(x - 3) = 0\\). Therefore, \\(x = 2\\) or \\(x = 3\\)."
+  },
+  {
+    "topic": "Geometry",
+    "subtopic": "Triangles",
+    "title": "A triangle has sides of length 5 cm, 12 cm, and 13 cm. What is the area of the triangle?",
+    "options": [
+      "30 cm\u00b2",
+      "60 cm\u00b2",
+      "26 cm\u00b2",
+      "78 cm\u00b2"
+    ],
+    "answer": "30 cm\u00b2",
+    "explanation": "This is a right triangle (\\(5^2 + 12^2 = 13^2\\)). The area is \\(\\frac{1}{2} \\\times 5 \\\times 12 = 30\\) cm\u00b2."
+  },
+  {
+    "topic": "Trigonometry",
+    "subtopic": "Sine Rule",
+    "title": "In a triangle, \\(\\sin A = \\frac{3}{5}\\), and the hypotenuse is 10 cm. What is the length of the side opposite \\(A\\)?",
+    "options": [
+      "3 cm",
+      "5 cm",
+      "6 cm",
+      "8 cm"
+    ],
+    "answer": "6 cm",
+    "explanation": "\\(\\sin A = \\frac{\\\text{opposite}}{\\\text{hypotenuse}}\\). Solving \\(\\frac{\\\text{opposite}}{10} = \\frac{3}{5}\\), \\(\\\text{opposite} = 6\\) cm."
+  },
+  {
+    "topic": "Mensuration",
+    "subtopic": "Surface Area",
+    "title": "Find the surface area of a cylinder with radius 7 cm and height 10 cm.",
+    "options": [
+      "748 cm\u00b2",
+      "462 cm\u00b2",
+      "748 cm\u00b3",
+      "462 cm\u00b3"
+    ],
+    "answer": "748 cm\u00b2",
+    "explanation": "Surface area of a cylinder \\(= 2\\pi r(h + r)\\). Substituting \\(r = 7\\), \\(h = 10\\): \\(2\\pi \\\times 7 \\\times (10 + 7) = 748\\) cm\u00b2."
+  },
+  {
+    "topic": "Probability",
+    "subtopic": "Conditional Probability",
+    "title": "A bag contains 3 red balls and 2 blue balls. A ball is drawn at random. What is the probability of getting a red ball?",
+    "options": [
+      "\\(\\frac{1}{5}\\)",
+      "\\(\\frac{2}{5}\\)",
+      "\\(\\frac{3}{5}\\)",
+      "\\(\\frac{4}{5}\\)"
+    ],
+    "answer": "\\(\\frac{3}{5}\\)",
+    "explanation": "The total number of balls is 5. The probability of drawing a red ball is \\(\\frac{3}{5}\\)."
+  },
+  {
+    "topic": "Statistics",
+    "subtopic": "Mean",
+    "title": "Find the mean of the dataset: 5, 7, 8, 10, 10.",
+    "options": [
+      "5",
+      "8",
+      "7",
+      "10"
+    ],
+    "answer": "8",
+    "explanation": "The mean is \\(\\frac{\\\text{sum of values}}{\\\text{number of values}}\\). Here, \\(\\frac{5 + 7 + 8 + 10 + 10}{5} = 8\\)."
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Linear Graphs",
+    "title": "What is the slope of the line passing through the points (1, 2) and (3, 6)?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": "2",
+    "explanation": "The slope \\(m = \\frac{y_2 - y_1}{x_2 - x_1}\\). Substituting \\((x_1, y_1) = (1, 2)\\) and \\((x_2, y_2) = (3, 6)\\): \\(m = \\frac{6 - 2}{3 - 1} = 2\\)."
+  },
+  {
+    "topic": "Functions",
+    "subtopic": "Composite Functions",
+    "title": "If \\(f(x) = 2x + 1\\) and \\(g(x) = x^2\\), find \\(f(g(2))\\).",
+    "options": [
+      "17",
+      "9",
+      "13",
+      "5"
+    ],
+    "answer": "17",
+    "explanation": "First, find \\(g(2) = 2^2 = 4\\). Then, \\(f(4) = 2(4) + 1 = 17\\)."
+  },
+  {
+    "topic": "Transformation Geometry",
+    "subtopic": "Rotations",
+    "title": "A point (1, 0) is rotated 90\u00b0 clockwise about the origin. What are the new coordinates?",
+    "options": [
+      "(0, 1)",
+      "(1, 1)",
+      "(0, -1)",
+      "(-1, 0)"
+    ],
+    "answer": "(0, -1)",
+    "explanation": "A 90\u00b0 clockwise rotation swaps and negates the y-coordinate: \\((x, y) \\\to (y, -x)\\). Thus, \\((1, 0) \\\to (0, -1)\\)."
+  },
+  {
+    "topic": "Number Theory",
+    "subtopic": "Prime Numbers",
+    "title": "Which of the following is a prime number?",
+    "options": [
+      "21",
+      "33",
+      "37",
+      "49"
+    ],
+    "answer": "37",
+    "explanation": "37 has no divisors other than 1 and itself, making it a prime number."
+  }
+]
