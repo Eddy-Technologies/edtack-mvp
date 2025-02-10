@@ -146,7 +146,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import { useGetGenerativeModelGP } from '~/composables/useGetGenerativeModelGP.js';
-import data from '../../assets/questions.json';
+import data from '../../../assets/questions.json';
 
 export default {
   components: { QuizPage },

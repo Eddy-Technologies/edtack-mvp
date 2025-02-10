@@ -1,4 +1,4 @@
-import type { ToastMessageOptions } from 'primevue/toast'
+import type { ToastMessageOptions } from 'primevue'
 import { useToast } from '#imports'
 
 export enum MessageSeverity {

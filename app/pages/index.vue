@@ -31,17 +31,17 @@
         </div>
       </UContainer>
     </header>
-    <main class="main-content">
-      <div class="grid grid-cols-2 lg:grid-cols-2 gap-2 items-center">
+    <main class="main-content flex items-center justify-center h-screen">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
+            class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
             to="/parent"
         >
           Are you a parent?
         </ULink>
         <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-            to="/store"
+            class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-yellow-300 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
+            to="/challenge"
         >
           Are you a child?
         </ULink>
@@ -57,6 +57,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import { useGetGenerativeModelGP } from '~/composables/useGetGenerativeModelGP.js';
 import data from '../../assets/questions.json';
+import { useCreditStore } from "~/stores/credit"; // Import your store
 
 export default {
   components: { QuizPage },
@@ -69,6 +70,7 @@ export default {
     const numberInput = ref(null);
     const errorMsg = ref(null);
     let credits = ref(0);
+    const creditStore = useCreditStore();
 
     const levels = ['Primary', 'Secondary', 'Junior College'];
     const primaryLvls = [1, 2, 3, 4, 5, 6];
@@ -199,7 +201,7 @@ export default {
 
     onMounted(() => {
       loadFromLocalStorage();
-      credits.value = parseInt(localStorage.getItem('credits')) || 0
+      credits.value = creditStore.count || 0
     });
 
     watch([selectedLevel, selectedInnerLevel, selectedSubject, numberInput], () => {
