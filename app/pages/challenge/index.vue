@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="generate-challenge">
     <header
         class="bg-white/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
     >
@@ -32,19 +32,109 @@
       </UContainer>
     </header>
     <main class="main-content">
-      <div class="grid grid-cols-2 lg:grid-cols-2 gap-2 items-center">
-        <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-            to="/parent"
-        >
-          Are you a parent?
-        </ULink>
-        <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-            to="/store"
-        >
-          Are you a child?
-        </ULink>
+      <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container">
+        <h1 v-if="!quiz" class="title">
+          <span class="title-highlight">Generate Your Challenge</span>
+        </h1>
+
+        <form :class="{ 'challenge-form': !quiz, 'compact-challenge-form': quiz }" @submit.prevent="fetchAnswer">
+          <div v-if="!quiz" class="form-grid">
+            <div class="form-group">
+              <label for="level" class="form-label">Level</label>
+              <select id="level" v-model="selectedLevel" class="form-control">
+                <option value="" disabled>Select Level</option>
+                <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="innerLevel" class="form-label">Inner Level</label>
+              <select id="innerLevel" v-model="selectedInnerLevel" class="form-control">
+                <option value="" disabled>Select Inner Level</option>
+                <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
+                  {{ innerLevel }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subject" class="form-label">Subject</label>
+              <select id="subject" v-model="selectedSubject" class="form-control">
+                <option value="" disabled>Select Subject</option>
+                <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="numberInput" class="form-label">Questions</label>
+              <input
+                  id="numberInput"
+                  v-model="numberInput"
+                  type="number"
+                  class="form-control"
+                  min="1"
+                  max="99"
+                  placeholder="Enter a number"
+                  @input="validateInput"
+              >
+              <div v-if="errorMsg" class="text-danger">
+                {{ errorMsg }}
+              </div>
+            </div>
+          </div>
+
+          <div v-if="quiz" class="compact-inputs">
+            <div class="form-group">
+              <label for="level" class="compact-label">Level</label>
+              <select id="level" v-model="selectedLevel" class="compact-control">
+                <option value="" disabled>Select Level</option>
+                <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="innerLevel" class="compact-label">Inner Level</label>
+              <select id="innerLevel" v-model="selectedInnerLevel" class="compact-control">
+                <option value="" disabled>Select Inner Level</option>
+                <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
+                  {{ innerLevel }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subject" class="compact-label">Subject</label>
+              <select id="subject" v-model="selectedSubject" class="compact-control">
+                <option value="" disabled>Select Subject</option>
+                <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="numberInput" class="compact-label">Questions</label>
+              <input
+                  id="numberInput"
+                  v-model="numberInput"
+                  type="number"
+                  class="compact-control"
+                  min="1"
+                  placeholder="#"
+              >
+            </div>
+          </div>
+
+          <button
+              type="submit"
+              :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading"
+              :class="{ 'large-button': !quiz, 'compact-button': quiz }"
+              class="submit-button"
+          >
+            {{ isLoading ? 'Generating...' : 'Generate Challenge' }}
+          </button>
+        </form>
+
+        <div v-if="quiz" class="current-challenge-info">
+          <p>Current challenge: {{ selectedLevel }} {{ selectedInnerLevel }} {{ selectedSubject }} ({{ numberInput }} questions)</p>
+          <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
+        </div>
+      </div>
+
+      <div v-if="quiz" class="quiz-container">
+        <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
       </div>
     </main>
 
