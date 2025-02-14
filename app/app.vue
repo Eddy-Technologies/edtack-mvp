@@ -12,7 +12,7 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
   bodyAttrs: {
-    class: 'bg-white dark:bg-gray-900',
+    class: 'bg-gray-100 dark:bg-gray-900',
   },
   link: [
     { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },

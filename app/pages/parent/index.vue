@@ -35,15 +35,23 @@
 
 <script setup>
 import { useCreditStore } from "~/stores/credit"; // Make sure to import the store correctly
+const toast = useToast()
 
 // Use the store
 const creditStore = useCreditStore();
-const { showSuccessMessage } = useMessages()
 // Function to add credits based on the amount
 function addCredits(amount) {
   creditStore.count += amount;
   console.log("Add credits to child: ", amount);
-  showSuccessMessage('Success Message', "Hello");
+  if (toast) {
+    toast.add({
+      title: 'Success',
+      description: `You have added ${amount} credits.`,
+      color: "green"
+    });
+  } else {
+    console.warn('showSuccessMessage is not available');
+  }
 }
 </script>
 

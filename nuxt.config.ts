@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-auth-utils',
     '@nuxtjs/mdc',
-    'nuxt-gtag',
+    'nuxt-gtag'
   ],
 
   hub: {

@@ -41,6 +41,9 @@ dependencies:
   nuxt-gtag:
     specifier: 3.0.2
     version: 3.0.2
+  nuxt-toastify:
+    specifier: ^1.0.0
+    version: 1.0.0(vue@3.5.8)
   nuxthub:
     specifier: ^0.7.8
     version: 0.7.8
@@ -7572,6 +7575,19 @@ packages:
       - supports-color
     dev: false
 
+  /nuxt-toastify@1.0.0(vue@3.5.8):
+    resolution: {integrity: sha512-woUhO0hHw5u6BhFYcT7MW4e8CwmHTh5TZoFmNJi+Td7CSAuz3+x7sRRdeKzqXl9OXMp+ONAE+0ZtFRH6+Awk2Q==}
+    dependencies:
+      '@nuxt/kit': 3.15.0(magicast@0.3.5)
+      defu: 6.1.4
+      vue3-toastify: 0.2.8(vue@3.5.8)
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
+      - vue
+    dev: false
+
   /nuxt@3.13.2(eslint@9.11.1)(sass-embedded@1.83.0)(typescript@5.7.2)(vite@6.0.6)(vue-tsc@2.1.6):
     resolution: {integrity: sha512-Bjc2qRsipfBhjXsBEJCN+EUAukhdgFv/KoIR5HFB2hZOYRSqXBod3oWQs78k3ja1nlIhAEdBG533898KJxUtJw==}
     engines: {node: ^14.18.0 || >=16.10.0}
@@ -10702,6 +10718,18 @@ packages:
       '@vue/language-core': 2.1.6(typescript@5.7.2)
       semver: 7.6.3
       typescript: 5.7.2
+
+  /vue3-toastify@0.2.8(vue@3.5.8):
+    resolution: {integrity: sha512-8jDOqsJaBZEbGpCbhWDETJc11D1lZefvgFPq/IPdM+U7+qyXoVPDvK6uq/FIgyV7qV0NcNzvGBMEzjsLQqGROw==}
+    engines: {node: '>=20', npm: '>=9.0.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    peerDependenciesMeta:
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.5.8(typescript@5.7.2)
+    dev: false
 
   /vue@3.5.8(typescript@5.7.2):
     resolution: {integrity: sha512-hvuvuCy51nP/1fSRvrrIqTLSvrSyz2Pq+KQ8S8SXCxTWVE0nMaOnSDnSOxV1eYmGfvK7mqiwvd1C59CEEz7dAQ==}

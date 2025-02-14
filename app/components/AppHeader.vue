@@ -1,6 +1,6 @@
 <template>
   <header
-      class="bg-white/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
+      class="bg-gray-200/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
   >
     <UContainer class="flex flex-wrap items-center justify-between h-14">
       <div class="flex items-center gap-x-4">
