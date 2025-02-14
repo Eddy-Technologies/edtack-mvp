@@ -36,8 +36,9 @@
       </div>
       <div>
         <h4>Your Score: {{ score }} / {{ questions.length }}</h4>
+        <span>You earned {{ score }} credits!</span>
       </div>
-      <button @click="restartQuiz">Try Again</button>
+      <!--<button @click="restartQuiz">Try Again</button>-->
     </div>
   </div>
 </template>
@@ -153,6 +154,10 @@ h4 {
 
 .explanation:hover {
   text-decoration: underline;
+}
+
+.question {
+  margin-top: 10px;
 }
 
 hr {

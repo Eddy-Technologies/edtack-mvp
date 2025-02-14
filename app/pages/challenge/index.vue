@@ -1,139 +1,8 @@
 <template>
   <div class="generate-challenge">
-    <header
-        class="bg-white/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
-    >
-      <UContainer class="flex flex-wrap items-center justify-between h-14">
-        <div class="flex items-center gap-x-4">
-          <ULink
-              class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-              to="/"
-          >
-            <AppIcon class="w-8 h-8" /> Eddy
-          </ULink>
-        </div>
-        <div class="flex items-center gap-x-2">
-          <UIcon
-              name="i-heroicons-currency-dollar-16-solid"
-              class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
-          />
-          <span>{{ credits }}</span>
-          <ULink
-              class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-              to="/store"
-          >
-            <UIcon
-                name="i-heroicons-building-storefront-16-solid"
-                class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
-            />
-          </ULink>
-          <ColorMode />
-        </div>
-      </UContainer>
-    </header>
+    <AppHeader />
     <main class="main-content">
-      <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container">
-        <h1 v-if="!quiz" class="title">
-          <span class="title-highlight">Generate Your Challenge</span>
-        </h1>
-
-        <form :class="{ 'challenge-form': !quiz, 'compact-challenge-form': quiz }" @submit.prevent="fetchAnswer">
-          <div v-if="!quiz" class="form-grid">
-            <div class="form-group">
-              <label for="level" class="form-label">Level</label>
-              <select id="level" v-model="selectedLevel" class="form-control">
-                <option value="" disabled>Select Level</option>
-                <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="innerLevel" class="form-label">Inner Level</label>
-              <select id="innerLevel" v-model="selectedInnerLevel" class="form-control">
-                <option value="" disabled>Select Inner Level</option>
-                <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
-                  {{ innerLevel }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="subject" class="form-label">Subject</label>
-              <select id="subject" v-model="selectedSubject" class="form-control">
-                <option value="" disabled>Select Subject</option>
-                <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="numberInput" class="form-label">Questions</label>
-              <input
-                  id="numberInput"
-                  v-model="numberInput"
-                  type="number"
-                  class="form-control"
-                  min="1"
-                  max="99"
-                  placeholder="Enter a number"
-                  @input="validateInput"
-              >
-              <div v-if="errorMsg" class="text-danger">
-                {{ errorMsg }}
-              </div>
-            </div>
-          </div>
-
-          <div v-if="quiz" class="compact-inputs">
-            <div class="form-group">
-              <label for="level" class="compact-label">Level</label>
-              <select id="level" v-model="selectedLevel" class="compact-control">
-                <option value="" disabled>Select Level</option>
-                <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="innerLevel" class="compact-label">Inner Level</label>
-              <select id="innerLevel" v-model="selectedInnerLevel" class="compact-control">
-                <option value="" disabled>Select Inner Level</option>
-                <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
-                  {{ innerLevel }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="subject" class="compact-label">Subject</label>
-              <select id="subject" v-model="selectedSubject" class="compact-control">
-                <option value="" disabled>Select Subject</option>
-                <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="numberInput" class="compact-label">Questions</label>
-              <input
-                  id="numberInput"
-                  v-model="numberInput"
-                  type="number"
-                  class="compact-control"
-                  min="1"
-                  placeholder="#"
-              >
-            </div>
-          </div>
-
-          <button
-              type="submit"
-              :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading"
-              :class="{ 'large-button': !quiz, 'compact-button': quiz }"
-              class="submit-button"
-          >
-            {{ isLoading ? 'Generating...' : 'Generate Challenge' }}
-          </button>
-        </form>
-
-        <div v-if="quiz" class="current-challenge-info">
-          <p>Current challenge: {{ selectedLevel }} {{ selectedInnerLevel }} {{ selectedSubject }} ({{ numberInput }} questions)</p>
-          <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
-        </div>
-      </div>
-
-      <div v-if="quiz" class="quiz-container">
+      <div class="quiz-container">
         <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
       </div>
     </main>
@@ -145,94 +14,16 @@
 <script>
 import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
-import { useGetGenerativeModelGP } from '~/composables/useGetGenerativeModelGP.js';
 import data from '../../../assets/questions.json';
+import {onBeforeMount} from "@vue/runtime-core";
+import { useCreditStore } from "~/stores/credit"; // Import your store
 
 export default {
   components: { QuizPage },
   setup() {
     const quiz = ref(null);
     const isLoading = ref(false);
-    const selectedLevel = ref('');
-    const selectedInnerLevel = ref('');
-    const selectedSubject = ref('');
-    const numberInput = ref(null);
-    const errorMsg = ref(null);
-    let credits = ref(0);
-
-    const levels = ['Primary', 'Secondary', 'Junior College'];
-    const primaryLvls = [1, 2, 3, 4, 5, 6];
-    const secondaryLvls = [1, 2, 3, 4];
-    const jcLvls = [1, 2];
-    const primarySubjects = ['Math', 'Science', 'English'];
-    const secondarySubjects = ['Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Social Studies'];
-    const jcSubjects = ['H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry', 'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History', 'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'];
-
-    const filteredInnerLevels = computed(() => {
-      switch (selectedLevel.value) {
-        case 'Primary': return primaryLvls;
-        case 'Secondary': return secondaryLvls;
-        case 'Junior College': return jcLvls;
-        default: return [];
-      }
-    });
-
-    const filteredSubjects = computed(() => {
-      switch (selectedLevel.value) {
-        case 'Primary': return primarySubjects;
-        case 'Secondary': return secondarySubjects;
-        case 'Junior College': return jcSubjects;
-        default: return [];
-      }
-    });
-
-    const createPrompt = (numberInput, selectedLevel, selectedInnerLevel, selectedSubject) => {
-      if (import.meta.client && window.gtag) {
-        window.gtag('event', 'user-action', {
-          event_category: 'select-prompt',
-          event_label: 'prompt',
-          numberInput,
-          selectedLevel,
-          selectedInnerLevel,
-          selectedSubject,
-        });
-      }
-      return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
-      of 4 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
-      Ensure there are questions with options such as "statement 1, 2, 3 are true" or "all of the above are true".
-      Provide detailed but concise steps on how to achieve the correct solution in the explanation.
-      Ensure that there must be a correct answer and only one correct answer for correctAnswer.
-      Ensure the correctAnswer is one of the option in the options array in the JSON schema for each question.
-      Ensure that the correctAnswer is given in full and is the same as one of the options in the options array.`;
-    };
-
-    const fetchAnswer = async () => {
-      isLoading.value = true;
-      quiz.value = '';
-      errorMsg.value = null;
-
-      const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
-
-      try {
-        //quiz.value = await useGetGenerativeModelGP(prompt);
-        quiz.value = getRandomizedQuestions(data, numberInput.value);
-        saveInputToLocalStorage();
-        if (quiz.value && quiz.value.length > 0) {
-          //saveQuestionsToLocalStorage(quiz.value);
-        } else {
-          throw new Error('Exceeded limit');
-        }
-      } catch (error) {
-        console.error('Error fetching quiz:', error);
-        if (error.message === 'Exceeded limit') {
-          errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
-        } else {
-          errorMsg.value = 'An error occurred while generating the quiz.';
-        }
-      } finally {
-        isLoading.value = false;
-      }
-    };
+    const creditStore = useCreditStore();
 
     const getRandomizedQuestions = (data, numberOfQuestions) => {
       // Step 1: Randomize the questions array
@@ -251,63 +42,17 @@ export default {
       return array;
     };
 
-    const saveInputToLocalStorage = () => {
-      const dataToSave = {
-        selectedLevel: selectedLevel.value,
-        selectedInnerLevel: selectedInnerLevel.value,
-        selectedSubject: selectedSubject.value,
-        numberInput: numberInput.value
-      };
-      localStorage.setItem('lastUsedInputs', JSON.stringify(dataToSave));
-    };
-
-    const saveQuestionsToLocalStorage = (questions) => {
-      localStorage.setItem('savedQuestions', JSON.stringify(questions));
-    };
-
-    const loadFromLocalStorage = () => {
-      errorMsg.value = null;
-      const savedData = localStorage.getItem('lastUsedInputs');
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        selectedLevel.value = parsedData.selectedLevel || '';
-        selectedInnerLevel.value = parsedData.selectedInnerLevel || '';
-        selectedSubject.value = parsedData.selectedSubject || '';
-        numberInput.value = parsedData.numberInput || null;
-      }
-      /*
-      const savedQuestions = localStorage.getItem('savedQuestions');
-      if (savedQuestions) {
-        quiz.value = JSON.parse(savedQuestions);
-      }
-       */
-    };
     const updateCredits = (newCredits) => {
-      credits.value = parseInt(localStorage.getItem('credits')) + newCredits;
-      localStorage.setItem('credits', credits.value); // Update local storage again just in case.
+      creditStore.count += newCredits;
     };
 
-    onMounted(() => {
-      loadFromLocalStorage();
-      credits.value = parseInt(localStorage.getItem('credits')) || 0
-    });
-
-    watch([selectedLevel, selectedInnerLevel, selectedSubject, numberInput], () => {
-      saveInputToLocalStorage();
+    onBeforeMount(() => {
+      quiz.value = getRandomizedQuestions(data, 10);
     });
 
     return {
       quiz,
       isLoading,
-      selectedLevel,
-      selectedInnerLevel,
-      selectedSubject,
-      numberInput,
-      levels,
-      filteredInnerLevels,
-      filteredSubjects,
-      credits,
-      fetchAnswer,
       updateCredits
     };
   }

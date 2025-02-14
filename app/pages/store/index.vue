@@ -1,36 +1,6 @@
 <template>
   <div class="store">
-    <header
-        class="bg-white/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
-    >
-      <UContainer class="flex flex-wrap items-center justify-between h-14">
-        <div class="flex items-center gap-x-4">
-          <ULink
-              class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-              to="/"
-          >
-            <AppIcon class="w-8 h-8" /> Eddy
-          </ULink>
-        </div>
-        <div class="flex items-center gap-x-2">
-          <UIcon
-              name="i-heroicons-currency-dollar-16-solid"
-              class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
-          />
-          <span>{{ localCredits }}</span>
-          <ULink
-              class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-              to="/store"
-          >
-            <UIcon
-                name="i-heroicons-building-storefront-16-solid"
-                class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
-            />
-          </ULink>
-          <ColorMode />
-        </div>
-      </UContainer>
-    </header>
+    <AppHeader />
     <div class="store-container">
       <h1>Store</h1>
       <div class="item-list">
@@ -45,8 +15,8 @@
           <p v-if="insufficientFundsMessage === item.id" class="error-message">Insufficient Funds!</p>
         </div>
       </div>
-      <p>Current Credits: {{ localCredits }}</p>
     </div>
+    <AppFooter />
   </div>
 </template>
 
@@ -55,42 +25,52 @@ import placeholder1 from '../../../assets/placeholder1.png';
 import placeholder2 from '../../../assets/placeholder2.png';
 import placeholder3 from '../../../assets/placeholder3.png';
 
+import { ref } from 'vue';
+import {useCreditStore} from "~/stores/credit";
+
 export default {
-  data() {
-    return {
-      items: [
-        { id: 'item1', name: 'Cool Hat', price: 50, image: placeholder1 },
-        { id: 'item2', name: 'Stylish Glasses', price: 100, image: placeholder2 },
-        { id: 'item3', name: 'Awesome Backpack', price: 150, image: placeholder3 },
-      ],
-      purchaseMessage: null,
-      insufficientFundsMessage: null,
-      localCredits: localStorage.getItem("credits")
-    };
-  },
-  watch: {
-    credits(newValue){
-      this.localCredits = newValue
-    }
-  },
-  methods: {
-    buyItem(item) {
-      if (this.localCredits >= item.price) {
-        this.localCredits -= item.price;
-        this.$emit('credits-updated', this.localCredits); // Emit the updated credits
-        this.purchaseMessage = item.id;
-        this.insufficientFundsMessage = null
+  setup(props, { emit }) {
+    // Define reactive state with `ref`
+    const items = [
+      { id: 'item1', name: 'Cool Hat', price: 50, image: placeholder1 },
+      { id: 'item2', name: 'Stylish Glasses', price: 100, image: placeholder2 },
+      { id: 'item3', name: 'Awesome Backpack', price: 150, image: placeholder3 },
+    ];
+
+    const purchaseMessage = ref(null);
+    const insufficientFundsMessage = ref(null);
+    const creditStore = useCreditStore();
+
+    // Buy item method
+    const buyItem = (item) => {
+      if (creditStore.count >= item.price) {
+        creditStore.count -= item.price;
+        emit('credits-updated', creditStore.count); // Emit the updated credits
+        purchaseMessage.value = item.id;
+        insufficientFundsMessage.value = null;
+
+        // Clear purchase message after 3 seconds
         setTimeout(() => {
-          this.purchaseMessage = null;
+          purchaseMessage.value = null;
         }, 3000);
       } else {
-        this.insufficientFundsMessage = item.id;
-        this.purchaseMessage = null
+        insufficientFundsMessage.value = item.id;
+        purchaseMessage.value = null;
+
+        // Clear insufficient funds message after 3 seconds
         setTimeout(() => {
-          this.insufficientFundsMessage = null;
+          insufficientFundsMessage.value = null;
         }, 3000);
       }
-    },
+    };
+
+    // Return reactive state and methods to template
+    return {
+      items,
+      purchaseMessage,
+      insufficientFundsMessage,
+      buyItem,
+    };
   },
 };
 </script>

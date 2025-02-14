@@ -1,10 +1,11 @@
 <template>
   <div class="question">
-    <div v-html="content" ref="content" @DOMNodeInserted="renderMathJax" />
-    <div class="explanation" @click="toggleExplain">
+    <span class="question-index">Q{{ questionIndex + 1 }}. </span>
+    <span v-html="content" ref="content" @DOMNodeInserted="renderMathJax"></span>
+    <!-- <div class="explanation" @click="toggleExplain">
       <div v-if="explanation" v-html="explanation" ref="explanation" @DOMNodeInserted="renderMathJax" />
       <span v-else class="explanation">Explain</span>
-    </div>
+    </div>-->
     <div v-for="(option, index) in question.options" :key="index">
       <label>
         <input
@@ -72,6 +73,10 @@ export default {
 </script>
 
 <style scoped>
+.question-index {
+  color: #48bb78;
+  font-weight: bold;
+}
 .explanation {
   color: #48bb78;
   font-weight: bold;
