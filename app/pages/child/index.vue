@@ -2,9 +2,9 @@
   <div class="home">
     <AppHeader />
     <main class="main-content flex items-center justify-center h-screen">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
         <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
+            class="text-2xl md:text-3xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
             to="/challenge"
             style="display: flex; flex-direction: column; justify-content: flex-start;"
         >
@@ -12,7 +12,7 @@
           <span class="credits-amount text-sm" style="margin-top: auto;">Earn up to 10 credits</span>
         </ULink>
         <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
+            class="text-2xl md:text-3xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
             to="/practice"
             style="display: flex; flex-direction: column; justify-content: flex-start;"
         >

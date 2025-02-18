@@ -1,13 +1,13 @@
 <template>
-  <div class="app-container grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="app-container grid grid-cols-1 md:grid-cols-2 gap-20">
     <ULink
-        class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
+        class="text-2xl md:text-3xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
         to="/parent"
     >
       Are you a parent?
     </ULink>
     <ULink
-        class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-yellow-300 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
+        class="text-2xl md:text-3xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-yellow-300 transition duration-300 ease-in-out px-6 py-3 rounded-lg"
         to="/child"
     >
       Are you a child?

@@ -1,19 +1,19 @@
 <template>
   <div class="question">
-    <span class="question-index">Q{{ questionIndex + 1 }}. </span>
-    <span v-html="content" ref="content" @DOMNodeInserted="renderMathJax"></span>
+    <span class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </span>
+    <span class="question-content text-xl" v-html="content" ref="content" @DOMNodeInserted="renderMathJax"></span>
     <!-- <div class="explanation" @click="toggleExplain">
       <div v-if="explanation" v-html="explanation" ref="explanation" @DOMNodeInserted="renderMathJax" />
       <span v-else class="explanation">Explain</span>
     </div>-->
     <div v-for="(option, index) in question.options" :key="index">
-      <label>
+      <label class="form-control text-xl ml-7 mt-4">
         <input
-            type="radio"
-            :value="option"
-            :name="'question-' + questionIndex"
-            :checked="selectedAnswer === option"
-            @change="selectAnswer(option)"
+          type="radio"
+          :value="option"
+          :name="'question-' + questionIndex"
+          :checked="selectedAnswer === option"
+          @change="selectAnswer(option)"
         />
         {{ option }}
       </label>
@@ -74,7 +74,6 @@ export default {
 
 <style scoped>
 .question-index {
-  color: #48bb78;
   font-weight: bold;
 }
 .explanation {
@@ -84,5 +83,77 @@ export default {
   margin-bottom: 10px;
   cursor: pointer;
 }
-/* Add any additional styling */
+
+:root {
+  --form-control-color: rebeccapurple;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+form {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+}
+
+.form-control {
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+}
+
+.form-control + .form-control {
+  margin-top: 1em;
+}
+
+.form-control:focus-within {
+  color: var(--form-control-color);
+}
+
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  background-color: white;
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+  border: 0.10em solid currentColor;
+  border-radius: 20%;
+  transform: translateY(0.09em);
+
+  display: grid;
+  place-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: #00dc82;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
 </style>

@@ -10,7 +10,7 @@
           @answer-selected="updateAnswer(index, $event)"
         />
       </div>
-      <button @click="submitQuiz">Submit Quiz</button>
+      <button @click="submitQuiz">Submit Challenge</button>
     </div>
 
     <div v-else>
