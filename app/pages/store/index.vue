@@ -2,17 +2,17 @@
   <div class="store">
     <AppHeader />
     <div class="store-container">
-      <h1>Store</h1>
       <div class="item-list">
-        <div v-for="item in items" :key="item.id" class="item">
-          <img :src="item.image" :alt="item.name" class="item-image">
-          <h3>{{ item.name }}</h3>
-          <p>Price: {{ item.price }} Credits</p>
-          <button class="buy-button" @click="buyItem(item)" :disabled="localCredits < item.price">
-            Buy
-          </button>
-          <p v-if="purchaseMessage === item.id">Purchase Successful!</p>
-          <p v-if="insufficientFundsMessage === item.id" class="error-message">Insufficient Funds!</p>
+        <div class="store-section">
+          <Store @add-to-cart="addToCart" />
+        </div>
+        <div class="sidebar">
+          <div class="credits-section">
+            <Credits />
+          </div>
+          <div class="cart-section">
+            <Cart :cart="cart" @clearCart="clearCart" />
+          </div>
         </div>
       </div>
     </div>
@@ -21,92 +21,91 @@
 </template>
 
 <script>
-import placeholder1 from '../../../assets/placeholder1.png';
-import placeholder2 from '../../../assets/placeholder2.png';
-import placeholder3 from '../../../assets/placeholder3.png';
-
 import { ref } from 'vue';
-import {useCreditStore} from "~/stores/credit";
+import Credits from '~/pages/store/Credits.vue';
+import Store from "~/pages/store/Store.vue";
+import Cart from "~/pages/store/Cart.vue";
 
 export default {
-  setup(props, { emit }) {
-    // Define reactive state with `ref`
-    const items = [
-      { id: 'item1', name: 'Cool Hat', price: 50, image: placeholder1 },
-      { id: 'item2', name: 'Stylish Glasses', price: 100, image: placeholder2 },
-      { id: 'item3', name: 'Awesome Backpack', price: 150, image: placeholder3 },
-    ];
-
-    const purchaseMessage = ref(null);
-    const insufficientFundsMessage = ref(null);
-    const creditStore = useCreditStore();
-
-    // Buy item method
-    const buyItem = (item) => {
-      if (creditStore.count >= item.price) {
-        creditStore.count -= item.price;
-        emit('credits-updated', creditStore.count); // Emit the updated credits
-        purchaseMessage.value = item.id;
-        insufficientFundsMessage.value = null;
-
-        // Clear purchase message after 3 seconds
-        setTimeout(() => {
-          purchaseMessage.value = null;
-        }, 3000);
-      } else {
-        insufficientFundsMessage.value = item.id;
-        purchaseMessage.value = null;
-
-        // Clear insufficient funds message after 3 seconds
-        setTimeout(() => {
-          insufficientFundsMessage.value = null;
-        }, 3000);
-      }
-    };
-
-    // Return reactive state and methods to template
-    return {
-      items,
-      purchaseMessage,
-      insufficientFundsMessage,
-      buyItem,
-    };
+  components: {
+    Cart,
+    Store,
+    Credits
   },
+  setup() {
+    // Reactive variable to hold cart items
+    const cart = ref([]);
+
+    // Method to add items to the cart
+    const addToCart = (updatedCart) => {
+      cart.value = updatedCart; // Update the cart with the new cart items
+    };
+
+    // Method to clear the cart
+    const clearCart = () => {
+      cart.value = []; // Reset the cart array to clear the items
+    };
+
+    // Return the reactive variables and methods for use in the template
+    return {
+      cart,
+      addToCart,
+      clearCart
+    };
+  }
 };
 </script>
+
 <style scoped>
 .store-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .item-list {
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
   justify-content: center;
-  gap: 20px; /* Spacing between items */
 }
 
-.item {
-  border: 1px solid #ccc;
+/* Sidebar (Desktop View) */
+.sidebar {
   padding: 10px;
-  text-align: center;
-  width: 200px; /* Adjust as needed */
+  border: 1px solid #ddd;
+  background-color: white;
+  z-index: 10;
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 20px;
 }
 
-.item-image {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-.error-message {
-  color: red
+/* Store Section */
+.store-section {
+  flex-grow: 1;
+  padding: 10px;
+  min-height: 400px;
+  max-width: 800px;
 }
 
-.buy-button {
-  background-color: #3a80d2;
-  transform: translateY(-2px);
+/* Responsive Design */
+@media (max-width: 1115px) {
+  .item-list {
+    flex-direction: column-reverse; /* Store appears below sidebar */
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: static; /* Remove sticky positioning */
+    margin-bottom: 20px;
+  }
 }
 </style>
