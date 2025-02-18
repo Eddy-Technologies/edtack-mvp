@@ -1,5 +1,5 @@
 <template>
-  <div class="credits-section">
+  <div class="credits-section border-gray-200 dark:border-gray-800">
     <h3>Credits</h3>
     <ul>
       <li>{{ credits }} Credits</li>
@@ -9,14 +9,15 @@
     <div class="withdraw-input">
       <label for="withdraw-amount">Withdraw Amount (in multiples of 10):</label>
       <input
-          id="withdraw-amount"
-          type="number"
-          v-model="withdrawAmount"
-          min="10"
-          :max="credits"
-          step="10"
-          placeholder="Enter amount to withdraw"
-          @input="onInputChange"
+        id="withdraw-amount"
+        type="number"
+        v-model="withdrawAmount"
+        min="10"
+        :max="credits"
+        step="10"
+        placeholder="Enter amount to withdraw"
+        @input="onInputChange"
+        :disabled="credits === 0"
       />
     </div>
 
@@ -83,9 +84,9 @@ export default {
 
 <style scoped>
 .credits-section {
-  background-color: #fafafa;
   padding: 15px;
-  border-radius: 8px;
+  border: 1px solid #ddd; /* Default border */
+  border-radius: 8px; /* Apply round corners */
 }
 
 h3 {

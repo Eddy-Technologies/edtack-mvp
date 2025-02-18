@@ -68,6 +68,9 @@ import placeholder2 from '../../../assets/b.png';
 import placeholder3 from '../../../assets/c.png';
 import placeholder4 from '../../../assets/d.png';
 import placeholder5 from '../../../assets/e.png';
+import placeholder6 from '../../../assets/f.png';
+import placeholder7 from '../../../assets/g.png';
+import placeholder8 from '../../../assets/h.png';
 
 import { ref, onMounted, onUnmounted } from "vue";
 import { useCreditStore } from "~/stores/credit";
@@ -77,9 +80,12 @@ export default {
     const items = [
       { id: '1', name: 'Chicha', price: 5, image: placeholder4 },
       { id: '3', name: 'KFC', price: 10, image: placeholder2 },
-      { id: '2', name: 'Fornite', price: 5, image: placeholder1 },
-      { id: '4', name: 'Riot Games', price: 10, image: placeholder3 },
-      { id: '5', name: 'Roblox', price: 10, image: placeholder5 },
+      { id: '2', name: 'Fornite', price: 10, image: placeholder1 },
+      { id: '4', name: 'Riot Games', price: 30, image: placeholder3 },
+      { id: '5', name: 'Roblox', price: 30, image: placeholder5 },
+      { id: '6', name: 'Labubu', price: 99, image: placeholder6 },
+      { id: '7', name: 'Pikachu Plush', price: 20, image: placeholder7 },
+      { id: '8', name: 'Steam', price: 30, image: placeholder8 }
     ];
 
     const purchaseMessage = ref(null);

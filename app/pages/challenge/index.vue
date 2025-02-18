@@ -3,6 +3,7 @@
     <AppHeader />
     <main class="main-content">
       <div class="quiz-container">
+        <h2 class="title text-primary">Challenge</h2>
         <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
       </div>
     </main>
@@ -60,12 +61,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.generate-challenge {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -95,20 +90,16 @@ export default {
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
   position: sticky;
-  top: 3.5rem;
+  top: 1.5rem;
   z-index: 10;
   border-radius: 0;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 2rem;
-}
-
-.title-highlight {
-  color: #4a90e2;
+  margin-bottom: 1.5rem;
 }
 
 .challenge-form {
@@ -220,7 +211,7 @@ export default {
 .quiz-container {
   width: 100%;
   max-width: 64rem;
-  margin: 2rem auto 0;
+  margin: 1rem auto 0;
 }
 
 @media (max-width: 768px) {

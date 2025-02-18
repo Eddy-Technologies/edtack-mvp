@@ -1,34 +1,40 @@
 <template>
-  <div class="cart-section">
+  <div class="cart-section border-black dark:border-gray-800">
     <h3>Your Cart</h3>
     <ul>
       <li v-for="item in cart" :key="item.id" class="cart-item">
+        <!-- First Row: Thumbnail and Delete Icon -->
         <div class="item-details">
-          <img :src="item.image" :alt="item.name" class="cart-item-image">
-          <p>{{ item.name }}</p>
+          <div class="item-info">
+            <img :src="item.image" :alt="item.name" class="cart-item-image">
+            <p>{{ item.name }}</p>
+          </div>
+
+          <!-- Quantity controls with delete icon -->
+          <div class="quantity-controls">
+            <input
+              type="number"
+              v-model.number="item.quantity"
+              :min="1"
+              class="quantity-input"
+              @change="updateQuantity(item)"
+            />
+            <UIcon
+              @click="deleteItem(item)"
+              name="i-heroicons-trash"
+              class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
+            />
+          </div>
         </div>
 
-        <!-- Quantity controls with buttons aligned to the right -->
-        <div class="quantity-controls">
-          <button @click="decreaseQuantity(item)" :disabled="item.quantity <= 1">-</button>
-          <span>{{ item.quantity }}</span> <!-- Display the current quantity -->
-          <button @click="increaseQuantity(item)">+</button>
-        </div>
-
-        <!-- Item total price -->
+        <!-- Second Row: Subtotal -->
         <div class="item-total">
-          <span>{{ item.price * item.quantity }}</span>
+          <span>{{ item.price * item.quantity }}C</span>
         </div>
-
-        <UIcon
-            @click="deleteItem(item)"
-            name="i-heroicons-trash"
-            class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
-        />
       </li>
     </ul>
-    <p v-if="cart.length > 0">Total: {{ totalCredits }} C</p> <!-- Displaying total credits -->
-    <button v-if="cart.length > 0" class="checkout-button" @click="checkout">Proceed to Checkout</button>
+    <p class="total" v-if="cart.length > 0">Total: {{ totalCredits }}C</p>
+    <button v-if="cart.length > 0" class="checkout-button" @click="checkout">Checkout</button>
     <p v-else>Your cart is empty.</p>
   </div>
 </template>
@@ -77,18 +83,12 @@ export default {
       emit('clearCart');
     };
 
-    // Function to increase the quantity of an item
-    const increaseQuantity = (item) => {
-      item.quantity++;
-      emit('update-cart', props.cart); // Emit the updated cart to the parent
-    };
-
-    // Function to decrease the quantity of an item
-    const decreaseQuantity = (item) => {
-      if (item.quantity > 1) {
-        item.quantity--;
-        emit('update-cart', props.cart); // Emit the updated cart to the parent
+    // Function to update the quantity of an item directly
+    const updateQuantity = (item) => {
+      if (item.quantity < 1) {
+        item.quantity = 1; // Ensure quantity doesn't go below 1
       }
+      emit('update-cart', props.cart); // Emit the updated cart to the parent
     };
 
     // Function to delete an item from the cart
@@ -103,8 +103,7 @@ export default {
     return {
       totalCredits,
       checkout,
-      increaseQuantity,
-      decreaseQuantity,
+      updateQuantity,
       deleteItem
     };
   }
@@ -112,23 +111,31 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
 .cart-section {
   margin-top: 20px;
   padding: 10px;
-  border: 1px solid #ddd;
-  background-color: white;
   width: 100%;
   max-width: 400px;
+  border: 1px solid #ddd; /* Default border */
+  border-radius: 8px; /* Apply round corners */
 }
 
 .cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Spacing between cart items */
 }
 
 .item-details {
+  display: flex; /* Align thumbnail, quantity, and delete icon in a row */
+  justify-content: space-between; /* Space out the elements */
+  align-items: center; /* Vertically center the items */
+}
+
+.item-info {
   display: flex;
   align-items: center;
 }
@@ -142,39 +149,25 @@ export default {
 .quantity-controls {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  justify-content: flex-start;
+  margin-left: 10px;
 }
 
-.quantity-controls button {
-  padding: 5px 10px;
-  margin: 0 5px;
+.quantity-input {
+  width: 50px;
+  padding: 5px;
   font-size: 14px;
-  cursor: pointer;
-}
-
-.quantity-controls span {
-  font-size: 16px;
-  font-weight: bold;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .item-total {
   font-size: 14px;
   font-weight: bold;
-  margin-left: 10px;
-}
-
-.delete-button {
-  background-color: red;
-  color: white;
-  padding: 5px 10px;
-  font-size: 12px;
-  border: none;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: darkred;
+  text-align: right; /* Align the total to the right */
+  margin-top: 5px; /* Add some space above the total */
+  margin-right: 10px;
 }
 
 .checkout-button {
@@ -188,5 +181,10 @@ export default {
 
 .checkout-button:hover {
   background-color: #317bb5;
+}
+.total {
+  font-size: 24px;
+  text-align: right;
+  margin-right: 10px;
 }
 </style>

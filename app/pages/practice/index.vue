@@ -444,7 +444,7 @@ export default {
 .quiz-container {
   width: 100%;
   max-width: 64rem;
-  margin: 2rem auto 0;
+  margin: 1rem auto 0;
 }
 
 @media (max-width: 768px) {

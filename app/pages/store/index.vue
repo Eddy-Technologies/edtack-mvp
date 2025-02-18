@@ -76,8 +76,6 @@ export default {
 /* Sidebar (Desktop View) */
 .sidebar {
   padding: 10px;
-  border: 1px solid #ddd;
-  background-color: white;
   z-index: 10;
   width: 280px;
   flex-shrink: 0;
