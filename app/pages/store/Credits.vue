@@ -4,7 +4,6 @@
     <ul>
       <li>{{ credits }} Credits</li>
     </ul>
-
     <!-- Input for withdrawing credits -->
     <div class="withdraw-input">
       <label for="withdraw-amount">Withdraw Amount (in multiples of 10):</label>

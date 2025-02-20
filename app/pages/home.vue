@@ -1,37 +1,140 @@
 <template>
   <div class="app">
-    <div class="image-container">
+    <div class="image-container" @mouseleave="resetOverlay">
       <img :src="background" class="item-image" alt="home">
-      <div class="link-container">
-        <!-- Left half: Transparent ULink -->
+
+      <!-- Left overlay: covers left half of the image (hidden on mobile) -->
+      <div
+          v-if="!isMobile"
+          @mousemove="handleMouseMoveLeft"
+          class="overlay left-overlay"
+          @click="routeTo('/parent')"
+          :style="{ backgroundColor: leftOverlay ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)'}">
         <ULink
-            class="text-2xl md:text-3xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-blue-600 transition duration-300 ease-in-out px-6 py-3 rounded-lg left-link"
-            to="/parent"
+            v-if="!leftOverlay"
+            class="text-2xl md:text-4xl text-primary font-bold flex items-center justify-center gap-x-2 px-6 py-3 mr-20"
         >
           Are you a parent?
         </ULink>
+      </div>
 
-        <!-- Right half: Transparent ULink -->
+      <!-- Right overlay: covers right half of the image (hidden on mobile) -->
+      <div
+          v-if="!isMobile"
+          @mousemove="handleMouseMoveRight"
+          class="overlay right-overlay"
+          @click="routeTo('/child')"
+          :style="{ backgroundColor: rightOverlay ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)'}">
         <ULink
-            class="text-2xl md:text-3xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-transparent hover:border-primary hover:bg-primary hover:text-yellow-300 transition duration-300 ease-in-out px-6 py-3 rounded-lg right-link"
-            to="/child"
+            v-if="!rightOverlay"
+            :style="{ color: '#c8e6ce' }"
+            class="text-2xl md:text-4xl font-bold flex gap-x-2 px-6 py-3 ml-auto"
         >
-          Are you a child?
+          Are you a student?
         </ULink>
+      </div>
+
+      <!-- For Mobile devices: Top and Bottom half overlays -->
+      <div v-if="isMobile">
+        <!-- Top half overlay (clickable) -->
+        <div
+            class="mobile-overlay top-overlay"
+            @click="routeTo('/parent')"
+        >
+          <span class="text-primary">Are you a parent?</span>
+        </div>
+
+        <!-- Bottom half overlay (clickable) -->
+        <div
+            class="mobile-overlay bottom-overlay"
+            @click="routeTo('/child')"
+        >
+          <span :style="{ color: '#c8e6ce' }">Are you a student?</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useRouter } from 'vue-router'; // Import useRouter
 import home from "../../assets/home.png";
+import homeMobile from "../../assets/home-mobile.png";
 
 export default {
   setup() {
-    const background = home;
+    // Get router instance using useRouter
+    const router = useRouter();
 
-    return { background };
-  }
+    // Reactive variable for the background image
+    const background = ref(home);
+
+    // Reactive state to control the overlays
+    const leftOverlay = ref(false);
+    const rightOverlay = ref(false);
+
+    const routeTo = (route) => {
+      router.push(route); // Use router.push instead of this.$router.push
+    };
+
+    // Reactive state for mobile check
+    const isMobile = ref(false);
+
+    // Function to check if the device is mobile
+    const checkMobile = () => {
+      return window.innerWidth <= 768; // Adjust this threshold based on your needs
+    };
+
+    // Update the background image based on device type
+    const updateBackground = () => {
+      if (checkMobile()) {
+        background.value = homeMobile; // Set the mobile-specific image
+        isMobile.value = true;
+      } else {
+        background.value = home; // Default image for larger screens
+        isMobile.value = false;
+      }
+    };
+
+    // Handle mouse movement over the image
+    const handleMouseMoveLeft = () => {
+      leftOverlay.value = false; // Keep the left overlay transparent
+      rightOverlay.value = true; // Darken the right overlay
+    };
+
+    const handleMouseMoveRight = () => {
+      leftOverlay.value = true; // Darken the left overlay
+      rightOverlay.value = false; // Keep the right overlay transparent
+    };
+
+    // Reset overlays when mouse leaves the image
+    const resetOverlay = () => {
+      leftOverlay.value = false;
+      rightOverlay.value = false;
+    };
+
+    // Watch for window resize to update the image dynamically
+    onMounted(() => {
+      updateBackground(); // Initial check when the component is mounted
+      window.addEventListener('resize', updateBackground); // Update on resize
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateBackground); // Clean up the event listener
+    });
+
+    return {
+      background,
+      leftOverlay,
+      rightOverlay,
+      isMobile,
+      routeTo,
+      handleMouseMoveLeft,
+      handleMouseMoveRight,
+      resetOverlay,
+    };
+  },
 };
 </script>
 
@@ -48,83 +151,56 @@ export default {
   height: 100%; /* Ensure the image container takes up full height of the app */
 }
 
+/* Ensure the image takes up the full width and height */
 .item-image {
-  width: 100%;  /* Make sure the image takes full width */
-  height: 100%; /* Make sure the image takes full height */
-  object-fit: cover; /* Ensure the image fully covers the container */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fully covers the container */
 }
 
-.link-container {
+/* Overlay styles */
+.overlay {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  height: 100%;
+  width: 50%;
+  transition: background-color 0.3s ease-in-out;
+  z-index: 5; /* Overlay stays above the image */
+}
+
+.left-overlay {
+  left: 0; /* Covers the left half of the image */
+}
+
+.right-overlay {
+  right: 0; /* Covers the right half of the image */
+}
+
+/* Mobile Styles: Links positioned at the top and bottom */
+.mobile-overlay {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent overlay */
+  color: white;
+}
+
+.top-overlay {
+  top: 0;
+  height: 50%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  z-index: 10;
+  justify-content: center;
 }
 
-/* Left half: */
-.left-link {
-  width: 50%; /* Left half takes up 50% */
+.bottom-overlay {
+  bottom: 0;
+  height: 50%;
   display: flex;
-  justify-content: flex-start;
-  visibility: visible;
-  position: relative;
-}
-
-/* Right half: */
-.right-link {
-  width: 50%; /* Right half takes up 50% */
-  display: flex;
-  justify-content: flex-end;
-  visibility: visible;
-  position: relative;
-}
-
-/* Darken the left side when hovering over the right half */
-.left-link::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0); /* No dark overlay initially */
-  transition: background-color 0.3s ease-in-out;
-  z-index: -1; /* Ensure it stays behind the link text */
-}
-
-.right-link::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0); /* No dark overlay initially */
-  transition: background-color 0.3s ease-in-out;
-  z-index: -1; /* Ensure it stays behind the link text */
-}
-
-/* When hovering the left half, darken the right half of the image */
-.image-container:hover .left-link::before {
-  background-color: rgba(0, 0, 0, 0.4); /* Darken the right half */
-}
-
-/* When hovering the right half, darken the left half of the image */
-.image-container:hover .right-link::before {
-  background-color: rgba(0, 0, 0, 0.4); /* Darken the left half */
-}
-
-.image-container:hover .left-link {
-  visibility: visible;
-}
-
-.image-container:hover .right-link {
-  visibility: visible;
+  align-items: center;
+  justify-content: center;
 }
 </style>
