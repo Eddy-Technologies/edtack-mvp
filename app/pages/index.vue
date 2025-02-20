@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <AppHeader />
-    <main class="main-content flex items-center justify-center h-screen">
+    <main class="main-content">
       <AppContainer />
     </main>
     <AppFooter />
@@ -28,13 +28,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensures the home container takes up the full viewport height */
+}
+
 .main-content {
   flex-grow: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: relative;
-  padding: 1rem;
-  min-height: calc(100vh - 3.5rem);
+  height: 100%; /* Make sure the container takes full height available */
+}
+
+.AppContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fills the entire container */
 }
 </style>

@@ -1,7 +1,5 @@
 <template>
-  <div class="app-container">
-    <Home />
-  </div>
+  <Home />
 </template>
 
 <script>
@@ -15,13 +13,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  padding: 1rem;
-  min-height: calc(100vh - 3.5rem);
-}
 </style>
