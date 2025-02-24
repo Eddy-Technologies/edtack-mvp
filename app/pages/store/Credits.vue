@@ -27,10 +27,12 @@
 
 <script>
 import { ref, watch } from 'vue';
-import { useCreditStore } from "~/stores/credit"; // Import your store
+import { useRouter } from 'vue-router';
+import { useCreditStore } from '~/stores/credit'; // Import your store
 
 export default {
   setup() {
+    const router = useRouter();
     const creditStore = useCreditStore();
     const credits = ref(creditStore.count);
     const withdrawAmount = ref(10); // Default withdraw amount is 10, as we only allow multiples of 10
@@ -53,8 +55,18 @@ export default {
     // Method to withdraw credits (in multiples of 10)
     const withdrawCredits = () => {
       if (withdrawAmount.value % 10 === 0 && withdrawAmount.value <= credits.value && withdrawAmount.value > 0) {
-        creditStore.count -= withdrawAmount.value;
-        credits.value -= withdrawAmount.value; // Update the credits locally as well
+        router.push({
+          name: 'summary',
+          params: {
+            extraFee: ref(0),
+            discount: ref(0),
+            currentBalance: creditStore.count,
+            cart: ref([]),
+            withdrawalAmt: credits.value
+          }
+        });
+        // creditStore.count -= withdrawAmount.value;
+        // credits.value -= withdrawAmount.value; // Update the credits locally as well
       } else {
         alert("Please enter a valid amount (multiple of 10) and ensure you have enough credits.");
       }
@@ -63,8 +75,18 @@ export default {
     // Method to withdraw all credits
     const withdrawAllCredits = () => {
       if (credits.value > 0) {
-        creditStore.count = 0;
-        credits.value = 0; // Update the credits locally to 0
+        router.push({
+          name: 'summary',
+          params: {
+            extraFee: ref(0),
+            discount: ref(0),
+            currentBalance: totalCredits,
+            cart: ref([]),
+            withdrawalAmt: creditStore.count
+          }
+        });
+        // creditStore.count = 0;
+        // credits.value = 0; // Update the credits locally to 0
       } else {
         alert("No credits available to withdraw.");
       }
