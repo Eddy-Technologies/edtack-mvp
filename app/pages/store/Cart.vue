@@ -40,8 +40,9 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
-import { useCreditStore } from "~/stores/credit";
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useCreditStore } from '~/stores/credit';
 
 export default {
   props: {
@@ -51,6 +52,7 @@ export default {
     }
   },
   setup(props, { emit }) {
+    const router = useRouter();
     const creditStore = useCreditStore();
 
     // Calculate total credits in cart using computed
@@ -70,12 +72,23 @@ export default {
         return;
       }
 
-      const confirmCheckout = confirm(`You are about to purchase items totaling ${totalCredits.value} Credits. Proceed?`);
+      router.push({
+        name: 'summary',
+        params: {
+          extraFee: ref(0),
+          discount: ref(0),
+          currentBalance: ref(creditStore.count),
+          withdrawalAmt: ref(0),
+          cart: JSON.stringify(props.cart.value)
+        }
+      });
 
-      if (confirmCheckout) {
-        clearCart();
-        alert("Checkout successful! Your items will be processed.");
-      }
+      // const confirmCheckout = confirm(`You are about to purchase items totaling ${totalCredits.value} Credits. Proceed?`);
+
+      // if (confirmCheckout) {
+      //   clearCart();
+      //   alert("Checkout successful! Your items will be processed.");
+      // }
     };
 
     // Clear the cart (Reset the cart state)
