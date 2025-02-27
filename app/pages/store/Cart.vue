@@ -13,16 +13,16 @@
           <!-- Quantity controls with delete icon -->
           <div class="quantity-controls">
             <input
-              type="number"
               v-model.number="item.quantity"
+              type="number"
               :min="1"
               class="quantity-input"
               @change="updateQuantity(item)"
-            />
+            >
             <UIcon
-              @click="deleteItem(item)"
               name="i-heroicons-trash"
               class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
+              @click="deleteItem(item)"
             />
           </div>
         </div>
@@ -33,22 +33,24 @@
         </div>
       </li>
     </ul>
-    <p class="total" v-if="cart.length > 0">Total: {{ totalCredits }}C</p>
+    <p v-if="cart.length > 0" class="total">Total: {{ totalCredits }}C</p>
     <button v-if="cart.length > 0" class="checkout-button" @click="checkout">Checkout</button>
     <p v-else>Your cart is empty.</p>
   </div>
 </template>
 
-<script>
-import { ref, computed } from 'vue';
+<script lang="ts">
+import { ref, computed, PropType } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCreditStore } from '~/stores/credit';
+import { Cart } from '~/models/Item';
+import { calculateItemSubTotal } from '~/utils/calculateCreditsUtils';
 
 export default {
   props: {
     cart: {
-      type: Array,
-      default: () => [] // Provide a default empty array for the cart
+      type: Array as PropType<Cart>,
+      default: () => [] // Default empty cart
     }
   },
   setup(props, { emit }) {
@@ -57,18 +59,18 @@ export default {
 
     // Calculate total credits in cart using computed
     const totalCredits = computed(() => {
-      return props.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      return props.cart.reduce((total, item) => total + calculateItemSubTotal(item), 0);
     });
 
     // Checkout function
     const checkout = () => {
       if (props.cart.length === 0) {
-        alert("Your cart is empty!");
+        alert('Your cart is empty!');
         return;
       }
 
       if (creditStore.count < totalCredits.value) {
-        alert("You do not have enough credits to complete this purchase!");
+        alert('You do not have enough credits to complete this purchase!');
         return;
       }
 
@@ -106,7 +108,7 @@ export default {
 
     // Function to delete an item from the cart
     const deleteItem = (item) => {
-      const index = props.cart.findIndex(cartItem => cartItem.id === item.id);
+      const index = props.cart.findIndex((cartItem) => cartItem.id === item.id);
       if (index !== -1) {
         props.cart.splice(index, 1); // Remove the item from the cart
         emit('update-cart', props.cart); // Emit the updated cart to the parent
