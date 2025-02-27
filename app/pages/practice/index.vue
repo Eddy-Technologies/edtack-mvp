@@ -107,7 +107,7 @@
         <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
       </div>
     </main>
-    <AppFooter />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 

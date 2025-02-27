@@ -4,7 +4,7 @@
     <main class="flex flex-col">
       <Children />
     </main>
-    <AppFooter />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 
