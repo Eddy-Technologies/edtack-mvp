@@ -26,7 +26,7 @@
           </div>
           <div class="withdrawal-amount">
             <h3 class="text-lg font-medium mb-2">Withdrawal Amount</h3>
-            <input v-model.number="withdrawalAmount" type="number" class="w-full p-2 border rounded">
+            <input v-model.number="withdrawalAmt" type="number" class="w-full p-2 border rounded">
           </div>
           <div class="cart-summary">
             <div class="summary-row">
