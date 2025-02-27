@@ -4,7 +4,7 @@
     <main class="main-content">
       <AppContainer />
     </main>
-    <AppFooter />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 

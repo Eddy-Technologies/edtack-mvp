@@ -21,7 +21,7 @@
         </ULink>
       </div>
     </main>
-    <AppFooter />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 
