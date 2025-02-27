@@ -9,15 +9,15 @@
       <label for="withdraw-amount">Withdraw Amount (in multiples of 10):</label>
       <input
         id="withdraw-amount"
-        type="number"
         v-model="withdrawAmount"
+        type="number"
         min="10"
         :max="credits"
         step="10"
         placeholder="Enter amount to withdraw"
-        @input="onInputChange"
         :disabled="credits === 0"
-      />
+        @input="onInputChange"
+      >
     </div>
 
     <button class="withdraw-button" @click="withdrawCredits">Withdraw</button>
@@ -39,10 +39,10 @@ export default {
 
     // Watch for changes in the credits value from the store
     watch(
-        () => creditStore.count,
-        (newCredits) => {
-          credits.value = newCredits; // Update local credits value
-        }
+      () => creditStore.count,
+      (newCredits) => {
+        credits.value = newCredits; // Update local credits value
+      }
     );
 
     // Method to handle input change to ensure it's a valid multiple of 10
@@ -68,7 +68,7 @@ export default {
         // creditStore.count -= withdrawAmount.value;
         // credits.value -= withdrawAmount.value; // Update the credits locally as well
       } else {
-        alert("Please enter a valid amount (multiple of 10) and ensure you have enough credits.");
+        alert('Please enter a valid amount (multiple of 10) and ensure you have enough credits.');
       }
     };
 
@@ -88,7 +88,7 @@ export default {
         // creditStore.count = 0;
         // credits.value = 0; // Update the credits locally to 0
       } else {
-        alert("No credits available to withdraw.");
+        alert('No credits available to withdraw.');
       }
     };
 

@@ -30,7 +30,7 @@
           </div>
           <div class="cart-summary">
             <div class="summary-row">
-              <span>Subtotal:</span>
+              <span>Cart Subtotal:</span>
               <span>${{ subtotal.toFixed(2) }}</span>
             </div>
             <div v-if="extraFee > 0" class="summary-row">
@@ -70,33 +70,54 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
+<script lang='ts' setup>
+import { ref, computed, PropType, defineProps } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { Cart } from '~/models/Item';
+import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';
 
 const route = useRoute();
 const router = useRouter();
 
-const cart = ref([
-  { name: 'Item 1', price: 10, quantity: 2, image: '/placeholder.svg?height=50&width=50' },
-  { name: 'Item 2', price: 15, quantity: 1, image: '/placeholder.svg?height=50&width=50' },
-  { name: 'Item 3', price: 20, quantity: 3, image: '/placeholder.svg?height=50&width=50' },
-]);
-const withdrawalAmt = ref(0);
-const extraFee = ref(2);
-const discount = ref(5);
-const currentBalance = ref(1000);
+const props = defineProps({
+  cart: {
+    type: Array as PropType<Cart>,
+    default: () => []
+  },
+  withdrawalAmount: {
+    type: Number,
+    default: 0
+  },
+  currentBalance: {
+    type: Number,
+    default: 1000
+  },
+  extraFee: {
+    type: Number,
+    default: 2
+  },
+  discount: {
+    type: Number,
+    default: 5
+  }
+});
+
+const cart = ref(props.cart);
+const withdrawalAmt = ref(props.withdrawalAmount);
+const extraFee = ref(props.extraFee);
+const discount = ref(props.discount);
+const currentBalance = ref(props.currentBalance);
 
 const subtotal = computed(() => {
-  return cart.value.reduce((total, item) => total + item.price * item.quantity, 0);
+  return calculateCartSubtotal(cart);
 });
 
 const total = computed(() => {
-  return subtotal.value + extraFee.value - discount.value + withdrawalAmt.value;
+  return subtotal.value + extraFee.value - discount.value;
 });
 
 const totalDeduction = computed(() => {
-  return total.value;
+  return total.value + withdrawalAmt.value;
 });
 
 const remainingBalance = computed(() => {
