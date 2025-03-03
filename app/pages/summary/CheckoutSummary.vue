@@ -1,6 +1,6 @@
 <template>
   <div class="confirmation-page">
-    <div class="page-content">
+    <div class="page-content bg-white dark:bg-gray-800">
       <h1 class="text-2xl font-bold mb-6">Confirm Your Order</h1>
       <div class="confirmation-content">
         <div class="cart-and-withdrawal">
@@ -26,9 +26,14 @@
           </div>
           <div class="withdrawal-amount">
             <h3 class="text-lg font-medium mb-2">Withdrawal Amount</h3>
-            <input v-model.number="withdrawalAmt" type="number" class="w-full p-2 border rounded">
+            <input
+              v-model.number="withdrawalAmt"
+              type="number"
+              class="w-full p-2 border rounded withdrawal-input dark:text-white text-black"
+              placeholder="Enter withdrawal amount"
+            />
           </div>
-          <div class="cart-summary">
+          <div class="cart-summary bg-gray-100 dark:bg-gray-700">
             <div class="summary-row">
               <span>Cart Subtotal:</span>
               <span>${{ subtotal.toFixed(2) }}</span>
@@ -49,7 +54,7 @@
         </div>
         <div class="cashflow-summary">
           <h2 class="text-xl font-semibold mb-4">Cashflow Summary</h2>
-          <div class="cashflow-details">
+          <div class="cashflow-details bg-gray-100 dark:bg-gray-700">
             <div class="summary-row">
               <span>Current Balance:</span>
               <span>${{ currentBalance.toFixed(2) }}</span>
@@ -165,28 +170,28 @@ onMounted(() => {
   margin: 0 auto;
   padding: 20px;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .page-content {
-  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-:global(.dark) .page-content {
-  background-color: #2a2a2a;
-  color: #ffffff;
-}
-
 .confirmation-content {
   display: flex;
   gap: 40px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 .cart-and-withdrawal,
 .cashflow-summary {
   flex: 1;
+  min-width: 300px; /* Ensures sections are flexible but don't get too narrow */
 }
 
 .cart-items {
@@ -259,14 +264,8 @@ onMounted(() => {
 
 .cart-summary,
 .cashflow-details {
-  background-color: #f0f0f0;
   padding: 15px;
   border-radius: 8px;
-}
-
-:global(.dark) .cart-summary,
-:global(.dark) .cashflow-details {
-  background-color: #3a3a3a;
 }
 
 .summary-row {
@@ -294,13 +293,7 @@ onMounted(() => {
 }
 
 input {
-  background-color: #ffffff;
   color: #000000;
-}
-
-:global(.dark) input {
-  background-color: #3a3a3a;
-  color: #ffffff;
 }
 
 @media (max-width: 768px) {

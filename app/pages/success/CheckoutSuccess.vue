@@ -1,6 +1,6 @@
 <template>
   <div class="success-page">
-    <div class="success-content">
+    <div class="success-content bg-white dark:bg-gray-800">
       <div class="success-icon">
         <UIcon class="h-16 w-16 text-green-500" name="i-heroicons-check-circle" />
       </div>
@@ -112,17 +112,22 @@ onMounted(() => {
 
 <style scoped>
 .success-page {
-  max-width: 600px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
   padding: 20px;
 }
 
 .success-content {
-  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .success-icon {
@@ -135,6 +140,7 @@ onMounted(() => {
 .order-summary {
   text-align: left;
   margin-bottom: 20px;
+  flex-grow: 1;  /* Allows it to expand based on content */
 }
 
 .item-image {
