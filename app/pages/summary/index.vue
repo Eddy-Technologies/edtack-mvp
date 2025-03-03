@@ -7,7 +7,6 @@
           <CheckoutSummary
             :cart="cart"
             :withdrawal-amount="withdrawalAmount"
-            :current-balance="currentBalance"
             :extra-fee="extraFee"
             :discount="discount"
           />
@@ -22,15 +21,12 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import type { Cart } from '~/models/Item';
-import { useCreditStore } from '~/stores/credit';
 import CheckoutSummary from '~/pages/summary/CheckoutSummary.vue';
 
 const route = useRoute();
-const creditStore = useCreditStore();
 
 const cart = ref<Cart>([] as Cart);
 const withdrawalAmount = ref(0);
-const currentBalance = creditStore.childCredits[0];
 const extraFee = ref(0);
 const discount = ref(0);
 

@@ -2,7 +2,7 @@
   <div class="success-page">
     <div class="success-content">
       <div class="success-icon">
-        <UIcon class="h-16 w-16 text-green-500" />
+        <UIcon class="h-16 w-16 text-green-500" name="i-heroicons-check-circle" />
       </div>
       <h1 class="text-2xl font-bold mb-4">Order Placed Successfully!</h1>
       <p class="mb-6">Thank you for your purchase. Your order has been confirmed.</p>
@@ -25,7 +25,7 @@
           <span>${{ currentBalance.toFixed(2) }}</span>
         </div>
       </div>
-      <div class="order-summary">
+      <div class="order-summary" v-if="cart.length > 0">
         <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
         <div v-for="(item, index) in cart" :key="index" class="order-item">
           <img :src="item.image" :alt="item.name" class="item-image">
