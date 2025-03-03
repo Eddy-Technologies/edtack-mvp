@@ -12,11 +12,20 @@
         </ULink>
       </div>
       <div class="flex items-center gap-x-2">
-        <UIcon
-            name="i-heroicons-currency-dollar-16-solid"
-            class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
-        />
-        <span>{{ credits }}</span>
+        <template v-if="!isParent">
+          <UIcon
+              name="i-heroicons-currency-dollar-16-solid"
+              class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
+          />
+          <span>{{ credits }}</span>
+        </template>
+        <template v-else>
+          <UIcon
+              name="i-heroicons-currency-dollar-16-solid"
+              class="flex-shrink-0 h-5 w-5 text-white-400 dark:text-white-500 ms-auto"
+          />
+          <span>{{ credits }}</span>
+        </template>
         <ULink
             class="text-l md:text-xl text-primary flex items-center gap-x-2"
             to="/store"
@@ -32,21 +41,26 @@
 <script>
 import { ref, watch } from 'vue';
 import { useCreditStore } from "~/stores/credit"; // Import your store
+import { useProfileStore } from "~/stores/profile";
 
 export default {
   setup() {
     const creditStore = useCreditStore();
-    const credits = ref(creditStore.count);
+    const profileStore = useProfileStore();
+    const isParent = profileStore.profile === "/parent";
+    const defaultChild = creditStore.childCredits[0];
+    const credits = ref(isParent ? creditStore.parentCredits : defaultChild);
 
     watch(
-        () => creditStore.count, // Watch the credits value in the store
+        () => isParent ? creditStore.parentCredits : creditStore.childCredits, // Watch the credits value in the store
         (newCredits) => {
           credits.value = newCredits; // Update the local ref when the store's value changes
         }
     );
 
     return {
-      credits
+      credits,
+      isParent
     };
   }
 };

@@ -30,6 +30,7 @@
           >
             <img :src="parent[0].avatar" alt="Avatar" class="avatar" />
             <p class="text-primary font-bold">{{ parent[0].name }}</p>
+            <p class="text-primary font-bold">${{ parentCredit }}</p>
           </div>
         </div>
 
@@ -46,6 +47,7 @@
               <div class="child-box">
                 <img :src="child.avatar" alt="Avatar" class="avatar" />
                 <p class="text-primary font-bold">{{ child.name }}</p>
+                <p class="text-primary font-bold">${{ childCredit[index] }}</p>
               </div>
             </div>
           </div>
@@ -73,6 +75,8 @@
 import { ref, onMounted, watch } from 'vue';
 import * as echarts from 'echarts';
 import Fund from "~/pages/parent/Fund.vue";
+import { useCreditStore } from "~/stores/credit";
+import { useProfileStore } from "~/stores/profile";
 
 export default {
   components: { Fund },
@@ -86,10 +90,33 @@ export default {
       { name: "Alice", avatar: "https://randomuser.me/api/portraits/women/2.jpg", data: [15, 10, 5, 10, 15] },
     ]);
     const selectedChild = ref(0);
-    const selectedTab = ref('analytics'); // To keep track of the selected tab
+    const selectedTab = ref('analytics');
     const chartContainer = ref(null);
-
     let chartInstance = null;
+
+    const creditStore = useCreditStore();
+    const parentCredit = ref(creditStore.parentCredits);
+    const childCredit = ref(creditStore.childCredits);
+
+    const profileStore = useProfileStore();
+    const profile = ref(profileStore.childSelected);
+
+    // Watch for changes in parent and child credits from the store
+    watch(
+        () => creditStore.parentCredits,
+        (newParentCredits) => {
+          parentCredit.value = newParentCredits; // Update parentCredit when the store changes
+          console.log('Parent credits updated:', parentCredit.value);
+        }
+    );
+
+    watch(
+        () => creditStore.childCredits,
+        (newChildCredits) => {
+          childCredit.value = newChildCredits; // Update childCredit when the store changes
+          console.log('Child credits updated:', childCredit.value);
+        }
+    );
 
     const selectChild = (index) => {
       selectedChild.value = index;
@@ -146,7 +173,17 @@ export default {
       renderChart();
     });
 
-    return { parent, children, selectedChild, selectChild, selectedTab, selectTab, chartContainer };
+    return {
+      parent,
+      children,
+      selectedChild,
+      selectChild,
+      selectedTab,
+      selectTab,
+      chartContainer,
+      parentCredit,
+      childCredit
+    };
   },
 };
 </script>

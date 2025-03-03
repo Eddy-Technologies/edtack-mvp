@@ -61,12 +61,13 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router'; // Import useRouter
 import home from "../../assets/home.png";
 import homeMobile from "../../assets/home-mobile.png";
+import { useProfileStore } from "~/stores/profile";
 
 export default {
   setup() {
     // Get router instance using useRouter
     const router = useRouter();
-
+    const profileStore = useProfileStore();
     // Reactive variable for the background image
     const background = ref(home);
 
@@ -75,6 +76,7 @@ export default {
     const rightOverlay = ref(false);
 
     const routeTo = (route) => {
+      profileStore.setProfile(route);
       router.push(route); // Use router.push instead of this.$router.push
     };
 

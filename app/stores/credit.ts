@@ -1,16 +1,28 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 
 export const useCreditStore = defineStore('credit', () => {
-    const count = ref(0)
-    const name = ref('sfxcode')
-    function increment() {
-        count.value++
+    const parentCredits = ref(0);  // This will hold the parent's credit
+    const childCredits = ref([0 , 0 , 0]);  // This will hold an array of child credits
+    const name = ref('sfxcode');  // name value, as you had it earlier
+
+    // Function to increment parent credits
+    function addParentCredit(parentCredit) {
+        parentCredits.value += parentCredit;
     }
 
-    watch(name, () => {
-        count.value = 0
-    })
+    // Function to add child credit to the array
+    function addChildCredit(childIndex, childCredit) {
+        childCredits.value[childIndex] += childCredit;
+        // Ensure Vue can track this update
+        childCredits.value = [...childCredits.value];  // Trigger reactivity by resetting the array
+    }
 
-    return { count, name, increment }
-})
+    // Watch the name and reset credits when it changes
+    watch(name, () => {
+        parentCredits.value = 0;
+        childCredits.value = [0, 0, 0];  // Reset the array to default state
+    });
+
+    return { parentCredits, childCredits, name, addParentCredit, addChildCredit };
+});

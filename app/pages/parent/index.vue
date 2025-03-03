@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <AppHeader />
+    <AppHeader :isParent="true" />
     <main class="flex flex-col">
       <Children />
     </main>
