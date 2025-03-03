@@ -114,8 +114,8 @@ onMounted(() => {
 .success-page {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
+  justify-content: flex-start;  /* Aligns content to the top */
+  min-height: 100vh;  /* Ensures the page takes at least full height */
   padding: 20px;
 }
 
@@ -124,10 +124,12 @@ onMounted(() => {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Aligns content to the top */
+  width: 100%;
+  max-width: 800px;  /* Limits the width to a maximum size */
+  margin: 0 auto;  /* Centers the content horizontally */
 }
 
 .success-icon {
@@ -140,7 +142,6 @@ onMounted(() => {
 .order-summary {
   text-align: left;
   margin-bottom: 20px;
-  flex-grow: 1;  /* Allows it to expand based on content */
 }
 
 .item-image {
