@@ -174,7 +174,6 @@ export default {
 
     onMounted(() => {
       loadFromLocalStorage();
-      credits.value = creditStore.count || 0
     });
 
     watch([selectedLevel, selectedInnerLevel, selectedSubject, numberInput], () => {

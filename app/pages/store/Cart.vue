@@ -65,7 +65,7 @@ export default {
         return;
       }
 
-      if (creditStore.count < totalCredits.value) {
+      if (creditStore.childCredits[0] < totalCredits.value) {
         alert("You do not have enough credits to complete this purchase!");
         return;
       }

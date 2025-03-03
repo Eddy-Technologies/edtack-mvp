@@ -32,12 +32,12 @@ import { useCreditStore } from "~/stores/credit"; // Import your store
 export default {
   setup() {
     const creditStore = useCreditStore();
-    const credits = ref(creditStore.count);
+    const credits = ref(creditStore.childCredits[0]);
     const withdrawAmount = ref(10); // Default withdraw amount is 10, as we only allow multiples of 10
 
     // Watch for changes in the credits value from the store
     watch(
-        () => creditStore.count,
+        () => creditStore.childCredits,
         (newCredits) => {
           credits.value = newCredits; // Update local credits value
         }
@@ -53,7 +53,7 @@ export default {
     // Method to withdraw credits (in multiples of 10)
     const withdrawCredits = () => {
       if (withdrawAmount.value % 10 === 0 && withdrawAmount.value <= credits.value && withdrawAmount.value > 0) {
-        creditStore.count -= withdrawAmount.value;
+        creditStore.childCredits[0] -= withdrawAmount.value;
         credits.value -= withdrawAmount.value; // Update the credits locally as well
       } else {
         alert("Please enter a valid amount (multiple of 10) and ensure you have enough credits.");
@@ -63,7 +63,7 @@ export default {
     // Method to withdraw all credits
     const withdrawAllCredits = () => {
       if (credits.value > 0) {
-        creditStore.count = 0;
+        creditStore.childCredits[0] = 0;
         credits.value = 0; // Update the credits locally to 0
       } else {
         alert("No credits available to withdraw.");
