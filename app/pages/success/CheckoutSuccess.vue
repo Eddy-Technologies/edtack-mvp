@@ -9,75 +9,95 @@
       <div class="order-details">
         <h2 class="text-xl font-semibold mb-2">Order Details</h2>
         <div class="detail-item">
-          <span>Order Number:</span>
-          <span>{{ orderNumber }}</span>
-        </div>
-        <div class="detail-item">
           <span>Order Date:</span>
           <span>{{ orderDate }}</span>
         </div>
         <div class="detail-item font-bold">
+          <span>Total Withdrawn:</span>
+          <span>${{ withdrawalAmount.toFixed(2) }}</span>
+        </div>
+        <div class="detail-item font-bold">
           <span>Total Amount:</span>
-          <span>${{ totalAmount.toFixed(2) }}</span>
+          <span>${{ totalCost.toFixed(2) }}</span>
         </div>
       </div>
       <div class="order-summary">
         <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
-        <div v-for="(item, index) in orderItems" :key="index" class="order-item">
+        <div v-for="(item, index) in cart" :key="index" class="order-item">
+          <img :src="item.image" :alt="item.name" class="item-image">
           <span>{{ item.name }} x {{ item.quantity }}</span>
           <span>${{ (item.price * item.quantity).toFixed(2) }}</span>
         </div>
       </div>
       <div class="action-buttons">
         <button class="btn-primary" @click="goToHome">Continue Shopping</button>
-        <button class="btn-secondary" @click="viewOrderDetails">View Order Details</button>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script lang="ts" setup>
+import { ref, PropType, defineProps} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import type { Cart } from '~/models/Item';
 
 const route = useRoute();
 const router = useRouter();
 
-const extraFee = ref(0);
-const discount = ref(0);
-const currentBalance = ref(0);
-const withdrawalAmt = ref(0);
-const cart = ref([]);
+const props = defineProps({
+  cart: {
+    type: Array as PropType<Cart>,
+    default: () => []
+  },
+  withdrawalAmount: {
+    type: Number,
+    default: 0
+  },
+  currentBalance: {
+    type: Number,
+    default: 0
+  },
+  extraFee: {
+    type: Number,
+    default: 0
+  },
+  discount: {
+    type: Number,
+    default: 0
+  },
+  totalCost: {
+    type: Number,
+    default: 0
+  }
+});
 
-// In a real application, you would get these values from your state management or API
-const orderNumber = ref('ORD' + Math.random().toString(36).substr(2, 9).toUpperCase());
-const orderDate = ref(new Date().toLocaleDateString());
-const totalAmount = ref(150.99);
-const orderItems = ref([
-  { name: 'Product 1', quantity: 2, price: 29.99 },
-  { name: 'Product 2', quantity: 1, price: 89.99 },
-  { name: 'Product 3', quantity: 1, price: 1.02 },
-]);
+const cart = ref<Cart>(props.cart as Cart);
+const withdrawalAmt = ref(props.withdrawalAmount);
+const extraFee = ref(props.extraFee);
+const discount = ref(props.discount);
+const currentBalance = ref(props.currentBalance);
+const totalCost = ref(props.totalCost);
+
+const orderDate = new Date().toLocaleDateString();
 
 const goToHome = () => {
   router.push({ name: 'home' });
 };
 
-const viewOrderDetails = () => {
-  router.push({ name: 'orderDetails', params: { orderId: orderNumber.value } });
-};
-
 onMounted(() => {
-  extraFee.value = Number(route.params.extraFee) || 0;
-  discount.value = Number(route.params.discount) || 0;
-  currentBalance.value = Number(route.params.currentBalance) || 0;
-  withdrawalAmt.value = Number(route.params.withdrawalAmt) || 0;
+  extraFee.value = Number(route.query.extraFee) || 0;
+  discount.value = Number(route.query.discount) || 0;
+  currentBalance.value = Number(route.query.currentBalance) || 0;
+  withdrawalAmt.value = Number(route.query.withdrawalAmt) || 0;
+  totalCost.value = Number(route.query.totalCost) || 0;
 
-  try {
-    cart.value = JSON.parse(route.params.cart) || [];
-  } catch (error) {
-    console.error('Error parsing cart data:', error);
-    cart.value = [];
+  if (route.query.cart) {
+    try {
+      cart.value = JSON.parse(route.query.cart as string) as Cart; // Parse the string back into a Cart array
+    } catch (error) {
+      console.error('Error parsing cart data:', error);
+      cart.value = []; // Fallback to an empty array if parsing fails
+    }
   }
 });
 </script>
@@ -107,6 +127,13 @@ onMounted(() => {
 .order-summary {
   text-align: left;
   margin-bottom: 20px;
+}
+
+.item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
 }
 
 .detail-item,

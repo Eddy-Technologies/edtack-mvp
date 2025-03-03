@@ -43,7 +43,7 @@
 import { ref, computed, PropType } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCreditStore } from '~/stores/credit';
-import { Cart } from '~/models/Item';
+import type { Cart } from '~/models/Item';
 import { calculateItemSubTotal } from '~/utils/calculateCreditsUtils';
 
 export default {

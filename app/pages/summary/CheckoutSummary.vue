@@ -73,13 +73,11 @@
 <script lang='ts' setup>
 import { ref, computed, PropType, defineProps } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useCreditStore } from '~/stores/credit';
 import type { Cart } from '~/models/Item';
 import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';
 
 const route = useRoute();
 const router = useRouter();
-const creditStore = useCreditStore();
 
 const props = defineProps({
   cart: {
@@ -92,7 +90,7 @@ const props = defineProps({
   },
   currentBalance: {
     type: Number,
-    default: creditStore.count
+    default: 0
   },
   extraFee: {
     type: Number,
@@ -104,14 +102,14 @@ const props = defineProps({
   }
 });
 
-const cart = ref(props.cart);
+const cart = ref<Cart>(props.cart as Cart);
 const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
 const discount = ref(props.discount);
-const currentBalance = props.currentBalance;
+const currentBalance = ref(props.currentBalance);
 
 const subtotal = computed(() => {
-  return calculateCartSubtotal(cart);
+  return calculateCartSubtotal(cart.value);
 });
 
 const total = computed(() => {
@@ -123,10 +121,10 @@ const totalDeduction = computed(() => {
 });
 
 const remainingBalance = computed(() => {
-  return currentBalance - totalDeduction.value;
+  return currentBalance.value - totalDeduction.value;
 });
 
-const deleteItem = (index) => {
+const deleteItem = (index: number) => {
   cart.value.splice(index, 1);
 };
 
@@ -134,26 +132,29 @@ const confirmOrder = () => {
   router.push({
     name: 'success',
     query: {
-      extraFee: extraFee,
-      discount: discount,
-      withdrawalAmt: withdrawalAmt,
-      cart: cart.value,
+      extraFee: extraFee.value,
+      discount: discount.value,
+      withdrawalAmt: withdrawalAmt.value,
+      cart: JSON.stringify(cart.value),
+      totalCost: totalDeduction.value
     }
   });
   console.log('Order confirmed');
 };
 
 onMounted(() => {
-  extraFee.value = Number(route.params.extraFee) || 0;
-  discount.value = Number(route.params.discount) || 0;
-  currentBalance.value = Number(route.params.currentBalance) || 0;
-  withdrawalAmt.value = Number(route.params.withdrawalAmt) || 0;
+  extraFee.value = Number(route.query.extraFee) || 0;
+  discount.value = Number(route.query.discount) || 0;
+  currentBalance.value = Number(route.query.currentBalance) || 0;
+  withdrawalAmt.value = Number(route.query.withdrawalAmt) || 0;
 
-  try {
-    cart.value = JSON.parse(route.params.cart) || [];
-  } catch (error) {
-    console.error('Error parsing cart data:', error);
-    cart.value = [];
+  if (route.query.cart) {
+    try {
+      cart.value = JSON.parse(route.query.cart as string) as Cart; // Parse the string back into a Cart array
+    } catch (error) {
+      console.error('Error parsing cart data:', error);
+      cart.value = []; // Fallback to an empty array if parsing fails
+    }
   }
 });
 </script>
