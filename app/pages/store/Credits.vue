@@ -62,7 +62,7 @@ export default {
             discount: ref(0),
             currentBalance: creditStore.count,
             cart: ref([]),
-            withdrawalAmt: credits.value
+            withdrawalAmt: withdrawAmount
           }
         });
         // creditStore.count -= withdrawAmount.value;
@@ -80,7 +80,7 @@ export default {
           params: {
             extraFee: ref(0),
             discount: ref(0),
-            currentBalance: totalCredits,
+            currentBalance: creditStore.count,
             cart: ref([]),
             withdrawalAmt: creditStore.count
           }
