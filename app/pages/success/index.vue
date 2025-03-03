@@ -20,8 +20,11 @@
 
 <script lang='ts' setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import CheckoutSuccess from '~/pages/success/CheckoutSuccess.vue';
+
+const route = useRoute();
 
 const cart = ref<Cart>([] as Cart);
 const withdrawalAmount = ref(0);
