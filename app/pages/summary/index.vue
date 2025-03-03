@@ -18,34 +18,34 @@
   </div>
 </template>
 
-<script setup>
+<script lang='ts' setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import type { Cart } from '~/models/Item';
 import { useCreditStore } from '~/stores/credit';
 import CheckoutSummary from '~/pages/summary/CheckoutSummary.vue';
 
 const route = useRoute();
 const creditStore = useCreditStore();
 
-const cart = ref([]);
+const cart = ref<Cart>([] as Cart);
 const withdrawalAmount = ref(0);
 const currentBalance = creditStore.count;
 const extraFee = ref(0);
 const discount = ref(0);
 
 onMounted(() => {
-  // Parse query parameters
+  console.log('summary onMount:', route.query);
   if (route.query.cart) {
     try {
-      cart.value = JSON.parse(route.query.cart);
+      cart.value = JSON.parse(route.query.cart as string) as Cart; // Parse the string back into a Cart array
     } catch (error) {
       console.error('Error parsing cart data:', error);
-      cart.value = [];
+      cart.value = []; // Fallback to an empty array if parsing fails
     }
   }
 
   withdrawalAmount.value = Number(route.query.withdrawalAmt) || 0;
-  currentBalance.value = Number(route.query.currentBalance) || creditStore.count;
   extraFee.value = Number(route.query.extraFee) || 0;
   discount.value = Number(route.query.discount) || 0;
 });

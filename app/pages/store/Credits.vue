@@ -55,14 +55,14 @@ export default {
     // Method to withdraw credits (in multiples of 10)
     const withdrawCredits = () => {
       if (withdrawAmount.value % 10 === 0 && withdrawAmount.value <= credits.value && withdrawAmount.value > 0) {
+        console.log('Withdrawing credits:', withdrawAmount.value);
         router.push({
           name: 'summary',
-          params: {
-            extraFee: ref(0),
-            discount: ref(0),
-            currentBalance: creditStore.count,
-            cart: ref([]),
-            withdrawalAmt: withdrawAmount
+          query: {
+            extraFee: 0,
+            discount: 0,
+            cart: JSON.stringify([]),
+            withdrawalAmt: withdrawAmount.value
           }
         });
         // creditStore.count -= withdrawAmount.value;
@@ -75,14 +75,14 @@ export default {
     // Method to withdraw all credits
     const withdrawAllCredits = () => {
       if (credits.value > 0) {
+        console.log('Withdrawing all credits:', credits.value);
         router.push({
           name: 'summary',
-          params: {
-            extraFee: ref(0),
-            discount: ref(0),
-            currentBalance: creditStore.count,
-            cart: ref([]),
-            withdrawalAmt: creditStore.count
+          query: {
+            extraFee: 0,
+            discount: 0,
+            cart: JSON.stringify([]),
+            withdrawalAmt: credits.value
           }
         });
         // creditStore.count = 0;

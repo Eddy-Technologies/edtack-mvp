@@ -73,15 +73,14 @@ export default {
         alert('You do not have enough credits to complete this purchase!');
         return;
       }
-
+      console.log('Buying items:', JSON.stringify(props.cart as Cart));
       router.push({
         name: 'summary',
-        params: {
+        query: {
           extraFee: 0,
           discount: 0,
-          currentBalance: creditStore.count,
           withdrawalAmt: 0,
-          cart: JSON.stringify(props.cart.values)
+          cart: JSON.stringify(props.cart as Cart)
         }
       });
 

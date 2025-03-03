@@ -5,10 +5,11 @@
       <div class="item-list">
         <div class="success-section">
           <CheckoutSuccess
-          :cart="cart"
+            :cart="cart"
             :withdrawal-amount="withdrawalAmount"
-            :current-balance="currentBalance"
+            :previous-balance="previousBalance"
             :extra-fee="extraFee"
+            :total-cost="totalCost"
             :discount="discount"/>
         </div>
       </div>
@@ -17,32 +18,34 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script lang='ts' setup>
+import { ref, onMounted } from 'vue';
+import type { Cart } from '~/models/Item';
 import CheckoutSuccess from '~/pages/success/CheckoutSuccess.vue';
 
-export default {
-  components: {
-    CheckoutSuccess,
-  },
-  setup() {
-    // Reactive variable to hold cart items
-    const cart = ref([]);
-    const withdrawalAmount = ref(0);
-    const extraFee = ref(0);
-    const discount = ref(0);
-    const currentBalance = ref(1000);
+const cart = ref<Cart>([] as Cart);
+const withdrawalAmount = ref(0);
+const extraFee = ref(0);
+const discount = ref(0);
+const previousBalance = ref(0);
+const totalCost = ref(0);
 
-    // Return the reactive variables and methods for use in the template
-    return {
-      extraFee,
-      discount,
-      currentBalance,
-      withdrawalAmount,
-      cart,
-    };
+onMounted(() => {
+  console.log('success onMount:', route.query);
+  if (route.query.cart) {
+    try {
+      cart.value = JSON.parse(route.query.cart as string) as Cart; // Parse the string back into a Cart array
+    } catch (error) {
+      console.error('Error parsing cart data:', error);
+      cart.value = []; // Fallback to an empty array if parsing fails
+    }
   }
-};
+
+  withdrawalAmount.value = Number(route.query.withdrawalAmt) || 0;
+  extraFee.value = Number(route.query.extraFee) || 0;
+  discount.value = Number(route.query.discount) || 0;
+  previousBalance.value = Number(route.query.previousBalance) || 0;
+});
 </script>
 
 <style scoped>
