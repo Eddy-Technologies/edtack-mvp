@@ -77,11 +77,11 @@ export default {
       router.push({
         name: 'summary',
         params: {
-          extraFee: ref(0),
-          discount: ref(0),
-          currentBalance: ref(creditStore.count),
-          withdrawalAmt: ref(0),
-          cart: JSON.stringify(props.cart.value)
+          extraFee: 0,
+          discount: 0,
+          currentBalance: creditStore.count,
+          withdrawalAmt: 0,
+          cart: JSON.stringify(props.cart.values)
         }
       });
 
