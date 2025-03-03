@@ -30,7 +30,7 @@ const creditStore = useCreditStore();
 
 const cart = ref<Cart>([] as Cart);
 const withdrawalAmount = ref(0);
-const currentBalance = creditStore.count;
+const currentBalance = creditStore.childCredits[0];
 const extraFee = ref(0);
 const discount = ref(0);
 

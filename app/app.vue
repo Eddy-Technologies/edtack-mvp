@@ -26,10 +26,10 @@ useHead({
 });
 
 useSeoMeta({
-  title: 'Chat GitHub',
-  ogTitle: 'Chat GitHub - Search GitHub in Plain English',
+  title: 'Eddy',
+  ogTitle: 'Eddy - Education for All',
   description:
-    'Chat GitHub is an AI powered chat interface that lets you search GitHub in everyday language. No need to remember complex query syntax.',
+    'Eddy is an AI powered edtech platform that lets you and your child be motivated to learn together and earn rewards',
   ogImage: 'https://chat-github.nuxt.dev/home.png',
   twitterCard: 'summary_large_image',
 });

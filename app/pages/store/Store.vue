@@ -100,9 +100,9 @@ export default {
 
     // Buy item method
     const buyItem = (item) => {
-      if (creditStore.count >= item.price) {
-        creditStore.count -= item.price;
-        emit('credits-updated', creditStore.count); // Emit the updated credits
+      if (creditStore.childCredits[0] >= item.price) {
+        creditStore.childCredits[0] -= item.price;
+        emit('credits-updated', creditStore.childCredits[0]); // Emit the updated credits
         purchaseMessage.value = item.id;
         insufficientFundsMessage.value = null;
 

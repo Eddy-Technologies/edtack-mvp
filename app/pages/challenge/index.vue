@@ -44,7 +44,7 @@ export default {
     };
 
     const updateCredits = (newCredits) => {
-      creditStore.count += newCredits;
+      creditStore.childCredits[0] += newCredits;
     };
 
     onBeforeMount(() => {

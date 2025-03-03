@@ -104,7 +104,7 @@ const cart = ref<Cart>(props.cart as Cart);
 const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
 const discount = ref(props.discount);
-const currentBalance = creditStore.count;
+const currentBalance = creditStore.childCredits[0];
 
 const subtotal = computed(() => {
   return calculateCartSubtotal(cart.value);
