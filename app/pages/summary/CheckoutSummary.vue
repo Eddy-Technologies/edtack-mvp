@@ -75,9 +75,11 @@ import { ref, computed, PropType, defineProps } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';
+import { useCreditStore } from '~/stores/credit'; // Import your store
 
 const route = useRoute();
 const router = useRouter();
+const creditStore = useCreditStore();
 
 const props = defineProps({
   cart: {
@@ -85,10 +87,6 @@ const props = defineProps({
     default: () => []
   },
   withdrawalAmount: {
-    type: Number,
-    default: 0
-  },
-  currentBalance: {
     type: Number,
     default: 0
   },
@@ -106,7 +104,7 @@ const cart = ref<Cart>(props.cart as Cart);
 const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
 const discount = ref(props.discount);
-const currentBalance = ref(props.currentBalance);
+const currentBalance = creditStore.count;
 
 const subtotal = computed(() => {
   return calculateCartSubtotal(cart.value);
@@ -121,7 +119,7 @@ const totalDeduction = computed(() => {
 });
 
 const remainingBalance = computed(() => {
-  return currentBalance.value - totalDeduction.value;
+  return currentBalance - totalDeduction.value;
 });
 
 const deleteItem = (index: number) => {
@@ -129,23 +127,25 @@ const deleteItem = (index: number) => {
 };
 
 const confirmOrder = () => {
+  console.log('Confirming order:', JSON.stringify(cart.value as Cart), withdrawalAmt.value);
   router.push({
     name: 'success',
     query: {
       extraFee: extraFee.value,
       discount: discount.value,
       withdrawalAmt: withdrawalAmt.value,
-      cart: JSON.stringify(cart.value),
-      totalCost: totalDeduction.value
+      cart: JSON.stringify(cart.value as Cart),
+      totalCost: totalDeduction.value,
+      previousBalance: currentBalance
     }
   });
   console.log('Order confirmed');
 };
 
 onMounted(() => {
+  console.log('onMount:', route.query);
   extraFee.value = Number(route.query.extraFee) || 0;
   discount.value = Number(route.query.discount) || 0;
-  currentBalance.value = Number(route.query.currentBalance) || 0;
   withdrawalAmt.value = Number(route.query.withdrawalAmt) || 0;
 
   if (route.query.cart) {

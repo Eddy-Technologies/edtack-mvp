@@ -20,6 +20,10 @@
           <span>Total Amount:</span>
           <span>${{ totalCost.toFixed(2) }}</span>
         </div>
+        <div class="detail-item font-bold">
+          <span>Remaining Balance:</span>
+          <span>${{ currentBalance.toFixed(2) }}</span>
+        </div>
       </div>
       <div class="order-summary">
         <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
@@ -40,9 +44,11 @@
 import { ref, PropType, defineProps} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Cart } from '~/models/Item';
+import { useCreditStore } from '~/stores/credit'; // Import your store
 
 const route = useRoute();
 const router = useRouter();
+const creditStore = useCreditStore();
 
 const props = defineProps({
   cart: {
@@ -50,10 +56,6 @@ const props = defineProps({
     default: () => []
   },
   withdrawalAmount: {
-    type: Number,
-    default: 0
-  },
-  currentBalance: {
     type: Number,
     default: 0
   },
@@ -68,6 +70,10 @@ const props = defineProps({
   totalCost: {
     type: Number,
     default: 0
+  },
+  previousBalance: {
+    type: Number,
+    default: 0
   }
 });
 
@@ -75,9 +81,9 @@ const cart = ref<Cart>(props.cart as Cart);
 const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
 const discount = ref(props.discount);
-const currentBalance = ref(props.currentBalance);
+const currentBalance = creditStore.count;
 const totalCost = ref(props.totalCost);
-
+const previousBalance = ref(props.previousBalance);
 const orderDate = new Date().toLocaleDateString();
 
 const goToHome = () => {
@@ -85,11 +91,13 @@ const goToHome = () => {
 };
 
 onMounted(() => {
+  console.log('onMount:', route.query);
+
   extraFee.value = Number(route.query.extraFee) || 0;
   discount.value = Number(route.query.discount) || 0;
-  currentBalance.value = Number(route.query.currentBalance) || 0;
   withdrawalAmt.value = Number(route.query.withdrawalAmt) || 0;
   totalCost.value = Number(route.query.totalCost) || 0;
+  previousBalance.value = Number(route.query.previousBalance) || 0;
 
   if (route.query.cart) {
     try {
