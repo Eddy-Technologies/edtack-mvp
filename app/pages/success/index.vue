@@ -4,7 +4,12 @@
     <div class="success-container">
       <div class="item-list">
         <div class="success-section">
-          <CheckoutSuccess />
+          <CheckoutSuccess
+          :cart="cart"
+            :withdrawal-amount="withdrawalAmount"
+            :current-balance="currentBalance"
+            :extra-fee="extraFee"
+            :discount="discount"/>
         </div>
       </div>
     </div>
@@ -24,8 +29,8 @@ export default {
     // Reactive variable to hold cart items
     const cart = ref([]);
     const withdrawalAmount = ref(0);
-    const extraFee = ref(2);
-    const discount = ref(5);
+    const extraFee = ref(0);
+    const discount = ref(0);
     const currentBalance = ref(1000);
 
     // Return the reactive variables and methods for use in the template

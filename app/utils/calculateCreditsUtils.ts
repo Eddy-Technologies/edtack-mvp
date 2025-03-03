@@ -22,6 +22,10 @@ export function calculateItemTotal(cart: Cart, taxRate: number = 0, discountPerc
 }
 
 export function calculateCartSubtotal(cart: Cart): number {
+  if (!Array.isArray(cart)) {
+    console.error('Cart is not an array:', cart);
+    return 0; // Return 0 if cart is not an array
+  }
   return cart.reduce((total, item) => total + calculateItemSubTotal(item), 0);
 }
 

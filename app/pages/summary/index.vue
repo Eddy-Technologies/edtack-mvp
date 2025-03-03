@@ -4,7 +4,13 @@
     <div class="store-container">
       <div class="item-list">
         <div class="store-section">
-          <CheckoutSummary />
+          <CheckoutSummary
+            :cart="cart"
+            :withdrawal-amount="withdrawalAmount"
+            :current-balance="currentBalance"
+            :extra-fee="extraFee"
+            :discount="discount"
+          />
         </div>
       </div>
     </div>
@@ -12,26 +18,37 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue';
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useCreditStore } from '~/stores/credit';
 import CheckoutSummary from '~/pages/summary/CheckoutSummary.vue';
 
-export default {
-  components: {
-    CheckoutSummary,
-  },
-  setup() {
-    // Reactive variable to hold cart items
-    const cart = ref([]);
-    const withdrawalAmount = ref(0);
+const route = useRoute();
+const creditStore = useCreditStore();
 
-    // Return the reactive variables and methods for use in the template
-    return {
-      cart,
-      withdrawalAmount,
-    };
+const cart = ref([]);
+const withdrawalAmount = ref(0);
+const currentBalance = creditStore.count;
+const extraFee = ref(0);
+const discount = ref(0);
+
+onMounted(() => {
+  // Parse query parameters
+  if (route.query.cart) {
+    try {
+      cart.value = JSON.parse(route.query.cart);
+    } catch (error) {
+      console.error('Error parsing cart data:', error);
+      cart.value = [];
+    }
   }
-};
+
+  withdrawalAmount.value = Number(route.query.withdrawalAmt) || 0;
+  currentBalance.value = Number(route.query.currentBalance) || creditStore.count;
+  extraFee.value = Number(route.query.extraFee) || 0;
+  discount.value = Number(route.query.discount) || 0;
+});
 </script>
 
 <style scoped>

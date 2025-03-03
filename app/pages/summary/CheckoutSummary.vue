@@ -73,11 +73,13 @@
 <script lang='ts' setup>
 import { ref, computed, PropType, defineProps } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { Cart } from '~/models/Item';
+import { useCreditStore } from '~/stores/credit';
+import type { Cart } from '~/models/Item';
 import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';
 
 const route = useRoute();
 const router = useRouter();
+const creditStore = useCreditStore();
 
 const props = defineProps({
   cart: {
@@ -90,15 +92,15 @@ const props = defineProps({
   },
   currentBalance: {
     type: Number,
-    default: 1000
+    default: creditStore.count
   },
   extraFee: {
     type: Number,
-    default: 2
+    default: 0
   },
   discount: {
     type: Number,
-    default: 5
+    default: 0
   }
 });
 
@@ -106,7 +108,7 @@ const cart = ref(props.cart);
 const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
 const discount = ref(props.discount);
-const currentBalance = ref(props.currentBalance);
+const currentBalance = props.currentBalance;
 
 const subtotal = computed(() => {
   return calculateCartSubtotal(cart);
@@ -121,7 +123,7 @@ const totalDeduction = computed(() => {
 });
 
 const remainingBalance = computed(() => {
-  return currentBalance.value - totalDeduction.value;
+  return currentBalance - totalDeduction.value;
 });
 
 const deleteItem = (index) => {
@@ -130,11 +132,10 @@ const deleteItem = (index) => {
 
 const confirmOrder = () => {
   router.push({
-    name: 'summary',
-    params: {
+    name: 'success',
+    query: {
       extraFee: extraFee,
       discount: discount,
-      currentBalance: currentBalance,
       withdrawalAmt: withdrawalAmt,
       cart: cart.value,
     }
