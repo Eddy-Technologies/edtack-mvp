@@ -1,54 +1,18 @@
 <template>
   <div class="confirmation-page">
     <div class="page-content bg-white dark:bg-gray-800">
-      <h1 class="text-2xl font-bold mb-6">Confirm Your Order</h1>
+      <h1 class="text-2xl font-bold mb-6">Confirm Your Withdrawal</h1>
       <div class="confirmation-content">
         <div class="cart-and-withdrawal">
-          <div class="cart-items">
-            <div v-for="(item, index) in cart" :key="index" class="cart-item">
-              <img :src="item.image" :alt="item.name" class="item-image">
-              <div class="item-details">
-                <span class="item-name">{{ item.name }}</span>
-                <div class="item-price-quantity">
-                  <span class="item-price">{{ item.price.toFixed(2) }} Credits x </span>
-                  <input
-                    v-model.number="item.quantity"
-                    type="number"
-                    :min="1"
-                    class="quantity-input dark:text-white text-black"
-                    @change="updateQuantity(item)"
-                  >
-                </div>
-                <span class="item-total">{{ (item.price * item.quantity).toFixed(2) }} Credits</span>
-              </div>
-              <div class="item-actions">
-                <button class="btn-icon btn-delete" title="Delete item">
-                  <UIcon
-                    name="i-heroicons-trash"
-                    class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
-                    @click="deleteItem(index)"
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="cart-summary bg-gray-100 dark:bg-gray-700">
-            <div class="summary-row">
-              <span>Cart Subtotal:</span>
-              <span>{{ subtotal.toFixed(2) }} Credits</span>
-            </div>
-            <div v-if="extraFee > 0" class="summary-row">
-              <span>Fees:</span>
-              <span>{{ extraFee.toFixed(2) }} Credits</span>
-            </div>
-            <div v-if="discount > 0" class="summary-row">
-              <span>Discount:</span>
-              <span>-{{ discount.toFixed(2) }} Credits</span>
-            </div>
-            <div class="summary-row font-bold">
-              <span>Total:</span>
-              <span>{{ totalDeduction.toFixed(2) }} Credits</span>
-            </div>
+          <div class="withdrawal-amount">
+            <h3 class="text-lg font-medium mb-2">Withdrawal Amount</h3>
+            <input
+              v-model.number="withdrawalAmt"
+              type="number"
+              class="w-full p-2 border rounded withdrawal-input dark:text-white text-black"
+              placeholder="Enter withdrawal amount"
+            />
+            Credits
           </div>
         </div>
         <div class="cashflow-summary">
@@ -57,6 +21,10 @@
             <div class="summary-row">
               <span>Current Balance:</span>
               <span>{{ currentBalance.toFixed(2) }} Credits</span>
+            </div>
+            <div v-if="extraFee > 0" class="summary-row">
+              <span>Fees:</span>
+              <span>{{ extraFee.toFixed(2) }} Credits</span>
             </div>
             <div class="summary-row">
               <span>Total Deduction:</span>
@@ -71,7 +39,7 @@
       </div>
       <button class="btn-confirm"
       @click="confirmOrder"
-      :disabled="isInvalidCheckout"
+      :disabled="isInvalidWithdrawal"
       >Confirm Order</button>
     </div>
   </div>
@@ -80,7 +48,7 @@
 <script lang='ts' setup>
 import { ref, computed, PropType, defineProps } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { Cart, Item } from '~/models/Item';
+import type { Cart } from '~/models/Item';
 import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';
 import { useCreditStore } from '~/stores/credit'; // Import your store
 
@@ -93,6 +61,10 @@ const props = defineProps({
     type: Array as PropType<Cart>,
     default: () => []
   },
+  withdrawalAmount: {
+    type: Number,
+    default: 0
+  },
   extraFee: {
     type: Number,
     default: 0
@@ -104,6 +76,7 @@ const props = defineProps({
 });
 
 const cart = ref<Cart>(props.cart as Cart);
+const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
 const discount = ref(props.discount);
 const currentBalance = creditStore.childCredits[0] as number;
@@ -112,37 +85,33 @@ const subtotal = computed(() => {
   return calculateCartSubtotal(cart.value);
 });
 
-const totalDeduction = computed(() => {
+const total = computed(() => {
   return subtotal.value + extraFee.value - discount.value;
+});
+
+const totalDeduction = computed(() => {
+  return total.value + withdrawalAmt.value;
 });
 
 const remainingBalance = computed(() => {
   return currentBalance - totalDeduction.value;
 });
 
-const isInvalidCheckout = computed(() => {
-  return totalDeduction.value > currentBalance || cart.value.length <= 0;
+const isInvalidWithdrawal = computed(() => {
+  return withdrawalAmt.value > currentBalance || withdrawalAmt.value <= 0;
 });
-
-const updateQuantity = (item: Item) => {
-  if (item.quantity < 1) {
-    item.quantity = 1; // Ensure quantity doesn't go below 1
-  }
-};
 
 const deleteItem = (index: number) => {
   cart.value.splice(index, 1);
 };
 
 const confirmOrder = () => {
-  console.log('Confirming order:', JSON.stringify(cart.value as Cart));
+  console.log('Confirming withdrawal:', withdrawalAmt.value);
   const previousBalance = currentBalance;
   if (creditStore.childCredits[0] === undefined) {
-    console.error('Child credits is undefined');
-    alert("Child credits is undefined");
+    alert("child credits is undefined");
     return;
   } else if (creditStore.childCredits[0] < totalDeduction.value) {
-    console.error('You do not have enough credits to complete this withdrawal!');
     alert("You do not have enough credits to complete this withdrawal!");
     return;
   } else {
@@ -153,11 +122,11 @@ const confirmOrder = () => {
   router.push({
     name: 'success',
     query: {
-      cartSubtotal: subtotal.value,
+      cartSubtotal: 0,
       extraFee: extraFee.value,
       discount: discount.value,
-      withdrawalAmt: 0,
-      cart: JSON.stringify(cart.value as Cart),
+      withdrawalAmt: withdrawalAmt.value,
+      cart: JSON.stringify([] as Cart),
       totalCost: totalDeduction.value,
       previousBalance: previousBalance
     }
@@ -169,6 +138,7 @@ onMounted(() => {
   console.log('onMount:', route.query);
   extraFee.value = Number(route.query.extraFee) || 0;
   discount.value = Number(route.query.discount) || 0;
+  withdrawalAmt.value = Number(route.query.withdrawalAmt) || 0;
 
   if (route.query.cart) {
     try {
@@ -228,27 +198,6 @@ onMounted(() => {
   border-color: #444444;
 }
 
-.item-price-quantity {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.item-price {
-  font-weight: bold;
-}
-
-.quantity-input {
-  width: 50px;
-  padding: 5px;
-  text-align: center;
-  border-radius: 4px;
-}
-
-.item-total {
-  font-weight: bold;
-}
-
 .item-image {
   width: 50px;
   height: 50px;
@@ -294,6 +243,10 @@ onMounted(() => {
 .btn-edit:hover,
 .btn-delete:hover {
   opacity: 0.8;
+}
+
+.withdrawal-amount {
+  margin-bottom: 20px;
 }
 
 .cart-summary,

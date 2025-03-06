@@ -7,42 +7,30 @@
       <h1 class="text-2xl font-bold mb-4">Order Placed Successfully!</h1>
       <p class="mb-6">Thank you for your purchase. Your order has been confirmed.</p>
       <div class="order-details">
-        <h2 class="text-xl font-semibold mb-2">Order Details</h2>
+        <h2 class="text-xl font-semibold mb-2">Withdrawal Details</h2>
         <div class="detail-item">
-          <span>Order Date:</span>
-          <span>{{ orderDate }}</span>
+          <span>Withdrawal Date:</span>
+          <span>{{ withdrawalDate }}</span>
         </div>
         <div class="detail-item">
           <span>Previous Balance:</span>
           <span>{{ previousBalance.toFixed(2) }} Credits</span>
         </div>
         <div class="detail-item">
-          <span>Cart Subtotal:</span>
-          <span>{{ cartSubtotal.toFixed(2) }} Credits</span>
-        </div>
-        <div v-if="discount > 0" class="detail-item">
-          <span>Discount:</span>
-          <span>Saved {{ discount.toFixed(2) }} Credits</span>
+          <span>Total Withdrawn:</span>
+          <span>{{ withdrawalAmount.toFixed(2) }} Credits</span>
         </div>
         <div v-if="extraFee > 0" class="detail-item">
           <span>Fees:</span>
           <span>{{ extraFee.toFixed(2) }} Credits</span>
         </div>
-        <div class="detail-item font-bold">
+        <div v-if="extraFee > 0" class="detail-item font-bold">
           <span>Total Amount:</span>
           <span>{{ totalCost.toFixed(2) }} Credits</span>
         </div>
         <div class="detail-item font-bold">
           <span>Remaining Balance:</span>
           <span>{{ currentBalance.toFixed(2) }} Credits</span>
-        </div>
-      </div>
-      <div class="order-summary" v-if="cart.length > 0">
-        <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
-        <div v-for="(item, index) in cart" :key="index" class="order-item">
-          <img :src="item.image" :alt="item.name" class="item-image">
-          <span>{{ item.name }} x {{ item.quantity }}</span>
-          <span>{{ (item.price * item.quantity).toFixed(2) }} Credits</span>
         </div>
       </div>
       <div class="action-buttons">
@@ -55,7 +43,6 @@
 <script lang="ts" setup>
 import { ref, PropType, defineProps} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { Cart } from '~/models/Item';
 import { useCreditStore } from '~/stores/credit'; // Import your store
 
 const route = useRoute();
@@ -63,19 +50,11 @@ const router = useRouter();
 const creditStore = useCreditStore();
 
 const props = defineProps({
-  cart: {
-    type: Array as PropType<Cart>,
-    default: () => []
-  },
-  cartSubtotal: {
+  withdrawalAmount: {
     type: Number,
     default: 0
   },
   extraFee: {
-    type: Number,
-    default: 0
-  },
-  discount: {
     type: Number,
     default: 0
   },
@@ -89,14 +68,12 @@ const props = defineProps({
   }
 });
 
-const cart = ref<Cart>(props.cart as Cart);
-const cartSubtotal = ref(props.cartSubtotal);
+const withdrawalAmt = ref(props.withdrawalAmount);
 const extraFee = ref(props.extraFee);
-const discount = ref(props.discount);
 const currentBalance = creditStore.childCredits[0] as number;
 const totalCost = ref(props.totalCost);
 const previousBalance = ref(props.previousBalance);
-const orderDate = new Date().toLocaleDateString();
+const withdrawalDate = new Date().toLocaleDateString();
 
 const goToHome = () => {
   router.push({ name: 'home' });
@@ -105,20 +82,10 @@ const goToHome = () => {
 onMounted(() => {
   console.log('onMount:', route.query);
 
-  cartSubtotal.value = Number(route.query.cartSubtotal) || 0;
   extraFee.value = Number(route.query.extraFee) || 0;
-  discount.value = Number(route.query.discount) || 0;
+  withdrawalAmt.value = Number(route.query.withdrawalAmt) || 0;
   totalCost.value = Number(route.query.totalCost) || 0;
   previousBalance.value = Number(route.query.previousBalance) || 0;
-
-  if (route.query.cart) {
-    try {
-      cart.value = JSON.parse(route.query.cart as string) as Cart; // Parse the string back into a Cart array
-    } catch (error) {
-      console.error('Error parsing cart data:', error);
-      cart.value = []; // Fallback to an empty array if parsing fails
-    }
-  }
 });
 </script>
 

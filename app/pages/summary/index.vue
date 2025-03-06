@@ -5,11 +5,18 @@
       <div class="item-list">
         <div class="store-section">
           <CheckoutSummary
+            v-if="cart.length > 0"
             :cart="cart"
-            :withdrawal-amount="withdrawalAmount"
             :extra-fee="extraFee"
             :discount="discount"
           />
+          <WithdrawSummary
+            v-if="withdrawalAmount > 0"
+            :withdrawal-amount="withdrawalAmount"
+          />
+          <div v-else class="empty-message p-4 text-center text-gray-500 dark:text-gray-400">
+            Your cart and withdrawals are empty.
+          </div>
         </div>
       </div>
     </div>
@@ -22,6 +29,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import CheckoutSummary from '~/pages/summary/CheckoutSummary.vue';
+import WithdrawSummary from '~/pages/summary/WithdrawSummary.vue';
 
 const route = useRoute();
 
@@ -82,6 +90,13 @@ onMounted(() => {
   padding: 10px;
   min-height: 400px;
   max-width: 800px;
+}
+
+.empty-message {
+  color: #6b7280; /* Tailwind gray-500 */
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 16px;
 }
 
 /* Responsive Design */

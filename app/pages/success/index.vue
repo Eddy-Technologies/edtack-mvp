@@ -5,12 +5,21 @@
       <div class="item-list">
         <div class="success-section">
           <CheckoutSuccess
+            v-if="cart.length > 0"
             :cart="cart"
-            :withdrawal-amount="withdrawalAmount"
+            :cart-subtotal="cartSubtotal"
             :previous-balance="previousBalance"
             :extra-fee="extraFee"
             :total-cost="totalCost"
             :discount="discount"/>
+          <WithdrawSuccess
+            v-if="withdrawalAmount > 0"
+            :previous-balance="previousBalance"
+            :withdrawal-amount="withdrawalAmount"
+          />
+          <div v-else class="empty-message p-4 text-center text-gray-500 dark:text-gray-400">
+            You did not exchange credits for items and withdraw any credits.
+          </div>
         </div>
       </div>
     </div>
@@ -23,10 +32,12 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import CheckoutSuccess from '~/pages/success/CheckoutSuccess.vue';
+import WithdrawSuccess from '~/pages/success/WithdrawSuccess.vue';
 
 const route = useRoute();
 
 const cart = ref<Cart>([] as Cart);
+const cartSubtotal = ref(0);
 const withdrawalAmount = ref(0);
 const extraFee = ref(0);
 const discount = ref(0);
@@ -44,6 +55,7 @@ onMounted(() => {
     }
   }
 
+  cartSubtotal.value = Number(route.query.cartSubtotal) || 0;
   withdrawalAmount.value = Number(route.query.withdrawalAmt) || 0;
   extraFee.value = Number(route.query.extraFee) || 0;
   discount.value = Number(route.query.discount) || 0;
@@ -86,6 +98,13 @@ onMounted(() => {
   padding: 10px;
   min-height: 400px;
   max-width: 800px;
+}
+
+.empty-message {
+  color: #6b7280; /* Tailwind gray-500 */
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 16px;
 }
 
 /* Responsive Design */
