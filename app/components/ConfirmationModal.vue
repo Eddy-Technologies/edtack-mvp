@@ -1,7 +1,7 @@
 <template>
   <div v-if="showModal" class="modal-overlay" @click="cancel">
     <div class="modal-content bg-gray-100 dark:bg-gray-900" @click.stop>
-      <h3>Are you sure you want to add ${{ amount }} credits?</h3>
+      <h3>Are you sure you want to add ${{ amount }} credits for {{ name }}?</h3>
       <div class="modal-actions">
         <button @click="confirm">Confirm</button>
         <button @click="cancel">Cancel</button>
@@ -17,6 +17,10 @@ import { defineProps, defineEmits } from 'vue';
 const props = defineProps({
   amount: {
     type: Number,
+    required: true
+  },
+  name: {
+    type: String,
     required: true
   },
   showModal: {

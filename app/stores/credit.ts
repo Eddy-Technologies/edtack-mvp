@@ -4,6 +4,7 @@ import { ref, watch } from 'vue';
 export const useCreditStore = defineStore('credit', () => {
     const parentCredits = ref(0);  // This will hold the parent's credit
     const childCredits = ref([0 , 0 , 0]);  // This will hold an array of child credits
+    const childEarnedCredits  = ref([0 , 0 , 0]);  // This will hold an array of child earned credits
     const name = ref('sfxcode');  // name value, as you had it earlier
 
     // Function to increment parent credits
@@ -24,5 +25,5 @@ export const useCreditStore = defineStore('credit', () => {
         childCredits.value = [0, 0, 0];  // Reset the array to default state
     });
 
-    return { parentCredits, childCredits, name, addParentCredit, addChildCredit };
+    return { parentCredits, childCredits, childEarnedCredits, name, addParentCredit, addChildCredit };
 });

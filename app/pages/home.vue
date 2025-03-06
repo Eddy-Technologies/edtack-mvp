@@ -48,7 +48,7 @@
             class="mobile-overlay bottom-overlay"
             @click="routeTo('/child')"
         >
-          <span class="student-text drop-shadow-[1px_1px_1px_black]" :style="{ color: '#c8e6ce' }">Are you a student?</span>
+          <span class="student-text drop-shadow-[1px_1px_1px_black]">Are you a student?</span>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router'; // Import useRouter
 import home from "../../assets/home.png";
 import homeMobile from "../../assets/home-mobile.png";
@@ -141,7 +141,7 @@ export default {
 
 <style lang="scss" scoped>
 .parent-text {
-  color: #33d6bf
+  color: #2f6089
 }
 .student-text {
   color: #c8e6ce

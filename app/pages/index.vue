@@ -33,6 +33,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Ensures the home container takes up the full viewport height */
+
+  @media (max-width: 768px) { // Adjust layout for mobile screens
+    margin-top: -60px;
+  }
 }
 
 .main-content {
@@ -48,11 +52,5 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
-}
-
-.item-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the image fills the entire container */
 }
 </style>

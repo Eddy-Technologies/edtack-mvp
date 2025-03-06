@@ -30,7 +30,7 @@
           >
             <img :src="parent[0].avatar" alt="Avatar" class="avatar" />
             <p class="text-primary font-bold">{{ parent[0].name }}</p>
-            <p class="text-primary font-bold">${{ parentCredit }}</p>
+            <p class="text-primary font-bold">Total: ${{ parentCredit }}</p>
           </div>
         </div>
 
@@ -47,7 +47,8 @@
               <div class="child-box">
                 <img :src="child.avatar" alt="Avatar" class="avatar" />
                 <p class="text-primary font-bold">{{ child.name }}</p>
-                <p class="text-primary font-bold">${{ childCredit[index] }}</p>
+                <p class="text-primary font-bold">Allocated: ${{ childCredit[index] }}</p>
+                <p class="text-primary font-bold">Earned: ${{ childEarnedCredit[index] }}</p>
               </div>
             </div>
           </div>
@@ -97,6 +98,7 @@ export default {
     const creditStore = useCreditStore();
     const parentCredit = ref(creditStore.parentCredits);
     const childCredit = ref(creditStore.childCredits);
+    const childEarnedCredit = ref(creditStore.childEarnedCredits);
 
     const profileStore = useProfileStore();
     const profile = ref(profileStore.childSelected);
@@ -182,7 +184,8 @@ export default {
       selectTab,
       chartContainer,
       parentCredit,
-      childCredit
+      childCredit,
+      childEarnedCredit
     };
   },
 };
@@ -249,7 +252,7 @@ export default {
 
 .parent-box, .child-box {
   cursor: pointer;
-  width: 100px;
+  width: 150px;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 12px;

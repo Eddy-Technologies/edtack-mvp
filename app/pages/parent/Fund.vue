@@ -54,6 +54,7 @@
   <ConfirmationModal
     :showModal="showModal"
     :amount="creditAmount"
+    :name="children[selectedChildIndex].name"
     @close="showModal = false"
     @confirm="addCreditsConfirmed"
   />

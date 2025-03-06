@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <AppFooter />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 
