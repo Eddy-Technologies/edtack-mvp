@@ -12,7 +12,7 @@
           :style="{ backgroundColor: leftOverlay ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)'}">
         <ULink
             v-if="!leftOverlay"
-            class="drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl text-primary font-bold flex items-center justify-center gap-x-2 px-6 py-3 mr-20"
+            class="parent-text drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 mr-20"
         >
           Are you a parent?
         </ULink>
@@ -27,8 +27,7 @@
           :style="{ backgroundColor: rightOverlay ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)'}">
         <ULink
             v-if="!rightOverlay"
-            :style="{ color: '#c8e6ce' }"
-            class="drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 ml-auto"
+            class="student-text drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 ml-auto"
         >
           Are you a student?
         </ULink>
@@ -41,7 +40,7 @@
             class="mobile-overlay top-overlay"
             @click="routeTo('/parent')"
         >
-          <span class="text-primary drop-shadow-[1px_1px_1px_black]">Are you a parent?</span>
+          <span class="parent-text drop-shadow-[1px_1px_1px_black]">Are you a parent?</span>
         </div>
 
         <!-- Bottom half overlay (clickable) -->
@@ -49,7 +48,7 @@
             class="mobile-overlay bottom-overlay"
             @click="routeTo('/child')"
         >
-          <span class="text-primary drop-shadow-[1px_1px_1px_black]" :style="{ color: '#c8e6ce' }">Are you a student?</span>
+          <span class="student-text drop-shadow-[1px_1px_1px_black]" :style="{ color: '#c8e6ce' }">Are you a student?</span>
         </div>
       </div>
     </div>
@@ -141,12 +140,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.parent-text {
+  color: #33d6bf
+}
+.student-text {
+  color: #c8e6ce
+}
 .app {
   position: relative;
   width: 100%;
   height: 100vh; /* Ensure the app takes full screen height */
 }
-
 .image-container {
   position: relative;
   width: 100%;
