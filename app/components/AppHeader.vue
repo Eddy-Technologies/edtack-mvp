@@ -32,6 +32,12 @@
         >
           STORE
         </ULink>
+        <ULink
+            class="text-l md:text-xl text-primary flex items-center gap-x-2"
+            to="https://forms.gle/dDxMkSmAa1yJNuL28"
+        >
+          FEEDBACK
+        </ULink>
         <ColorMode />
       </div>
     </UContainer>
