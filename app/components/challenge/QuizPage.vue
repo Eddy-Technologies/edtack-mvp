@@ -27,7 +27,7 @@
         <p v-if="!isCorrect(index)">
           <strong>Explanation:</strong> {{ question.explanation }}
         </p>
-        <p v-if="isCorrect(index)" style="color: green;">
+        <p v-if="isCorrect(index)" style="color: #c8e6ce;">
           Correct! Well done!
         </p>
         <p v-else style="color: red;">

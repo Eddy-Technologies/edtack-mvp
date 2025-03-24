@@ -1,10 +1,10 @@
 <template>
   <div class="generate-challenge">
     <AppHeader />
-    <main class="main-content">
+    <main :class="{ 'centered-bg': !quiz }" class="main-content">
       <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container">
         <h1 v-if="!quiz" class="title">
-          <span class="title-highlight">Generate Your Practice Challenge</span>
+          <span class="title-highlight">Generate Your Practice</span>
         </h1>
 
         <form :class="{ 'challenge-form': !quiz, 'compact-challenge-form': quiz }" @submit.prevent="fetchAnswer">
@@ -183,8 +183,8 @@ export default {
       const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
       try {
-        //quiz.value = await useGetGenerativeModelGP(prompt);
-        quiz.value = getRandomizedQuestions(data, numberInput.value);
+        quiz.value = await useGetGenerativeModelGP(prompt);
+        //quiz.value = getRandomizedQuestions(data, numberInput.value);
         saveInputToLocalStorage();
         if (quiz.value && quiz.value.length > 0) {
           //saveQuestionsToLocalStorage(quiz.value);
@@ -309,7 +309,16 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
+.centered-bg {
+  background-image: url('../../../assets/practice2.png'); /* Update with the correct path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .centered-form {
+  width: 100%;
+  max-width: 27rem;
   margin: auto;
   padding: 2rem;
 }
@@ -332,7 +341,7 @@ export default {
 }
 
 .title-highlight {
-  color: #4a90e2;
+  color: #c8e6ce;
 }
 
 .challenge-form {
@@ -360,7 +369,7 @@ export default {
 }
 
 .form-label {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #b0b0b0;
   margin-bottom: 0.5rem;
@@ -368,8 +377,6 @@ export default {
 
 .form-control {
   padding: 0.75rem;
-  font-size: 1rem;
-  color: #e0e0e0;
   background-color: rgba(58, 58, 58, 0.7);
   border: 1px solid #4a4a4a;
   border-radius: 4px;
@@ -383,7 +390,7 @@ export default {
 }
 
 .compact-label {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #b0b0b0;
   margin-bottom: 0.25rem;
@@ -406,8 +413,8 @@ export default {
 }
 
 .submit-button {
-  background-color: #4a90e2;
-  color: white;
+  background-color: #c8e6ce;
+  color: black;
   font-weight: 600;
   border-radius: 4px;
   border: none;
