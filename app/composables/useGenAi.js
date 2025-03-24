@@ -9,6 +9,9 @@ export const useGenAi = async (schema) => {
         generationConfig: {
             responseMimeType: "application/json",
             responseSchema: schema,
+            temperature: 0,
+            topK: 30,
+            topP: 0.75
         },
     });
 }

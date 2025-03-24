@@ -116,6 +116,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import { useGetGenerativeModelGP } from '~/composables/useGetGenerativeModelGP.js';
 import data from '../../../assets/questions.json';
+import {useOpenRouterModelGP} from "~/composables/useOpenRouterModelGP.js";
 
 export default {
   components: { QuizPage },
@@ -170,9 +171,11 @@ export default {
       of 4 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
       Ensure there are questions with options such as "statement 1, 2, 3 are true" or "all of the above are true".
       Provide detailed but concise steps on how to achieve the correct solution in the explanation.
+      Ensure that there is no error in the question.
       Ensure that there must be a correct answer and only one correct answer for correctAnswer.
       Ensure the correctAnswer is one of the option in the options array in the JSON schema for each question.
-      Ensure that the correctAnswer is given in full and is the same as one of the options in the options array.`;
+      Ensure that the correctAnswer is given in full and is the same as one of the options in the options array.
+      Ensure that the response only contains the json schema`;
     };
 
     const fetchAnswer = async () => {
@@ -183,7 +186,7 @@ export default {
       const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
       try {
-        quiz.value = await useGetGenerativeModelGP(prompt);
+        quiz.value = await useOpenRouterModelGP(prompt);
         //quiz.value = getRandomizedQuestions(data, numberInput.value);
         saveInputToLocalStorage();
         if (quiz.value && quiz.value.length > 0) {
