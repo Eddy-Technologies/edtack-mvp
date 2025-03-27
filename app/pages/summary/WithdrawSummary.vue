@@ -46,7 +46,8 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, computed, PropType, defineProps } from 'vue';
+import { ref, computed } from 'vue';
+import type { PropType } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';

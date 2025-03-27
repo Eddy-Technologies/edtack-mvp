@@ -340,7 +340,6 @@ export default {
   font-size: 2.5rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 2rem;
 }
 
 .title-highlight {

@@ -40,7 +40,8 @@
 </template>
 
 <script lang="ts">
-import { ref, computed, PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue'
 import { useRouter } from 'vue-router';
 import { useCreditStore } from '~/stores/credit';
 import type { Cart } from '~/models/Item';

@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, PropType, defineProps} from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCreditStore } from '~/stores/credit'; // Import your store
 

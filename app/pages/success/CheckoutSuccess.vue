@@ -53,7 +53,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, PropType, defineProps} from 'vue';
+import { ref } from 'vue';
+import type { PropType } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import { useCreditStore } from '~/stores/credit'; // Import your store
