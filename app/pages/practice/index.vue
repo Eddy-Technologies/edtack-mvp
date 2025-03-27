@@ -169,12 +169,16 @@ export default {
       }
       return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
       of 4 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
+      Give questions of varying topics and difficulties from the syllabus but do not include image related questions.
+      Provide concise steps on how to achieve the correct solution in the explanation first before generating the question options.
+      Ensure that the correct answer is based on the explanation.
+      Do not use $...$ delimiters for math equations.
+      Always use Katex format $$...$$ as delimiters for all math equations.
       Ensure there are questions with options such as "statement 1, 2, 3 are true" or "all of the above are true".
-      Provide detailed but concise steps on how to achieve the correct solution in the explanation.
-      Ensure that there is no error in the question.
-      Ensure that there must be a correct answer and only one correct answer for correctAnswer.
-      Ensure the correctAnswer is one of the option in the options array in the JSON schema for each question.
-      Ensure that the correctAnswer is given in full and is the same as one of the options in the options array.
+      Ensure that one of the options is the correct answer for the question.
+      Ensure that there is no error in the question and the options.
+      Ensure that there is only one correct answer for correctAnswer.
+      Ensure that the correct answer is the value of the option and not using alphabets.
       Ensure that the response only contains the json schema`;
     };
 
@@ -186,7 +190,7 @@ export default {
       const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
       try {
-        quiz.value = await useOpenRouterModelGP(prompt);
+        quiz.value = await useGetGenerativeModelGP(prompt);
         //quiz.value = getRandomizedQuestions(data, numberInput.value);
         saveInputToLocalStorage();
         if (quiz.value && quiz.value.length > 0) {

@@ -13,6 +13,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "@iconify-json/simple-icons": "^1.2.29",
+    "@mistralai/mistralai": "^1.5.2",
     "@nuxt/eslint": "^0.5.7",
     "@nuxt/ui": "^2.21.1",
     "@nuxthub/core": "^0.7.37",
@@ -31,7 +32,8 @@
     "pinia": "^2.3.1",
     "primevue": "^4.3.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.5.7",

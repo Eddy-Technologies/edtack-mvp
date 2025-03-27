@@ -24,7 +24,7 @@
           </p>
         </div>
         <p><strong>Correct Answer:</strong> {{ question.correctAnswer }}</p>
-        <p v-if="!isCorrect(index)">
+        <p v-if="!isCorrect(index)" ref="explanation">
           <strong>Explanation:</strong> {{ question.explanation }}
         </p>
         <p v-if="isCorrect(index)" style="color: #c8e6ce;">
@@ -45,6 +45,7 @@
 
 <script>
 import QuizQuestion from "~/components/challenge/QuizQuestion.vue";
+import renderMathInElement from "katex/contrib/auto-render/auto-render.js";
 
 export default {
   components: {
@@ -106,6 +107,34 @@ export default {
         return { color: 'red', fontWeight: 'bold' }; // User's incorrect answer in red
       }
       return {}; // No special style for other options
+    },
+    renderMath(element) {
+      try {
+        return renderMathInElement(element, {
+          delimiters: [
+            {left: "$$", right: "$$", display: false},
+            {left: "\\(", right: "\\)", display: false},
+            // LaTeX uses $…$, but it ruins the display of normal `$` in text:
+            {left: "\\newline", right: "\\newline", display: true},
+            // $ must come after $$
+            // Render AMS environments even if outside $$…$$ delimiters.
+            {left: "\\begin{equation}", right: "\\end{equation}", display: false},
+            {left: "\\begin{align}", right: "\\end{align}", display: false},
+            {left: "\\begin{alignat}", right: "\\end{alignat}", display: false},
+            {left: "\\begin{gather}", right: "\\end{gather}", display: false},
+            {left: "\\begin{CD}", right: "\\end{CD}", display: false},
+            {left: "\\[", right: "\\]", display: true},
+          ]
+        });
+      } catch (error) {
+        console.error('KaTeX rendering error:', error);
+        return element;
+      }
+    }
+  },
+  mounted() {
+    if (this.question && this.question.explanation) {
+      this.renderMath(this.$refs.explanation);
     }
   }
 };

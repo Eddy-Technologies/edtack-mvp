@@ -11,6 +11,9 @@ dependencies:
   '@iconify-json/simple-icons':
     specifier: ^1.2.29
     version: 1.2.29
+  '@mistralai/mistralai':
+    specifier: ^1.5.2
+    version: 1.5.2(zod@3.24.2)
   '@nuxt/eslint':
     specifier: ^0.5.7
     version: 0.5.7(eslint@9.23.0)(typescript@5.8.2)(vite@6.2.3)
@@ -55,7 +58,7 @@ dependencies:
     version: 0.7.8
   openai:
     specifier: ^4.89.0
-    version: 4.89.0
+    version: 4.89.0(zod@3.24.2)
   pinia:
     specifier: ^2.3.1
     version: 2.3.1(typescript@5.8.2)(vue@3.5.13)
@@ -68,6 +71,9 @@ dependencies:
   vue-router:
     specifier: ^4.5.0
     version: 4.5.0(vue@3.5.13)
+  zod:
+    specifier: ^3.24.2
+    version: 3.24.2
 
 devDependencies:
   '@nuxt/eslint-config':
@@ -1686,6 +1692,15 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
+    dev: false
+
+  /@mistralai/mistralai@1.5.2(zod@3.24.2):
+    resolution: {integrity: sha512-mBTIDQmuAX9RowMYteZFHJIYlEwDcHzzaxgXzrFtlvH9CkKXK7R1VnZ1sZSe+uLMg0dIXUVdPRUh1SwyFeSqXw==}
+    peerDependencies:
+      zod: '>= 3'
+    dependencies:
+      zod: 3.24.2
+      zod-to-json-schema: 3.24.5(zod@3.24.2)
     dev: false
 
   /@napi-rs/wasm-runtime@0.2.7:
@@ -8113,7 +8128,7 @@ packages:
       is-wsl: 2.2.0
     dev: false
 
-  /openai@4.89.0:
+  /openai@4.89.0(zod@3.24.2):
     resolution: {integrity: sha512-XNI0q2l8/Os6jmojxaID5EhyQjxZgzR2gWcpEjYWK5hGKwE7AcifxEY7UNwFDDHJQXqeiosQ0CJwQN+rvnwdjA==}
     hasBin: true
     peerDependencies:
@@ -8132,6 +8147,7 @@ packages:
       form-data-encoder: 1.7.2
       formdata-node: 4.4.1
       node-fetch: 2.7.0
+      zod: 3.24.2
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -11277,6 +11293,14 @@ packages:
       archiver-utils: 5.0.2
       compress-commons: 6.0.2
       readable-stream: 4.7.0
+    dev: false
+
+  /zod-to-json-schema@3.24.5(zod@3.24.2):
+    resolution: {integrity: sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==}
+    peerDependencies:
+      zod: ^3.24.1
+    dependencies:
+      zod: 3.24.2
     dev: false
 
   /zod@3.22.3:
