@@ -13,7 +13,7 @@
       <button @click="submitQuiz">Submit Challenge</button>
     </div>
 
-    <div v-else>
+    <div v-else ref="content">
       <h3>Results</h3>
       <div v-for="(question, index) in questions" :key="index">
         <p><strong>Question:</strong> {{ question.title }}</p>
@@ -132,9 +132,15 @@ export default {
       }
     }
   },
-  mounted() {
-    if (this.question && this.question.explanation) {
-      this.renderMath(this.$refs.explanation);
+  watch: {
+    quizFinished(newValue) {
+      if (newValue) {
+        this.$nextTick(() => {
+          if (this.$refs.content) {
+            this.renderMath(this.$refs.content);
+          }
+        });
+      }
     }
   }
 };

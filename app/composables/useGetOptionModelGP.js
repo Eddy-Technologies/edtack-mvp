@@ -1,7 +1,7 @@
 import {useGenAi} from './useGenAi.js'
 import {SchemaType} from "@google/generative-ai";
 
-export const useGetGenerativeModelGP = async (prompt) => {
+export const useGetOptionModelGP = async (prompt) => {
     const schema = {
         type: SchemaType.ARRAY,
         items: {

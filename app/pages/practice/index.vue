@@ -114,9 +114,9 @@
 <script>
 import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
-import { useGetGenerativeModelGP } from '~/composables/useGetGenerativeModelGP.js';
+import {useGetQuestionModelGP} from '~/composables/useGetQuestionModelGP.js';
 import data from '../../../assets/questions.json';
-import {useOpenRouterModelGP} from "~/composables/useOpenRouterModelGP.js";
+import {useGetOptionModelGP} from "~/composables/useGetOptionModelGP.js";
 
 export default {
   components: { QuizPage },
@@ -168,18 +168,15 @@ export default {
         });
       }
       return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
-      of 4 options of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
-      Give questions of varying topics and difficulties from the syllabus but do not include image related questions.
-      Provide concise steps on how to achieve the correct solution in the explanation first before generating the question options.
-      Ensure that the correct answer is based on the explanation.
+      of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
+      Provide a JSON of just what is declared in the schema, which is the question, explanation and the id without the question options.
+      Generate questions of a mixture of topics and difficulties from the syllabus but do not include image related questions.
+      Generate a fresh batch of questions that is different from the previous batch.
+      Ensure there is no error in the question.
+      Provide the most accurate and precise explanation to solve the question and then
+      provide a concise summary on the steps to achieve the correct solution.
       Do not use $...$ delimiters for math equations.
-      Always use Katex format $$...$$ as delimiters for all math equations.
-      Ensure there are questions with options such as "statement 1, 2, 3 are true" or "all of the above are true".
-      Ensure that one of the options is the correct answer for the question.
-      Ensure that there is no error in the question and the options.
-      Ensure that there is only one correct answer for correctAnswer.
-      Ensure that the correct answer is the value of the option and not using alphabets.
-      Ensure that the response only contains the json schema`;
+      Always use Katex format $$...$$ as delimiters for all math equations.`
     };
 
     const fetchAnswer = async () => {
@@ -187,10 +184,21 @@ export default {
       quiz.value = '';
       errorMsg.value = null;
 
-      const prompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
+      const questionPrompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
 
       try {
-        quiz.value = await useGetGenerativeModelGP(prompt);
+        const result = await useGetQuestionModelGP(questionPrompt);
+        const optionPrompt = `With this JSON result ${result},
+        Copy the correct answer in the explanation and insert it into the options array.
+        Ensure that the correct answer is based on the explanation.
+        Ensure that the correct answer is also one of the options.
+        Do not use $...$ delimiters for math equations.
+        Always use Katex format $$...$$ as delimiters for all math and scientific equations for all questions and options.
+        Ensure that there is no error in the question and the options.
+        Ensure that there is only one correct answer for correctAnswer.
+        Ensure that the correct answer is the value of the option and not using alphabets.
+        Ensure that the response only contains the json schema`;
+        quiz.value = await useGetOptionModelGP(optionPrompt);
         //quiz.value = getRandomizedQuestions(data, numberInput.value);
         saveInputToLocalStorage();
         if (quiz.value && quiz.value.length > 0) {

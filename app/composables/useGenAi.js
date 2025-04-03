@@ -5,7 +5,7 @@ export const useGenAi = async (schema) => {
 
     const genAI = new GoogleGenerativeAI(VITE_GOOGLE_AI_STUDIO_API_KEY)
     return genAI.getGenerativeModel({
-        model: "gemini-2.0-flash-exp",
+        model: "gemini-2.0-flash",
         generationConfig: {
             responseMimeType: "application/json",
             responseSchema: schema,

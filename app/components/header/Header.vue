@@ -1,24 +1,39 @@
 <template>
- <ParentHeader v-if="isParent" />
- <ChildHeader v-else-if="isChild" />
- <Header v-else />
+  <header
+      class="bg-gray-200/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
+  >
+    <UContainer class="flex flex-wrap items-center justify-between h-14">
+      <div class="flex items-center gap-x-4">
+        <ULink
+            class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
+            to="/"
+        >
+          <AppIcon class="w-8 h-8" /> Eddy
+        </ULink>
+      </div>
+      <div class="flex items-center gap-x-2">
+        <ULink
+            class="text-m md:text-m text-primary flex items-center gap-x-2"
+            to="https://forms.gle/dDxMkSmAa1yJNuL28"
+        >
+          Feedback
+        </ULink>
+        <ColorMode />
+      </div>
+    </UContainer>
+  </header>
 </template>
 
 <script>
 import { ref, watch } from 'vue';
 import { useCreditStore } from "~/stores/credit"; // Import your store
 import { useProfileStore } from "~/stores/profile";
-import ParentHeader from "~/components/header/ParentHeader.vue";
-import ChildHeader from "~/components/header/ChildHeader.vue";
-import Header from "~/components/header/Header.vue";
 
 export default {
-  components: {Header, ChildHeader, ParentHeader},
   setup() {
     const creditStore = useCreditStore();
     const profileStore = useProfileStore();
     const isParent = profileStore.profile === "/parent";
-    const isChild = profileStore.profile === "/child" || profileStore.profile === "/challenge" || profileStore.profile === "/practice";
     const defaultChild = creditStore.childCredits[0];
     const credits = ref(isParent ? creditStore.parentCredits : defaultChild);
 
@@ -31,8 +46,7 @@ export default {
 
     return {
       credits,
-      isParent,
-      isChild
+      isParent
     };
   }
 };

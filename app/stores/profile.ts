@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 
 export const useProfileStore = defineStore('profile', () => {
-    const profile = ref("/parent");
+    const profile = ref("/");
     const childSelected = ref(0);
     const name = ref('sfxcode');  // name value, as you had it earlier
 
