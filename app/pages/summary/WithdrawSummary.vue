@@ -195,10 +195,6 @@ onMounted(() => {
   border-radius: 4px;
 }
 
-:global(.dark) .cart-item {
-  border-color: #444444;
-}
-
 .item-image {
   width: 50px;
   height: 50px;

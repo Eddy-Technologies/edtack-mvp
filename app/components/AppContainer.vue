@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Home from '../../app/pages/home.vue';
+import Home from '../../app/pages/landing.vue';
 
 export default {
   components: {

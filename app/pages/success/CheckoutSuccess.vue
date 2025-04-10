@@ -192,24 +192,4 @@ onMounted(() => {
   background-color: #4a90e2;
   color: white;
 }
-
-.btn-secondary {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-:global(.dark) .success-content {
-  background-color: #2a2a2a;
-  color: #ffffff;
-}
-
-:global(.dark) .detail-item,
-:global(.dark) .order-item {
-  border-bottom-color: #444444;
-}
-
-:global(.dark) .btn-secondary {
-  background-color: #3a3a3a;
-  color: #ffffff;
-}
 </style>

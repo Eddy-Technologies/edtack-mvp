@@ -225,10 +225,6 @@ onMounted(() => {
   border-radius: 4px;
 }
 
-:global(.dark) .cart-item {
-  border-color: #444444;
-}
-
 .item-price-quantity {
   display: flex;
   align-items: center;

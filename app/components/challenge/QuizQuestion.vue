@@ -3,15 +3,21 @@
     <span class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </span>
     <p class="question-content text-xl">{{ question.title }}</p>
     <div v-for="(option, index) in question.options" :key="index">
-      <label class="form-control text-xl ml-7 mt-4">
-        <input
-            type="radio"
-            :value="option"
-            :name="'question-' + questionIndex"
-            :checked="selectedAnswer === option"
-            @change="selectAnswer(option)"
-        />
-        <span v-html="option"></span>
+      <label
+          class="form-control text-xl ml-7 mt-4 option-item"
+          :class="{
+          'bg-[#f0f8ff] border-[#00dc82] dark:bg-[#2a2a2a] dark:border-[#00dc82]': selectedAnswer === option,
+          'hover:bg-[#f0f8ff] hover:border-[#00dc82] dark:hover:bg-[#2a2a2a] dark:hover:border-gray-500': selectedAnswer !== option
+      }"
+      >
+      <input
+          type="radio"
+          :value="option"
+          :name="'question-' + questionIndex"
+          :checked="selectedAnswer === option"
+          @change="selectAnswer(option)"
+      />
+      <span v-html="option"></span>
       </label>
     </div>
   </div>
@@ -137,5 +143,12 @@ input[type="radio"]::before {
 
 input[type="radio"]:checked::before {
   transform: scale(1);
+}
+
+.option-item {
+  border-width: 2px;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+  transition: all 0.2s ease;
 }
 </style>
