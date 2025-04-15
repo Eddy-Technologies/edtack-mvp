@@ -11,6 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@google/genai": "^0.8.0",
     "@google/generative-ai": "^0.21.0",
     "@iconify-json/simple-icons": "^1.2.29",
     "@mistralai/mistralai": "^1.5.2",
