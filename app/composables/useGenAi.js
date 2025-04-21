@@ -1,7 +1,7 @@
 import {GoogleGenerativeAI} from '@google/generative-ai'
 
 export const useGenAi = async (schema) => {
-    const genAI = new GoogleGenerativeAI(process.env.VITE_GOOGLE_AI_STUDIO_API_KEY)
+    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_AI_STUDIO_API_KEY);
     return genAI.getGenerativeModel({
         model: "gemini-2.0-flash",
         generationConfig: {
