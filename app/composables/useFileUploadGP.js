@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 
 export const useFileUploadGP = async (file) => {
     return new Promise((resolve, reject) => {
-        const ai = new GoogleGenAI({apiKey: "AIzaSyBottpu2Q1606SXtA1gv3USpgX2RHsQObQ"});
+        const ai = new GoogleGenAI({apiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY});
         const reader = new FileReader();
 
         reader.onload = async (event) => {

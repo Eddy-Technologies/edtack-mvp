@@ -4,7 +4,7 @@ import { Mistral } from '@mistralai/mistralai';
 import { z } from "zod";
 
 const mistral = new Mistral({
-    apiKey: 'wJyXSJ8Gnjbh4ufOtjWCLbaFjgCDmjpY', // Replace with your API key
+    apiKey: '', // Replace with your API key
 });
 const QuestionSchema = z.object({
     id: z.number(),
