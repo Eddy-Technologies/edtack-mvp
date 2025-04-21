@@ -4,6 +4,7 @@ import { Buffer } from 'buffer';
 export const useFileUploadGP = async (file) => {
     return new Promise((resolve, reject) => {
         const config = useRuntimeConfig()
+        console.log(config.public);
         const ai = new GoogleGenAI({apiKey: config.public.googleAIStudioApiKey});
         const reader = new FileReader();
 

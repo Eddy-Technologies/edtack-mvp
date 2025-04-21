@@ -208,7 +208,8 @@ export default {
         Ensure that the correct answer is based on the explanation.
         Ensure that the correct answer is also one of the options.
         Do not use $...$ delimiters for math equations.
-        Always use Katex format $$...$$ as delimiters for all math and scientific equations for all questions and options.
+        Always use Katex format $$...$$ as delimiters for all math and scientific equations for all questions.
+        Always use Katex format $$...$$ as delimiters for all math and scientific equations for options.
         Ensure that there is no error in the question and the options.
         Ensure that there is only one correct answer for correctAnswer.
         Ensure that the correct answer is the value of the option and not using alphabets.
