@@ -1,6 +1,3 @@
-name: Deploy to NuxtHub
-on: push
-
 jobs:
   deploy:
     name: "Deploy to NuxtHub"
@@ -29,9 +26,13 @@ jobs:
 
       - name: Build application
         run: pnpm build
+        env:
+          VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
 
       - name: Deploy to NuxtHub
         uses: nuxt-hub/action@v1
         id: deploy
         with:
           project-key: edtack-mvp-9jku
+        env:
+          VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
