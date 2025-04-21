@@ -2,24 +2,24 @@
   <div class="generate-challenge">
     <AppHeader />
     <main :class="{ 'centered-bg': !quiz }" class="main-content">
-      <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container bg-gray-600/50 dark:bg-zinc-900/50">
+      <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container bg-white dark:bg-zinc-900/50">
         <h1 v-if="!quiz" class="title">
-          <span class="title-highlight">Generate Your Practice</span>
+          <span class="text-[#75d38a] dark:text-[#c8e6ce]">Generate Your Practice</span>
         </h1>
 
         <div v-show="!isFormCollapsed" class="transition-all duration-300 ease-in-out">
           <form :class="{ 'challenge-form': !quiz, 'compact-challenge-form': quiz }" @submit.prevent="fetchAnswer">
             <div v-if="!quiz" class="form-grid">
               <div class="form-group">
-                <label for="level" class="form-label">Level</label>
-                <select id="level" v-model="selectedLevel" class="form-control bg-gray-100/70 dark:bg-zinc-800/70">
+                <label for="level" class="form-label text-primary-800 dark:text-primary-400">Level</label>
+                <select id="level" v-model="selectedLevel" class="form-control bg-gray-200/70 dark:bg-zinc-800/70">
                   <option value="" disabled>Select Level</option>
                   <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="innerLevel" class="form-label">Inner Level</label>
-                <select id="innerLevel" v-model="selectedInnerLevel" class="form-control bg-gray-100/70 dark:bg-zinc-800/70">
+                <label for="innerLevel" class="form-label text-primary-800 dark:text-primary-400">Inner Level</label>
+                <select id="innerLevel" v-model="selectedInnerLevel" class="form-control bg-gray-200/70 dark:bg-zinc-800/70">
                   <option value="" disabled>Select Inner Level</option>
                   <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
                     {{ innerLevel }}
@@ -27,19 +27,19 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="subject" class="form-label">Subject</label>
-                <select id="subject" v-model="selectedSubject" class="form-control bg-gray-100/70 dark:bg-zinc-800/70">
+                <label for="subject" class="form-label text-primary-800 dark:text-primary-400">Subject</label>
+                <select id="subject" v-model="selectedSubject" class="form-control bg-gray-200/70 dark:bg-zinc-800/70">
                   <option value="" disabled>Select Subject</option>
                   <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="numberInput" class="form-label">Questions</label>
+                <label for="numberInput" class="form-label text-primary-800 dark:text-primary-400">Questions</label>
                 <input
                   id="numberInput"
                   v-model="numberInput"
                   type="number"
-                  class="form-control bg-gray-100/70 dark:bg-zinc-800/70 border border-gray-300 dark:border-zinc-600"
+                  class="form-control bg-gray-200/70 dark:bg-zinc-800/70 border border-gray-300 dark:border-zinc-600"
                   min="1"
                   max="10"
                   placeholder="Enter a number"
@@ -391,10 +391,6 @@ export default {
   text-align: center;
 }
 
-.title-highlight {
-  color: #c8e6ce;
-}
-
 .challenge-form {
   display: flex;
   flex-direction: column;
@@ -422,7 +418,6 @@ export default {
 .form-label {
   font-size: 1rem;
   font-weight: 600;
-  color: #b0b0b0;
   margin-bottom: 0.5rem;
 }
 
