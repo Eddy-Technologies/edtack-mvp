@@ -41,7 +41,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
-      VITE_GOOGLE_AI_STUDIO_API_KEY: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY
+      NUXT_GOOGLE_AI_STUDIO_API_KEY: ''
     },
   },
 });

@@ -5,7 +5,7 @@ export const useFileUploadGP = async (file) => {
     return new Promise((resolve, reject) => {
         const config = useRuntimeConfig()
         console.log(config.public);
-        const ai = new GoogleGenAI({apiKey: config.public.VITE_GOOGLE_AI_STUDIO_API_KEY});
+        const ai = new GoogleGenAI({apiKey: config.public.NUXT_GOOGLE_AI_STUDIO_API_KEY});
         const reader = new FileReader();
 
         reader.onload = async (event) => {
