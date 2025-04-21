@@ -2,7 +2,7 @@
   <div class="generate-challenge">
     <AppHeader />
     <main :class="{ 'centered-bg': !quiz }" class="main-content">
-      <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container">
+      <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container bg-gray-600/50 dark:bg-zinc-900/50">
         <h1 v-if="!quiz" class="title">
           <span class="title-highlight">Generate Your Practice</span>
         </h1>
@@ -11,14 +11,14 @@
           <div v-if="!quiz" class="form-grid">
             <div class="form-group">
               <label for="level" class="form-label">Level</label>
-              <select id="level" v-model="selectedLevel" class="form-control">
+              <select id="level" v-model="selectedLevel" class="form-control bg-gray-100/70 dark:bg-zinc-800/70">
                 <option value="" disabled>Select Level</option>
                 <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
               </select>
             </div>
             <div class="form-group">
               <label for="innerLevel" class="form-label">Inner Level</label>
-              <select id="innerLevel" v-model="selectedInnerLevel" class="form-control">
+              <select id="innerLevel" v-model="selectedInnerLevel" class="form-control bg-gray-100/70 dark:bg-zinc-800/70">
                 <option value="" disabled>Select Inner Level</option>
                 <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
                   {{ innerLevel }}
@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
               <label for="subject" class="form-label">Subject</label>
-              <select id="subject" v-model="selectedSubject" class="form-control">
+              <select id="subject" v-model="selectedSubject" class="form-control bg-gray-100/70 dark:bg-zinc-800/70">
                 <option value="" disabled>Select Subject</option>
                 <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
               </select>
@@ -38,7 +38,7 @@
                   id="numberInput"
                   v-model="numberInput"
                   type="number"
-                  class="form-control"
+                  class="form-control bg-gray-100/70 dark:bg-zinc-800/70 border border-gray-300 dark:border-zinc-600"
                   min="1"
                   max="99"
                   placeholder="Enter a number"
@@ -318,7 +318,6 @@ export default {
 .form-container {
   width: 100%;
   max-width: 64rem;
-  background-color: rgba(42, 42, 42, 0.5);
   backdrop-filter: blur(10px);
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
@@ -391,7 +390,6 @@ export default {
 
 .form-control {
   padding: 0.75rem;
-  background-color: rgba(58, 58, 58, 0.7);
   border: 1px solid #4a4a4a;
   border-radius: 4px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
