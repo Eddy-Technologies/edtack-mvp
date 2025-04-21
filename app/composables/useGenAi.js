@@ -3,7 +3,7 @@ import {GoogleGenerativeAI} from '@google/generative-ai'
 export const useGenAi = async (schema) => {
     const config = useRuntimeConfig()
     console.log(config.public);
-    const genAI = new GoogleGenerativeAI(config.public.NUXT_GOOGLE_AI_STUDIO_API_KEY);
+    const genAI = new GoogleGenerativeAI(config.public.googleAIStudioApiKey);
     return genAI.getGenerativeModel({
         model: "gemini-2.0-flash",
         generationConfig: {
