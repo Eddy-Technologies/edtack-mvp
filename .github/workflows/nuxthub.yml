@@ -1,3 +1,6 @@
+name: Deploy to NuxtHub
+on: push
+
 jobs:
   deploy:
     name: "Deploy to NuxtHub"
