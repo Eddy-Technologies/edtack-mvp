@@ -11,7 +11,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-auth-utils',
     '@nuxtjs/mdc',
-    'nuxt-gtag'
+    'nuxt-gtag',
+    '@nuxt/scripts',
   ],
 
   hub: {
@@ -30,13 +31,14 @@ export default defineNuxtConfig({
       },
     },
   },
-
-  devtools: { enabled: true },
-
-  gtag: {
-    id: process.env.GOOGLE_TAG_MANAGER_ID, // Set your GTM ID here
-    enabled: process.env.NODE_ENV === 'production',
+  scripts: {
+    registry: {
+      googleAnalytics: {
+        id: process.env.GOOGLE_TAG_MANAGER_ID,
+      }
+    }
   },
+  devtools: { enabled: true },
 
   runtimeConfig: {
     public: {
