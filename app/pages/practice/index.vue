@@ -125,6 +125,7 @@ import QuizPage from '~/components/challenge/QuizPage.vue';
 import {useGetQuestionModelGP} from '~/composables/useGetQuestionModelGP.js';
 import data from '../../../assets/questions.json';
 import {useGetOptionModelGP} from "~/composables/useGetOptionModelGP.js";
+import {useCreditStore} from "~/stores/credit.js";
 
 export default {
   components: { QuizPage },
@@ -148,6 +149,8 @@ export default {
     const primarySubjects = ['Math', 'Science', 'English'];
     const secondarySubjects = ['Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Social Studies'];
     const jcSubjects = ['H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry', 'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History', 'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'];
+
+    const creditStore = useCreditStore();
 
     const toggleFormCollapse = () => {
       isFormCollapsed.value = !isFormCollapsed.value;
@@ -283,8 +286,9 @@ export default {
        */
     };
     const updateCredits = (newCredits) => {
-      credits.value = parseInt(localStorage.getItem('credits')) + newCredits;
-      localStorage.setItem('credits', credits.value); // Update local storage again just in case.
+      const updatedCredits = [...creditStore.childCredits];
+      updatedCredits[0] += newCredits * 10;
+      creditStore.childCredits = updatedCredits; // Replace reference to trigger update
     };
 
     onMounted(() => {

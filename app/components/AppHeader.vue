@@ -1,7 +1,7 @@
 <template>
  <ParentHeader v-if="isParent" />
- <ChildHeader v-else-if="isChild" />
- <Header v-else />
+ <ChildHeader v-else />
+ <!--<Header v-else />-->
 </template>
 
 <script>

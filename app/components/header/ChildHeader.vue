@@ -81,7 +81,7 @@ export default {
     watch(
         () => isParent ? creditStore.parentCredits : creditStore.childCredits,
         (newCredits) => {
-          credits.value = newCredits;
+          credits.value = newCredits[0];
         }
     );
 

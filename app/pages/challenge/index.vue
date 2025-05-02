@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import data from '../../../assets/questions.json';
 import {onBeforeMount} from "@vue/runtime-core";
@@ -44,7 +44,9 @@ export default {
     };
 
     const updateCredits = (newCredits) => {
-      creditStore.childCredits[0] += newCredits;
+      const updatedCredits = [...creditStore.childCredits];
+      updatedCredits[0] += newCredits * 10;
+      creditStore.childCredits = updatedCredits; // Replace reference to trigger update
     };
 
     onBeforeMount(() => {
