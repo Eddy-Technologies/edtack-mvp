@@ -16,6 +16,13 @@
       >
         Account Settings
       </button>
+      <button
+          class="sidebar-btn"
+          :class="{ active: selectedTab === 'store-settings' }"
+          @click="selectTab('store-settings')"
+      >
+        Store Settings
+      </button>
     </div>
 
     <!-- Content Area -->
@@ -67,6 +74,10 @@
           <h3 class="tab-title text-primary font-bold">Account Settings</h3>
           <Fund />
         </div>
+        <div v-if="selectedTab === 'store-settings'">
+          <h3 class="tab-title text-primary font-bold">Store Settings</h3>
+          <Store />
+        </div>
       </div>
     </div>
   </div>
@@ -78,9 +89,10 @@ import * as echarts from 'echarts';
 import Fund from "~/pages/parent/Fund.vue";
 import { useCreditStore } from "~/stores/credit";
 import { useProfileStore } from "~/stores/profile";
+import Store from "~/pages/parent/Store.vue";
 
 export default {
-  components: { Fund },
+  components: {Store, Fund },
   setup() {
     const parent = ref([
       { name: "Me", avatar: "https://randomuser.me/api/portraits/men/3.jpg", data: [5, 10, 15, 20, 25] }
@@ -236,7 +248,7 @@ export default {
 
 .profile-container {
   display: flex;
-  margin-top: 30px;
+  margin-top: 10px;
   gap: 50px;
 }
 
@@ -282,8 +294,8 @@ export default {
 
 /* Tab Content */
 .tab-content {
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 30px;
+  padding-top: 20px;
   border-top: 1px solid #ccc;
 }
 
@@ -326,6 +338,14 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+  .sidebar {
+    margin-top: 10px;
+  }
+
+  .sidebar-btn {
+    margin-right: 15px; /* Adjust the gap between buttons on mobile */
+  }
+
   .profile-container {
     flex-direction: column;
     gap: 30px;
