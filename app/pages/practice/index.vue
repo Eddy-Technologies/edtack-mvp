@@ -175,16 +175,6 @@ export default {
     });
 
     const createPrompt = (numberInput, selectedLevel, selectedInnerLevel, selectedSubject) => {
-      if (import.meta.client && window.gtag) {
-        window.gtag('event', 'user-action', {
-          event_category: 'select-prompt',
-          event_label: 'prompt',
-          numberInput,
-          selectedLevel,
-          selectedInnerLevel,
-          selectedSubject,
-        });
-      }
       return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
       of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
       Provide a JSON of just what is declared in the schema, which is the question, explanation and the id without the question options.
@@ -202,39 +192,75 @@ export default {
       quiz.value = '';
       errorMsg.value = null;
 
-      const questionPrompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
+      if (import.meta.client && window.gtag) {
+        window.gtag('event', 'user-action', {
+          event_category: 'select-prompt',
+          event_label: 'prompt',
+          numberInput,
+          selectedLevel,
+          selectedInnerLevel,
+          selectedSubject,
+        });
+      }
+      saveInputToLocalStorage();
 
-      try {
-        const result = await useGetQuestionModelGP(questionPrompt);
-        const optionPrompt = `With this JSON result ${result},
-        Copy the correct answer in the explanation and insert it into the options array.
-        Ensure that the correct answer is based on the explanation.
-        Ensure that the correct answer is also one of the options.
-        Do not use $...$ delimiters for math equations.
-        Always use Katex format $$...$$ as delimiters for all math and scientific equations for all questions.
-        Always use Katex format $$...$$ as delimiters for all math and scientific equations for options.
-        Ensure that there is no error in the question and the options.
-        Ensure that there is only one correct answer for correctAnswer.
-        Ensure that the correct answer is the value of the option and not using alphabets.
-        Ensure that the response only contains the json schema`;
-        quiz.value = await useGetOptionModelGP(optionPrompt);
-        //quiz.value = getRandomizedQuestions(data, numberInput.value);
-        saveInputToLocalStorage();
-        if (quiz.value && quiz.value.length > 0) {
-          //saveQuestionsToLocalStorage(quiz.value);
-        } else {
-          throw new Error('Exceeded limit');
-        }
-      } catch (error) {
-        console.error('Error fetching quiz:', error);
-        if (error.message === 'Exceeded limit') {
-          errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
-        } else {
-          errorMsg.value = 'An error occurred while generating the quiz.';
+      try{
+        const { data, error } = await $fetch('/api/questions', {
+          method: 'post',
+          body: {
+            numberInput: numberInput.value,
+            selectedLevel: selectedLevel.value,
+            selectedInnerLevel: selectedInnerLevel.value,
+            selectedSubject:  selectedSubject.value,
+          }
+        })
+
+        if (error) {
+          console.error('Error fetching quiz:', error);
+          if (error.message === 'Exceeded limit') {
+            errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
+          } else {
+            errorMsg.value = 'An error occurred while generating the quiz.';
+          }
+          return;
         }
       } finally {
         isLoading.value = false;
+        console.log("Questions successfully generated:", data);
+        quiz.value = data.questions;
       }
+      // const questionPrompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
+      // try {
+      //   const result = await useGetQuestionModelGP(questionPrompt);
+      //   const optionPrompt = `With this JSON result ${result},
+      //   Copy the correct answer in the explanation and insert it into the options array.
+      //   Ensure that the correct answer is based on the explanation.
+      //   Ensure that the correct answer is also one of the options.
+      //   Do not use $...$ delimiters for math equations.
+      //   Always use Katex format $$...$$ as delimiters for all math and scientific equations for all questions.
+      //   Always use Katex format $$...$$ as delimiters for all math and scientific equations for options.
+      //   Ensure that there is no error in the question and the options.
+      //   Ensure that there is only one correct answer for correctAnswer.
+      //   Ensure that the correct answer is the value of the option and not using alphabets.
+      //   Ensure that the response only contains the json schema`;
+      //   quiz.value = await useGetOptionModelGP(optionPrompt);
+      //   //quiz.value = getRandomizedQuestions(data, numberInput.value);
+      //   saveInputToLocalStorage();
+      //   if (quiz.value && quiz.value.length > 0) {
+      //     //saveQuestionsToLocalStorage(quiz.value);
+      //   } else {
+      //     throw new Error('Exceeded limit');
+      //   }
+      // } catch (error) {
+      //   console.error('Error fetching quiz:', error);
+      //   if (error.message === 'Exceeded limit') {
+      //     errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
+      //   } else {
+      //     errorMsg.value = 'An error occurred while generating the quiz.';
+      //   }
+      // } finally {
+      //   isLoading.value = false;
+      // }
     };
 
     const getRandomizedQuestions = (data, numberOfQuestions) => {
