@@ -205,7 +205,7 @@ export default {
       saveInputToLocalStorage();
 
       try{
-        const { data, error } = await $fetch('/api/questions', {
+        const questions = await $fetch('/api/questions', {
           method: 'post',
           body: {
             numberInput: numberInput.value,
@@ -214,20 +214,18 @@ export default {
             selectedSubject:  selectedSubject.value,
           }
         })
+        console.log("Questions successfully generated:", questions);
+        quiz.value = questions.questions;
 
-        if (error) {
-          console.error('Error fetching quiz:', error);
-          if (error.message === 'Exceeded limit') {
-            errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
-          } else {
-            errorMsg.value = 'An error occurred while generating the quiz.';
-          }
-          return;
+      } catch (error) {
+        console.error('Error fetching quiz:', error);
+        if (error.message === 'Exceeded limit') {
+          errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
+        } else {
+          errorMsg.value = 'An error occurred while generating the quiz.';
         }
       } finally {
         isLoading.value = false;
-        console.log("Questions successfully generated:", data);
-        quiz.value = data.questions;
       }
       // const questionPrompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
       // try {
