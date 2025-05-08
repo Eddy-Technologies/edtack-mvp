@@ -14,9 +14,12 @@
     <div class="overlay">
       <!-- Landing Message -->
       <div class="landing-message">
-        <h1 class="text-2xl md:text-3xl text-black header">
-          Welcome to Eddy!
-        </h1>
+        <div class="header-row">
+          <h1 class="text-2xl md:text-3xl text-black header mr-3">
+            Welcome to Eddy
+          </h1>
+          <img src="/logo.png" class="logo" />
+        </div>
         <h2 class="text-xl md:text-2xl text-black header mt-2">
           An educational platform where parents can incentivise and motivate <br />
           their children for consistent and fun learning.
@@ -68,8 +71,7 @@ export default {
     const mobileLeft = ref(parent);
     const mobileRight = ref(child);
     const isMobile = ref(false);
-
-    const infoBoxes = ref([
+    const desktopInfoBox = [
       {
         image: deposit,
         icon: 'i-heroicons-user-group',
@@ -80,7 +82,7 @@ export default {
         image: deposit,
         icon: 'i-heroicons-light-bulb',
         label: 'Earn Rewards',
-        description: 'Test yourself with our quiz generator'
+        description: 'Earn credits from weekly challenges'
       },
       {
         image: deposit,
@@ -94,7 +96,34 @@ export default {
         label: 'The Store',
         description: 'Swap your credits for exciting goodies'
       },
-    ]);
+    ];
+    const mobileInfoBoxes = [
+      {
+        image: deposit,
+        icon: 'i-heroicons-user-group',
+        label: 'Parent Dashboard',
+        description: 'Top up cash and control settings'
+      },
+      {
+        image: deposit,
+        icon: 'i-heroicons-chart-bar',
+        label: 'Track Progress',
+        description: `Track your child\'s progress with easy to visualise charts`
+      },
+      {
+        image: deposit,
+        icon: 'i-heroicons-light-bulb',
+        label: 'Earn Rewards',
+        description: 'Earn credits from weekly challenges'
+      },
+      {
+        image: deposit,
+        icon: 'i-heroicons-building-storefront',
+        label: 'The Store',
+        description: 'Swap your credits for exciting goodies'
+      },
+    ];
+    const infoBoxes = computed(() => isMobile.value ? mobileInfoBoxes : desktopInfoBox);
 
     const hoveredBoxIndex = ref(null);
 
@@ -145,7 +174,6 @@ export default {
   overflow: auto;
   text-align: center;
 }
-
 .background-image {
   position: absolute;
   top: 0;
@@ -154,6 +182,17 @@ export default {
   height: 100%;
   object-fit: cover;
   z-index: 0;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  width: 60px; /* Adjust size as needed */
+  height: auto;
 }
 
 .overlay {
@@ -179,7 +218,7 @@ export default {
 
   .mobile-left-img {
     position: fixed;
-    top: 100px;
+    top: 130px;
     left: 0;
     width: 200px;
     height: auto;
@@ -212,12 +251,18 @@ export default {
   font-family: Georgia, sans-serif;
 }
 
+@media (max-width: 768px) {
+  .landing-message {
+    margin-top: 10px;
+  }
+}
+
 .info-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
   width: 100%;
-  max-width: 300px;
+  max-width: 250px;
   margin-bottom: 20px;
 }
 
