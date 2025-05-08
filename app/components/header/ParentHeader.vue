@@ -13,11 +13,6 @@
         </ULink>
       </div>
 
-      <!-- Role -->
-      <div class="flex-1 text-center text-xl md:text-2xl text-primary md:ml-24">
-        <span>Parent</span>
-      </div>
-
       <!-- Desktop Menu -->
       <div class="hidden md:flex items-center gap-x-2">
         <UIcon

@@ -1,10 +1,8 @@
 <template>
   <div class="home">
-    <AppHeader />
     <main class="main-content">
       <AppContainer />
     </main>
-    <!-- <AppFooter /> -->
   </div>
 </template>
 
