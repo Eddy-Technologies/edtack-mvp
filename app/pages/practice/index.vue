@@ -214,15 +214,15 @@ export default {
             selectedSubject:  selectedSubject.value,
           }
         })
-        console.log("Questions successfully generated:", questions);
         quiz.value = questions.questions;
-
-      } catch (error) {
-        console.error('Error fetching quiz:', error);
-        if (error.message === 'Exceeded limit') {
-          errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
-        } else {
-          errorMsg.value = 'An error occurred while generating the quiz.';
+        if (error) {
+          console.error('Error fetching quiz:', error);
+          if (error.message === 'Exceeded limit') {
+            errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
+          } else {
+            errorMsg.value = 'An error occurred while generating the quiz.';
+          }
+          return;
         }
       } finally {
         isLoading.value = false;
