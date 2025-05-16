@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
         throw new Error('Invalid subject for Junior College');
     }
 
-    const questionPrompt = createPrompt(numberInput, selectedLevel, selectedInnerLevel, selectedSubject.value);
+    const questionPrompt = createPrompt(numberInput, selectedLevel, selectedInnerLevel, selectedSubject);
     const result = await useGetQuestionModelGP(questionPrompt);
     const optionPrompt = `With this JSON result ${result},
     Copy the correct answer in the explanation and insert it into the options array.
