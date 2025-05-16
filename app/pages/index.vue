@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <main class="main-content">
+  <div class="flex flex-col min-h-screen -mt-[60px] md:mt-0">
+    <main class="flex-grow flex justify-center relative w-full h-full">
       <AppContainer />
     </main>
   </div>
@@ -25,30 +25,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.home {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Ensures the home container takes up the full viewport height */
-
-  @media (max-width: 768px) { // Adjust layout for mobile screens
-    margin-top: -60px;
-  }
-}
-
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 100%; /* Make sure the container takes full height available */
-}
-
-.AppContainer {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-</style>

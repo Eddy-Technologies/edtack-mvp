@@ -5,7 +5,7 @@
     <!-- Quiz Phase -->
     <div v-if="!quizFinished">
       <div v-for="(question, index) in questions" :key="index" class="quiz-section">
-        <QuizQuestion
+        <Question
           :question="question"
           :questionIndex="index"
           :selectedAnswer="userAnswers[index]"
@@ -19,7 +19,7 @@
     <div v-else ref="content">
       <h3 class="section-title">Results</h3>
       <div v-for="(question, index) in questions" :key="index" class="quiz-section">
-        <QuizResult
+        <QuestionResult
           :question="question"
           :questionIndex="index"
           :selectedAnswer="userAnswers[index]"
@@ -34,13 +34,13 @@
 </template>
 
 <script>
-import QuizQuestion from "~/components/challenge/QuizQuestion.vue";
-import QuizResult from "~/components/challenge/QuizResult.vue";
+import Question from "~/components/challenge/Question.vue";
+import QuestionResult from "~/components/challenge/QuestionResult.vue";
 
 export default {
   components: {
-    QuizQuestion,
-    QuizResult
+    Question,
+    QuestionResult
   },
   props: {
     quiz: Object,
