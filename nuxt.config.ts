@@ -14,7 +14,6 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxt/scripts',
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/supabase'
   ],
 
   hub: {
