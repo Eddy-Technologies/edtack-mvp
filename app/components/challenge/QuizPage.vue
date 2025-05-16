@@ -1,8 +1,10 @@
 <template>
   <div class="quiz-container">
-    <h1> {{ name }}</h1>
+    <h1 class="quiz-title">{{ name }}</h1>
+
+    <!-- Quiz Phase -->
     <div v-if="!quizFinished">
-      <div v-for="(question, index) in questions" :key="index" class="question">
+      <div v-for="(question, index) in questions" :key="index" class="quiz-section">
         <QuizQuestion
           :question="question"
           :questionIndex="index"
@@ -10,23 +12,23 @@
           @answer-selected="updateAnswer(index, $event)"
         />
       </div>
-      <button @click="submitQuiz">Submit Challenge</button>
+      <button class="btn-submit" @click="submitQuiz">Submit Challenge</button>
     </div>
 
+    <!-- Result Phase -->
     <div v-else ref="content">
-      <h3>Results</h3>
-      <div v-for="(question, index) in questions" :key="index">
+      <h3 class="section-title">Results</h3>
+      <div v-for="(question, index) in questions" :key="index" class="quiz-section">
         <QuizResult
           :question="question"
           :questionIndex="index"
           :selectedAnswer="userAnswers[index]"
         />
       </div>
-      <div>
+      <div class="score-box">
         <h4>Your Score: {{ score }} / {{ questions.length }}</h4>
         <span>You earned {{ score }} credits!</span>
       </div>
-      <!--<button @click="restartQuiz">Try Again</button>-->
     </div>
   </div>
 </template>
@@ -41,24 +43,11 @@ export default {
     QuizResult
   },
   props: {
-    quiz: {
-      type: Object
-    },
+    quiz: Object,
   },
   data() {
     return {
       questions: this.quiz,
-      questions2: [{
-        "id": 1,
-        "title": "Which of the following is a characteristic of living organisms?",
-        "options": ["Reproduction", "Nutrition", "Excretion", "All of the above"],
-        "correctAnswer": "All of the above"
-      }, {
-        "id": 2,
-        "title": "What is the function of the cell membrane?",
-        "options": ["To regulate the movement of substances into and out of the cell", "To synthesize proteins", "To store genetic information", "To carry out respiration"],
-        "correctAnswer": "To regulate the movement of substances into and out of the cell"
-      }],
       userAnswers: [],
       quizFinished: false,
       score: 0,
@@ -78,74 +67,109 @@ export default {
       this.score = this.userAnswers.reduce((total, answer, index) => {
         return total + (answer === this.questions[index].correctAnswer ? 1 : 0);
       }, 0);
-    },
-    restartQuiz() {
-      this.userAnswers = [];
-      this.score = 0;
-      this.quizFinished = false;
     }
   }
 };
 </script>
 
 <style scoped>
+/* Container */
 .quiz-container {
-  width: 70%;
+  width: 80%;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 24px;
 }
 
-button {
+/* Title */
+.quiz-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Segmented Card Section */
+.quiz-section {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.quiz-section:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dark .quiz-section {
+  background-color: #1e1e1e;
+  border-color: #333;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+.dark .quiz-section:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
+}
+
+/* Buttons */
+.btn-submit {
   margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
+  padding: 12px 24px;
+  background-color: #00c853;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #45a049;
+.btn-submit:hover {
+  background-color: #00b341;
 }
 
-h3 {
-  font-size: 1.2em;
+.dark .btn-submit {
+  background-color: #00e676;
+  color: #121212;
+}
+
+.dark .btn-submit:hover {
+  background-color: #00c853;
+}
+
+/* Score box */
+.score-box {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  border: 1px solid #b3e5fc;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.2);
+}
+
+.dark .score-box {
+  background-color: #263238;
+  border-color: #4dd0e1;
+  color: #b2ebf2;
+  box-shadow: 0 0 8px rgba(77, 208, 225, 0.3);
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
 }
 
 h4 {
+  font-size: 1.2rem;
   margin-top: 20px;
-  font-size: 1.2em;
-  font-weight: bold;
+  font-weight: 600;
 }
 
-.explanation {
-  color: #48bb78;
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.explanation:hover {
-  text-decoration: underline;
-}
-
-.question {
-  margin-top: 10px;
-}
-
-hr {
-  margin: 20px 0;
-}
-
-p {
-  margin: 5px 0;
-}
-
-strong {
-  font-weight: bold;
-}
 </style>
