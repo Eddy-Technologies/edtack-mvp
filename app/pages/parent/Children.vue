@@ -1,81 +1,82 @@
 <template>
-  <div class="main-container">
-    <!-- Sidebar Section -->
-    <div class="sidebar">
+  <div class="flex flex-col md:flex-row h-full">
+    <!-- Desktop Sidebar -->
+    <div class="hidden md:flex flex-col w-64 p-4 border-r border-gray-200">
       <button
-          class="sidebar-btn"
-          :class="{ active: selectedTab === 'analytics' }"
-          @click="selectTab('analytics')"
+          v-for="tab in tabs"
+          :key="tab.key"
+          class="w-full text-left p-2 mb-2 rounded"
+          :class="{ 'bg-primary text-white': selectedTab === tab.key }"
+          @click="selectTab(tab.key)"
       >
-        Analytics
+        {{ tab.label }}
       </button>
+    </div>
+
+    <!-- Mobile Tab Bar -->
+    <div class="flex md:hidden justify-around border-b border-gray-300 mb-4 px-2 pt-2">
       <button
-          class="sidebar-btn"
-          :class="{ active: selectedTab === 'account-settings' }"
-          @click="selectTab('account-settings')"
+          v-for="tab in tabs"
+          :key="tab.key"
+          class="pb-2 text-sm font-medium"
+          :class="selectedTab === tab.key
+          ? 'border-b-2 border-primary text-primary'
+          : 'text-gray-600'"
+          @click="selectTab(tab.key)"
       >
-        Account Settings
-      </button>
-      <button
-          class="sidebar-btn"
-          :class="{ active: selectedTab === 'store-settings' }"
-          @click="selectTab('store-settings')"
-      >
-        Store Settings
+        {{ tab.label }}
       </button>
     </div>
 
     <!-- Content Area -->
-    <div class="content-area">
-      <div class="profile-container">
+    <div class="flex-1 p-4">
+      <div class="flex flex-col lg:flex-row gap-8">
         <!-- Parent Section -->
-        <div class="parent-section">
-          <h2 class="section-title text-primary">Profile</h2>
+        <div>
+          <h2 class="text-xl font-bold text-primary mb-2">Profile</h2>
           <div
-              class="parent-box"
+              class="min-w-[160px] cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center"
               @click="selectChild(0)"
           >
-            <img :src="parent[0].avatar" alt="Avatar" class="avatar" />
+            <img :src="parent[0].avatar" alt="Avatar" class="w-16 h-16 rounded-full mb-2" />
             <p class="text-primary font-bold">{{ parent[0].name }}</p>
             <p class="text-primary font-bold">Total: ${{ parentCredit }}</p>
           </div>
         </div>
 
-        <!-- Children Section -->
-        <div class="children-section">
-          <h2 class="section-title text-primary">Children</h2>
-          <div class="children-list">
+        <!-- Children Section with Carousel -->
+        <div class="w-full">
+          <h2 class="text-xl font-bold text-primary mb-2">Children</h2>
+          <div class="flex overflow-x-auto space-x-4 pb-2">
             <div
                 v-for="(child, index) in children"
                 :key="index"
-                class="child-item"
+                class="min-w-[160px] flex-shrink-0 border-2 rounded-xl p-4 text-center cursor-pointer"
                 @click="selectChild(index)"
             >
-              <div class="child-box">
-                <img :src="child.avatar" alt="Avatar" class="avatar" />
-                <p class="text-primary font-bold">{{ child.name }}</p>
-                <p class="text-primary font-bold">Allocated: ${{ childCredit[index] }}</p>
-                <p class="text-primary font-bold">Earned: ${{ childEarnedCredit[index] }}</p>
-              </div>
+              <img :src="child.avatar" alt="Avatar" class="w-16 h-16 rounded-full mx-auto mb-2" />
+              <p class="text-primary font-bold">{{ child.name }}</p>
+              <p class="text-primary font-bold">Allocated: ${{ childCredit[index] }}</p>
+              <p class="text-primary font-bold">Earned: ${{ childEarnedCredit[index] }}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Tab Content (Analytics or Account Settings) -->
-      <div class="tab-content">
+      <!-- Tab Content -->
+      <div class="mt-8">
         <div v-if="selectedTab === 'analytics'">
-          <h3 class="tab-title text-primary font-bold">Analytics</h3>
-          <div class="chart-container" v-if="selectedChild !== null">
-            <div ref="chartContainer" class="chart"></div>
+          <h3 class="text-xl font-bold text-primary mb-4">Analytics</h3>
+          <div class="w-full h-72" v-if="selectedChild !== null">
+            <div ref="chartContainer" class="w-full h-full"></div>
           </div>
         </div>
         <div v-if="selectedTab === 'account-settings'">
-          <h3 class="tab-title text-primary font-bold">Account Settings</h3>
+          <h3 class="text-xl font-bold text-primary mb-4">Account Settings</h3>
           <Fund />
         </div>
         <div v-if="selectedTab === 'store-settings'">
-          <h3 class="tab-title text-primary font-bold">Store Settings</h3>
+          <h3 class="text-xl font-bold text-primary mb-4">Store Settings</h3>
           <Store />
         </div>
       </div>
@@ -92,7 +93,7 @@ import { useProfileStore } from "~/stores/profile";
 import Store from "~/pages/parent/Store.vue";
 
 export default {
-  components: {Store, Fund },
+  components: { Store, Fund },
   setup() {
     const parent = ref([
       { name: "Me", avatar: "https://randomuser.me/api/portraits/men/3.jpg", data: [5, 10, 15, 20, 25] }
@@ -115,44 +116,26 @@ export default {
     const profileStore = useProfileStore();
     const profile = ref(profileStore.childSelected);
 
-    // Watch for changes in parent and child credits from the store
-    watch(
-        () => creditStore.parentCredits,
-        (newParentCredits) => {
-          parentCredit.value = newParentCredits; // Update parentCredit when the store changes
-          console.log('Parent credits updated:', parentCredit.value);
-        }
-    );
+    const tabs = [
+      { key: 'analytics', label: 'Analytics' },
+      { key: 'account-settings', label: 'Account Settings' },
+      { key: 'store-settings', label: 'Store Settings' }
+    ];
 
-    watch(
-        () => creditStore.childCredits,
-        (newChildCredits) => {
-          childCredit.value = newChildCredits; // Update childCredit when the store changes
-          console.log('Child credits updated:', childCredit.value);
-        }
-    );
+    watch(() => creditStore.parentCredits, (newVal) => parentCredit.value = newVal);
+    watch(() => creditStore.childCredits, (newVal) => childCredit.value = newVal);
 
-    const selectChild = (index) => {
-      selectedChild.value = index;
-    };
-
-    const selectTab = (tab) => {
-      selectedTab.value = tab;
-    };
+    const selectChild = (index) => selectedChild.value = index;
+    const selectTab = (tab) => selectedTab.value = tab;
 
     const renderChart = () => {
       if (!chartContainer.value) return;
-
-      if (chartInstance) {
-        chartInstance.dispose();
-      }
+      if (chartInstance) chartInstance.dispose();
 
       chartInstance = echarts.init(chartContainer.value);
+      const selectedData = selectedChild.value === 0 ? parent.value[0].data : children.value[selectedChild.value].data;
 
-      const selectedData = selectedChild.value !== null ?
-          (selectedChild.value === 0 ? parent.value[0].data : children.value[selectedChild.value].data) : [];
-
-      const option = {
+      chartInstance.setOption({
         title: {
           text: selectedChild.value === 0 ? `My Deposit` : `${children.value[selectedChild.value].name}'s Deposit`,
         },
@@ -169,23 +152,14 @@ export default {
             data: selectedData,
             type: 'line',
             smooth: true,
-            itemStyle: {
-              color: 'rgb(75, 192, 192)',
-            },
+            itemStyle: { color: 'rgb(75, 192, 192)' },
           },
         ],
-      };
-
-      chartInstance.setOption(option);
+      });
     };
 
-    watch(selectedChild, (newValue) => {
-      renderChart();
-    });
-
-    onMounted(() => {
-      renderChart();
-    });
+    watch(selectedChild, () => renderChart());
+    onMounted(() => renderChart());
 
     return {
       parent,
@@ -197,172 +171,9 @@ export default {
       chartContainer,
       parentCredit,
       childCredit,
-      childEarnedCredit
+      childEarnedCredit,
+      tabs
     };
-  },
+  }
 };
 </script>
-
-<style scoped>
-/* Main Layout */
-.main-container {
-  display: flex;
-  height: 100vh;
-}
-
-.sidebar {
-  width: 250px;
-  padding: 20px;
-  border-right: 2px solid #ccc;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  margin-top: 60px;
-}
-
-.sidebar-btn {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar-btn:hover {
-  background-color: #e2e2e2;
-}
-
-.sidebar-btn.active {
-  background-color: #14dfbd;
-}
-
-/* Content Area */
-.content-area {
-  margin-left: 250px;
-  padding: 20px;
-  flex-grow: 1;
-}
-
-.profile-container {
-  display: flex;
-  margin-top: 10px;
-  gap: 50px;
-}
-
-.section-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.parent-section, .children-section {
-  margin-bottom: 10px;
-}
-
-.parent-box, .child-box {
-  cursor: pointer;
-  width: 150px;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.children-list {
-  display: flex;
-  gap: 15px;
-}
-
-.child-item {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-}
-
-/* Tab Content */
-.tab-content {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #ccc;
-}
-
-.tab-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.chart-container {
-  width: 100%;
-  height: 300px;
-  margin-top: 10px;
-}
-
-.chart {
-  width: 100%;
-  height: 100%;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 1024px) {
-  .main-container {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    position: relative;
-    border-right: none;
-  }
-
-  .content-area {
-    margin-left: 0;
-  }
-
-  .sidebar-btn {
-    width: auto;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .sidebar {
-    margin-top: 10px;
-  }
-
-  .sidebar-btn {
-    margin-right: 15px; /* Adjust the gap between buttons on mobile */
-  }
-
-  .profile-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .section-title {
-    font-size: 1.2em;
-  }
-
-  .chart-container {
-    width: 90%;
-    height: 250px;
-  }
-}
-</style>

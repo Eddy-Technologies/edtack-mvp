@@ -13,6 +13,8 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     'nuxt-gtag',
     '@nuxt/scripts',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/supabase'
   ],
 
   hub: {

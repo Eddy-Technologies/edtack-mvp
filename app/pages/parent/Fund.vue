@@ -1,19 +1,24 @@
 <template>
-  <div class="bank-account-container mt-10">
-    <h3 class="title text-primary">Linked Bank Account</h3>
+  <!-- Linked Bank Account -->
+  <div class="mt-10">
+    <h3 class="text-lg font-extrabold text-primary mb-6">Linked Bank Account</h3>
     <ULink
-        class="text-l md:text-l text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-solid hover:border-primary hover:text-green-600 transition duration-300 ease-in-out w-34 h-16 px-6 py-3 rounded-lg p-2"
+        class="text-base md:text-lg text-primary font-bold flex items-center justify-center gap-2 border-2 border-primary hover:text-green-600 hover:border-green-600 transition duration-300 ease-in-out w-34 h-16 px-6 py-3 rounded-lg"
         @click="addBankAccount"
     >
       Link a Bank Account
     </ULink>
   </div>
 
-  <div class="quick-deposit-container flex flex-col mt-10">
-    <div class="flex items-center gap-x-4">
-      <h3 class="title text-primary">Quick Deposit</h3>
-      <!-- Child Selection Dropdown -->
-      <select v-model="selectedChildIndex" @change="setSelectedChild" class="quick-deposit-dropdown border-2 border-primary p-2 rounded-lg text-primary">
+  <!-- Quick Deposit -->
+  <div class="mt-10 flex flex-col">
+    <div class="flex items-center gap-4 mb-4">
+      <h3 class="text-lg font-extrabold text-primary">Quick Deposit</h3>
+      <select
+          v-model="selectedChildIndex"
+          @change="setSelectedChild"
+          class="border-2 border-primary rounded-lg text-primary p-2"
+      >
         <option disabled value="">Select a Child</option>
         <option v-for="(child, index) in children" :key="index" :value="index">
           {{ child.name }}
@@ -21,42 +26,32 @@
       </select>
     </div>
 
-    <!-- Quick Deposit Buttons -->
-    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-10 gap-4">
       <ULink
-          class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-solid hover:border-primary hover:text-green-600 transition duration-300 ease-in-out w-24 h-16 px-6 py-3 rounded-lg p-2"
-          @click="askForConfirmation(10)"
+          v-for="amount in [10, 50, 100]"
+          :key="amount"
+          class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-2 border-2 border-primary hover:text-green-600 hover:border-green-600 transition duration-300 ease-in-out w-24 h-16 px-6 py-3 rounded-lg"
+          @click="askForConfirmation(amount)"
       >
-        $10
-      </ULink>
-      <ULink
-          class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-solid hover:border-primary hover:text-green-600 transition duration-300 ease-in-out w-24 h-16 px-6 py-3 rounded-lg p-2"
-          @click="askForConfirmation(50)"
-      >
-        $50
-      </ULink>
-      <ULink
-          class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-x-2 border-2 border-solid hover:border-primary hover:text-green-600 transition duration-300 ease-in-out w-24 h-16 px-6 py-3 rounded-lg p-2"
-          @click="askForConfirmation(100)"
-      >
-        $100
+        ${{ amount }}
       </ULink>
     </div>
   </div>
 
-  <div class="quick-deposit-container flex flex-col mt-10">
-    <h3 class="title text-primary">Deposit via PayNow</h3>
-    <p>Do not PayNow as we are in beta testing but if you want to support us, go ahead :)</p>
-    <img class="m-2 w-40" :src="PayNow" alt="PayNow">
+  <!-- Deposit via PayNow -->
+  <div class="mt-10 flex flex-col">
+    <h3 class="text-lg font-extrabold text-primary mb-2">Deposit via PayNow</h3>
+    <p class="mb-2 text-sm">Do not PayNow as we are in beta testing but if you want to support us, go ahead :)</p>
+    <img class="w-40 m-2" :src="PayNow" alt="PayNow" />
   </div>
 
   <!-- Confirmation Modal -->
   <ConfirmationModal
-    :showModal="showModal"
-    :amount="creditAmount"
-    :name="children[selectedChildIndex].name"
-    @close="showModal = false"
-    @confirm="addCreditsConfirmed"
+      :showModal="showModal"
+      :amount="creditAmount"
+      :name="children[selectedChildIndex].name"
+      @close="showModal = false"
+      @confirm="addCreditsConfirmed"
   />
 </template>
 
@@ -133,14 +128,4 @@ function addBankAccount() {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  font-size: 1rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-}
-
-.quick-deposit-dropdown {
-  margin-right: 10px;
-  margin-bottom: 20px;
-}
 </style>

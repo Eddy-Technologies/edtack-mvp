@@ -11,6 +11,3 @@
 <script setup>
 import Children from "~/pages/parent/Children.vue";
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -1,63 +1,58 @@
 <template>
   <AppHeader />
-  <div class="app">
-    <div class="image-container" @mouseleave="resetOverlay">
-      <img :src="background" class="item-image" alt="challenge">
+  <div class="relative w-full h-screen md:mt-0 mt-[-60px]">
+    <div class="relative w-full h-full" @mouseleave="resetOverlay">
+      <img :src="background" class="w-full h-full object-cover" alt="challenge" />
 
-      <!-- Left overlay: covers left half of the image (hidden on mobile) -->
+      <!-- Left overlay (desktop only) -->
       <div
           v-if="!isMobile"
           @mousemove="handleMouseMoveLeft"
-          class="overlay left-overlay"
           @click="routeTo('/challenge')"
-          :style="{ backgroundColor: leftOverlay ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)'}">
+          class="absolute top-0 left-0 w-1/2 h-full transition-colors duration-300 z-10"
+          :class="leftOverlay ? 'bg-black/30' : 'bg-transparent'"
+      >
         <ULink
             v-if="!leftOverlay"
-            class="challenge-text drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 mr-20"
-            style="display: flex; flex-direction: column; justify-content: flex-start;"
+            class="text-[#2f6089] drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex flex-col justify-start gap-2 px-6 py-3 mr-20"
         >
           Challenge
-          <span class="credits-amount text-sm" style="margin-top: auto;">Earn up to 10 credits</span>
+          <span class="text-sm mt-auto">Earn up to 10 credits</span>
         </ULink>
       </div>
 
-      <!-- Right overlay: covers right half of the image (hidden on mobile) -->
+      <!-- Right overlay (desktop only) -->
       <div
           v-if="!isMobile"
           @mousemove="handleMouseMoveRight"
-          class="overlay right-overlay"
           @click="routeTo('/practice')"
-          :style="{ backgroundColor: rightOverlay ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0)'}">
+          class="absolute top-0 right-0 w-1/2 h-full transition-colors duration-300 z-10"
+          :class="rightOverlay ? 'bg-black/30' : 'bg-transparent'"
+      >
         <ULink
             v-if="!rightOverlay"
-            class="practice-text drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 ml-auto"
-            style="display: flex; flex-direction: column; justify-content: flex-start;"
+            class="text-[#c8e6ce] drop-shadow-[1px_1px_1px_black] text-2xl md:text-3xl lg:text-4xl font-bold flex flex-col justify-start gap-2 px-6 py-3 ml-auto"
         >
           Practice
-          <span class="credits-amount text-sm" style="margin-top: auto;">Try a sample challenge</span>
+          <span class="text-sm mt-auto">Try a sample challenge</span>
         </ULink>
       </div>
 
-      <!-- For Mobile devices: Top and Bottom half overlays -->
+      <!-- Mobile overlays -->
       <div v-if="isMobile">
-        <!-- Top half overlay (clickable) -->
         <div
-            class="mobile-overlay top-overlay"
+            class="absolute top-0 w-full h-1/2 flex flex-col justify-end text-center text-white text-2xl font-bold p-4 bg-black/10 z-10"
             @click="routeTo('/challenge')"
-            style="display: flex; flex-direction: column; justify-content: flex-end;"
         >
-          <span class="challenge-text drop-shadow-[1px_1px_1px_black]">Challenge</span>
-          <span class="challenge-text text-sm">Earn up to 10 credits</span>
+          <span class="text-[#2f6089] drop-shadow-[1px_1px_1px_black]">Challenge</span>
+          <span class="text-sm">Earn up to 10 credits</span>
         </div>
-
-        <!-- Bottom half overlay (clickable) -->
         <div
-            class="mobile-overlay bottom-overlay"
+            class="absolute bottom-0 w-full h-1/2 flex flex-col justify-start text-center text-white text-2xl font-bold p-4 bg-black/10 z-10"
             @click="routeTo('/practice')"
-            style="display: flex; flex-direction: column; justify-content: flex-start;"
         >
-          <span class="practice-text drop-shadow-[1px_1px_1px_black] mt-2">Practice</span>
-          <span class="practice-text text-sm">Try a sample challenge</span>
+          <span class="text-[#c8e6ce] drop-shadow-[1px_1px_1px_black] mt-2">Practice</span>
+          <span class="text-sm">Try a sample challenge</span>
         </div>
       </div>
     </div>
@@ -147,79 +142,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.challenge-text {
-  color: #2f6089
-}
-.practice-text {
-  color: #c8e6ce
-}
-.app {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* Ensure the app takes full screen height */
-
-  @media (max-width: 768px) { // Adjust layout for mobile screens
-    margin-top: -60px;
-  }
-}
-.image-container {
-  position: relative;
-  width: 100%;
-  height: 100%; /* Ensure the image container takes up full height of the app */
-}
-
-/* Ensure the image takes up the full width and height */
-.item-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the image fully covers the container */
-}
-
-/* Overlay styles */
-.overlay {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 50%;
-  transition: background-color 0.3s ease-in-out;
-  z-index: 5; /* Overlay stays above the image */
-}
-
-.left-overlay {
-  left: 0; /* Covers the left half of the image */
-}
-
-.right-overlay {
-  right: 0; /* Covers the right half of the image */
-}
-
-/* Mobile Styles: Links positioned at the top and bottom */
-.mobile-overlay {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent overlay */
-  color: white;
-}
-
-.top-overlay {
-  top: 0;
-  height: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bottom-overlay {
-  bottom: 0;
-  height: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-</style>
