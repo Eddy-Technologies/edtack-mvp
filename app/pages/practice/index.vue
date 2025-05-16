@@ -35,15 +35,20 @@
               </div>
               <div class="form-group">
                 <label for="numberInput" class="form-label text-primary-800 dark:text-primary-400">Questions</label>
-                <input
+                <select
                   id="numberInput"
                   v-model="numberInput"
-                  type="number"
                   class="form-control bg-gray-200/70 dark:bg-zinc-800/70 border border-gray-300 dark:border-zinc-600"
-                  min="1"
-                  max="10"
-                  placeholder="Enter a number"
                 >
+                  <option value="" disabled>Select Number of Questions</option>
+                  <option
+                    v-for="option in numberInputOptions"
+                    :key="option"
+                    :value="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
                 <div v-if="errorMsg" class="text-danger">
                   {{ errorMsg }}
                 </div>
@@ -76,14 +81,20 @@
               </div>
               <div class="form-group">
                 <label for="numberInput" class="compact-label">Questions</label>
-                <input
-                    id="numberInput"
-                    v-model="numberInput"
-                    type="number"
-                    class="compact-control"
-                    min="1"
-                    placeholder="#"
+                <select
+                  id="numberInput"
+                  v-model="numberInput"
+                  class="compact-control"
                 >
+                  <option value="" disabled>Select Number of Questions</option>
+                  <option
+                    v-for="option in numberInputOptions"
+                    :key="option"
+                    :value="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
               </div>
             </div>
 
@@ -135,7 +146,7 @@ export default {
     const selectedLevel = ref('');
     const selectedInnerLevel = ref('');
     const selectedSubject = ref('');
-    const numberInput = ref(null);
+    const numberInput = ref(10);
     const errorMsg = ref(null);
     const loadingText = ref(''); // animated dots
     let dotInterval = null;
@@ -149,6 +160,8 @@ export default {
     const primarySubjects = ['Math', 'Science', 'English'];
     const secondarySubjects = ['Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Social Studies'];
     const jcSubjects = ['H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry', 'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History', 'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'];
+
+    const numberInputOptions = [5, 10];
 
     const creditStore = useCreditStore();
 
@@ -227,38 +240,6 @@ export default {
       } finally {
         isLoading.value = false;
       }
-      // const questionPrompt = createPrompt(numberInput.value, selectedLevel.value, selectedInnerLevel.value, selectedSubject.value);
-      // try {
-      //   const result = await useGetQuestionModelGP(questionPrompt);
-      //   const optionPrompt = `With this JSON result ${result},
-      //   Copy the correct answer in the explanation and insert it into the options array.
-      //   Ensure that the correct answer is based on the explanation.
-      //   Ensure that the correct answer is also one of the options.
-      //   Do not use $...$ delimiters for math equations.
-      //   Always use Katex format $$...$$ as delimiters for all math and scientific equations for all questions.
-      //   Always use Katex format $$...$$ as delimiters for all math and scientific equations for options.
-      //   Ensure that there is no error in the question and the options.
-      //   Ensure that there is only one correct answer for correctAnswer.
-      //   Ensure that the correct answer is the value of the option and not using alphabets.
-      //   Ensure that the response only contains the json schema`;
-      //   quiz.value = await useGetOptionModelGP(optionPrompt);
-      //   //quiz.value = getRandomizedQuestions(data, numberInput.value);
-      //   saveInputToLocalStorage();
-      //   if (quiz.value && quiz.value.length > 0) {
-      //     //saveQuestionsToLocalStorage(quiz.value);
-      //   } else {
-      //     throw new Error('Exceeded limit');
-      //   }
-      // } catch (error) {
-      //   console.error('Error fetching quiz:', error);
-      //   if (error.message === 'Exceeded limit') {
-      //     errorMsg.value = 'Exceeded limit: Unable to generate questions. Please try again later.';
-      //   } else {
-      //     errorMsg.value = 'An error occurred while generating the quiz.';
-      //   }
-      // } finally {
-      //   isLoading.value = false;
-      // }
     };
 
     const getRandomizedQuestions = (data, numberOfQuestions) => {
@@ -349,6 +330,7 @@ export default {
       selectedLevel,
       selectedInnerLevel,
       selectedSubject,
+      numberInputOptions,
       numberInput,
       levels,
       filteredInnerLevels,
