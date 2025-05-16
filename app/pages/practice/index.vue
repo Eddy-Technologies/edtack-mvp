@@ -133,9 +133,7 @@
 <script>
 import { ref, computed, onMounted, watch } from 'vue';
 import QuizPage from '~/components/challenge/QuizPage.vue';
-import {useGetQuestionModelGP} from '~/composables/useGetQuestionModelGP.js';
-import data from '../../../assets/questions.json';
-import {useGetOptionModelGP} from "~/composables/useGetOptionModelGP.js";
+import data from '../../../assets/questions.json'; // for default questions
 import {useCreditStore} from "~/stores/credit.js";
 
 export default {
@@ -187,24 +185,12 @@ export default {
       }
     });
 
-    const createPrompt = (numberInput, selectedLevel, selectedInnerLevel, selectedSubject) => {
-      return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
-      of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
-      Provide a JSON of just what is declared in the schema, which is the question, explanation and the id without the question options.
-      Generate questions of a mixture of topics and difficulties from the syllabus but do not include image related questions.
-      Generate a fresh batch of questions that is different from the previous batch.
-      Ensure there is no error in the question.
-      Provide the most accurate and precise explanation to solve the question and then
-      provide a concise summary on the steps to achieve the correct solution.
-      Do not use $...$ delimiters for math equations.
-      Always use Katex format $$...$$ as delimiters for all math equations.`
-    };
-
     const fetchAnswer = async () => {
       isLoading.value = true;
       quiz.value = '';
       errorMsg.value = null;
 
+      // not used now for gtag
       if (import.meta.client && window.gtag) {
         window.gtag('event', 'user-action', {
           event_category: 'select-prompt',

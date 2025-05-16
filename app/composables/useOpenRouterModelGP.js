@@ -1,5 +1,3 @@
-import {useGenAi} from './useGenAi.js'
-import {SchemaType} from "@google/generative-ai";
 import { Mistral } from '@mistralai/mistralai';
 import { z } from "zod";
 
