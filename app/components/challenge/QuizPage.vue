@@ -16,23 +16,11 @@
     <div v-else ref="content">
       <h3>Results</h3>
       <div v-for="(question, index) in questions" :key="index">
-        <p><strong>Question:</strong> {{ question.title }}</p>
-        <!-- Show all options for the question with highlighting the correct answer -->
-        <div v-for="(option, optionIndex) in question.options" :key="optionIndex">
-          <p :style="getOptionStyle(option, question.correctAnswer, userAnswers[index])">
-            <strong>{{ option }}</strong>
-          </p>
-        </div>
-        <p><strong>Correct Answer:</strong> {{ question.correctAnswer }}</p>
-        <p v-if="!isCorrect(index)" ref="explanation">
-          <strong>Explanation:</strong> {{ question.explanation }}
-        </p>
-        <p v-if="isCorrect(index)" style="color: #c8e6ce;">
-          Correct! Well done!
-        </p>
-        <p v-else style="color: red;">
-          Incorrect. Better luck next time!
-        </p>
+        <QuizResult
+          :question="question"
+          :questionIndex="index"
+          :selectedAnswer="userAnswers[index]"
+        />
       </div>
       <div>
         <h4>Your Score: {{ score }} / {{ questions.length }}</h4>
@@ -45,11 +33,12 @@
 
 <script>
 import QuizQuestion from "~/components/challenge/QuizQuestion.vue";
-import renderMathInElement from "katex/contrib/auto-render/auto-render.js";
+import QuizResult from "~/components/challenge/QuizResult.vue";
 
 export default {
   components: {
-    QuizQuestion
+    QuizQuestion,
+    QuizResult
   },
   props: {
     quiz: {
@@ -85,9 +74,6 @@ export default {
     updateAnswer(index, answer) {
       this.userAnswers[index] = answer;
     },
-    isCorrect(index) {
-      return this.userAnswers[index] + "" === this.questions[index].correctAnswer;
-    },
     calculateScore() {
       this.score = this.userAnswers.reduce((total, answer, index) => {
         return total + (answer === this.questions[index].correctAnswer ? 1 : 0);
@@ -97,50 +83,6 @@ export default {
       this.userAnswers = [];
       this.score = 0;
       this.quizFinished = false;
-    },
-    getOptionStyle(option, correctAnswer, userAnswer) {
-      // Set the option style based on whether it's correct, incorrect or the user's selected answer
-      if (option === correctAnswer) {
-        return { color: 'green', fontWeight: 'bold' }; // Correct option in green
-      }
-      if (option === userAnswer) {
-        return { color: 'red', fontWeight: 'bold' }; // User's incorrect answer in red
-      }
-      return {}; // No special style for other options
-    },
-    renderMath(element) {
-      try {
-        return renderMathInElement(element, {
-          delimiters: [
-            {left: "$$", right: "$$", display: false},
-            {left: "\\(", right: "\\)", display: false},
-            // LaTeX uses $…$, but it ruins the display of normal `$` in text:
-            {left: "\\newline", right: "\\newline", display: true},
-            // $ must come after $$
-            // Render AMS environments even if outside $$…$$ delimiters.
-            {left: "\\begin{equation}", right: "\\end{equation}", display: false},
-            {left: "\\begin{align}", right: "\\end{align}", display: false},
-            {left: "\\begin{alignat}", right: "\\end{alignat}", display: false},
-            {left: "\\begin{gather}", right: "\\end{gather}", display: false},
-            {left: "\\begin{CD}", right: "\\end{CD}", display: false},
-            {left: "\\[", right: "\\]", display: true},
-          ]
-        });
-      } catch (error) {
-        console.error('KaTeX rendering error:', error);
-        return element;
-      }
-    }
-  },
-  watch: {
-    quizFinished(newValue) {
-      if (newValue) {
-        this.$nextTick(() => {
-          if (this.$refs.content) {
-            this.renderMath(this.$refs.content);
-          }
-        });
-      }
     }
   }
 };
