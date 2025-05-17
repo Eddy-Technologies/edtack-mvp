@@ -29,6 +29,7 @@ export default defineNuxtConfig({
         commaDangle: 'only-multiline',
         braceStyle: '1tbs',
         arrowParens: true,
+        indent: 2
       },
     },
   },
