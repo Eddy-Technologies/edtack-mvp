@@ -46,14 +46,14 @@
             @click="routeTo('/challenge')"
           >
             <span class="text-[#2f6089] drop-shadow-[1px_1px_1px_black]">Challenge</span>
-            <span class="text-sm">Earn up to 10 credits</span>
+            <span class="text-[#2f6089] drop-shadow-[1px_1px_1px_black] text-sm">Earn up to 10 credits</span>
           </div>
           <div
             class="absolute bottom-0 w-full h-1/2 flex flex-col justify-start text-center text-white text-2xl font-bold p-4 bg-black/10 z-10"
             @click="routeTo('/practice')"
           >
             <span class="text-[#c8e6ce] drop-shadow-[1px_1px_1px_black] mt-2">Practice</span>
-            <span class="text-sm">Try a sample challenge</span>
+            <span class="text-[#c8e6ce] drop-shadow-[1px_1px_1px_black] text-sm">Try a sample challenge</span>
           </div>
         </div>
       </div>

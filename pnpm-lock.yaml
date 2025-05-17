@@ -14,6 +14,9 @@ dependencies:
   '@iconify-json/simple-icons':
     specifier: ^1.2.29
     version: 1.2.29
+  '@lottiefiles/dotlottie-vue':
+    specifier: ^0.6.3
+    version: 0.6.3(vue@3.5.13)
   '@mistralai/mistralai':
     specifier: ^1.5.2
     version: 1.5.2(zod@3.24.2)
@@ -1741,6 +1744,19 @@ packages:
 
   /@kwsites/promise-deferred@1.1.1:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
+    dev: false
+
+  /@lottiefiles/dotlottie-vue@0.6.3(vue@3.5.13):
+    resolution: {integrity: sha512-t8uGmuue8Rv/xWOmbG2HkgYWt0KX6m34baOzlPit6cbfrHFXYJcr+BLp06y6tGMJtrtv/y3tK5nqwi4s9WHrkg==}
+    peerDependencies:
+      vue: ^3.3.4
+    dependencies:
+      '@lottiefiles/dotlottie-web': 0.44.0
+      vue: 3.5.13(typescript@5.8.3)
+    dev: false
+
+  /@lottiefiles/dotlottie-web@0.44.0:
+    resolution: {integrity: sha512-IUWKVciDJI/BMWDWnh7j0Ngd0N8q9ySRAwm84aDqIE07qpmdZ7x1rkIpBaU1yHSNqNYHeh1Rxsl+LC3CY4f0KA==}
     dev: false
 
   /@mapbox/node-pre-gyp@1.0.11:

@@ -1,28 +1,36 @@
 <template>
   <div ref="content" class="question">
-    <span class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </span>
-    <p class="question-content text-xl">{{ question.title }}</p>
+    <span class="text-primary font-bold text-2xl">Q{{ questionIndex + 1 }}.</span>
+    <p class="text-xl mt-2">{{ question.title }}</p>
+
     <div v-for="(option, index) in question.options" :key="index">
       <label
-        class="form-control text-xl ml-7 mt-4 option-item"
-        :class="{
+          class="flex items-center gap-3 text-xl mt-4 p-4 rounded-lg border-2 transition-all cursor-pointer"
+          :class="{
           'bg-[#f0f8ff] border-[#00dc82] dark:bg-[#2a2a2a] dark:border-[#00dc82]': selectedAnswer === option,
           'hover:bg-[#f0f8ff] hover:border-[#00dc82] dark:hover:bg-[#2a2a2a] dark:hover:border-gray-500': selectedAnswer !== option
         }"
       >
         <input
-          type="radio"
-          :value="option"
-          :name="'question-' + questionIndex"
-          :checked="selectedAnswer === option"
-          @change="selectAnswer(option)"
-        >
+            type="radio"
+            :value="option"
+            :name="'question-' + questionIndex"
+            :checked="selectedAnswer === option"
+            @change="selectAnswer(option)"
+            class="appearance-none w-5 h-5 rounded border-2 border-current grid place-content-center relative
+                    before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-[#00dc82] before:scale-0
+                    checked:before:scale-100 transition-transform before:transition-transform before:duration-150"
+        />
         <span>{{ option }}</span>
       </label>
     </div>
-    <button class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600" @click="openReportModal">
+
+    <UButton
+      class="mt-4 px-3 py-1 text-sm bg-red-400 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600 transition"
+      @click="openReportModal"
+    >
       Report Error
-    </button>
+    </UButton>
 
     <ReportErrorModal
       :show-report-modal="showReport"
@@ -33,24 +41,23 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import 'katex/dist/katex.min.css';
 import { renderMath } from '../../utils/katexUtils.js';
 import ReportErrorModal from '~/components/report/ReportErrorModal.vue';
 
-const props = defineProps({
-  question: Object,
-  questionIndex: Number,
-  selectedAnswer: String,
-});
+const props = defineProps<{
+  question: any,
+  questionIndex: number,
+  selectedAnswer: string
+}>();
 
 const showReport = ref(false);
-const content = ref(null);
-
+const content = ref<HTMLElement | null>(null);
 const emit = defineEmits(['answer-selected']);
 
-function selectAnswer(answer) {
+function selectAnswer(answer: string) {
   emit('answer-selected', answer);
 }
 
@@ -59,94 +66,14 @@ function openReportModal() {
 }
 
 onMounted(() => {
-  if (props.question && props.question.title) {
+  if (props.question?.title) {
     renderMath(content.value);
   }
 });
 
-// Re-render math when question changes
 watch(() => props.question, () => {
-  if (props.question && props.question.title) {
+  if (props.question?.title) {
     renderMath(content.value);
   }
 });
 </script>
-
-<style scoped>
-.question-index {
-  font-weight: bold;
-}
-
-:root {
-  --form-control-color: rebeccapurple;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-form {
-  display: grid;
-  place-content: center;
-  min-height: 100vh;
-}
-
-.form-control {
-  line-height: 1.1;
-  display: grid;
-  grid-template-columns: 1em auto;
-  gap: 0.5em;
-}
-
-.form-control + .form-control {
-  margin-top: 1em;
-}
-
-.form-control:focus-within {
-  color: var(--form-control-color);
-}
-
-input[type="radio"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: white;
-  margin: 0;
-  font: inherit;
-  color: currentColor;
-  width: 1em;
-  height: 1em;
-  border: 0.10em solid currentColor;
-  border-radius: 20%;
-  transform: translateY(0.09em);
-  display: grid;
-  place-content: center;
-}
-
-input[type="radio"]::before {
-  content: "";
-  width: 0.4em;
-  height: 0.4em;
-  border-radius: 50%;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--form-control-color);
-  background-color: #00dc82;
-}
-
-input[type="radio"]:checked::before {
-  transform: scale(1);
-}
-
-.option-item {
-  border-width: 2px;
-  padding: 0.75em 1em;
-  border-radius: 0.5em;
-  transition: all 0.2s ease;
-}
-</style>

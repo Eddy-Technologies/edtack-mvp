@@ -1,10 +1,14 @@
 <template>
-  <div class="quiz-container">
-    <h1 class="quiz-title">{{ name }}</h1>
+  <div class="w-11/12 max-w-6xl mx-auto p-6">
+    <h1 class=" font-bold mb-2 text-center text-primary">{{ name }}</h1>
 
     <!-- Quiz Phase -->
     <div v-if="!quizFinished">
-      <div v-for="(question, index) in questions" :key="index" class="quiz-section">
+      <div
+        v-for="(question, index) in questions"
+        :key="index"
+        class="bg-white dark:bg-zinc-900 rounded-xl p-5 mb-5 border border-gray-200 dark:border-zinc-700 shadow hover:shadow-lg transition"
+      >
         <Question
           :question="question"
           :question-index="index"
@@ -12,23 +16,43 @@
           @answer-selected="updateAnswer(index, $event)"
         />
       </div>
-      <button class="btn-submit" @click="submitQuiz">Submit Challenge</button>
+
+      <div class="flex justify-center sm:justify-start mt-5">
+        <button
+            class="px-6 py-3 bg-green-600 hover:bg-green-700 dark:bg-green-400 dark:hover:bg-green-500 text-white dark:text-zinc-900 font-semibold rounded-lg transition"
+            @click="submitQuiz"
+        >
+          Submit Challenge
+        </button>
+      </div>
     </div>
 
     <!-- Result Phase -->
     <div v-else ref="content">
-      <h3 class="section-title">Results</h3>
-      <div v-for="(question, index) in questions" :key="index" class="quiz-section">
+      <h3 class="text-2xl font-semibold mb-5 text-center text-primary">Results</h3>
+
+      <div
+          v-for="(question, index) in questions"
+          :key="index"
+          class="bg-white dark:bg-zinc-900 rounded-xl p-5 mb-5 border border-gray-200 dark:border-zinc-700 shadow"
+      >
         <QuestionResult
-          :question="question"
-          :question-index="index"
-          :selected-answer="userAnswers[index]"
+            :question="question"
+            :question-index="index"
+            :selected-answer="userAnswers[index]"
         />
       </div>
-      <div class="score-box">
-        <h4>Your Score: {{ score }} / {{ questions.length }}</h4>
-        <span>You earned {{ score }} credits!</span>
+
+      <div
+          class="mt-8 p-6 bg-blue-50 dark:bg-slate-800 border border-blue-200 dark:border-cyan-400 text-center rounded-lg shadow"
+      >
+        <h4 class="text-xl font-bold mb-2">Your Score: {{ score }} / {{ questions.length }}</h4>
+        <span class="text-lg font-medium text-primary">You earned {{ score }} credits!</span>
       </div>
+
+      <UButton to="store" aria-label="store" class="mt-6">
+        Redeem your credits!
+      </UButton>
     </div>
   </div>
 </template>
@@ -72,104 +96,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/* Container */
-.quiz-container {
-  width: 80%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-/* Title */
-.quiz-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-/* Segmented Card Section */
-.quiz-section {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.quiz-section:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.dark .quiz-section {
-  background-color: #1e1e1e;
-  border-color: #333;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
-}
-
-.dark .quiz-section:hover {
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
-}
-
-/* Buttons */
-.btn-submit {
-  margin-top: 20px;
-  padding: 12px 24px;
-  background-color: #00c853;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.btn-submit:hover {
-  background-color: #00b341;
-}
-
-.dark .btn-submit {
-  background-color: #00e676;
-  color: #121212;
-}
-
-.dark .btn-submit:hover {
-  background-color: #00c853;
-}
-
-/* Score box */
-.score-box {
-  margin-top: 30px;
-  padding: 20px;
-  background-color: #f0f8ff;
-  border-radius: 8px;
-  border: 1px solid #b3e5fc;
-  text-align: center;
-  box-shadow: 0 0 8px rgba(0, 191, 255, 0.2);
-}
-
-.dark .score-box {
-  background-color: #263238;
-  border-color: #4dd0e1;
-  color: #b2ebf2;
-  box-shadow: 0 0 8px rgba(77, 208, 225, 0.3);
-}
-
-/* Section titles */
-.section-title {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  font-weight: 600;
-  text-align: center;
-}
-
-h4 {
-  font-size: 1.2rem;
-  margin-top: 20px;
-  font-weight: 600;
-}
-</style>
