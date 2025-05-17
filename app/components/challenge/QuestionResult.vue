@@ -19,6 +19,7 @@
           :value="option"
           :name="'question-' + questionIndex"
           :checked="selectedAnswer === option"
+          disabled
         />
         <span v-html="option"></span>
       </label>
@@ -38,42 +39,45 @@
     <p v-if="selectedAnswer !== question.correctAnswer" ref="explanation" class="feedback explanation-box">
       <strong>Explanation:</strong> {{ question.explanation }}
     </p>
+
+    <button @click="openReportModal" class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600">
+      Report Error
+    </button>
+
+    <ReportErrorModal
+      :showReportModal="showReport"
+      :question="question"
+      :selectedAnswer="selectedAnswer"
+      @close="showReport = false"
+    />
   </div>
 </template>
 
-<script>
-import 'katex/dist/katex.min.css';
-import { renderMath } from "../../utils/katexUtils.js";
+<script setup>
+import { defineProps, ref, onMounted } from 'vue'
+import 'katex/dist/katex.min.css'
+import { renderMath } from '~/utils/katexUtils.js'
+import ReportErrorModal from '~/components/report/ReportErrorModal.vue'
 
-export default {
-  props: {
-    question: Object,
-    questionIndex: Number,
-    selectedAnswer: String,
-  },
-  methods: {
-    getOptionStyle(option, correctAnswer, userAnswer) {
-      // Set the option style based on whether it's correct, incorrect or the user's selected answer
-      if (option === correctAnswer) {
-        return { color: 'green', fontWeight: 'bold' }; // Correct option in green
-      }
-      if (option === userAnswer) {
-        return { color: 'red', fontWeight: 'bold' }; // User's incorrect answer in red
-      }
-      return {}; // No special style for other options
-    }
-  },
-  mounted() {
-    if (this.question && this.question.title) {
-      renderMath(this.$refs.content);
-    }
-  },
-  data() {
-    return {
-      showDebugInfo: false,
-    };
-  },
-};
+const props = defineProps({
+  question: Object,
+  questionIndex: Number,
+  selectedAnswer: String,
+})
+
+const showDebugInfo = ref(false)
+const showReport = ref(false)
+const content = ref(null)
+
+function openReportModal() {
+  showReport.value = true
+}
+
+onMounted(() => {
+  if (props.question && props.question.title) {
+    renderMath(content.value)
+  }
+})
 </script>
 
 <style scoped>

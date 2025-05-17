@@ -20,35 +20,58 @@
       <span v-html="option"></span>
       </label>
     </div>
+    <button @click="openReportModal" class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600">
+      Report Error
+    </button>
+
+    <ReportErrorModal
+      :showReportModal="showReport"
+      :question="question"
+      :selectedAnswer=null
+      @close="showReport = false"
+    />
   </div>
 </template>
 
-<script>
-import 'katex/dist/katex.min.css';
-import { renderMath } from "../../utils/katexUtils.js";
+<script setup>
+import { ref, onMounted, watch } from 'vue'
+import 'katex/dist/katex.min.css'
+import { renderMath } from '../../utils/katexUtils.js'
+import ReportErrorModal from '~/components/report/ReportErrorModal.vue'
 
-export default {
-  props: {
-    question: Object,
-    questionIndex: Number,
-    selectedAnswer: String,
-  },
-  data() {
-    return {
-      renderedContent: '',
-    };
-  },
-  methods: {
-    selectAnswer(answer) {
-      this.$emit('answer-selected', answer);
-    }
-  },
-  mounted() {
-    if (this.question && this.question.title) {
-      renderMath(this.$refs.content);
-    }
+const props = defineProps({
+  question: Object,
+  questionIndex: Number,
+  selectedAnswer: String,
+})
+
+const showReport = ref(false)
+const content = ref(null)
+
+function selectAnswer(answer) {
+  // emit event to parent
+  // $emit is not available in <script setup>, use defineEmits
+  emit('answer-selected', answer)
+}
+
+function openReportModal() {
+  showReport.value = true
+}
+
+const emit = defineEmits(['answer-selected'])
+
+onMounted(() => {
+  if (props.question && props.question.title) {
+    renderMath(content.value)
   }
-};
+})
+
+// Re-render math when question changes
+watch(() => props.question, () => {
+  if (props.question && props.question.title) {
+    renderMath(content.value)
+  }
+})
 </script>
 
 <style scoped>
