@@ -11,7 +11,7 @@
               type="number"
               class="w-full p-2 border rounded withdrawal-input dark:text-white text-black"
               placeholder="Enter withdrawal amount"
-            />
+            >
             Credits
           </div>
         </div>
@@ -37,17 +37,20 @@
           </div>
         </div>
       </div>
-      <button class="btn-confirm"
-      @click="confirmOrder"
-      :disabled="isInvalidWithdrawal"
-      >Confirm Order</button>
+      <button
+        class="btn-confirm"
+        :disabled="isInvalidWithdrawal"
+        @click="confirmOrder"
+      >
+        Confirm Order
+      </button>
     </div>
   </div>
 </template>
 
 <script lang='ts' setup>
 import { ref, computed } from 'vue';
-import type { PropType } from 'vue'
+import type { PropType } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import { calculateCartSubtotal } from '~/utils/calculateCreditsUtils';
@@ -110,10 +113,10 @@ const confirmOrder = () => {
   console.log('Confirming withdrawal:', withdrawalAmt.value);
   const previousBalance = currentBalance;
   if (creditStore.childCredits[0] === undefined) {
-    alert("child credits is undefined");
+    alert('child credits is undefined');
     return;
   } else if (creditStore.childCredits[0] < totalDeduction.value) {
-    alert("You do not have enough credits to complete this withdrawal!");
+    alert('You do not have enough credits to complete this withdrawal!');
     return;
   } else {
     console.info('creditstore before:', creditStore.childCredits[0]);

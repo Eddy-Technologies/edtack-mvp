@@ -1,5 +1,5 @@
 export function useNavigationMenu() {
-  const separator = h('hr')
+  const separator = h('hr');
 
   const menu = computed(() => {
     return [
@@ -59,8 +59,8 @@ export function useNavigationMenu() {
         ],
       },
 
-    ]
-  })
+    ];
+  });
 
-  return { menu }
+  return { menu };
 }

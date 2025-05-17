@@ -1,77 +1,77 @@
 <template>
-  <div class="question" ref="content">
+  <div ref="content" class="question">
     <span class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </span>
     <p class="question-content text-xl">{{ question.title }}</p>
     <div v-for="(option, index) in question.options" :key="index">
       <label
-          class="form-control text-xl ml-7 mt-4 option-item"
-          :class="{
+        class="form-control text-xl ml-7 mt-4 option-item"
+        :class="{
           'bg-[#f0f8ff] border-[#00dc82] dark:bg-[#2a2a2a] dark:border-[#00dc82]': selectedAnswer === option,
           'hover:bg-[#f0f8ff] hover:border-[#00dc82] dark:hover:bg-[#2a2a2a] dark:hover:border-gray-500': selectedAnswer !== option
-      }"
+        }"
       >
-      <input
+        <input
           type="radio"
           :value="option"
           :name="'question-' + questionIndex"
           :checked="selectedAnswer === option"
           @change="selectAnswer(option)"
-      />
-      <span v-html="option"></span>
+        >
+        <span v-html="option" />
       </label>
     </div>
-    <button @click="openReportModal" class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600">
+    <button class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600" @click="openReportModal">
       Report Error
     </button>
 
     <ReportErrorModal
-      :showReportModal="showReport"
+      :show-report-modal="showReport"
       :question="question"
-      :selectedAnswer=null
+      :selected-answer="null"
       @close="showReport = false"
     />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import 'katex/dist/katex.min.css'
-import { renderMath } from '../../utils/katexUtils.js'
-import ReportErrorModal from '~/components/report/ReportErrorModal.vue'
+import { ref, onMounted, watch } from 'vue';
+import 'katex/dist/katex.min.css';
+import { renderMath } from '../../utils/katexUtils.js';
+import ReportErrorModal from '~/components/report/ReportErrorModal.vue';
 
 const props = defineProps({
   question: Object,
   questionIndex: Number,
   selectedAnswer: String,
-})
+});
 
-const showReport = ref(false)
-const content = ref(null)
+const showReport = ref(false);
+const content = ref(null);
 
 function selectAnswer(answer) {
   // emit event to parent
   // $emit is not available in <script setup>, use defineEmits
-  emit('answer-selected', answer)
+  emit('answer-selected', answer);
 }
 
 function openReportModal() {
-  showReport.value = true
+  showReport.value = true;
 }
 
-const emit = defineEmits(['answer-selected'])
+const emit = defineEmits(['answer-selected']);
 
 onMounted(() => {
   if (props.question && props.question.title) {
-    renderMath(content.value)
+    renderMath(content.value);
   }
-})
+});
 
 // Re-render math when question changes
 watch(() => props.question, () => {
   if (props.question && props.question.title) {
-    renderMath(content.value)
+    renderMath(content.value);
   }
-})
+});
 </script>
 
 <style scoped>

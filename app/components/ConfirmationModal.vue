@@ -38,7 +38,7 @@ const cancel = () => {
 
 // Confirm the action and close the modal
 const confirm = () => {
-  emit('confirm', props.amount);  // Emit amount when confirming
+  emit('confirm', props.amount); // Emit amount when confirming
 };
 </script>
 

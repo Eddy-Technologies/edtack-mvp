@@ -1,15 +1,15 @@
 <template>
   <header
-      class="bg-gray-200/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
+    class="bg-gray-200/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
   >
     <div class="w-full flex flex-wrap justify-between items-center h-14 px-6">
       <!-- Logo -->
       <div class="flex items-center gap-x-4">
         <ULink
-            class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
-            to="/"
+          class="text-xl md:text-2xl text-primary font-bold flex items-center gap-x-2"
+          to="/"
         >
-          <img src="https://randomuser.me/api/portraits/men/3.jpg" class="w-8 h-8 rounded-full" alt="john" /> Eddy
+          <img src="https://randomuser.me/api/portraits/men/3.jpg" class="w-8 h-8 rounded-full" alt="john"> Eddy
         </ULink>
       </div>
       <HeaderMenu :credits="credits" />
@@ -19,23 +19,23 @@
 
 <script>
 import { ref, watch } from 'vue';
-import { useCreditStore } from "~/stores/credit";
-import { useProfileStore } from "~/stores/profile";
+import { useCreditStore } from '~/stores/credit';
+import { useProfileStore } from '~/stores/profile';
 
 export default {
   setup() {
     const creditStore = useCreditStore();
     const profileStore = useProfileStore();
-    const isParent = profileStore.profile === "/parent";
+    const isParent = profileStore.profile === '/parent';
     const defaultChild = creditStore.childCredits[0];
     const credits = ref(isParent ? creditStore.parentCredits : defaultChild);
     const showMobileMenu = ref(false);
 
     watch(
-        () => isParent ? creditStore.parentCredits : creditStore.childCredits,
-        (newCredits) => {
-          credits.value = newCredits;
-        }
+      () => isParent ? creditStore.parentCredits : creditStore.childCredits,
+      (newCredits) => {
+        credits.value = newCredits;
+      }
     );
 
     return {

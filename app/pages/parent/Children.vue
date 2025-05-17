@@ -3,11 +3,11 @@
     <!-- Desktop Sidebar -->
     <div class="hidden md:flex flex-col w-64 p-4 border-r border-gray-200">
       <button
-          v-for="tab in tabs"
-          :key="tab.key"
-          class="w-full text-left p-2 mb-2 rounded"
-          :class="{ 'bg-primary text-white': selectedTab === tab.key }"
-          @click="selectTab(tab.key)"
+        v-for="tab in tabs"
+        :key="tab.key"
+        class="w-full text-left p-2 mb-2 rounded"
+        :class="{ 'bg-primary text-white': selectedTab === tab.key }"
+        @click="selectTab(tab.key)"
       >
         {{ tab.label }}
       </button>
@@ -16,13 +16,13 @@
     <!-- Mobile Tab Bar -->
     <div class="flex md:hidden justify-around border-b border-gray-300 mb-4 px-2 pt-2">
       <button
-          v-for="tab in tabs"
-          :key="tab.key"
-          class="pb-2 text-sm font-medium"
-          :class="selectedTab === tab.key
+        v-for="tab in tabs"
+        :key="tab.key"
+        class="pb-2 text-sm font-medium"
+        :class="selectedTab === tab.key
           ? 'border-b-2 border-primary text-primary'
           : 'text-gray-600'"
-          @click="selectTab(tab.key)"
+        @click="selectTab(tab.key)"
       >
         {{ tab.label }}
       </button>
@@ -35,10 +35,10 @@
         <div>
           <h2 class="text-xl font-bold text-primary mb-2">Profile</h2>
           <div
-              class="min-w-[160px] cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center"
-              @click="selectChild(0)"
+            class="min-w-[160px] cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center"
+            @click="selectChild(0)"
           >
-            <img :src="parent[0].avatar" alt="Avatar" class="w-16 h-16 rounded-full mb-2" />
+            <img :src="parent[0].avatar" alt="Avatar" class="w-16 h-16 rounded-full mb-2">
             <p class="text-primary font-bold">{{ parent[0].name }}</p>
             <p class="text-primary font-bold">Total: ${{ parentCredit }}</p>
           </div>
@@ -49,12 +49,12 @@
           <h2 class="text-xl font-bold text-primary mb-2">Children</h2>
           <div class="flex overflow-x-auto space-x-4 pb-2">
             <div
-                v-for="(child, index) in children"
-                :key="index"
-                class="min-w-[160px] flex-shrink-0 border-2 rounded-xl p-4 text-center cursor-pointer"
-                @click="selectChild(index)"
+              v-for="(child, index) in children"
+              :key="index"
+              class="min-w-[160px] flex-shrink-0 border-2 rounded-xl p-4 text-center cursor-pointer"
+              @click="selectChild(index)"
             >
-              <img :src="child.avatar" alt="Avatar" class="w-16 h-16 rounded-full mx-auto mb-2" />
+              <img :src="child.avatar" alt="Avatar" class="w-16 h-16 rounded-full mx-auto mb-2">
               <p class="text-primary font-bold">{{ child.name }}</p>
               <p class="text-primary font-bold">Allocated: ${{ childCredit[index] }}</p>
               <p class="text-primary font-bold">Earned: ${{ childEarnedCredit[index] }}</p>
@@ -67,8 +67,8 @@
       <div class="mt-8">
         <div v-if="selectedTab === 'analytics'">
           <h3 class="text-xl font-bold text-primary mb-4">Analytics</h3>
-          <div class="w-full h-72" v-if="selectedChild !== null">
-            <div ref="chartContainer" class="w-full h-full"></div>
+          <div v-if="selectedChild !== null" class="w-full h-72">
+            <div ref="chartContainer" class="w-full h-full" />
           </div>
         </div>
         <div v-if="selectedTab === 'account-settings'">
@@ -87,21 +87,21 @@
 <script>
 import { ref, onMounted, watch } from 'vue';
 import * as echarts from 'echarts';
-import Fund from "~/pages/parent/Fund.vue";
-import { useCreditStore } from "~/stores/credit";
-import { useProfileStore } from "~/stores/profile";
-import Store from "~/pages/parent/Store.vue";
+import Fund from '~/pages/parent/Fund.vue';
+import { useCreditStore } from '~/stores/credit';
+import { useProfileStore } from '~/stores/profile';
+import Store from '~/pages/parent/Store.vue';
 
 export default {
   components: { Store, Fund },
   setup() {
     const parent = ref([
-      { name: "Me", avatar: "https://randomuser.me/api/portraits/men/3.jpg", data: [5, 10, 15, 20, 25] }
+      { name: 'Me', avatar: 'https://randomuser.me/api/portraits/men/3.jpg', data: [5, 10, 15, 20, 25] }
     ]);
     const children = ref([
-      { name: "John", avatar: "https://randomuser.me/api/portraits/men/1.jpg", data: [5, 10, 15, 20, 25] },
-      { name: "Jane", avatar: "https://randomuser.me/api/portraits/women/1.jpg", data: [10, 15, 20, 25, 30] },
-      { name: "Alice", avatar: "https://randomuser.me/api/portraits/women/2.jpg", data: [15, 10, 5, 10, 15] },
+      { name: 'John', avatar: 'https://randomuser.me/api/portraits/men/1.jpg', data: [5, 10, 15, 20, 25] },
+      { name: 'Jane', avatar: 'https://randomuser.me/api/portraits/women/1.jpg', data: [10, 15, 20, 25, 30] },
+      { name: 'Alice', avatar: 'https://randomuser.me/api/portraits/women/2.jpg', data: [15, 10, 5, 10, 15] },
     ]);
     const selectedChild = ref(0);
     const selectedTab = ref('analytics');

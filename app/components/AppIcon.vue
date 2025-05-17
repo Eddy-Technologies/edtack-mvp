@@ -1,9 +1,9 @@
 <template>
   <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 100 100"
-      width="100"
-      height="100"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    width="100"
+    height="100"
   >
     <!-- Mortarboard Top (Rhombus Shape) -->
     <polygon
@@ -16,20 +16,20 @@
 
     <!-- Headband -->
     <polygon
-        points="30,55 27,65 50,75 73,65 70,55 50,65"
-        fill="teal"
-        stroke="#14b8a6"
-        stroke-width="1"
+      points="30,55 27,65 50,75 73,65 70,55 50,65"
+      fill="teal"
+      stroke="#14b8a6"
+      stroke-width="1"
     />
 
     <!-- Line from center of top left quadrant -->
     <line
-        x1="30"
-        y1="35"
-        x2="50"
-        y2="45"
-        stroke="#14b8a6"
-        stroke-width="3"
+      x1="30"
+      y1="35"
+      x2="50"
+      y2="45"
+      stroke="#14b8a6"
+      stroke-width="3"
     />
     <!-- Tassel -->
     <line

@@ -6,10 +6,10 @@
         <li v-for="reason in reasons" :key="reason">
           <label :class="['option-item', { selected: selectedReportReasons.includes(reason) }]">
             <input
+              v-model="selectedReportReasons"
               type="checkbox"
               :value="reason"
-              v-model="selectedReportReasons"
-            />
+            >
             {{ reason }}
           </label>
         </li>
@@ -18,7 +18,7 @@
         v-if="selectedReportReasons.includes('Other')"
         v-model="otherReasons"
         placeholder="Describe the issue..."
-      ></textarea>
+      />
       <div class="modal-actions">
         <button @click="submitReport">Submit</button>
         <button @click="closeReportModal">Cancel</button>
@@ -28,48 +28,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, computed } from 'vue'
+import { ref, defineProps, defineEmits, computed } from 'vue';
 import { handleReportSubmit, QuestionReportReason, ResultReportReason } from '~/utils/submitReportUtils.js';
 
 const props = defineProps<{
-  showReportModal: boolean,
-  question: object,
-  selectedAnswer: string | null
-}>()
+  showReportModal: boolean;
+  question: object;
+  selectedAnswer: string | null;
+}>();
 
 const emit = defineEmits<{
-  (e: 'close'): void
+  (e: 'close'): void;
   (e: 'submit', payload: {
-    reasons: string[],
-    otherReasons: string | null,
-    question: object,
-    selectedAnswer: string | null
-  }): void
-}>()
+    reasons: string[];
+    otherReasons: string | null;
+    question: object;
+    selectedAnswer: string | null;
+  }): void;
+}>();
 
 // Choose which reasons to use (ResultReportReason or QuestionReportReason)
 const reasons = computed(() => {
   if (props.selectedAnswer === null)
-    return Object.values(QuestionReportReason).map(String)
+    return Object.values(QuestionReportReason).map(String);
   else
-    return Object.values(ResultReportReason).map(String)
-})
+    return Object.values(ResultReportReason).map(String);
+});
 
-const selectedReportReasons = ref<string[]>([])
-const otherReasons = ref('')
+const selectedReportReasons = ref<string[]>([]);
+const otherReasons = ref('');
 
-const toast = useToast()
+const toast = useToast();
 
 function closeReportModal() {
-  emit('close')
-  selectedReportReasons.value = []
-  otherReasons.value = ''
+  emit('close');
+  selectedReportReasons.value = [];
+  otherReasons.value = '';
 }
 
 function submitReport() {
   if (selectedReportReasons.value.length === 0) {
-    closeReportModal()
-    return
+    closeReportModal();
+    return;
   }
 
   handleReportSubmit(
@@ -77,14 +77,14 @@ function submitReport() {
     props.selectedAnswer,
     selectedReportReasons.value,
     otherReasons.value,
-  )
+  );
 
   toast.add({
     title: 'Success',
     description: 'Report sent. Thank you!',
     timeout: 2000,
     icon: 'check',
-    color: "green"
+    color: 'green'
   });
 
   emit('submit', {
@@ -92,8 +92,8 @@ function submitReport() {
     otherReasons: otherReasons.value,
     question: props.question,
     selectedAnswer: props.selectedAnswer
-  })
-  closeReportModal()
+  });
+  closeReportModal();
 }
 </script>
 

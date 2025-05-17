@@ -37,7 +37,7 @@
           <span>{{ currentBalance.toFixed(2) }} Credits</span>
         </div>
       </div>
-      <div class="order-summary" v-if="cart.length > 0">
+      <div v-if="cart.length > 0" class="order-summary">
         <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
         <div v-for="(item, index) in cart" :key="index" class="order-item">
           <img :src="item.image" :alt="item.name" class="item-image">
@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { PropType } from 'vue'
+import type { PropType } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { Cart } from '~/models/Item';
 import { useCreditStore } from '~/stores/credit'; // Import your store

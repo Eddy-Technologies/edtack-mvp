@@ -3,8 +3,8 @@
   <div class="mt-10">
     <h3 class="text-lg font-extrabold text-primary mb-6">Linked Bank Account</h3>
     <ULink
-        class="text-base md:text-lg text-primary font-bold flex items-center justify-center gap-2 border-2 border-primary hover:text-green-600 hover:border-green-600 transition duration-300 ease-in-out w-34 h-16 px-6 py-3 rounded-lg"
-        @click="addBankAccount"
+      class="text-base md:text-lg text-primary font-bold flex items-center justify-center gap-2 border-2 border-primary hover:text-green-600 hover:border-green-600 transition duration-300 ease-in-out w-34 h-16 px-6 py-3 rounded-lg"
+      @click="addBankAccount"
     >
       Link a Bank Account
     </ULink>
@@ -15,9 +15,9 @@
     <div class="flex items-center gap-4 mb-4">
       <h3 class="text-lg font-extrabold text-primary">Quick Deposit</h3>
       <select
-          v-model="selectedChildIndex"
-          @change="setSelectedChild"
-          class="border-2 border-primary rounded-lg text-primary p-2"
+        v-model="selectedChildIndex"
+        class="border-2 border-primary rounded-lg text-primary p-2"
+        @change="setSelectedChild"
       >
         <option disabled value="">Select a Child</option>
         <option v-for="(child, index) in children" :key="index" :value="index">
@@ -28,10 +28,10 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-10 gap-4">
       <ULink
-          v-for="amount in [10, 50, 100]"
-          :key="amount"
-          class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-2 border-2 border-primary hover:text-green-600 hover:border-green-600 transition duration-300 ease-in-out w-24 h-16 px-6 py-3 rounded-lg"
-          @click="askForConfirmation(amount)"
+        v-for="amount in [10, 50, 100]"
+        :key="amount"
+        class="text-xl md:text-2xl text-primary font-bold flex items-center justify-center gap-2 border-2 border-primary hover:text-green-600 hover:border-green-600 transition duration-300 ease-in-out w-24 h-16 px-6 py-3 rounded-lg"
+        @click="askForConfirmation(amount)"
       >
         ${{ amount }}
       </ULink>
@@ -42,25 +42,25 @@
   <div class="mt-10 flex flex-col">
     <h3 class="text-lg font-extrabold text-primary mb-2">Deposit via PayNow</h3>
     <p class="mb-2 text-sm">Do not PayNow as we are in beta testing but if you want to support us, go ahead :)</p>
-    <img class="w-40 m-2" :src="PayNow" alt="PayNow" />
+    <img class="w-40 m-2" :src="PayNow" alt="PayNow">
   </div>
 
   <!-- Confirmation Modal -->
   <ConfirmationModal
-      :showModal="showModal"
-      :amount="creditAmount"
-      :name="children[selectedChildIndex].name"
-      @close="showModal = false"
-      @confirm="addCreditsConfirmed"
+    :show-modal="showModal"
+    :amount="creditAmount"
+    :name="children[selectedChildIndex].name"
+    @close="showModal = false"
+    @confirm="addCreditsConfirmed"
   />
 </template>
 
 <script setup>
+import { ref, watch } from 'vue';
 import PayNow from '../../../assets/paynow.png';
-import { useCreditStore } from "~/stores/credit";
-import { useProfileStore } from "~/stores/profile";
-import { ref, watch } from "vue";
-import ConfirmationModal from "~/components/ConfirmationModal.vue";  // Import the modal component
+import { useCreditStore } from '~/stores/credit';
+import { useProfileStore } from '~/stores/profile';
+import ConfirmationModal from '~/components/ConfirmationModal.vue'; // Import the modal component
 
 // Get the toast instance
 const toast = useToast();
@@ -71,13 +71,13 @@ const profileStore = useProfileStore();
 
 // Initialize children data
 const children = ref([
-  { name: "John"  },
-  { name: "Jane"  },
-  { name: "Alice" },
+  { name: 'John' },
+  { name: 'Jane' },
+  { name: 'Alice' },
 ]);
 
 // Reactive selected child index
-const selectedChildIndex = ref(profileStore.childSelected);  // Sync with profile store
+const selectedChildIndex = ref(profileStore.childSelected); // Sync with profile store
 
 // Modal state
 const showModal = ref(false);
@@ -91,15 +91,15 @@ function askForConfirmation(amount) {
 
 // Function to add credits after confirmation
 function addCreditsConfirmed() {
-  creditStore.addParentCredit(creditAmount.value);  // Add credits to the parent account
-  creditStore.addChildCredit(selectedChildIndex.value, creditAmount.value);  // Add credit to the selected child
+  creditStore.addParentCredit(creditAmount.value); // Add credits to the parent account
+  creditStore.addChildCredit(selectedChildIndex.value, creditAmount.value); // Add credit to the selected child
 
   showModal.value = false;
   if (toast) {
     toast.add({
       title: 'Success',
       description: `You have added ${creditAmount.value} credits.`,
-      color: "green"
+      color: 'green'
     });
   }
 }
@@ -122,7 +122,7 @@ function addBankAccount() {
   toast.add({
     title: 'Success',
     description: 'You have linked a bank account.',
-    color: "green"
+    color: 'green'
   });
 }
 </script>

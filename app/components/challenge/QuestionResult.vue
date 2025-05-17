@@ -1,5 +1,5 @@
 <template>
-  <div class="question" ref="content">
+  <div ref="content" class="question">
     <span class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </span>
     <p class="question-content text-xl">{{ question.title }}</p>
     <div v-for="(option, index) in question.options" :key="index">
@@ -20,8 +20,8 @@
           :name="'question-' + questionIndex"
           :checked="selectedAnswer === option"
           disabled
-        />
-        <span v-html="option"></span>
+        >
+        <span v-html="option" />
       </label>
     </div>
     <p v-if="showDebugInfo" class="feedback correct-answer-box">
@@ -40,44 +40,44 @@
       <strong>Explanation:</strong> {{ question.explanation }}
     </p>
 
-    <button @click="openReportModal" class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600">
+    <button class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600" @click="openReportModal">
       Report Error
     </button>
 
     <ReportErrorModal
-      :showReportModal="showReport"
+      :show-report-modal="showReport"
       :question="question"
-      :selectedAnswer="selectedAnswer"
+      :selected-answer="selectedAnswer"
       @close="showReport = false"
     />
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from 'vue'
-import 'katex/dist/katex.min.css'
-import { renderMath } from '~/utils/katexUtils.js'
-import ReportErrorModal from '~/components/report/ReportErrorModal.vue'
+import { defineProps, ref, onMounted } from 'vue';
+import 'katex/dist/katex.min.css';
+import { renderMath } from '~/utils/katexUtils.js';
+import ReportErrorModal from '~/components/report/ReportErrorModal.vue';
 
 const props = defineProps({
   question: Object,
   questionIndex: Number,
   selectedAnswer: String,
-})
+});
 
-const showDebugInfo = ref(false)
-const showReport = ref(false)
-const content = ref(null)
+const showDebugInfo = ref(false);
+const showReport = ref(false);
+const content = ref(null);
 
 function openReportModal() {
-  showReport.value = true
+  showReport.value = true;
 }
 
 onMounted(() => {
   if (props.question && props.question.title) {
-    renderMath(content.value)
+    renderMath(content.value);
   }
-})
+});
 </script>
 
 <style scoped>
@@ -245,7 +245,6 @@ input[type="radio"]:checked::before {
   background-color: #238c4b;
   box-shadow: 0 0 18px rgba(0, 230, 118, 0.7);
 }
-
 
 /* Generic feedback box */
 .feedback {

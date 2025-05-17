@@ -1,25 +1,30 @@
 <template>
   <div class="relative w-full min-h-screen bg-[#c8e6ce] overflow-auto text-center flex flex-col">
-  <!-- Desktop Background Image -->
-    <img v-if="!isMobile" :src="background" class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out" alt="home" />
+    <!-- Desktop Background Image -->
+    <img
+      v-if="!isMobile"
+      :src="background"
+      class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
+      alt="home"
+    >
 
     <!-- Mobile Background Layer -->
     <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
-      <div class="absolute inset-0 bg-[#c8e6ce] z-0"></div>
-      <img :src="mobileLeft" class="absolute top-[180px] sm:top-[100px] left-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out" />
-      <img :src="mobileRight" class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out" />
+      <div class="absolute inset-0 bg-[#c8e6ce] z-0" />
+      <img :src="mobileLeft" class="absolute top-[180px] sm:top-[100px] left-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out">
+      <img :src="mobileRight" class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out">
     </div>
 
     <!-- Overlay content -->
     <div class="relative md:mt-0 mt-10 z-10 pt-10 sm:pt-16 md:pt-20 flex flex-col items-center px-4 sm:px-6">
-    <!-- Landing Message -->
+      <!-- Landing Message -->
       <div class="px-4 sm:px-8 mb-4 max-w-full font-serif mt-2 text-center">
         <div class="flex items-center justify-center flex-wrap">
           <h1 class="text-2xl md:text-3xl text-black mr-3">Welcome to Eddy</h1>
-          <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto" />
+          <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto">
         </div>
         <h2 class="text-lg sm:text-xl md:text-2xl text-black mt-2 leading-snug">
-          An educational platform where parents can incentivise and motivate <br class="hidden sm:block" />
+          An educational platform where parents can incentivise and motivate <br class="hidden sm:block">
           their children for consistent and fun learning.
         </h2>
       </div>
@@ -27,11 +32,11 @@
       <!-- Info Boxes -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:mt-6 gap-5 w-full max-w-[280px] sm:max-w-[600px] mb-5">
         <div
-            v-for="(box, i) in infoBoxes"
-            :key="i"
-            @mouseenter="hoveredBoxIndex = i"
-            @mouseleave="hoveredBoxIndex = null"
-            class="relative bg-white/70 p-4 sm:p-5 rounded-lg text-black text-center h-[240px] sm:h-[250px] flex flex-col justify-center items-center shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out"
+          v-for="(box, i) in infoBoxes"
+          :key="i"
+          class="relative bg-white/70 p-4 sm:p-5 rounded-lg text-black text-center h-[240px] sm:h-[250px] flex flex-col justify-center items-center shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out"
+          @mouseenter="hoveredBoxIndex = i"
+          @mouseleave="hoveredBoxIndex = null"
         >
           <!--
           <div v-if="hoveredBoxIndex === i" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
@@ -49,8 +54,8 @@
       <!-- Call-to-Actions -->
       <div class="flex flex-col sm:flex-row md:mt-6 gap-4 mb-16 items-center justify-center w-full">
         <button
-            class="w-[220px] py-2 md:mr-14 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-            @click="routeTo('/try')"
+          class="w-[220px] py-2 md:mr-14 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+          @click="routeTo('/try')"
         >
           Try Eddy Now
         </button>
@@ -64,12 +69,12 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { useRouter } from '#vue-router';
 import home from '../../../assets/home.png';
 import homeMobile from '../../../assets/home-mobile.png';
 import parent from '../../../assets/parent.png';
 import child from '../../../assets/child.png';
 import deposit from '../../../assets/deposit.png';
+import { useRouter } from '#vue-router';
 
 const router = useRouter();
 const background = ref(home);

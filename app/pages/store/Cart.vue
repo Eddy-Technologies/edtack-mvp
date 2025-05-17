@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import { computed } from 'vue';
-import type { PropType } from 'vue'
+import type { PropType } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCreditStore } from '~/stores/credit';
 import type { Cart } from '~/models/Item';
@@ -71,7 +71,7 @@ export default {
       }
 
       if (creditStore.childCredits[0] < totalCredits.value) {
-        alert("You do not have enough credits to complete this purchase!");
+        alert('You do not have enough credits to complete this purchase!');
         return;
       }
       console.log('Buying items:', JSON.stringify(props.cart as Cart));
