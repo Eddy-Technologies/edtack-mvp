@@ -1,12 +1,19 @@
 <template>
-  <AppHeader />
-  <div class="app">
-    <input type="file" accept=".pdf" @change="handleFileUpload" class="file-uploader">
+  <div>
+    <AppHeader />
+    <div class="app">
+      <input
+        type="file"
+        accept=".pdf"
+        class="file-uploader"
+        @change="handleFileUpload"
+      >
+    </div>
   </div>
 </template>
 
 <script>
-import { useFileUploadGP } from "~/composables/useFileUploadGP.js";
+import { useFileUploadGP } from '~/composables/useFileUploadGP.js';
 
 export default {
   methods: {
@@ -14,10 +21,10 @@ export default {
       const file = event.target.files[0];
       if (file) {
         const result = await useFileUploadGP(file);
-        console.log("Gemini Result:", result);
+        console.log('Gemini Result:', result);
         // Handle the result (e.g., display it to the user)
       } else {
-        console.log("No file selected.");
+        console.log('No file selected.');
       }
     }
   }

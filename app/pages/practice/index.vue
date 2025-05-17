@@ -99,10 +99,10 @@
             </div>
 
             <button
-                type="submit"
-                :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading"
-                :class="{ 'large-button': !quiz, 'compact-button': quiz }"
-                class="submit-button"
+              type="submit"
+              :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading"
+              :class="{ 'large-button': !quiz, 'compact-button': quiz }"
+              class="submit-button"
             >
               {{ isLoading ? 'Generating' + loadingText : 'Generate' }}
             </button>
@@ -115,7 +115,7 @@
 
         <!-- Mobile form toggle -->
         <div v-if="quiz" class="form-toggle-button md:hidden text-center">
-          <button @click="toggleFormCollapse" class="text-white text-sm font-semibold">
+          <button class="text-white text-sm font-semibold" @click="toggleFormCollapse">
             <span v-if="isFormCollapsed">▼</span>
             <span v-else>▲</span>
           </button>
@@ -123,7 +123,7 @@
       </div>
 
       <div v-if="quiz" class="quiz-container">
-        <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
+        <QuizPage :quiz="quiz" @quiz-submitted="updateCredits" />
       </div>
     </main>
     <!-- <AppFooter /> -->
@@ -132,9 +132,9 @@
 
 <script>
 import { ref, computed, onMounted, watch } from 'vue';
-import QuizPage from '~/components/challenge/QuizPage.vue';
 import data from '../../../assets/questions.json'; // for default questions
-import {useCreditStore} from "~/stores/credit.js";
+import QuizPage from '~/components/challenge/QuizPage.vue';
+import { useCreditStore } from '~/stores/credit.js';
 
 export default {
   components: { QuizPage },
@@ -148,7 +148,7 @@ export default {
     const errorMsg = ref(null);
     const loadingText = ref(''); // animated dots
     let dotInterval = null;
-    let credits = ref(0);
+    const credits = ref(0);
     const isFormCollapsed = ref(false);
 
     const levels = ['Primary', 'Secondary', 'Junior College'];
@@ -203,16 +203,16 @@ export default {
       }
       saveInputToLocalStorage();
 
-      try{
+      try {
         const questions = await $fetch('/api/questions', {
           method: 'post',
           body: {
             numberInput: numberInput.value,
             selectedLevel: selectedLevel.value,
             selectedInnerLevel: selectedInnerLevel.value,
-            selectedSubject:  selectedSubject.value,
+            selectedSubject: selectedSubject.value,
           }
-        })
+        });
         quiz.value = questions.questions;
         if (error) {
           console.error('Error fetching quiz:', error);

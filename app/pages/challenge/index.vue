@@ -4,7 +4,7 @@
     <main class="main-content">
       <div class="quiz-container">
         <h2 class="title text-primary">Challenge</h2>
-        <QuizPage @quiz-submitted="updateCredits" :quiz="quiz" />
+        <QuizPage :quiz="quiz" @quiz-submitted="updateCredits" />
       </div>
     </main>
 
@@ -13,11 +13,10 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import QuizPage from '~/components/challenge/QuizPage.vue';
+import { ref, onBeforeMount } from 'vue';
 import data from '../../../assets/questions.json';
-import {onBeforeMount} from "@vue/runtime-core";
-import { useCreditStore } from "~/stores/credit"; // Import your store
+import QuizPage from '~/components/challenge/QuizPage.vue';
+import { useCreditStore } from '~/stores/credit'; // Import your store
 
 export default {
   components: { QuizPage },

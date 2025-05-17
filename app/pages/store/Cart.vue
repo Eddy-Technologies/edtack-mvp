@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import { computed } from 'vue';
-import type { PropType } from 'vue'
+import type { PropType } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCreditStore } from '~/stores/credit';
 import type { Cart } from '~/models/Item';
@@ -54,24 +54,25 @@ export default {
       default: () => [] // Default empty cart
     }
   },
-  setup(props, { emit }) {
+  emits: ['update-cart'],
+  setup(props: { cart: Cart }, { emit }: { emit: (event: string, ...args: unknown[]) => void }) {
     const router = useRouter();
     const creditStore = useCreditStore();
 
     // Calculate total credits in cart using computed
     const totalCredits = computed(() => {
-      return props.cart.reduce((total, item) => total + calculateItemSubTotal(item), 0);
+      return props.cart.reduce((total: number, item: Cart[number]) => total + calculateItemSubTotal(item), 0);
     });
 
     // Checkout function
     const checkout = () => {
-      if (props.cart.length === 0) {
+      if (!props.cart || props.cart.length === 0) {
         alert('Your cart is empty!');
         return;
       }
 
-      if (creditStore.childCredits[0] < totalCredits.value) {
-        alert("You do not have enough credits to complete this purchase!");
+      if (!creditStore.childCredits || creditStore.childCredits.length === 0 || (creditStore.childCredits?.[0] ?? 0) < totalCredits.value) {
+        alert('You do not have enough credits to complete this purchase!');
         return;
       }
       console.log('Buying items:', JSON.stringify(props.cart as Cart));
@@ -84,35 +85,23 @@ export default {
           cart: JSON.stringify(props.cart as Cart)
         }
       });
-
-      // const confirmCheckout = confirm(`You are about to purchase items totaling ${totalCredits.value} Credits. Proceed?`);
-
-      // if (confirmCheckout) {
-      //   clearCart();
-      //   alert("Checkout successful! Your items will be processed.");
-      // }
-    };
-
-    // Clear the cart (Reset the cart state)
-    const clearCart = () => {
-      emit('clearCart');
     };
 
     // Function to update the quantity of an item directly
-    const updateQuantity = (item) => {
+    const updateQuantity = (item: Cart[number]) => {
       if (item.quantity < 1) {
         item.quantity = 1; // Ensure quantity doesn't go below 1
       }
-      emit('update-cart', props.cart); // Emit the updated cart to the parent
+      // Emit a new array to avoid mutating the prop directly
+      emit('update-cart', props.cart.map((cartItem: Cart[number]) =>
+        cartItem.id === item.id ? { ...cartItem, quantity: item.quantity } : cartItem
+      ));
     };
 
     // Function to delete an item from the cart
-    const deleteItem = (item) => {
-      const index = props.cart.findIndex((cartItem) => cartItem.id === item.id);
-      if (index !== -1) {
-        props.cart.splice(index, 1); // Remove the item from the cart
-        emit('update-cart', props.cart); // Emit the updated cart to the parent
-      }
+    const deleteItem = (item: Cart[number]) => {
+      // Emit a new array with the item removed
+      emit('update-cart', props.cart.filter((cartItem: Cart[number]) => cartItem.id !== item.id));
     };
 
     return {

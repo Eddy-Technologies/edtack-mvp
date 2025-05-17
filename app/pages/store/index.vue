@@ -11,7 +11,7 @@
             <Credits />
           </div>
           <div class="cart-section">
-            <Cart :cart="cart" @clearCart="clearCart" />
+            <Cart :cart="cart" @clear-cart="clearCart" />
           </div>
         </div>
       </div>
@@ -23,8 +23,8 @@
 <script>
 import { ref } from 'vue';
 import Credits from '~/pages/store/Credits.vue';
-import Store from "~/pages/store/Store.vue";
-import Cart from "~/pages/store/Cart.vue";
+import Store from '~/pages/store/Store.vue';
+import Cart from '~/pages/store/Cart.vue';
 
 export default {
   components: {

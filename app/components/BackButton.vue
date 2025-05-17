@@ -1,7 +1,7 @@
 <template>
   <button
-      class="back-button absolute top-4 left-4"
-      @click="goBack"
+    class="back-button absolute top-4 left-4"
+    @click="goBack"
   >
     Back
   </button>
@@ -14,7 +14,7 @@ export default {
       this.$router.back(); // Also goes back to the previous page
     }
   }
-}
+};
 </script>
 
 <style scoped>

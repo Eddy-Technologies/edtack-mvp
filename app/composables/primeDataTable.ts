@@ -1,13 +1,13 @@
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 export function usePrimeDataTable() {
-  const tableData = ref([])
+  const tableData = ref([]);
 
-  const filters = ref({})
-  const dataTableRef = ref()
+  const filters = ref({});
+  const dataTableRef = ref();
 
   function exportCSV() {
-    dataTableRef.value?.exportCSV()
+    dataTableRef.value?.exportCSV();
   }
 
   return {
@@ -15,5 +15,5 @@ export function usePrimeDataTable() {
     filters,
     dataTableRef,
     exportCSV,
-  }
+  };
 }

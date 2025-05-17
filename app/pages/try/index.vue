@@ -1,38 +1,38 @@
 <template>
   <div class="relative w-full h-screen">
     <div class="relative w-full h-full" @mouseleave="resetOverlay">
-      <img :src="background" class="w-full h-full object-cover" alt="home" />
+      <img :src="background" class="w-full h-full object-cover" alt="home">
 
       <!-- Desktop Overlays -->
       <div
-          v-if="!isMobile"
-          @mousemove="handleMouseMoveLeft"
-          @click="routeTo('/parent')"
-          :class="[
+        v-if="!isMobile"
+        :class="[
           'absolute top-0 left-0 h-full w-1/2 transition-colors duration-300 z-10',
           leftOverlay ? 'bg-black/30' : 'bg-transparent'
         ]"
+        @mousemove="handleMouseMoveLeft"
+        @click="routeTo('/parent')"
       >
         <ULink
-            v-if="!leftOverlay"
-            class="text-[#2f6089] drop-shadow-lg text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 mr-20"
+          v-if="!leftOverlay"
+          class="text-[#2f6089] drop-shadow-lg text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 mr-20"
         >
           Are you a parent?
         </ULink>
       </div>
 
       <div
-          v-if="!isMobile"
-          @mousemove="handleMouseMoveRight"
-          @click="routeTo('/child')"
-          :class="[
+        v-if="!isMobile"
+        :class="[
           'absolute top-0 right-0 h-full w-1/2 transition-colors duration-300 z-10',
           rightOverlay ? 'bg-black/30' : 'bg-transparent'
         ]"
+        @mousemove="handleMouseMoveRight"
+        @click="routeTo('/child')"
       >
         <ULink
-            v-if="!rightOverlay"
-            class="text-[#c8e6ce] drop-shadow-lg text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 ml-auto"
+          v-if="!rightOverlay"
+          class="text-[#c8e6ce] drop-shadow-lg text-2xl md:text-3xl lg:text-4xl font-bold flex gap-x-2 px-6 py-3 ml-auto"
         >
           Are you a student?
         </ULink>
@@ -41,14 +41,14 @@
       <!-- Mobile Overlays -->
       <div v-if="isMobile">
         <div
-            @click="routeTo('/parent')"
-            class="absolute top-0 w-full h-1/2 bg-black/10 text-center text-white text-2xl font-bold flex items-center justify-center z-10"
+          class="absolute top-0 w-full h-1/2 bg-black/10 text-center text-white text-2xl font-bold flex items-center justify-center z-10"
+          @click="routeTo('/parent')"
         >
           <span class="drop-shadow-xl text-[#2f6089]">Are you a parent?</span>
         </div>
         <div
-            @click="routeTo('/child')"
-            class="absolute bottom-0 w-full h-1/2 bg-black/10 text-center text-white text-2xl font-bold flex items-center justify-center z-10"
+          class="absolute bottom-0 w-full h-1/2 bg-black/10 text-center text-white text-2xl font-bold flex items-center justify-center z-10"
+          @click="routeTo('/child')"
         >
           <span class="drop-shadow-dramatic text-3xl text-[#c8e6ce] font-bold">Are you a student?</span>
         </div>
@@ -60,9 +60,9 @@
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router'; // Import useRouter
-import home from "../../../assets/home2.png";
-import homeMobile from "../../../assets/home-mobile-2.png";
-import { useProfileStore } from "~/stores/profile";
+import home from '../../../assets/home2.png';
+import homeMobile from '../../../assets/home-mobile-2.png';
+import { useProfileStore } from '~/stores/profile';
 
 export default {
   setup() {

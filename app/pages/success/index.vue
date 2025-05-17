@@ -11,7 +11,8 @@
             :previous-balance="previousBalance"
             :extra-fee="extraFee"
             :total-cost="totalCost"
-            :discount="discount"/>
+            :discount="discount"
+          />
           <WithdrawSuccess
             v-if="withdrawalAmount > 0"
             :previous-balance="previousBalance"

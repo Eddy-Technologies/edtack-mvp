@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <AppHeader :isParent="true" />
+    <AppHeader :is-parent="true" />
     <main class="flex flex-col">
       <Children />
     </main>
@@ -9,5 +9,5 @@
 </template>
 
 <script setup>
-import Children from "~/pages/parent/Children.vue";
+import Children from '~/pages/parent/Children.vue';
 </script>

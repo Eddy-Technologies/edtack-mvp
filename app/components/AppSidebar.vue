@@ -1,18 +1,17 @@
 <script setup lang='ts'>
-const config = useRuntimeConfig()
-const { menu } = useNavigationMenu()
+const config = useRuntimeConfig();
+const { menu } = useNavigationMenu();
 
-const collapsed = useState<boolean>('collapsed')
-const isOnMobile = useState<boolean>('isOnMobile')
+const collapsed = useState<boolean>('collapsed');
+const isOnMobile = useState<boolean>('isOnMobile');
 
 function onResize() {
   if (window.innerWidth <= 980) {
-    collapsed.value = true
-    isOnMobile.value = true
-  }
-  else {
-    collapsed.value = false
-    isOnMobile.value = false
+    collapsed.value = true;
+    isOnMobile.value = true;
+  } else {
+    collapsed.value = false;
+    isOnMobile.value = false;
   }
 }
 
@@ -23,9 +22,9 @@ function onItemClick() {
 }
 
 onMounted(() => {
-  onResize()
-  window.addEventListener('resize', onResize)
-})
+  onResize();
+  window.addEventListener('resize', onResize);
+});
 </script>
 
 <template>

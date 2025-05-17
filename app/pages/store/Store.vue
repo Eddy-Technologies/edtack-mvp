@@ -5,14 +5,14 @@
 
       <div class="view-toggle">
         <UIcon
-            @click="viewMode = 'icon'"
-            name="i-heroicons-squares-2x2"
-            class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
+          name="i-heroicons-squares-2x2"
+          class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
+          @click="viewMode = 'icon'"
         />
         <UIcon
-            @click="viewMode = 'list'"
-            name="i-heroicons-list-bullet"
-            class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0"
+          name="i-heroicons-list-bullet"
+          class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0"
+          @click="viewMode = 'list'"
         />
       </div>
     </div>
@@ -25,11 +25,11 @@
           <img :src="item.image" :alt="item.name" class="item-image">
           <button
             class="cart-button"
+            :aria-label="'Add ' + item.name + ' to Cart'"
             @click="addToCart(item)"
-            :aria-label="'Add ' + item.name + ' to Cart'">
+          >
             Add to Cart
           </button>
-
         </div>
         <div class="item-details">
           <h3>{{ item.name }}</h3>
@@ -50,8 +50,9 @@
         </div>
         <button
           class="cart-button"
+          :aria-label="'Add ' + item.name + ' to Cart'"
           @click="addToCart(item)"
-          :aria-label="'Add ' + item.name + ' to Cart'">
+        >
           Add to Cart
         </button>
 
@@ -63,6 +64,7 @@
 </template>
 
 <script>
+import { ref, onMounted, onUnmounted } from 'vue';
 import placeholder1 from '../../../assets/a.png';
 import placeholder2 from '../../../assets/b.png';
 import placeholder3 from '../../../assets/c.png';
@@ -72,10 +74,10 @@ import placeholder6 from '../../../assets/f.png';
 import placeholder7 from '../../../assets/g.png';
 import placeholder8 from '../../../assets/h.png';
 
-import { ref, onMounted, onUnmounted } from "vue";
-import { useCreditStore } from "~/stores/credit";
+import { useCreditStore } from '~/stores/credit';
 
 export default {
+  emits: ['credits-updated', 'add-to-cart'],
   setup(props, { emit }) {
     const items = [
       { id: '1', name: 'Chicha', price: 5, image: placeholder4 },
@@ -123,7 +125,7 @@ export default {
 
     const addToCart = (item) => {
       // Check if item is already in the cart
-      const existingItem = cart.value.find(cartItem => cartItem.id === item.id);
+      const existingItem = cart.value.find((cartItem) => cartItem.id === item.id);
 
       if (existingItem) {
         // Increase the quantity of the item if it already exists
@@ -141,7 +143,7 @@ export default {
       if (isWindowAvailable) {
         screenWidth.value = window.innerWidth;
         if (screenWidth.value <= 768) {
-          viewMode.value = "icon"; // Always default to icon mode on mobile
+          viewMode.value = 'icon'; // Always default to icon mode on mobile
         }
       }
     };
@@ -150,14 +152,14 @@ export default {
     onMounted(() => {
       updateScreenSize();
       if (isWindowAvailable) {
-        window.addEventListener("resize", updateScreenSize);
+        window.addEventListener('resize', updateScreenSize);
       }
     });
 
     // Cleanup event listener when component unmounts
     onUnmounted(() => {
       if (isWindowAvailable) {
-        window.removeEventListener("resize", updateScreenSize);
+        window.removeEventListener('resize', updateScreenSize);
       }
     });
 

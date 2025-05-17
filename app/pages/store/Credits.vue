@@ -39,10 +39,10 @@ export default {
 
     // Watch for changes in the credits value from the store
     watch(
-        () => creditStore.childCredits,
-        (newCredits) => {
-          credits.value = newCredits; // Update local credits value
-        }
+      () => creditStore.childCredits,
+      (newCredits) => {
+        credits.value = newCredits; // Update local credits value
+      }
     );
 
     // Method to handle input change to ensure it's a valid multiple of 10

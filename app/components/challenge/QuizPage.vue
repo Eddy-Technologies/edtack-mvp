@@ -7,8 +7,8 @@
       <div v-for="(question, index) in questions" :key="index" class="quiz-section">
         <Question
           :question="question"
-          :questionIndex="index"
-          :selectedAnswer="userAnswers[index]"
+          :question-index="index"
+          :selected-answer="userAnswers[index]"
           @answer-selected="updateAnswer(index, $event)"
         />
       </div>
@@ -21,8 +21,8 @@
       <div v-for="(question, index) in questions" :key="index" class="quiz-section">
         <QuestionResult
           :question="question"
-          :questionIndex="index"
-          :selectedAnswer="userAnswers[index]"
+          :question-index="index"
+          :selected-answer="userAnswers[index]"
         />
       </div>
       <div class="score-box">
@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import Question from "~/components/challenge/Question.vue";
-import QuestionResult from "~/components/challenge/QuestionResult.vue";
+import Question from '~/components/challenge/Question.vue';
+import QuestionResult from '~/components/challenge/QuestionResult.vue';
 
 export default {
   components: {
@@ -45,6 +45,7 @@ export default {
   props: {
     quiz: Object,
   },
+  emits: ['quiz-submitted'],
   data() {
     return {
       questions: this.quiz,
@@ -171,5 +172,4 @@ h4 {
   margin-top: 20px;
   font-weight: 600;
 }
-
 </style>
