@@ -5,22 +5,22 @@
 
     <div v-for="(option, index) in question.options" :key="index">
       <label
-          class="flex items-center gap-3 text-xl mt-4 p-4 rounded-lg border-2 transition-all cursor-pointer"
-          :class="{
+        class="flex items-center gap-3 text-xl mt-4 p-4 rounded-lg border-2 transition-all cursor-pointer"
+        :class="{
           'bg-[#f0f8ff] border-[#00dc82] dark:bg-[#2a2a2a] dark:border-[#00dc82]': selectedAnswer === option,
           'hover:bg-[#f0f8ff] hover:border-[#00dc82] dark:hover:bg-[#2a2a2a] dark:hover:border-gray-500': selectedAnswer !== option
         }"
       >
         <input
-            type="radio"
-            :value="option"
-            :name="'question-' + questionIndex"
-            :checked="selectedAnswer === option"
-            @change="selectAnswer(option)"
-            class="appearance-none w-5 h-5 rounded border-2 border-current grid place-content-center relative
+          type="radio"
+          :value="option"
+          :name="'question-' + questionIndex"
+          :checked="selectedAnswer === option"
+          class="appearance-none w-5 h-5 rounded border-2 border-current grid place-content-center relative
                     before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-[#00dc82] before:scale-0
                     checked:before:scale-100 transition-transform before:transition-transform before:duration-150"
-        />
+          @change="selectAnswer(option)"
+        >
         <span>{{ option }}</span>
       </label>
     </div>
@@ -48,9 +48,9 @@ import { renderMath } from '../../utils/katexUtils.js';
 import ReportErrorModal from '~/components/report/ReportErrorModal.vue';
 
 const props = defineProps<{
-  question: any,
-  questionIndex: number,
-  selectedAnswer: string
+  question: any;
+  questionIndex: number;
+  selectedAnswer: string;
 }>();
 
 const showReport = ref(false);

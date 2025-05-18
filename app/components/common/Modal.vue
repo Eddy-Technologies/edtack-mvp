@@ -1,11 +1,11 @@
 <template>
   <div
-      v-if="show"
-      class="fixed inset-0 bg-black/40 flex items-center justify-center z-[1000]"
-      @click.self="emit('close')"
+    v-if="show"
+    class="fixed inset-0 bg-black/40 flex items-center justify-center z-[1000]"
+    @click.self="emit('close')"
   >
     <div
-        class="bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 p-6 rounded-xl shadow-md w-[90%] max-w-md text-base"
+      class="bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 p-6 rounded-xl shadow-md w-[90%] max-w-md text-base"
     >
       <header v-if="$slots.title" class="mb-4">
         <slot name="title" />

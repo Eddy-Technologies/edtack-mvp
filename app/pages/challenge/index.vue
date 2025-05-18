@@ -14,35 +14,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onBeforeMount } from 'vue'
-import data from '../../../assets/questions.json'
-import QuizPage from '~/components/challenge/QuizPage.vue'
-import { useCreditStore } from '~/stores/credit'
+import { ref, onBeforeMount } from 'vue';
+import data from '../../../assets/questions.json';
+import QuizPage from '~/components/challenge/QuizPage.vue';
+import { useCreditStore } from '~/stores/credit';
 
-const quiz = ref(null)
-const isLoading = ref(false)
-const creditStore = useCreditStore()
+const quiz = ref(null);
+const isLoading = ref(false);
+const creditStore = useCreditStore();
 
 const getRandomizedQuestions = (data: any[], numberOfQuestions: number) => {
-  const shuffled = shuffleArray([...data])
-  return shuffled.slice(0, numberOfQuestions)
-}
+  const shuffled = shuffleArray([...data]);
+  return shuffled.slice(0, numberOfQuestions);
+};
 
 const shuffleArray = (array: any[]) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[array[i], array[j]] = [array[j], array[i]]
+    ;[array[i], array[j]] = [array[j], array[i]];
   }
-  return array
-}
+  return array;
+};
 
 const updateCredits = (newCredits: number) => {
-  const updatedCredits = [...creditStore.childCredits]
-  updatedCredits[0] += newCredits * 10
-  creditStore.childCredits = updatedCredits
-}
+  const updatedCredits = [...creditStore.childCredits];
+  updatedCredits[0] += newCredits * 10;
+  creditStore.childCredits = updatedCredits;
+};
 
 onBeforeMount(() => {
-  quiz.value = getRandomizedQuestions(data, 10)
-})
+  quiz.value = getRandomizedQuestions(data, 10);
+});
 </script>

@@ -7,43 +7,43 @@
     <ul class="space-y-3 mb-4">
       <li v-for="reason in reasons" :key="reason">
         <label
-            class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition
+          class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition
             border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-900
             hover:border-primary hover:bg-[#f0f8ff] dark:hover:bg-zinc-700
             text-zinc-800 dark:text-zinc-100"
-            :class="{
+          :class="{
             'border-primary bg-[#f0f8ff] dark:border-primary dark:bg-zinc-700':
               selectedReportReasons.includes(reason)
           }"
         >
           <input
-              type="checkbox"
-              v-model="selectedReportReasons"
-              :value="reason"
-              class="accent-purple-600 dark:accent-purple-400"
-          />
+            v-model="selectedReportReasons"
+            type="checkbox"
+            :value="reason"
+            class="accent-purple-600 dark:accent-purple-400"
+          >
           {{ reason }}
         </label>
       </li>
     </ul>
 
     <textarea
-        v-if="selectedReportReasons.includes('Other')"
-        v-model="otherReasons"
-        placeholder="Describe the issue..."
-        class="w-full mt-2 min-h-[80px] rounded-md border border-slate-300 dark:border-zinc-600 p-3 text-base bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+      v-if="selectedReportReasons.includes('Other')"
+      v-model="otherReasons"
+      placeholder="Describe the issue..."
+      class="w-full mt-2 min-h-[80px] rounded-md border border-slate-300 dark:border-zinc-600 p-3 text-base bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
     />
 
     <template #footer>
       <UButton
-          @click="submitReport"
-          class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-600 transition"
+        class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-600 transition"
+        @click="submitReport"
       >
         Submit
       </UButton>
       <UButton
-          @click="closeReportModal"
-          class="bg-slate-200 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-100 px-4 py-2 rounded-md hover:bg-slate-300 dark:hover:bg-zinc-600 transition"
+        class="bg-slate-200 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-100 px-4 py-2 rounded-md hover:bg-slate-300 dark:hover:bg-zinc-600 transition"
+        @click="closeReportModal"
       >
         Cancel
       </UButton>
@@ -97,10 +97,10 @@ function submitReport() {
   }
 
   handleReportSubmit(
-      props.question,
-      props.selectedAnswer,
-      selectedReportReasons.value,
-      otherReasons.value,
+    props.question,
+    props.selectedAnswer,
+    selectedReportReasons.value,
+    otherReasons.value,
   );
 
   toast.add({
