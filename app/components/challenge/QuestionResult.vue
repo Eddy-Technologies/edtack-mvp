@@ -29,11 +29,15 @@
     </p>
 
     <p v-if="selectedAnswer === question.correctAnswer" class="feedback correct-feedback">
-      🎉 Correct! Well done!
+      ✅ Correct!
+    </p>
+
+    <p v-else-if="selectedAnswer === undefined" class="feedback bg-gray-100 border-2 border-solid border-gray-400 ">
+      You did not attempt this question.
     </p>
 
     <p v-else class="feedback wrong-feedback">
-      ❌ Incorrect. Better luck next time!
+      ❌ Incorrect.
     </p>
 
     <p v-if="selectedAnswer !== question.correctAnswer" ref="explanation" class="feedback explanation-box">
