@@ -13,9 +13,9 @@
           'border-red-600 bg-red-100 text-red-600'
         ]"
       >
-        <p v-if="selectedAnswer === question.correctAnswer">✅ Correct</p>
+        <p v-if="selectedAnswer === question.correctAnswer">✅</p>
         <p v-else-if="selectedAnswer === undefined || selectedAnswer === null">Not attempted</p>
-        <p v-else>❌  Incorrect</p>
+        <p v-else>❌</p>
       </div>
     </div>
 
