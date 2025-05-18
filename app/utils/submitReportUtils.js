@@ -20,7 +20,7 @@ export const QuestionReportReason = Object.freeze({
 });
 
 export const ResultReportReason = Object.freeze({
-  IRRELAVENT: 'Irrelavent Content',
+  IRRELEVENT: 'Irrelevent Content',
   NOT_IN_SYLLB: 'Not in Syllabus',
   INCORRECT_OPT: 'No Valid Options',
   INCORRECT_ANS: 'Incorrect Answer',

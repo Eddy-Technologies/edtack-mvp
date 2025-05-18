@@ -4,7 +4,7 @@
     <p class="question-content text-xl">{{ question.title }}</p>
     <div v-for="(option, index) in question.options" :key="index">
       <label
-        class="form-control text-xl ml-7 mt-4 option-item"
+        class="form-control text-xl mt-4 option-item"
         :class="[
           selectedAnswer === option
             ? option === question.correctAnswer
@@ -40,9 +40,12 @@
       <strong>Explanation:</strong> {{ question.explanation }}
     </p>
 
-    <button class="mt-2 px-3 py-1 text-sm bg-red-200 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600" @click="openReportModal">
+    <UButton
+      class="mt-4 px-3 py-1 text-sm bg-red-400 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600 transition"
+      @click="openReportModal"
+    >
       Report Error
-    </button>
+    </UButton>
 
     <ReportErrorModal
       :show-report-modal="showReport"
