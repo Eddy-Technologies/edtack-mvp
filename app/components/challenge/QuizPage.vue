@@ -32,7 +32,7 @@
       <div
         v-for="(question, index) in questions"
         :key="index"
-        class="bg-white dark:bg-zinc-900 rounded-xl p-5 mb-5 border border-gray-200 dark:border-zinc-700 shadow"
+        class="bg-white dark:bg-zinc-900 rounded-xl mb-5 border border-gray-200 dark:border-zinc-700 shadow"
       >
         <QuestionResult
           :question="question"

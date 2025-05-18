@@ -1,6 +1,24 @@
 <template>
-  <div ref="content" class="question">
-    <span class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </span>
+  <div
+    ref="content"
+    class="question p-5"
+  >
+    <div class="flex justify-between items-center mb-2">
+      <div class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </div>
+      <div
+        class="py-1 px-2 rounded-md question border-2 border-solid shadow-md font-semibold"
+        :class="[
+          selectedAnswer === question.correctAnswer ? 'border-green-600 bg-green-100 text-green-600' :
+          selectedAnswer === undefined|null ? 'border-gray-600 bg-gray-100':
+          'border-red-600 bg-red-100 text-red-600'
+        ]"
+      >
+        <p v-if="selectedAnswer === question.correctAnswer">✅ Correct</p>
+        <p v-else-if="selectedAnswer === undefined || selectedAnswer === null">Not attempted</p>
+        <p v-else>❌  Incorrect</p>
+      </div>
+    </div>
+
     <p class="question-content text-xl">{{ question.title }}</p>
     <div v-for="(option, index) in question.options" :key="index">
       <label
@@ -28,17 +46,13 @@
       <strong>Correct Answer:</strong> {{ question.correctAnswer }}
     </p>
 
-    <p v-if="selectedAnswer === question.correctAnswer" class="feedback correct-feedback">
+    <!-- <p v-if="selectedAnswer === question.correctAnswer" class="feedback correct-feedback">
       ✅ Correct!
-    </p>
-
-    <p v-else-if="selectedAnswer === undefined" class="feedback bg-gray-100 border-2 border-solid border-gray-400 ">
-      You did not attempt this question.
     </p>
 
     <p v-else class="feedback wrong-feedback">
       ❌ Incorrect.
-    </p>
+    </p> -->
 
     <p v-if="selectedAnswer !== question.correctAnswer" ref="explanation" class="feedback explanation-box">
       <strong>Explanation:</strong> {{ question.explanation }}
