@@ -21,8 +21,8 @@
 
     <p class="question-content text-xl">{{ question.title }}</p>
     <div v-for="(option, index) in question.options" :key="index">
-      <label
-        class="form-control text-xl mt-4 option-item"
+      <div
+        class="form-control text-xl mt-4 option-item text-gray-400"
         :class="[
           selectedAnswer === option
             ? option === question.correctAnswer
@@ -32,15 +32,8 @@
           option === question.correctAnswer ? 'always-correct' : ''
         ]"
       >
-        <input
-          type="radio"
-          :value="option"
-          :name="'question-' + questionIndex"
-          :checked="selectedAnswer === option"
-          disabled
-        >
         <span>{{ option }}</span>
-      </label>
+      </div>
     </div>
     <p v-if="showDebugInfo" class="feedback correct-answer-box">
       <strong>Correct Answer:</strong> {{ question.correctAnswer }}
@@ -128,8 +121,8 @@ form {
 
 .form-control {
   line-height: 1.1;
-  display: grid;
-  grid-template-columns: 1em auto;
+  /* display: grid; */
+  /* grid-template-columns: 1em auto; */
   gap: 0.5em;
 }
 
