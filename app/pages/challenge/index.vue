@@ -4,7 +4,7 @@
 
     <main class="flex-grow flex flex-col items-center p-4 min-h-[calc(100vh-3.5rem)]">
       <div class="w-full max-w-6xl mt-4">
-        <h2 class="text-3xl font-extrabold text-primary text-center">Challenge</h2>
+        <h2 class="text-3xl font-extrabold text-primary text-center mb-4">Challenge</h2>
         <QuizPage :quiz="quiz" @quiz-submitted="updateCredits" />
       </div>
     </main>

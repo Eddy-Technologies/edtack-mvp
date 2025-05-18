@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto sm:w-11/12 sm:max-w-6xl sm:p-6">
+  <div class="mx-auto sm:w-11/12 sm:max-w-6xl sm:px-6">
     <h1 class=" font-bold mb-2 text-center text-primary">{{ name }}</h1>
 
     <!-- Quiz Phase -->
