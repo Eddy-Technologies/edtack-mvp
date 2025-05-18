@@ -16,7 +16,7 @@
           :value="option"
           :name="'question-' + questionIndex"
           :checked="selectedAnswer === option"
-          class="appearance-none w-5 h-5 rounded border-2 border-current grid place-content-center relative
+          class="appearance-none w-5 flex-shrink-0 h-5 rounded border-2 border-current grid place-content-center relative
                     before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-[#00dc82] before:scale-0
                     checked:before:scale-100 transition-transform before:transition-transform before:duration-150"
           @change="selectAnswer(option)"
