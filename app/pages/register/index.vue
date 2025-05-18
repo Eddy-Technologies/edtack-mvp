@@ -1,0 +1,89 @@
+<template>
+  <div class="min-h-screen bg-background flex flex-col md:flex-row">
+    <!-- Left Form Section -->
+    <div class="flex-1 flex items-center justify-center px-6 py-10">
+      <form class="w-full max-w-md space-y-5 bg-white p-6 rounded-lg">
+        <!-- Back Icon -->
+        <div class="top-4 left-4">
+          <UIcon
+            name="i-heroicons-arrow-left"
+            class="icon cursor-pointer w-6 h-6 shrink-0 px-4"
+            @click="routeTo('/')"
+          />
+        </div>
+        <h1 class="text-2xl font-bold text-gray-800 text-center font-serif">Register for Eddy</h1>
+
+        <div class="flex gap-4">
+          <input
+            type="text"
+            placeholder="First Name"
+            class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <input
+          type="email"
+          placeholder="Email"
+          class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+          required
+        />
+
+        <div class="flex items-center space-x-2 text-sm text-gray-600">
+          <input type="checkbox" required />
+          <p>
+            I agree to the
+            <a href="#" class="text-primary underline">terms of use</a> and
+            <a href="#" class="text-primary underline">privacy policy</a>
+          </p>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="submit"
+            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+          >
+            Register
+          </button>
+        </div>
+
+        <div class="text-center">
+          <button
+            @click="routeTo('/try')"
+            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+          >
+            Continue as Guest
+          </button>
+        </div>
+
+        <p class="text-sm text-center mt-4">
+          Already have an account?
+          <a @click="routeTo('/login')" class="text-primary cursor-pointer font-semibold hover:underline">Sign in</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- Right Feature Section -->
+    <Placeholder />
+  </div>
+</template>
+
+<script setup>
+import { useRouter } from '#vue-router';
+import Placeholder from "~/components/login/Placeholder.vue";
+
+const router = useRouter();
+const routeTo = (route) => router.push(route);
+</script>

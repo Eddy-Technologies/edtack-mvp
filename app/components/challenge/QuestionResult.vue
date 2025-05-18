@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import 'katex/dist/katex.min.css';
 import { renderMath } from '~/utils/katexUtils.js';
 import ReportErrorModal from '~/components/report/ReportErrorModal.vue';

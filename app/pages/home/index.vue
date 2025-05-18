@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full min-h-screen bg-[#c8e6ce] overflow-auto text-center flex flex-col">
+  <div class="relative w-full min-h-screen bg-background overflow-auto text-center flex flex-col">
     <!-- Desktop Background Image -->
     <img
       v-if="!isMobile"
@@ -10,13 +10,13 @@
 
     <!-- Mobile Background Layer -->
     <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
-      <div class="absolute inset-0 bg-[#c8e6ce] z-0" />
+      <div class="absolute inset-0 bg-background z-0" />
       <img :src="mobileLeft" class="absolute top-[180px] sm:top-[100px] left-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out">
       <img :src="mobileRight" class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out">
     </div>
 
     <!-- Overlay content -->
-    <div class="relative md:mt-0 mt-10 z-10 pt-10 sm:pt-16 md:pt-20 flex flex-col items-center px-4 sm:px-6">
+    <div class="relative md:mt-0 mt-10 z-10 pt-10 sm:pt-16 md:pt-16 flex flex-col items-center px-4 sm:px-6">
       <!-- Landing Message -->
       <div class="px-4 sm:px-8 mb-4 max-w-full font-serif mt-2 text-center">
         <div class="flex items-center justify-center flex-wrap">
@@ -27,6 +27,16 @@
           An educational platform where parents can incentivise and motivate <br class="hidden sm:block">
           their children for consistent and fun learning.
         </h2>
+      </div>
+
+      <div class="flex flex-col mb-4 md:mb-0 items-center justify-center gap-4 w-full">
+        <!-- Top button centered -->
+        <button
+            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+            @click="routeTo('/register')"
+        >
+          Try Eddy Now
+        </button>
       </div>
 
       <!-- Info Boxes -->
@@ -52,16 +62,22 @@
       </div>
 
       <!-- Call-to-Actions -->
-      <div class="flex flex-col sm:flex-row md:mt-6 gap-4 mb-16 items-center justify-center w-full">
-        <button
-          class="w-[220px] py-2 md:mr-14 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          @click="routeTo('/try')"
-        >
-          Try Eddy Now
-        </button>
-        <button class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300" @click="routeTo('/demo')">
-          Request Demo
-        </button>
+      <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
+        <!-- Responsive button layout -->
+        <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto items-center">
+          <button
+              class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
+              @click="routeTo('/demo')"
+          >
+            Request Demo
+          </button>
+          <button
+              class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
+              @click="routeTo('/about')"
+          >
+            About Us
+          </button>
+        </div>
       </div>
     </div>
   </div>

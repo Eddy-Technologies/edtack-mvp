@@ -11,8 +11,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-
 // Modal visibility control and amount to be added
 const props = defineProps({
   amount: {

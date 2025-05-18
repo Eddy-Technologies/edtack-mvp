@@ -1,64 +1,53 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-    <div class="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
-      <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Login</h1>
-
-      <form class="space-y-4" @submit.prevent="handleLogin">
+  <div class="min-h-screen bg-background flex flex-col md:flex-row">
+    <!-- Left Form Section -->
+    <div class="flex-1 flex items-center justify-center px-6 py-10">
+      <form class="w-full max-w-md space-y-5 bg-white p-6 rounded-lg">
+        <!-- Back Icon -->
+        <div class="top-4 left-4">
+          <UIcon
+            name="i-heroicons-arrow-left"
+            class="icon cursor-pointer w-6 h-6 shrink-0 px-4"
+            @click="routeTo('/')"
+          />
+        </div>
+        <h1 class="text-2xl font-bold mb-6 text-center font-serif">Login to Eddy</h1>
         <input
-          v-model="email"
-          type="email"
-          placeholder="Email"
-          required
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-        >
+            type="email"
+            placeholder="Email"
+            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
+            required
+        />
         <input
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          required
-          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
-        >
-        <button
-          type="submit"
-          :disabled="loading"
-          class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
-        >
-          {{ loading ? 'Logging in...' : 'Login' }}
-        </button>
+            type="password"
+            placeholder="Password"
+            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
+            required
+        />
+        <div class="text-center">
+          <button
+              type="submit"
+              class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+          >
+            Login
+          </button>
+        </div>
+        <p class="text-center text-sm mt-4">
+          Don't have an account?
+          <a @click="routeTo('/register')" class="text-primary cursor-pointer font-semibold hover:underline">Sign up</a>
+        </p>
       </form>
-
-      <p v-if="error" class="text-red-600 text-sm text-center mt-4">{{ error }}</p>
     </div>
+
+    <!-- Right Feature Section -->
+    <Placeholder />
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+<script setup>
+import { useRouter } from '#vue-router';
+import Placeholder from "~/components/login/Placeholder.vue";
 
-// const supabase = useSupabaseClient()
 const router = useRouter();
-
-const email = ref('');
-const password = ref('');
-const loading = ref(false);
-const error = ref('');
-
-async function handleLogin() {
-  loading.value = true;
-  error.value = '';
-
-  const { error: loginError } = await supabase.auth.signInWithPassword({
-    email: email.value,
-    password: password.value,
-  });
-
-  loading.value = false;
-
-  if (loginError) {
-    error.value = loginError.message;
-  } else {
-    router.push('/'); // or redirect wherever
-  }
-}
+const routeTo = (route) => router.push(route);
 </script>
