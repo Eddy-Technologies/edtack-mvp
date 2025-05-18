@@ -1,5 +1,5 @@
 <template>
-  <div class="w-11/12 max-w-6xl mx-auto p-6">
+  <div class="mx-auto sm:w-11/12 sm:max-w-6xl sm:p-6">
     <h1 class=" font-bold mb-2 text-center text-primary">{{ name }}</h1>
 
     <!-- Quiz Phase -->
@@ -19,8 +19,8 @@
 
       <div class="flex justify-center sm:justify-start mt-5">
         <button
-            class="px-6 py-3 bg-green-600 hover:bg-green-700 dark:bg-green-400 dark:hover:bg-green-500 text-white dark:text-zinc-900 font-semibold rounded-lg transition"
-            @click="submitQuiz"
+          class="px-6 py-3 bg-green-600 hover:bg-green-700 dark:bg-green-400 dark:hover:bg-green-500 text-white dark:text-zinc-900 font-semibold rounded-lg transition"
+          @click="submitQuiz"
         >
           Submit Challenge
         </button>
@@ -32,19 +32,19 @@
       <h3 class="text-2xl font-semibold mb-5 text-center text-primary">Results</h3>
 
       <div
-          v-for="(question, index) in questions"
-          :key="index"
-          class="bg-white dark:bg-zinc-900 rounded-xl p-5 mb-5 border border-gray-200 dark:border-zinc-700 shadow"
+        v-for="(question, index) in questions"
+        :key="index"
+        class="bg-white dark:bg-zinc-900 rounded-xl p-5 mb-5 border border-gray-200 dark:border-zinc-700 shadow"
       >
         <QuestionResult
-            :question="question"
-            :question-index="index"
-            :selected-answer="userAnswers[index]"
+          :question="question"
+          :question-index="index"
+          :selected-answer="userAnswers[index]"
         />
       </div>
 
       <div
-          class="mt-8 p-6 bg-blue-50 dark:bg-slate-800 border border-blue-200 dark:border-cyan-400 text-center rounded-lg shadow"
+        class="mt-8 p-6 bg-blue-50 dark:bg-slate-800 border border-blue-200 dark:border-cyan-400 text-center rounded-lg shadow"
       >
         <h4 class="text-xl font-bold mb-2">Your Score: {{ score }} / {{ questions.length }}</h4>
         <span class="text-lg font-medium text-primary">You earned {{ score }} credits!</span>
