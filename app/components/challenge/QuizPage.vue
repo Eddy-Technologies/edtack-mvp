@@ -17,14 +17,12 @@
         />
       </div>
 
-      <div class="flex justify-center sm:justify-start mt-5">
-        <button
-          class="px-6 py-3 bg-green-600 hover:bg-green-700 dark:bg-green-400 dark:hover:bg-green-500 text-white dark:text-zinc-900 font-semibold rounded-lg transition"
-          @click="submitQuiz"
-        >
-          Submit Challenge
-        </button>
-      </div>
+      <button
+        class="px-6 py-3 bg-green-600 hover:bg-green-700 dark:bg-green-400 dark:hover:bg-green-500 text-white dark:text-zinc-900 font-semibold rounded-lg transition"
+        @click="submitQuiz"
+      >
+        Submit Challenge
+      </button>
     </div>
 
     <!-- Result Phase -->
