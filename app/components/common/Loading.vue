@@ -1,31 +1,26 @@
 <template>
   <div
-    :class="[
-      'flex items-center justify-center',
-      fullscreen
-        ? 'fixed inset-0 bg-white/80 backdrop-blur z-50'
-        : 'w-full h-full'
+      :class="[
+      'absolute top-0 left-0 w-full h-full z-50 flex items-center justify-center',
+      fullscreen ? 'bg-white/80 backdrop-blur' : 'bg-transparent'
     ]"
   >
-    <dotlottie-player
-      :src="animationUrl"
-      autoplay
-      loop
-      class="w-24 h-24 md:w-32 md:h-32"
-    />
+    <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="w-32 h-32 md:w-40 md:h-40 object-contain"
+    >
+      <source src="/loading.webm" type="video/webm" />
+      <source src="/loading.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-
-const props = defineProps<{
-  animationUrl?: string;
+defineProps<{
   fullscreen?: boolean;
 }>();
-
-const animationUrl = computed(() =>
-  props.animationUrl ??
-  'https://lottie.host/1c4dc8c6-5417-4647-b1e4-4ef2f35233b0/R40bH3w1aC.json'
-);
 </script>

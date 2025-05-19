@@ -36,10 +36,10 @@
       <!-- The Community -->
       <div class="mb-6 max-w-3xl text-center mt-6">
         <h1 class="text-2xl md:text-3xl text-black font-serif mb-2">AI-Powered Learning with Customised LLMs</h1>
-        <h2 class="text-lg sm:text-xl md:text-2xl mb-4">
+        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug">
           At <strong>Eddy</strong>, we leverage the power of <strong>customised Large Language Models (LLMs)</strong> designed specifically for education. Our models are fine-tuned using curriculum-based content, student interaction data, and real classroom feedback.
         </h2>
-        <ul class="text-sm sm:text-lg list-disc list-inside space-y-2 mb-4">
+        <ul class="text-sm sm:text-lg list-disc list-inside text-black space-y-2 mb-4">
           <li><strong>Curriculum-aware content:</strong> Generates questions, hints, and explanations aligned to learning objectives.</li>
           <li><strong>Adaptive difficulty:</strong> Adjusts challenge level dynamically based on student responses and progress.</li>
           <li><strong>Smart feedback:</strong> Understands free-text student answers and provides constructive guidance.</li>
