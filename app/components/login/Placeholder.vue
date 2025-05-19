@@ -18,6 +18,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref } from 'vue';
 import challenge from '../../../assets/home-mobile.png';
