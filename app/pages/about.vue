@@ -1,12 +1,12 @@
 <template>
-  <div class="relative w-full min-h-screen bg-background overflow-auto text-justify flex flex-col">
+  <div class="relative w-full min-h-screen bg-background overflow-auto text-center flex flex-col">
     <!-- Desktop Background Image -->
     <img
-      v-if="!isMobile"
-      :src="background"
-      class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
-      alt="about"
-    >
+        v-if="!isMobile"
+        :src="background"
+        class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
+        alt="about"
+    />
 
     <!-- Mobile Background Layer -->
     <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
@@ -19,7 +19,7 @@
       <!-- Mission -->
       <div class="mb-6 max-w-3xl text-center">
         <h1 class="text-2xl md:text-3xl text-black font-serif mb-2">Our Mission</h1>
-        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug text-justify">
+        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug">
           Our mission is to inspire children through rewards, engagement and targeted learning and allow parents to take charge of their children's education.
         </h2>
       </div>
@@ -27,25 +27,26 @@
       <!-- The Founders -->
       <div class="mb-6 max-w-3xl text-center mt-6">
         <h1 class="text-2xl md:text-3xl text-black font-serif mb-2">The Founders</h1>
-        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug text-justify">
-          We are a group of friends that believe in using artificial intelligence to provide education for all.
+        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug">
+          We are a team of like-minded individuals that believe in using artificial intelligence to provide education for all.
+          We met each other at the National University of Singapore (NUS).
         </h2>
       </div>
 
       <!-- The Community -->
-      <div class="mb-6 max-w-3xl text-center mt-6 text-lg sm:text-xl md:text-2xl space-y-4">
-        <h1 class="md:text-3xl text-black font-serif">AI-Powered Learning with Customised LLMs</h1>
-        <h2 class=" text-justify">
+      <div class="mb-6 max-w-3xl text-center mt-6">
+        <h1 class="text-2xl md:text-3xl text-black font-serif mb-2">AI-Powered Learning with Customised LLMs</h1>
+        <h2 class="text-lg sm:text-xl md:text-2xl mb-4">
           At <strong>Eddy</strong>, we leverage the power of <strong>customised Large Language Models (LLMs)</strong> designed specifically for education. Our models are fine-tuned using curriculum-based content, student interaction data, and real classroom feedback.
         </h2>
-        <ul class="list-disc list-inside space-y-4 mb-4 text-justify">
+        <ul class="text-sm sm:text-lg list-disc list-inside space-y-2 mb-4">
           <li><strong>Curriculum-aware content:</strong> Generates questions, hints, and explanations aligned to learning objectives.</li>
-          <li><strong>Adaptive difficulty:</strong> Adjusts difficulty dynamically based on student responses and progress.</li>
+          <li><strong>Adaptive difficulty:</strong> Adjusts challenge level dynamically based on student responses and progress.</li>
           <li><strong>Smart feedback:</strong> Understands free-text student answers and provides constructive guidance.</li>
           <li><strong>Modular AI design:</strong> Supports multiple subjects and learning modes like quizzes and lessons.</li>
           <li><strong>Child-safe AI:</strong> Built with bias filters and content safety tailored for young learners.</li>
         </ul>
-        <p class="text-justify">
+        <p>
           With domain-specific intelligence built directly into our models, Eddy delivers a learning experience that’s not only smart, but also truly meaningful—scaling personalised education like never before.
         </p>
       </div>
@@ -53,22 +54,22 @@
       <!-- The Community -->
       <div class="mb-6 max-w-3xl text-center mt-6">
         <h1 class="text-2xl md:text-3xl text-black font-serif mb-2">The Community</h1>
-        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug text-justify">
+        <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug">
           Thank you for your support and please let us know what features you would like to see on our platform.
         </h2>
       </div>
 
       <!-- Call-to-Actions -->
-      <div class="flex flex-row items-center justify-center gap-4 mb-16 w-full">
+      <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
         <button
-          class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          @click="routeTo('/try')"
+            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+            @click="routeTo('/try')"
         >
           Try Eddy Now
         </button>
         <button
-          class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          @click="routeTo('/feedback')"
+            class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
+            @click="routeTo('/feedback')"
         >
           Write to Us
         </button>
