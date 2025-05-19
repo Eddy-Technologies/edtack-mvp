@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-export function useMinimumLoader(minDuration = 1000) {
+export function useMinimumLoader(minDuration = 500) {
     const isLoading = ref(true);
 
     /**

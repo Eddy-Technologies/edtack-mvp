@@ -1,16 +1,15 @@
 <template>
-  <div
-    ref="content"
-    class="question p-5"
-  >
+  <div ref="content" class="p-5">
     <div class="flex justify-between items-center mb-2">
-      <div class="question-index text-primary text-2xl">Q{{ questionIndex + 1 }}. </div>
+      <div class="text-primary text-2xl font-bold">Q{{ questionIndex + 1 }}.</div>
       <div
-        class="py-1 px-2 rounded-md question border-2 border-solid shadow-md font-semibold"
-        :class="[
-          selectedAnswer === question.correctAnswer ? 'border-green-600 bg-green-100 text-green-600' :
-          selectedAnswer === undefined|null ? 'border-gray-600 bg-gray-100':
-          'border-red-600 bg-red-100 text-red-600'
+          class="py-1 px-2 rounded-md border-2 shadow-md font-semibold"
+          :class="[
+          selectedAnswer === question.correctAnswer
+            ? 'border-green-600 bg-green-100 text-green-600'
+            : selectedAnswer === undefined || selectedAnswer === null
+              ? 'border-gray-600 bg-gray-100 text-gray-600'
+              : 'border-red-600 bg-red-100 text-red-600'
         ]"
       >
         <p v-if="selectedAnswer === question.correctAnswer">✅</p>
@@ -19,50 +18,50 @@
       </div>
     </div>
 
-    <p class="question-content text-xl">{{ question.title }}</p>
+    <p class="text-xl">{{ question.title }}</p>
+
     <div v-for="(option, index) in question.options" :key="index">
       <div
-        class="form-control text-xl mt-4 option-item text-gray-400"
-        :class="[
+          class="mt-4 text-xl text-gray-400 border-2 p-3 rounded-lg transition-all duration-200"
+          :class="[
           selectedAnswer === option
             ? option === question.correctAnswer
-              ? 'correct-answer'
-              : 'wrong-answer'
+              ? 'bg-[#d0f6d6] border-[#00a152] text-[#007e33] font-bold shadow-[0_0_14px_rgba(0,161,82,0.3)] hover:bg-[#9ddb8f] hover:shadow-[0_0_22px_rgba(0,161,82,0.5)] dark:bg-[#1b5e20] dark:text-[#a5d6a7] dark:border-[#00e676] dark:hover:bg-[#238c4b] dark:hover:shadow-[0_0_18px_rgba(0,230,118,0.7)]'
+              : 'bg-[#ffebee] border-[#d32f2f] text-[#b71c1c] font-bold shadow-[0_0_8px_rgba(211,47,47,0.2)] hover:bg-[#ffcdd2] hover:shadow-[0_0_12px_rgba(211,47,47,0.4)] dark:bg-[#b71c1c] dark:text-[#ffcdd2] dark:border-[#ef5350] dark:hover:bg-[#ef9a9a] dark:hover:shadow-[0_0_14px_rgba(239,83,80,0.7)]'
             : '',
-          option === question.correctAnswer ? 'always-correct' : ''
+          option === question.correctAnswer
+            ? 'bg-[#c8e6ce] border-dotted border-2 border-[#388e3c] text-[#1b5e20] font-bold shadow-[0_0_6px_rgba(56,142,60,0.15)] hover:bg-[#a2d190] hover:shadow-[0_0_12px_rgba(56,142,60,0.35)] dark:bg-[#1b5e20] dark:text-[#a5d6a7] dark:border-[#00e676] dark:shadow-[0_0_8px_rgba(0,230,118,0.5)] dark:hover:bg-[#238c4b] dark:hover:shadow-[0_0_14px_rgba(0,230,118,0.6)]'
+            : ''
         ]"
       >
         <span>{{ option }}</span>
       </div>
     </div>
-    <p v-if="showDebugInfo" class="feedback correct-answer-box">
+
+    <p v-if="showDebugInfo" class="mt-4 p-4 rounded-lg text-lg font-medium bg-[#e8f5e9] border-2 border-[#00c853] text-[#1b5e20] dark:bg-[#1b5e20] dark:border-[#00e676] dark:text-[#a5d6a7]">
       <strong>Correct Answer:</strong> {{ question.correctAnswer }}
     </p>
 
-    <!-- <p v-if="selectedAnswer === question.correctAnswer" class="feedback correct-feedback">
-      ✅ Correct!
-    </p>
-
-    <p v-else class="feedback wrong-feedback">
-      ❌ Incorrect.
-    </p> -->
-
-    <p v-if="selectedAnswer !== question.correctAnswer" ref="explanation" class="feedback explanation-box">
+    <p
+        v-if="selectedAnswer !== question.correctAnswer"
+        ref="explanation"
+        class="mt-4 p-4 rounded-lg text-lg font-medium bg-[#fff8e1] border-2 border-[#ffb300] text-[#795548] dark:bg-[#3e2723] dark:border-[#ffca28] dark:text-[#ffe0b2]"
+    >
       <strong>Explanation:</strong> {{ question.explanation }}
     </p>
 
     <UButton
-      class="mt-4 px-3 py-1 text-sm bg-red-400 dark:bg-red-700 rounded hover:bg-red-300 dark:hover:bg-red-600 transition"
-      @click="openReportModal"
+        class="mt-4 px-3 py-1 text-sm rounded bg-red-400 dark:bg-red-700 hover:bg-red-300 dark:hover:bg-red-600 transition"
+        @click="openReportModal"
     >
       Report Error
     </UButton>
 
     <ReportErrorModal
-      :show-report-modal="showReport"
-      :question="question"
-      :selected-answer="selectedAnswer"
-      @close="showReport = false"
+        :show-report-modal="showReport"
+        :question="question"
+        :selected-answer="selectedAnswer"
+        @close="showReport = false"
     />
   </div>
 </template>
@@ -93,232 +92,3 @@ onMounted(() => {
   }
 });
 </script>
-
-<style scoped>
-.question-index {
-  font-weight: bold;
-}
-
-:root {
-  --form-control-color: rebeccapurple;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-form {
-  display: grid;
-  place-content: center;
-  min-height: 100vh;
-}
-
-.form-control {
-  line-height: 1.1;
-  /* display: grid; */
-  /* grid-template-columns: 1em auto; */
-  gap: 0.5em;
-}
-
-.form-control+.form-control {
-  margin-top: 1em;
-}
-
-.form-control:focus-within {
-  color: var(--form-control-color);
-}
-
-input[type="radio"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: white;
-  margin: 0;
-  font: inherit;
-  color: currentColor;
-  width: 1em;
-  height: 1em;
-  border: 0.10em solid currentColor;
-  border-radius: 20%;
-  transform: translateY(0.09em);
-  display: grid;
-  place-content: center;
-}
-
-input[type="radio"]::before {
-  content: "";
-  width: 0.4em;
-  height: 0.4em;
-  border-radius: 50%;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--form-control-color);
-  background-color: #00dc82;
-}
-
-input[type="radio"]:checked::before {
-  transform: scale(1);
-}
-
-.option-item {
-  border-width: 2px;
-  padding: 0.75em 1em;
-  border-radius: 0.5em;
-  transition: all 0.2s ease;
-}
-
-/* Always Correct (user did not select but is correct) */
-.always-correct {
-  background-color: #c8e6ce; /* Vibrant soft green */
-  border: 2px dotted #388e3c; /* Rich green dotted border */
-  color: #1b5e20; /* Deep green text */
-  font-weight: bold;
-  box-shadow: 0 0 6px rgba(56, 142, 60, 0.15);
-  opacity: 1;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.always-correct:hover {
-  background-color: #a2d190; /* Slightly stronger vibrant green */
-  box-shadow: 0 0 12px rgba(56, 142, 60, 0.35);
-}
-
-/* Dark mode */
-.dark .always-correct {
-  background-color: #1b5e20;
-  color: #a5d6a7;
-  border-color: #00e676;
-  box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.dark .always-correct:hover {
-  background-color: #238c4b;
-  box-shadow: 0 0 14px rgba(0, 230, 118, 0.6);
-}
-
-/* Wrong Answer */
-.wrong-answer {
-  background-color: #ffebee; /* Light red */
-  border: 2px solid #d32f2f;
-  color: #b71c1c;
-  font-weight: bold;
-  box-shadow: 0 0 8px rgba(211, 47, 47, 0.2);
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.wrong-answer:hover {
-  background-color: #ffcdd2; /* Slightly stronger red on hover */
-  box-shadow: 0 0 12px rgba(211, 47, 47, 0.4);
-}
-
-/* Dark mode */
-.dark .wrong-answer {
-  background-color: #b71c1c;
-  color: #ffcdd2;
-  border-color: #ef5350;
-  box-shadow: 0 0 8px rgba(239, 83, 80, 0.5);
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.dark .wrong-answer:hover {
-  background-color: #ef9a9a; /* lighter red */
-  box-shadow: 0 0 14px rgba(239, 83, 80, 0.7);
-}
-
-/* Correct Answer (user selected) */
-.correct-answer {
-  background-color: #d0f6d6; /* Deeper vibrant green */
-  border: 2px solid #00a152; /* Dark vibrant green border */
-  color: #007e33; /* Deep green text for contrast */
-  font-weight: bold;
-  box-shadow: 0 0 14px rgba(0, 161, 82, 0.3);
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.correct-answer:hover {
-  background-color: #9ddb8f; /* Stronger green on hover */
-  box-shadow: 0 0 22px rgba(0, 161, 82, 0.5);
-}
-
-/* Dark mode */
-.dark .correct-answer {
-  background-color: #1b5e20;
-  color: #a5d6a7;
-  border-color: #00e676;
-  box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.dark .correct-answer:hover {
-  background-color: #238c4b;
-  box-shadow: 0 0 18px rgba(0, 230, 118, 0.7);
-}
-
-/* Generic feedback box */
-.feedback {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-/* Correct Answer Display */
-.correct-answer-box {
-  background-color: #e8f5e9;
-  border: 2px solid #00c853;
-  color: #1b5e20;
-}
-
-.dark .correct-answer-box {
-  background-color: #1b5e20;
-  border-color: #00e676;
-  color: #a5d6a7;
-}
-
-/* Explanation Box */
-.explanation-box {
-  background-color: #fff8e1;
-  border: 2px solid #ffb300;
-  color: #795548;
-}
-
-.dark .explanation-box {
-  background-color: #3e2723;
-  border-color: #ffca28;
-  color: #ffe0b2;
-}
-
-/* Positive Feedback */
-.correct-feedback {
-  background-color: #c8e6ce;
-  border: 2px solid #00c853;
-  color: #1b5e20;
-}
-
-.dark .correct-feedback {
-  background-color: #1b5e20;
-  border-color: #00e676;
-  color: #a5d6a7;
-}
-
-/* Negative Feedback */
-.wrong-feedback {
-  background-color: #ffebee;
-  border: 2px solid #d32f2f;
-  color: #b71c1c;
-}
-
-.dark .wrong-feedback {
-  background-color: #b71c1c;
-  border-color: #ef5350;
-  color: #ffcdd2;
-}
-</style>

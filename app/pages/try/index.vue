@@ -28,7 +28,7 @@
           rightOverlay ? 'bg-black/30' : 'bg-transparent'
         ]"
         @mousemove="handleMouseMoveRight"
-        @click="routeTo('/child')"
+        @click="routeTo('/onboard')"
       >
         <ULink
           v-if="!rightOverlay"
@@ -48,7 +48,7 @@
         </div>
         <div
           class="absolute bottom-0 w-full h-1/2 bg-black/10 text-center text-white text-2xl font-bold flex items-center justify-center z-10"
-          @click="routeTo('/child')"
+          @click="routeTo('/onboard')"
         >
           <span class="drop-shadow-dramatic text-3xl text-[#c8e6ce] font-bold">Are you a student?</span>
         </div>

@@ -1,70 +1,67 @@
 <template>
   <div>
-    <div class="store-header">
-      <h2 class="title text-primary">STORE</h2>
-
-      <div class="view-toggle">
-        <UIcon
-          name="i-heroicons-squares-2x2"
-          class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
-          @click="viewMode = 'icon'"
-        />
-        <UIcon
-          name="i-heroicons-list-bullet"
-          class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0"
-          @click="viewMode = 'list'"
-        />
-      </div>
+    <div class="flex flex-wrap justify-between items-center mb-5">
+      <h2 class="text-2xl font-extrabold text-primary text-center">STORE</h2>
     </div>
-    <p>Here are some amazing products.</p>
+
+    <p class="mb-4">Here are some amazing products.</p>
 
     <!-- Icon View -->
-    <div v-if="viewMode === 'icon'" class="icon-view">
-      <div v-for="item in items" :key="item.id" class="item icon-item">
-        <div class="image-container">
-          <img :src="item.image" :alt="item.name" class="item-image">
+    <div v-if="viewMode === 'icon'" class="grid gap-5 mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div
+          v-for="item in items"
+          :key="item.id"
+          class="flex flex-col items-center justify-center text-center p-4 max-w-xs w-full"
+      >
+        <div class="relative flex justify-center items-center group">
+          <img :src="item.image" :alt="item.name" class="w-[150px] h-[150px] object-cover rounded mb-2" />
           <button
-            class="cart-button"
-            :aria-label="'Add ' + item.name + ' to Cart'"
-            @click="addToCart(item)"
+              class="absolute top-2 right-2 bg-black/70 text-white text-xs px-3 py-1 rounded
+           opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+              :aria-label="'Add ' + item.name + ' to Cart'"
+              @click="addToCart(item)"
           >
             Add to Cart
           </button>
         </div>
-        <div class="item-details">
+        <div>
           <h3>{{ item.name }}</h3>
           <p>{{ item.price }} Credits</p>
         </div>
-        <p v-if="purchaseMessage === item.id">Purchase Successful!</p>
-        <p v-if="insufficientFundsMessage === item.id" class="error-message">Insufficient Funds!</p>
+        <p v-if="purchaseMessage === item.id" class="text-green-600">Purchase Successful!</p>
+        <p v-if="insufficientFundsMessage === item.id" class="text-red-600">Insufficient Funds!</p>
       </div>
     </div>
 
     <!-- List View -->
-    <div v-if="viewMode === 'list'" class="list-view">
-      <div v-for="item in items" :key="item.id" class="item list-item">
-        <img :src="item.image" :alt="item.name" class="item-image">
-        <div class="item-details">
+    <div v-if="viewMode === 'list'" class="flex flex-col gap-4">
+      <div
+        v-for="item in items"
+        :key="item.id"
+        class="flex flex-col items-center text-center p-4 w-full max-w-sm mx-auto"
+      >
+        <img :src="item.image" :alt="item.name" class="w-[150px] h-[150px] object-cover rounded mb-2" />
+        <div>
           <h3>{{ item.name }}</h3>
           <p>Price: {{ item.price }} Credits</p>
         </div>
         <button
-          class="cart-button"
+          class="mt-2 bg-black/70 text-white text-sm px-3 py-1 rounded"
           :aria-label="'Add ' + item.name + ' to Cart'"
           @click="addToCart(item)"
         >
           Add to Cart
         </button>
-
-        <p v-if="purchaseMessage === item.id">Purchase Successful!</p>
-        <p v-if="insufficientFundsMessage === item.id" class="error-message">Insufficient Funds!</p>
+        <p v-if="purchaseMessage === item.id" class="text-green-600">Purchase Successful!</p>
+        <p v-if="insufficientFundsMessage === item.id" class="text-red-600">Insufficient Funds!</p>
       </div>
     </div>
   </div>
 </template>
-
-<script>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useCreditStore } from '~/stores/credit';
+
 import placeholder1 from '../../../assets/a.png';
 import placeholder2 from '../../../assets/b.png';
 import placeholder3 from '../../../assets/c.png';
@@ -74,228 +71,86 @@ import placeholder6 from '../../../assets/f.png';
 import placeholder7 from '../../../assets/g.png';
 import placeholder8 from '../../../assets/h.png';
 
-import { useCreditStore } from '~/stores/credit';
+const props = defineProps<{
+  cart: Array<any>
+}>();
 
-export default {
-  emits: ['credits-updated', 'add-to-cart'],
-  setup(props, { emit }) {
-    const items = [
-      { id: '1', name: 'Chicha', price: 5, image: placeholder4 },
-      { id: '3', name: 'KFC', price: 10, image: placeholder2 },
-      { id: '2', name: 'Fornite', price: 10, image: placeholder1 },
-      { id: '4', name: 'Riot Games', price: 30, image: placeholder3 },
-      { id: '5', name: 'Roblox', price: 30, image: placeholder5 },
-      { id: '6', name: 'Labubu', price: 99, image: placeholder6 },
-      { id: '7', name: 'Pikachu Plush', price: 20, image: placeholder7 },
-      { id: '8', name: 'Steam', price: 30, image: placeholder8 }
-    ];
+const emit = defineEmits<{
+  (e: 'credits-updated', updatedCredits: number): void;
+  (e: 'add-to-cart', updatedCart: any[]): void;
+}>();
 
-    const purchaseMessage = ref(null);
-    const insufficientFundsMessage = ref(null);
-    const creditStore = useCreditStore();
-    const viewMode = ref('icon'); // Default to 'icon' view
-    const cart = ref([]); // Cart array to hold added items
-    const screenWidth = ref(null);
+const items = [
+  { id: '1', name: 'Chicha', price: 5, image: placeholder4 },
+  { id: '3', name: 'KFC', price: 10, image: placeholder2 },
+  { id: '2', name: 'Fornite', price: 10, image: placeholder1 },
+  { id: '4', name: 'Riot Games', price: 30, image: placeholder3 },
+  { id: '5', name: 'Roblox', price: 30, image: placeholder5 },
+  { id: '6', name: 'Labubu', price: 99, image: placeholder6 },
+  { id: '7', name: 'Pikachu Plush', price: 20, image: placeholder7 },
+  { id: '8', name: 'Steam', price: 30, image: placeholder8 }
+];
 
-    // Check if window is available (for SSR)
-    const isWindowAvailable = typeof window !== 'undefined';
+const purchaseMessage = ref<string | null>(null);
+const insufficientFundsMessage = ref<string | null>(null);
+const viewMode = ref<'icon' | 'list'>('icon');
+const screenWidth = ref<number | null>(null);
 
-    // Buy item method
-    const buyItem = (item) => {
-      if (creditStore.childCredits[0] >= item.price) {
-        creditStore.childCredits[0] -= item.price;
-        emit('credits-updated', creditStore.childCredits[0]); // Emit the updated credits
-        purchaseMessage.value = item.id;
-        insufficientFundsMessage.value = null;
+const creditStore = useCreditStore();
+const isWindowAvailable = typeof window !== 'undefined';
 
-        // Clear purchase message after 3 seconds
-        setTimeout(() => {
-          purchaseMessage.value = null;
-        }, 3000);
-      } else {
-        insufficientFundsMessage.value = item.id;
-        purchaseMessage.value = null;
+const buyItem = (item: any) => {
+  if (creditStore.childCredits[0] >= item.price) {
+    creditStore.childCredits[0] -= item.price;
+    emit('credits-updated', creditStore.childCredits[0]);
+    purchaseMessage.value = item.id;
+    insufficientFundsMessage.value = null;
 
-        // Clear insufficient funds message after 3 seconds
-        setTimeout(() => {
-          insufficientFundsMessage.value = null;
-        }, 3000);
-      }
-    };
+    setTimeout(() => {
+      purchaseMessage.value = null;
+    }, 3000);
+  } else {
+    insufficientFundsMessage.value = item.id;
+    purchaseMessage.value = null;
 
-    const addToCart = (item) => {
-      // Check if item is already in the cart
-      const existingItem = cart.value.find((cartItem) => cartItem.id === item.id);
-
-      if (existingItem) {
-        // Increase the quantity of the item if it already exists
-        existingItem.quantity++;
-      } else {
-        // If item doesn't exist in the cart, add it with quantity 1
-        cart.value.push({ ...item, quantity: 1 });
-      }
-
-      emit('add-to-cart', cart.value); // Send updated cart to parent
-    };
-
-    // Function to update screen width and change view mode
-    const updateScreenSize = () => {
-      if (isWindowAvailable) {
-        screenWidth.value = window.innerWidth;
-        if (screenWidth.value <= 768) {
-          viewMode.value = 'icon'; // Always default to icon mode on mobile
-        }
-      }
-    };
-
-    // Add event listener for screen resizing
-    onMounted(() => {
-      updateScreenSize();
-      if (isWindowAvailable) {
-        window.addEventListener('resize', updateScreenSize);
-      }
-    });
-
-    // Cleanup event listener when component unmounts
-    onUnmounted(() => {
-      if (isWindowAvailable) {
-        window.removeEventListener('resize', updateScreenSize);
-      }
-    });
-
-    // Return reactive state and methods to template
-    return {
-      items,
-      purchaseMessage,
-      insufficientFundsMessage,
-      buyItem,
-      addToCart,
-      viewMode,
-      cart
-    };
-  },
+    setTimeout(() => {
+      insufficientFundsMessage.value = null;
+    }, 3000);
+  }
 };
+
+const addToCart = (item: any) => {
+  const updatedCart = [...props.cart];
+  const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    updatedCart.push({ ...item, quantity: 1 });
+  }
+
+  emit('add-to-cart', updatedCart);
+};
+
+const updateScreenSize = () => {
+  if (isWindowAvailable) {
+    screenWidth.value = window.innerWidth;
+    if (screenWidth.value <= 768) {
+      viewMode.value = 'icon';
+    }
+  }
+};
+
+onMounted(() => {
+  updateScreenSize();
+  if (isWindowAvailable) {
+    window.addEventListener('resize', updateScreenSize);
+  }
+});
+
+onUnmounted(() => {
+  if (isWindowAvailable) {
+    window.removeEventListener('resize', updateScreenSize);
+  }
+});
 </script>
-
-<style scoped>
-.store-header {
-  display: flex;
-  justify-content: space-between; /* Space out text and buttons */
-  align-items: center; /* Vertically center items */
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.title {
-  font-weight: normal;
-}
-
-/* Icon view styles */
-.icon-view {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Default: 4 columns */
-  gap: 20px; /* Spacing between items */
-  margin-top: 20px;
-}
-
-/* List view styles */
-.list-view {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Adjust items */
-.item {
-  padding: 10px;
-  text-align: center;
-  width: 100%; /* Adjust width for responsiveness */
-  max-width: 300px;
-}
-
-.icon-item, .list-item {
-  display: flex;
-  flex-direction: column; /* Stack image and details vertically */
-  align-items: center; /* Center everything */
-  justify-content: center;
-  text-align: center; /* Ensure text is centered */
-  padding: 15px;
-}
-
-.item-image {
-  width: 150px;  /* Square image */
-  height: 150px;
-  object-fit: cover; /* Maintain aspect ratio without distortion */
-  border-radius: 8px;
-  margin-bottom: 10px; /* Add space between image and details */
-}
-
-.image-container {
-  position: relative; /* Needed for absolute positioning */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.cart-button {
-  position: absolute;
-  top: 10px; /* Position at top */
-  right: 10px; /* Position at right */
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 5px;
-  font-size: 12px;
-  cursor: pointer;
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease-in-out;
-}
-
-.icon-item:hover .cart-button {
-  opacity: 1; /* Show button on hover */
-}
-
-.view-toggle {
-  display: flex;
-  gap: 10px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .icon-view {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for tablets */
-  }
-}
-
-@media (max-width: 768px) {
-  .view-toggle {
-    display: none;
-  }
-
-  .icon-view {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for smaller screens */
-  }
-
-  .store-header {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .icon-view {
-    grid-template-columns: repeat(1, 1fr); /* 1 column for mobile */
-  }
-
-  .list-item {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .list-item img {
-    max-width: 80%;
-    margin-bottom: 10px;
-  }
-}
-</style>

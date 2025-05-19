@@ -62,14 +62,14 @@
       <!-- Call-to-Actions -->
       <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
         <button
-            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-            @click="routeTo('/try')"
+          class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+          to="try"
         >
           Try Eddy Now
         </button>
         <button
             class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
-            @click="routeTo('/feedback')"
+           to="feedback"
         >
           Write to Us
         </button>
@@ -79,19 +79,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import aboutDesktop from '../../assets/home.png'; // reuse or replace with a dedicated image
 import aboutMobileLeft from '../../assets/parent.png';
 import aboutMobileRight from '../../assets/child.png';
-import { useRouter } from '#vue-router';
 
-const router = useRouter();
 const isMobile = ref(false);
 const background = ref(aboutDesktop);
 const mobileRight = ref(aboutMobileRight);
 
 const checkMobile = () => window.innerWidth <= 768;
-const routeTo = (route) => router.push(route);
 const updateBackground = () => {
   isMobile.value = checkMobile();
   background.value = isMobile.value ? aboutMobileLeft : aboutDesktop;

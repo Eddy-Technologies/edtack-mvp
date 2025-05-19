@@ -1,17 +1,14 @@
 <template>
-  <div class="store">
+  <div class="store bg-background">
     <AppHeader />
     <div class="store-container">
       <div class="item-list">
         <div class="store-section">
-          <Store @add-to-cart="addToCart" />
+          <Store :cart="cart" @add-to-cart="addToCart" />
         </div>
         <div class="sidebar">
-          <div class="credits-section">
-            <Credits />
-          </div>
           <div class="cart-section">
-            <Cart :cart="cart" @clear-cart="clearCart" />
+            <Cart :cart="cart" @update-cart="updateCart" @clear-cart="clearCart" />
           </div>
         </div>
       </div>
@@ -20,39 +17,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref } from 'vue';
 import Credits from '~/pages/store/Credits.vue';
 import Store from '~/pages/store/Store.vue';
 import Cart from '~/pages/store/Cart.vue';
 
-export default {
-  components: {
-    Cart,
-    Store,
-    Credits
-  },
-  setup() {
-    // Reactive variable to hold cart items
-    const cart = ref([]);
+// Reactive cart
+const cart = ref([]);
 
-    // Method to add items to the cart
-    const addToCart = (updatedCart) => {
-      cart.value = updatedCart; // Update the cart with the new cart items
-    };
+// Update cart after an item is added
+const addToCart = (updatedCart: any[]) => {
+  cart.value = updatedCart;
+};
 
-    // Method to clear the cart
-    const clearCart = () => {
-      cart.value = []; // Reset the cart array to clear the items
-    };
+// Clear all items
+const clearCart = () => {
+  cart.value = [];
+};
 
-    // Return the reactive variables and methods for use in the template
-    return {
-      cart,
-      addToCart,
-      clearCart
-    };
-  }
+// Update cart from child (e.g., delete/edit)
+const updateCart = (updatedCart: any[]) => {
+  cart.value = updatedCart;
 };
 </script>
 

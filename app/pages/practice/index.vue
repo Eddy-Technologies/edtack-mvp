@@ -4,7 +4,7 @@
     <main :class="{ 'centered-bg': !quiz }" class="main-content">
       <div :class="{ 'compact-form': quiz, 'centered-form': !quiz }" class="form-container bg-white dark:bg-zinc-900/50">
         <h1 v-if="!quiz" class="title">
-          <span class="text-[#75d38a] dark:text-[#c8e6ce]">Generate Your Practice</span>
+          <span class="text-primary dark:text-[#c8e6ce]">Generate Your Practice</span>
         </h1>
 
         <div v-show="!isFormCollapsed" class="transition-all duration-300 ease-in-out">
