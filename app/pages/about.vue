@@ -17,19 +17,6 @@
     <!-- Overlay Content -->
     <div class="relative z-10 pt-10 sm:pt-16 md:pt-20 flex flex-col items-center px-4 sm:px-6">
       <!-- Mission -->
-      <video
-        class="w-full h-auto object-contain
-             max-w-full max-h-[80vh]
-             md:max-w-[80vw] md:max-h-[80vh] mb-10"
-        autoplay
-        muted
-        loop
-        playsinline
-      >
-        <source src="/../assets/eddy.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
       <div class="mb-6 max-w-3xl text-center">
         <h1 class="text-2xl md:text-3xl text-black font-serif mb-2">Our Mission</h1>
         <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug text-justify">
@@ -75,7 +62,7 @@
       <div class="flex flex-row items-center justify-center gap-4 mb-16 w-full">
         <button
           class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          @click="routeTo('/register')"
+          @click="routeTo('/try')"
         >
           Try Eddy Now
         </button>
