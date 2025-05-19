@@ -29,13 +29,19 @@
         </h2>
       </div>
 
-      <div class="flex flex-col mb-4 md:mb-0 items-center justify-center gap-4 w-full">
+      <div class="flex flex-row mb-4 md:mb-0 items-center justify-center gap-6 w-full">
         <!-- Top button centered -->
         <button
           class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
           @click="routeTo('/register')"
         >
           Try Eddy Now
+        </button>
+        <button
+          class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
+          @click="routeTo('/about')"
+        >
+          About Us
         </button>
       </div>
 
@@ -62,23 +68,17 @@
       </div>
 
       <!-- Call-to-Actions -->
-      <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
-        <!-- Responsive button layout -->
-        <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto items-center">
+      <!-- <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full"> -->
+      <!-- Responsive button layout -->
+      <!-- <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto items-center">
           <button
             class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
             @click="routeTo('/demo')"
           >
             Request Demo
           </button>
-          <button
-            class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
-            @click="routeTo('/about')"
-          >
-            About Us
-          </button>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
