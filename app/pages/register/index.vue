@@ -3,15 +3,16 @@
     <!-- Left Form Section -->
     <div class="flex-1 flex items-center justify-center px-6 py-10">
       <form class="w-full max-w-md space-y-5 bg-white p-6 rounded-lg">
-        <!-- Back Icon -->
-        <div class="top-4 left-4">
+        <div class="flex items-center mb-2">
           <UIcon
-            name="i-heroicons-arrow-left"
-            class="icon cursor-pointer w-6 h-6 shrink-0 px-4"
-            @click="routeTo('/')"
+              name="i-heroicons-arrow-left"
+              class="cursor-pointer w-6 h-6 text-gray-800 hover:text-gray-600"
+              @click="routeTo('/')"
           />
+          <div class="flex-1 text-center">
+            <h1 class="text-2xl font-bold text-gray-800 font-serif">Register for Eddy</h1>
+          </div>
         </div>
-        <h1 class="text-2xl font-bold text-gray-800 text-center font-serif">Register for Eddy</h1>
 
         <div class="flex gap-4">
           <input
@@ -41,9 +42,9 @@
           required
         />
 
-        <div class="flex items-center space-x-2 text-sm text-gray-600">
-          <input type="checkbox" required />
-          <p class="text-center text-sm mt-4 text-black">
+        <div class="flex items-start space-x-2 text-sm text-gray-600">
+          <input type="checkbox" required class="mt-1" />
+          <p class="text-sm text-black">
             I agree to the
             <a href="#" class="text-primary underline">terms of use</a> and
             <a href="#" class="text-primary underline">privacy policy</a>
