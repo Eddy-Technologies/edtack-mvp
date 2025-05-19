@@ -17,13 +17,13 @@
           <input
             type="text"
             placeholder="First Name"
-            class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+            class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white"
             required
           />
           <input
             type="text"
             placeholder="Last Name"
-            class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+            class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white"
             required
           />
         </div>
@@ -31,19 +31,19 @@
         <input
           type="email"
           placeholder="Email"
-          class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+          class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white"
           required
         />
         <input
           type="password"
           placeholder="Password"
-          class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
+          class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white"
           required
         />
 
         <div class="flex items-center space-x-2 text-sm text-gray-600">
           <input type="checkbox" required />
-          <p>
+          <p class="text-center text-sm mt-4 text-black">
             I agree to the
             <a href="#" class="text-primary underline">terms of use</a> and
             <a href="#" class="text-primary underline">privacy policy</a>
@@ -68,7 +68,7 @@
           </button>
         </div>
 
-        <p class="text-sm text-center mt-4">
+        <p class="text-center text-sm mt-4 text-black">
           Already have an account?
           <a @click="routeTo('/login')" class="text-primary cursor-pointer font-semibold hover:underline">Sign in</a>
         </p>

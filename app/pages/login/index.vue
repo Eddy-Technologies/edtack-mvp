@@ -15,13 +15,13 @@
         <input
             type="email"
             placeholder="Email"
-            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
+            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400 bg-white"
             required
         />
         <input
             type="password"
             placeholder="Password"
-            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
+            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400 bg-white"
             required
         />
         <div class="text-center">
@@ -32,7 +32,7 @@
             Login
           </button>
         </div>
-        <p class="text-center text-sm mt-4">
+        <p class="text-center text-sm mt-4 text-black">
           Don't have an account?
           <a @click="routeTo('/register')" class="text-primary cursor-pointer font-semibold hover:underline">Sign up</a>
         </p>
