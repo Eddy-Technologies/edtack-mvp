@@ -19,13 +19,13 @@
             placeholder="First Name"
             class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
             required
-          >
+          />
           <input
             type="text"
             placeholder="Last Name"
             class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
             required
-          >
+          />
         </div>
 
         <input
@@ -33,16 +33,16 @@
           placeholder="Email"
           class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
           required
-        >
+        />
         <input
           type="password"
           placeholder="Password"
           class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500"
           required
-        >
+        />
 
         <div class="flex items-center space-x-2 text-sm text-gray-600">
-          <input type="checkbox" required>
+          <input type="checkbox" required />
           <p>
             I agree to the
             <a href="#" class="text-primary underline">terms of use</a> and
@@ -61,8 +61,8 @@
 
         <div class="text-center">
           <button
-            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
             @click="routeTo('/try')"
+            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
           >
             Continue as Guest
           </button>
@@ -70,7 +70,7 @@
 
         <p class="text-sm text-center mt-4">
           Already have an account?
-          <a class="text-primary cursor-pointer font-semibold hover:underline" @click="routeTo('/login')">Sign in</a>
+          <a @click="routeTo('/login')" class="text-primary cursor-pointer font-semibold hover:underline">Sign in</a>
         </p>
       </form>
     </div>
@@ -82,7 +82,7 @@
 
 <script setup>
 import { useRouter } from '#vue-router';
-import Placeholder from '~/components/login/Placeholder.vue';
+import Placeholder from "~/components/login/Placeholder.vue";
 
 const router = useRouter();
 const routeTo = (route) => router.push(route);

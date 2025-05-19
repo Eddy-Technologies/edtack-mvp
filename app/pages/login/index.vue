@@ -13,28 +13,28 @@
         </div>
         <h1 class="text-2xl font-bold mb-6 text-center font-serif">Login to Eddy</h1>
         <input
-          type="email"
-          placeholder="Email"
-          class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
-          required
-        >
+            type="email"
+            placeholder="Email"
+            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
+            required
+        />
         <input
-          type="password"
-          placeholder="Password"
-          class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
-          required
-        >
+            type="password"
+            placeholder="Password"
+            class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400"
+            required
+        />
         <div class="text-center">
           <button
-            type="submit"
-            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+              type="submit"
+              class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
           >
             Login
           </button>
         </div>
         <p class="text-center text-sm mt-4">
           Don't have an account?
-          <a class="text-primary cursor-pointer font-semibold hover:underline" @click="routeTo('/register')">Sign up</a>
+          <a @click="routeTo('/register')" class="text-primary cursor-pointer font-semibold hover:underline">Sign up</a>
         </p>
       </form>
     </div>
@@ -46,7 +46,7 @@
 
 <script setup>
 import { useRouter } from '#vue-router';
-import Placeholder from '~/components/login/Placeholder.vue';
+import Placeholder from "~/components/login/Placeholder.vue";
 
 const router = useRouter();
 const routeTo = (route) => router.push(route);
