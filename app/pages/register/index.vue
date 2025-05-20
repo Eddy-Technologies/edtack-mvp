@@ -101,8 +101,6 @@ const username = ref(''); // not used yet
 const email = ref('');
 const password = ref('');
 
-const { signup } = useUsers();
-
 const handleRegister = async () => {
   try {
     // call reusable signup
