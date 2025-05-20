@@ -1,10 +1,9 @@
 import { ref, onMounted } from 'vue';
 import type { User } from '@supabase/supabase-js';
 
-const nuxtApp = useNuxtApp();
-const supabase = nuxtApp.$supabase;
-
 export const useSupabaseClient = () => {
+  const nuxtApp = useNuxtApp();
+  const supabase = nuxtApp.$supabase;
   return supabase;
 };
 
