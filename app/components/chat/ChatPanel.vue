@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="w-full border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
     <div ref="chatContainer" class="flex-1 overflow-y-auto">
       <div
         class="max-w-4xl mx-auto min-h-full border-x border-gray-200 dark:border-gray-800 p-4 space-y-2"
@@ -20,7 +20,7 @@
           />
         </template>
         <ChatLoadingSkeleton v-if="loading" class="p-4" />
-        <NoChats v-if="messages.length === 0" @query-select="onQuerySelect" />
+        <NoChats v-if="!loading && messages.length === 0" @query-select="onQuerySelect" />
       </div>
     </div>
     <UDivider />
@@ -28,7 +28,7 @@
       <UTextarea
         ref="userInput"
         v-model="userMessage"
-        placeholder="How can I help you today?"
+        placeholder="How can Eddy help you today?"
         class="w-full"
         :ui="{
           padding: { xl: 'pr-11' },
@@ -55,6 +55,9 @@
 
 <script setup lang="ts">
 import type { Message } from '~~/types';
+import NoChats from "~/components/chat/NoChats.vue";
+import ChatLoadingSkeleton from "~/components/chat/ChatLoadingSkeleton.vue";
+import AssistantMessage from "~/components/chat/AssistantMessage.vue";
 
 const messages = ref<Message[]>([]);
 const loading = ref(false);
@@ -76,6 +79,10 @@ onMounted(() => {
       characterData: true,
     });
   }
+
+  nextTick(() => {
+    userInput.value?.textarea.focus();
+  });
 });
 
 onUnmounted(() => {
@@ -97,34 +104,46 @@ const sendMessage = async () => {
 
   loading.value = true;
   const tmpMessage = userMessage.value;
+  userMessage.value = '';
+
+  // Add user message
+  messages.value.push({
+    role: 'user',
+    id: String(Date.now()),
+    content: tmpMessage,
+  });
+
+  // Placeholder for assistant response
+  const assistantMessageId = String(Date.now() + 1);
+  messages.value.push({
+    role: 'assistant',
+    id: assistantMessageId,
+    content: '',
+  });
+
+  await nextTick();
+
   try {
-    userMessage.value = '';
-    messages.value.push({
-      role: 'user',
-      id: String(Date.now()),
-      content: tmpMessage,
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: messages.value }),
     });
 
-    const response = useChat('/api/chat', { messages: messages.value })();
+    const reader = res.body?.getReader();
+    const decoder = new TextDecoder();
 
-    let responseAdded = false;
-    for await (const chunk of response) {
-      if (responseAdded) {
-        // add the chunk to the current message's content
-        messages.value[messages.value.length - 1]!.content += chunk;
-      } else {
-        // add a new message to the chat history
-        messages.value.push({
-          role: 'assistant',
-          id: String(Date.now()),
-          content: chunk,
-        });
-
-        responseAdded = true;
-        loading.value = false;
+    let done = false;
+    while (!done && reader) {
+      const { value, done: streamDone } = await reader.read();
+      done = streamDone;
+      const chunk = decoder.decode(value || new Uint8Array(), { stream: true });
+      if (chunk) {
+        messages.value[messages.value.length - 1].content += chunk;
       }
     }
 
+    loading.value = false;
     nextTick(() => {
       userInput.value?.textarea.focus();
     });

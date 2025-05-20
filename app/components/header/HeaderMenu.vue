@@ -19,12 +19,12 @@
         Feedback
       </ULink>
 
-      <ColorMode />
+      <!--ColorMode />-->
     </div>
 
     <!-- Mobile Menu Button -->
     <div class="block md:hidden">
-      <ColorMode />
+      <!--ColorMode />-->
       <button class="ml-4 focus:outline-none" @click="toggleMobileMenu">
         <UIcon name="i-heroicons-bars-3-16-solid" class="h-5 w-5 mt-1" />
       </button>

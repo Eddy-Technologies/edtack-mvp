@@ -51,6 +51,9 @@ const updateCredits = (newCredits: number) => {
   const updatedCredits = [...creditStore.childCredits];
   updatedCredits[0] += newCredits * 10;
   creditStore.childCredits = updatedCredits;
+
+  // Scroll the page to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 onBeforeMount(() => {
