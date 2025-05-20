@@ -10,6 +10,10 @@
     <!-- Main Content -->
     <div class="relative z-10 flex flex-col justify-center items-center">
       <h1 class="text-3xl font-bold text-center text-primary mb-6 font-serif">Welcome to Eddy!</h1>
+      Email: {{ user?.user_metadata?.email }}
+      Name: {{ user?.user_metadata?.name }}
+      {{ user?.user_metadata?.avatar_url }}
+      {{ user?.user_metadata?.phone }}
       <h2 class="text-2xl font-bold text-center text-primary mb-6 font-serif">Choose Your Level</h2>
 
       <!-- Main Level Selection -->
@@ -60,8 +64,15 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useSupabaseUser } from '~/composables/useUsers';
 import aboutDesktop from '~/../assets/child.png';
 import { useRouter } from '#vue-router';
+
+definePageMeta({
+  middleware: 'auth'
+});
+
+const { user } = useSupabaseUser();
 
 const router = useRouter();
 const levels = ['Primary', 'Secondary'];
