@@ -45,7 +45,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       supabaseUrl: process.env.VITE_SUPABASE_URL,
-      supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY
+      supabaseAnonKey: process.env.VITE_SUPABASE_KEY
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,

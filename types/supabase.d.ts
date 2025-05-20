@@ -4,6 +4,9 @@ declare module '#app' {
   interface NuxtApp {
     $supabase: SupabaseClient;
   }
+  interface ComponentCustomProperties {
+    $supabase: SupabaseClient;
+  }
 }
 
 declare module '@vue/runtime-core' {

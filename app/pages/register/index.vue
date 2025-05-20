@@ -89,7 +89,7 @@
 import { ref } from 'vue';
 import { useRouter } from '#vue-router';
 import Placeholder from '~/components/login/Placeholder.vue';
-import { signup, addAppUser } from '~/composables/supabase/useUsers';
+import { useUsers } from '~/composables/supabase/useUsers';
 
 const router = useRouter();
 const routeTo = (route) => router.push(route);
@@ -100,6 +100,8 @@ const lastName = ref('');
 const username = ref(''); // not used yet
 const email = ref('');
 const password = ref('');
+
+const { signup, addAppUser } = useUsers();
 
 const handleRegister = async () => {
   try {
