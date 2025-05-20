@@ -6,8 +6,9 @@ export function useUsers() {
 
   // Fetch all users
   async function getUsers() {
+  // Fetch from auth.users via RPC or REST API (special handling)
     const { data, error } = await supabase
-      .from('users')
+      .from('all_users')
       .select('*')
       .order('created_at', { ascending: false });
     if (error) throw error;
@@ -17,7 +18,7 @@ export function useUsers() {
   // Fetch a single user by ID
   async function getUserById(id: string | number) {
     const { data, error } = await supabase
-      .from('users')
+      .from('all_users')
       .select('*')
       .eq('id', id)
       .single();
@@ -26,9 +27,9 @@ export function useUsers() {
   }
 
   // Add a new user
-  async function addUser(userData: Record<string, any>) {
+  async function addAppUser(userData: Record<string, any>) {
     const { error } = await supabase
-      .from('users')
+      .from('app_users')
       .insert([userData]);
     if (error) throw error;
     return true;
@@ -77,7 +78,7 @@ export function useUsers() {
     user,
     getUsers,
     getUserById,
-    addUser,
+    addAppUser,
     updateUser,
     deleteUser,
     login,
