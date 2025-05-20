@@ -11,14 +11,14 @@
           <form :class="{ 'challenge-form': !quiz, 'compact-challenge-form': quiz }" @submit.prevent="fetchAnswer">
             <div v-if="!quiz" class="form-grid">
               <div class="form-group">
-                <label for="level" class="form-label text-primary-800 dark:text-primary-400">Level</label>
+                <label for="level" class="form-label text-primary dark:text-primary">Level</label>
                 <select id="level" v-model="selectedLevel" class="form-control bg-gray-200/70 dark:bg-zinc-800/70">
                   <option value="" disabled>Select Level</option>
                   <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="innerLevel" class="form-label text-primary-800 dark:text-primary-400">Inner Level</label>
+                <label for="innerLevel" class="form-label text-primary dark:text-primary">Inner Level</label>
                 <select id="innerLevel" v-model="selectedInnerLevel" class="form-control bg-gray-200/70 dark:bg-zinc-800/70">
                   <option value="" disabled>Select Inner Level</option>
                   <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">
@@ -27,14 +27,14 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="subject" class="form-label text-primary-800 dark:text-primary-400">Subject</label>
+                <label for="subject" class="form-label text-primary dark:text-primary">Subject</label>
                 <select id="subject" v-model="selectedSubject" class="form-control bg-gray-200/70 dark:bg-zinc-800/70">
                   <option value="" disabled>Select Subject</option>
                   <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="numberInput" class="form-label text-primary-800 dark:text-primary-400">Questions</label>
+                <label for="numberInput" class="form-label text-primary dark:text-primary">Questions</label>
                 <select
                   id="numberInput"
                   v-model="numberInput"

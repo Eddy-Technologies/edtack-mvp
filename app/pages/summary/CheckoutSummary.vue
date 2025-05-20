@@ -25,7 +25,7 @@
                 <button class="btn-icon btn-delete" title="Delete item">
                   <UIcon
                     name="i-heroicons-trash"
-                    class="icon w-6 h-6 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0 px-4"
+                    class="icon w-6 h-6 text-primary dark:text-primary sm:text-primary sm:dark:text-primary shrink-0 px-4"
                     @click="deleteItem(index)"
                   />
                 </button>

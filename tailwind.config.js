@@ -28,5 +28,9 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    { pattern: /bg-primary-\d{3}/ },
+    { pattern: /text-primary-\d{3}/ },
+  ],
   plugins: [],
 }

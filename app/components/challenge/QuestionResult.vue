@@ -65,7 +65,7 @@
       </UButton>
     </div>
 
-    <ChatPanel v-if="showChatPanel" class="mt-4" />
+    <ChatPanel v-if="showChatPanel" :question="question" class="mt-4" />
 
     <UButton
       class="mt-4 px-3 py-1 text-sm rounded bg-red-400 dark:bg-red-700 hover:bg-red-300 dark:hover:bg-red-600 transition"

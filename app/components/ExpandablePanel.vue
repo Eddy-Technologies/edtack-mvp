@@ -14,7 +14,7 @@
       <h3 class="flex items-center gap-x-2">
         <UIcon
           :name="titleIcon"
-          class="w-5 h-5 text-primary-600 dark:text-primary-400 sm:text-primary sm:dark:text-primary shrink-0"
+          class="w-5 h-5 text-primary-600 dark:text-primary sm:text-primary sm:dark:text-primary shrink-0"
         />
         {{ title }}
       </h3>
