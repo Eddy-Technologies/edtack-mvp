@@ -62,7 +62,7 @@
 
         <div class="text-center">
           <button
-            @click="routeTo('/try')"
+            @click="routeTo('/child')"
             class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
           >
             Continue as Guest
