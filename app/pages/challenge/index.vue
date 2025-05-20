@@ -3,7 +3,7 @@
     <AppHeader />
 
     <!-- Fullscreen overlay within the parent -->
-    <Loading v-if="isLoading" :fullscreen="true" />
+    <Loading v-if="isLoading" />
 
     <!-- Main content is visually underneath, but interaction will be blocked -->
     <main
@@ -30,7 +30,7 @@ import { useCreditStore } from '~/stores/credit';
 import { useMinimumLoader } from '~/composables/useMinimumLoader';
 import Loading from '~/components/common/Loading.vue'; // your loader component
 
-const { isLoading, loadWithMinimum } = useMinimumLoader(3000);
+const { isLoading, loadWithMinimum } = useMinimumLoader();
 const quiz = ref(null);
 const creditStore = useCreditStore();
 

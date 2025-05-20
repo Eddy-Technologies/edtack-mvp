@@ -15,13 +15,13 @@
     <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
       <button
           class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          @click="routeTo('/try')"
+          to="try"
       >
         Try Eddy Now
       </button>
       <button
           class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          @click="routeTo('/feedback')"
+          to="feedback"
       >
         Write to Us
       </button>
@@ -29,8 +29,4 @@
   </div>
 </template>
 <script setup>
-import { useRouter } from '#vue-router';
-
-const router = useRouter();
-const routeTo = (route) => router.push(route);
 </script>

@@ -4,14 +4,16 @@
     <div class="flex-1 flex items-center justify-center px-6 py-10">
       <form class="w-full max-w-md space-y-5 bg-white p-6 rounded-lg">
         <!-- Back Icon -->
-        <div class="top-4 left-4">
+        <div class="flex items-center mb-2">
           <UIcon
-            name="i-heroicons-arrow-left"
-            class="icon cursor-pointer w-6 h-6 shrink-0 px-4"
-            @click="routeTo('/')"
+              name="i-heroicons-arrow-left"
+              class="icon cursor-pointer w-6 h-6 shrink-0 px-4"
+              @click="routeTo('/')"
           />
+          <div class="flex-1 text-center">
+            <h1 class="text-2xl font-bold text-gray-800 font-serif">Login to Eddy</h1>
+          </div>
         </div>
-        <h1 class="text-2xl font-bold mb-6 text-center font-serif">Login to Eddy</h1>
         <input
             type="email"
             placeholder="Email"

@@ -6,14 +6,13 @@
     ]"
   >
     <video
-        autoplay
-        muted
-        loop
-        playsinline
-        class="w-32 h-32 md:w-40 md:h-40 object-contain"
+      autoplay
+      muted
+      loop
+      playsinline
+      class="w-32 h-32 md:w-40 md:h-40 object-contain"
     >
       <source src="/loading.webm" type="video/webm" />
-      <source src="/loading.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   </div>
