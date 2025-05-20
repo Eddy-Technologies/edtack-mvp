@@ -64,13 +64,15 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { user } from '~/composables/useUsers';
+import { useSupabaseUser } from '~/composables/supabase/useUsers';
 import aboutDesktop from '~/../assets/child.png';
 import { useRouter } from '#vue-router';
 
 definePageMeta({
   middleware: 'auth'
 });
+
+const { user } = useSupabaseUser();
 
 const router = useRouter();
 const levels = ['Primary', 'Secondary'];

@@ -1,9 +1,15 @@
-import { useSupabaseUser } from '@supabase/auth-helpers-nuxt';
+import { useSupabaseClient } from '~/composables/supabase/useUsers';
 
-export default defineNuxtRouteMiddleware((to, from) => {
-  const user = useSupabaseUser();
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const supabase = useSupabaseClient();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (!user.value) {
-    return navigateTo('/login'); // Redirect to login page
+  if (error) {
+    console.error('Error fetching user:', error);
+    return navigateTo('/login');
+  }
+
+  if (!user) {
+    return navigateTo('/login');
   }
 });

@@ -1,4 +1,26 @@
-import { useSupabaseClient, useSupabaseUser } from '@supabase/auth-helpers-nuxt';
+import { ref, onMounted } from 'vue';
+import type { User } from '@supabase/supabase-js';
+
+const nuxtApp = useNuxtApp();
+const supabase = nuxtApp.$supabase;
+
+export const useSupabaseClient = () => {
+  return supabase;
+};
+
+export const useSupabaseUser = () => {
+  const supabase = useNuxtApp().$supabase;
+  const user = ref<User | null>(null);
+
+  onMounted(async () => {
+    const { data, error } = await supabase.auth.getUser();
+    if (!error) {
+      user.value = data.user;
+    }
+  });
+
+  return { user };
+};
 
 export function useUsers() {
   const supabase = useSupabaseClient();
@@ -63,7 +85,13 @@ export function useUsers() {
   }
 
   async function signup(email: string, password: string) {
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        emailRedirectTo: '/auth/callback',
+      },
+    });
     if (error) throw error;
     return true;
   }

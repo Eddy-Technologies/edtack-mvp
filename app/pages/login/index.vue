@@ -55,7 +55,7 @@
 import { ref } from 'vue';
 import { useRouter } from '#vue-router';
 import Placeholder from '~/components/login/Placeholder.vue';
-import { useUsers } from '~/composables/useUsers'; // adjust path if needed
+import { useUsers } from '~/composables/supabase/useUsers';
 
 const router = useRouter();
 const routeTo = (route) => router.push(route);

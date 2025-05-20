@@ -89,7 +89,7 @@
 import { ref } from 'vue';
 import { useRouter } from '#vue-router';
 import Placeholder from '~/components/login/Placeholder.vue';
-import { signup, addAppUser } from '~/composables/useUsers';
+import { signup, addAppUser } from '~/composables/supabase/useUsers';
 
 const router = useRouter();
 const routeTo = (route) => router.push(route);
@@ -103,6 +103,7 @@ const password = ref('');
 
 const handleRegister = async () => {
   try {
+    console.log('Registering user:', { firstName: firstName.value, lastName: lastName.value, email: email.value, password: password.value });
     // call reusable signup
     await signup(email.value, password.value);
 
