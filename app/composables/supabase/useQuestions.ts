@@ -1,5 +1,3 @@
-import { useSupabaseClient } from '@supabase/auth-helpers-nuxt';
-
 export function useQuestions() {
   const supabase = useSupabaseClient();
 

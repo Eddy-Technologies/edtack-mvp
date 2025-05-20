@@ -1,5 +1,3 @@
-import { useSupabaseClient, useSupabaseUser } from '@supabase/auth-helpers-nuxt';
-
 export function useCredits() {
   const supabase = useSupabaseClient();
   const user = useSupabaseUser();

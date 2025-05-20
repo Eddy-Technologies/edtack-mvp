@@ -89,7 +89,7 @@
 import { ref } from 'vue';
 import { useRouter } from '#vue-router';
 import Placeholder from '~/components/login/Placeholder.vue';
-import { useUsers } from '~/composables/supabase/useUsers';
+import { useUsers } from '~/composables/useUsers';
 
 const router = useRouter();
 const routeTo = (route) => router.push(route);
