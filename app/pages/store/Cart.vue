@@ -14,16 +14,16 @@
               </div>
               <div class="flex items-center gap-2">
                 <input
-                    v-model.number="item.quantity"
-                    type="number"
-                    min="1"
-                    @change="updateQuantity(item)"
-                    class="w-14 px-2 py-1 border rounded text-sm text-center"
+                  v-model.number="item.quantity"
+                  type="number"
+                  min="1"
+                  @change="updateQuantity(item)"
+                  class="w-14 px-2 py-1 border rounded text-sm text-center"
                 />
                 <UIcon
-                    name="i-heroicons-trash"
-                    class="w-5 h-5 text-red-500 cursor-pointer"
-                    @click="deleteItem(item)"
+                  name="i-heroicons-trash"
+                  class="w-5 h-5 text-red-500 cursor-pointer"
+                  @click="deleteItem(item)"
                 />
               </div>
             </div>
@@ -60,9 +60,9 @@
 
   <!-- 🔸 Mobile Cart Modal -->
   <div
-      v-if="showCart"
-      class="fixed inset-0 z-40 bg-black/50 sm:hidden"
-      @click.self="showCart = false"
+    v-if="showCart"
+    class="fixed inset-0 z-40 bg-black/50 sm:hidden"
+    @click.self="showCart = false"
   >
     <div class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 rounded-t-lg shadow-lg p-4">
       <div class="flex justify-between items-center mb-3">

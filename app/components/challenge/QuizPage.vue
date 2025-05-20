@@ -48,7 +48,7 @@
         <span class="text-lg font-medium text-primary">You earned {{ score }} credits!</span>
       </div>
 
-      <UButton to="store" aria-label="store" class="mt-6">
+      <UButton to="store" aria-label="store" class="mt-6 bg-primary">
         Redeem your credits!
       </UButton>
     </div>
