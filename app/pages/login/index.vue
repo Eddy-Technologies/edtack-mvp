@@ -73,11 +73,9 @@ console.log('[Login Component] Component mounted. Initial user.value:', user.val
 
 const handleLogin = async () => {
   errorMessage.value = '';
-  console.log('[Login Component] handleLogin called.');
 
   try {
     const loginResult = await login(email.value, password.value);
-    console.log('[Login Component] login() function resolved. Result:', loginResult);
 
     toast.add({
       title: 'Success',

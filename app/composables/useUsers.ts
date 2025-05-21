@@ -71,13 +71,7 @@ export function useUsers() {
 
     // --- CRITICAL LOGGING HERE ---
     console.log('[useUsers.ts] signInWithPassword SUCCESS. Full Data received:', data);
-    if (data.session) {
-      console.log('[useUsers.ts] Session present in data:', data.session);
-      console.log('[useUsers.ts] Access Token:', data.session.access_token);
-      console.log('[useUsers.ts] User from data:', data.user);
-    } else {
-      console.warn('[useUsers.ts] signInWithPassword returned NO SESSION in data despite no error! User might need to confirm email.');
-    }
+
     // --- END CRITICAL LOGGING ---
 
     return true; // Indicate success (even if no session, means API call was successful)
