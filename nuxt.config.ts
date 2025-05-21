@@ -59,4 +59,12 @@ export default defineNuxtConfig({
     key: process.env.VITE_SUPABASE_KEY,
     redirect: false, // Set to true if you want to use the redirect URL for authentication
   },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        'ws',
+      ],
+    },
+  },
 });
