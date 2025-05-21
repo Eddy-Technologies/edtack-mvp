@@ -1,7 +1,5 @@
 <template>
-  <header
-    class="bg-gray-200/75 dark:bg-gray-900/75 backdrop-blur border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800"
-  >
+  <header class="sticky top-0 z-50 bg-gray-200 dark:bg-gray-900/75 backdrop-blur border-b border-gray-200 dark:border-gray-800">
     <div class="w-full flex flex-wrap justify-between items-center h-14 px-6">
       <!-- Logo -->
       <div class="flex items-center gap-x-4">

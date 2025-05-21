@@ -28,7 +28,7 @@
           class="absolute top-0 right-0 w-1/2 h-full transition-colors duration-300 z-10"
           :class="rightOverlay ? 'bg-black/30' : 'bg-transparent'"
           @mousemove="handleMouseMoveRight"
-          @click="routeTo('/practice')"
+          @click="routeTo('/generate')"
         >
           <ULink
             v-if="!rightOverlay"
@@ -50,7 +50,7 @@
           </div>
           <div
             class="absolute bottom-0 w-full h-1/2 flex flex-col justify-start text-center text-white text-2xl font-bold p-4 bg-black/10 z-10"
-            @click="routeTo('/practice')"
+            @click="routeTo('/generate')"
           >
             <span class="text-[#c8e6ce] drop-shadow-[1px_1px_1px_black] mt-2">Practice</span>
             <span class="text-[#c8e6ce] drop-shadow-[1px_1px_1px_black] text-sm">Try a sample challenge</span>
