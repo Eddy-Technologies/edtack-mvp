@@ -1,0 +1,40 @@
+// .vscode/launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    // Existing Client-Side Debugger
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Nuxt: Client Side",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/*",
+        "webpack:///*": "${webRoot}/*",
+        "nuxi:///*": "${webRoot}/*"
+      }
+    },
+    // Server-Side Debugger using pnpm dev
+    {
+      "name": "Nuxt: Server Side",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 9229,
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Nuxt: Full Stack Debug",
+      "configurations": ["Nuxt: Server Side", "Nuxt: Client Side"]
+    }
+  ]
+}
