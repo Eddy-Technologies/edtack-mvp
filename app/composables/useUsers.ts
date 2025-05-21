@@ -1,25 +1,5 @@
 import { ref, onMounted } from 'vue';
-import type { SupabaseClient, User } from '@supabase/supabase-js';
-
-export const useSupabaseClient = (): SupabaseClient => {
-  const nuxtApp = useNuxtApp();
-  const supabase = nuxtApp.$supabase;
-  return supabase;
-};
-
-export const useSupabaseUser = () => {
-  const supabase = useNuxtApp().$supabase;
-  const user = ref<User | null>(null);
-
-  onMounted(async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (!error) {
-      user.value = data.user;
-    }
-  });
-
-  return { user };
-};
+import { useSupabaseClient, useSupabaseUser } from '#imports';
 
 export function useUsers() {
   const supabase = useSupabaseClient();
@@ -77,10 +57,30 @@ export function useUsers() {
   }
 
   // Auth: login, logout, signup
-  async function login(email: string, password: string) {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    return true;
+  async function login(email_val: string, password_val: string) {
+    console.log('[useUsers.ts] Calling signInWithPassword for:', email_val);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email_val,
+      password: password_val
+    });
+
+    if (error) {
+      console.error('[useUsers.ts] signInWithPassword ERROR:', error);
+      throw error; // Re-throw the error
+    }
+
+    // --- CRITICAL LOGGING HERE ---
+    console.log('[useUsers.ts] signInWithPassword SUCCESS. Full Data received:', data);
+    if (data.session) {
+      console.log('[useUsers.ts] Session present in data:', data.session);
+      console.log('[useUsers.ts] Access Token:', data.session.access_token);
+      console.log('[useUsers.ts] User from data:', data.user);
+    } else {
+      console.warn('[useUsers.ts] signInWithPassword returned NO SESSION in data despite no error! User might need to confirm email.');
+    }
+    // --- END CRITICAL LOGGING ---
+
+    return true; // Indicate success (even if no session, means API call was successful)
   }
 
   async function signup(email: string, password: string) {

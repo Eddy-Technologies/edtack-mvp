@@ -52,26 +52,65 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from '#vue-router';
+import { ref, watch } from 'vue';
+import { useSupabaseUser } from '#imports';
+import { useRouter, navigateTo } from '#app';
 import Placeholder from '~/components/login/Placeholder.vue';
 import { useUsers } from '~/composables/useUsers';
 
+const user = useSupabaseUser();
 const router = useRouter();
 const routeTo = (route) => router.push(route);
 
 const email = ref('');
 const password = ref('');
+const errorMessage = ref('');
 
 const { login } = useUsers();
+const toast = useToast();
+
+console.log('[Login Component] Component mounted. Initial user.value:', user.value ? user.value.email : 'null');
 
 const handleLogin = async () => {
+  errorMessage.value = '';
+  console.log('[Login Component] handleLogin called.');
+
   try {
-    await login(email.value, password.value);
-    router.push('/dashboard'); // Redirect after successful login
+    const loginResult = await login(email.value, password.value);
+    console.log('[Login Component] login() function resolved. Result:', loginResult);
+
+    toast.add({
+      title: 'Success',
+      description: 'Login successful! Redirecting...',
+      timeout: 2000,
+      icon: 'check',
+      color: 'green'
+    });
+
+    console.log('[Login Component] After login() resolves, immediate user.value:', user.value ? user.value.email : 'null');
   } catch (error) {
-    console.error('Login error:', error.message);
-    alert('Login failed: ' + error.message); // Or use a toast
+    console.error('[Login Component] Login failed:', error);
+
+    errorMessage.value = error?.message || 'An unexpected login error occurred.';
+
+    toast.add({
+      title: 'Request Error',
+      description: errorMessage.value,
+      timeout: 10000,
+      icon: 'i-heroicons-exclamation-triangle-16-solid',
+      color: 'red',
+    });
   }
 };
+
+watch(user, async (newUser, oldUser) => {
+  console.log(`[Login Component] WATCHER triggered. Old user: ${oldUser ? oldUser.email : 'null'}, New user: ${newUser ? newUser.email : 'null'}`);
+  if (newUser) {
+    console.log('[Login Component] WATCHER: User state became non-null. Initiating navigation...');
+    // Ensure navigateTo is only called once if already on dashboard or navigating
+    if (router.currentRoute.value.path !== '/dashboard') { // Prevent navigating if already there
+      await navigateTo('/dashboard');
+    }
+  }
+}, { immediate: true });
 </script>

@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxt/scripts',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/supabase',
   ],
 
   hub: {
@@ -51,5 +52,11 @@ export default defineNuxtConfig({
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
       googleAIStudioApiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY
     },
+  },
+
+  supabase: {
+    url: process.env.VITE_SUPABASE_URL,
+    key: process.env.VITE_SUPABASE_KEY,
+    redirect: false, // Set to true if you want to use the redirect URL for authentication
   },
 });

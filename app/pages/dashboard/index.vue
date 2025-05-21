@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useSupabaseUser } from '~/composables/useUsers';
+import { useSupabaseUser } from '#imports';
 import aboutDesktop from '~/../assets/child.png';
 import { useRouter } from '#vue-router';
 
