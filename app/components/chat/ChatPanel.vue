@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
 import type { Message } from '~~/types';
 import UserMessage from '~/components/chat/UserMessage.vue';
 import NoChats from '~/components/chat/NoChats.vue';
