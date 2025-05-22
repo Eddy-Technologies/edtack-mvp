@@ -94,8 +94,8 @@ defineProps({
     required: true,
   },
 });
-const { currentAppUser } = useUsers(); // Get currentAppUser
 const isAuthenticated = computed(() => currentAppUser !== null);
+const { currentAppUser } = useUsers(); // Get currentAppUser
 
 const showMobileMenu = ref(false);
 const toggleMobileMenu = () => {
