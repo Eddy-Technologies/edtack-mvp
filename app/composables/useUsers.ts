@@ -25,15 +25,6 @@ export function useUsers() {
     return data;
   }
 
-  // Add a new user
-  async function addAppUser(userData: Record<string, any>) {
-    const { error } = await supabase
-      .from('app_users')
-      .insert([userData]);
-    if (error) throw error;
-    return true;
-  }
-
   // Update a user by ID
   async function updateUser(id: string | number, updates: Record<string, any>) {
     const { error } = await supabase
@@ -55,7 +46,7 @@ export function useUsers() {
   }
 
   // Auth: login, logout, signup
-  async function login(email_val: string, password_val: string) {
+  async function loginEmail(email_val: string, password_val: string) {
     console.log('[useUsers.ts] Calling signInWithPassword for:', email_val);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email_val,
@@ -75,7 +66,15 @@ export function useUsers() {
     return true; // Indicate success (even if no session, means API call was successful)
   }
 
-  async function signup(email: string, password: string) {
+  async function loginUsername(username_val: string, password_val: string) {
+    const response = await $fetch('/api/app-auth/login', { // Call the new server route
+      method: 'POST',
+      body: { username: username_val, password: password_val },
+    });
+    return response;
+  }
+
+  async function signupEmail(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
@@ -87,6 +86,21 @@ export function useUsers() {
     return true;
   }
 
+  // Function to handle username registration (calls server route)
+  async function signupUsername(payload: {
+    firstName: string;
+    lastName: string;
+    username: string;
+    password: string;
+  }) {
+    console.log('[useUsers.ts] Calling /api/app-auth/register with payload:', payload);
+    const response = await $fetch('/api/app-auth/register', {
+      method: 'POST',
+      body: payload, // Send the entire payload object
+    });
+    return response;
+  }
+
   async function logout() {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
@@ -96,11 +110,12 @@ export function useUsers() {
   return {
     getUsers,
     getUserById,
-    addAppUser,
     updateUser,
     deleteUser,
-    login,
-    signup,
+    loginEmail,
+    loginUsername,
+    signupEmail,
+    signupUsername,
     logout,
   };
 }

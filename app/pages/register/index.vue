@@ -169,7 +169,7 @@ const password = ref('');
 const username = ref('');
 const usernamePassword = ref('');
 
-const { signup, addAppUser } = useUsers();
+const { signupEmail, signupUsername } = useUsers();
 const toast = useToast();
 
 // Function to toggle between email and username registration forms
@@ -188,7 +188,7 @@ const toggleRegistrationMethod = () => {
 const handleRegister = async () => {
   try {
     console.log('Registering user with email:', { firstName: firstName.value, lastName: lastName.value, email: email.value, password: password.value });
-    await signup(email.value, password.value);
+    await signupEmail(email.value, password.value);
 
     toast.add({
       title: 'Registration Successful',
@@ -213,39 +213,32 @@ const handleRegister = async () => {
 // Handler for Username-only Registration
 const handleUsernameRegister = async () => {
   try {
-    // IMPORTANT SECURITY NOTE:
-    // Passwords MUST be hashed on the server-side (e.g., in a Nuxt server route
-    // that calls addAppUser) before being stored in your 'app_users' table.
-    // Storing plain passwords (usernamePassword.value) directly is a severe security risk.
-    // Your `addAppUser` function currently just inserts the provided userData.
-    // Ensure your backend handles hashing if you pass plain password from here.
+    console.log('Attempting username registration via useUsers.signupUsername:', { firstName: firstName.value, lastName: lastName.value, username: username.value });
 
-    console.log('Registering user with username:', {
-      firstName: firstName.value, // Pass first name
-      lastName: lastName.value, // Pass last name
-      username: username.value,
-      password: usernamePassword.value
-    });
-    await addAppUser({
+    // Call the new signupUsername function from useUsers
+    const response = await signupUsername({
       firstName: firstName.value,
       lastName: lastName.value,
       username: username.value,
-      password: usernamePassword.value
+      password: usernamePassword.value,
     });
+
+    console.log('Registration response from signupUsername:', response);
 
     toast.add({
       title: 'Registration Successful',
-      description: 'You can now log in with your username.',
+      description: response.message || 'You can now log in with your username.',
       timeout: 5000,
       icon: 'i-heroicons-check-circle-20-solid',
       color: 'green'
     });
-    navigateTo('/login'); // Redirect to login page
+    navigateTo('/login');
   } catch (error) {
     console.error('Username registration failed:', error);
+    const errorMessage = error?.data?.statusMessage || error?.message || 'An unexpected error occurred during username registration.';
     toast.add({
       title: 'Registration Error',
-      description: error?.message || 'An unexpected error occurred during username registration.',
+      description: errorMessage,
       timeout: 10000,
       icon: 'i-heroicons-exclamation-triangle-16-solid',
       color: 'red',

@@ -66,7 +66,7 @@ const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
 
-const { login } = useUsers();
+const { loginEmail, loginUsername } = useUsers();
 const toast = useToast();
 
 console.log('[Login Component] Component mounted. Initial user.value:', user.value ? user.value.email : 'null');
@@ -75,7 +75,7 @@ const handleLogin = async () => {
   errorMessage.value = '';
 
   try {
-    await login(email.value, password.value);
+    await loginEmail(email.value, password.value);
     toast.add({
       title: 'Success',
       description: 'Login successful! Redirecting...',
