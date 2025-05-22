@@ -14,10 +14,12 @@
         </div>
 
         <form v-if="showEmailRegister" class="space-y-5" @submit.prevent="handleRegister">
-          <h2 class="text-xl font-bold text-gray-800 text-center font-serif">Register with Email</h2>
-          <p class="text-center text-sm text-gray-500 -mt-3 mb-4">
-            or <a class="text-primary cursor-pointer font-semibold hover:underline" @click="toggleRegistrationMethod">username</a>
-          </p>
+          <div class="text-center text-gray-800 font-serif mb-4">
+            <h2 class="text-xl font-bold inline">Using Email</h2>
+            <span class="text-sm text-gray-500 ml-2 align-middle">
+              or <a class="text-primary cursor-pointer font-semibold hover:underline" @click="toggleRegistrationMethod">username</a>
+            </span>
+          </div>
 
           <input
             v-model="firstName"
@@ -62,16 +64,18 @@
               type="submit"
               class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
             >
-              Register with Email
+              Using Email
             </button>
           </div>
         </form>
 
         <form v-else class="space-y-5" @submit.prevent="handleUsernameRegister">
-          <h2 class="text-xl font-bold text-gray-800 text-center font-serif">Register with Username</h2>
-          <p class="text-center text-sm text-gray-500 -mt-3 mb-4">
-            or <a class="text-primary cursor-pointer font-semibold hover:underline" @click="toggleRegistrationMethod">email</a>
-          </p>
+          <div class="text-center text-gray-800 font-serif">
+            <h2 class="text-xl font-bold inline">Using Username</h2>
+            <span class="text-sm text-gray-500 ml-2">
+              or <a class="text-primary cursor-pointer font-semibold hover:underline" @click="toggleRegistrationMethod">email</a>
+            </span>
+          </div>
 
           <p class="text-center text-xs text-red-600 font-medium mb-4">
             * For students without email. This option provides limited features.
@@ -121,7 +125,7 @@
               type="submit"
               class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
             >
-              Register with Username
+              Using Username
             </button>
           </div>
         </form>

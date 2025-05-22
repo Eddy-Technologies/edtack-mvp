@@ -19,6 +19,20 @@
         Feedback
       </ULink>
 
+      <UIcon
+          class="text-l font-semibold text-primary flex items-center gap-x-2"
+          to="https://forms.gle/dDxMkSmAa1yJNuL28"
+      >
+        Logout
+      </UIcon>
+      <!-- Not logged in -->
+      <UButton v-if="isAuthenticated" to="login" icon="i-heroicons-arrow-right-start-on-rectangle" color="primary">
+        Logout
+      </UButton>
+      <!-- Not logged in -->
+      <UButton v-else to="login" icon="i-heroicons-arrow-right-end-on-rectangle" color="primary">
+        Login
+      </UButton>
       <!--ColorMode />-->
     </div>
 
@@ -57,6 +71,14 @@
             Feedback
           </ULink>
         </div>
+        <!-- Not logged in -->
+        <UButton v-if="isAuthenticated" to="login" icon="i-heroicons-arrow-right-start-on-rectangle" color="primary">
+          Logout
+        </UButton>
+        <!-- Not logged in -->
+        <UButton v-else to="login" icon="i-heroicons-arrow-right-end-on-rectangle" color="primary">
+          Login
+        </UButton>
       </div>
     </Transition>
   </div>
@@ -64,6 +86,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useUsers } from '~/composables/useUsers';
 
 defineProps({
   credits: {
@@ -71,6 +94,8 @@ defineProps({
     required: true,
   },
 });
+const { currentAppUser } = useUsers(); // Get currentAppUser
+const isAuthenticated = computed(() => currentAppUser !== null);
 
 const showMobileMenu = ref(false);
 const toggleMobileMenu = () => {
