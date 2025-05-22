@@ -1,9 +1,7 @@
-import { ref, onMounted } from 'vue';
-import { useSupabaseClient, useSupabaseUser } from '#imports';
+import { useSupabaseClient } from '#imports';
 
 export function useUsers() {
   const supabase = useSupabaseClient();
-  const user = useSupabaseUser();
 
   // Fetch all users
   async function getUsers() {
@@ -96,7 +94,6 @@ export function useUsers() {
   }
 
   return {
-    user,
     getUsers,
     getUserById,
     addAppUser,

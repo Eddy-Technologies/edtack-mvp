@@ -1,4 +1,3 @@
-import type { User } from '@supabase/supabase-js'; // Good for type hinting
 import { defineNuxtRouteMiddleware, navigateTo } from '#app';
 import { useSupabaseUser } from '#imports';
 

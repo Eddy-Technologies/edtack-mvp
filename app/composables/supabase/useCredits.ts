@@ -1,3 +1,5 @@
+import { useSupabaseClient, useSupabaseUser } from '#imports';
+
 export function useCredits() {
   const supabase = useSupabaseClient();
   const user = useSupabaseUser();

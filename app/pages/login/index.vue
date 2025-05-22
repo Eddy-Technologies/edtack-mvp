@@ -75,8 +75,7 @@ const handleLogin = async () => {
   errorMessage.value = '';
 
   try {
-    const loginResult = await login(email.value, password.value);
-
+    await login(email.value, password.value);
     toast.add({
       title: 'Success',
       description: 'Login successful! Redirecting...',
@@ -84,7 +83,6 @@ const handleLogin = async () => {
       icon: 'check',
       color: 'green'
     });
-
     console.log('[Login Component] After login() resolves, immediate user.value:', user.value ? user.value.email : 'null');
   } catch (error) {
     console.error('[Login Component] Login failed:', error);

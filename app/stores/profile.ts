@@ -1,18 +1,26 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+// No need to import 'ref' directly here, as Pinia handles reactivity for state
 
-export const useProfileStore = defineStore('profile', () => {
-  const profile = ref('/');
-  const childSelected = ref(0);
-  const name = ref('sfxcode'); // name value, as you had it earlier
+export const useProfileStore = defineStore('profile', {
+  // State is now a function that returns a plain object
+  state: () => ({
+    profile: '/' as string, // Initialize as a string, e.g., '/'
+    childSelected: 0 as number, // Initialize as a number
+    name: 'sfxcode' as string, // Initialize as a string
+  }),
 
-  function setProfile(type) {
-    profile.value = type;
-  }
+  // Actions are methods that modify the state
+  actions: {
+    setProfile(type: string) {
+      this.profile = type;
+    },
 
-  function setChild(childSelected) {
-    childSelected.value = childSelected;
-  }
+    setChild(selectedChildIndex: number) { // Renamed parameter for clarity
+      this.childSelected = selectedChildIndex;
+    },
+  },
 
-  return { profile, name, childSelected, setProfile, setChild };
+  getters: {
+    currentProfilePath: (state) => `/profiles/${state.profile}`,
+  },
 });

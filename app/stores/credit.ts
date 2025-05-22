@@ -1,29 +1,38 @@
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
+// No need to import 'ref' or 'watch' directly here, as Pinia handles reactivity for state
+// and you can use actions for logic.
 
-export const useCreditStore = defineStore('credit', () => {
-  const parentCredits = ref(0); // This will hold the parent's credit
-  const childCredits = ref([0, 0, 0]); // This will hold an array of child credits
-  const childEarnedCredits = ref([0, 0, 0]); // This will hold an array of child earned credits
-  const name = ref('sfxcode'); // name value, as you had it earlier
+export const useCreditStore = defineStore('credit', {
+  // State is now a function that returns a plain object
+  state: () => ({
+    parentCredits: 0,
+    childCredits: [0, 0, 0] as number[], // Explicit type for clarity
+    childEarnedCredits: [0, 0, 0] as number[], // Explicit type for clarity
+    name: 'sfxcode',
+  }),
 
-  // Function to increment parent credits
-  function addParentCredit(parentCredit) {
-    parentCredits.value += parentCredit;
-  }
+  actions: {
+    // Function to increment parent credits
+    addParentCredit(parentCredit: number) {
+      this.parentCredits += parentCredit;
+    },
 
-  // Function to add child credit to the array
-  function addChildCredit(childIndex, childCredit) {
-    childCredits.value[childIndex] += childCredit;
-    // Ensure Vue can track this update
-    childCredits.value = [...childCredits.value]; // Trigger reactivity by resetting the array
-  }
+    // Function to add child credit to the array
+    addChildCredit(childIndex: number, childCredit: number) {
+      // Direct modification of array element works fine with Pinia's reactivity
+      this.childCredits[childIndex] += childCredit;
+      // No need for `this.childCredits = [...this.childCredits]` here,
+      // Pinia's reactivity handles array element updates.
+    },
 
-  // Watch the name and reset credits when it changes
-  watch(name, () => {
-    parentCredits.value = 0;
-    childCredits.value = [0, 0, 0]; // Reset the array to default state
-  });
+    resetCreditsOnNameChange() {
+      this.parentCredits = 0;
+      this.childCredits = [0, 0, 0];
+      this.childEarnedCredits = [0, 0, 0];
+    },
+  },
 
-  return { parentCredits, childCredits, childEarnedCredits, name, addParentCredit, addChildCredit };
+  getters: {
+    totalChildCredits: (state) => state.childCredits.reduce((sum, credit) => sum + credit, 0),
+  },
 });
