@@ -14,27 +14,29 @@
         </div>
 
         <form v-if="showEmailRegister" class="space-y-5" @submit.prevent="handleRegister">
-          <div class="text-center text-gray-800 font-serif mb-4">
-            <h2 class="text-xl font-bold inline">Using Email</h2>
-            <span class="text-sm text-gray-500 ml-2 align-middle">
+          <div class="text-center text-gray-800 mb-4">
+            <h2 class="text-xl font-bold font-serif">Using Email</h2>
+            <span class="text-sm text-gray-500">
               or <a class="text-primary cursor-pointer font-semibold hover:underline" @click="toggleRegistrationMethod">username</a>
             </span>
           </div>
 
-          <input
-            v-model="firstName"
-            type="text"
-            placeholder="First Name"
-            class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
-            required
-          >
-          <input
-            v-model="lastName"
-            type="text"
-            placeholder="Last Name"
-            class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
-            required
-          >
+          <div class="flex space-x-4">
+            <input
+              v-model="firstName"
+              type="text"
+              placeholder="First Name"
+              class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
+              required
+            >
+            <input
+              v-model="lastName"
+              type="text"
+              placeholder="Last Name"
+              class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
+              required
+            >
+          </div>
           <input
             v-model="email"
             type="email"
@@ -70,9 +72,9 @@
         </form>
 
         <form v-else class="space-y-5" @submit.prevent="handleUsernameRegister">
-          <div class="text-center text-gray-800 font-serif">
-            <h2 class="text-xl font-bold inline">Using Username</h2>
-            <span class="text-sm text-gray-500 ml-2">
+          <div class="text-center text-gray-800">
+            <h2 class="text-xl font-bold font-serif">Using Username</h2>
+            <span class="text-sm text-gray-500">
               or <a class="text-primary cursor-pointer font-semibold hover:underline" @click="toggleRegistrationMethod">email</a>
             </span>
           </div>
@@ -81,20 +83,22 @@
             * For students without email. This option provides limited features.
           </p>
 
-          <input
-            v-model="firstName"
-            type="text"
-            placeholder="First Name"
-            class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
-            required
-          >
-          <input
-            v-model="lastName"
-            type="text"
-            placeholder="Last Name"
-            class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
-            required
-          >
+          <div class="flex space-x-4">
+            <input
+              v-model="firstName"
+              type="text"
+              placeholder="First Name"
+              class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
+              required
+            >
+            <input
+              v-model="lastName"
+              type="text"
+              placeholder="Last Name"
+              class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
+              required
+            >
+          </div>
 
           <input
             v-model="username"
