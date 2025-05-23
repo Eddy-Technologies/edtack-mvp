@@ -1,5 +1,6 @@
 import { ref, onMounted } from 'vue';
 import { useSupabaseClient } from '#imports';
+import { navigateTo } from '#app';
 
 // Reactive state to hold the current app_user's info (no longer the token itself)
 const currentAppUser = ref<any | null>(null);
