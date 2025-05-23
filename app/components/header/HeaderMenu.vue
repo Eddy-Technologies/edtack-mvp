@@ -79,7 +79,7 @@
         <UButton
           v-if="isAuthenticated"
           icon="i-heroicons-arrow-right-start-on-rectangle"
-          color="primary"
+          color="gray"
           @click="handleLogout"
         >
           Logout
@@ -111,7 +111,7 @@ defineProps({
   },
 });
 
-const { currentAppUser, logout: appUserLogout } = useUsers(); // Get app user specific logout
+const { currentAppUser, logoutUsername, logoutEmail } = useUsers();
 const supabaseUser = useSupabaseUser();
 const supabase = useSupabaseClient();
 const router = useRouter();
@@ -127,10 +127,12 @@ const toggleMobileMenu = () => {
 const handleLogout = async () => {
   try {
     if (currentAppUser.value) {
-      await appUserLogout(); // This should clear currentAppUser and related state
+      // If currentAppUser is active, it means it's a username-based login
+      await logoutUsername();
     }
     if (supabaseUser.value) {
-      await supabase.auth.signOut();
+      // If supabaseUser is active, it's an email-based login (handled by Supabase Auth)
+      await logoutEmail(); // Or directly supabase.auth.signOut() if logoutEmail just wraps that
     }
     router.push('/login');
   } catch (error) {
