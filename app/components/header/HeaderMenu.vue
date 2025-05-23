@@ -19,26 +19,30 @@
         Feedback
       </ULink>
 
-      <UIcon
-          class="text-l font-semibold text-primary flex items-center gap-x-2"
-          to="https://forms.gle/dDxMkSmAa1yJNuL28"
+      <!-- Not logged in -->
+      <UButton
+        v-if="isAuthenticated"
+        icon="i-heroicons-arrow-right-start-on-rectangle"
+        color="primary"
+        @click="handleLogout"
       >
         Logout
-      </UIcon>
-      <!-- Not logged in -->
-      <UButton v-if="isAuthenticated" to="login" icon="i-heroicons-arrow-right-start-on-rectangle" color="primary">
-        Logout
       </UButton>
       <!-- Not logged in -->
-      <UButton v-else to="login" icon="i-heroicons-arrow-right-end-on-rectangle" color="primary">
+      <UButton
+        v-else
+        to="login"
+        icon="i-heroicons-arrow-right-end-on-rectangle"
+        color="gray"
+      >
         Login
       </UButton>
-      <!--ColorMode />-->
+      <!-- ColorMode /> -->
     </div>
 
     <!-- Mobile Menu Button -->
     <div class="block md:hidden">
-      <!--ColorMode />-->
+      <!-- ColorMode /> -->
       <button class="ml-4 focus:outline-none" @click="toggleMobileMenu">
         <UIcon name="i-heroicons-bars-3-16-solid" class="h-5 w-5 mt-1" />
       </button>
@@ -72,11 +76,21 @@
           </ULink>
         </div>
         <!-- Not logged in -->
-        <UButton v-if="isAuthenticated" to="login" icon="i-heroicons-arrow-right-start-on-rectangle" color="primary">
+        <UButton
+          v-if="isAuthenticated"
+          icon="i-heroicons-arrow-right-start-on-rectangle"
+          color="primary"
+          @click="handleLogout"
+        >
           Logout
         </UButton>
         <!-- Not logged in -->
-        <UButton v-else to="login" icon="i-heroicons-arrow-right-end-on-rectangle" color="primary">
+        <UButton
+          v-else
+          to="login"
+          icon="i-heroicons-arrow-right-end-on-rectangle"
+          color="gray"
+        >
           Login
         </UButton>
       </div>
@@ -85,8 +99,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useUsers } from '~/composables/useUsers';
+import { useSupabaseUser, useSupabaseClient, useToast } from '#imports';
+import { useRouter } from '#app';
 
 defineProps({
   credits: {
@@ -94,11 +110,38 @@ defineProps({
     required: true,
   },
 });
-const isAuthenticated = computed(() => currentAppUser !== null);
-const { currentAppUser } = useUsers(); // Get currentAppUser
+
+const { currentAppUser, logout: appUserLogout } = useUsers(); // Get app user specific logout
+const supabaseUser = useSupabaseUser();
+const supabase = useSupabaseClient();
+const router = useRouter();
+const toast = useToast();
+
+const isAuthenticated = computed(() => !!supabaseUser.value || !!currentAppUser.value);
 
 const showMobileMenu = ref(false);
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value;
+};
+
+const handleLogout = async () => {
+  try {
+    if (currentAppUser.value) {
+      await appUserLogout(); // This should clear currentAppUser and related state
+    }
+    if (supabaseUser.value) {
+      await supabase.auth.signOut();
+    }
+    router.push('/login');
+  } catch (error) {
+    console.error('Error during logout:', error);
+    toast.add({
+      title: 'Logout Error',
+      description: error?.message || 'An unexpected error occurred during logout. Please try again.',
+      timeout: 5000,
+      icon: 'i-heroicons-exclamation-triangle-16-solid',
+      color: 'red',
+    });
+  }
 };
 </script>

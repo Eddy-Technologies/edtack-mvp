@@ -19,7 +19,7 @@ export function useUsers() {
           console.log('[useUsers.ts] App user session re-hydrated:', response.user.id);
         }
       } catch (error) {
-        console.warn('[useUsers.ts] No active app user session or session invalid.', error);
+        console.debug('[useUsers.ts] No active app user session or session invalid.', error);
         currentAppUser.value = null; // Ensure state is clear if session is invalid
       }
     }
