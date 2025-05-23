@@ -122,7 +122,7 @@ import { useRouter } from '#app';
 import { useToast } from '#imports';
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: 'auth-app-user-only', // Changed 'auth' to 'auth-app-user-only'
 });
 
 const { currentAppUser, logoutUsername } = useUsers();
