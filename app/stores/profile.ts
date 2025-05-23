@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
-// No need to import 'ref' directly here, as Pinia handles reactivity for state
 
 export const useProfileStore = defineStore('profile', {
-  // State is now a function that returns a plain object
+  // State is now a function that returns a plain object, do not use 'ref' or 'reactive' directly
   state: () => ({
     profile: '/' as string, // Initialize as a string, e.g., '/'
     childSelected: 0 as number, // Initialize as a number

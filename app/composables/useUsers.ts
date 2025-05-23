@@ -35,7 +35,6 @@ export function useUsers() {
         body: { username: username_val, password: password_val },
       });
 
-      // The server sets the HttpOnly cookie. We just update client-side state.
       if (response.user) {
         currentAppUser.value = response.user;
         console.log('[useUsers.ts] App user login successful, state updated.');
@@ -90,7 +89,6 @@ export function useUsers() {
       throw error;
     }
     console.log('[useUsers.ts] signInWithPassword SUCCESS. Full Data received:', data);
-    // Supabase client handles its own session (cookies, local storage depending on setup)
     return true;
   }
 
@@ -160,7 +158,7 @@ export function useUsers() {
       console.log(`[useUsers.ts] User deletion successful: ${response.message}`);
       // If the deleted user was the current app_user, clear their session
       if (currentAppUser.value?.id === user_info_id) {
-        logoutUsername(); // This will clear the cookie and redirect
+        logoutUsername();
       }
       return true;
     } catch (error: any) {
@@ -180,6 +178,6 @@ export function useUsers() {
     getUsers,
     getUserInfoById,
     updateUserInfo,
-    deleteUser, // Renamed and updated
+    deleteUser,
   };
 }

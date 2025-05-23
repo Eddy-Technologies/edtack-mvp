@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
-// No need to import 'ref' or 'watch' directly here, as Pinia handles reactivity for state
-// and you can use actions for logic.
 
 export const useCreditStore = defineStore('credit', {
-  // State is now a function that returns a plain object
+  // State is now a function that returns a plain object, do not use 'ref' or 'reactive' directly
   state: () => ({
     parentCredits: 0,
-    childCredits: [0, 0, 0] as number[], // Explicit type for clarity
-    childEarnedCredits: [0, 0, 0] as number[], // Explicit type for clarity
+    childCredits: [0, 0, 0] as number[],
+    childEarnedCredits: [0, 0, 0] as number[],
     name: 'sfxcode',
   }),
 
