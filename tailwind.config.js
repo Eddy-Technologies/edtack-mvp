@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          DEFAULT: "#14b8a6",
           "50": "#e8f8f6",
           "100": "#d0f1ed",
           "200": "#a1e3db",
@@ -19,6 +20,7 @@ module.exports = {
         secondary: '#f59e0b',    // e.g., orange
         accent: '#10b981',       // greenish accent
         background: {
+          DEFAULT: "#c8e6ce",
           "50": "#fafdfa",
           "100": "#f4faf5",
           "200": "#e9f5eb",
@@ -51,8 +53,10 @@ module.exports = {
     },
   },
   safelist: [
-    { pattern: /bg-primary-\d{3}/ },
-    { pattern: /text-primary-\d{3}/ },
+    { pattern: /bg-primary-\d{2,3}/ },
+    { pattern: /text-primary-\d{2,3}/ },
+    { pattern: /bg-background-\d{2,3}/ },
+    { pattern: /text-background-\d{2,3}/ },
   ],
   plugins: [],
 }
