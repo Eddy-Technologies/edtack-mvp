@@ -23,7 +23,7 @@
       <UButton
         v-if="isAuthenticated"
         icon="i-heroicons-arrow-right-start-on-rectangle"
-        color="primary"
+        color="gray"
         @click="handleLogout"
       >
         Logout
