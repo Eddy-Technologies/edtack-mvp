@@ -47,14 +47,15 @@ export default defineNuxtConfig({
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
       googleAIStudioApiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY,
-      supabaseUrlForServiceRole: process.env.VITE_SUPABASE_URL,
+      // For privileged client, ensure these are set in your deployment environment
+      supabaseUrlForServiceRole: process.env.NUXT_PRIVATE_SUPABASE_URL || process.env.VITE_SUPABASE_URL,
       supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-      jwtSecret: process.env.JWT_SECRET
+      jwtSecret: process.env.JWT_SECRET,
     },
-    public: { // Variables here are exposed to the client-side
-      supabaseUrl: process.env.VITE_SUPABASE_URL, // For @nuxtjs/supabase client
-      supabaseKey: process.env.VITE_SUPABASE_KEY, // For @nuxtjs/supabase client
-    }
+    public: {
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL,
+      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY || process.env.VITE_SUPABASE_KEY,
+    },
   },
 
   supabase: {
