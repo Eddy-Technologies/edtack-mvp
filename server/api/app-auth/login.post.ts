@@ -1,7 +1,16 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken'; // Original import
 import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET
 import { serverSupabaseClient } from '#supabase/server';
+
+// Define a stub for jwt
+const jwtStub = {
+  sign: (payload: any, secretOrPrivateKey: any, options?: any): string => {
+    console.log('[STUB] jwt.sign called with payload:', payload, 'options:', options);
+    // Return a consistent, fake token. This is not a real JWT.
+    return 'fake-jwt-token-for-stubbing-purposes-' + Date.now();
+  },
+};
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
@@ -28,7 +37,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Generate JWT
-    const token = jwt.sign(
+    const token = jwtStub.sign( // Use the stubbed sign method
       { app_user_id: appUserRecord.id, username: appUserRecord.username, user_type: 'app_user' },
       JWT_SECRET,
       { expiresIn: '7d' }, // Token expires in 7 days

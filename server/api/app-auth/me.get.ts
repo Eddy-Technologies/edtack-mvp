@@ -1,10 +1,21 @@
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken'; // Original import
 import { JWT_SECRET } from '../../utils/authConfig';
 import { serverSupabaseClient } from '#supabase/server';
+
+// Define a stub for jwt
+const jwtStub = {
+  verify: (token: string, secretOrPublicKey: any, options?: any): object | string => {
+    console.log('[STUB] jwt.verify called with token:', token ? 'present' : 'missing', 'options:', options);
+    // Return a consistent, fake decoded payload.
+    // This should match the structure of what your jwt.sign in login.post.ts creates.
+    return { app_user_id: 'stubbed-app-user-id-' + Date.now(), username: 'stubbed_username', user_type: 'app_user' };
+  },
+};
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching user_infos)
   const token = getCookie(event, 'app_user_jwt'); // Get the HttpOnly cookie
+
   if (!token) {
     throw createError({ statusCode: 401, statusMessage: 'No app user session found.' });
   }
@@ -14,8 +25,7 @@ export default defineEventHandler(async (event) => {
       console.error('JWT_SECRET is not defined in runtime configuration.');
       throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT_SECRET missing.' });
     }
-    const decoded: any = jwt.verify(token, JWT_SECRET); // Use the imported JWT_SECRET
-    // const decoded: any = { user_type: 'app_user', app_user_id: '12345' }; // Your previous mock
+    const decoded: any = jwtStub.verify(token, JWT_SECRET); // Use the stubbed verify method
 
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Invalid app user token.' });
