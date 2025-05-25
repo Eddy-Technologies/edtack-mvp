@@ -5,8 +5,7 @@ export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching user_infos)
   const token = getCookie(event, 'app_user_jwt'); // Get the HttpOnly cookie
   const config = useRuntimeConfig(event); // Access runtime configuration
-  // const jwtSecret = config.private.jwtSecret; // Get JWT_SECRET from runtime config
-  const jwtSecret = 'asdfa';
+  const jwtSecret = config.private.jwtSecret; // Get JWT_SECRET from runtime config
   if (!token) {
     throw createError({ statusCode: 401, statusMessage: 'No app user session found.' });
   }
