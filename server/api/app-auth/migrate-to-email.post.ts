@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import { authenticateAppUserJWT } from '../../utils/authHelpers'; // Import helper
 import { privilegedSupabaseClient } from '../../utils/authConfig'; // Import privileged client
+import type { Database } from '~/types/supabase';
 import { serverSupabaseClient } from '#supabase/server';
-import type { Database } from '~/types/supabase'; // Adjust path if your supabase types are elsewhere
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)

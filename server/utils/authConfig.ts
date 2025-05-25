@@ -6,7 +6,7 @@ const config = useRuntimeConfig();
 
 // Export sensitive keys for use in other server files
 export const JWT_SECRET = config.private.jwtSecret;
-export const SUPABASE_URL_FOR_SERVICE_ROLE = config.private.supabaseUrl;
+export const SUPABASE_URL_FOR_SERVICE_ROLE = config.private.supabaseUrlForServiceRole;
 export const SUPABASE_SERVICE_ROLE_KEY = config.private.supabaseServiceRoleKey;
 
 // Initialize and export a privileged Supabase client

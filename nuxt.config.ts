@@ -47,10 +47,10 @@ export default defineNuxtConfig({
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
       googleAIStudioApiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY,
-      supabaseUrl: process.env.VITE_SUPABASE_URL,
+      supabaseUrlForServiceRole: process.env.VITE_SUPABASE_URL,
       supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET
-    },
+    }
   },
 
   supabase: {
