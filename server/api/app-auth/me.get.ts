@@ -1,4 +1,4 @@
-// import jwt from 'jsonwebtoken'; // Original import
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../utils/authConfig';
 import { serverSupabaseClient } from '#supabase/server';
 
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       console.error('JWT_SECRET is not defined in runtime configuration.');
       throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT_SECRET missing.' });
     }
-    const decoded: any = jwtStub.verify(token, JWT_SECRET); // Use the stubbed verify method
+    const decoded: any = jwt.verify(token, JWT_SECRET); // Use the stubbed verify method
 
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Invalid app user token.' });

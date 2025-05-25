@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-// import jwt from 'jsonwebtoken'; // Original import
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET
 import { serverSupabaseClient } from '#supabase/server';
 
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Generate JWT
-    const token = jwtStub.sign( // Use the stubbed sign method
+    const token = jwt.sign( // Use the stubbed sign method
       { app_user_id: appUserRecord.id, username: appUserRecord.username, user_type: 'app_user' },
       JWT_SECRET,
       { expiresIn: '7d' }, // Token expires in 7 days
