@@ -50,12 +50,18 @@ export default defineNuxtConfig({
       supabaseUrlForServiceRole: process.env.VITE_SUPABASE_URL,
       supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET
+    },
+    public: { // Variables here are exposed to the client-side
+      supabaseUrl: process.env.VITE_SUPABASE_URL, // For @nuxtjs/supabase client
+      supabaseKey: process.env.VITE_SUPABASE_KEY, // For @nuxtjs/supabase client
     }
   },
 
   supabase: {
-    url: process.env.VITE_SUPABASE_URL,
-    key: process.env.VITE_SUPABASE_KEY,
+    // url and key can be omitted here if defined in runtimeConfig.public.supabaseUrl/Key
+    // The @nuxtjs/supabase module will pick them up automatically.
+    // url: process.env.VITE_SUPABASE_URL,
+    // key: process.env.VITE_SUPABASE_KEY,
     redirect: false, // Set to true if you want to use the redirect URL for authentication
   },
 
