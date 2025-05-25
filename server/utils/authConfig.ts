@@ -9,9 +9,9 @@ console.log('[AuthConfig] Initializing...');
 console.log('[AuthConfig] JWT_SECRET available:', config.private.jwtSecret ? 'Yes (set)' : 'No (NOT SET)');
 console.log('[AuthConfig] SUPABASE_URL_FOR_SERVICE_ROLE available:', config.private.supabaseUrlForServiceRole ? 'Yes (set)' : 'No (NOT SET)');
 console.log('[AuthConfig] SUPABASE_SERVICE_ROLE_KEY available:', config.private.supabaseServiceRoleKey ? 'Yes (set)' : 'No (NOT SET)');
-const DEFAULT_JWT_SECRET = 'your_default_fallback_jwt_secret_please_change_me_and_set_env_var';
-const DEFAULT_SUPABASE_URL = 'your_default_fallback_supabase_url_please_set_env_var';
-const DEFAULT_SUPABASE_SERVICE_KEY = 'your_default_fallback_supabase_service_key_please_set_env_var';
+const DEFAULT_JWT_SECRET = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'; // Default fallback for JWT_SECRET
+const DEFAULT_SUPABASE_URL = 'http://localhost:54321'; // Fake URL, Supabase local dev often uses this port
+const DEFAULT_SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfIjoic2VydmljZV9yb2xlX2tleV9mYWtlX2RhdGEifQ.fake_signature_part_for_stub'; // Fake service role key
 
 console.log('[AuthConfig] Initializing configuration...');
 
