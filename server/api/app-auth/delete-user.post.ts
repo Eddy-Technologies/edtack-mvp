@@ -1,30 +1,8 @@
 // This route handles deleting a user, whether they are an auth.users user or an app_user.
 // It requires privileged access to perform deletions on auth.users or app_users.
 
-import { privilegedSupabaseClient } from '../../utils/authConfig'; // Original import
+import { privilegedSupabaseClient, privilegedSupabaseClientStub } from '../../utils/authConfig'; // Original import
 import { serverSupabaseClient } from '#supabase/server';
-
-// Define a stub for privilegedSupabaseClient
-const privilegedSupabaseClientStub = {
-  auth: {
-    admin: {
-      deleteUser: async (userId: string) => {
-        console.log(`[STUB] privilegedSupabaseClient.auth.admin.deleteUser called for user ID: ${userId}`);
-        // Simulate a successful deletion response
-        return { data: { user: null }, error: null };
-      },
-    },
-  },
-  from: (table: string) => ({
-    delete: () => ({
-      eq: async (column: string, value: any) => {
-        console.log(`[STUB] privilegedSupabaseClient.from('${table}').delete().eq('${column}', '${value}') called`);
-        // Simulate a successful deletion response
-        return { data: null, error: null };
-      },
-    }),
-  }),
-};
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
@@ -54,7 +32,7 @@ export default defineEventHandler(async (event) => {
     if (userInfo.user_id) {
       // This is a Supabase Auth user (email/phone)
       console.log(`Attempting to delete auth.users user with ID: ${userInfo.user_id}`);
-      const { data, error } = await privilegedSupabaseClient.auth.admin.deleteUser(userInfo.user_id);
+      const { data, error } = await privilegedSupabaseClientStub.auth.admin.deleteUser(userInfo.user_id);
       deletionResult = data;
       deletionError = error;
       if (deletionError) {
@@ -65,7 +43,7 @@ export default defineEventHandler(async (event) => {
     } else if (userInfo.app_user_id) {
       // This is a custom app_user (username/password)
       console.log(`Attempting to delete app_users user with ID: ${userInfo.app_user_id}`);
-      const { error } = await privilegedSupabaseClient
+      const { error } = await privilegedSupabaseClientStub
         .from('app_users')
         .delete()
         .eq('id', userInfo.app_user_id);

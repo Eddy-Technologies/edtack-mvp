@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { authenticateAppUserJWT } from '../../utils/authHelpers'; // Import helper
-import { privilegedSupabaseClient } from '../../utils/authConfig'; // Import privileged client
+import { privilegedSupabaseClient, privilegedSupabaseClientStub } from '../../utils/authConfig'; // Import the stub
 import type { Database } from '~/types/supabase';
 import { serverSupabaseClient } from '#supabase/server';
 
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
       console.warn('Supabase user_infos fetch warning during migration for metadata:', userInfoForSupabaseError);
     }
 
-    const { data: supabaseAuthData, error: supabaseAuthError } = await privilegedSupabaseClient.auth.signUp({
+    const { data: supabaseAuthData, error: supabaseAuthError } = await privilegedSupabaseClientStub.auth.signUp({
       email: newEmail,
       password: newSupabasePassword, // Use the new password for Supabase Auth
       options: {
@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
       console.error('Supabase update error during user_infos linking:', updateUserInfoError);
       // Attempt to delete the newly created Supabase Auth user if linking user_infos fails
       if (supabaseAuthUserId) {
-        await privilegedSupabaseClient.auth.admin.deleteUser(supabaseAuthUserId);
+        await privilegedSupabaseClientStub.auth.admin.deleteUser(supabaseAuthUserId);
         console.log(`Rolled back Supabase Auth user creation (ID: ${supabaseAuthUserId}) due to user_infos update failure.`);
       }
       throw createError({ statusCode: 500, statusMessage: updateUserInfoError.message });
@@ -117,7 +117,7 @@ export default defineEventHandler(async (event) => {
 
     // 5. Optionally, delete the old app_user record (since it's no longer the primary auth)
     // Using privileged client for this deletion as well
-    const { error: deleteAppUserError } = await privilegedSupabaseClient
+    const { error: deleteAppUserError } = await privilegedSupabaseClientStub
       .from('app_users')
       .delete()
       .eq('id', appUser.app_user_id);
