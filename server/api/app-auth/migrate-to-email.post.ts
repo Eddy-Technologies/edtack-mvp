@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const { newEmail, currentPassword, newSupabasePassword } = await readBody(event);
 
   // 1. Authenticate the incoming request using the custom JWT for 'app_users'
-  await authenticateAppUserJWT(event);
+  // await authenticateAppUserJWT(event);
   const appUser = event.context.user; // Get authenticated app_user from middleware context
 
   // Validate required fields for migration
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
       console.warn('Supabase user_infos fetch warning during migration for metadata:', userInfoForSupabaseError);
     }
 
-    const { data: supabaseAuthData, error: supabaseAuthError } = await privilegedSupabaseClientStub.auth.signUp({
+    const { data: supabaseAuthData, error: supabaseAuthError } = await privilegedSupabaseClient.auth.signUp({
       email: newEmail,
       password: newSupabasePassword, // Use the new password for Supabase Auth
       options: {
@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
       console.error('Supabase update error during user_infos linking:', updateUserInfoError);
       // Attempt to delete the newly created Supabase Auth user if linking user_infos fails
       if (supabaseAuthUserId) {
-        await privilegedSupabaseClientStub.auth.admin.deleteUser(supabaseAuthUserId);
+        await privilegedSupabaseClient.auth.admin.deleteUser(supabaseAuthUserId);
         console.log(`Rolled back Supabase Auth user creation (ID: ${supabaseAuthUserId}) due to user_infos update failure.`);
       }
       throw createError({ statusCode: 500, statusMessage: updateUserInfoError.message });
@@ -117,7 +117,7 @@ export default defineEventHandler(async (event) => {
 
     // 5. Optionally, delete the old app_user record (since it's no longer the primary auth)
     // Using privileged client for this deletion as well
-    const { error: deleteAppUserError } = await privilegedSupabaseClientStub
+    const { error: deleteAppUserError } = await privilegedSupabaseClient
       .from('app_users')
       .delete()
       .eq('id', appUser.app_user_id);
