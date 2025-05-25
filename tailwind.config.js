@@ -4,10 +4,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#14b8a6',      // your brand primary color
+        primary: {
+          DEFAULT: "#14b8a6",
+          "50": "#e8f8f6",
+          "100": "#d0f1ed",
+          "200": "#a1e3db",
+          "300": "#72d4ca",
+          "400": "#43c6b8",
+          "500": "#14b8a6",
+          "600": "#109385",
+          "700": "#0c6e64",
+          "800": "#084a42",
+          "900": "#042521"
+        },
         secondary: '#f59e0b',    // e.g., orange
         accent: '#10b981',       // greenish accent
-        background: '#c8e6ce',   // light background
+        background: {
+          DEFAULT: "#c8e6ce",
+          "50": "#fafdfa",
+          "100": "#f4faf5",
+          "200": "#e9f5eb",
+          "300": "#def0e2",
+          "400": "#d3ebd8",
+          "500": "#c8e6ce",
+          "600": "#a0b8a5",
+          "700": "#788a7c",
+          "800": "#505c52",
+          "900": "#282e29"
+        },   // light background
         danger: '#ef4444'        // for errors or alerts
       },
       fontFamily: {
@@ -29,8 +53,10 @@ module.exports = {
     },
   },
   safelist: [
-    { pattern: /bg-primary-\d{3}/ },
-    { pattern: /text-primary-\d{3}/ },
+    { pattern: /bg-primary-\d{2,3}/ },
+    { pattern: /text-primary-\d{2,3}/ },
+    { pattern: /bg-background-\d{2,3}/ },
+    { pattern: /text-background-\d{2,3}/ },
   ],
   plugins: [],
 }
