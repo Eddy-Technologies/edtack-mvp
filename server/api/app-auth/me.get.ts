@@ -1,22 +1,21 @@
 import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '../../utils/authConfig';
 import { serverSupabaseClient } from '#supabase/server';
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching user_infos)
   const token = getCookie(event, 'app_user_jwt'); // Get the HttpOnly cookie
-  const config = useRuntimeConfig(event); // Access runtime configuration
-  const jwtSecret = config.private.jwtSecret; // Get JWT_SECRET from runtime config
   if (!token) {
     throw createError({ statusCode: 401, statusMessage: 'No app user session found.' });
   }
 
   try {
-    if (!jwtSecret) {
+    if (!JWT_SECRET) {
       console.error('JWT_SECRET is not defined in runtime configuration.');
-      throw createError({ statusCode: 500, statusMessage: 'Server configuration error.' });
+      throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT_SECRET missing.' });
     }
-    // const decoded: any = {jwt.verify(token, jwtSecret)};
-    const decoded: any = { user_type: 'app_user', app_user_id: '12345' }; // Mocked for example, replace with actual verification
+    const decoded: any = jwt.verify(token, JWT_SECRET); // Use the imported JWT_SECRET
+    // const decoded: any = { user_type: 'app_user', app_user_id: '12345' }; // Your previous mock
 
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Invalid app user token.' });
