@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     if (userInfo.user_id) {
       // This is a Supabase Auth user (email/phone)
       console.log(`Attempting to delete auth.users user with ID: ${userInfo.user_id}`);
-      const { data, error } = await privilegedSupabaseClientStub.auth.admin.deleteUser(userInfo.user_id);
+      const { data, error } = await privilegedSupabaseClient.auth.admin.deleteUser(userInfo.user_id);
       deletionResult = data;
       deletionError = error;
       if (deletionError) {
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
     } else if (userInfo.app_user_id) {
       // This is a custom app_user (username/password)
       console.log(`Attempting to delete app_users user with ID: ${userInfo.app_user_id}`);
-      const { error } = await privilegedSupabaseClientStub
+      const { error } = await privilegedSupabaseClient
         .from('app_users')
         .delete()
         .eq('id', userInfo.app_user_id);
