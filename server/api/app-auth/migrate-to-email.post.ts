@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const { newEmail, currentPassword, newSupabasePassword } = await readBody(event);
 
   // 1. Authenticate the incoming request using the custom JWT for 'app_users'
-  // await authenticateAppUserJWT(event);
+  await authenticateAppUserJWT(event);
   const appUser = event.context.user; // Get authenticated app_user from middleware context
 
   // Validate required fields for migration
