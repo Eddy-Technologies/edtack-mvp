@@ -1,6 +1,5 @@
 // /server/api/app-auth/test-jwt.get.ts
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
 
 // Use a simple, hardcoded secret for this test.
 // For HS256 (default), the secret should ideally be a strong, random string.
@@ -13,11 +12,11 @@ export default defineEventHandler(() => {
     const payload = { userId: 'testUser123', data: 'sample-data' };
 
     console.log('[test-jwt.get.ts] Signing token...');
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1m' });
+    const token = jwt.sign(payload, TEST_JWT_SECRET, { expiresIn: '1m' });
     console.log('[test-jwt.get.ts] Token signed:', !!token);
 
     console.log('[test-jwt.get.ts] Verifying token...');
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, TEST_JWT_SECRET);
     console.log('[test-jwt.get.ts] Token verified. Decoded:', decoded);
 
     return {

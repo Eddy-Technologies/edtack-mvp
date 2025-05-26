@@ -49,12 +49,12 @@ export default defineNuxtConfig({
       googleAIStudioApiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY,
       // For privileged client, ensure these are set in your deployment environment
       supabaseUrlForServiceRole: process.env.NUXT_PRIVATE_SUPABASE_URL,
-      supabaseServiceRoleKey: process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY,
+      supabaseServiceRoleKey: process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
     },
     public: {
-      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL,
-      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY || process.env.VITE_SUPABASE_KEY,
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
+      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY,
     },
   },
 
