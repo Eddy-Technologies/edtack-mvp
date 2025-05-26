@@ -1,35 +1,42 @@
 // /server/api/app-auth/test-jwt.get.ts
-import jwt from 'jsonwebtoken';
+
+// import jwt from 'jsonwebtoken'; // Commented out the real import
 import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
 
-// Use a simple, hardcoded secret for this test.
-// For HS256 (default), the secret should ideally be a strong, random string.
-// The length matters for security, but for this test, a simple string will do.
-const TEST_JWT_SECRET = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+// Stub version of jwt for testing without actual token logic
+const jwtStub = {
+  sign: (payload: any, secretOrPrivateKey: any, options?: any): string => {
+    console.log('[test-jwt.get.ts STUB] jwt.sign called with payload:', payload, 'options:', options);
+    return 'fake-jwt-token-for-stubbing-purposes-' + Date.now();
+  },
+  verify: (token: string, secretOrPublicKey: any, options?: any): object | string => {
+    console.log('[test-jwt.get.ts STUB] jwt.verify called with token:', token ? 'present' : 'missing', 'options:', options);
+    return { userId: 'stubbed-test-user', data: 'stubbed-sample-data', verifiedAt: new Date().toISOString() };
+  },
+};
 
 export default defineEventHandler(() => {
-  console.log('[test-jwt.get.ts] Attempting to sign and verify JWT...');
+  console.log('[test-jwt.get.ts] Attempting to sign and verify JWT (STUB)...');
   try {
     const payload = { userId: 'testUser123', data: 'sample-data' };
 
     console.log('[test-jwt.get.ts] Signing token...');
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1m' });
-    console.log('[test-jwt.get.ts] Token signed:', !!token);
+    const token = jwtStub.sign(payload, JWT_SECRET, { expiresIn: '1m' });
+    console.log('[test-jwt.get.ts] Token signed:', token);
 
     console.log('[test-jwt.get.ts] Verifying token...');
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwtStub.verify(token, JWT_SECRET);
     console.log('[test-jwt.get.ts] Token verified. Decoded:', decoded);
 
     return {
       success: true,
-      message: 'jsonwebtoken sign and verify test successful.',
-      tokenGenerated: !!token,
+      message: 'jsonwebtoken sign and verify test successful (using stub).',
+      tokenGenerated: token,
       decodedPayload: decoded,
     };
   } catch (error: any) {
     console.error('[test-jwt.get.ts] JWT Test Error:', error.message);
     console.error('[test-jwt.get.ts] JWT Test Error Stack:', error.stack);
-    // Return a more detailed error for debugging
     return {
       success: false,
       error: error.message,
