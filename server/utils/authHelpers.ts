@@ -1,6 +1,7 @@
-import jwt from 'jsonwebtoken'; // Comment out the real import
+// /server/utils/authenticateAppUserJWT.ts
+import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
-import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
+import { JWT_SECRET } from './authConfig';
 
 // Define a stub for jwt
 const jwtStub = {
@@ -9,16 +10,17 @@ const jwtStub = {
     // Return a consistent, fake token. This is not a real JWT.
     return 'fake-jwt-token-for-stubbing-purposes-' + Date.now();
   },
-  verify: (token: string, secretOrPublicKey: any, options?: any): object | string => {
-    console.log('[AuthHelpers_STUB] jwt.verify called with token:', token ? 'present' : 'missing', 'options:', options);
-    // Return a consistent, fake decoded payload.
-    // This should match the structure of what your actual jwt.sign creates.
-    return { app_user_id: 'stubbed-app-user-id-' + Date.now(), username: 'stubbed_username', user_type: 'app_user' };
+  verify: (token: string, secretOrPublicKey: any): any => {
+    console.log('[AuthHelpers_STUB] jwt.verify called with token:', token);
+    // Return a fixed payload for stubbing
+    return {
+      app_user_id: 'stubbed-app-user-id',
+      username: 'stubbed-username',
+      user_type: 'app_user',
+    };
   },
 };
 
-// Helper function to authenticate requests based on the custom JWT issued for 'app_users'.
-// It's designed to be used before handlers that require an authenticated 'app_user'.
 export async function authenticateAppUserJWT(event: H3Event) {
   const authHeader = getHeader(event, 'authorization');
   if (!authHeader) {
@@ -31,12 +33,12 @@ export async function authenticateAppUserJWT(event: H3Event) {
   }
 
   try {
-    const decoded: any = jwtStub.verify(token, JWT_SECRET); // Use STUB
-    // Ensure the token is for an 'app_user' and contains the app_user_id
+    const decoded: any = jwt.verify(token, JWT_SECRET);
+
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
     }
-    // Attach decoded user information to the event context for access in the main handler
+
     event.context.user = decoded;
   } catch (err: any) {
     console.error('JWT verification failed:', err);
@@ -76,7 +78,6 @@ export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWT
   return token;
 }
 
-// Helper function to verify the app_user_jwt cookie and return the decoded payload
 export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayload {
   const token = getCookie(event, 'app_user_jwt');
   if (!token) {

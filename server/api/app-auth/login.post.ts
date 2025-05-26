@@ -1,9 +1,8 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken'; // Comment out the real import
+import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
-import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
+import { JWT_SECRET, getSupabaseClient } from '../../utils/authConfig'; // Use dynamic secret fetcher
 // import { signAndSetAppUserCookie } from '../../utils/authHelpers';
-import { serverSupabaseClient } from '#supabase/server';
 
 interface AppUserJWTPayload {
   app_user_id: string;
@@ -24,7 +23,7 @@ export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWT
     user_type: 'app_user',
   };
 
-  const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '7d' }); // Use STUB
+  const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '7d' });
 
   setCookie(event, 'app_user_jwt', token, {
     httpOnly: true,
@@ -38,7 +37,7 @@ export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWT
 }
 
 export default defineEventHandler(async (event) => {
-  const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
+  const supabase = await getSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
   const { username, password } = await readBody(event);
 
   if (!username || !password) {
@@ -78,7 +77,7 @@ export default defineEventHandler(async (event) => {
     return {
       user: { ...appUserRecord, user_info_id: userInfoData?.id, ...userInfoData }, // Combine app_user and user_infos data
       type: 'app_user',
-      message: 'Username login successful!'
+      message: 'Username login successful!',
     };
   } catch (err: any) {
     console.error('Server-side username login error:', err);

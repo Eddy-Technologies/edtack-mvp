@@ -60,20 +60,18 @@
       </div>
 
       <!-- Call-to-Actions -->
-      <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
-        <button
-          class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+      <UButton
+          class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300 flex justify-center items-center text-center"
           to="try"
-        >
-          Try Eddy Now
-        </button>
-        <button
-            class="w-[220px] py-2 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300"
-           to="feedback"
-        >
-          Write to Us
-        </button>
-      </div>
+      >
+        Try Eddy Now
+      </UButton>
+      <UButton
+          class="w-[220px] mt-2 mb-4 py-4 rounded-lg font-bold cursor-pointer bg-black text-white hover:bg-gray-800 text-base sm:text-lg md:text-xl transition-colors duration-300 flex justify-center items-center text-center"
+          to="feedback"
+      >
+        Write to Us
+      </UButton>
     </div>
   </div>
 </template>

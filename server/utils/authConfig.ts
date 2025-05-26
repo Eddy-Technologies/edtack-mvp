@@ -1,7 +1,8 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { createClient } from '@supabase/supabase-js';
+import type { H3Event } from 'h3';
+import { serverSupabaseClient } from '#supabase/server';
+import { serverSupabaseServiceRole } from '#supabase/server'; // Supabase privileged client for admin tasks
+import { useRuntimeConfig } from '#imports'; // Nuxt runtime config
 
-// Access runtime configuration
 const config = useRuntimeConfig();
 
 // Log the values to verify they are loaded during deployment
@@ -14,14 +15,7 @@ console.log('[AuthConfig] Initializing configuration...');
 // Export sensitive keys for use in other server files
 export const JWT_SECRET = config.private.jwtSecret; ;
 export const SUPABASE_URL_FOR_SERVICE_ROLE = config.private.supabaseUrlForServiceRole;
-export const SUPABASE_SERVICE_ROLE_KEY = config.private.supabaseServiceRoleKey; ;
-
-// Initialize and export a privileged Supabase client
-// This client bypasses RLS and is used for administrative tasks like direct user creation/modification.
-export const privilegedSupabaseClient: SupabaseClient = createClient(
-  SUPABASE_URL_FOR_SERVICE_ROLE,
-  SUPABASE_SERVICE_ROLE_KEY
-);
+export const SUPABASE_SERVICE_ROLE_KEY = config.private.supabaseServiceRoleKey;
 
 export const privilegedSupabaseClientStub = {
   auth: {
@@ -51,3 +45,19 @@ export const privilegedSupabaseClientStub = {
     }),
   }),
 };
+
+// Expose the service role client in a runtime-safe way
+export function getPrivilegedSupabaseClient(event: H3Event) {
+  if (!config.private.supabaseServiceRoleKey) {
+    console.warn('[AuthConfig] WARNING: SUPABASE_SERVICE_ROLE_KEY not found in env. Check your config.');
+  }
+
+  // This client uses the service role key automatically
+  return serverSupabaseServiceRole(event);
+}
+
+// Example: helper to get RLS-aware client in event handlers (already part of your codebase)
+// You typically use this in API routes
+export async function getSupabaseClient(event: H3Event) {
+  return await serverSupabaseClient(event);
+}

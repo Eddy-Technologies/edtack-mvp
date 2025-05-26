@@ -34,7 +34,7 @@ jobs:
           echo "NUXT_PUBLIC_SUPABASE_URL is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL != '' }}"
           echo "NUXT_PUBLIC_SUPABASE_KEY is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY != '' }}"
           echo "NUXT_PRIVATE_SUPABASE_URL is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL != '' }}"
-          echo "NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY != '' }}"
+          echo "NUXT_PRIVATE_SUPABASE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY != '' }}"
           echo "JWT_SECRET is set: ${{ secrets.JWT_SECRET != '' }}"
 
       - name: Ensure NuxtHub module is installed
@@ -50,7 +50,7 @@ jobs:
           NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
           # Private runtime config variables
           NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
-          NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY }}
+          NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Deploy to NuxtHub
@@ -66,5 +66,5 @@ jobs:
           NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
           # Private runtime config variables
           NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
-          NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY }}
+          NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}

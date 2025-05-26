@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { serverSupabaseClient } from '#supabase/server';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 export default defineEventHandler(async (event) => {
-  const supabase = await serverSupabaseClient(event);
+  const supabase = await getSupabaseClient(event); // Use RLS-aware client
   const { firstName, lastName, username, password } = await readBody(event);
 
   // Validate required fields for registration

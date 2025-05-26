@@ -1,8 +1,7 @@
-import jwt from 'jsonwebtoken'; // Comment out the real import
+import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
-import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
+import { JWT_SECRET, getSupabaseClient } from '../../utils/authConfig'; // Use dynamic secret fetcher
 // import { verifyAppUserCookieAndGetPayload } from '../../utils/authHelpers';
-import { serverSupabaseClient } from '#supabase/server';
 
 interface AppUserJWTPayload {
   app_user_id: string;
@@ -35,7 +34,7 @@ export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayl
 }
 
 export default defineEventHandler(async (event) => {
-  const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching user_infos)
+  const supabase = await getSupabaseClient(event); // RLS-aware client (for fetching user_infos)
 
   try {
     // Verify JWT from cookie and get payload using the helper
