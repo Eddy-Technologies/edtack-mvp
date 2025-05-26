@@ -1,5 +1,38 @@
-import { verifyAppUserCookieAndGetPayload } from '../../utils/authHelpers';
+import jwt from 'jsonwebtoken'; // Comment out the real import
+import type { H3Event } from 'h3';
+import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
+// import { verifyAppUserCookieAndGetPayload } from '../../utils/authHelpers';
 import { serverSupabaseClient } from '#supabase/server';
+
+interface AppUserJWTPayload {
+  app_user_id: string;
+  username: string;
+  user_type: 'app_user';
+  // Add any other standard claims you might include, e.g., iat, exp (though exp is handled by options)
+}
+
+export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayload {
+  const token = getCookie(event, 'app_user_jwt');
+  if (!token) {
+    throw createError({ statusCode: 401, statusMessage: 'No app user session found (cookie missing).' });
+  }
+
+  if (!JWT_SECRET) {
+    console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot verify token.');
+    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as AppUserJWTPayload; // Use STUB
+    console.log('[AuthHelpers] App user JWT cookie verified.');
+    return decoded;
+  } catch (err: any) {
+    console.error('[AuthHelpers] App user JWT cookie verification failed:', err.message);
+    // Clear the invalid cookie
+    setCookie(event, 'app_user_jwt', '', { httpOnly: true, maxAge: 0, path: '/', sameSite: 'lax' });
+    throw createError({ statusCode: 403, statusMessage: 'Invalid or expired app user session (cookie).' });
+  }
+}
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching user_infos)
