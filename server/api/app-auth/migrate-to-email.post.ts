@@ -1,8 +1,38 @@
 import bcrypt from 'bcryptjs';
-import { authenticateAppUserJWT } from '../../utils/authHelpers'; // Import helper
+import jwt from 'jsonwebtoken'; // Comment out the real import
+import type { H3Event } from 'h3';
 import { privilegedSupabaseClient, privilegedSupabaseClientStub } from '../../utils/authConfig'; // Import the stub
+import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
+// import { authenticateAppUserJWT } from '../../utils/authHelpers'; // Import helper
 import type { Database } from '~/types/supabase';
 import { serverSupabaseClient } from '#supabase/server';
+
+// Helper function to authenticate requests based on the custom JWT issued for 'app_users'.
+// It's designed to be used before handlers that require an authenticated 'app_user'.
+export async function authenticateAppUserJWT(event: H3Event) {
+  const authHeader = getHeader(event, 'authorization');
+  if (!authHeader) {
+    throw createError({ statusCode: 401, statusMessage: 'Authorization header missing.' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    throw createError({ statusCode: 401, statusMessage: 'Token missing.' });
+  }
+
+  try {
+    const decoded: any = jwt.verify(token, JWT_SECRET); // Use STUB
+    // Ensure the token is for an 'app_user' and contains the app_user_id
+    if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
+      throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
+    }
+    // Attach decoded user information to the event context for access in the main handler
+    event.context.user = decoded;
+  } catch (err: any) {
+    console.error('JWT verification failed:', err);
+    throw createError({ statusCode: 403, statusMessage: 'Invalid or expired token.' });
+  }
+}
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
