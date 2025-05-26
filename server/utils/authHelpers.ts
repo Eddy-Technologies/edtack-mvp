@@ -33,7 +33,7 @@ export async function authenticateAppUserJWT(event: H3Event) {
   }
 
   try {
-    const decoded: any = jwt.verify(token, JWT_SECRET);
+    const decoded: any = jwtStub.verify(token, JWT_SECRET);
 
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
