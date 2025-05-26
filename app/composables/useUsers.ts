@@ -77,7 +77,6 @@ export function useUsers() {
   // --- Supabase User (Email/Password) Authentication ---
 
   async function loginEmail(email_val: string, password_val: string) {
-    console.log('[useUsers.ts] Calling signInWithPassword for:', email_val);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email_val,
       password: password_val
