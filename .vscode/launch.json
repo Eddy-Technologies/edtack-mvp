@@ -13,6 +13,11 @@
         "webpack:///./*": "${webRoot}/*",
         "webpack:///*": "${webRoot}/*",
         "nuxi:///*": "${webRoot}/*"
+      },
+      "serverReadyAction": {
+        "pattern": "Local:    http://localhost:([0-9]+)", // Or a more specific pattern from your `pnpm dev` output
+        "uriFormat": "http://localhost:%s",
+        "action": "debugWithChrome"
       }
     },
     // Server-Side Debugger using pnpm dev
