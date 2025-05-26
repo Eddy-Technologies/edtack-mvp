@@ -15,11 +15,12 @@ const DEFAULT_SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfI
 
 console.log('[AuthConfig] Initializing configuration...');
 
-let jwtSecret = config.private.jwtSecret;
-if (!jwtSecret) {
-  console.warn('[AuthConfig] WARNING: JWT_SECRET not found in environment variables. Using default fallback. THIS IS INSECURE FOR PRODUCTION.');
-  jwtSecret = DEFAULT_JWT_SECRET;
-}
+// let jwtSecret = config.private.jwtSecret;
+// if (!jwtSecret) {
+//   console.warn('[AuthConfig] WARNING: JWT_SECRET not found in environment variables. Using default fallback. THIS IS INSECURE FOR PRODUCTION.');
+// jwtSecret = DEFAULT_JWT_SECRET;
+// }
+const jwtSecret = DEFAULT_JWT_SECRET;
 
 let supabaseUrlForServiceRole = config.private.supabaseUrlForServiceRole;
 if (!supabaseUrlForServiceRole) {
