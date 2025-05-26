@@ -1,7 +1,7 @@
 // This route handles deleting a user, whether they are an auth.users user or an app_user.
 // It requires privileged access to perform deletions on auth.users or app_users.
 
-import { privilegedSupabaseClient, privilegedSupabaseClientStub } from '../../utils/authConfig'; // Original import
+import { privilegedSupabaseClient } from '../../utils/authConfig'; // Original import
 import { serverSupabaseClient } from '#supabase/server';
 
 export default defineEventHandler(async (event) => {

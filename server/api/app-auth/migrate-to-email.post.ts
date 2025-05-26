@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; // Comment out the real import
 import type { H3Event } from 'h3';
-import { JWT_SECRET, privilegedSupabaseClient, privilegedSupabaseClientStub } from '../../utils/authConfig';
+import { JWT_SECRET, privilegedSupabaseClient } from '../../utils/authConfig';
 // import { authenticateAppUserJWT } from '../../utils/authHelpers'; // Import helper
 import type { Database } from '~/types/supabase';
 import { serverSupabaseClient } from '#supabase/server';
