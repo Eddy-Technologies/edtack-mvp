@@ -1,8 +1,9 @@
 // /server/api/app-auth/test-jwt.get.ts
 
 // import jwt from 'jsonwebtoken'; // Commented out the real import
-import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
+import {getJwtSecret} from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
 
+const JWT_SECRET = getJwtSecret();
 // Stub version of jwt for testing without actual token logic
 const jwtStub = {
   sign: (payload: any, secretOrPrivateKey: any, options?: any): string => {
