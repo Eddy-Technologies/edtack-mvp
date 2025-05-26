@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
-import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
+// import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
+
+const JWT_SECRET = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'; // 64-char hex fallback
 
 // Helper function to authenticate requests based on the custom JWT issued for 'app_users'.
 // It's designed to be used before handlers that require an authenticated 'app_user'.
