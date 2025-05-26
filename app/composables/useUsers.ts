@@ -53,7 +53,6 @@ export function useUsers() {
     username: string;
     password: string;
   }) {
-    console.log('[useUsers.ts] Calling /api/app-auth/register with payload:', payload);
     const response = await $fetch('/api/app-auth/register', {
       method: 'POST',
       body: payload,
@@ -64,7 +63,6 @@ export function useUsers() {
   }
 
   async function logoutUsername() {
-    console.log('[useUsers.ts] Calling /api/app-auth/logout to clear app user session.');
     try {
       await $fetch('/api/app-auth/logout', { method: 'POST' });
       currentAppUser.value = null; // Clear client-side state
