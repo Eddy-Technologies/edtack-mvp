@@ -1,16 +1,6 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET
+import { signAndSetAppUserCookie } from '../../utils/authHelpers';
 import { serverSupabaseClient } from '#supabase/server';
-
-// Define a stub for jwt
-const jwtStub = {
-  sign: (payload: any, secretOrPrivateKey: any, options?: any): string => {
-    console.log('[STUB] jwt.sign called with payload:', payload, 'options:', options);
-    // Return a consistent, fake token. This is not a real JWT.
-    return 'fake-jwt-token-for-stubbing-purposes-' + Date.now();
-  },
-};
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
@@ -36,21 +26,8 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'Invalid credentials.' });
     }
 
-    // Generate JWT
-    const token = jwt.sign( // Use the stubbed sign method
-      { app_user_id: appUserRecord.id, username: appUserRecord.username, user_type: 'app_user' },
-      JWT_SECRET,
-      { expiresIn: '7d' }, // Token expires in 7 days
-    );
-
-    // Set HttpOnly cookie
-    setCookie(event, 'app_user_jwt', token, {
-      httpOnly: true, // Crucial for security: JS cannot access this cookie
-      secure: process.env.NODE_ENV === 'production', // Use secure in production (HTTPS)
-      maxAge: 60 * 60 * 24 * 7, // 7 days (matches JWT expiry)
-      path: '/', // Accessible across the entire domain
-      sameSite: 'lax', // Or 'strict' depending on your needs
-    });
+    // Sign JWT and set cookie using the helper
+    signAndSetAppUserCookie(event, { app_user_id: appUserRecord.id, username: appUserRecord.username });
 
     // Fetch associated profile data from 'user_infos' for the response
     const { data: userInfoData, error: userInfoError } = await supabase
