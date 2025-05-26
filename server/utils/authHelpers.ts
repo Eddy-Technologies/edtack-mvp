@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken'; // Comment out the real import
+// import jwt from 'jsonwebtoken'; // Commented out the real import
 import type { H3Event } from 'h3';
-import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
+import { getJwtSecret } from './authConfig'; // Import function to get JWT_SECRET dynamically
 
 // Define a stub for jwt
 const jwtStub = {
@@ -30,6 +30,12 @@ export async function authenticateAppUserJWT(event: H3Event) {
     throw createError({ statusCode: 401, statusMessage: 'Token missing.' });
   }
 
+  const JWT_SECRET = getJwtSecret();
+  if (!JWT_SECRET) {
+    console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot verify token.');
+    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT verification secret missing.' });
+  }
+
   try {
     const decoded: any = jwtStub.verify(token, JWT_SECRET); // Use STUB
     // Ensure the token is for an 'app_user' and contains the app_user_id
@@ -53,6 +59,7 @@ interface AppUserJWTPayload {
 
 // Helper function to sign a JWT for an app_user and set it as an HttpOnly cookie
 export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWTPayload, 'user_type'>): string {
+  const JWT_SECRET = getJwtSecret();
   if (!JWT_SECRET) {
     console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot sign token.');
     throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
@@ -83,9 +90,10 @@ export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayl
     throw createError({ statusCode: 401, statusMessage: 'No app user session found (cookie missing).' });
   }
 
+  const JWT_SECRET = getJwtSecret();
   if (!JWT_SECRET) {
     console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot verify token.');
-    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
+    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT verification secret missing.' });
   }
 
   try {
