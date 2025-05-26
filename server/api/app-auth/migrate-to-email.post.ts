@@ -1,14 +1,13 @@
 // /server/api/app-auth/migrate-account.post.ts
 import bcrypt from 'bcryptjs';
 import { serverSupabaseClient, serverSupabaseServiceRole } from '#supabase/server';
-import { authenticateAppUserJWT } from '../../utils/authHelpers';
 
 export default defineEventHandler(async (event) => {
   const supabase = serverSupabaseClient(event);
   const serviceSupabase = serverSupabaseServiceRole();
   const { newEmail, currentPassword, newSupabasePassword } = await readBody(event);
 
-  await authenticateAppUserJWT(event);
+  //await authenticateAppUserJWT(event);
   const appUser = event.context.user;
 
   if (!newEmail || !currentPassword || !newSupabasePassword) {
