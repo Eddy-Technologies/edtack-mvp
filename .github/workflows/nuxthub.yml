@@ -31,12 +31,10 @@ jobs:
         run: |
           echo "VITE_GOOGLE_AI_STUDIO_API_KEY is set: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY != '' }}"
           echo "GOOGLE_TAG_MANAGER_ID is set: ${{ secrets.GOOGLE_TAG_MANAGER_ID != '' }}"
-          echo "VITE_SUPABASE_URL is set: ${{ secrets.VITE_SUPABASE_URL != '' }}"
-          echo "VITE_SUPABASE_KEY is set: ${{ secrets.VITE_SUPABASE_KEY != '' }}"
           echo "NUXT_PUBLIC_SUPABASE_URL is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL != '' }}"
           echo "NUXT_PUBLIC_SUPABASE_KEY is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY != '' }}"
           echo "NUXT_PRIVATE_SUPABASE_URL is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL != '' }}"
-          echo "NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY != '' }}"
+          echo "NUXT_PRIVATE_SUPABASE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY != '' }}"
           echo "JWT_SECRET is set: ${{ secrets.JWT_SECRET != '' }}"
 
       - name: Ensure NuxtHub module is installed
@@ -52,7 +50,7 @@ jobs:
           NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
           # Private runtime config variables
           NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
-          NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY }}
+          NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Deploy to NuxtHub
@@ -63,12 +61,10 @@ jobs:
         env:
           VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
           GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
           # NUXT_PUBLIC_ prefixed variables for runtimeConfig.public
           NUXT_PUBLIC_SUPABASE_URL: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL }}
           NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
           # Private runtime config variables
           NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
-          NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY }}
+          NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
