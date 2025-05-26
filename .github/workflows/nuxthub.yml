@@ -6,7 +6,7 @@ jobs:
     name: "Deploy to NuxtHub"
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
+      name: ${{ github.ref == 'refs/heads/production' && 'production' || 'preview' }}
       url: ${{ steps.deploy.outputs.deployment-url }}
     permissions:
       contents: read
@@ -38,6 +38,9 @@ jobs:
           echo "NUXT_PRIVATE_SUPABASE_URL is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL != '' }}"
           echo "NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY != '' }}"
           echo "JWT_SECRET is set: ${{ secrets.JWT_SECRET != '' }}"
+
+      - name: Ensure NuxtHub module is installed
+        run: pnpx nuxthub@latest ensure
 
       - name: Build application
         run: pnpm build
