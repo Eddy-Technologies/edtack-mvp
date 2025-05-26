@@ -1,5 +1,5 @@
-import { getPrivilegedSupabaseClient, privilegedSupabaseClientStub } from '../../utils/authConfig';
 import { serverSupabaseClient } from '#supabase/server';
+import { getPrivilegedSupabaseClient } from '../../utils/authConfig'; // Adjust the import path as needed
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client for app_users and user_infos
@@ -25,38 +25,35 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 404, statusMessage: 'User profile not found.' });
     }
 
-    let deletionError: any;
-
     // 2. Perform deletion based on authentication type
     if (userInfo.user_id) {
       // Supabase Auth user (email/phone)
-      console.log(`Attempting to delete auth.users user with ID: ${userInfo.user_id}`);
+      console.log(`Deleting auth.users user with ID: ${userInfo.user_id}`);
       const { error } = await privilegedSupabaseClient.auth.admin.deleteUser(userInfo.user_id);
       if (error) {
         console.error('Error deleting auth.users user:', error);
         throw createError({ statusCode: 500, statusMessage: error.message || 'Failed to delete Supabase Auth user.' });
       }
-      console.log('Successfully deleted auth.users user:', userInfo.user_id);
     } else if (userInfo.app_user_id) {
       // Custom app_user (username/password)
-      console.log(`Attempting to delete app_users user with ID: ${userInfo.app_user_id}`);
+      console.log(`Deleting app_users user with ID: ${userInfo.app_user_id}`);
       const { error } = await privilegedSupabaseClient
           .from('app_users')
           .delete()
           .eq('id', userInfo.app_user_id);
-
       if (error) {
         console.error('Error deleting app_users user:', error);
         throw createError({ statusCode: 500, statusMessage: error.message || 'Failed to delete app user.' });
       }
-      console.log('Successfully deleted app_users user:', userInfo.app_user_id);
     } else {
       // Fallback (should not happen)
       throw createError({ statusCode: 400, statusMessage: 'User profile not linked to any authentication type.' });
     }
 
-    // ON DELETE CASCADE handles related cleanup.
-    return { message: `User with user_info_id ${user_info_id} and associated authentication record successfully deleted.` };
+    // ON DELETE CASCADE in DB handles cleanup
+    return {
+      message: `User with user_info_id ${user_info_id} and associated authentication record successfully deleted.`,
+    };
   } catch (err: any) {
     console.error('Server-side user deletion error:', err);
     throw createError({
