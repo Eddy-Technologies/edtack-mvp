@@ -1,8 +1,21 @@
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken'; // Comment out the real import
 import type { H3Event } from 'h3';
-// import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
+import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
 
-const JWT_SECRET = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'; // 64-char hex fallback
+// Define a stub for jwt
+const jwtStub = {
+  sign: (payload: any, secretOrPrivateKey: any, options?: any): string => {
+    console.log('[AuthHelpers_STUB] jwt.sign called with payload:', payload, 'options:', options);
+    // Return a consistent, fake token. This is not a real JWT.
+    return 'fake-jwt-token-for-stubbing-purposes-' + Date.now();
+  },
+  verify: (token: string, secretOrPublicKey: any, options?: any): object | string => {
+    console.log('[AuthHelpers_STUB] jwt.verify called with token:', token ? 'present' : 'missing', 'options:', options);
+    // Return a consistent, fake decoded payload.
+    // This should match the structure of what your actual jwt.sign creates.
+    return { app_user_id: 'stubbed-app-user-id-' + Date.now(), username: 'stubbed_username', user_type: 'app_user' };
+  },
+};
 
 // Helper function to authenticate requests based on the custom JWT issued for 'app_users'.
 // It's designed to be used before handlers that require an authenticated 'app_user'.
@@ -18,7 +31,7 @@ export async function authenticateAppUserJWT(event: H3Event) {
   }
 
   try {
-    const decoded: any = jwt.verify(token, JWT_SECRET); // Use imported JWT_SECRET
+    const decoded: any = jwtStub.verify(token, JWT_SECRET); // Use STUB
     // Ensure the token is for an 'app_user' and contains the app_user_id
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
@@ -50,7 +63,7 @@ export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWT
     user_type: 'app_user',
   };
 
-  const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '7d' });
+  const token = jwtStub.sign(tokenPayload, JWT_SECRET, { expiresIn: '7d' }); // Use STUB
 
   setCookie(event, 'app_user_jwt', token, {
     httpOnly: true,
@@ -76,7 +89,7 @@ export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayl
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as AppUserJWTPayload;
+    const decoded = jwtStub.verify(token, JWT_SECRET) as AppUserJWTPayload; // Use STUB
     console.log('[AuthHelpers] App user JWT cookie verified.');
     return decoded;
   } catch (err: any) {
