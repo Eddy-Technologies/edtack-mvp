@@ -89,7 +89,7 @@ export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayl
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as AppUserJWTPayload; // Use STUB
+    const decoded = jwtStub.verify(token, JWT_SECRET) as AppUserJWTPayload; // Use STUB
     console.log('[AuthHelpers] App user JWT cookie verified.');
     return decoded;
   } catch (err: any) {

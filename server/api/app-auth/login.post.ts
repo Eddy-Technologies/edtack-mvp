@@ -1,6 +1,41 @@
 import bcrypt from 'bcryptjs';
-import { signAndSetAppUserCookie } from '../../utils/authHelpers';
+import jwt from 'jsonwebtoken'; // Comment out the real import
+import type { H3Event } from 'h3';
+import { JWT_SECRET } from '../../utils/authConfig'; // Import JWT_SECRET from authConfig
+// import { signAndSetAppUserCookie } from '../../utils/authHelpers';
 import { serverSupabaseClient } from '#supabase/server';
+
+interface AppUserJWTPayload {
+  app_user_id: string;
+  username: string;
+  user_type: 'app_user';
+  // Add any other standard claims you might include, e.g., iat, exp (though exp is handled by options)
+}
+
+// Helper function to sign a JWT for an app_user and set it as an HttpOnly cookie
+export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWTPayload, 'user_type'>): string {
+  if (!JWT_SECRET) {
+    console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot sign token.');
+    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
+  }
+
+  const tokenPayload: AppUserJWTPayload = {
+    ...payload,
+    user_type: 'app_user',
+  };
+
+  const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: '7d' }); // Use STUB
+
+  setCookie(event, 'app_user_jwt', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+    path: '/',
+    sameSite: 'lax',
+  });
+  console.log('[AuthHelpers] App user JWT cookie set.');
+  return token;
+}
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event); // RLS-aware client (for fetching app_users and user_infos)
