@@ -1,7 +1,7 @@
-// /Users/sin/Dev/edtack-mvp/server/api/test-jwt.get.ts
+// /server/api/app-auth/test-jwt.get.ts
 import jwt from 'jsonwebtoken';
+// import { JWT_SECRET } from './authConfig'; // Import JWT_SECRET from authConfig
 
-//
 // Use a simple, hardcoded secret for this test.
 // For HS256 (default), the secret should ideally be a strong, random string.
 // The length matters for security, but for this test, a simple string will do.
