@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "vitest"
   },
   "dependencies": {
     "@google/genai": "^0.8.0",
@@ -50,6 +51,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "eslint": "^9.23.0",
     "sass-embedded": "^1.86.0",
+    "vitest": "^3.1.4",
     "vue-tsc": "^2.2.8",
     "wrangler": "^3.114.2"
   },
