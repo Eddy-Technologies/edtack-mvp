@@ -1,10 +1,14 @@
 // /server/api/app-auth/migrate-account.post.ts
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken'; // Comment out the real import
+import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
 import { JWT_SECRET, getPrivilegedSupabaseClient, getSupabaseClient } from '../../utils/authConfig';
-// import { authenticateAppUserJWT } from '../../utils/authHelpers'; // Import helper
-import type { Database } from '~/types/supabase';
+
+interface AppUserJWTPayload {
+  app_user_id: string;
+  username: string;
+  user_type: 'app_user';
+}
 
 // Helper function to authenticate requests based on the custom JWT issued for 'app_users'.
 // It's designed to be used before handlers that require an authenticated 'app_user'.
@@ -20,7 +24,7 @@ export async function authenticateAppUserJWT(event: H3Event) {
   }
 
   try {
-    const decoded: any = jwt.verify(token, JWT_SECRET); // Use STUB
+    const decoded = jwt.verify(token, JWT_SECRET) as AppUserJWTPayload;
     // Ensure the token is for an 'app_user' and contains the app_user_id
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
@@ -38,8 +42,12 @@ export default defineEventHandler(async (event) => {
   const serviceSupabase = getPrivilegedSupabaseClient(event);
   const { newEmail, currentPassword, newSupabasePassword } = await readBody(event);
 
-  // await authenticateAppUserJWT(event);
-  const appUser = event.context.user;
+  // Authenticate the app_user using their JWT from the Authorization header
+  await authenticateAppUserJWT(event);
+  const appUser = event.context.user as AppUserJWTPayload; // Cast to the defined type
+  if (!appUser || !appUser.app_user_id) {
+    throw createError({ statusCode: 401, statusMessage: 'Authentication failed or app_user_id missing from token.' });
+  }
 
   if (!newEmail || !currentPassword || !newSupabasePassword) {
     throw createError({
@@ -95,7 +103,7 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 500, statusMessage: 'Supabase user ID not returned after signup.' });
     }
 
-    const { error: updateUserInfoError } = await supabase
+    const { error: updateUserInfoError } = await serviceSupabase // Use privileged client for this update
       .from('user_infos')
       .update({ user_id: supabaseAuthUserId, app_user_id: null })
       .eq('app_user_id', appUser.app_user_id)

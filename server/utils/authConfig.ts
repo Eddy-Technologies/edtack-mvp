@@ -13,7 +13,7 @@ console.log('[AuthConfig] SUPABASE_SERVICE_ROLE_KEY available:', config.private.
 console.log('[AuthConfig] Initializing configuration...');
 
 // Export sensitive keys for use in other server files
-export const JWT_SECRET = config.private.jwtSecret; ;
+export const JWT_SECRET = config.private.jwtSecret;
 export const SUPABASE_URL_FOR_SERVICE_ROLE = config.private.supabaseUrlForServiceRole;
 export const SUPABASE_SERVICE_ROLE_KEY = config.private.supabaseServiceRoleKey;
 

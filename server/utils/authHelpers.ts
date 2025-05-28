@@ -1,4 +1,6 @@
 // /server/utils/authenticateAppUserJWT.ts
+// This file does not work as jwt is unable to be deployed properly in production.
+// but it works in development.
 import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
 import { JWT_SECRET } from './authConfig';

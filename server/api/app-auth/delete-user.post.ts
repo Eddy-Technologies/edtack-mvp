@@ -1,9 +1,9 @@
 // This route handles deleting a user, whether they are an auth.users user or an app_user.
 // It requires privileged access to perform deletions on auth.users or app_users.
-import { getSupabaseClient, getPrivilegedSupabaseClient } from '../../utils/authConfig'; // Adjust the import path as needed
+import { getPrivilegedSupabaseClient } from '../../utils/authConfig'; // Adjust the import path as needed
 
 export default defineEventHandler(async (event) => {
-  const supabase = await getSupabaseClient(event); // RLS-aware client for app_users and user_infos
+  const privilegedSupabaseClient = getPrivilegedSupabaseClient(event); // Use privileged client for all operations
   const { user_info_id } = await readBody(event);
 
   if (!user_info_id) {
@@ -11,11 +11,8 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Initialize privileged client (runtime-safe)
-    const privilegedSupabaseClient = getPrivilegedSupabaseClient(event);
-
     // 1. Fetch the user_infos record to determine the authentication type
-    const { data: userInfo, error: userInfoError } = await supabase
+    const { data: userInfo, error: userInfoError } = await privilegedSupabaseClient
       .from('user_infos')
       .select('user_id, app_user_id')
       .eq('id', user_info_id)
