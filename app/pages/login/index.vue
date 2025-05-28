@@ -14,7 +14,7 @@
         </div>
 
         <input
-          v-model="email"
+          v-model="identifier"
           type="text"
           placeholder="Email or Username"
           class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400 bg-white"
@@ -54,16 +54,16 @@ import { useSupabaseUser } from '#imports';
 import { useRouter, navigateTo } from '#app';
 import Placeholder from '~/components/login/Placeholder.vue';
 import { useUsers } from '~/composables/useUsers';
+import { isValidEmail } from '~/utils/emailUtils';
 
 const user = useSupabaseUser(); // Supabase Auth user
 const router = useRouter();
 const routeTo = (route) => router.push(route);
 
-const email = ref(''); // This field will now hold either email or username
+const identifier = ref(''); // Can be email or username
 const password = ref('');
-const errorMessage = ref('');
 
-const { loginEmail, loginUsername, currentAppUser } = useUsers(); // Get currentAppUser
+const { loginEmail, loginUsername, currentAppUser } = useUsers();
 
 const toast = useToast();
 
@@ -71,43 +71,50 @@ const toast = useToast();
 // console.log('[Login Component] Component mounted. Initial currentAppUser.value:', currentAppUser.value ? currentAppUser.value.username : 'null');
 
 const handleLogin = async () => {
-  errorMessage.value = '';
+  const currentIdentifier = identifier.value;
+  const currentPassword = password.value;
 
-  try {
-    // Attempt Email Login first
-    console.log('[Login Component] Attempting email login...');
-    await loginEmail(email.value, password.value);
-    console.log('[Login Component] Email login successful.');
-    showSuccessToast('Email login successful!');
-    await navigateTo('/dashboard');
-    return; // Exit if successful
-  } catch (emailError) {
-    console.warn('[Login Component] Email login failed. Trying username login...', emailError);
-    // If email login fails, try username login if the field is not empty
-    if (email.value) { // Check if the input field has a value to use as username
-      try {
-        console.log('[Login Component] Attempting username login...');
-        const response = await loginUsername(email.value, password.value); // Use 'email' field as username
-        console.log('[Login Component] Username login successful:', response);
-        showSuccessToast('Username login successful!');
-        await navigateTo('/dashboard');
-        return; // Exit if successful
-      } catch (usernameError) {
-        console.error('[Login Component] Username login failed:', usernameError);
-        errorMessage.value = usernameError?.statusMessage || usernameError?.message || 'Invalid username or password.';
-      }
-    } else {
-      // If email field was empty and email login failed (unlikely, but for completeness)
-      errorMessage.value = emailError?.statusMessage || emailError?.message || 'Invalid email or password.';
+  if (!currentIdentifier || !currentPassword) {
+    showErrorToast('Email/Username and password are required.');
+    return;
+  }
+
+  const isEmail = isValidEmail(currentIdentifier);
+  // Attempt 1: Login with email if format is valid
+  if (isEmail) {
+    console.log(`[Login Component] Input '${currentIdentifier}' is in email format. Attempting email login...`);
+    try {
+      await loginEmail(currentIdentifier, currentPassword);
+      console.log('[Login Component] Email login successful.');
+      showSuccessToast('Email login successful!');
+      await navigateTo('/dashboard');
+      return; // Exit if successful
+    } catch (emailError) {
+      console.warn(`[Login Component] Email login for '${currentIdentifier}' failed. Proceeding to attempt username login with the same credentials.`, emailError);
+      // Don't show error to user yet, give username login a chance.
     }
   }
 
-  // If we reach here, both login attempts failed or an initial validation failed
-  if (errorMessage.value) {
-    showErrorToast(errorMessage.value);
+  // Attempt 2: Login with username
+  // This will run if:
+  //   a) Input was not in email format OR
+  //   b) Input was in email format, but email login failed.
+  if (!isEmail) {
+    console.log(`[Login Component] Input '${currentIdentifier}' is not in email format. Attempting username login...`);
   } else {
-    // Fallback for unexpected scenarios
-    showErrorToast('An unexpected login error occurred. Please try again.');
+    // This log indicates we're trying username after an email attempt.
+    console.log(`[Login Component] Attempting username login with '${currentIdentifier}' (after email attempt failed or was skipped)...`);
+  }
+
+  try {
+    const response = await loginUsername(currentIdentifier, currentPassword);
+    console.log('[Login Component] Username login successful:', response);
+    showSuccessToast('Username login successful!');
+    await navigateTo('/dashboard');
+  } catch (usernameError) {
+    console.error('[Login Component] Username login failed:', usernameError);
+    const message = usernameError?.statusMessage || usernameError?.message || 'Invalid email/username or password.';
+    showErrorToast(message);
   }
 };
 
