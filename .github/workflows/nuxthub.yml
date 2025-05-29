@@ -27,44 +27,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Verify Secrets Availability
-        run: |
-          echo "VITE_GOOGLE_AI_STUDIO_API_KEY is set: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY != '' }}"
-          echo "GOOGLE_TAG_MANAGER_ID is set: ${{ secrets.GOOGLE_TAG_MANAGER_ID != '' }}"
-          echo "NUXT_PUBLIC_SUPABASE_URL is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL != '' }}"
-          echo "NUXT_PUBLIC_SUPABASE_KEY is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY != '' }}"
-          echo "NUXT_PRIVATE_SUPABASE_URL is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL != '' }}"
-          echo "NUXT_PRIVATE_SUPABASE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY != '' }}"
-          echo "JWT_SECRET is set: ${{ secrets.JWT_SECRET != '' }}"
-
       - name: Ensure NuxtHub module is installed
         run: pnpx nuxthub@latest ensure
 
       - name: Build application
         run: pnpm build
-        env:
-          VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
-          GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
-           # NUXT_PUBLIC_ prefixed variables for runtimeConfig.public
-          NUXT_PUBLIC_SUPABASE_URL: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL }}
-          NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
-          # Private runtime config variables
-          NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
-          NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Deploy to NuxtHub
         uses: nuxt-hub/action@v1
         id: deploy
         with:
-          project-key: edtack-mvp-9jku
-        env:
-          VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
-          GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
-          # NUXT_PUBLIC_ prefixed variables for runtimeConfig.public
-          NUXT_PUBLIC_SUPABASE_URL: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL }}
-          NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
-          # Private runtime config variables
-          NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
-          NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          project-key: eddy-8rzd
