@@ -1,0 +1,82 @@
+{
+  "P1": [
+    "Count objects up to 20",
+    "Recognise and write numbers up to 20",
+    "Number bonds up to 10",
+    "Addition within 20",
+    "Subtraction within 20",
+    "Compare quantities (more, less, equal)",
+    "Recognise coins and notes up to $1",
+    "Identify shapes: circle, square, rectangle, triangle",
+    "Sort objects by size, colour, shape",
+    "Identify days of the week",
+    "Sequence events by time"
+  ],
+  "P2": [
+    "Count objects up to 100",
+    "Recognise and write numbers up to 100",
+    "Addition and subtraction within 100",
+    "Multiplication as repeated addition",
+    "Division as sharing equally",
+    "Money: count coins and notes up to $100",
+    "Tell time to the hour and half-hour",
+    "Recognise and draw basic shapes",
+    "Identify halves and quarters",
+    "Measure length using standard units",
+    "Compare lengths using centimetres and metres"
+  ],
+  "P3": [
+    "Multiplication tables: 2, 3, 4, 5, 10",
+    "Division facts for 2, 3, 4, 5, 10",
+    "Add and subtract numbers up to 1000",
+    "Fractions: halves, quarters, eighths",
+    "Equivalent fractions",
+    "Time: read clocks to nearest 5 minutes",
+    "Identify parallel and perpendicular lines",
+    "Perimeter of simple figures",
+    "Volume of liquid in millilitres and litres",
+    "Area of squares and rectangles",
+    "Data: tally charts and bar graphs"
+  ],
+  "P4": [
+    "Multiplication tables up to 12",
+    "Multiply and divide 2-digit and 3-digit numbers",
+    "Simplify fractions",
+    "Compare and order fractions",
+    "Convert improper fractions to mixed numbers",
+    "Decimals up to 2 decimal places",
+    "Add and subtract decimals",
+    "Time: 24-hour clock",
+    "Angles: acute, right, obtuse",
+    "Measure angles using a protractor",
+    "Symmetry: lines of symmetry in shapes"
+  ],
+  "P5": [
+    "Prime numbers up to 100",
+    "Common factors and multiples",
+    "Highest common factor (HCF)",
+    "Lowest common multiple (LCM)",
+    "Fractions: addition and subtraction with unlike denominators",
+    "Multiplying and dividing decimals",
+    "Percentage of a quantity",
+    "Ratio concepts",
+    "Convert units of length, mass, and volume",
+    "Area and perimeter of composite figures",
+    "Volume of cubes and cuboids",
+    "Average (mean) of a set of numbers"
+  ],
+  "P6": [
+    "Algebra: simple expressions and equations",
+    "Find the value of unknowns",
+    "Ratio and proportion word problems",
+    "Percentage increase and decrease",
+    "Speed = distance / time",
+    "Circle: radius, diameter, circumference",
+    "Pie charts: interpret and draw",
+    "Nets of 3D shapes",
+    "Volume of prisms",
+    "Angle sums in polygons",
+    "Angles in a triangle and quadrilateral",
+    "Solid figures: cubes, cuboids, cylinders, spheres"
+  ]
+}
