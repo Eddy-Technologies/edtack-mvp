@@ -2,8 +2,6 @@
   <div>
     <h2 class="text-xl font-bold mb-4 text-center">We’d love your feedback!</h2>
     <form
-        action="https://formspree.io/f/xgvkdgwj"
-        method="POST"
         class="flex flex-col gap-4"
         @submit="handleSubmit"
     >
@@ -58,33 +56,39 @@ const isSubmitting = ref(false);
 const emit = defineEmits(['close']);
 
 async function handleSubmit(event: Event) {
-  event.preventDefault();
+  event.preventDefault(); // Keep this
   isSubmitting.value = true;
 
-  const form = event.target as HTMLFormElement;
-  const data = new FormData(form);
+  // Remove: const form = event.target as HTMLFormElement;
+  // Remove: const data = new FormData(form);
 
   try {
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
+    const response = await fetch('/api/feedback', { // New API endpoint
+      method: 'POST', // Explicitly POST
       headers: {
-        'Accept': 'application/json'
-      }
+        'Content-Type': 'application/json', // Set content type
+      },
+      body: JSON.stringify(formData.value), // Send JSON data
     });
 
     if (response.ok) {
-      // Optionally, display a success message to the user
-      alert('Feedback submitted successfully!');
-      formData.value = { name: '', email: '', message: '' }; // Reset form
-      emit('close'); // Close the modal/form
+      const result = await response.json();
+      if (result.success) {
+        alert('Feedback submitted successfully!'); // Or a more subtle notification
+        formData.value = { name: '', email: '', message: '' }; // Reset form
+        emit('close');
+      } else {
+        // Handle cases where response is ok but operation wasn't successful (e.g. handled error by API)
+        alert(result.statusMessage || 'There was an issue submitting your feedback.');
+      }
     } else {
-      // Handle errors (e.g., show an error message)
-      alert('There was an error submitting your feedback. Please try again.');
+      // Handle HTTP errors (4xx, 5xx)
+      const errorData = await response.json().catch(() => ({ statusMessage: 'An unexpected error occurred.' }));
+      alert(`Error: ${response.status} - ${errorData.statusMessage || 'Could not submit feedback.'}`);
     }
   } catch (error) {
     console.error('Form submission error:', error);
-    alert('There was an error submitting your feedback. Please try again.');
+    alert('An error occurred while submitting your feedback. Please try again.');
   } finally {
     isSubmitting.value = false;
   }
