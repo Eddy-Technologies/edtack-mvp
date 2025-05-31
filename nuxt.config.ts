@@ -22,6 +22,13 @@ export default defineNuxtConfig({
     database: true,
   },
 
+  ui: {
+    colorMode: {
+      preference: 'light',
+      forcedValue: 'light',
+    }
+  },
+
   eslint: {
     config: {
       stylistic: {

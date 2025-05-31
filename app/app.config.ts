@@ -1,6 +1,11 @@
 export default defineAppConfig({
   ui: {
     primary: 'teal',
-    gray: 'neutral'
+    gray: 'neutral',
+    button: {
+      slots: {
+        label: 'truncate text-center'
+      }
+    }
   }
 });
