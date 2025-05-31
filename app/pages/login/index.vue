@@ -17,24 +17,27 @@
           v-model="identifier"
           type="text"
           placeholder="Email or Username"
-          class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400 bg-white"
+          class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-primary-500 bg-white"
           required
         >
         <input
           v-model="password"
           type="password"
           placeholder="Password"
-          class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-blue-400 bg-white"
+          class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-primary-500 bg-white"
           required
         >
 
         <div class="text-center">
-          <button
+          <UButton
             type="submit"
-            class="w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
+            variant="outline"
+            color="gray"
+            size="xl"
+            class="w-[220px]"
           >
             Login
-          </button>
+          </UButton>
         </div>
 
         <p class="text-center text-sm mt-4 text-black">

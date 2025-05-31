@@ -1,6 +1,6 @@
 <template>
   <!-- Right Feature Section -->
-  <div class="hidden md:flex flex-1 flex-col justify-center bg-[#0d1b2a] text-white p-10 space-y-6 rounded-l-lg">
+  <div class="hidden md:flex flex-1 flex-col justify-center bg-login-placeholder-bg text-white p-10 space-y-6 rounded-l-lg">
     <div>
       <h2 class="font-semibold text-lg">Eddy</h2>
       <p class="text-sm">Education for All.</p>

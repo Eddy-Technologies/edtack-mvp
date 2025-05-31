@@ -32,7 +32,8 @@ module.exports = {
           "800": "#505c52",
           "900": "#282e29"
         },   // light background
-        danger: '#ef4444'        // for errors or alerts
+        danger: '#ef4444',        // for errors or alerts
+        'login-placeholder-bg': '#0d1b2a',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],

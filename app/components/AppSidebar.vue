@@ -50,21 +50,24 @@ onMounted(() => {
     </sidebar-menu>
     <div
       v-if="isOnMobile && !collapsed"
-      class="sidebar-overlay"
+      class="fixed w-full h-full top-0 left-0 bg-white opacity-50 z-[900]"
       @click="collapsed = true"
     />
   </div>
 </template>
 
 <style lang="scss">
-.sidebar-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #fff;
-  opacity: 0.5;
-  z-index: 900;
+.v-sidebar-menu {
+  --vsm-primary-color: theme('colors.primary.DEFAULT');
+  --vsm-base-bg: theme('colors.background.100');
+  --vsm-item-color: theme('colors.primary.900');
+  --vsm-item-active-color: theme('colors.primary.500');
+  --vsm-item-active-bg: theme('colors.background.300');
+  --vsm-icon-color: theme('colors.primary.700');
+  --vsm-item-hover-bg: theme('colors.background.200');
+  // You can add other variables here as needed, for example:
+  // --vsm-title-color: theme('colors.secondary');
+  // --vsm-toggle-btn-color: theme('colors.accent');
+  // --vsm-dropdown-bg: theme('colors.background.50');
 }
 </style>

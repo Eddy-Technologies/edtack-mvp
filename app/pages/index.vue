@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen -mt-[60px] md:mt-0">
+  <div class="flex flex-col min-h-screen">
     <main class="flex-grow flex justify-center relative w-full h-full">
       <AppContainer />
     </main>

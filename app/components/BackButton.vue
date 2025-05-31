@@ -1,6 +1,6 @@
 <template>
   <button
-    class="back-button absolute top-4 left-4"
+    class="absolute top-4 left-4 px-5 py-2.5 bg-green-500 text-white border-none rounded-md cursor-pointer text-base hover:bg-green-600"
     @click="goBack"
   >
     Back
@@ -16,18 +16,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.back-button {
-  padding: 10px 20px;
-  background-color: #48bb78;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.back-button:hover {
-  background-color: #48bb78;
-}
-</style>

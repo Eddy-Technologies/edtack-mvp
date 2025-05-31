@@ -7,8 +7,8 @@
       <label
         class="flex items-center gap-3 text-xl mt-4 p-4 rounded-lg border-2 transition-all cursor-pointer"
         :class="{
-          'bg-[#f0f8ff] border-[#00dc82] dark:bg-[#2a2a2a] dark:border-[#00dc82]': selectedAnswer === option,
-          'hover:bg-[#f0f8ff] hover:border-[#00dc82] dark:hover:bg-[#2a2a2a] dark:hover:border-gray-500': selectedAnswer !== option
+          'bg-blue-50 border-emerald-500 dark:bg-gray-800 dark:border-emerald-500': selectedAnswer === option,
+          'hover:bg-blue-50 hover:border-emerald-500 dark:hover:bg-gray-800 dark:hover:border-gray-500': selectedAnswer !== option
         }"
       >
         <input
@@ -17,7 +17,7 @@
           :name="'question-' + questionIndex"
           :checked="selectedAnswer === option"
           class="appearance-none w-5 flex-shrink-0 h-5 rounded border-2 border-current grid place-content-center relative
-                    before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-[#00dc82] before:scale-0
+                    before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-emerald-500 before:scale-0
                     checked:before:scale-100 transition-transform before:transition-transform before:duration-150"
           @change="selectAnswer(option)"
         >
