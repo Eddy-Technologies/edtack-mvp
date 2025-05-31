@@ -1,82 +1,96 @@
 <template>
- <div class="generate-challenge min-h-screen bg-white text-zinc-900 relative">
- <AppHeader />
- <Loading v-if="isLoading" />
+  <div class="generate-challenge min-h-screen bg-white text-zinc-900 relative">
+    <AppHeader />
+    <Loading v-if="isLoading" />
 
- <main class="relative z-10 flex items-center justify-center min-h-screen px-4 py-10 md:py-16">
- <img
- :src="background"
- class="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
- alt="practice"
- />
- <div class="max-w-xl w-full bg-white/90 p-6 rounded-2xl shadow-xl ring-1 ring-black/5 backdrop-blur-md space-y-6 transition-all duration-300 ease-in-out"> <h1 class="text-2xl md:text-4xl font-bold text-center mb-8">
- <span class="text-primary">Generate Your Practice</span>
- </h1>
- <form @submit.prevent="fetchAnswer" class="flex flex-col gap-4">
- <div>
- <label for="level" class="block text-sm font-medium text-primary mb-1">Level</label>
- <select
- id="level"
- v-model="selectedLevel"
- class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
- >
- <option value="" disabled>Select Level</option>
- <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
- </select>
- </div>
+    <main class="relative z-10 flex items-center justify-center min-h-screen px-4 py-10 md:py-16">
+      <img
+          :src="background"
+          class="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
+          alt="practice"
+      />
+      <div class="max-w-xl w-full bg-white/90 p-6 rounded-2xl shadow-xl ring-1 ring-black/5 backdrop-blur-md space-y-6 transition-all duration-300 ease-in-out">
+        <h1 class="text-2xl md:text-4xl font-bold text-center mb-8">
+          <span class="text-primary">Generate Your Practice</span>
+        </h1>
 
- <div>
- <label for="innerLevel" class="block text-sm font-medium text-primary mb-1">Inner Level</label>
- <select
- id="innerLevel"
- v-model="selectedInnerLevel"
- class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
- >
- <option value="" disabled>Select Inner Level</option>
- <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">{{ innerLevel }}</option>
- </select>
- </div>
+        <form @submit.prevent="fetchAnswer" class="flex flex-col gap-4">
+          <div>
+            <label for="level" class="block text-sm font-medium text-primary mb-1">Level</label>
+            <select
+                id="level"
+                v-model="selectedLevel"
+                class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
+            >
+              <option value="" disabled>Select Level</option>
+              <option v-for="level in levels" :key="level" :value="level">{{ level }}</option>
+            </select>
+          </div>
 
- <div>
- <label for="subject" class="block text-sm font-medium text-primary mb-1">Subject</label>
- <select
- id="subject"
- v-model="selectedSubject"
- class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
- >
- <option value="" disabled>Select Subject</option>
- <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
- </select>
- </div>
+          <div v-if="topics.length > 0">
+            <label for="topic" class="block text-sm font-medium text-primary mb-1">Topic (Optional)</label>
+            <select
+                id="topic"
+                v-model="selectedTopic"
+                class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
+            >
+              <option value="">Select Topic (Optional)</option>
+              <option v-for="topic in topics" :key="topic" :value="topic">{{ topic }}</option>
+            </select>
+          </div>
 
- <div>
- <label for="numberInput" class="block text-sm font-medium text-primary mb-1">Questions</label>
- <select
- id="numberInput"
- v-model="numberInput"
- class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
- >
- <option value="" disabled>Select Number of Questions</option>
- <option v-for="option in numberInputOptions" :key="option" :value="option">{{ option }}</option>
- </select>
- <div v-if="errorMsg" class="text-red-600 text-sm mt-1">
- {{ errorMsg }}
- </div>
- </div>
+          <div>
+            <label for="innerLevel" class="block text-sm font-medium text-primary mb-1">Inner Level</label>
+            <select
+                id="innerLevel"
+                v-model="selectedInnerLevel"
+                class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
+            >
+              <option value="" disabled>Select Inner Level</option>
+              <option v-for="innerLevel in filteredInnerLevels" :key="innerLevel" :value="innerLevel">{{ innerLevel }}</option>
+            </select>
+          </div>
 
- <div class="sm:col-span-2 lg:col-span-4 text-center pt-4">
- <button
- type="submit"
- :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading"
- class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-all"
- >
- {{ isLoading ? 'Generating' + loadingText : 'Generate' }}
- </button>
- </div>
- </form>
- </div>
- </main>
- </div>
+          <div>
+            <label for="subject" class="block text-sm font-medium text-primary mb-1">Subject</label>
+            <select
+                id="subject"
+                v-model="selectedSubject"
+                class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
+            >
+              <option value="" disabled>Select Subject</option>
+              <option v-for="subject in filteredSubjects" :key="subject" :value="subject">{{ subject }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="numberInput" class="block text-sm font-medium text-primary mb-1">Questions</label>
+            <select
+                id="numberInput"
+                v-model="numberInput"
+                class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
+            >
+              <option value="" disabled>Select Number of Questions</option>
+              <option v-for="option in numberInputOptions" :key="option" :value="option">{{ option }}</option>
+            </select>
+            <div v-if="errorMsg" class="text-red-600 text-sm mt-1">
+              {{ errorMsg }}
+            </div>
+          </div>
+
+          <div class="sm:col-span-2 lg:col-span-4 text-center pt-4">
+            <button
+                type="submit"
+                :disabled="!selectedLevel || !selectedSubject || !numberInput || isLoading"
+                class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              {{ isLoading ? 'Generating' + loadingText : 'Generate' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script setup lang="ts">
