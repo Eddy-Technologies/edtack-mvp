@@ -25,6 +25,18 @@
             </select>
           </div>
 
+          <div v-if="topics.length > 0">
+            <label for="topic" class="block text-sm font-medium text-primary dark:text-primary mb-1">Topic (Optional)</label>
+            <select
+                id="topic"
+                v-model="selectedTopic"
+                class="w-full rounded-md border border-gray-300 dark:border-zinc-600 bg-gray-100/70 dark:bg-zinc-700/70 px-3 py-2"
+            >
+              <option value="">Select Topic (Optional)</option>
+              <option v-for="topic in topics" :key="topic" :value="topic">{{ topic }}</option>
+            </select>
+          </div>
+
           <div>
             <label for="innerLevel" class="block text-sm font-medium text-primary dark:text-primary mb-1">Inner Level</label>
             <select
@@ -81,6 +93,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
+import mathSyllabus from '../../../../assets/primary-math-syllabus.json';
+import scienceSyllabus from '../../../../assets/primary-science-syllabus.json';
 import Loading from '@/components/common/Loading.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import background from '../../../assets/practice2.png';
@@ -93,6 +107,7 @@ const isLoading = ref(false)
 const selectedLevel = ref('')
 const selectedInnerLevel = ref('')
 const selectedSubject = ref('')
+const selectedTopic = ref('');
 const numberInput = ref(10)
 const errorMsg = ref<string | null>(null)
 const loadingText = ref('')
@@ -126,6 +141,19 @@ const filteredInnerLevels = computed(() => {
   }
 })
 
+const topics = computed(() => {
+  if (selectedLevel.value === 'Primary' && selectedInnerLevel.value) {
+    const innerLevelKey = `P${selectedInnerLevel.value}`;
+    if (selectedSubject.value === 'Math') {
+      return mathSyllabus[innerLevelKey] || [];
+    }
+    if (selectedSubject.value === 'Science') {
+      return scienceSyllabus[innerLevelKey] || [];
+    }
+  }
+  return [];
+});
+
 const filteredSubjects = computed(() => {
   switch (selectedLevel.value) {
     case 'Primary': return primarySubjects
@@ -148,6 +176,7 @@ const fetchAnswer = async () => {
       selectedLevel: selectedLevel.value,
       selectedInnerLevel: selectedInnerLevel.value,
       selectedSubject: selectedSubject.value,
+      selectedTopic: selectedTopic.value,
     })
   }
 
@@ -161,6 +190,7 @@ const fetchAnswer = async () => {
         selectedLevel: selectedLevel.value,
         selectedInnerLevel: selectedInnerLevel.value,
         selectedSubject: selectedSubject.value,
+        selectedTopic: selectedTopic.value,
       },
     })
 
@@ -199,6 +229,7 @@ const saveInputToLocalStorage = () => {
     selectedInnerLevel: selectedInnerLevel.value,
     selectedSubject: selectedSubject.value,
     numberInput: numberInput.value,
+    selectedTopic: selectedTopic.value,
   }
   localStorage.setItem('lastUsedInputs', JSON.stringify(dataToSave))
 }
@@ -212,6 +243,7 @@ const loadFromLocalStorage = () => {
     selectedInnerLevel.value = parsedData.selectedInnerLevel || ''
     selectedSubject.value = parsedData.selectedSubject || ''
     numberInput.value = parsedData.numberInput || 10
+    selectedTopic.value = parsedData.selectedTopic || '';
   }
 }
 
@@ -231,4 +263,16 @@ watch(isLoading, (newVal) => {
     if (dotInterval) clearInterval(dotInterval)
   }
 })
+
+watch(selectedLevel, () => {
+  selectedTopic.value = '';
+});
+
+watch(selectedInnerLevel, () => {
+  selectedTopic.value = '';
+});
+
+watch(selectedSubject, () => {
+  selectedTopic.value = '';
+});
 </script>
