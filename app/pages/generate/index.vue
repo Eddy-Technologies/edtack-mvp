@@ -102,13 +102,14 @@ import AppHeader from '@/components/AppHeader.vue'
 import background from '../../../assets/practice2.png';
 import { useCreditStore } from '~/stores/credit'
 import { useQuizStore } from '~/stores/quiz'
-import {useRouter} from"vue-router";
+import {useRouter} from "vue-router";
 
 const router = useRouter();
 const isLoading = ref(false)
 const selectedLevel = ref('')
 const selectedInnerLevel = ref('')
 const selectedSubject = ref('')
+const selectedTopic = ref('');
 const numberInput = ref(10)
 const errorMsg = ref<string | null>(null)
 const loadingText = ref('')
@@ -120,13 +121,13 @@ const secondaryLvls = [1, 2, 3, 4]
 const jcLvls = [1, 2]
 const primarySubjects = ['Math', 'Science', 'English']
 const secondarySubjects = [
- 'Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology',
- 'English', 'History', 'Geography', 'Social Studies'
+  'Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology',
+  'English', 'History', 'Geography', 'Social Studies'
 ]
 const jcSubjects = [
- 'H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry',
- 'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History',
- 'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'
+  'H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry',
+  'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History',
+  'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'
 ]
 const numberInputOptions = [5, 10]
 
@@ -134,118 +135,146 @@ const creditStore = useCreditStore()
 const quizStore = useQuizStore()
 
 const filteredInnerLevels = computed(() => {
- switch (selectedLevel.value) {
- case 'Primary': return primaryLvls
- case 'Secondary': return secondaryLvls
- case 'Junior College': return jcLvls
- default: return []
- }
+  switch (selectedLevel.value) {
+    case 'Primary': return primaryLvls
+    case 'Secondary': return secondaryLvls
+    case 'Junior College': return jcLvls
+    default: return []
+  }
 })
 
+const topics = computed(() => {
+  if (selectedLevel.value === 'Primary' && selectedInnerLevel.value) {
+    const innerLevelKey = `P${selectedInnerLevel.value}`;
+    if (selectedSubject.value === 'Math') {
+      return mathSyllabus[innerLevelKey] || [];
+    }
+    if (selectedSubject.value === 'Science') {
+      return scienceSyllabus[innerLevelKey] || [];
+    }
+  }
+  return [];
+});
+
 const filteredSubjects = computed(() => {
- switch (selectedLevel.value) {
- case 'Primary': return primarySubjects
- case 'Secondary': return secondarySubjects
- case 'Junior College': return jcSubjects
- default: return []
- }
+  switch (selectedLevel.value) {
+    case 'Primary': return primarySubjects
+    case 'Secondary': return secondarySubjects
+    case 'Junior College': return jcSubjects
+    default: return []
+  }
 })
 
 const fetchAnswer = async () => {
- isLoading.value = true
- quizStore.setQuiz(null);
- errorMsg.value = null
+  isLoading.value = true
+  quizStore.setQuiz(null);
+  errorMsg.value = null
 
- if (import.meta.client && window.gtag) {
- window.gtag('event', 'user-action', {
- event_category: 'select-prompt',
- event_label: 'prompt',
- numberInput: numberInput.value,
- selectedLevel: selectedLevel.value,
- selectedInnerLevel: selectedInnerLevel.value,
- selectedSubject: selectedSubject.value,
- })
- }
+  if (import.meta.client && window.gtag) {
+    window.gtag('event', 'user-action', {
+      event_category: 'select-prompt',
+      event_label: 'prompt',
+      numberInput: numberInput.value,
+      selectedLevel: selectedLevel.value,
+      selectedInnerLevel: selectedInnerLevel.value,
+      selectedSubject: selectedSubject.value,
+      selectedTopic: selectedTopic.value,
+    })
+  }
 
- saveInputToLocalStorage()
+  saveInputToLocalStorage()
 
- try {
- const quiz = await $fetch('/api/questions', {
- method: 'post',
- body: {
- numberInput: numberInput.value,
- selectedLevel: selectedLevel.value,
- selectedInnerLevel: selectedInnerLevel.value,
- selectedSubject: selectedSubject.value,
- },
- })
+  try {
+    const quiz = await $fetch('/api/questions', {
+      method: 'post',
+      body: {
+        numberInput: numberInput.value,
+        selectedLevel: selectedLevel.value,
+        selectedInnerLevel: selectedInnerLevel.value,
+        selectedSubject: selectedSubject.value,
+        selectedTopic: selectedTopic.value,
+      },
+    })
 
- quizStore.setQuiz(quiz.questions);
- router.push('practice');
- } catch (error: any) {
- console.error('Error fetching quiz:', error)
- errorMsg.value =
- error?.message === 'Exceeded limit'
- ? 'Exceeded limit: Unable to generate questions. Please try again later.'
- : 'An error occurred while generating the quiz.'
- } finally {
- isLoading.value = false
- }
+    quizStore.setQuiz(quiz.questions);
+    router.push('practice');
+  } catch (error: any) {
+    console.error('Error fetching quiz:', error)
+    errorMsg.value =
+        error?.message === 'Exceeded limit'
+            ? 'Exceeded limit: Unable to generate questions. Please try again later.'
+            : 'An error occurred while generating the quiz.'
+  } finally {
+    isLoading.value = false
+  }
 }
 const getRandomizedQuestions = (data, numberOfQuestions) => {
- // Step 1: Randomize the questions array
- const shuffledQuestions = shuffleArray(data);
+  // Step 1: Randomize the questions array
+  const shuffledQuestions = shuffleArray(data);
 
- // Step 2: Slice the array to get the desired number of questions
- return shuffledQuestions.slice(0, numberOfQuestions);
+  // Step 2: Slice the array to get the desired number of questions
+  return shuffledQuestions.slice(0, numberOfQuestions);
 };
 
 const shuffleArray = (array) => {
- // Fisher-Yates algorithm to shuffle the array
- for (let i = array.length - 1; i > 0; i--) {
- const j = Math.floor(Math.random() * (i + 1));
- [array[i], array[j]] = [array[j], array[i]]; // Swap
- }
- return array;
+  // Fisher-Yates algorithm to shuffle the array
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap
+  }
+  return array;
 };
 
 const saveInputToLocalStorage = () => {
- const dataToSave = {
- selectedLevel: selectedLevel.value,
- selectedInnerLevel: selectedInnerLevel.value,
- selectedSubject: selectedSubject.value,
- numberInput: numberInput.value,
- }
- localStorage.setItem('lastUsedInputs', JSON.stringify(dataToSave))
+  const dataToSave = {
+    selectedLevel: selectedLevel.value,
+    selectedInnerLevel: selectedInnerLevel.value,
+    selectedSubject: selectedSubject.value,
+    numberInput: numberInput.value,
+    selectedTopic: selectedTopic.value,
+  }
+  localStorage.setItem('lastUsedInputs', JSON.stringify(dataToSave))
 }
 
 const loadFromLocalStorage = () => {
- errorMsg.value = null
- const savedData = localStorage.getItem('lastUsedInputs')
- if (savedData) {
- const parsedData = JSON.parse(savedData)
- selectedLevel.value = parsedData.selectedLevel || ''
- selectedInnerLevel.value = parsedData.selectedInnerLevel || ''
- selectedSubject.value = parsedData.selectedSubject || ''
- numberInput.value = parsedData.numberInput || 10
- }
+  errorMsg.value = null
+  const savedData = localStorage.getItem('lastUsedInputs')
+  if (savedData) {
+    const parsedData = JSON.parse(savedData)
+    selectedLevel.value = parsedData.selectedLevel || ''
+    selectedInnerLevel.value = parsedData.selectedInnerLevel || ''
+    selectedSubject.value = parsedData.selectedSubject || ''
+    numberInput.value = parsedData.numberInput || 10
+    selectedTopic.value = parsedData.selectedTopic || '';
+  }
 }
 
 onMounted(() => {
- loadFromLocalStorage()
+  loadFromLocalStorage()
 })
 
 watch(isLoading, (newVal) => {
- if (newVal) {
- let dotCount = 0
- dotInterval = setInterval(() => {
- dotCount = (dotCount + 1) % 4
- loadingText.value = '.'.repeat(dotCount)
- }, 500)
- } else {
- loadingText.value = ''
- if (dotInterval) clearInterval(dotInterval)
- }
+  if (newVal) {
+    let dotCount = 0
+    dotInterval = setInterval(() => {
+      dotCount = (dotCount + 1) % 4
+      loadingText.value = '.'.repeat(dotCount)
+    }, 500)
+  } else {
+    loadingText.value = ''
+    if (dotInterval) clearInterval(dotInterval)
+  }
 })
-</script>
 
+watch(selectedLevel, () => {
+  selectedTopic.value = '';
+});
+
+watch(selectedInnerLevel, () => {
+  selectedTopic.value = '';
+});
+
+watch(selectedSubject, () => {
+  selectedTopic.value = '';
+});
+</script>
