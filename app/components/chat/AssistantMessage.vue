@@ -32,6 +32,7 @@ watch(() => props.content, async () => {
 
   renderTimeout = setTimeout(async () => {
     await nextTick();
+    console.log(test);
     if (messageContent.value) {
       renderMath(messageContent.value);
     }
