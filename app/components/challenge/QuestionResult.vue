@@ -26,17 +26,17 @@
         :class="[
         // ✅ Selected correct answer (green solid)
         selectedAnswer === option && option === question.correctAnswer
-          ? 'bg-[#d0f6d6] border-[#00a152] text-[#007e33] font-bold shadow-[0_0_14px_rgba(0,161,82,0.3)] hover:bg-[#9ddb8f] hover:shadow-[0_0_22px_rgba(0,161,82,0.5)] dark:bg-[#1b5e20] dark:text-[#a5d6a7] dark:border-[#00e676] dark:hover:bg-[#238c4b] dark:hover:shadow-[0_0_18px_rgba(0,230,118,0.7)]'
+          ? 'bg-green-100 border-green-600 text-green-800 font-bold shadow-lg hover:bg-green-200 hover:shadow-xl dark:bg-green-800 dark:text-green-200 dark:border-green-500 dark:hover:bg-green-700 dark:hover:shadow-xl'
           : '',
 
         // ❌ Selected wrong answer (red)
         selectedAnswer === option && option !== question.correctAnswer
-          ? 'bg-[#ffebee] border-[#d32f2f] text-[#b71c1c] font-bold shadow-[0_0_8px_rgba(211,47,47,0.2)] hover:bg-[#ffcdd2] hover:shadow-[0_0_12px_rgba(211,47,47,0.4)] dark:bg-[#b71c1c] dark:text-[#ffcdd2] dark:border-[#ef5350] dark:hover:bg-[#ef9a9a] dark:hover:shadow-[0_0_14px_rgba(239,83,80,0.7)]'
+          ? 'bg-red-50 border-red-600 text-red-800 font-bold shadow-md hover:bg-red-100 hover:shadow-lg dark:bg-red-800 dark:text-red-200 dark:border-red-500 dark:hover:bg-red-300 dark:hover:shadow-lg'
           : '',
 
         // ✅ Correct answer (not selected) – dotted
         selectedAnswer !== option && option === question.correctAnswer
-          ? 'bg-[#c8e6ce] border-dotted border-[#388e3c] text-[#1b5e20] font-bold shadow-[0_0_6px_rgba(56,142,60,0.15)] hover:bg-[#a2d190] hover:shadow-[0_0_12px_rgba(56,142,60,0.35)] dark:bg-[#1b5e20] dark:text-[#a5d6a7] dark:border-[#00e676] dark:shadow-[0_0_8px_rgba(0,230,118,0.5)] dark:hover:bg-[#238c4b] dark:hover:shadow-[0_0_14px_rgba(0,230,118,0.6)]'
+          ? 'bg-green-100 border-dotted border-green-700 text-green-900 font-bold shadow-sm hover:bg-green-200 hover:shadow-md dark:bg-green-800 dark:text-green-200 dark:border-green-500 dark:shadow-md dark:hover:bg-green-700 dark:hover:shadow-lg'
           : ''
       ]"
       >
@@ -44,14 +44,14 @@
       </div>
     </div>
 
-    <p v-if="showDebugInfo" class="mt-4 p-4 rounded-lg text-lg font-medium bg-[#e8f5e9] border-2 border-[#00c853] text-[#1b5e20] dark:bg-[#1b5e20] dark:border-[#00e676] dark:text-[#a5d6a7]">
+    <p v-if="showDebugInfo" class="mt-4 p-4 rounded-lg text-lg font-medium bg-green-50 border-2 border-green-500 text-green-900 dark:bg-green-800 dark:border-green-500 dark:text-green-200">
       <strong>Correct Answer:</strong> {{ question.correctAnswer }}
     </p>
 
     <div
       v-if="selectedAnswer !== question.correctAnswer"
       ref="explanation"
-      class="mt-4 p-4 rounded-lg text-lg font-medium bg-[#fff8e1] border-2 border-[#ffb300] text-[#795548] dark:bg-[#3e2723] dark:border-[#ffca28] dark:text-[#ffe0b2]"
+      class="mt-4 p-4 rounded-lg text-lg font-medium bg-yellow-50 border-2 border-yellow-500 text-yellow-800 dark:bg-yellow-900 dark:border-yellow-400 dark:text-yellow-200"
     >
       <p>
         <strong>Explanation:</strong> {{ question.explanation }}

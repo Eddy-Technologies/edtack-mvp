@@ -9,10 +9,10 @@
         <label
           class="flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition
             border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-900
-            hover:border-primary hover:bg-[#f0f8ff] dark:hover:bg-zinc-700
+            hover:border-primary hover:bg-blue-50 dark:hover:bg-primary-700
             text-zinc-800 dark:text-zinc-100"
           :class="{
-            'border-primary bg-[#f0f8ff] dark:border-primary dark:bg-zinc-700':
+            'border-primary bg-blue-50 dark:border-primary dark:bg-primary-700':
               selectedReportReasons.includes(reason)
           }"
         >
@@ -20,7 +20,7 @@
             v-model="selectedReportReasons"
             type="checkbox"
             :value="reason"
-            class="accent-purple-600 dark:accent-purple-400"
+            class="accent-primary-600 dark:accent-primary-400"
           >
           {{ reason }}
         </label>
@@ -31,18 +31,19 @@
       v-if="selectedReportReasons.includes('Other')"
       v-model="otherReasons"
       placeholder="Describe the issue..."
-      class="w-full mt-2 min-h-[80px] rounded-md border border-slate-300 dark:border-zinc-600 p-3 text-base bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+      class="w-full mt-2 min-h-[80px] rounded-md border border-slate-300 dark:border-zinc-600 p-3 text-base bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 focus:ring-primary-500 focus:border-primary-500"
     />
 
     <template #footer>
       <UButton
-        class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-600 transition"
+        color="primary"
         @click="submitReport"
       >
         Submit
       </UButton>
       <UButton
-        class="bg-slate-200 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-100 px-4 py-2 rounded-md hover:bg-slate-300 dark:hover:bg-zinc-600 transition"
+        variant="soft"
+        color="gray"
         @click="closeReportModal"
       >
         Cancel
