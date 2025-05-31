@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
   const numberInput = body.numberInput;
   const selectedLevel = body.selectedLevel;
   const selectedInnerLevel = body.selectedInnerLevel;
+  const selectedTopic = body.selectedTopic;
   const selectedSubject = body.selectedSubject;
   if (!numberInput || !selectedLevel || !selectedInnerLevel || !selectedSubject) {
     throw new Error('Missing required parameters');
@@ -48,7 +49,7 @@ export default defineEventHandler(async (event) => {
     throw new Error('Invalid subject for Junior College');
   }
 
-  const questionPrompt = createPrompt(numberInput, selectedLevel, selectedInnerLevel, selectedSubject);
+  const questionPrompt = createPrompt(numberInput, selectedLevel, selectedInnerLevel, selectedSubject, selectedTopic);
   const result = await useGetQuestionModelGP(questionPrompt);
   const optionPrompt = `With this JSON result ${result},
     Copy the correct answer in the explanation and insert it into the options array.
@@ -73,9 +74,9 @@ export default defineEventHandler(async (event) => {
   };
 });
 
-const createPrompt = (numberInput: number, selectedLevel: string, selectedInnerLevel: number, selectedSubject: string) => {
+const createPrompt = (numberInput: number, selectedLevel: string, selectedInnerLevel: number, selectedSubject: string, selectedTopic: string) => {
   return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
-    of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} topic with varying difficulties.
+    of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} ${selectedTopic} topic with varying difficulties.
     Provide a JSON of just what is declared in the schema, which is the question, explanation and the id without the question options.
     Generate questions of a mixture of topics and difficulties from the syllabus but do not include image related questions.
     Generate a fresh batch of questions that is different from the previous batch.
@@ -158,6 +159,6 @@ const useGetQuestionModelGP = async (prompt: string) => {
   };
   const model = await useGenAi(schema);
   const result = await model.generateContent(prompt);
-  const response = await result.response;
+  const response = result.response;
   return response.text();
 };
