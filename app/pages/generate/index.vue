@@ -93,8 +93,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import mathSyllabus from '../../../../assets/primary-math-syllabus.json';
-import scienceSyllabus from '../../../../assets/primary-science-syllabus.json';
+import mathSyllabus from '../../../assets/primary-math-syllabus.json';
+import scienceSyllabus from '../../../assets/primary-science-syllabus.json';
 import Loading from '@/components/common/Loading.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import background from '../../../assets/practice2.png';
@@ -276,3 +276,4 @@ watch(selectedSubject, () => {
   selectedTopic.value = '';
 });
 </script>
+
