@@ -5,6 +5,12 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <NuxtPage />
     <UNotifications />
+
+    <!-- Feedback Components -->
+    <FeedbackButton @openFeedback="openFeedbackModal" />
+    <FeedbackModal :show="showFeedbackModal" @close="closeFeedbackModal" />
+    <!-- End Feedback Components -->
+
     <!--
     <div v-if="!hasConsent" class="fixed bottom-0 left-0 w-full bg-gray-200 dark:bg-gray-800 p-4 z-50 shadow-md">
       <div class="container mx-auto flex justify-between items-center">
@@ -28,6 +34,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+// Import feedback components
+import FeedbackButton from '~/components/common/FeedbackButton.vue';
+import FeedbackModal from '~/components/common/FeedbackModal.vue';
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
@@ -85,6 +94,17 @@ onMounted(() => {
     // If no consent is stored, the consent form will be shown
   }
 });
+
+// Reactive state for feedback modal visibility
+const showFeedbackModal = ref(false);
+
+function openFeedbackModal() {
+  showFeedbackModal.value = true;
+}
+
+function closeFeedbackModal() {
+  showFeedbackModal.value = false;
+}
 </script>
 
 <style scoped>

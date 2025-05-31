@@ -11,7 +11,7 @@
         <slot name="title" />
       </header>
 
-      <div class="mb-6">
+      <div class="mb-6 max-h-[80vh] overflow-y-auto">
         <slot />
       </div>
 
