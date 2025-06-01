@@ -65,11 +65,12 @@
             </select>
           </div>
 
-          <div v-if="topics.length > 0">
+          <div>
             <label for="topic" class="block text-sm font-medium text-primary mb-1"
               >Topic (Optional)</label
             >
             <select
+              :disabled="topics.length <= 0"
               id="topic"
               v-model="selectedTopic"
               class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
