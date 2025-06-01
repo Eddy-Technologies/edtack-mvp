@@ -42,8 +42,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 // Import feedback components
-import FeedbackButton from '~/components/common/FeedbackButton.vue';
-import FeedbackModal from '~/components/common/FeedbackModal.vue';
+import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
+import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
