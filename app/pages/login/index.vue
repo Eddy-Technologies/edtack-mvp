@@ -31,7 +31,6 @@
         <div class="text-center">
           <Button
             text="Login"
-            route="/login"
             color="white"
             size="xl"
             bold

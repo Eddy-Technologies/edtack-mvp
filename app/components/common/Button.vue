@@ -43,7 +43,11 @@ const computedClass = computed(() => {
   if (props.bold) classes.push('font-bold');
   if (props.rounded) classes.push('rounded-lg');
   if (props.border) classes.push('border-2 border-black');
-  if (props.hover) classes.push('hover:bg-gray-200');
+  if (props.color === 'white') {
+    if (props.hover) classes.push('hover:bg-gray-200');
+  } else {
+    if (props.hover) classes.push('hover:bg-gray-800');
+  }
 
   classes.push('justify-center', 'text-center', 'transition-colors', 'duration-300');
 

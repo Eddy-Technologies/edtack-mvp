@@ -42,22 +42,28 @@
         <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto items-center">
           <!-- Top button centered -->
           <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-4">
-            <UButton
+            <Button
+              text="Login"
+              route="/login"
               color="white"
               size="xl"
-              class="w-[220px] justify-center text-center font-bold rounded-lg border-2 border-black"
-              @click="routeTo('/login')"
-            >
-              Login
-            </UButton>
-            <UButton
+              bold
+              rounded
+              border
+              hover
+              extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+            />
+            <Button
+              text="Try Eddy Now"
+              route="/register"
               color="white"
               size="xl"
-              class="w-[220px] justify-center text-center font-bold rounded-lg border-2 border-black"
-              @click="routeTo('/register')"
-            >
-              Try Eddy Now
-            </UButton>
+              bold
+              rounded
+              border
+              hover
+              extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+            />
           </div>
         </div>
       </div>
@@ -94,22 +100,28 @@
       <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
         <!-- Responsive button layout -->
         <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-4">
-          <UButton
+          <Button
+            text="Request Demo"
+            route="/demo"
             color="black"
             size="xl"
-            class="w-[220px] flex items-center justify-center text-center"
-            @click="routeTo('/demo')"
-          >
-            Request Demo
-          </UButton>
-          <UButton
+            bold
+            rounded
+            border
+            hover
+            extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+          />
+          <Button
+            text="About Us"
+            route="/about"
             color="black"
             size="xl"
-            class="w-[220px] flex items-center justify-center text-center"
-            @click="routeTo('/about')"
-          >
-            About Us
-          </UButton>
+            bold
+            rounded
+            border
+            hover
+            extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+          />
         </div>
       </div>
     </div>
@@ -124,6 +136,7 @@ import parent from '../../../assets/parent.png';
 import child from '../../../assets/child.png';
 import deposit from '../../../assets/deposit.png';
 import { useRouter } from '#vue-router';
+import Button from '~/components/common/Button.vue';
 
 const router = useRouter();
 const background = ref(home);
