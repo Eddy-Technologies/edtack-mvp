@@ -52,5 +52,4 @@ arguments:
 Summarize final response concisely using markdown when appropriate (for all links add {target="_blank"} at the end). Do not include images, commit SHA or hashes etc. in your summary.`;
 
 export const getSystemPrompt = (loggedInUserName: string) =>
-  systemPrompt +
-  `\n\nNote: The currently logged in github user is "${loggedInUserName}".`;
+  systemPrompt + `\n\nNote: The currently logged in github user is "${loggedInUserName}".`;

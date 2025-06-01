@@ -12,10 +12,16 @@ interface AppUserJWTPayload {
 }
 
 // Helper function to sign a JWT for an app_user and set it as an HttpOnly cookie
-export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWTPayload, 'user_type'>): string {
+export function signAndSetAppUserCookie(
+  event: H3Event,
+  payload: Omit<AppUserJWTPayload, 'user_type'>
+): string {
   if (!JWT_SECRET) {
     console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot sign token.');
-    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Server configuration error: JWT signing secret missing.',
+    });
   }
 
   const tokenPayload: AppUserJWTPayload = {
@@ -41,7 +47,10 @@ export default defineEventHandler(async (event) => {
   const { username, password } = await readBody(event);
 
   if (!username || !password) {
-    throw createError({ statusCode: 400, statusMessage: 'Username and password are required for login.' });
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Username and password are required for login.',
+    });
   }
 
   try {
@@ -52,21 +61,32 @@ export default defineEventHandler(async (event) => {
       .single();
 
     if (selectAppUserError || !appUserRecord) {
-      throw createError({ statusCode: 400, statusMessage: 'Invalid credentials.' });
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid credentials.',
+      });
     }
 
     const validPassword = await bcrypt.compare(password, appUserRecord.encrypted_password);
     if (!validPassword) {
-      throw createError({ statusCode: 400, statusMessage: 'Invalid credentials.' });
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid credentials.',
+      });
     }
 
     // Sign JWT and set cookie using the helper
-    signAndSetAppUserCookie(event, { app_user_id: appUserRecord.id, username: appUserRecord.username });
+    signAndSetAppUserCookie(event, {
+      app_user_id: appUserRecord.id,
+      username: appUserRecord.username,
+    });
 
     // Fetch associated profile data from 'user_infos' for the response
     const { data: userInfoData, error: userInfoError } = await supabase
       .from('user_infos')
-      .select('id, user_id, app_user_id, first_name, last_name, gender, address, country_code, postal_code, date_of_birth, level_type, profile_picture_url, onboarding_completed, payment_customer_id, is_active, created_at, updated_at')
+      .select(
+        'id, user_id, app_user_id, first_name, last_name, gender, address, country_code, postal_code, date_of_birth, level_type, profile_picture_url, onboarding_completed, payment_customer_id, is_active, created_at, updated_at'
+      )
       .eq('app_user_id', appUserRecord.id)
       .single();
 
@@ -75,7 +95,11 @@ export default defineEventHandler(async (event) => {
     }
 
     return {
-      user: { ...appUserRecord, user_info_id: userInfoData?.id, ...userInfoData }, // Combine app_user and user_infos data
+      user: {
+        ...appUserRecord,
+        user_info_id: userInfoData?.id,
+        ...userInfoData,
+      }, // Combine app_user and user_infos data
       type: 'app_user',
       message: 'Username login successful!',
     };
@@ -83,7 +107,8 @@ export default defineEventHandler(async (event) => {
     console.error('Server-side username login error:', err);
     throw createError({
       statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || err.message || 'Internal server error during username login.',
+      statusMessage:
+        err.statusMessage || err.message || 'Internal server error during username login.',
     });
   }
 });

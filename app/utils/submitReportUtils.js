@@ -16,7 +16,7 @@ export const QuestionReportReason = Object.freeze({
   IRRELAVENT: 'Irrelavent Content',
   NOT_IN_SYLLB: 'Not in Syllabus',
   INCORRECT_OPT: 'No Valid Options',
-  OTHER: 'Other'
+  OTHER: 'Other',
 });
 
 export const ResultReportReason = Object.freeze({
@@ -25,5 +25,5 @@ export const ResultReportReason = Object.freeze({
   INCORRECT_OPT: 'No Valid Options',
   INCORRECT_ANS: 'Incorrect Answer',
   INCORRECT_EXPLN: 'Incorrect Explanation',
-  OTHER: 'Other'
+  OTHER: 'Other',
 });

@@ -15,7 +15,10 @@ interface AppUserJWTPayload {
 export async function authenticateAppUserJWT(event: H3Event) {
   const authHeader = getHeader(event, 'authorization');
   if (!authHeader) {
-    throw createError({ statusCode: 401, statusMessage: 'Authorization header missing.' });
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authorization header missing.',
+    });
   }
 
   const token = authHeader.split(' ')[1];
@@ -27,13 +30,19 @@ export async function authenticateAppUserJWT(event: H3Event) {
     const decoded = jwt.verify(token, JWT_SECRET) as AppUserJWTPayload;
     // Ensure the token is for an 'app_user' and contains the app_user_id
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
-      throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
+      throw createError({
+        statusCode: 403,
+        statusMessage: 'Forbidden: Not an app_user or invalid token type.',
+      });
     }
     // Attach decoded user information to the event context for access in the main handler
     event.context.user = decoded;
   } catch (err: any) {
     console.error('JWT verification failed:', err);
-    throw createError({ statusCode: 403, statusMessage: 'Invalid or expired token.' });
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Invalid or expired token.',
+    });
   }
 }
 
@@ -46,13 +55,17 @@ export default defineEventHandler(async (event) => {
   await authenticateAppUserJWT(event);
   const appUser = event.context.user as AppUserJWTPayload; // Cast to the defined type
   if (!appUser || !appUser.app_user_id) {
-    throw createError({ statusCode: 401, statusMessage: 'Authentication failed or app_user_id missing from token.' });
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authentication failed or app_user_id missing from token.',
+    });
   }
 
   if (!newEmail || !currentPassword || !newSupabasePassword) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'New email, current password, and a new password for the email account are required for migration.',
+      statusMessage:
+        'New email, current password, and a new password for the email account are required for migration.',
     });
   }
 
@@ -71,36 +84,51 @@ export default defineEventHandler(async (event) => {
       .single();
 
     if (selectAppUserError || !appUserRecord) {
-      throw createError({ statusCode: 404, statusMessage: 'App user not found.' });
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'App user not found.',
+      });
     }
 
     const passwordMatch = await bcrypt.compare(currentPassword, appUserRecord.encrypted_password);
     if (!passwordMatch) {
-      throw createError({ statusCode: 401, statusMessage: 'Incorrect current password.' });
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Incorrect current password.',
+      });
     }
 
     const { data: userInfoForSupabase } = await supabase
       .from('user_infos')
-      .select('first_name, last_name, gender, country_code, level_type, profile_picture_url, created_at, updated_at')
+      .select(
+        'first_name, last_name, gender, country_code, level_type, profile_picture_url, created_at, updated_at'
+      )
       .eq('app_user_id', appUser.app_user_id)
       .single();
 
-    const { data: supabaseAuthData, error: supabaseAuthError } = await serviceSupabase.auth.admin.createUser({
-      email: newEmail,
-      password: newSupabasePassword,
-      user_metadata: {
-        username_migrated_from: appUserRecord.username,
-        ...(userInfoForSupabase || {})
-      }
-    });
+    const { data: supabaseAuthData, error: supabaseAuthError } =
+      await serviceSupabase.auth.admin.createUser({
+        email: newEmail,
+        password: newSupabasePassword,
+        user_metadata: {
+          username_migrated_from: appUserRecord.username,
+          ...(userInfoForSupabase || {}),
+        },
+      });
 
     if (supabaseAuthError) {
-      throw createError({ statusCode: 500, statusMessage: supabaseAuthError.message });
+      throw createError({
+        statusCode: 500,
+        statusMessage: supabaseAuthError.message,
+      });
     }
 
     const supabaseAuthUserId = supabaseAuthData.user?.id;
     if (!supabaseAuthUserId) {
-      throw createError({ statusCode: 500, statusMessage: 'Supabase user ID not returned after signup.' });
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Supabase user ID not returned after signup.',
+      });
     }
 
     const { error: updateUserInfoError } = await serviceSupabase // Use privileged client for this update
@@ -111,7 +139,10 @@ export default defineEventHandler(async (event) => {
 
     if (updateUserInfoError) {
       await serviceSupabase.auth.admin.deleteUser(supabaseAuthUserId);
-      throw createError({ statusCode: 500, statusMessage: updateUserInfoError.message });
+      throw createError({
+        statusCode: 500,
+        statusMessage: updateUserInfoError.message,
+      });
     }
 
     const { error: deleteAppUserError } = await serviceSupabase
@@ -131,7 +162,8 @@ export default defineEventHandler(async (event) => {
   } catch (err: any) {
     throw createError({
       statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || err.message || 'Internal server error during account migration.',
+      statusMessage:
+        err.statusMessage || err.message || 'Internal server error during account migration.',
     });
   }
 });

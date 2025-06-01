@@ -58,7 +58,6 @@ export function useNavigationMenu() {
           { href: '/cms/component', title: 'Component' },
         ],
       },
-
     ];
   });
 

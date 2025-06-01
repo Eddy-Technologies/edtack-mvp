@@ -16,7 +16,7 @@ export function renderMath(element) {
         { left: '\\begin{gather}', right: '\\end{gather}', display: false },
         { left: '\\begin{CD}', right: '\\end{CD}', display: false },
         { left: '\\[', right: '\\]', display: true },
-      ]
+      ],
     });
   } catch (error) {
     console.error('KaTeX rendering error:', error);

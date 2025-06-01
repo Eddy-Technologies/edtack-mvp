@@ -17,7 +17,11 @@ export function calculateRemainingBalance(
   return startingCredits - cartCost - withdrawal - fee;
 }
 
-export function calculateItemTotal(cart: Cart, taxRate: number = 0, discountPercent: number = 0): number {
+export function calculateItemTotal(
+  cart: Cart,
+  taxRate: number = 0,
+  discountPercent: number = 0
+): number {
   return calculateTotalFromCartSubtotal(calculateCartSubtotal(cart), taxRate, discountPercent);
 }
 
@@ -41,6 +45,14 @@ export function calculateDiscount(amount: number, discountPercent: number): numb
   return amount * (discountPercent / 100);
 }
 
-export function calculateTotalFromCartSubtotal(castSubtotal: number, taxRate: number, discountPercent: number): number {
-  return castSubtotal + calculateTax(castSubtotal, taxRate) - calculateDiscount(castSubtotal, discountPercent);
+export function calculateTotalFromCartSubtotal(
+  castSubtotal: number,
+  taxRate: number,
+  discountPercent: number
+): number {
+  return (
+    castSubtotal +
+    calculateTax(castSubtotal, taxRate) -
+    calculateDiscount(castSubtotal, discountPercent)
+  );
 }

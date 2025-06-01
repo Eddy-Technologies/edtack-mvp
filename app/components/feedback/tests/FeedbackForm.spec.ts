@@ -29,9 +29,15 @@ describe('FeedbackForm.vue', () => {
     await wrapper.find('input[name="email"]').setValue('test@example.com');
     await wrapper.find('textarea[name="message"]').setValue('Test message');
 
-    expect((wrapper.find('input[name="name"]').element as HTMLInputElement).value).toBe('Test Name');
-    expect((wrapper.find('input[name="email"]').element as HTMLInputElement).value).toBe('test@example.com');
-    expect((wrapper.find('textarea[name="message"]').element as HTMLTextAreaElement).value).toBe('Test message');
+    expect((wrapper.find('input[name="name"]').element as HTMLInputElement).value).toBe(
+      'Test Name'
+    );
+    expect((wrapper.find('input[name="email"]').element as HTMLInputElement).value).toBe(
+      'test@example.com'
+    );
+    expect((wrapper.find('textarea[name="message"]').element as HTMLTextAreaElement).value).toBe(
+      'Test message'
+    );
   });
 
   it('submits the form to /api/feedback, emits "close", and resets fields on successful submission', async () => {
@@ -42,7 +48,11 @@ describe('FeedbackForm.vue', () => {
     } as Response);
 
     const wrapper = mount(FeedbackForm);
-    const testData = { name: 'Test User', email: 'test@example.com', message: 'Test feedback message' };
+    const testData = {
+      name: 'Test User',
+      email: 'test@example.com',
+      message: 'Test feedback message',
+    };
 
     await wrapper.find('input[name="name"]').setValue(testData.name);
     await wrapper.find('input[name="email"]').setValue(testData.email);
@@ -70,13 +80,18 @@ describe('FeedbackForm.vue', () => {
 
     expect((wrapper.find('input[name="name"]').element as HTMLInputElement).value).toBe('');
     expect((wrapper.find('input[name="email"]').element as HTMLInputElement).value).toBe('');
-    expect((wrapper.find('textarea[name="message"]').element as HTMLTextAreaElement).value).toBe('');
+    expect((wrapper.find('textarea[name="message"]').element as HTMLTextAreaElement).value).toBe(
+      ''
+    );
   });
 
   it('handles API error when submitting feedback (response.ok true, success false)', async () => {
     vi.mocked(global.fetch).mockResolvedValue({
       ok: true,
-      json: async () => ({ success: false, statusMessage: 'API rejected feedback' }),
+      json: async () => ({
+        success: false,
+        statusMessage: 'API rejected feedback',
+      }),
     } as Response);
     const alertSpy = vi.spyOn(global, 'alert'); // Use spyOn to not interfere with other alert mocks if any
     const wrapper = mount(FeedbackForm);

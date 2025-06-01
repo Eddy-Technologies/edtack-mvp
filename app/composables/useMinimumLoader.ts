@@ -1,25 +1,25 @@
 import { ref } from 'vue';
 
 export function useMinimumLoader(minDuration = 500) {
-    const isLoading = ref(true);
+  const isLoading = ref(true);
 
-    /**
-     * Wrap an async function or Promise to ensure loading lasts at least `minDuration`.
-     * @param task A Promise or async function.
-     */
-    async function loadWithMinimum(task: Promise<any>) {
-        const start = Date.now();
-        await task;
-        const elapsed = Date.now() - start;
-        const remaining = Math.max(0, minDuration - elapsed);
+  /**
+   * Wrap an async function or Promise to ensure loading lasts at least `minDuration`.
+   * @param task A Promise or async function.
+   */
+  async function loadWithMinimum(task: Promise<any>) {
+    const start = Date.now();
+    await task;
+    const elapsed = Date.now() - start;
+    const remaining = Math.max(0, minDuration - elapsed);
 
-        setTimeout(() => {
-            isLoading.value = false;
-        }, remaining);
-    }
+    setTimeout(() => {
+      isLoading.value = false;
+    }, remaining);
+  }
 
-    return {
-        isLoading,
-        loadWithMinimum
-    };
+  return {
+    isLoading,
+    loadWithMinimum,
+  };
 }

@@ -1,25 +1,20 @@
 <template>
- <div class="relative flex flex-col min-h-screen bg-gray-100">
- <AppHeader />
+  <div class="relative flex flex-col min-h-screen bg-gray-100">
+    <AppHeader />
 
- <!-- Fullscreen overlay within the parent -->
- <Loading v-if="isLoading" />
+    <!-- Fullscreen overlay within the parent -->
+    <Loading v-if="isLoading" />
 
- <!-- Main content is visually underneath, but interaction will be blocked -->
- <main
- v-else
- class="flex-grow flex flex-col items-center p-4 min-h-[calc(100vh-3.5rem)]"
- >
- <div class="w-full max-w-6xl mt-4">
- <h2 class="text-3xl font-extrabold text-primary text-center mb-4">
- Challenge
- </h2>
- <QuizPage :quiz="quiz" @quiz-submitted="updateCredits" />
- </div>
- </main>
+    <!-- Main content is visually underneath, but interaction will be blocked -->
+    <main v-else class="flex-grow flex flex-col items-center p-4 min-h-[calc(100vh-3.5rem)]">
+      <div class="w-full max-w-6xl mt-4">
+        <h2 class="text-3xl font-extrabold text-primary text-center mb-4">Challenge</h2>
+        <QuizPage :quiz="quiz" @quiz-submitted="updateCredits" />
+      </div>
+    </main>
 
- <!-- <AppFooter /> -->
- </div>
+    <!-- <AppFooter /> -->
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -35,34 +30,34 @@ const quiz = ref(null);
 const creditStore = useCreditStore();
 
 const getRandomizedQuestions = (data: any[], numberOfQuestions: number) => {
- const shuffled = shuffleArray([...data]);
- return shuffled.slice(0, numberOfQuestions);
+  const shuffled = shuffleArray([...data]);
+  return shuffled.slice(0, numberOfQuestions);
 };
 
 const shuffleArray = (array: any[]) => {
- for (let i = array.length - 1; i > 0; i--) {
- const j = Math.floor(Math.random() * (i + 1))
- ;[array[i], array[j]] = [array[j], array[i]];
- }
- return array;
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 };
 
 const updateCredits = (newCredits: number) => {
- const updatedCredits = [...creditStore.childCredits];
- updatedCredits[0] += newCredits * 10;
- creditStore.childCredits = updatedCredits;
+  const updatedCredits = [...creditStore.childCredits];
+  updatedCredits[0] += newCredits * 10;
+  creditStore.childCredits = updatedCredits;
 
- // Scroll the page to top
- window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll the page to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 onBeforeMount(() => {
- quiz.value = getRandomizedQuestions(data, 10);
+  quiz.value = getRandomizedQuestions(data, 10);
 });
 
 onMounted(() => {
- // Replace with your actual async task
- const asyncTask = new Promise(resolve => setTimeout(resolve, 100));
- loadWithMinimum(asyncTask);
+  // Replace with your actual async task
+  const asyncTask = new Promise((resolve) => setTimeout(resolve, 100));
+  loadWithMinimum(asyncTask);
 });
 </script>

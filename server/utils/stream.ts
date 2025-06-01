@@ -1,6 +1,4 @@
-export const asyncGeneratorToStream = (
-  asyncGenerator: AsyncGenerator<string, void, unknown>
-) => {
+export const asyncGeneratorToStream = (asyncGenerator: AsyncGenerator<string, void, unknown>) => {
   let cancelled = false;
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
@@ -11,9 +9,7 @@ export const asyncGeneratorToStream = (
             break;
           }
 
-          controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify({ response: value })}\n\n`)
-          );
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ response: value })}\n\n`));
         }
 
         // Send done to signal end of stream
@@ -24,10 +20,7 @@ export const asyncGeneratorToStream = (
         console.log('Error in stream:', err);
 
         /* eslint-disable @stylistic/operator-linebreak */
-        const errorMessage =
-          err instanceof Error
-            ? err.message
-            : 'An error occurred in the stream';
+        const errorMessage = err instanceof Error ? err.message : 'An error occurred in the stream';
         /* eslint-enable @stylistic/operator-linebreak */
 
         controller.enqueue(

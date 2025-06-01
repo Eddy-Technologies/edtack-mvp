@@ -2,48 +2,28 @@
   {
     "correctAnswer": "30%",
     "id": "P6MathMCQ1",
-    "options": [
-      "10%",
-      "20%",
-      "30%",
-      "40%"
-    ],
+    "options": ["10%", "20%", "30%", "40%"],
     "title": "A shirt costs $20.  It is on sale for $6 off. What is the percentage discount?",
     "explanation": "Discount percentage = (Discount amount / Original price) * 100%. Discount amount = $6. Original price = $20.  Discount percentage = ($6 / $20) * 100% = 30%"
   },
   {
     "correctAnswer": "12 cm",
     "id": "P6MathMCQ2",
-    "options": [
-      "6 cm",
-      "8 cm",
-      "10 cm",
-      "12 cm"
-    ],
+    "options": ["6 cm", "8 cm", "10 cm", "12 cm"],
     "title": "The area of a square is 144 cm². What is the length of one side?",
     "explanation": "Area of a square = side * side.  Therefore, side = square root of area = square root of 144 = 12 cm."
   },
   {
     "correctAnswer": "36",
     "id": "P6MathMCQ3",
-    "options": [
-      "6",
-      "12",
-      "18",
-      "36"
-    ],
+    "options": ["6", "12", "18", "36"],
     "title": "What is the value of 6 + 6 x 5?",
     "explanation": "Following order of operations (PEMDAS/BODMAS), multiplication comes before addition. 6 x 5 = 30.  6 + 30 = 36."
   },
   {
     "correctAnswer": "5/8",
     "id": "P6MathMCQ4",
-    "options": [
-      "1/4",
-      "3/8",
-      "1/2",
-      "5/8"
-    ],
+    "options": ["1/4", "3/8", "1/2", "5/8"],
     "title": "What fraction is exactly halfway between 1/4 and 3/4?",
     "explanation": "Find the average of the two fractions: (1/4 + 3/4) / 2 = (4/4) / 2 = 1 / 2 = 4/8. The question required for a fraction that is halfway between 1/4 (2/8) and 3/4 (6/8). (2/8 + 6/8) / 2 = 8/8 / 2 = 1/2 = 4/8. The question requires a fraction that is exactly halfway between 1/4 and 3/4. We want halfway between 2/8 and 6/8. That is 4/8. But, the correct logic to use is (1/4 + 3/4) / 2 = 1/2. However, the question requires to find a fraction that is exactly halfway between 1/4 and 3/4 from the options provided. The question should have been framed better but given the options, find the fraction of the difference and add to the smaller fraction. (3/4 - 1/4) = 1/2. 1/2 / 2 = 1/4. So the answer is 1/4 + 1/4 = 1/2 = 4/8. The correct logic to apply is: (3/4 - 1/4)/2 + 1/4 = 1/8 + 2/8 = 3/8 . So the question is flawed. Now between 1/4 and 3/4 lies 5/8 too. 5/8 - 1/4 = 3/8. 3/4 - 5/8 = 1/8. This is wrong. So another logic is : 1/4 + 3/4 = 4/4 = 1. There must be another fraction say x that is halfway. So 1/4 < x < 3/4. Options are 1/4, 3/8, 1/2, 5/8. If it were 1/2 the it would be 1/4 + 1/2 = 3/4. So it is not 1/2. 5/8 > 1/2. Try 3/8 + 3/8 = 6/8 = 3/4. No. Trying 5/8. If it is halfway, 5/8 - 1/4 = 3/4 - 5/8. So, 5/8 - 2/8 = 6/8 - 5/8. 3/8 = 1/8. No. So, it is actually  (3/4 + 1/4) / 2 = 4/4 / 2 = 1/2. So the 3/8 value is wrong. If we take 5/8 , 1/4 = 2/8. 3/4 = 6/8. So 2/8 < 5/8 < 6/8. 5/8 is between 2/8 and 6/8.  (1/4 + 3/4) / 2 = 1/2 = 4/8. (1/4 + x )/2 = x implies x=1/6 which is not an option. This is a poorly framed question. Option 5/8 works as a better answer based on available options."
   },
@@ -62,60 +42,35 @@
   {
     "correctAnswer": "90",
     "id": "P6MathMCQ6",
-    "options": [
-      "45",
-      "60",
-      "90",
-      "120"
-    ],
+    "options": ["45", "60", "90", "120"],
     "title": "What is the value of y in the equation 2y - 10 = 170?",
     "explanation": "2y - 10 = 170 \n 2y = 170 + 10\n 2y = 180\n y = 180 / 2 = 90"
   },
   {
     "correctAnswer": "All of the above",
     "id": "P6MathMCQ7",
-    "options": [
-      "Perimeter",
-      "Area",
-      "Volume",
-      "All of the above"
-    ],
+    "options": ["Perimeter", "Area", "Volume", "All of the above"],
     "title": "Which of the following measurements can be used to describe a 3-dimensional object?",
     "explanation": "Perimeter describes the length around a 2D shape. Area describes the surface of a 2D shape. Volume describes the space occupied by a 3D object. Therefore, all of them can describe a 3-dimensional object. We can compute the volume of a 3D object, find the area of the faces of a 3D object, find the perimeter of the faces of a 3D object."
   },
   {
     "correctAnswer": "36",
     "id": "P6MathMCQ8",
-    "options": [
-      "4",
-      "6",
-      "12",
-      "36"
-    ],
+    "options": ["4", "6", "12", "36"],
     "title": "What is the Least Common Multiple (LCM) of 9 and 12?",
     "explanation": "Multiples of 9: 9, 18, 27, 36, 45, ...\n Multiples of 12: 12, 24, 36, 48, ...\n The least common multiple is 36."
   },
   {
     "correctAnswer": "0.75",
     "id": "P6MathMCQ9",
-    "options": [
-      "0.25",
-      "0.5",
-      "0.75",
-      "1.25"
-    ],
+    "options": ["0.25", "0.5", "0.75", "1.25"],
     "title": "Express 3/4 as a decimal.",
     "explanation": "3/4 = 0.75"
   },
   {
     "correctAnswer": "8",
     "id": "P6MathMCQ10",
-    "options": [
-      "4",
-      "6",
-      "8",
-      "10"
-    ],
+    "options": ["4", "6", "8", "10"],
     "title": "Simplify: 2³",
     "explanation": "2³ = 2 * 2 * 2 = 8"
   },
@@ -134,108 +89,63 @@
   {
     "correctAnswer": "3 hours 30 minutes",
     "id": "P6MathMCQ12",
-    "options": [
-      "2 hours 30 minutes",
-      "3 hours",
-      "3 hours 30 minutes",
-      "4 hours"
-    ],
+    "options": ["2 hours 30 minutes", "3 hours", "3 hours 30 minutes", "4 hours"],
     "title": "A train leaves Singapore at 10:15 AM and arrives in Kuala Lumpur at 1:45 PM. How long is the journey?",
     "explanation": "From 10:15 AM to 1:15 PM is 3 hours. From 1:15 PM to 1:45 PM is 30 minutes. Total time = 3 hours + 30 minutes = 3 hours 30 minutes."
   },
   {
     "correctAnswer": "40",
     "id": "P6MathMCQ13",
-    "options": [
-      "20",
-      "30",
-      "40",
-      "50"
-    ],
+    "options": ["20", "30", "40", "50"],
     "title": "If the ratio of boys to girls in a class is 2:3, and there are 60 girls, how many boys are there?",
     "explanation": "The ratio of boys to girls is 2:3. 3 units represent 60 girls. 1 unit represents 60 / 3 = 20. 2 units (boys) represent 2 * 20 = 40 boys."
   },
   {
     "correctAnswer": "400 cm³",
     "id": "P6MathMCQ14",
-    "options": [
-      "100 cm³",
-      "200 cm³",
-      "300 cm³",
-      "400 cm³"
-    ],
+    "options": ["100 cm³", "200 cm³", "300 cm³", "400 cm³"],
     "title": "A cuboid has a length of 10 cm, a breadth of 5 cm, and a height of 8 cm. What is its volume?",
     "explanation": "Volume of a cuboid = length * breadth * height = 10 cm * 5 cm * 8 cm = 400 cm³."
   },
   {
     "correctAnswer": "$16",
     "id": "P6MathMCQ15",
-    "options": [
-      "$4",
-      "$8",
-      "$12",
-      "$16"
-    ],
+    "options": ["$4", "$8", "$12", "$16"],
     "title": "John bought 4 pens for $4 each. How much did he spend in total?",
     "explanation": "Total cost = number of pens * cost per pen = 4 * $4 = $16."
   },
   {
     "correctAnswer": "1/6",
     "id": "P6MathMCQ16",
-    "options": [
-      "1/2",
-      "1/3",
-      "1/6",
-      "1/12"
-    ],
+    "options": ["1/2", "1/3", "1/6", "1/12"],
     "title": "What is half of 1/3?",
     "explanation": "Half of 1/3 = (1/2) * (1/3) = 1/6."
   },
   {
     "correctAnswer": "75%",
     "id": "P6MathMCQ17",
-    "options": [
-      "25%",
-      "50%",
-      "75%",
-      "100%"
-    ],
+    "options": ["25%", "50%", "75%", "100%"],
     "title": "Express 3/4 as a percentage.",
     "explanation": "3/4 = (3/4) * 100% = 75%"
   },
   {
     "correctAnswer": "24",
     "id": "P6MathMCQ18",
-    "options": [
-      "6",
-      "8",
-      "12",
-      "24"
-    ],
+    "options": ["6", "8", "12", "24"],
     "title": "What is the Highest Common Factor (HCF) of 48 and 72?",
     "explanation": "Factors of 48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48\nFactors of 72: 1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72\nThe highest common factor is 24."
   },
   {
     "correctAnswer": "60",
     "id": "P6MathMCQ19",
-    "options": [
-      "30",
-      "45",
-      "60",
-      "90"
-    ],
+    "options": ["30", "45", "60", "90"],
     "title": "If 50% of a number is 30, what is the number?",
     "explanation": "If 50% (or 1/2) of a number is 30, then the number is 30 * 2 = 60."
   },
   {
     "correctAnswer": "180°",
     "id": "P6MathMCQ20",
-    "options": [
-      "90°",
-      "120°",
-      "180°",
-      "360°"
-    ],
+    "options": ["90°", "120°", "180°", "360°"],
     "title": "What is the sum of angles on a straight line?",
     "explanation": "The sum of angles on a straight line is 180°."
   },
@@ -254,108 +164,63 @@
   {
     "correctAnswer": "25",
     "id": "P6MathMCQ22",
-    "options": [
-      "5",
-      "10",
-      "20",
-      "25"
-    ],
+    "options": ["5", "10", "20", "25"],
     "title": "What is 125% of 20?",
     "explanation": "125% of 20 = (125/100) * 20 = 1.25 * 20 = 25"
   },
   {
     "correctAnswer": "15",
     "id": "P6MathMCQ23",
-    "options": [
-      "5",
-      "10",
-      "15",
-      "20"
-    ],
+    "options": ["5", "10", "15", "20"],
     "title": "If x + 5 = 20, what is the value of x?",
     "explanation": "x + 5 = 20. Subtract 5 from both sides: x = 20 - 5 = 15."
   },
   {
     "correctAnswer": "5/12",
     "id": "P6MathMCQ24",
-    "options": [
-      "1/4",
-      "1/3",
-      "5/12",
-      "7/12"
-    ],
+    "options": ["1/4", "1/3", "5/12", "7/12"],
     "title": "What is 1/3 + 1/4?",
     "explanation": "1/3 + 1/4 = 4/12 + 3/12 = 7/12."
   },
   {
     "correctAnswer": "7/12",
     "id": "P6MathMCQ25",
-    "options": [
-      "1/12",
-      "5/12",
-      "7/12",
-      "11/12"
-    ],
+    "options": ["1/12", "5/12", "7/12", "11/12"],
     "title": "Calculate 1/3 + 1/4.",
     "explanation": "1/3 + 1/4 = (4/12) + (3/12) = 7/12"
   },
   {
     "correctAnswer": "32",
     "id": "P6MathMCQ26",
-    "options": [
-      "8",
-      "16",
-      "24",
-      "32"
-    ],
+    "options": ["8", "16", "24", "32"],
     "title": "What is the area of a square with a perimeter of 16 cm?  (Hint: Find the length of one side first)",
     "explanation": "Perimeter of square = 4 * side. 16 = 4 * side. Side = 4 cm. Area of square = side * side = 4 * 4 = 16 cm².  Error. Question asked for area but perimeter provided. Question should be, what is area of square with side 4cm?"
   },
   {
     "correctAnswer": "90",
     "id": "P6MathMCQ27",
-    "options": [
-      "30",
-      "45",
-      "60",
-      "90"
-    ],
+    "options": ["30", "45", "60", "90"],
     "title": "An angle is twice the size of 45 degrees. What is its size?",
     "explanation": "2 * 45 = 90"
   },
   {
     "correctAnswer": "7",
     "id": "P6MathMCQ28",
-    "options": [
-      "2",
-      "7",
-      "10",
-      "20"
-    ],
+    "options": ["2", "7", "10", "20"],
     "title": "If a = 2 and b = 3, what is the value of 2a + b?",
     "explanation": "2a + b = 2 * 2 + 3 = 4 + 3 = 7"
   },
   {
     "correctAnswer": "12",
     "id": "P6MathMCQ29",
-    "options": [
-      "3",
-      "4",
-      "6",
-      "12"
-    ],
+    "options": ["3", "4", "6", "12"],
     "title": "What is the perimeter of a square with side length 3?",
     "explanation": "Perimeter of square = 4 * side = 4 * 3 = 12"
   },
   {
     "correctAnswer": "0.6",
     "id": "P6MathMCQ30",
-    "options": [
-      "0.2",
-      "0.4",
-      "0.6",
-      "0.8"
-    ],
+    "options": ["0.2", "0.4", "0.6", "0.8"],
     "title": "Express 3/5 as a decimal.",
     "explanation": "3/5 = 0.6"
   },
@@ -374,48 +239,28 @@
   {
     "correctAnswer": "10 cm",
     "id": "P6MathMCQ32",
-    "options": [
-      "5 cm",
-      "10 cm",
-      "15 cm",
-      "20 cm"
-    ],
+    "options": ["5 cm", "10 cm", "15 cm", "20 cm"],
     "title": "A rectangle has an area of 50 cm² and a width of 5 cm. What is its length?",
     "explanation": "Area = length * width. 50 = length * 5. length = 50 / 5 = 10 cm."
   },
   {
     "correctAnswer": "120",
     "id": "P6MathMCQ33",
-    "options": [
-      "30",
-      "60",
-      "90",
-      "125"
-    ],
+    "options": ["30", "60", "90", "125"],
     "title": "What is the volume of a cube with side length 5?",
     "explanation": "Volume = side * side * side = 5*5*5 = 125"
   },
   {
     "correctAnswer": "0.8",
     "id": "P6MathMCQ34",
-    "options": [
-      "0.25",
-      "0.5",
-      "0.75",
-      "0.8"
-    ],
+    "options": ["0.25", "0.5", "0.75", "0.8"],
     "title": "Express 4/5 as a decimal.",
     "explanation": "4/5 = 0.8"
   },
   {
     "correctAnswer": "15",
     "id": "P6MathMCQ35",
-    "options": [
-      "3",
-      "5",
-      "15",
-      "25"
-    ],
+    "options": ["3", "5", "15", "25"],
     "title": "What is the area of rectangle with length 5 and breadth 3?",
     "explanation": "Area of rectangle is Length * Breadth = 5 * 3 = 15"
   },
@@ -434,108 +279,63 @@
   {
     "correctAnswer": "8 cm",
     "id": "P6MathMCQ37",
-    "options": [
-      "2 cm",
-      "4 cm",
-      "8 cm",
-      "16 cm"
-    ],
+    "options": ["2 cm", "4 cm", "8 cm", "16 cm"],
     "title": "What is the side length of a square with an area of 64 cm²?",
     "explanation": "Area = side * side.  64 = side².  side = sqrt(64) = 8"
   },
   {
     "correctAnswer": "90",
     "id": "P6MathMCQ38",
-    "options": [
-      "30",
-      "45",
-      "60",
-      "90"
-    ],
+    "options": ["30", "45", "60", "90"],
     "title": "If a quarter of a number is 15, what is 6 times the number?",
     "explanation": "A quarter of a number is 15, therefore the number is 4*15=60. Six times the number is 6 * 15 = 90"
   },
   {
     "correctAnswer": "0.75",
     "id": "P6MathMCQ39",
-    "options": [
-      "0.25",
-      "0.5",
-      "0.75",
-      "1.0"
-    ],
+    "options": ["0.25", "0.5", "0.75", "1.0"],
     "title": "What is 75% as a decimal?",
     "explanation": "75% = 75/100 = 0.75"
   },
   {
     "correctAnswer": "6",
     "id": "P6MathMCQ40",
-    "options": [
-      "2",
-      "3",
-      "6",
-      "9"
-    ],
+    "options": ["2", "3", "6", "9"],
     "title": "What is the value of x in the equation: 3x - 5 = 13",
     "explanation": "3x - 5 = 13. 3x = 18. x = 18/3 = 6"
   },
   {
     "correctAnswer": "All of the above",
     "id": "P6MathMCQ41",
-    "options": [
-      "Square",
-      "Rectangle",
-      "Parallelogram",
-      "All of the above"
-    ],
+    "options": ["Square", "Rectangle", "Parallelogram", "All of the above"],
     "title": "Which of the following shapes have two pairs of parallel sides?",
     "explanation": "All the shapes have two pairs of parallel sides."
   },
   {
     "correctAnswer": "48",
     "id": "P6MathMCQ42",
-    "options": [
-      "12",
-      "16",
-      "24",
-      "48"
-    ],
+    "options": ["12", "16", "24", "48"],
     "title": "Find the least common multiple (LCM) of 12 and 16.",
     "explanation": "Multiples of 12: 12, 24, 36, 48, 60, ...\nMultiples of 16: 16, 32, 48, 64, ...\nThe LCM is 48."
   },
   {
     "correctAnswer": "8",
     "id": "P6MathMCQ43",
-    "options": [
-      "2",
-      "4",
-      "6",
-      "8"
-    ],
+    "options": ["2", "4", "6", "8"],
     "title": "If 3/4 of a number is 6, what is 4/4 of the number?",
     "explanation": "If 3/4 is 6, then 1/4 is 6/3 = 2. Therefore, 4/4 is 4 * 2 = 8"
   },
   {
     "correctAnswer": "25",
     "id": "P6MathMCQ44",
-    "options": [
-      "5",
-      "10",
-      "20",
-      "25"
-    ],
+    "options": ["5", "10", "20", "25"],
     "title": "What is the square root of 625?",
     "explanation": "The square root of 625 is 25 (25 * 25 = 625)."
   },
   {
     "correctAnswer": "16",
     "id": "P6MathMCQ45",
-    "options": [
-      "4",
-      "8",
-      "12",
-      "16"
-    ],
+    "options": ["4", "8", "12", "16"],
     "title": "If x = 4, what is x²?",
     "explanation": "x² = x * x = 4 * 4 = 16"
   },
@@ -551,51 +351,31 @@
     "title": "Consider the following statements:\n1. A right-angled triangle has one angle equal to 90 degrees.\n2. An equilateral triangle has all sides equal.\n3. An isosceles triangle has all angles equal. Which is true?",
     "explanation": "Statements 1 and 2 are true. Statement 3 is false, so 1 and 2."
   },
-    {
+  {
     "correctAnswer": "18",
     "id": "P6MathMCQ47",
-    "options": [
-      "6",
-      "9",
-      "12",
-      "18"
-    ],
+    "options": ["6", "9", "12", "18"],
     "title": "A bakery sells cupcakes in boxes of 6. How many boxes are needed for 108 cupcakes?",
     "explanation": "To find the number of boxes, divide the total number of cupcakes by the number of cupcakes per box. 108 cupcakes / 6 cupcakes per box = 18 boxes"
   },
   {
     "correctAnswer": "63",
     "id": "P6MathMCQ48",
-    "options": [
-      "42",
-      "56",
-      "63",
-      "70"
-    ],
+    "options": ["42", "56", "63", "70"],
     "title": "Find the value of 7 x 9.",
     "explanation": "7 multiplied by 9 equals 63."
   },
   {
     "correctAnswer": "10",
     "id": "P6MathMCQ49",
-    "options": [
-      "5",
-      "10",
-      "15",
-      "20"
-    ],
+    "options": ["5", "10", "15", "20"],
     "title": "If a rectangle's area is 80 sq cm and its breadth is 8 cm, what is its length?",
     "explanation": "Area of rectangle = length * breadth. 80 = length * 8.  length = 80/8 = 10."
   },
   {
     "correctAnswer": "All of the above",
     "id": "P6MathMCQ50",
-    "options": [
-      "Addition",
-      "Subtraction",
-      "Multiplication",
-      "All of the above"
-    ],
+    "options": ["Addition", "Subtraction", "Multiplication", "All of the above"],
     "title": "Which of the following operations can change the value of a number?",
     "explanation": "All of the above operations can change the value of a number."
   }

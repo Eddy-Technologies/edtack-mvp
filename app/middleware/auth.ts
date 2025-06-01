@@ -24,19 +24,25 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
         currentAppUser.value = response.user; // Manually set it for immediate use in middleware
       }
     } catch (error) {
-      console.warn('Middleware: No active app user session during client-side rehydration attempt.');
+      console.warn(
+        'Middleware: No active app user session during client-side rehydration attempt.'
+      );
       // Error means no session or invalid, so currentAppUser remains null
     }
   }
 
   // Check if either type of user is authenticated
   if (!supabaseUser.value && !currentAppUser.value) {
-    console.log(`[Auth Middleware] Neither Supabase user nor App user authenticated. Redirecting to /login.`);
+    console.log(
+      `[Auth Middleware] Neither Supabase user nor App user authenticated. Redirecting to /login.`
+    );
     // Ensure we are not already on the login page to prevent infinite redirects
     if (to.path !== '/login') {
       return navigateTo('/login');
     }
   }
   // If either is authenticated, allow access
-  console.log(`[Auth Middleware] User authenticated. Supabase User: ${!!supabaseUser.value}, App User: ${!!currentAppUser.value}`);
+  console.log(
+    `[Auth Middleware] User authenticated. Supabase User: ${!!supabaseUser.value}, App User: ${!!currentAppUser.value}`
+  );
 });

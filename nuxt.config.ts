@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     colorMode: {
       preference: 'light',
       forcedValue: 'light',
-    }
+    },
   },
 
   eslint: {
@@ -37,7 +37,7 @@ export default defineNuxtConfig({
         commaDangle: 'only-multiline',
         braceStyle: '1tbs',
         arrowParens: true,
-        indent: 2
+        indent: 2,
       },
     },
   },
@@ -45,8 +45,8 @@ export default defineNuxtConfig({
     registry: {
       googleAnalytics: {
         id: process.env.GOOGLE_TAG_MANAGER_ID,
-      }
-    }
+      },
+    },
   },
   devtools: { enabled: true },
 
@@ -56,7 +56,8 @@ export default defineNuxtConfig({
       googleAIStudioApiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY,
       // For privileged client, ensure these are set in your deployment environment
       supabaseUrlForServiceRole: process.env.NUXT_PRIVATE_SUPABASE_URL,
-      supabaseServiceRoleKey: process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
+      supabaseServiceRoleKey:
+        process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
     },
   },
@@ -69,9 +70,7 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: [
-        'ws',
-      ],
+      include: ['ws'],
     },
   },
 });

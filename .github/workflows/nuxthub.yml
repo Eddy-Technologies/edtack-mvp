@@ -3,7 +3,7 @@ on: push
 
 jobs:
   deploy:
-    name: "Deploy to NuxtHub"
+    name: 'Deploy to NuxtHub'
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref == 'refs/heads/production' && 'production' || 'preview' }}
@@ -44,8 +44,9 @@ jobs:
         run: pnpm build
         env:
           VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
-          GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
-           # NUXT_PUBLIC_ prefixed variables for runtimeConfig.public
+          GOOGLE_TAG_MANAGER_ID:
+            ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
+            # NUXT_PUBLIC_ prefixed variables for runtimeConfig.public
           NUXT_PUBLIC_SUPABASE_URL: ${{ secrets.NUXT_PUBLIC_SUPABASE_URL }}
           NUXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY }}
           # Private runtime config variables

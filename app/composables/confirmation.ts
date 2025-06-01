@@ -5,10 +5,13 @@ export function useConfirmation() {
   const { showSuccessMessage, showInfoMessage } = useMessages();
 
   // eslint-disable-next-line unused-imports/no-unused-vars
-  function doNothing(id: string | number) {
-  }
+  function doNothing(id: string | number) {}
 
-  function confirmDelete(idToDelete: string | number, acceptCallback: (id: string | number) => void, rejectCallback: (id: string | number) => void = doNothing) {
+  function confirmDelete(
+    idToDelete: string | number,
+    acceptCallback: (id: string | number) => void,
+    rejectCallback: (id: string | number) => void = doNothing
+  ) {
     confirm.require({
       message: 'Should this entry be deleted ?',
       header: 'Are you sure',
@@ -28,7 +31,13 @@ export function useConfirmation() {
     });
   }
 
-  function confirmAction(acceptCallback: () => void, acceptMessage: string = 'Action confirmed', acceptMessageDetail: string = acceptMessage, header: string = 'Attention', message: string = 'Should proceed with this action ?') {
+  function confirmAction(
+    acceptCallback: () => void,
+    acceptMessage: string = 'Action confirmed',
+    acceptMessageDetail: string = acceptMessage,
+    header: string = 'Attention',
+    message: string = 'Should proceed with this action ?'
+  ) {
     confirm.require({
       message,
       header,

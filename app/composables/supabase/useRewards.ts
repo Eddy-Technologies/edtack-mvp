@@ -24,16 +24,16 @@ export function useRewards() {
     if (score < threshold) return false;
 
     // Insert a reward record
-    const { error } = await supabase
-      .from('rewards')
-      .insert([{
+    const { error } = await supabase.from('rewards').insert([
+      {
         user_id: user.value.id,
         challenge_id: challengeId,
         score,
         reward_type: rewardType,
         amount: rewardAmount,
         ...extraData,
-      }]);
+      },
+    ]);
     if (error) throw error;
     return true;
   }

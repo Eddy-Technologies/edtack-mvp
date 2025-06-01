@@ -13,40 +13,28 @@ export function useQuestions() {
 
   // Fetch a single question by ID
   async function getQuestionById(id: string | number) {
-    const { data, error } = await supabase
-      .from('questions')
-      .select('*')
-      .eq('id', id)
-      .single();
+    const { data, error } = await supabase.from('questions').select('*').eq('id', id).single();
     if (error) throw error;
     return data;
   }
 
   // Add a new question
   async function addQuestion(questionData: Record<string, any>) {
-    const { error } = await supabase
-      .from('questions')
-      .insert([questionData]);
+    const { error } = await supabase.from('questions').insert([questionData]);
     if (error) throw error;
     return true;
   }
 
   // Update a question by ID
   async function updateQuestion(id: string | number, updates: Record<string, any>) {
-    const { error } = await supabase
-      .from('questions')
-      .update(updates)
-      .eq('id', id);
+    const { error } = await supabase.from('questions').update(updates).eq('id', id);
     if (error) throw error;
     return true;
   }
 
   // Delete a question by ID
   async function deleteQuestion(id: string | number) {
-    const { error } = await supabase
-      .from('questions')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('questions').delete().eq('id', id);
     if (error) throw error;
     return true;
   }
@@ -65,15 +53,15 @@ export function useQuestions() {
     isCorrect: boolean;
     attemptData?: Record<string, any>;
   }) {
-    const { error } = await supabase
-      .from('question_attempts')
-      .insert([{
+    const { error } = await supabase.from('question_attempts').insert([
+      {
         user_id: userId,
         question_id: questionId,
         selected_answer: selectedAnswer,
         is_correct: isCorrect,
         ...attemptData,
-      }]);
+      },
+    ]);
     if (error) throw error;
     return true;
   }

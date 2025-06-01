@@ -6,8 +6,34 @@ const primaryLvls = [1, 2, 3, 4, 5, 6];
 const secondaryLvls = [1, 2, 3, 4];
 const jcLvls = [1, 2];
 const primarySubjects = ['Math', 'Science', 'English'];
-const secondarySubjects = ['Elementary Mathematics', 'Additional Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Social Studies'];
-const jcSubjects = ['H1 Math', 'H2 Math', 'H1 Physics', 'H2 Physics', 'H1 Chemistry', 'H2 Chemistry', 'H1 Biology', 'H2 Biology', 'H1 General Paper', 'H1 History', 'H2 History', 'H1 Geography', 'H2 Geography', 'H1 Economics', 'H2 Economics'];
+const secondarySubjects = [
+  'Elementary Mathematics',
+  'Additional Mathematics',
+  'Physics',
+  'Chemistry',
+  'Biology',
+  'English',
+  'History',
+  'Geography',
+  'Social Studies',
+];
+const jcSubjects = [
+  'H1 Math',
+  'H2 Math',
+  'H1 Physics',
+  'H2 Physics',
+  'H1 Chemistry',
+  'H2 Chemistry',
+  'H1 Biology',
+  'H2 Biology',
+  'H1 General Paper',
+  'H1 History',
+  'H2 History',
+  'H1 Geography',
+  'H2 Geography',
+  'H1 Economics',
+  'H2 Economics',
+];
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -49,7 +75,13 @@ export default defineEventHandler(async (event) => {
     throw new Error('Invalid subject for Junior College');
   }
 
-  const questionPrompt = createPrompt(numberInput, selectedLevel, selectedInnerLevel, selectedSubject, selectedTopic);
+  const questionPrompt = createPrompt(
+    numberInput,
+    selectedLevel,
+    selectedInnerLevel,
+    selectedSubject,
+    selectedTopic
+  );
   const result = await useGetQuestionModelGP(questionPrompt);
   const optionPrompt = `With this JSON result ${result},
     Copy the correct answer in the explanation and insert it into the options array.
@@ -70,11 +102,17 @@ export default defineEventHandler(async (event) => {
   return {
     questionPrompt: questionPrompt,
     optionsPrompt: optionPrompt,
-    questions: quiz
+    questions: quiz,
   };
 });
 
-const createPrompt = (numberInput: number, selectedLevel: string, selectedInnerLevel: number, selectedSubject: string, selectedTopic: string) => {
+const createPrompt = (
+  numberInput: number,
+  selectedLevel: string,
+  selectedInnerLevel: number,
+  selectedSubject: string,
+  selectedTopic: string
+) => {
   return `From the Singapore syllabus, how would you as an examiner create ${numberInput} multiple choice questions
     of the ${selectedLevel} ${selectedInnerLevel} ${selectedSubject} ${selectedTopic} topic with varying difficulties.
     Provide a JSON of just what is declared in the schema, which is the question, explanation and the id without the question options.
@@ -107,7 +145,7 @@ export const useGetOptionModelGP = async (prompt: string) => {
           type: SchemaType.ARRAY,
           items: {
             type: SchemaType.STRING,
-            description: 'Question option'
+            description: 'Question option',
           },
           description: 'Question options with correct answer of question',
           nullable: false,
@@ -121,7 +159,7 @@ export const useGetOptionModelGP = async (prompt: string) => {
           type: SchemaType.STRING,
           description: 'Detailed steps to achieve the correct answer',
           nullable: false,
-        }
+        },
       },
       required: ['id', 'title', 'options', 'correctAnswer'],
     },
@@ -152,7 +190,7 @@ const useGetQuestionModelGP = async (prompt: string) => {
           type: SchemaType.STRING,
           description: 'Detailed steps to achieve the correct answer',
           nullable: false,
-        }
+        },
       },
       required: ['id', 'title', 'explanation'],
     },

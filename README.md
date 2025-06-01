@@ -113,7 +113,7 @@ Once you're ready, you can deploy using either the following ways:
 - Deploy from the Admin console.
 
 [Learn more about Git integration](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci)
-  
+
 ### Deploy via NuxtHub CLI
 
 ```bash

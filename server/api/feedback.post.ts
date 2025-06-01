@@ -44,11 +44,12 @@ export default defineEventHandler(async (event) => {
     // Handle potential errors from createError or other issues
     console.error('Error in feedback submission endpoint:', err);
     // Ensure a proper error response is sent
-    if (!err.statusCode) { // If it's not already a Nuxt error
-        throw createError({
-            statusCode: 500,
-            statusMessage: err.message || 'Internal Server Error',
-        });
+    if (!err.statusCode) {
+      // If it's not already a Nuxt error
+      throw createError({
+        statusCode: 500,
+        statusMessage: err.message || 'Internal Server Error',
+      });
     }
     throw err; // Re-throw if it's already a Nuxt error object
   }

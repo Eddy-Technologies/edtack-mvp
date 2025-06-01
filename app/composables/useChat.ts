@@ -8,9 +8,7 @@ export function useChat(apiBase: string, body: Record<string, unknown>) {
       });
 
       let buffer = '';
-      const reader = (response as ReadableStream)
-        .pipeThrough(new TextDecoderStream())
-        .getReader();
+      const reader = (response as ReadableStream).pipeThrough(new TextDecoderStream()).getReader();
 
       while (true) {
         const { value, done } = await reader.read();
@@ -44,9 +42,7 @@ export function useChat(apiBase: string, body: Record<string, unknown>) {
             const parsedError = JSON.parse(data);
             console.error('Stream error:', parsedError);
 
-            throw new Error(
-              parsedError.message ?? 'Failed to generate response'
-            );
+            throw new Error(parsedError.message ?? 'Failed to generate response');
           } else if (data) {
             if (data === '[DONE]') return;
 

@@ -5,9 +5,7 @@ export default defineEventHandler(async (event) => {
 
   // Include the question as system context or preamble
   const userInput = messages[messages.length - 1]?.content || '';
-  const prompt = question
-      ? `${question} + ${userInput}`
-      : userInput;
+  const prompt = question ? `${question} + ${userInput}` : userInput;
 
   const message = await useBufferedGenAi(prompt);
   return { message };

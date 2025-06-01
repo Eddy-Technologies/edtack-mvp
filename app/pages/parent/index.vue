@@ -1,11 +1,11 @@
 <template>
- <div class="home">
- <AppHeader :is-parent="true" />
- <main class="flex flex-col">
- <Children />
- </main>
- <!-- <AppFooter /> -->
- </div>
+  <div class="home">
+    <AppHeader :is-parent="true" />
+    <main class="flex flex-col">
+      <Children />
+    </main>
+    <!-- <AppFooter /> -->
+  </div>
 </template>
 
 <script setup>

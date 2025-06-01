@@ -7,7 +7,10 @@ export default defineEventHandler(async (event) => {
   const { user_info_id } = await readBody(event);
 
   if (!user_info_id) {
-    throw createError({ statusCode: 400, statusMessage: 'User Info ID is required for deletion.' });
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'User Info ID is required for deletion.',
+    });
   }
 
   try {
@@ -20,7 +23,10 @@ export default defineEventHandler(async (event) => {
 
     if (userInfoError || !userInfo) {
       console.error('Error fetching user_infos for deletion:', userInfoError);
-      throw createError({ statusCode: 404, statusMessage: 'User profile not found.' });
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'User profile not found.',
+      });
     }
 
     // 2. Perform deletion based on authentication type
@@ -30,7 +36,10 @@ export default defineEventHandler(async (event) => {
       const { error } = await privilegedSupabaseClient.auth.admin.deleteUser(userInfo.user_id);
       if (error) {
         console.error('Error deleting auth.users user:', error);
-        throw createError({ statusCode: 500, statusMessage: error.message || 'Failed to delete Supabase Auth user.' });
+        throw createError({
+          statusCode: 500,
+          statusMessage: error.message || 'Failed to delete Supabase Auth user.',
+        });
       }
     } else if (userInfo.app_user_id) {
       // Custom app_user (username/password)
@@ -41,11 +50,17 @@ export default defineEventHandler(async (event) => {
         .eq('id', userInfo.app_user_id);
       if (error) {
         console.error('Error deleting app_users user:', error);
-        throw createError({ statusCode: 500, statusMessage: error.message || 'Failed to delete app user.' });
+        throw createError({
+          statusCode: 500,
+          statusMessage: error.message || 'Failed to delete app user.',
+        });
       }
     } else {
       // Fallback (should not happen)
-      throw createError({ statusCode: 400, statusMessage: 'User profile not linked to any authentication type.' });
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'User profile not linked to any authentication type.',
+      });
     }
 
     // ON DELETE CASCADE in DB handles cleanup
@@ -56,7 +71,8 @@ export default defineEventHandler(async (event) => {
     console.error('Server-side user deletion error:', err);
     throw createError({
       statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || err.message || 'Internal server error during user deletion.',
+      statusMessage:
+        err.statusMessage || err.message || 'Internal server error during user deletion.',
     });
   }
 });

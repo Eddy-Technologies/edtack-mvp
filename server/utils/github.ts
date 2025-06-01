@@ -24,11 +24,7 @@ function useOctokit() {
 }
 
 export const searchGithub = defineCachedFunction(
-  async (
-    event: H3Event,
-    endpoint: string,
-    params: Omit<SearchParams, 'endpoint'>
-  ) => {
+  async (event: H3Event, endpoint: string, params: Omit<SearchParams, 'endpoint'>) => {
     if (!endpoint || !allowedEndpoints[endpoint as EndpointType]) {
       throw createError({
         statusCode: 404,
@@ -57,11 +53,7 @@ export const searchGithub = defineCachedFunction(
     maxAge: 60 * 60,
     group: 'github',
     name: 'search',
-    getKey: (
-      event: H3Event,
-      endpoint: string,
-      params: Omit<SearchParams, 'endpoint'>
-    ) => {
+    getKey: (event: H3Event, endpoint: string, params: Omit<SearchParams, 'endpoint'>) => {
       const q = params.q.trim().toLowerCase().split(' ');
 
       const mainQuery = q.filter((term) => !term.includes(':')).join(' ');

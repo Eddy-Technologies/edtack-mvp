@@ -11,6 +11,6 @@ export const useQuizStore = defineStore('quiz', {
     },
     clear() {
       this.quiz = null;
-    }
+    },
   },
 });

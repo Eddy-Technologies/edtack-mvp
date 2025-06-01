@@ -10,7 +10,7 @@ export const useGenAi = async (schema) => {
       responseSchema: schema,
       temperature: 0,
       topK: 30,
-      topP: 0.75
+      topP: 0.75,
     },
   });
 };

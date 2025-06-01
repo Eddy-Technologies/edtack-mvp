@@ -21,13 +21,11 @@ export const useOpenRouterModelGP = async (prompt) => {
   // const OPENROUTER_API_KEY = "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";
   const chatResponse = await mistral.chat.parse({
     model: 'mistral-small-latest', // Use the desired Mistral model
-    messages: [
-      { role: 'user', content: prompt },
-    ],
+    messages: [{ role: 'user', content: prompt }],
     temperature: 0,
-    responseFormat: QuizSchema
+    responseFormat: QuizSchema,
   });
-    // Wait for the JSON response
+  // Wait for the JSON response
   const json = JSON.parse(chatResponse.choices[0].message.content);
 
   // Check if choices exist

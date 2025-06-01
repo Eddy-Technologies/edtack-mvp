@@ -14,7 +14,8 @@ export const useProfileStore = defineStore('profile', {
       this.profile = type;
     },
 
-    setChild(selectedChildIndex: number) { // Renamed parameter for clarity
+    setChild(selectedChildIndex: number) {
+      // Renamed parameter for clarity
       this.childSelected = selectedChildIndex;
     },
   },

@@ -2,7 +2,8 @@ import { defineNuxtRouteMiddleware, navigateTo } from '#app'; // Added defineNux
 import { useSupabaseUser } from '#imports';
 import { useUsers } from '~/composables/useUsers';
 
-export default defineNuxtRouteMiddleware(async (to, _from) => { // Changed to async
+export default defineNuxtRouteMiddleware(async (to, _from) => {
+  // Changed to async
   const { currentAppUser } = useUsers();
   const supabaseUser = useSupabaseUser();
 
@@ -15,7 +16,10 @@ export default defineNuxtRouteMiddleware(async (to, _from) => { // Changed to as
         console.log('[AuthAppUserOnly Middleware] App user session re-hydrated:', response.user.id);
       }
     } catch (error) {
-      console.warn('[AuthAppUserOnly Middleware] No active app user session during client-side rehydration attempt or error fetching /me:', error);
+      console.warn(
+        '[AuthAppUserOnly Middleware] No active app user session during client-side rehydration attempt or error fetching /me:',
+        error
+      );
       // currentAppUser remains null or undefined
     }
   }
@@ -27,7 +31,7 @@ export default defineNuxtRouteMiddleware(async (to, _from) => { // Changed to as
     // otherwise they might get stuck in a redirect loop if /dashboard also uses this middleware.
     // For now, assume /dashboard is safe or uses a different middleware.
     if (to.path !== '/dashboard') {
-        return navigateTo('/dashboard');
+      return navigateTo('/dashboard');
     }
   }
 
@@ -39,5 +43,7 @@ export default defineNuxtRouteMiddleware(async (to, _from) => { // Changed to as
     }
   }
   // If currentAppUser.value exists (and not a supabaseUser), allow access
-  console.log(`[AuthAppUserOnly Middleware] App User: ${!!currentAppUser.value}, Supabase User: ${!!supabaseUser.value}. Access to ${to.path} determined.`);
+  console.log(
+    `[AuthAppUserOnly Middleware] App User: ${!!currentAppUser.value}, Supabase User: ${!!supabaseUser.value}. Access to ${to.path} determined.`
+  );
 });

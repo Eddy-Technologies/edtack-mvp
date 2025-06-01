@@ -31,10 +31,13 @@ export function useUsers() {
   async function loginUsername(username_val: string, password_val: string) {
     console.log('[useUsers.ts] Calling /api/app-auth/login');
     try {
-      const response: { user: any; type: string; message: string } = await $fetch('/api/app-auth/login', {
-        method: 'POST',
-        body: { username: username_val, password: password_val },
-      });
+      const response: { user: any; type: string; message: string } = await $fetch(
+        '/api/app-auth/login',
+        {
+          method: 'POST',
+          body: { username: username_val, password: password_val },
+        }
+      );
 
       if (response.user) {
         currentAppUser.value = response.user;
@@ -79,7 +82,7 @@ export function useUsers() {
   async function loginEmail(email_val: string, password_val: string) {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email_val,
-      password: password_val
+      password: password_val,
     });
 
     if (error) {
@@ -102,7 +105,8 @@ export function useUsers() {
     return true;
   }
 
-  async function logoutEmail() { // Renamed from general 'logout' to clarify it's for email users
+  async function logoutEmail() {
+    // Renamed from general 'logout' to clarify it's for email users
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     console.log('[useUsers.ts] Email user logged out.');
@@ -137,10 +141,7 @@ export function useUsers() {
 
   // Update a user's profile by user_info_id
   async function updateUserInfo(user_info_id: string, updates: Record<string, any>) {
-    const { error } = await supabase
-      .from('user_infos')
-      .update(updates)
-      .eq('id', user_info_id);
+    const { error } = await supabase.from('user_infos').update(updates).eq('id', user_info_id);
     if (error) throw error;
     return true;
   }

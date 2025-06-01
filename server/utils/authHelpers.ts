@@ -26,7 +26,10 @@ const jwtStub = {
 export async function authenticateAppUserJWT(event: H3Event) {
   const authHeader = getHeader(event, 'authorization');
   if (!authHeader) {
-    throw createError({ statusCode: 401, statusMessage: 'Authorization header missing.' });
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Authorization header missing.',
+    });
   }
 
   const token = authHeader.split(' ')[1];
@@ -38,13 +41,19 @@ export async function authenticateAppUserJWT(event: H3Event) {
     const decoded: any = jwtStub.verify(token, JWT_SECRET);
 
     if (decoded.user_type !== 'app_user' || !decoded.app_user_id) {
-      throw createError({ statusCode: 403, statusMessage: 'Forbidden: Not an app_user or invalid token type.' });
+      throw createError({
+        statusCode: 403,
+        statusMessage: 'Forbidden: Not an app_user or invalid token type.',
+      });
     }
 
     event.context.user = decoded;
   } catch (err: any) {
     console.error('JWT verification failed:', err);
-    throw createError({ statusCode: 403, statusMessage: 'Invalid or expired token.' });
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Invalid or expired token.',
+    });
   }
 }
 
@@ -56,10 +65,16 @@ interface AppUserJWTPayload {
 }
 
 // Helper function to sign a JWT for an app_user and set it as an HttpOnly cookie
-export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWTPayload, 'user_type'>): string {
+export function signAndSetAppUserCookie(
+  event: H3Event,
+  payload: Omit<AppUserJWTPayload, 'user_type'>
+): string {
   if (!JWT_SECRET) {
     console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot sign token.');
-    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Server configuration error: JWT signing secret missing.',
+    });
   }
 
   const tokenPayload: AppUserJWTPayload = {
@@ -83,12 +98,18 @@ export function signAndSetAppUserCookie(event: H3Event, payload: Omit<AppUserJWT
 export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayload {
   const token = getCookie(event, 'app_user_jwt');
   if (!token) {
-    throw createError({ statusCode: 401, statusMessage: 'No app user session found (cookie missing).' });
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'No app user session found (cookie missing).',
+    });
   }
 
   if (!JWT_SECRET) {
     console.error('[AuthHelpers] JWT_SECRET is not defined. Cannot verify token.');
-    throw createError({ statusCode: 500, statusMessage: 'Server configuration error: JWT signing secret missing.' });
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Server configuration error: JWT signing secret missing.',
+    });
   }
 
   try {
@@ -98,7 +119,15 @@ export function verifyAppUserCookieAndGetPayload(event: H3Event): AppUserJWTPayl
   } catch (err: any) {
     console.error('[AuthHelpers] App user JWT cookie verification failed:', err.message);
     // Clear the invalid cookie
-    setCookie(event, 'app_user_jwt', '', { httpOnly: true, maxAge: 0, path: '/', sameSite: 'lax' });
-    throw createError({ statusCode: 403, statusMessage: 'Invalid or expired app user session (cookie).' });
+    setCookie(event, 'app_user_jwt', '', {
+      httpOnly: true,
+      maxAge: 0,
+      path: '/',
+      sameSite: 'lax',
+    });
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Invalid or expired app user session (cookie).',
+    });
   }
 }

@@ -23,7 +23,10 @@ export default defineEventHandler(async (event) => {
 
     if (selectError) {
       console.error('Supabase select error during username existence check:', selectError);
-      throw createError({ statusCode: 500, statusMessage: selectError.message });
+      throw createError({
+        statusCode: 500,
+        statusMessage: selectError.message,
+      });
     }
 
     if (userExists && userExists.length > 0) {
@@ -49,7 +52,10 @@ export default defineEventHandler(async (event) => {
 
     if (insertAppUserError || !newAppUser) {
       console.error('Supabase insert error during app_user registration:', insertAppUserError);
-      throw createError({ statusCode: 500, statusMessage: 'Failed to create app user.' });
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to create app user.',
+      });
     }
 
     // 4. Insert profile data into 'user_infos' table, linked to the new app_user
@@ -62,26 +68,32 @@ export default defineEventHandler(async (event) => {
         onboarding_completed: false,
         is_active: true,
       })
-      .select('id, first_name, last_name, gender, address, country_code, postal_code, date_of_birth, level_type, profile_picture_url, onboarding_completed, payment_customer_id, is_active, created_at, updated_at')
+      .select(
+        'id, first_name, last_name, gender, address, country_code, postal_code, date_of_birth, level_type, profile_picture_url, onboarding_completed, payment_customer_id, is_active, created_at, updated_at'
+      )
       .single();
 
     if (insertUserInfoError) {
       console.error('Supabase insert error during user_infos creation:', insertUserInfoError);
       // IMPORTANT: If user_infos creation fails, you might want to delete the app_user as well
       // to prevent orphaned records. This requires a transaction or a separate delete call.
-      throw createError({ statusCode: 500, statusMessage: insertUserInfoError.message });
+      throw createError({
+        statusCode: 500,
+        statusMessage: insertUserInfoError.message,
+      });
     }
 
     return {
       user: { ...newAppUser, user_info_id: newUserInfo.id, ...newUserInfo },
       type: 'app_user',
-      message: 'Username registration successful!'
+      message: 'Username registration successful!',
     };
   } catch (err: any) {
     console.error('Server-side username registration error:', err);
     throw createError({
       statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || err.message || 'Internal server error during username registration.',
+      statusMessage:
+        err.statusMessage || err.message || 'Internal server error during username registration.',
     });
   }
 });

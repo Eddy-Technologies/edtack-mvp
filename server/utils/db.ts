@@ -1,9 +1,4 @@
-import type {
-  RecentQuery,
-  ToolCallDetails,
-  TrendingUser,
-  UserQuery,
-} from '~~/types';
+import type { RecentQuery, ToolCallDetails, TrendingUser, UserQuery } from '~~/types';
 
 const getAvatarUrl = (toolCall: ToolCallDetails) => {
   let avatarUrl;
@@ -24,10 +19,7 @@ const getAvatarUrl = (toolCall: ToolCallDetails) => {
   return avatarUrl;
 };
 
-const shouldSaveUserQuery = (
-  toolCall: ToolCallDetails,
-  loggedInUser: string
-) => {
+const shouldSaveUserQuery = (toolCall: ToolCallDetails, loggedInUser: string) => {
   const responseItem = toolCall.response.items[0];
   if (
     responseItem &&
@@ -42,10 +34,7 @@ const shouldSaveUserQuery = (
   return true;
 };
 
-export const saveUserQuery = async (
-  loggedInUser: string,
-  userQuery: UserQuery
-) => {
+export const saveUserQuery = async (loggedInUser: string, userQuery: UserQuery) => {
   const toolCall = userQuery.toolCalls[0];
   const matchedUser = toolCall.request.q.match(/(?:author:|user:)(\S+)/);
   if (matchedUser) {
@@ -53,12 +42,10 @@ export const saveUserQuery = async (
     if (queriedUser !== loggedInUser) {
       const avatarUrl = getAvatarUrl(toolCall);
 
-      await storeQuery(
-        userQuery.userMessage,
-        userQuery.assistantReply,
-        toolCall,
-        { login: queriedUser, avatarUrl }
-      );
+      await storeQuery(userQuery.userMessage, userQuery.assistantReply, toolCall, {
+        login: queriedUser,
+        avatarUrl,
+      });
     }
   } else if (shouldSaveUserQuery(toolCall, loggedInUser)) {
     await storeQuery(userQuery.userMessage, userQuery.assistantReply, toolCall);
@@ -122,9 +109,7 @@ export const getRecentQueries = async () => {
   const db = hubDatabase();
   console.log('getRecentQueries');
   const result = await db
-    .prepare(
-      'SELECT id, text, response, queried_at FROM queries ORDER BY queried_at DESC LIMIT ?'
-    )
+    .prepare('SELECT id, text, response, queried_at FROM queries ORDER BY queried_at DESC LIMIT ?')
     .bind(10)
     .all<RecentQuery>();
 
@@ -142,15 +127,10 @@ export const saveUser = async (username: string, avatarUrl: string) => {
     .run();
 };
 
-export const saveFailedQuery = async (
-  queryText: string,
-  toolCallRequest: string
-) => {
+export const saveFailedQuery = async (queryText: string, toolCallRequest: string) => {
   const db = hubDatabase();
   await db
-    .prepare(
-      'INSERT INTO failed_queries (text, github_request) VALUES (?1, ?2)'
-    )
+    .prepare('INSERT INTO failed_queries (text, github_request) VALUES (?1, ?2)')
     .bind(queryText, toolCallRequest)
     .run();
 };

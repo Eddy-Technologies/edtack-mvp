@@ -89,8 +89,7 @@ export const handleMessageWithOpenAI = async function* (
           }
 
           if (toolCall.function?.arguments) {
-            currentToolCalls[toolCall.index].function.arguments +=
-              toolCall.function.arguments;
+            currentToolCalls[toolCall.index].function.arguments += toolCall.function.arguments;
           }
         }
       }
@@ -112,16 +111,12 @@ export const handleMessageWithOpenAI = async function* (
         if (toolCall.function.name === 'searchGithub') {
           try {
             const functionArgs = JSON.parse(toolCall.function.arguments);
-            const toolResult = await searchGithub(
-              event,
-              functionArgs.endpoint,
-              {
-                q: functionArgs.q,
-                sort: functionArgs.sort,
-                order: functionArgs.order,
-                per_page: functionArgs.per_page,
-              }
-            );
+            const toolResult = await searchGithub(event, functionArgs.endpoint, {
+              q: functionArgs.q,
+              sort: functionArgs.sort,
+              order: functionArgs.order,
+              per_page: functionArgs.per_page,
+            });
 
             queryToSave.toolCalls.push({
               request: functionArgs,
@@ -135,10 +130,7 @@ export const handleMessageWithOpenAI = async function* (
             });
           } catch (error) {
             console.error('Error parsing tool call arguments:', error);
-            await saveFailedQuery(
-              queryToSave.userMessage,
-              toolCall.function.arguments
-            );
+            await saveFailedQuery(queryToSave.userMessage, toolCall.function.arguments);
 
             throw error;
           }
@@ -163,10 +155,7 @@ export const handleMessageWithOpenAI = async function* (
           await saveUserQuery(loggedInUser, queryToSave);
         }
       } catch (error) {
-        console.error(
-          'Error generating final response or saving user query :',
-          error
-        );
+        console.error('Error generating final response or saving user query :', error);
 
         throw error;
       }

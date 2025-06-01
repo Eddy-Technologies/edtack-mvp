@@ -31,24 +31,12 @@ export class Item {
 
   // Create Item from a plain object
   static fromObject(obj: Partial<Item>): Item {
-    return new Item(
-      obj.id,
-      obj.name,
-      obj.price,
-      obj.quantity,
-      obj.image
-    );
+    return new Item(obj.id, obj.name, obj.price, obj.quantity, obj.image);
   }
 
   // Create a copy of the item
   clone(): Item {
-    return new Item(
-      this.id,
-      this.name,
-      this.price,
-      this.quantity,
-      this.image
-    );
+    return new Item(this.id, this.name, this.price, this.quantity, this.image);
   }
 }
 

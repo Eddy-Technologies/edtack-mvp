@@ -4,8 +4,8 @@ export default defineAppConfig({
     gray: 'neutral',
     button: {
       slots: {
-        label: 'truncate text-center'
-      }
-    }
-  }
+        label: 'truncate text-center',
+      },
+    },
+  },
 });
