@@ -6,8 +6,10 @@
     :class="computedClass"
     @click="handleClick"
   >
-    <slot name="icon" />
-    <span class="inline-block">{{ text }}</span>
+    <div class="flex items-center justify-center w-full h-full">
+      <slot name="icon" />
+      <span v-if="text" class="inline-block">{{ text }}</span>
+    </div>
   </UButton>
 </template>
 
@@ -16,8 +18,8 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const props = defineProps<{
-  text: string;
-  route: string;
+  text?: string;
+  route?: string;
   color?: string;
   size?: string;
   variant?: string;
@@ -33,7 +35,7 @@ const router = useRouter();
 
 const handleClick = () => {
   emit('clicked');
-  router.push(props.route);
+  if (props.route !== undefined) router.push(props.route);
 };
 
 // Compute dynamic classes
