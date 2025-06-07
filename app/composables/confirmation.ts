@@ -4,7 +4,6 @@ export function useConfirmation() {
   const confirm = useConfirm();
   const { showSuccessMessage, showInfoMessage } = useMessages();
 
-  // eslint-disable-next-line unused-imports/no-unused-vars
   function doNothing(id: string | number) {}
 
   function confirmDelete(

@@ -10,10 +10,10 @@ import { useCreditStore } from '~/stores/credit'; // Import your store
 import { useProfileStore } from '~/stores/profile';
 import ParentHeader from '~/components/header/ParentHeader.vue';
 import ChildHeader from '~/components/header/ChildHeader.vue';
-import BaseHeader from '~/components/header/BaseHeader.vue';
+// import BaseHeader from '~/components/header/BaseHeader.vue';
 
 export default {
-  components: { BaseHeader, ChildHeader, ParentHeader },
+  components: { ChildHeader, ParentHeader },
   setup() {
     const creditStore = useCreditStore();
     const profileStore = useProfileStore();

@@ -1,6 +1,5 @@
 import type { H3Event } from 'h3';
-import { serverSupabaseClient } from '#supabase/server';
-import { serverSupabaseServiceRole } from '#supabase/server'; // Supabase privileged client for admin tasks
+import { serverSupabaseClient, serverSupabaseServiceRole } from '#supabase/server';
 import { useRuntimeConfig } from '#imports'; // Nuxt runtime config
 
 const config = useRuntimeConfig();
