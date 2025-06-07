@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
+        'primary': {
           DEFAULT: '#14b8a6',
           50: '#e8f8f6',
           100: '#d0f1ed',
@@ -17,9 +17,9 @@ module.exports = {
           800: '#084a42',
           900: '#042521',
         },
-        secondary: '#f59e0b', // e.g., orange
-        accent: '#10b981', // greenish accent
-        background: {
+        'secondary': '#f59e0b', // e.g., orange
+        'accent': '#10b981', // greenish accent
+        'background': {
           DEFAULT: '#c8e6ce',
           50: '#fafdfa',
           100: '#f4faf5',
@@ -32,7 +32,7 @@ module.exports = {
           800: '#505c52',
           900: '#282e29',
         }, // light background
-        danger: '#ef4444', // for errors or alerts
+        'danger': '#ef4444', // for errors or alerts
         'login-placeholder-bg': '#0d1b2a',
       },
       fontFamily: {
@@ -40,7 +40,7 @@ module.exports = {
         heading: ['"Poppins"', 'sans-serif'],
       },
       borderRadius: {
-        xl: '1rem',
+        'xl': '1rem',
         '2xl': '1.5rem',
       },
       spacing: {

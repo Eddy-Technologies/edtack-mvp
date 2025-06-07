@@ -11,7 +11,7 @@
               type="number"
               class="w-full p-2 border rounded withdrawal-input text-black"
               placeholder="Enter withdrawal amount"
-            />
+            >
             Credits
           </div>
         </div>

@@ -40,7 +40,7 @@
       <div v-if="cart.length > 0" class="order-summary">
         <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
         <div v-for="(item, index) in cart" :key="index" class="order-item">
-          <img :src="item.image" :alt="item.name" class="item-image" />
+          <img :src="item.image" :alt="item.name" class="item-image">
           <span>{{ item.name }} x {{ item.quantity }}</span>
           <span>{{ (item.price * item.quantity).toFixed(2) }} Credits</span>
         </div>

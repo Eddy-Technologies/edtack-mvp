@@ -26,7 +26,12 @@
         Logout
       </UButton>
       <!-- Not logged in -->
-      <UButton v-else to="login" icon="i-heroicons-arrow-right-end-on-rectangle" color="gray">
+      <UButton
+        v-else
+        to="login"
+        icon="i-heroicons-arrow-right-end-on-rectangle"
+        color="gray"
+      >
         Login
       </UButton>
       <!-- ColorMode /> -->
@@ -72,7 +77,12 @@
           Logout
         </UButton>
         <!-- Not logged in -->
-        <UButton v-else to="login" icon="i-heroicons-arrow-right-end-on-rectangle" color="gray">
+        <UButton
+          v-else
+          to="login"
+          icon="i-heroicons-arrow-right-end-on-rectangle"
+          color="gray"
+        >
           Login
         </UButton>
       </div>

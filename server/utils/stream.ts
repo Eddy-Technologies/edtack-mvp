@@ -19,9 +19,7 @@ export const asyncGeneratorToStream = (asyncGenerator: AsyncGenerator<string, vo
       } catch (err) {
         console.log('Error in stream:', err);
 
-        /* eslint-disable @stylistic/operator-linebreak */
         const errorMessage = err instanceof Error ? err.message : 'An error occurred in the stream';
-        /* eslint-enable @stylistic/operator-linebreak */
 
         controller.enqueue(
           encoder.encode(

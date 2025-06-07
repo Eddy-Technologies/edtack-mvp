@@ -2,19 +2,18 @@
   <div>
     <NuxtRouteAnnouncer />
     <NuxtLoadingIndicator />
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
+    <noscript><iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT"
+      height="0"
+      width="0"
+      style="display: none; visibility: hidden"
       ></iframe
-    ></noscript>
+      ></noscript>
     <NuxtPage />
     <UNotifications />
 
     <!-- Feedback Components -->
-    <FeedbackButton @openFeedback="openFeedbackModal" />
+    <FeedbackButton @open-feedback="openFeedbackModal" />
     <FeedbackModal :show="showFeedbackModal" @close="closeFeedbackModal" />
     <!-- End Feedback Components -->
 

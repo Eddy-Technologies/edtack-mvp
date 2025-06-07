@@ -5,7 +5,7 @@
       :src="aboutDesktop"
       class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-0 opacity-80 pointer-events-none"
       alt="Eddy character"
-    />
+    >
 
     <!-- Main Content -->
     <div class="relative z-10 flex flex-col justify-center items-center">

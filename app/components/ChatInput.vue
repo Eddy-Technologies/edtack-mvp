@@ -7,7 +7,7 @@
         placeholder="Type something here"
         class="flex-1 p-3 border rounded-lg text-sm"
         @keydown.enter="emitMessage"
-      />
+      >
       <Button
         icon="i-heroicons-arrow-right-20-solid"
         color="black"
@@ -15,7 +15,7 @@
         bold
         rounded
         hover
-        extraClasses="p-2 rounded-full hover:bg-gray-800"
+        extra-classes="p-2 rounded-full hover:bg-gray-800"
         @click="emitMessage"
       />
     </div>

@@ -45,7 +45,7 @@
       <p class="mb-2 text-sm">
         Do not PayNow as we are in beta testing but if you want to support us, go ahead :)
       </p>
-      <img class="w-40 m-2" :src="PayNow" alt="PayNow" />
+      <img class="w-40 m-2" :src="PayNow" alt="PayNow">
     </div>
 
     <!-- Confirmation Modal -->

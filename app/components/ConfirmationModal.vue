@@ -11,14 +11,14 @@
 
       <div class="flex justify-around mt-4">
         <button
-          @click="confirm"
           class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded transition"
+          @click="confirm"
         >
           Confirm
         </button>
         <button
-          @click="cancel"
           class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded transition"
+          @click="cancel"
         >
           Cancel
         </button>

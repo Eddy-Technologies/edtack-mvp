@@ -21,7 +21,7 @@
             :src="item.image"
             :alt="item.name"
             class="w-[150px] h-[150px] object-cover rounded mb-2"
-          />
+          >
           <button
             class="absolute top-2 right-2 bg-black/70 text-white text-xs px-3 py-1 rounded opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
             :aria-label="'Add ' + item.name + ' to Cart'"
@@ -50,7 +50,7 @@
           :src="item.image"
           :alt="item.name"
           class="w-[150px] h-[150px] object-cover rounded mb-2"
-        />
+        >
         <div>
           <h3>{{ item.name }}</h3>
           <p>Price: {{ item.price }} Credits</p>
@@ -68,9 +68,9 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useCreditStore } from '~/stores/credit';
 
 import placeholder1 from '../../../assets/a.png';
 import placeholder2 from '../../../assets/b.png';
@@ -80,6 +80,7 @@ import placeholder5 from '../../../assets/e.png';
 import placeholder6 from '../../../assets/f.png';
 import placeholder7 from '../../../assets/g.png';
 import placeholder8 from '../../../assets/h.png';
+import { useCreditStore } from '~/stores/credit';
 
 const props = defineProps<{
   cart: Array<any>;

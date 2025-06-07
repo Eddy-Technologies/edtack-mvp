@@ -1,6 +1,6 @@
 // server/api/feedback.post.ts
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { serverSupabaseClient } from '#supabase/server'; // Path might vary based on project setup
-import { type SupabaseClient } from '@supabase/supabase-js';
 
 export default defineEventHandler(async (event) => {
   const client: SupabaseClient = await serverSupabaseClient(event);

@@ -19,7 +19,7 @@
             type="checkbox"
             class="toggle-checkbox"
             @change="toggleAll(setting)"
-          />
+          >
         </div>
 
         <!-- Children Toggles -->

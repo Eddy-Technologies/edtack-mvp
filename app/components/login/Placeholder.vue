@@ -18,6 +18,7 @@
     <div class="mt-6 opacity-70 text-xs">Eddy 2025. All rights reserved.</div>
   </div>
 </template>
+
 <script>
 import { ref } from 'vue';
 import challenge from '../../../assets/home-mobile.png';

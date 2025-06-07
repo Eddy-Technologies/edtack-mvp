@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import Modal from '~/components/common/Modal.vue';
 import FeedbackForm from './FeedbackForm.vue';
+import Modal from '~/components/common/Modal.vue';
 
 defineProps<{
   show: boolean;

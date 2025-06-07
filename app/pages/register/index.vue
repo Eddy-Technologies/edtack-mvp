@@ -21,8 +21,7 @@
               <a
                 class="text-primary cursor-pointer font-semibold hover:underline"
                 @click="toggleRegistrationMethod"
-                >username</a
-              >
+              >username</a>
             </span>
           </div>
 
@@ -33,14 +32,14 @@
               placeholder="First Name"
               class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
               required
-            />
+            >
             <input
               v-model="lastName"
               type="text"
               placeholder="Last Name"
               class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
               required
-            />
+            >
           </div>
           <input
             v-model="email"
@@ -48,17 +47,17 @@
             placeholder="Email"
             class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
             required
-          />
+          >
           <input
             v-model="password"
             type="password"
             placeholder="Password"
             class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
             required
-          />
+          >
 
           <div class="flex items-start space-x-2 text-sm text-gray-600">
-            <input type="checkbox" required class="mt-1" />
+            <input type="checkbox" required class="mt-1">
             <p class="text-sm text-black">
               I agree to the
               <a href="#" class="text-primary underline">terms of use</a> and
@@ -84,8 +83,7 @@
               <a
                 class="text-primary cursor-pointer font-semibold hover:underline"
                 @click="toggleRegistrationMethod"
-                >email</a
-              >
+              >email</a>
             </span>
           </div>
 
@@ -100,14 +98,14 @@
               placeholder="First Name"
               class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
               required
-            />
+            >
             <input
               v-model="lastName"
               type="text"
               placeholder="Last Name"
               class="w-1/2 p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
               required
-            />
+            >
           </div>
 
           <input
@@ -116,17 +114,17 @@
             placeholder="Username"
             class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
             required
-          />
+          >
           <input
             v-model="usernamePassword"
             type="password"
             placeholder="Password"
             class="w-full p-3 rounded border border-gray-300 focus:ring focus:ring-blue-500 bg-white text-black"
             required
-          />
+          >
 
           <div class="flex items-start space-x-2 text-sm text-gray-600">
-            <input type="checkbox" required class="mt-1" />
+            <input type="checkbox" required class="mt-1">
             <p class="text-sm text-black">
               I agree to the
               <a href="#" class="text-primary underline">terms of use</a> and
@@ -157,8 +155,7 @@
             <a
               class="text-primary cursor-pointer font-semibold hover:underline"
               @click="routeTo('/login')"
-              >Sign in</a
-            >
+            >Sign in</a>
           </p>
         </div>
       </div>

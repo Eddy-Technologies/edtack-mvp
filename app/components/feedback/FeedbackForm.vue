@@ -3,29 +3,29 @@
     <h2 class="text-xl font-bold mb-4 text-center">We’d love your feedback!</h2>
     <form class="flex flex-col gap-4" @submit="handleSubmit">
       <input
+        v-model="formData.name"
         type="text"
         name="name"
-        v-model="formData.name"
         placeholder="Your Name"
         required
         class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
-      />
+      >
       <input
+        v-model="formData.email"
         type="email"
         name="email"
-        v-model="formData.email"
         placeholder="Your Email"
         required
         class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
-      />
+      >
       <textarea
-        name="message"
         v-model="formData.message"
+        name="message"
         placeholder="Your Feedback"
         rows="5"
         required
         class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
-      ></textarea>
+      />
 
       <div class="flex justify-end">
         <UButton

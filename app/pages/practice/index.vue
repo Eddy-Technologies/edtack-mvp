@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import { useQuizStore } from '~/stores/quiz';
 import { useCreditStore } from '~/stores/credit';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const quizStore = useQuizStore();

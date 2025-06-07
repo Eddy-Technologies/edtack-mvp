@@ -9,21 +9,21 @@
           placeholder="Your Name"
           required
           class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        >
         <input
           type="email"
           name="email"
           placeholder="Your Email"
           required
           class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        >
         <textarea
           name="message"
           placeholder="Your Feedback"
           rows="5"
           required
           class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        ></textarea>
+        />
 
         <!-- ✅ Button aligned to right -->
         <div class="flex justify-end">

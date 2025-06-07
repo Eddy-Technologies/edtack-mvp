@@ -19,14 +19,14 @@
           placeholder="Email or Username"
           class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-primary-500 bg-white"
           required
-        />
+        >
         <input
           v-model="password"
           type="password"
           placeholder="Password"
           class="w-full p-3 border rounded border-gray-300 focus:ring focus:ring-primary-500 bg-white"
           required
-        />
+        >
 
         <div class="text-center">
           <Button
@@ -37,7 +37,7 @@
             rounded
             border
             hover
-            extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
           />
         </div>
 
@@ -46,8 +46,7 @@
           <a
             class="text-primary cursor-pointer font-semibold hover:underline"
             @click="routeTo('/register')"
-            >Sign up</a
-          >
+          >Sign up</a>
         </p>
       </form>
     </div>

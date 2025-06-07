@@ -17,7 +17,7 @@
             type="checkbox"
             :value="reason"
             class="accent-primary-600"
-          />
+          >
           {{ reason }}
         </label>
       </li>

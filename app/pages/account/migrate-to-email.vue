@@ -36,12 +36,13 @@
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
               placeholder="New Email address"
-            />
+            >
           </div>
           <div>
-            <label for="current-password" class="sr-only"
-              >Current Password (for username account)</label
-            >
+            <label
+              for="current-password"
+              class="sr-only"
+            >Current Password (for username account)</label>
             <input
               id="current-password"
               v-model="currentPassword"
@@ -51,12 +52,13 @@
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
               placeholder="Current Password (for username account)"
-            />
+            >
           </div>
           <div>
-            <label for="new-supabase-password" class="sr-only"
-              >New Password for Email Account</label
-            >
+            <label
+              for="new-supabase-password"
+              class="sr-only"
+            >New Password for Email Account</label>
             <input
               id="new-supabase-password"
               v-model="newSupabasePassword"
@@ -66,7 +68,7 @@
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
               placeholder="New Password for Email Account"
-            />
+            >
           </div>
           <div>
             <label for="confirm-new-supabase-password" class="sr-only">Confirm New Password</label>
@@ -79,7 +81,7 @@
               required
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
               placeholder="Confirm New Password"
-            />
+            >
           </div>
         </div>
 

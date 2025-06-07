@@ -8,7 +8,7 @@
             src="https://randomuser.me/api/portraits/men/1.jpg"
             class="w-8 h-8 rounded-full"
             alt="john"
-          />
+          >
           Eddy
         </ULink>
       </div>

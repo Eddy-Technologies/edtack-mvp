@@ -9,7 +9,7 @@
             <!-- Row 1: Image, Name, Quantity & Delete -->
             <div class="flex items-center justify-between w-full gap-2">
               <div class="flex items-center gap-2">
-                <img :src="item.image" :alt="item.name" class="w-10 h-10 rounded object-cover" />
+                <img :src="item.image" :alt="item.name" class="w-10 h-10 rounded object-cover">
                 <p class="text-sm">{{ item.name }}</p>
               </div>
               <div class="flex items-center gap-2">
@@ -17,9 +17,9 @@
                   v-model.number="item.quantity"
                   type="number"
                   min="1"
-                  @change="updateQuantity(item)"
                   class="w-14 px-2 py-1 border rounded text-sm text-center"
-                />
+                  @change="updateQuantity(item)"
+                >
                 <UIcon
                   name="i-heroicons-trash"
                   class="w-5 h-5 text-red-500 cursor-pointer"
@@ -75,7 +75,7 @@
       <ul>
         <li v-for="item in cart" :key="item.id" class="flex justify-between items-center mb-3">
           <div class="flex items-center gap-2">
-            <img :src="item.image" :alt="item.name" class="w-10 h-10 rounded object-cover" />
+            <img :src="item.image" :alt="item.name" class="w-10 h-10 rounded object-cover">
             <p class="text-sm">{{ item.name }}</p>
           </div>
           <div class="flex items-center gap-2">
@@ -83,9 +83,9 @@
               v-model.number="item.quantity"
               type="number"
               min="1"
-              @change="updateQuantity(item)"
               class="w-14 px-2 py-1 border rounded text-sm text-center"
-            />
+              @change="updateQuantity(item)"
+            >
             <UIcon
               name="i-heroicons-trash"
               class="w-5 h-5 text-red-500 cursor-pointer"

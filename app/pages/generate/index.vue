@@ -8,7 +8,7 @@
         :src="background"
         class="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
         alt="practice"
-      />
+      >
       <div
         class="max-w-xl w-full bg-white/90 p-6 rounded-2xl shadow-xl ring-1 ring-black/5 backdrop-blur-md space-y-6 transition-all duration-300 ease-in-out"
       >
@@ -16,7 +16,7 @@
           <span class="text-primary">Generate Your Practice</span>
         </h1>
 
-        <form @submit.prevent="fetchAnswer" class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4" @submit.prevent="fetchAnswer">
           <div>
             <label for="level" class="block text-sm font-medium text-primary mb-1">Level</label>
             <select
@@ -32,9 +32,10 @@
           </div>
 
           <div>
-            <label for="innerLevel" class="block text-sm font-medium text-primary mb-1"
-              >Inner Level</label
-            >
+            <label
+              for="innerLevel"
+              class="block text-sm font-medium text-primary mb-1"
+            >Inner Level</label>
             <select
               id="innerLevel"
               v-model="selectedInnerLevel"
@@ -66,13 +67,14 @@
           </div>
 
           <div>
-            <label for="topic" class="block text-sm font-medium text-primary mb-1"
-              >Topic (Optional)</label
-            >
+            <label
+              for="topic"
+              class="block text-sm font-medium text-primary mb-1"
+            >Topic (Optional)</label>
             <select
-              :disabled="topics.length <= 0"
               id="topic"
               v-model="selectedTopic"
+              :disabled="topics.length <= 0"
               class="w-full rounded-md border border-gray-300 bg-gray-100/70 px-3 py-2"
             >
               <option value="">Select Topic (Optional)</option>
@@ -83,9 +85,10 @@
           </div>
 
           <div>
-            <label for="numberInput" class="block text-sm font-medium text-primary mb-1"
-              >Questions</label
-            >
+            <label
+              for="numberInput"
+              class="block text-sm font-medium text-primary mb-1"
+            >Questions</label>
             <select
               id="numberInput"
               v-model="numberInput"
@@ -118,14 +121,14 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import mathSyllabus from '../../../assets/primary-math-syllabus.json';
 import scienceSyllabus from '../../../assets/primary-science-syllabus.json';
+import background from '../../../assets/practice2.png';
 import Loading from '~/components/common/Loading.vue';
 import AppHeader from '~/components/AppHeader.vue';
-import background from '../../../assets/practice2.png';
 import { useCreditStore } from '~/stores/credit';
 import { useQuizStore } from '~/stores/quiz';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const isLoading = ref(false);
@@ -251,9 +254,9 @@ const fetchAnswer = async () => {
   } catch (error: any) {
     console.error('Error fetching quiz:', error);
     errorMsg.value =
-      error?.message === 'Exceeded limit'
-        ? 'Exceeded limit: Unable to generate questions. Please try again later.'
-        : 'An error occurred while generating the quiz.';
+      error?.message === 'Exceeded limit' ?
+        'Exceeded limit: Unable to generate questions. Please try again later.' :
+        'An error occurred while generating the quiz.';
   } finally {
     isLoading.value = false;
   }

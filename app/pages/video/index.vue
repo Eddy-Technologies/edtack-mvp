@@ -13,7 +13,7 @@
     <div
       class="w-1 cursor-ew-resize bg-gray-300 hover:bg-gray-400"
       @mousedown="startDragging"
-    ></div>
+    />
 
     <!-- Main Chat Area -->
     <div class="flex flex-col flex-1 h-full">

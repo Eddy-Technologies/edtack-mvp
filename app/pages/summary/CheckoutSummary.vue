@@ -6,7 +6,7 @@
         <div class="cart-and-withdrawal">
           <div class="cart-items">
             <div v-for="(item, index) in cart" :key="index" class="cart-item">
-              <img :src="item.image" :alt="item.name" class="item-image" />
+              <img :src="item.image" :alt="item.name" class="item-image">
               <div class="item-details">
                 <span class="item-name">{{ item.name }}</span>
                 <div class="item-price-quantity">
@@ -17,11 +17,9 @@
                     :min="1"
                     class="quantity-input text-black"
                     @change="updateQuantity(item)"
-                  />
+                  >
                 </div>
-                <span class="item-total"
-                  >{{ (item.price * item.quantity).toFixed(2) }} Credits</span
-                >
+                <span class="item-total">{{ (item.price * item.quantity).toFixed(2) }} Credits</span>
               </div>
               <div class="item-actions">
                 <button class="btn-icon btn-delete" title="Delete item">

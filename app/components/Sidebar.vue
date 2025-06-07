@@ -12,7 +12,7 @@
         bold
         rounded
         hover
-        extraClasses="p-2 rounded-full hover:bg-gray-800"
+        extra-classes="p-2 rounded-full hover:bg-gray-800"
         @click="toggleSidebar"
       />
       <Button
@@ -24,7 +24,7 @@
         bold
         rounded
         hover
-        extraClasses="p-2 rounded-full hover:bg-gray-800"
+        extra-classes="p-2 rounded-full hover:bg-gray-800"
         @click="toggleSidebar"
       />
     </div>
@@ -34,7 +34,7 @@
       <div class="text-gray-500 mb-4">Chat History</div>
 
       <div class="relative w-[400px] h-[800px] mx-auto bg-gray-600 rounded-xl shadow-inner p-2">
-        <img src="/snorlax.gif" alt="Snorlax" class="w-full h-full object-contain" />
+        <img src="/snorlax.gif" alt="Snorlax" class="w-full h-full object-contain">
 
         <!-- Floating action buttons -->
         <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-4 mb-6">
@@ -46,7 +46,7 @@
             bold
             rounded
             hover
-            extraClasses="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg"
+            extra-classes="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg"
             @click="handleCall"
           />
           <Button
@@ -57,7 +57,7 @@
             bold
             rounded
             hover
-            extraClasses="bg-gray-300 hover:bg-gray-400 rounded-full p-4 shadow-lg"
+            extra-classes="bg-gray-300 hover:bg-gray-400 rounded-full p-4 shadow-lg"
             @click="handleMute"
           />
         </div>
@@ -68,6 +68,7 @@
 
 <script setup>
 import Button from '~/components/common/Button.vue';
+
 const emit = defineEmits(['toggle-sidebar']);
 defineProps({ collapsed: Boolean }); // optional if you want to conditionally hide labels, etc.
 

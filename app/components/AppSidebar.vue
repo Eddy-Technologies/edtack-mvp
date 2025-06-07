@@ -38,14 +38,12 @@ onMounted(() => {
       @item-click="onItemClick"
     >
       <template #header>
-        <img class="m-2 w-40" src="../../assets/a.png" />
+        <img class="m-2 w-40" src="../../assets/a.png">
       </template>
       <template #footer>
         <div class="m-2 text-center text-xs text-color-[var(--primary-color)]">
-          <span class="font-medium ml-2"
-            >Super Workshop - {{ config.public['APP_VERSION'] }} -
-            {{ new Date().toDateString() }}</span
-          >
+          <span class="font-medium ml-2">Super Workshop - {{ config.public['APP_VERSION'] }} -
+            {{ new Date().toDateString() }}</span>
         </div>
       </template>
     </sidebar-menu>

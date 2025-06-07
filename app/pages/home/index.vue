@@ -6,7 +6,7 @@
       :src="background"
       class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
       alt="home"
-    />
+    >
 
     <!-- Mobile Background Layer -->
     <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
@@ -14,11 +14,11 @@
       <img
         :src="mobileLeft"
         class="absolute top-[180px] sm:top-[100px] left-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      />
+      >
       <img
         :src="mobileRight"
         class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      />
+      >
     </div>
 
     <!-- Overlay content -->
@@ -29,11 +29,11 @@
       <div class="px-4 sm:px-8 mb-4 max-w-full font-serif mt-2 text-center">
         <div class="flex items-center justify-center flex-wrap">
           <h1 class="text-2xl md:text-3xl text-black mr-3">Welcome to Eddy</h1>
-          <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto" />
+          <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto">
         </div>
         <h2 class="text-lg sm:text-xl md:text-2xl text-black mt-2 leading-snug">
           An educational platform where parents can incentivise and motivate
-          <br class="hidden sm:block" />
+          <br class="hidden sm:block">
           their children for consistent and fun learning.
         </h2>
       </div>
@@ -51,7 +51,7 @@
               rounded
               border
               hover
-              extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+              extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
             />
             <Button
               text="Try Eddy Now"
@@ -62,7 +62,7 @@
               rounded
               border
               hover
-              extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+              extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
             />
           </div>
         </div>
@@ -109,7 +109,7 @@
             rounded
             border
             hover
-            extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
           />
           <Button
             text="About Us"
@@ -120,7 +120,7 @@
             rounded
             border
             hover
-            extraClasses="w-[220px] text-base sm:text-lg md:text-xl"
+            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
           />
         </div>
       </div>

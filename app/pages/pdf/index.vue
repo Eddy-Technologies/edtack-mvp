@@ -2,7 +2,12 @@
   <div>
     <AppHeader />
     <div class="app">
-      <input type="file" accept=".pdf" class="file-uploader" @change="handleFileUpload" />
+      <input
+        type="file"
+        accept=".pdf"
+        class="file-uploader"
+        @change="handleFileUpload"
+      >
     </div>
   </div>
 </template>

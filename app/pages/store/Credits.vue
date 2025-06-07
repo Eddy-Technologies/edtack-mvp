@@ -17,7 +17,7 @@
         placeholder="Enter amount to withdraw"
         :disabled="credits === 0"
         @input="onInputChange"
-      />
+      >
     </div>
 
     <button class="withdraw-button" @click="withdrawCredits">Withdraw</button>
