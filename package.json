@@ -8,9 +8,10 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
+     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@google/genai": "^0.8.0",
@@ -50,6 +51,8 @@
     "@nuxt/eslint-config": "^0.5.7",
     "@types/jsonwebtoken": "^9.0.9",
     "eslint": "^9.23.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "sass-embedded": "^1.86.0",
     "vue-tsc": "^2.2.8",
@@ -62,5 +65,10 @@
       "@nuxtjs/mdc@<=0.13.2": ">=0.13.3",
       "cookie@<0.7.0": ">=0.7.0"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue}": [
+      "eslint --fix"
+    ]
   }
 }
