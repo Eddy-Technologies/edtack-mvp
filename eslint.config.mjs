@@ -7,4 +7,7 @@ export default withNuxt().overrideRules({
   'vue/singleline-html-element-content-newline': ['off'],
   'vue/operator-linebreak': ['off'],
   '@stylistic/operator-linebreak': ['error', 'after'],
+  '@typescript-eslint/no-explicit-any': 'off',
+  '@typescript-eslint/no-implicit-any': 'off',
+  '@typescript-eslint/explicit-any': 'off'
 });
