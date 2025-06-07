@@ -23,12 +23,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 
+const route = useRoute();
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
+const selectedCharacter = ref<string | null>(null);
+
+onMounted(() => {
+  // Get character parameter from URL
+  if (route.query.character) {
+    selectedCharacter.value = route.query.character as string;
+    console.log('Selected character:', selectedCharacter.value);
+    // You can use this character info to customize the chat experience
+  }
+});
 
 const toggleSidebar = () => {
   collapsed.value = !collapsed.value;

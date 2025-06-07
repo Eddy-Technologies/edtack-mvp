@@ -1,221 +1,132 @@
 <template>
-  <div class="relative w-full min-h-screen bg-background overflow-auto text-center flex flex-col">
-    <!-- Desktop Background Image -->
-    <img
-      v-if="!isMobile"
-      :src="background"
-      class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
-      alt="home"
-    >
+  <div class="relative w-full min-h-screen bg-background overflow-auto">
+    <!-- Landing Message -->
+    <div class="px-4 sm:px-8 py-8 text-center">
+      <div class="flex items-center justify-center flex-wrap mb-4">
+        <h1 class="text-3xl md:text-4xl text-black mr-3 font-heading">Welcome to Eddy</h1>
+        <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto">
+      </div>
+      <h2 class="text-lg sm:text-xl md:text-2xl text-black leading-snug max-w-4xl mx-auto">
+        An educational platform where parents can incentivise and motivate
+        their children for consistent and fun learning.
+      </h2>
 
-    <!-- Mobile Background Layer -->
-    <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
-      <div class="absolute inset-0 bg-background z-0" />
-      <img
-        :src="mobileLeft"
-        class="absolute top-[180px] sm:top-[100px] left-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      >
-      <img
-        :src="mobileRight"
-        class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      >
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+        <Button
+          text="Login"
+          route="/login"
+          color="white"
+          size="xl"
+          bold
+          rounded
+          border
+          hover
+          extra-classes="w-[200px] text-base sm:text-lg"
+        />
+        <Button
+          text="Try Eddy Now"
+          route="/register"
+          color="primary"
+          size="xl"
+          bold
+          rounded
+          hover
+          extra-classes="w-[200px] text-base sm:text-lg"
+        />
+      </div>
     </div>
 
-    <!-- Overlay content -->
-    <div
-      class="relative md:mt-0 mt-10 z-10 pt-10 sm:pt-16 md:pt-16 flex flex-col items-center px-4 sm:px-6"
-    >
-      <!-- Landing Message -->
-      <div class="px-4 sm:px-8 mb-4 max-w-full font-serif mt-2 text-center">
-        <div class="flex items-center justify-center flex-wrap">
-          <h1 class="text-2xl md:text-3xl text-black mr-3">Welcome to Eddy</h1>
-          <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto">
+    <!-- First Section: 3x3 Character Grid -->
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-heading text-black mb-4">
+            Meet Your Learning Companions
+          </h2>
+          <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+            Choose from our diverse cast of AI tutors, each with their own expertise and personality.
+            Click on any character to start your learning journey!
+          </p>
         </div>
-        <h2 class="text-lg sm:text-xl md:text-2xl text-black mt-2 leading-snug">
-          An educational platform where parents can incentivise and motivate
-          <br class="hidden sm:block">
-          their children for consistent and fun learning.
+        <CharacterGrid />
+      </div>
+    </section>
+
+    <!-- Second Section: Character Carousel -->
+    <section class="py-12 px-4 bg-white/50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-heading text-black mb-4">
+            Popular Tutors
+          </h2>
+          <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+            Discover our most popular AI tutors and their specialties.
+          </p>
+        </div>
+        <CharacterCarousel />
+      </div>
+    </section>
+
+    <!-- Third Section: Chat Demo -->
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-heading text-black mb-4">
+            Experience AI-Powered Learning
+          </h2>
+          <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+            Try our interactive chat demo to see how Eddy can help with your studies.
+            Ask questions, get explanations, and discover personalized learning!
+          </p>
+        </div>
+        <ChatDemo />
+      </div>
+    </section>
+
+    <!-- Final Call-to-Action -->
+    <section class="py-16 px-4 bg-primary-50">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-heading text-black mb-6">
+          Ready to Transform Your Learning?
         </h2>
-      </div>
-
-      <div class="flex flex-col mb-4 md:mb-0 items-center justify-center gap-4 w-full">
-        <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto items-center">
-          <!-- Top button centered -->
-          <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-4">
-            <Button
-              text="Login"
-              route="/login"
-              color="white"
-              size="xl"
-              bold
-              rounded
-              border
-              hover
-              extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-            />
-            <Button
-              text="Try Eddy Now"
-              route="/register"
-              color="white"
-              size="xl"
-              bold
-              rounded
-              border
-              hover
-              extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Info Boxes -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:mt-6 gap-5 w-full max-w-[280px] sm:max-w-[600px] mb-5"
-      >
-        <div
-          v-for="(box, i) in infoBoxes"
-          :key="i"
-          class="relative bg-white/70 p-4 sm:p-5 rounded-lg text-black text-center h-[240px] sm:h-[250px] flex flex-col justify-center items-center shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out"
-          @mouseenter="hoveredBoxIndex = i"
-          @mouseleave="hoveredBoxIndex = null"
-        >
-          <!--
-          <div v-if="hoveredBoxIndex === i" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-          <img :src="box.image" class="w-[300px] sm:w-[500px] max-w-[80vw] h-auto object-contain shadow-lg rounded transition-transform duration-300 scale-110" />
-          </div>
-          -->
-          <div>
-            <UIcon :name="box.icon" class="text-[2rem] sm:text-[2.5rem] text-blue-700" />
-          </div>
-          <p class="text-xs sm:text-sm md:text-base font-bold mt-2">
-            {{ box.label }}
-          </p>
-          <p class="text-base sm:text-xl md:text-2xl mt-2 leading-snug">
-            {{ box.description }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Call-to-Actions -->
-      <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
-        <!-- Responsive button layout -->
-        <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-4">
+        <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+          Join thousands of students and parents who are already using Eddy to make learning more engaging and effective.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button
+            text="Start Free Trial"
+            route="/register"
+            color="primary"
+            size="xl"
+            bold
+            rounded
+            hover
+            extra-classes="w-[220px] text-base sm:text-lg"
+          />
           <Button
             text="Request Demo"
             route="/demo"
-            color="black"
+            color="white"
             size="xl"
             bold
             rounded
             border
             hover
-            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-          />
-          <Button
-            text="About Us"
-            route="/about"
-            color="black"
-            size="xl"
-            bold
-            rounded
-            border
-            hover
-            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
+            extra-classes="w-[220px] text-base sm:text-lg"
           />
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import home from '../../../assets/home.png';
-import homeMobile from '../../../assets/home-mobile.png';
-import parent from '../../../assets/parent.png';
-import child from '../../../assets/child.png';
-import deposit from '../../../assets/deposit.png';
-import { useRouter } from '#vue-router';
+import { ref } from 'vue';
 import Button from '~/components/common/Button.vue';
-
-const router = useRouter();
-const background = ref(home);
-const mobileLeft = ref(parent);
-const mobileRight = ref(child);
-const isMobile = ref(false);
-const hoveredBoxIndex = ref(null);
-
-const desktopInfoBox = [
-  {
-    image: deposit,
-    icon: 'i-heroicons-user-group',
-    label: 'Parent Dashboard',
-    description: 'Top up cash and control settings',
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-light-bulb',
-    label: 'Earn Rewards',
-    description: 'Earn credits from weekly challenges',
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-chart-bar',
-    label: 'Track Progress',
-    description: `Track your child's progress with easy to visualise charts`,
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-building-storefront',
-    label: 'The Store',
-    description: 'Swap your credits for exciting goodies',
-  },
-];
-
-const mobileInfoBoxes = [
-  {
-    image: deposit,
-    icon: 'i-heroicons-user-group',
-    label: 'Parent Dashboard',
-    description: 'Top up cash and control settings',
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-chart-bar',
-    label: 'Track Progress',
-    description: `Track your child's progress with easy to visualise charts`,
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-light-bulb',
-    label: 'Earn Rewards',
-    description: 'Earn credits from weekly challenges',
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-building-storefront',
-    label: 'The Store',
-    description: 'Swap your credits for exciting goodies',
-  },
-];
-
-const infoBoxes = computed(() => (isMobile.value ? mobileInfoBoxes : desktopInfoBox));
-
-const checkMobile = () => window.innerWidth <= 768;
-const routeTo = (route) => router.push(route);
-const updateBackground = () => {
-  isMobile.value = checkMobile();
-  background.value = isMobile.value ? homeMobile : home;
-};
-
-onMounted(() => {
-  updateBackground();
-  window.addEventListener('resize', updateBackground);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateBackground);
-});
+import CharacterGrid from '~/components/CharacterGrid.vue';
+import CharacterCarousel from '~/components/CharacterCarousel.vue';
+import ChatDemo from '~/components/ChatDemo.vue';
 </script>
 
 <style scoped></style>
