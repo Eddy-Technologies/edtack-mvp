@@ -7,10 +7,10 @@ export default withNuxt().overrideRules({
   'vue/singleline-html-element-content-newline': ['off'],
   'vue/operator-linebreak': ['off'],
   'vue/multi-word-component-names': ['off'], // TODO
-  'vue/no-multiple-template-roots': ['off'], // temporary fix
+  'vue/no-multiple-template-root': ['off'], // temporary fix
   '@stylistic/operator-linebreak': ['error', 'after'],
   '@typescript-eslint/no-explicit-any': 'off',
-  '@typescript-eslint/no-implicit-any': 'off',
+  '@typescript-eslint/no-implicit-any': 'off', // temporary fix for all any types
   '@typescript-eslint/explicit-any': 'off',
   '@typescript-eslint/no-unused-vars': 'off'
 });
