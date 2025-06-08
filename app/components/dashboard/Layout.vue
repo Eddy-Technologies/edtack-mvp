@@ -7,6 +7,28 @@
         <AppIcon class="w-8 h-8 mr-3" />
         <span class="text-xl font-semibold text-gray-800">Dashboard</span>
       </div>
+      <!-- Chat Button -->
+      <div class="px-6 py-4 border-b">
+        <button
+          class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          @click="navigateToRoute({ name: 'Chat', route: '/video' })"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-2.697-.413L4 21l1.413-6.297A8.955 8.955 0 014 12C4 7.582 7.582 4 12 4s8 3.582 8 8z"
+            />
+          </svg>
+          Back to Chat
+        </button>
+      </div>
 
       <!-- Navigation -->
       <nav class="mt-6">
