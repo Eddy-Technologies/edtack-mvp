@@ -15,7 +15,6 @@
     <!-- Parent Components -->
     <template v-else>
       <ParentProfileTab v-if="currentTab === 'profile'" />
-      <ParentNotesTab v-else-if="currentTab === 'notes'" />
       <ParentSubscriptionTab v-else-if="currentTab === 'subscription'" />
       <ParentAccountTab v-else-if="currentTab === 'account'" />
       <ParentChildrenTab v-else-if="currentTab === 'children'" />

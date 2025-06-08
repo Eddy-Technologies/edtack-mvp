@@ -260,6 +260,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const personalInfo = ref({
   firstName: 'Alex',
   lastName: 'Johnson',
@@ -274,7 +276,6 @@ const passwordForm = ref({
   new: '',
   confirm: ''
 });
-
 const security = ref({
   twoFactorEnabled: false
 });

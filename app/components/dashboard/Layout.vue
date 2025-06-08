@@ -188,11 +188,6 @@ const parentNavigation: NavigationItem[] = [
     icon: 'LockClosedIcon'
   },
   {
-    name: 'Notes',
-    route: '/dashboard?tab=notes',
-    icon: 'DocumentTextIcon'
-  },
-  {
     name: 'Subscription',
     route: '/dashboard?tab=subscription',
     icon: 'CreditCardIcon'
