@@ -6,7 +6,7 @@
       :src="background"
       class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
       alt="about"
-    />
+    >
 
     <!-- Mobile Background Layer -->
     <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
@@ -14,7 +14,7 @@
       <img
         :src="mobileRight"
         class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      />
+      >
     </div>
 
     <!-- Overlay Content -->

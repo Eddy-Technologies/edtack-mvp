@@ -8,7 +8,7 @@
         alt="eddy"
         class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
         @click="routeTo('/')"
-      />
+      >
       <Button
         :icon="isMini ? 'i-heroicons-arrow-right-20-solid' : 'i-heroicons-arrow-left-20-solid'"
         color="black"
@@ -26,8 +26,8 @@
       <div class="px-3">
         <div class="border-t border-black">
           <ULink
-            @click="handleNewChat"
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleNewChat"
           >
             <Icon name="i-heroicons-plus" class="w-6 h-6" />
             <span v-if="!isMini" class="truncate">New Chat</span>
@@ -37,8 +37,8 @@
       <div class="px-3">
         <div class="border-t border-black">
           <ULink
-            @click="handleShowChatHistory"
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleShowChatHistory"
           >
             <Icon name="i-heroicons-clock" class="w-6 h-6" />
             <span v-if="!isMini" class="truncate">Chat History</span>
@@ -85,10 +85,10 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { computed } from 'vue';
 import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
-import { computed } from 'vue';
 
 const emit = defineEmits(['toggle-sidebar']);
 const props = defineProps({

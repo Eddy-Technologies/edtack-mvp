@@ -12,8 +12,8 @@
     >
       <Sidebar
         :collapsed="collapsed"
-        :sidebarWidth="sidebarWidth"
-        :isMobile="isMobile"
+        :sidebar-width="sidebarWidth"
+        :is-mobile="isMobile"
         @toggle-sidebar="toggleSidebar"
       />
     </div>
@@ -42,7 +42,7 @@
             alt="User Avatar"
             class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500"
             @click="menuOpen = !menuOpen"
-          />
+          >
           <!-- Overflow Menu -->
           <div
             v-if="menuOpen"

@@ -9,13 +9,13 @@
           type="email"
           placeholder="Email"
           class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-        />
+        >
         <input
           v-model="password"
           type="password"
           placeholder="Password"
           class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
-        />
+        >
         <button
           class="w-full py-3 rounded-xl bg-[#c8e6ce] text-black font-semibold hover:bg-green-500 transition"
           @click="handleLogin"

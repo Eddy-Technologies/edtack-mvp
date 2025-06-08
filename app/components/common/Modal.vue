@@ -3,19 +3,19 @@
     <div
       v-if="visible"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-      @keydown.esc="emitClose"
       tabindex="0"
+      @keydown.esc="emitClose"
     >
       <!-- Modal Panel -->
       <div
+        ref="modalRef"
         class="relative bg-white rounded-3xl shadow-xl p-8 max-w-full"
         :class="sizeClass"
-        ref="modalRef"
       >
         <!-- Close Button -->
         <button
-          @click="emitClose"
           class="absolute top-5 right-8 text-gray-400 hover:text-gray-600 focus:outline-none"
+          @click="emitClose"
         >
           <span class="sr-only">Close</span>
           ✕
