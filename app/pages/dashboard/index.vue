@@ -1,105 +1,81 @@
 <template>
-  <div class="relative min-h-screen bg-background px-4 py-10 overflow-hidden">
-    <!-- Background Image -->
-    <img
-      :src="aboutDesktop"
-      class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-0 opacity-80 pointer-events-none"
-      alt="Eddy character"
-    >
-
-    <!-- Main Content -->
-    <div class="relative z-10 flex flex-col justify-center items-center">
-      <h1 class="text-3xl font-bold text-center text-primary mb-6 font-serif">Welcome to Eddy!</h1>
-      Email: {{ user?.user_metadata?.email }} Name:
-      {{ user?.user_metadata?.name }}
-      {{ user?.user_metadata?.avatar_url }}
-      {{ user?.user_metadata?.phone }}
-      <h2 class="text-2xl font-bold text-center text-primary mb-6 font-serif">Choose Your Level</h2>
-
-      <!-- Main Level Selection -->
-      <div class="flex flex-wrap justify-center gap-4 mb-6">
-        <button
-          v-for="level in levels"
-          :key="level"
-          :class="[
-            'px-6 py-4 rounded-full border transition text-sm',
-            selectedMainLevel === level
-              ? 'bg-primary text-white border-primary'
-              : 'bg-white font-bold border-gray-300 text-gray-700 hover:bg-gray-100',
-          ]"
-          @click="selectLevel(level)"
-        >
-          {{ level }}
-        </button>
+  <Layout :user-type="userType" :user-name="userName" :user-avatar="userAvatar">
+    <!-- Student Components -->
+    <template v-if="userType === 'student'">
+      <StudentProfileTab v-if="currentTab === 'profile'" />
+      <StudentNotesTab v-else-if="currentTab === 'notes'" />
+      <StudentSubscriptionTab v-else-if="currentTab === 'subscription'" />
+      <StudentAccountTab v-else-if="currentTab === 'account'" />
+      <div v-else class="text-center py-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
+        <p class="text-gray-600">Select a section from the sidebar to get started.</p>
       </div>
+    </template>
 
-      <!-- Sub-Level Selection -->
-      <div v-if="subLevels.length" class="flex flex-wrap justify-center gap-3 mb-6">
-        <button
-          v-for="lvl in subLevels"
-          :key="lvl"
-          :class="[
-            'px-6 py-4 rounded-full border transition text-sm',
-            selectedSubLevel === lvl
-              ? 'bg-blue-600 text-white border-blue-600'
-              : 'bg-white font-bold border-gray-300 text-gray-700 hover:bg-gray-100',
-          ]"
-          @click="selectSubLevel(lvl)"
-        >
-          Level {{ lvl }}
-        </button>
+    <!-- Parent Components -->
+    <template v-else>
+      <ParentProfileTab v-if="currentTab === 'profile'" />
+      <ParentNotesTab v-else-if="currentTab === 'notes'" />
+      <ParentSubscriptionTab v-else-if="currentTab === 'subscription'" />
+      <ParentAccountTab v-else-if="currentTab === 'account'" />
+      <ParentChildrenTab v-else-if="currentTab === 'children'" />
+      <ParentPermissionsTab v-else-if="currentTab === 'permissions'" />
+      <div v-else class="text-center py-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Family Dashboard</h2>
+        <p class="text-gray-600">Select a section from the sidebar to manage your family's learning journey.</p>
       </div>
-
-      <!-- Continue Button -->
-      <UButton
-        v-if="selectedMainLevel && selectedSubLevel"
-        class="w-[150px] py-2 px-4 flex items-center justify-center rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-        @click="handleContinue"
-      >
-        Continue
-      </UButton>
-    </div>
-  </div>
+    </template>
+  </Layout>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useSupabaseUser } from '#imports';
-import aboutDesktop from '~/../assets/child.png';
-import { useRouter } from '#vue-router';
+import { useRoute } from 'vue-router';
+import Layout from '~/components/dashboard/Layout.vue';
+
+// Student Components
+import StudentProfileTab from '~/components/dashboard/student/ProfileTab.vue';
+import StudentNotesTab from '~/components/dashboard/student/NotesTab.vue';
+import StudentSubscriptionTab from '~/components/dashboard/student/SubscriptionTab.vue';
+import StudentAccountTab from '~/components/dashboard/student/AccountTab.vue';
+
+// Parent Components
+import ParentProfileTab from '~/components/dashboard/parent/ProfileTab.vue';
+import ParentSubscriptionTab from '~/components/dashboard/parent/SubscriptionTab.vue';
+import ParentAccountTab from '~/components/dashboard/parent/AccountTab.vue';
+import ParentChildrenTab from '~/components/dashboard/parent/ChildrenTab.vue';
+import ParentPermissionsTab from '~/components/dashboard/parent/PermissionsTab.vue';
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: ['auth']
 });
 
-const { user } = useSupabaseUser();
+// This would normally come from user authentication/session
+const userType = ref<'student' | 'parent'>('parent');
+const userName = ref('Alex Johnson');
+const userAvatar = ref('/default-avatar.png');
 
-const router = useRouter();
-const levels = ['Primary', 'Secondary'];
-const primaryLvls = [1, 2, 3, 4, 5, 6];
-const secondaryLvls = [1, 2, 3, 4];
-
-const selectedMainLevel = ref<string | null>(null);
-const selectedSubLevel = ref<number | null>(null);
-
-const selectLevel = (level: string) => {
-  selectedMainLevel.value = level;
-  selectedSubLevel.value = null; // Reset sublevel on main level change
-};
-
-const selectSubLevel = (lvl: number) => {
-  selectedSubLevel.value = lvl;
-};
-
-const subLevels = computed(() => {
-  if (selectedMainLevel.value === 'Primary') return primaryLvls;
-  if (selectedMainLevel.value === 'Secondary') return secondaryLvls;
-  return [];
+// Get current tab from route query or default to 'profile'
+const route = useRoute();
+const currentTab = computed(() => {
+  return (route.query.tab as string) || 'profile';
 });
 
-const handleContinue = () => {
-  localStorage.setItem('selectedMainLevel', selectedMainLevel.value);
-  localStorage.setItem('selectedSubLevel', selectedSubLevel.value.toString());
-  router.push('child');
-};
+// Update page title based on current tab
+const pageTitle = computed(() => {
+  const tabTitles = {
+    profile: 'Profile',
+    notes: 'Notes',
+    subscription: 'Subscription',
+    account: 'Account',
+    children: 'Children',
+    permissions: 'Permissions'
+  };
+  return tabTitles[currentTab.value as keyof typeof tabTitles] || 'Dashboard';
+});
+
+// Set page title
+useHead({
+  title: () => `${pageTitle.value} - Dashboard`
+});
 </script>
