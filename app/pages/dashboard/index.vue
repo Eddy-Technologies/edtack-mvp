@@ -1,5 +1,10 @@
 <template>
-  <Layout :user-type="userType" :user-name="userName" :user-email="userEmail" :user-avatar="userAvatar">
+  <Layout
+    :user-type="userType"
+    :user-name="userName"
+    :user-email="userEmail"
+    :user-avatar="userAvatar"
+  >
     <!-- Student Components -->
     <template v-if="userType === 'student'">
       <StudentProfileTab v-if="currentTab === 'profile'" />

@@ -43,6 +43,135 @@
             </svg>
           </button>
         </div>
+        <!-- Cart Icon -->
+        <div class="relative">
+          <button
+            class="flex items-center px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+            @click="showCart = !showCart"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5M7 13l-1.1 5m0 0h8.2M7 18a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4z"
+              />
+            </svg>
+            Cart ({{ cart.length }})
+            <span v-if="cartTotal > 0" class="ml-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+              {{ cartTotal }}C
+            </span>
+          </button>
+
+          <!-- Cart Dropdown -->
+          <div v-if="showCart" class="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border z-50">
+            <div class="p-4">
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">Shopping Cart</h3>
+
+              <div v-if="cart.length === 0" class="text-center py-8">
+                <svg
+                  class="w-12 h-12 mx-auto text-gray-300 mb-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5M7 13l-1.1 5m0 0h8.2M7 18a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4z"
+                  />
+                </svg>
+                <p class="text-gray-500 text-sm">Your cart is empty</p>
+              </div>
+
+              <div v-else class="space-y-3 max-h-64 overflow-y-auto">
+                <div v-for="item in cart" :key="item.id" class="flex items-center space-x-3 p-2 border rounded-lg">
+                  <img :src="item.image" :alt="item.name" class="w-10 h-10 object-cover rounded">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</p>
+                    <p class="text-xs text-gray-600">{{ item.price }}C × {{ item.quantity }}</p>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <button class="p-1 text-gray-400 hover:text-gray-600" @click="updateCartQuantity(item, -1)">
+                      <svg
+                        class="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M20 12H4"
+                        />
+                      </svg>
+                    </button>
+                    <span class="text-sm font-medium">{{ item.quantity }}</span>
+                    <button class="p-1 text-gray-400 hover:text-gray-600" @click="updateCartQuantity(item, 1)">
+                      <svg
+                        class="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    </button>
+                    <button class="p-1 text-red-400 hover:text-red-600" @click="removeFromCart(item)">
+                      <svg
+                        class="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="cart.length > 0" class="mt-4 pt-3 border-t">
+                <div class="flex justify-between items-center mb-3">
+                  <span class="font-semibold text-gray-900">Total:</span>
+                  <span class="font-bold text-blue-600 text-lg">{{ cartTotal }}C</span>
+                </div>
+                <div class="flex space-x-2">
+                  <button
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                    @click="goToCheckout"
+                  >
+                    Checkout
+                  </button>
+                  <button
+                    class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 rounded-lg transition-colors"
+                    @click="clearCart"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Wishlist Toggle -->
         <button
           :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', showWishlist ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200']"
@@ -64,7 +193,7 @@
           v-model="searchQuery"
           type="text"
           placeholder="Search products..."
-          class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
         >
         <svg
           class="absolute left-3 top-3.5 w-5 h-5 text-gray-400"
@@ -86,7 +215,7 @@
         <!-- Category Filter -->
         <select
           v-model="selectedCategory"
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
         >
           <option value="">All Categories</option>
           <option v-for="category in categories" :key="category" :value="category">
@@ -97,7 +226,7 @@
         <!-- Price Filter -->
         <select
           v-model="priceFilter"
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
         >
           <option value="">All Prices</option>
           <option value="0-10">0-10 Credits</option>
@@ -109,7 +238,7 @@
         <!-- Sort By -->
         <select
           v-model="sortBy"
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
         >
           <option value="name">Sort by Name</option>
           <option value="price-low">Price: Low to High</option>
@@ -192,7 +321,8 @@
       <div
         v-for="item in filteredItems"
         :key="item.id"
-        class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4"
+        class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4 cursor-pointer"
+        @click="quickView(item)"
       >
         <div class="relative mb-4">
           <img
@@ -203,7 +333,7 @@
           <!-- Wishlist Heart -->
           <button
             class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
-            @click="toggleWishlist(item)"
+            @click.stop="toggleWishlist(item)"
           >
             <svg
               :class="['w-5 h-5', isInWishlist(item.id) ? 'text-red-500' : 'text-gray-400']"
@@ -258,13 +388,13 @@
           <div class="flex space-x-2 pt-2">
             <button
               class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
-              @click="addToCart(item)"
+              @click.stop="addToCart(item)"
             >
               Add to Cart
             </button>
             <button
               class="px-3 py-2 border border-gray-300 hover:border-gray-400 rounded-lg transition-colors text-sm text-gray-600 hover:text-gray-900"
-              @click="quickView(item)"
+              @click.stop="quickView(item)"
             >
               Quick View
             </button>
@@ -282,7 +412,8 @@
       <div
         v-for="item in filteredItems"
         :key="item.id"
-        class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6"
+        class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6 cursor-pointer"
+        @click="quickView(item)"
       >
         <div class="flex items-center space-x-6">
           <div class="relative flex-shrink-0">
@@ -293,7 +424,7 @@
             >
             <button
               class="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
-              @click="toggleWishlist(item)"
+              @click.stop="toggleWishlist(item)"
             >
               <svg
                 :class="['w-4 h-4', isInWishlist(item.id) ? 'text-red-500' : 'text-gray-400']"
@@ -351,13 +482,13 @@
               <div class="flex flex-col space-y-2 ml-4">
                 <button
                   class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
-                  @click="addToCart(item)"
+                  @click.stop="addToCart(item)"
                 >
                   Add to Cart
                 </button>
                 <button
                   class="border border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-900 py-2 px-4 rounded-lg transition-colors"
-                  @click="quickView(item)"
+                  @click.stop="quickView(item)"
                 >
                   Quick View
                 </button>
@@ -403,6 +534,23 @@
         </button>
       </nav>
     </div>
+
+    <!-- Product Modal -->
+    <ProductModal
+      :is-open="showProductModal"
+      :product="selectedProduct"
+      @close="showProductModal = false"
+      @add-to-cart="addToCartFromModal"
+      @toggle-wishlist="toggleWishlist"
+    />
+
+    <!-- Checkout Modal -->
+    <CheckoutModal
+      :is-open="showCheckout"
+      :cart="cart"
+      @close="showCheckout = false"
+      @payment-success="handlePaymentSuccess"
+    />
   </div>
 </template>
 
@@ -417,6 +565,8 @@ import placeholder5 from '../../../../assets/e.png';
 import placeholder6 from '../../../../assets/f.png';
 import placeholder7 from '../../../../assets/g.png';
 import placeholder8 from '../../../../assets/h.png';
+import CheckoutModal from './CheckoutModal.vue';
+import ProductModal from './ProductModal.vue';
 
 const props = defineProps<{
   cart: Array<any>;
@@ -532,6 +682,10 @@ const priceFilter = ref('');
 const sortBy = ref('name');
 const showWishlist = ref(false);
 const wishlist = ref<any[]>([]);
+const showCart = ref(false);
+const showCheckout = ref(false);
+const showProductModal = ref(false);
+const selectedProduct = ref<any>(null);
 const currentPage = ref(1);
 const itemsPerPage = ref(12);
 
@@ -596,6 +750,11 @@ const hasActiveFilters = computed(() => {
   return searchQuery.value || selectedCategory.value || priceFilter.value || sortBy.value !== 'name';
 });
 
+// Cart computed properties
+const cartTotal = computed(() => {
+  return props.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+});
+
 // Wishlist functions
 const isInWishlist = (itemId: string) => {
   return wishlist.value.some((item) => item.id === itemId);
@@ -608,6 +767,46 @@ const toggleWishlist = (item: any) => {
   } else {
     wishlist.value.push(item);
   }
+};
+
+// Cart functions
+const updateCartQuantity = (item: any, change: number) => {
+  const updatedCart = [...props.cart];
+  const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
+
+  if (existingItem) {
+    existingItem.quantity += change;
+    if (existingItem.quantity <= 0) {
+      const index = updatedCart.indexOf(existingItem);
+      updatedCart.splice(index, 1);
+    }
+  }
+
+  emit('add-to-cart', updatedCart);
+};
+
+const removeFromCart = (item: any) => {
+  const updatedCart = props.cart.filter((cartItem) => cartItem.id !== item.id);
+  emit('add-to-cart', updatedCart);
+};
+
+const clearCart = () => {
+  emit('add-to-cart', []);
+  showCart.value = false;
+};
+
+const goToCheckout = () => {
+  showCart.value = false;
+  showCheckout.value = true;
+};
+
+const handlePaymentSuccess = () => {
+  // Clear cart after successful payment
+  emit('add-to-cart', []);
+  showCheckout.value = false;
+
+  // Show success message
+  alert('Payment successful! Thank you for your purchase.');
 };
 
 // Functions
@@ -631,8 +830,29 @@ const addToCart = (item: any) => {
 };
 
 const quickView = (item: any) => {
-  // This would typically open a modal with detailed product information
-  alert(`Quick view for ${item.name}\n\n${item.description}\n\nPrice: ${item.price} Credits\nRating: ${item.rating}/5 (${item.reviewCount} reviews)`);
+  selectedProduct.value = item;
+  showProductModal.value = true;
+};
+
+const addToCartFromModal = (product: any, quantity: number) => {
+  // Add the specified quantity to cart
+  const updatedCart = [...props.cart];
+  const existingItem = updatedCart.find((cartItem) => cartItem.id === product.id);
+
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    updatedCart.push({ ...product, quantity });
+  }
+
+  // Show success message
+  purchaseMessage.value = product.id;
+  setTimeout(() => {
+    purchaseMessage.value = null;
+  }, 2000);
+
+  emit('add-to-cart', updatedCart);
+  showProductModal.value = false;
 };
 
 const clearFilters = () => {
