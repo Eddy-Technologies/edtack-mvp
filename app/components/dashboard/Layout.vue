@@ -7,6 +7,29 @@
         <AppIcon class="w-8 h-8 mr-3" />
         <span class="text-xl font-semibold text-gray-800">Dashboard</span>
       </div>
+
+      <!-- User Account Section -->
+      <div class="px-6 py-4 border-b bg-gray-50">
+        <div class="flex items-center space-x-3">
+          <div class="flex-shrink-0">
+            <img class="w-10 h-10 rounded-full object-cover" :src="userAvatar" :alt="userName">
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">
+              {{ userName }}
+            </p>
+            <p class="text-xs text-gray-500 truncate">
+              {{ userEmail }}
+            </p>
+            <div class="flex items-center mt-1">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                {{ userType === 'student' ? 'Student' : 'Parent' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Chat Button -->
       <div class="px-6 py-4 border-b">
         <button
@@ -123,15 +146,6 @@
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
-      <!-- Top Header -->
-      <header class="bg-white shadow-sm border-b px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <h1 class="text-2xl font-semibold text-gray-900">{{ currentPageTitle }}</h1>
-          </div>
-        </div>
-      </header>
-
       <!-- Page Content -->
       <main class="flex-1 p-6 overflow-auto">
         <slot />
@@ -154,11 +168,13 @@ interface NavigationItem {
 interface Props {
   userType: 'student' | 'parent';
   userName?: string;
+  userEmail?: string;
   userAvatar?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   userName: 'User',
+  userEmail: 'user@example.com',
   userAvatar: '/default-avatar.png'
 });
 const route = useRoute();
@@ -182,8 +198,8 @@ const studentNavigation: NavigationItem[] = [
     icon: 'CreditCardIcon'
   },
   {
-    name: 'Store',
-    route: '/store',
+    name: 'Shop',
+    route: '/dashboard?tab=shop',
     icon: 'ShoppingBagIcon'
   },
   {
@@ -215,8 +231,8 @@ const parentNavigation: NavigationItem[] = [
     icon: 'CreditCardIcon'
   },
   {
-    name: 'Store',
-    route: '/store',
+    name: 'Shop',
+    route: '/dashboard?tab=shop',
     icon: 'ShoppingBagIcon'
   },
   {
@@ -240,7 +256,8 @@ const currentPageTitle = computed(() => {
     subscription: 'Subscription',
     account: 'Account',
     children: 'Children',
-    permissions: 'Permissions'
+    permissions: 'Permissions',
+    shop: 'Shop'
   };
 
   return tabTitles[currentTab] || 'Dashboard';

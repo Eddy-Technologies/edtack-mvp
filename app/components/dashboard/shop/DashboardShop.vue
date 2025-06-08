@@ -1,0 +1,668 @@
+<template>
+  <div>
+    <!-- Header Section -->
+    <div class="flex flex-wrap justify-between items-center mb-6">
+      <h2 class="text-3xl font-extrabold text-blue-600">SHOP</h2>
+      <div class="flex items-center space-x-4">
+        <!-- View Toggle -->
+        <div class="flex bg-gray-100 rounded-lg p-1">
+          <button
+            :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'icon' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+            @click="viewMode = 'icon'"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+              />
+            </svg>
+          </button>
+          <button
+            :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+            @click="viewMode = 'list'"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+        <!-- Wishlist Toggle -->
+        <button
+          :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', showWishlist ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200']"
+          @click="showWishlist = !showWishlist"
+        >
+          <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          {{ showWishlist ? 'Shop' : 'Wishlist' }} ({{ wishlist.length }})
+        </button>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="mb-6 space-y-4">
+      <!-- Search Bar -->
+      <div class="relative">
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search products..."
+          class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+        <svg
+          class="absolute left-3 top-3.5 w-5 h-5 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+
+      <!-- Filters Row -->
+      <div class="flex flex-wrap gap-4 items-center">
+        <!-- Category Filter -->
+        <select
+          v-model="selectedCategory"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Categories</option>
+          <option v-for="category in categories" :key="category" :value="category">
+            {{ category }}
+          </option>
+        </select>
+
+        <!-- Price Filter -->
+        <select
+          v-model="priceFilter"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Prices</option>
+          <option value="0-10">0-10 Credits</option>
+          <option value="11-30">11-30 Credits</option>
+          <option value="31-50">31-50 Credits</option>
+          <option value="51+">51+ Credits</option>
+        </select>
+
+        <!-- Sort By -->
+        <select
+          v-model="sortBy"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="name">Sort by Name</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Highest Rated</option>
+          <option value="newest">Newest First</option>
+        </select>
+
+        <!-- Clear Filters -->
+        <button
+          v-if="hasActiveFilters"
+          class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 underline"
+          @click="clearFilters"
+        >
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Info -->
+    <div class="mb-4 text-sm text-gray-600">
+      Showing {{ filteredItems.length }} of {{ items.length }} products
+      <span v-if="searchQuery"> for "{{ searchQuery }}"</span>
+    </div>
+
+    <!-- Wishlist View -->
+    <div v-if="showWishlist" class="mb-8">
+      <h3 class="text-xl font-semibold text-gray-900 mb-4">Your Wishlist</h3>
+      <div v-if="wishlist.length === 0" class="text-center py-12 bg-gray-50 rounded-lg">
+        <svg
+          class="w-16 h-16 mx-auto text-gray-300 mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+          />
+        </svg>
+        <p class="text-gray-500">Your wishlist is empty</p>
+        <p class="text-sm text-gray-400 mt-1">Add some products to your wishlist!</p>
+      </div>
+      <div v-else class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div
+          v-for="item in wishlist"
+          :key="item.id"
+          class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-4"
+        >
+          <div class="relative">
+            <img :src="item.image" :alt="item.name" class="w-full h-40 object-cover rounded mb-3">
+            <button
+              class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+              @click="toggleWishlist(item)"
+            >
+              <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </button>
+          </div>
+          <h3 class="font-semibold text-gray-900 mb-1">{{ item.name }}</h3>
+          <p class="text-blue-600 font-medium mb-3">{{ item.price }} Credits</p>
+          <button
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+            @click="addToCart(item)"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid (Icon View) -->
+    <div
+      v-if="viewMode === 'icon' && !showWishlist"
+      class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      <div
+        v-for="item in filteredItems"
+        :key="item.id"
+        class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4"
+      >
+        <div class="relative mb-4">
+          <img
+            :src="item.image"
+            :alt="item.name"
+            class="w-full h-48 object-cover rounded-lg"
+          >
+          <!-- Wishlist Heart -->
+          <button
+            class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+            @click="toggleWishlist(item)"
+          >
+            <svg
+              :class="['w-5 h-5', isInWishlist(item.id) ? 'text-red-500' : 'text-gray-400']"
+              :fill="isInWishlist(item.id) ? 'currentColor' : 'none'"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </button>
+          <!-- Sale Badge -->
+          <span v-if="item.originalPrice" class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+            -{{ Math.round((1 - item.price / item.originalPrice) * 100) }}%
+          </span>
+          <!-- Category Badge -->
+          <span class="absolute bottom-2 left-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+            {{ item.category }}
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="font-semibold text-gray-900 line-clamp-2">{{ item.name }}</h3>
+          <p class="text-sm text-gray-600">{{ item.description }}</p>
+
+          <!-- Rating -->
+          <div class="flex items-center space-x-1">
+            <div class="flex text-yellow-400">
+              <svg
+                v-for="i in 5"
+                :key="i"
+                :class="['w-4 h-4', i <= item.rating ? 'fill-current' : 'fill-gray-200']"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            </div>
+            <span class="text-sm text-gray-600">({{ item.reviewCount }})</span>
+          </div>
+
+          <!-- Price -->
+          <div class="flex items-center space-x-2">
+            <span class="text-lg font-bold text-blue-600">{{ item.price }}C</span>
+            <span v-if="item.originalPrice" class="text-sm text-gray-500 line-through">{{ item.originalPrice }}C</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex space-x-2 pt-2">
+            <button
+              class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
+              @click="addToCart(item)"
+            >
+              Add to Cart
+            </button>
+            <button
+              class="px-3 py-2 border border-gray-300 hover:border-gray-400 rounded-lg transition-colors text-sm text-gray-600 hover:text-gray-900"
+              @click="quickView(item)"
+            >
+              Quick View
+            </button>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <p v-if="purchaseMessage === item.id" class="text-green-600 text-sm mt-2">Added to Cart!</p>
+        <p v-if="insufficientFundsMessage === item.id" class="text-red-600 text-sm mt-2">Insufficient Funds!</p>
+      </div>
+    </div>
+
+    <!-- List View -->
+    <div v-if="viewMode === 'list' && !showWishlist" class="space-y-4">
+      <div
+        v-for="item in filteredItems"
+        :key="item.id"
+        class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6"
+      >
+        <div class="flex items-center space-x-6">
+          <div class="relative flex-shrink-0">
+            <img
+              :src="item.image"
+              :alt="item.name"
+              class="w-24 h-24 object-cover rounded-lg"
+            >
+            <button
+              class="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+              @click="toggleWishlist(item)"
+            >
+              <svg
+                :class="['w-4 h-4', isInWishlist(item.id) ? 'text-red-500' : 'text-gray-400']"
+                :fill="isInWishlist(item.id) ? 'currentColor' : 'none'"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ item.name }}</h3>
+                <p class="text-gray-600 text-sm mb-2">{{ item.description }}</p>
+
+                <!-- Rating and Category -->
+                <div class="flex items-center space-x-4 mb-3">
+                  <div class="flex items-center space-x-1">
+                    <div class="flex text-yellow-400">
+                      <svg
+                        v-for="i in 5"
+                        :key="i"
+                        :class="['w-4 h-4', i <= item.rating ? 'fill-current' : 'fill-gray-200']"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    </div>
+                    <span class="text-sm text-gray-600">({{ item.reviewCount }})</span>
+                  </div>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                    {{ item.category }}
+                  </span>
+                </div>
+
+                <!-- Price -->
+                <div class="flex items-center space-x-2">
+                  <span class="text-xl font-bold text-blue-600">{{ item.price }}C</span>
+                  <span v-if="item.originalPrice" class="text-lg text-gray-500 line-through">{{ item.originalPrice }}C</span>
+                  <span v-if="item.originalPrice" class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                    -{{ Math.round((1 - item.price / item.originalPrice) * 100) }}%
+                  </span>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex flex-col space-y-2 ml-4">
+                <button
+                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                  @click="addToCart(item)"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  class="border border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-900 py-2 px-4 rounded-lg transition-colors"
+                  @click="quickView(item)"
+                >
+                  Quick View
+                </button>
+              </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="mt-3">
+              <p v-if="purchaseMessage === item.id" class="text-green-600 text-sm">Added to Cart!</p>
+              <p v-if="insufficientFundsMessage === item.id" class="text-red-600 text-sm">Insufficient Funds!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div v-if="!showWishlist && filteredItems.length > itemsPerPage" class="flex justify-center mt-8">
+      <nav class="flex items-center space-x-2">
+        <button
+          :disabled="currentPage === 1"
+          :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50']"
+          @click="currentPage--"
+        >
+          Previous
+        </button>
+
+        <button
+          v-for="page in totalPages"
+          :key="page"
+          :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', page === currentPage ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50']"
+          @click="currentPage = page"
+        >
+          {{ page }}
+        </button>
+
+        <button
+          :disabled="currentPage === totalPages"
+          :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50']"
+          @click="currentPage++"
+        >
+          Next
+        </button>
+      </nav>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+
+import placeholder1 from '../../../../assets/a.png';
+import placeholder2 from '../../../../assets/b.png';
+import placeholder3 from '../../../../assets/c.png';
+import placeholder4 from '../../../../assets/d.png';
+import placeholder5 from '../../../../assets/e.png';
+import placeholder6 from '../../../../assets/f.png';
+import placeholder7 from '../../../../assets/g.png';
+import placeholder8 from '../../../../assets/h.png';
+
+const props = defineProps<{
+  cart: Array<any>;
+}>();
+
+const emit = defineEmits<{
+  (e: 'credits-updated', updatedCredits: number): void;
+  (e: 'add-to-cart', updatedCart: any[]): void;
+}>();
+
+// Enhanced product data with e-commerce features
+const items = [
+  {
+    id: '1',
+    name: 'Chicha Morada Tea',
+    description: 'Premium purple corn tea with authentic Peruvian flavor',
+    price: 5,
+    originalPrice: 8,
+    image: placeholder4,
+    category: 'Food & Beverages',
+    rating: 4.5,
+    reviewCount: 128,
+    isNew: false
+  },
+  {
+    id: '2',
+    name: 'KFC Gift Card',
+    description: 'Enjoy delicious fried chicken with this $10 gift card',
+    price: 10,
+    image: placeholder2,
+    category: 'Gift Cards',
+    rating: 4.8,
+    reviewCount: 256,
+    isNew: true
+  },
+  {
+    id: '3',
+    name: 'Fortnite V-Bucks',
+    description: '1000 V-Bucks for in-game purchases and battle pass',
+    price: 10,
+    image: placeholder1,
+    category: 'Gaming',
+    rating: 4.7,
+    reviewCount: 891,
+    isNew: false
+  },
+  {
+    id: '4',
+    name: 'Riot Games RP',
+    description: 'Riot Points for League of Legends and Valorant skins',
+    price: 30,
+    originalPrice: 35,
+    image: placeholder3,
+    category: 'Gaming',
+    rating: 4.6,
+    reviewCount: 445,
+    isNew: false
+  },
+  {
+    id: '5',
+    name: 'Roblox Premium',
+    description: 'Monthly Roblox Premium subscription with Robux',
+    price: 30,
+    image: placeholder5,
+    category: 'Gaming',
+    rating: 4.4,
+    reviewCount: 672,
+    isNew: false
+  },
+  {
+    id: '6',
+    name: 'Labubu Collectible',
+    description: 'Limited edition Labubu figurine - perfect for collectors',
+    price: 99,
+    originalPrice: 120,
+    image: placeholder6,
+    category: 'Collectibles',
+    rating: 4.9,
+    reviewCount: 89,
+    isNew: true
+  },
+  {
+    id: '7',
+    name: 'Pikachu Plush Toy',
+    description: 'Adorable Pokemon Pikachu soft plush toy - 12 inches',
+    price: 20,
+    image: placeholder7,
+    category: 'Toys',
+    rating: 4.8,
+    reviewCount: 334,
+    isNew: false
+  },
+  {
+    id: '8',
+    name: 'Steam Wallet Code',
+    description: '$30 Steam wallet credit for games and DLC purchases',
+    price: 30,
+    image: placeholder8,
+    category: 'Gaming',
+    rating: 4.9,
+    reviewCount: 1205,
+    isNew: false
+  },
+];
+
+// Reactive state
+const purchaseMessage = ref<string | null>(null);
+const insufficientFundsMessage = ref<string | null>(null);
+const viewMode = ref<'icon' | 'list'>('icon');
+const searchQuery = ref('');
+const selectedCategory = ref('');
+const priceFilter = ref('');
+const sortBy = ref('name');
+const showWishlist = ref(false);
+const wishlist = ref<any[]>([]);
+const currentPage = ref(1);
+const itemsPerPage = ref(12);
+
+// Categories
+const categories = computed(() => {
+  const cats = new Set(items.map((item) => item.category));
+  return Array.from(cats).sort();
+});
+
+// Filtering and sorting
+const filteredItems = computed(() => {
+  let filtered = [...items];
+
+  // Search filter
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    filtered = filtered.filter((item) =>
+      item.name.toLowerCase().includes(query) ||
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    );
+  }
+
+  // Category filter
+  if (selectedCategory.value) {
+    filtered = filtered.filter((item) => item.category === selectedCategory.value);
+  }
+
+  // Price filter
+  if (priceFilter.value) {
+    const [min, max] = priceFilter.value.split('-').map((v) => v === '+' ? Infinity : parseInt(v));
+    filtered = filtered.filter((item) => {
+      if (max === undefined) return item.price >= min;
+      return item.price >= min && item.price <= max;
+    });
+  }
+
+  // Sorting
+  filtered.sort((a, b) => {
+    switch (sortBy.value) {
+      case 'price-low':
+        return a.price - b.price;
+      case 'price-high':
+        return b.price - a.price;
+      case 'rating':
+        return b.rating - a.rating;
+      case 'newest':
+        return b.isNew === a.isNew ? 0 : b.isNew ? 1 : -1;
+      case 'name':
+      default:
+        return a.name.localeCompare(b.name);
+    }
+  });
+
+  return filtered;
+});
+
+// Pagination
+const totalPages = computed(() => Math.ceil(filteredItems.value.length / itemsPerPage.value));
+
+const hasActiveFilters = computed(() => {
+  return searchQuery.value || selectedCategory.value || priceFilter.value || sortBy.value !== 'name';
+});
+
+// Wishlist functions
+const isInWishlist = (itemId: string) => {
+  return wishlist.value.some((item) => item.id === itemId);
+};
+
+const toggleWishlist = (item: any) => {
+  const index = wishlist.value.findIndex((w) => w.id === item.id);
+  if (index > -1) {
+    wishlist.value.splice(index, 1);
+  } else {
+    wishlist.value.push(item);
+  }
+};
+
+// Functions
+const addToCart = (item: any) => {
+  const updatedCart = [...props.cart];
+  const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    updatedCart.push({ ...item, quantity: 1 });
+  }
+
+  // Show success message
+  purchaseMessage.value = item.id;
+  setTimeout(() => {
+    purchaseMessage.value = null;
+  }, 2000);
+
+  emit('add-to-cart', updatedCart);
+};
+
+const quickView = (item: any) => {
+  // This would typically open a modal with detailed product information
+  alert(`Quick view for ${item.name}\n\n${item.description}\n\nPrice: ${item.price} Credits\nRating: ${item.rating}/5 (${item.reviewCount} reviews)`);
+};
+
+const clearFilters = () => {
+  searchQuery.value = '';
+  selectedCategory.value = '';
+  priceFilter.value = '';
+  sortBy.value = 'name';
+  currentPage.value = 1;
+};
+
+const updateScreenSize = () => {
+  if (typeof window !== 'undefined') {
+    if (window.innerWidth <= 768) {
+      viewMode.value = 'list';
+    } else {
+      viewMode.value = 'icon';
+    }
+  }
+};
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    updateScreenSize();
+    window.addEventListener('resize', updateScreenSize);
+  }
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', updateScreenSize);
+  }
+});
+</script>

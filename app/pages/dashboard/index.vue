@@ -1,11 +1,12 @@
 <template>
-  <Layout :user-type="userType" :user-name="userName" :user-avatar="userAvatar">
+  <Layout :user-type="userType" :user-name="userName" :user-email="userEmail" :user-avatar="userAvatar">
     <!-- Student Components -->
     <template v-if="userType === 'student'">
       <StudentProfileTab v-if="currentTab === 'profile'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
       <StudentSubscriptionTab v-else-if="currentTab === 'subscription'" />
       <StudentAccountTab v-else-if="currentTab === 'account'" />
+      <ShopTab v-else-if="currentTab === 'shop'" />
       <div v-else class="text-center py-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
         <p class="text-gray-600">Select a section from the sidebar to get started.</p>
@@ -19,6 +20,7 @@
       <ParentAccountTab v-else-if="currentTab === 'account'" />
       <ParentChildrenTab v-else-if="currentTab === 'children'" />
       <ParentPermissionsTab v-else-if="currentTab === 'permissions'" />
+      <ShopTab v-else-if="currentTab === 'shop'" />
       <div v-else class="text-center py-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Family Dashboard</h2>
         <p class="text-gray-600">Select a section from the sidebar to manage your family's learning journey.</p>
@@ -45,6 +47,9 @@ import ParentAccountTab from '~/components/dashboard/parent/AccountTab.vue';
 import ParentChildrenTab from '~/components/dashboard/parent/ChildrenTab.vue';
 import ParentPermissionsTab from '~/components/dashboard/parent/PermissionsTab.vue';
 
+// Shop Components
+import ShopTab from '~/components/dashboard/shop/ShopTab.vue';
+
 definePageMeta({
   middleware: ['auth']
 });
@@ -52,6 +57,7 @@ definePageMeta({
 // This would normally come from user authentication/session
 const userType = ref<'student' | 'parent'>('parent');
 const userName = ref('Alex Johnson');
+const userEmail = ref('alex.johnson@example.com');
 const userAvatar = ref('/default-avatar.png');
 
 // Get current tab from route query or default to 'profile'
@@ -68,7 +74,8 @@ const pageTitle = computed(() => {
     subscription: 'Subscription',
     account: 'Account',
     children: 'Children',
-    permissions: 'Permissions'
+    permissions: 'Permissions',
+    shop: 'Shop'
   };
   return tabTitles[currentTab.value as keyof typeof tabTitles] || 'Dashboard';
 });
