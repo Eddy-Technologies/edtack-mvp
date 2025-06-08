@@ -11,7 +11,7 @@
         loop
         playsinline
       >
-        <source src="/../assets/eddy.mp4" type="video/mp4">
+        <source src="/../assets/eddy.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -19,7 +19,7 @@
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full mb-10">
         <button
           class="w-full sm:w-[220px] py-2 rounded-lg border-2 border-black font-bold cursor-pointer bg-white text-black hover:bg-gray-200 text-base sm:text-lg md:text-xl transition-colors duration-300"
-          to="try"
+          to="chat"
         >
           Try Eddy Now
         </button>

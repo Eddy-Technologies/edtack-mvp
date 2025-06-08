@@ -1,5 +1,5 @@
 <template>
-  <Modal :show="show" @close="handleClose">
+  <Modal :visible="show" @close="handleClose">
     <template #default>
       <FeedbackForm @close="handleFormClose" />
     </template>

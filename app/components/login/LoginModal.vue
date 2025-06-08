@@ -1,0 +1,34 @@
+<template>
+  <Modal :visible="true" @close="handleClose">
+    <template #header>
+      <h2 class="text-xl font-semibold text-center">Welcome to Eddy</h2>
+    </template>
+
+    <LoginForm @success="handleLogin" />
+
+    <template #footer>
+      <div class="flex justify-around text-sm text-gray-600">
+        <button class="hover:underline">Sign Up</button>
+        <button class="hover:underline">Forgot Password</button>
+        <button class="hover:underline">Contact Us</button>
+      </div>
+    </template>
+  </Modal>
+</template>
+
+<script setup lang="ts">
+import Modal from '@/components/common/Modal.vue';
+import LoginForm from '@/components/login/LoginForm.vue';
+
+const emit = defineEmits(['close', 'success']);
+
+const handleClose = () => {
+  emit('close');
+};
+
+// Example: After login succeeds
+const handleLogin = () => {
+  // Replace with real auth logic, then:
+  emit('success');
+};
+</script>

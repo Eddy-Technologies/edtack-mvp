@@ -1,5 +1,5 @@
 <template>
-  <Modal :show="props.showReportModal" @close="closeReportModal">
+  <Modal :visible="props.showReportModal" @close="closeReportModal">
     <template #title>
       <h4 class="text-lg font-bold text-primary">Report an Issue</h4>
     </template>
@@ -17,7 +17,7 @@
             type="checkbox"
             :value="reason"
             class="accent-primary-600"
-          >
+          />
           {{ reason }}
         </label>
       </li>

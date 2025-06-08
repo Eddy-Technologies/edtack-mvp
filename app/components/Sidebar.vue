@@ -1,43 +1,60 @@
 <template>
-  <aside class="h-full flex flex-col border-r">
+  <aside class="h-full flex flex-col border-r bg-white max-w-[900px]">
     <!-- Header -->
-    <div class="p-4 flex items-center justify-between border-b">
-      <span v-if="!collapsed" class="text-lg font-semibold">New Chat</span>
-      <Button
-        v-if="!collapsed"
-        text=""
-        icon="i-heroicons-arrow-left-20-solid"
-        color="black"
-        size="l"
-        bold
-        rounded
-        hover
-        extra-classes="p-2 rounded-full hover:bg-gray-800"
-        @click="toggleSidebar"
+    <div class="p-4 flex items-center justify-between">
+      <img
+        v-if="!isMini"
+        src="/logo.png"
+        alt="eddy"
+        class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
+        @click="routeTo('/')"
       />
       <Button
-        v-else
-        text=""
-        icon="i-heroicons-arrow-right-20-solid"
+        :icon="isMini ? 'i-heroicons-arrow-right-20-solid' : 'i-heroicons-arrow-left-20-solid'"
         color="black"
         size="l"
         bold
         rounded
         hover
-        extra-classes="p-2 rounded-full hover:bg-gray-800"
-        @click="toggleSidebar"
+        :extra-classes="'p-2 rounded-full hover:bg-gray-500 px-3'"
+        @click="emit('toggle-sidebar')"
       />
     </div>
 
-    <!-- Main Scrollable Content -->
-    <div class="flex-1 p-4 overflow-y-auto">
-      <div class="text-gray-500 mb-4">Chat History</div>
+    <!-- Scrollable Content -->
+    <div class="flex-1 overflow-y-auto">
+      <div class="px-3">
+        <div class="border-t border-black">
+          <ULink
+            @click="handleNewChat"
+            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+          >
+            <Icon name="i-heroicons-plus" class="w-6 h-6" />
+            <span v-if="!isMini" class="truncate">New Chat</span>
+          </ULink>
+        </div>
+      </div>
+      <div class="px-3">
+        <div class="border-t border-black">
+          <ULink
+            @click="handleShowChatHistory"
+            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+          >
+            <Icon name="i-heroicons-clock" class="w-6 h-6" />
+            <span v-if="!isMini" class="truncate">Chat History</span>
+          </ULink>
+        </div>
+      </div>
+    </div>
 
-      <div class="relative w-[400px] h-[800px] mx-auto bg-gray-600 rounded-xl shadow-inner p-2">
-        <img src="/snorlax.gif" alt="Snorlax" class="w-full h-full object-contain">
-
-        <!-- Floating action buttons -->
-        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-4 mb-6">
+    <!-- Avatar & Buttons -->
+    <div class="p-4">
+      <div class="relative bg-gray-700 rounded-xl shadow-inner p-2 min-h-[180px] w-full">
+        <Avatar />
+        <div
+          class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4"
+          :class="isMini ? 'flex-col items-center gap-3' : 'flex-row'"
+        >
           <Button
             text=""
             icon="i-heroicons-phone-20-solid"
@@ -46,7 +63,7 @@
             bold
             rounded
             hover
-            extra-classes="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg"
+            :extra-classes="`bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg ${isMini ? 'p-3' : 'p-6'}`"
             @click="handleCall"
           />
           <Button
@@ -57,7 +74,7 @@
             bold
             rounded
             hover
-            extra-classes="bg-gray-300 hover:bg-gray-400 rounded-full p-4 shadow-lg"
+            :extra-classes="`bg-gray-300 hover:bg-gray-400 rounded-full shadow-lg ${isMini ? 'p-3' : 'p-6'}`"
             @click="handleMute"
           />
         </div>
@@ -67,30 +84,52 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import Button from '~/components/common/Button.vue';
+import Avatar from '~/components/avatar/Avatar.vue';
+import { useToast } from '#imports';
+import { computed } from 'vue';
 
 const emit = defineEmits(['toggle-sidebar']);
-defineProps({ collapsed: Boolean }); // optional if you want to conditionally hide labels, etc.
+const props = defineProps({
+  collapsed: Boolean,
+  sidebarWidth: Number,
+  isMobile: Boolean,
+});
 
+const router = useRouter();
 const toast = useToast();
+const routeTo = (path) => router.push(path);
+
+const isMini = computed(
+  () => props.collapsed || props.isMobile || (props.sidebarWidth ?? 999) < 150
+);
 
 const handleCall = () => {
-  toast.add({
-    title: 'Call Action',
-    description: 'Call button pressed.',
-    icon: 'i-heroicons-phone-20-solid',
-  });
+  toast.add({ title: 'Call', description: 'Calling...', icon: 'i-heroicons-phone-20-solid' });
 };
 
 const handleMute = () => {
   toast.add({
-    title: 'Mute Action',
-    description: 'Mute button pressed.',
+    title: 'Muted',
+    description: 'Microphone muted.',
     icon: 'i-heroicons-microphone-slash-20-solid',
   });
 };
 
-const toggleSidebar = () => {
-  emit('toggle-sidebar');
+const handleNewChat = () => {
+  toast.add({
+    title: 'New Chat',
+    description: 'Created New Chat',
+    icon: 'i-heroicons-plus',
+  });
+};
+
+const handleShowChatHistory = () => {
+  toast.add({
+    title: 'Chat History',
+    description: 'Chat history shown.',
+    icon: 'i-heroicons-clock',
+  });
 };
 </script>
