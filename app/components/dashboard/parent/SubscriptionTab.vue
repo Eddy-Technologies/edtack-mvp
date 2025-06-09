@@ -108,7 +108,7 @@
     <!-- Billing History -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Billing History</h3>
+        <h3 class="text-lg font-semibold text-gray-900">Billing History TODO</h3>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full">

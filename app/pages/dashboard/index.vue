@@ -67,13 +67,13 @@ definePageMeta({
 });
 
 // This would normally come from user authentication/session
-const userType = ref<'student' | 'parent'>('parent');
+const userType = ref<'student' | 'parent'>('student');
 const userName = ref('Alex Johnson');
 const userEmail = ref('alex.johnson@example.com');
 const userAvatar = ref(placeholder1);
 
 // Student payment responsibility - would come from user/subscription data
-const studentPaysForSubscription = ref(false); // Set to true if student pays, false if parent pays
+const studentPaysForSubscription = ref(true); // Set to true if student pays, false if parent pays
 
 // Get current tab from route query or default to 'profile'
 const route = useRoute();

@@ -61,41 +61,6 @@
       </div>
     </div>
 
-    <!-- Personal Information -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Personal Information</h3>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-            <p class="text-gray-900">{{ profile.fullName }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-            <p class="text-gray-900">{{ profile.dateOfBirth }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">School</label>
-            <p class="text-gray-900">{{ profile.school }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Parent/Guardian</label>
-            <p class="text-gray-900">{{ profile.parentName }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Emergency Contact</label>
-            <p class="text-gray-900">{{ profile.emergencyContact }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Learning Style</label>
-            <p class="text-gray-900">{{ profile.learningStyle }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Subject Preferences -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">

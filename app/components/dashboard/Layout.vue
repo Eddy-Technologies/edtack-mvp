@@ -213,11 +213,6 @@ const studentNavigation = computed((): NavigationItem[] => {
       icon: 'ShoppingBagIcon'
     },
     {
-      name: 'Permissions',
-      route: '/dashboard?tab=permissions',
-      icon: 'LockClosedIcon'
-    },
-    {
       name: 'Account',
       route: '/dashboard?tab=account',
       icon: 'CogIcon'

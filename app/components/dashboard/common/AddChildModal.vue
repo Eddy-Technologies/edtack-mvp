@@ -33,8 +33,8 @@
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Grade</label>
               <select v-model="childData.grade" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">Select grade</option>
-                <option v-for="grade in grades" :key="grade" :value="grade">{{ grade }}</option>
+                <option value="">Select grade TODO</option>
+                <!-- <option v-for="grade in grades" :key="grade" :value="grade">{{ grade }}</option> -->
               </select>
             </div>
           </div>
@@ -60,7 +60,6 @@ defineProps<Props>();
 const emit = defineEmits<{ (e: 'close'): void; (e: 'child-added', child: any): void }>();
 
 const childData = ref({ name: '', email: '', grade: '', avatar: '/default-avatar.png', plan: 'Free' });
-const grades = ref(['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']);
 
 const closeModal = () => emit('close');
 const addChild = () => {
