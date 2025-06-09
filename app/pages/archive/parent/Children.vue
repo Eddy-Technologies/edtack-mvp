@@ -38,7 +38,7 @@
             class="min-w-[160px] cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center"
             @click="selectChild(0)"
           >
-            <img :src="parent[0].avatar" alt="Avatar" class="w-16 h-16 rounded-full mb-2" />
+            <img :src="parent[0].avatar" alt="Avatar" class="w-16 h-16 rounded-full mb-2">
             <p class="text-primary font-bold">{{ parent[0].name }}</p>
             <p class="text-primary font-bold">Total: ${{ parentCredit }}</p>
           </div>
@@ -54,7 +54,7 @@
               class="min-w-[160px] flex-shrink-0 border-2 rounded-xl p-4 text-center cursor-pointer"
               @click="selectChild(index)"
             >
-              <img :src="child.avatar" alt="Avatar" class="w-16 h-16 rounded-full mx-auto mb-2" />
+              <img :src="child.avatar" alt="Avatar" class="w-16 h-16 rounded-full mx-auto mb-2">
               <p class="text-primary font-bold">{{ child.name }}</p>
               <p class="text-primary font-bold">Allocated: ${{ childCredit[index] }}</p>
               <p class="text-primary font-bold">Earned: ${{ childEarnedCredit[index] }}</p>
@@ -157,9 +157,9 @@ export default {
       chartInstance.setOption({
         title: {
           text:
-            selectedChild.value === 0
-              ? `My Deposit`
-              : `${children.value[selectedChild.value].name}'s Deposit`,
+            selectedChild.value === 0 ?
+              `My Deposit` :
+              `${children.value[selectedChild.value].name}'s Deposit`,
         },
         tooltip: {},
         xAxis: {

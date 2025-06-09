@@ -8,8 +8,8 @@
 import { ref, watch } from 'vue';
 import { useCreditStore } from '~/stores/credit'; // Import your store
 import { useProfileStore } from '~/stores/profile';
-import ParentHeader from '~/components/header/ParentHeader.vue';
-import ChildHeader from '~/components/header/ChildHeader.vue';
+import ParentHeader from '~/components/archived/header/ParentHeader.vue';
+import ChildHeader from '~/components/archived/header/ChildHeader.vue';
 // import BaseHeader from '~/components/header/BaseHeader.vue';
 
 export default {
