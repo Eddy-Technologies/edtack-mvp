@@ -121,12 +121,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import placeholder1 from '../../../../assets/default-avatar.png';
 
 const profile = ref({
   name: 'Alex Johnson',
   fullName: 'Alexander James Johnson',
   email: 'alex.johnson@student.edu',
-  avatar: '/default-avatar.png',
+  avatar: placeholder1,
   grade: '8',
   studentId: 'ST2024-8A-001',
   dateOfBirth: 'March 15, 2010',

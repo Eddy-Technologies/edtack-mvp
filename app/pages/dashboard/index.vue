@@ -4,13 +4,15 @@
     :user-name="userName"
     :user-email="userEmail"
     :user-avatar="userAvatar"
+    :student-pays-for-subscription="studentPaysForSubscription"
   >
     <!-- Student Components -->
     <template v-if="userType === 'student'">
       <StudentProfileTab v-if="currentTab === 'profile'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
-      <StudentSubscriptionTab v-else-if="currentTab === 'subscription'" />
+      <StudentSubscriptionTab v-else-if="currentTab === 'subscription' && studentPaysForSubscription" />
       <StudentAccountTab v-else-if="currentTab === 'account'" />
+      <SecurityTab v-else-if="currentTab === 'security'" />
       <ShopTab v-else-if="currentTab === 'shop'" />
       <div v-else class="text-center py-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
@@ -25,6 +27,7 @@
       <ParentAccountTab v-else-if="currentTab === 'account'" />
       <ParentChildrenTab v-else-if="currentTab === 'children'" />
       <ParentPermissionsTab v-else-if="currentTab === 'permissions'" />
+      <SecurityTab v-else-if="currentTab === 'security'" />
       <ShopTab v-else-if="currentTab === 'shop'" />
       <div v-else class="text-center py-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Family Dashboard</h2>
@@ -37,6 +40,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import placeholder1 from '../../../../assets/default-avatar.png';
 import Layout from '~/components/dashboard/Layout.vue';
 
 // Student Components
@@ -55,6 +59,9 @@ import ParentPermissionsTab from '~/components/dashboard/parent/PermissionsTab.v
 // Shop Components
 import ShopTab from '~/components/dashboard/shop/ShopTab.vue';
 
+// Shared Components
+import SecurityTab from '~/components/dashboard/common/SecurityTab.vue';
+
 definePageMeta({
   middleware: ['auth']
 });
@@ -63,7 +70,10 @@ definePageMeta({
 const userType = ref<'student' | 'parent'>('parent');
 const userName = ref('Alex Johnson');
 const userEmail = ref('alex.johnson@example.com');
-const userAvatar = ref('/default-avatar.png');
+const userAvatar = ref(placeholder1);
+
+// Student payment responsibility - would come from user/subscription data
+const studentPaysForSubscription = ref(false); // Set to true if student pays, false if parent pays
 
 // Get current tab from route query or default to 'profile'
 const route = useRoute();
@@ -78,6 +88,7 @@ const pageTitle = computed(() => {
     notes: 'Notes',
     subscription: 'Subscription',
     account: 'Account',
+    security: 'Security',
     children: 'Children',
     permissions: 'Permissions',
     shop: 'Shop'

@@ -1,365 +1,349 @@
 <template>
   <div class="space-y-6">
-    <!-- Account Settings Header -->
-    <div class="bg-white rounded-xl shadow-sm border p-6">
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">Account Settings</h2>
-      <p class="text-gray-600">Manage your account preferences and security settings</p>
-    </div>
-
     <!-- Personal Information -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Personal Information</h3>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-            <input
-              v-model="personalInfo.firstName"
-              type="text"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-            <input
-              v-model="personalInfo.lastName"
-              type="text"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-            <input
-              v-model="personalInfo.email"
-              type="email"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-            <input
-              v-model="personalInfo.phone"
-              type="tel"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-            <input
-              v-model="personalInfo.dateOfBirth"
-              type="date"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Grade Level</label>
-            <select
-              v-model="personalInfo.grade"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option v-for="grade in grades" :key="grade" :value="grade">{{ grade }}</option>
-            </select>
-          </div>
-        </div>
-        <div class="mt-6">
-          <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-            Save Changes
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Security Settings -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Security Settings</h3>
-      </div>
-      <div class="p-6 space-y-6">
-        <!-- Change Password -->
-        <div>
-          <h4 class="font-medium text-gray-900 mb-4">Change Password</h4>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
-              <input
-                v-model="passwordForm.current"
-                type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-              <input
-                v-model="passwordForm.new"
-                type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
-              <input
-                v-model="passwordForm.confirm"
-                type="password"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              Update Password
-            </button>
-          </div>
-        </div>
-
-        <!-- Two-Factor Authentication -->
-        <div class="border-t pt-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <h4 class="font-medium text-gray-900">Two-Factor Authentication</h4>
-              <p class="text-sm text-gray-600">Add an extra layer of security to your account</p>
-            </div>
-            <button
-              :class="[
-                'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                security.twoFactorEnabled ? 'bg-blue-600' : 'bg-gray-200'
-              ]"
-              @click="security.twoFactorEnabled = !security.twoFactorEnabled"
-            >
-              <span
-                :class="[
-                  'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                  security.twoFactorEnabled ? 'translate-x-6' : 'translate-x-1'
-                ]"
-              />
-            </button>
-          </div>
-        </div>
-
-        <!-- Login Sessions -->
-        <div class="border-t pt-6">
-          <h4 class="font-medium text-gray-900 mb-4">Active Sessions</h4>
-          <div class="space-y-3">
-            <div v-for="session in sessions" :key="session.id" class="flex items-center justify-between p-4 border rounded-lg">
-              <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                  <svg
-                    class="w-5 h-5 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p class="font-medium text-gray-900">{{ session.device }}</p>
-                  <p class="text-sm text-gray-600">{{ session.location }} • {{ session.lastActive }}</p>
-                </div>
-              </div>
-              <div class="flex items-center space-x-2">
-                <span v-if="session.current" class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Current</span>
-                <button v-else class="text-red-600 hover:text-red-700 text-sm">Revoke</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Preferences -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Preferences</h3>
-      </div>
-      <div class="p-6 space-y-6">
-        <!-- Notifications -->
-        <div>
-          <h4 class="font-medium text-gray-900 mb-4">Notifications</h4>
-          <div class="space-y-3">
-            <div v-for="notification in notifications" :key="notification.key" class="flex items-center justify-between">
-              <div>
-                <p class="font-medium text-gray-900">{{ notification.label }}</p>
-                <p class="text-sm text-gray-600">{{ notification.description }}</p>
-              </div>
-              <button
-                :class="[
-                  'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  notification.enabled ? 'bg-blue-600' : 'bg-gray-200'
-                ]"
-                @click="notification.enabled = !notification.enabled"
-              >
-                <span
-                  :class="[
-                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                    notification.enabled ? 'translate-x-6' : 'translate-x-1'
-                  ]"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Theme -->
-        <div class="border-t pt-6">
-          <h4 class="font-medium text-gray-900 mb-4">Theme</h4>
-          <div class="grid grid-cols-3 gap-3">
-            <button
-              v-for="theme in themes"
-              :key="theme.value"
-              :class="[
-                'p-3 border rounded-lg text-center transition-colors',
-                preferences.theme === theme.value ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
-              ]"
-              @click="preferences.theme = theme.value"
-            >
-              <div class="text-2xl mb-1">{{ theme.icon }}</div>
-              <div class="text-sm font-medium">{{ theme.label }}</div>
-            </button>
-          </div>
-        </div>
-
-        <!-- Language -->
-        <div class="border-t pt-6">
-          <h4 class="font-medium text-gray-900 mb-4">Language</h4>
-          <select
-            v-model="preferences.language"
-            class="w-48 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
+          <button
+            v-if="!isEditing"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            @click="startEditing"
           >
-            <option v-for="language in languages" :key="language.code" :value="language.code">
-              {{ language.name }}
-            </option>
-          </select>
+            Edit Profile
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <form v-if="isEditing" @submit.prevent="saveProfile">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+              <input
+                v-model="editForm.firstName"
+                type="text"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+              <input
+                v-model="editForm.lastName"
+                type="text"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+              <input
+                v-model="editForm.dateOfBirth"
+                type="date"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+              <input
+                v-model="editForm.phone"
+                type="tel"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+          </div>
+
+          <div class="mt-6 flex space-x-4">
+            <button
+              type="submit"
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Save Changes
+            </button>
+            <button
+              type="button"
+              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              @click="cancelEditing"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+            <p class="text-gray-900">{{ personalInfo.firstName }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+            <p class="text-gray-900">{{ personalInfo.lastName }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <p class="text-gray-900">{{ formatDate(personalInfo.dateOfBirth) }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <p class="text-gray-900">{{ personalInfo.phone || 'Not provided' }}</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Danger Zone -->
-    <div class="bg-white rounded-xl shadow-sm border border-red-200">
-      <div class="p-6 border-b border-red-200">
-        <h3 class="text-lg font-semibold text-red-900">Danger Zone</h3>
-        <p class="text-red-600">Irreversible and destructive actions</p>
+    <!-- Academic Information -->
+    <div class="bg-white rounded-xl shadow-sm border">
+      <div class="p-6 border-b">
+        <h3 class="text-lg font-semibold text-gray-900">Academic Information</h3>
       </div>
-      <div class="p-6 space-y-4">
-        <div class="flex items-center justify-between p-4 border border-red-200 rounded-lg">
+
+      <div class="p-6 space-y-6">
+        <!-- Grade Level -->
+        <div class="flex items-center justify-between py-4 border-b">
           <div>
-            <h4 class="font-medium text-red-900">Delete Account</h4>
-            <p class="text-sm text-red-600">Permanently delete your account and all associated data</p>
+            <h4 class="text-lg font-medium text-gray-900">Grade Level</h4>
+            <p class="text-gray-600">{{ academicInfo.grade }}</p>
           </div>
-          <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-            Delete Account
+          <button
+            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            @click="showGradeModal = true"
+          >
+            Change
+          </button>
+        </div>
+
+        <!-- Parent Information -->
+        <div v-if="academicInfo.parentName" class="flex items-center justify-between py-4">
+          <div>
+            <h4 class="text-lg font-medium text-gray-900">Parent/Guardian</h4>
+            <p class="text-gray-600">{{ academicInfo.parentName }}</p>
+            <p v-if="academicInfo.parentEmail" class="text-sm text-gray-500">{{ academicInfo.parentEmail }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subscription Access Notice -->
+    <div v-if="!userPaysForSubscription" class="bg-amber-50 border border-amber-200 rounded-xl p-6">
+      <div class="flex items-start space-x-3">
+        <svg
+          class="w-5 h-5 text-amber-600 mt-0.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <div>
+          <h4 class="font-medium text-amber-800">Subscription Managed by Parent</h4>
+          <p class="text-sm text-amber-700 mt-1">
+            Your subscription is managed by your parent/guardian. You cannot make changes to your subscription plan directly.
+            Contact your parent or guardian if you need to upgrade or modify your plan.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Information -->
+    <div class="bg-white rounded-xl shadow-sm border">
+      <div class="p-6 border-b">
+        <h3 class="text-lg font-semibold text-gray-900">Address Information</h3>
+      </div>
+
+      <div class="p-6 space-y-6">
+        <!-- Payment & Billing Information (only show if user pays for subscription) -->
+        <div v-if="userPaysForSubscription" class="flex items-center justify-between py-4 border-b">
+          <div>
+            <h4 class="text-lg font-medium text-gray-900">Payment & Billing</h4>
+            <div v-if="paymentMethod.lastFour" class="text-gray-600">
+              <p class="flex items-center space-x-2">
+                <span>•••• •••• •••• {{ paymentMethod.lastFour }}</span>
+                <span class="text-sm text-gray-500">expires {{ paymentMethod.expiry }}</span>
+              </p>
+            </div>
+            <div v-if="billingAddress.street" class="text-gray-600 mt-1">
+              <p class="text-sm">{{ billingAddress.street }}, {{ billingAddress.city }}, {{ billingAddress.state }} {{ billingAddress.zipCode }}</p>
+            </div>
+            <div v-else class="text-gray-500">
+              <p>No payment method on file</p>
+            </div>
+          </div>
+          <button
+            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            @click="showBillingModal = true"
+          >
+            {{ paymentMethod.lastFour ? 'Update' : 'Add Payment Method' }}
+          </button>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="flex items-center justify-between py-4">
+          <div>
+            <h4 class="text-lg font-medium text-gray-900">Shipping Address</h4>
+            <div v-if="hasShippingAddress" class="text-gray-600">
+              <div v-if="addressSameAsBilling && userPaysForSubscription">
+                <p class="text-sm">Same as billing address</p>
+              </div>
+              <div v-else>
+                <p>{{ shippingAddress.street }}</p>
+                <p>{{ shippingAddress.city }}, {{ shippingAddress.state }} {{ shippingAddress.zipCode }}</p>
+                <p>{{ shippingAddress.country }}</p>
+              </div>
+            </div>
+            <div v-else class="text-gray-500">
+              <p>No shipping address provided</p>
+            </div>
+          </div>
+          <button
+            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            @click="showShippingModal = true"
+          >
+            {{ hasShippingAddress ? 'Edit' : 'Add' }}
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Modals -->
+    <ChangeGradeModal
+      :is-open="showGradeModal"
+      :current-grade="academicInfo.grade"
+      @close="showGradeModal = false"
+      @grade-updated="handleGradeUpdated"
+    />
+
+    <BillingUpdateModal
+      :is-open="showBillingModal"
+      :current-address="billingAddress"
+      @close="showBillingModal = false"
+      @payment-updated="handleBillingUpdated"
+    />
+
+    <ShippingAddressModal
+      :is-open="showShippingModal"
+      :current-address="shippingAddress"
+      :same-as-billing="addressSameAsBilling"
+      @close="showShippingModal = false"
+      @address-updated="handleShippingUpdated"
+      @same-as-billing-updated="handleSameAsBillingUpdated"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import ChangeGradeModal from '../common/ChangeGradeModal.vue';
+import BillingUpdateModal from '../common/BillingUpdateModal.vue';
+import ShippingAddressModal from '../common/ShippingAddressModal.vue';
 
 const personalInfo = ref({
   firstName: 'Alex',
   lastName: 'Johnson',
-  email: 'alex.johnson@student.edu',
-  phone: '+1 (555) 123-4567',
   dateOfBirth: '2010-03-15',
-  grade: 'Grade 8'
+  phone: '+1 (555) 123-4567'
 });
 
-const passwordForm = ref({
-  current: '',
-  new: '',
-  confirm: ''
-});
-const security = ref({
-  twoFactorEnabled: false
+const academicInfo = ref({
+  grade: 'Grade 8',
+  parentName: '', // Optional field - empty means not provided
+  parentEmail: ''
 });
 
-const preferences = ref({
-  theme: 'system',
-  language: 'en'
+// This would come from user/subscription data
+const userPaysForSubscription = ref(false); // Set to true if user pays, false if parent pays
+
+const paymentMethod = ref({
+  lastFour: '', // Empty means no payment method on file
+  expiry: ''
 });
 
-const grades = ref([
-  'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'
-]);
+const billingAddress = ref({
+  street: '', // Empty means no billing address provided
+  city: '',
+  state: '',
+  zipCode: '',
+  country: ''
+});
 
-const sessions = ref([
-  {
-    id: 1,
-    device: 'MacBook Pro',
-    location: 'San Francisco, CA',
-    lastActive: '2 minutes ago',
-    current: true
-  },
-  {
-    id: 2,
-    device: 'iPhone 14',
-    location: 'San Francisco, CA',
-    lastActive: '1 hour ago',
-    current: false
-  },
-  {
-    id: 3,
-    device: 'iPad Air',
-    location: 'San Francisco, CA',
-    lastActive: '2 days ago',
-    current: false
+const shippingAddress = ref({
+  street: '', // Empty means no shipping address provided
+  city: '',
+  state: '',
+  zipCode: '',
+  country: ''
+});
+
+const addressSameAsBilling = ref(false);
+
+// Computed properties
+const hasShippingAddress = computed(() => {
+  return shippingAddress.value.street.trim() !== '' || 
+         (addressSameAsBilling.value && userPaysForSubscription.value && billingAddress.value.street.trim() !== '');
+});
+
+// Edit mode
+const isEditing = ref(false);
+const editForm = ref({ ...personalInfo.value });
+
+// Modal states
+const showGradeModal = ref(false);
+const showBillingModal = ref(false);
+const showShippingModal = ref(false);
+
+// Methods
+const startEditing = () => {
+  isEditing.value = true;
+  editForm.value = { ...personalInfo.value };
+};
+
+const cancelEditing = () => {
+  isEditing.value = false;
+  editForm.value = { ...personalInfo.value };
+};
+
+const saveProfile = () => {
+  personalInfo.value = { ...editForm.value };
+  isEditing.value = false;
+};
+
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+
+// Event handlers
+const handleGradeUpdated = (newGrade: string) => {
+  academicInfo.value.grade = newGrade;
+};
+
+const handleBillingUpdated = (data: { card: any; address: any }) => {
+  // Update payment method display
+  paymentMethod.value.lastFour = data.card.number.slice(-4);
+  paymentMethod.value.expiry = data.card.expiry;
+
+  // Update billing address
+  billingAddress.value = data.address;
+  if (addressSameAsBilling.value) {
+    shippingAddress.value = { ...data.address };
   }
-]);
+};
 
-const notifications = ref([
-  {
-    key: 'email',
-    label: 'Email Notifications',
-    description: 'Receive notifications via email',
-    enabled: true
-  },
-  {
-    key: 'push',
-    label: 'Push Notifications',
-    description: 'Receive push notifications on your devices',
-    enabled: true
-  },
-  {
-    key: 'assignments',
-    label: 'Assignment Reminders',
-    description: 'Get reminders about upcoming assignments',
-    enabled: true
-  },
-  {
-    key: 'grades',
-    label: 'Grade Updates',
-    description: 'Notifications when grades are posted',
-    enabled: false
-  },
-  {
-    key: 'marketing',
-    label: 'Marketing Emails',
-    description: 'Receive updates about new features and promotions',
-    enabled: false
+const handleShippingUpdated = (address: any) => {
+  shippingAddress.value = address;
+  addressSameAsBilling.value = false;
+};
+
+const handleSameAsBillingUpdated = (sameAsBilling: boolean) => {
+  addressSameAsBilling.value = sameAsBilling;
+  if (sameAsBilling) {
+    shippingAddress.value = { ...billingAddress.value };
   }
-]);
-
-const themes = ref([
-  { value: 'light', label: 'Light', icon: '☀️' },
-  { value: 'dark', label: 'Dark', icon: '🌙' },
-  { value: 'system', label: 'System', icon: '💻' }
-]);
-
-const languages = ref([
-  { code: 'en', name: 'English' },
-  { code: 'es', name: 'Español' },
-  { code: 'fr', name: 'Français' },
-  { code: 'de', name: 'Deutsch' },
-  { code: 'it', name: 'Italiano' },
-  { code: 'pt', name: 'Português' },
-  { code: 'zh', name: '中文' },
-  { code: 'ja', name: '日本語' }
-]);
+};
 </script>

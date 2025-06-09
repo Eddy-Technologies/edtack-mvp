@@ -170,44 +170,67 @@ interface Props {
   userName?: string;
   userEmail?: string;
   userAvatar?: string;
+  studentPaysForSubscription?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   userName: 'User',
   userEmail: 'user@example.com',
-  userAvatar: '/default-avatar.png'
+  userAvatar: '/default-avatar.png',
+  studentPaysForSubscription: false
 });
 const route = useRoute();
 const router = useRouter();
 const openSubmenus = ref<string[]>([]);
 
-const studentNavigation: NavigationItem[] = [
-  {
-    name: 'Profile',
-    route: '/dashboard?tab=profile',
-    icon: 'UserIcon'
-  },
-  {
-    name: 'Notes',
-    route: '/dashboard?tab=notes',
-    icon: 'DocumentTextIcon'
-  },
-  {
-    name: 'Subscription',
-    route: '/dashboard?tab=subscription',
-    icon: 'CreditCardIcon'
-  },
-  {
-    name: 'Shop',
-    route: '/dashboard?tab=shop',
-    icon: 'ShoppingBagIcon'
-  },
-  {
-    name: 'Account',
-    route: '/dashboard?tab=account',
-    icon: 'CogIcon'
+const studentNavigation = computed((): NavigationItem[] => {
+  const baseItems: NavigationItem[] = [
+    {
+      name: 'Profile',
+      route: '/dashboard?tab=profile',
+      icon: 'UserIcon'
+    },
+    {
+      name: 'Notes',
+      route: '/dashboard?tab=notes',
+      icon: 'DocumentTextIcon'
+    }
+  ];
+
+  // Only add subscription if student pays for it
+  if (props.studentPaysForSubscription) {
+    baseItems.push({
+      name: 'Subscription',
+      route: '/dashboard?tab=subscription',
+      icon: 'CreditCardIcon'
+    });
   }
-];
+
+  baseItems.push(
+    {
+      name: 'Shop',
+      route: '/dashboard?tab=shop',
+      icon: 'ShoppingBagIcon'
+    },
+    {
+      name: 'Permissions',
+      route: '/dashboard?tab=permissions',
+      icon: 'LockClosedIcon'
+    },
+    {
+      name: 'Account',
+      route: '/dashboard?tab=account',
+      icon: 'CogIcon'
+    },
+    {
+      name: 'Security',
+      route: '/dashboard?tab=security',
+      icon: 'ShieldCheckIcon'
+    }
+  );
+
+  return baseItems;
+});
 
 const parentNavigation: NavigationItem[] = [
   {
@@ -221,9 +244,9 @@ const parentNavigation: NavigationItem[] = [
     icon: 'UsersIcon'
   },
   {
-    name: 'Permissions',
-    route: '/dashboard?tab=permissions',
-    icon: 'LockClosedIcon'
+    name: 'Shop',
+    route: '/dashboard?tab=shop',
+    icon: 'ShoppingBagIcon'
   },
   {
     name: 'Subscription',
@@ -231,19 +254,24 @@ const parentNavigation: NavigationItem[] = [
     icon: 'CreditCardIcon'
   },
   {
-    name: 'Shop',
-    route: '/dashboard?tab=shop',
-    icon: 'ShoppingBagIcon'
+    name: 'Permissions',
+    route: '/dashboard?tab=permissions',
+    icon: 'LockClosedIcon'
   },
   {
     name: 'Account',
     route: '/dashboard?tab=account',
     icon: 'CogIcon'
+  },
+  {
+    name: 'Security',
+    route: '/dashboard?tab=security',
+    icon: 'ShieldCheckIcon'
   }
 ];
 
 const navigationItems = computed(() => {
-  return props.userType === 'student' ? studentNavigation : parentNavigation;
+  return props.userType === 'student' ? studentNavigation.value : parentNavigation;
 });
 
 const currentPageTitle = computed(() => {
@@ -255,6 +283,7 @@ const currentPageTitle = computed(() => {
     notes: 'Notes',
     subscription: 'Subscription',
     account: 'Account',
+    security: 'Security',
     children: 'Children',
     permissions: 'Permissions',
     shop: 'Shop'

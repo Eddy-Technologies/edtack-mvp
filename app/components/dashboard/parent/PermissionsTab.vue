@@ -140,52 +140,47 @@
         </div>
       </div>
 
-      <!-- Feature Permissions -->
+      <!-- Store Filter Permissions -->
       <div class="bg-white rounded-xl shadow-sm border">
         <div class="p-6 border-b">
-          <h3 class="text-lg font-semibold text-gray-900">Feature Permissions</h3>
-          <p class="text-gray-600">Control which features {{ selectedChildData.name }} can access</p>
-        </div>
-        <div class="p-6">
-          <div class="space-y-4">
-            <div v-for="feature in featurePermissions" :key="feature.key" class="flex items-center justify-between py-3 border-b last:border-b-0">
-              <div class="flex-1">
-                <h4 class="font-medium text-gray-900">{{ feature.name }}</h4>
-                <p class="text-sm text-gray-600">{{ feature.description }}</p>
-              </div>
-              <button
-                :class="[
-                  'relative inline-flex h-6 w-11 items-center rounded-full transition-colors ml-4',
-                  selectedChildData.permissions.features[feature.key] ? 'bg-blue-600' : 'bg-gray-200'
-                ]"
-                @click="selectedChildData.permissions.features[feature.key] = !selectedChildData.permissions.features[feature.key]"
-              >
-                <span
-                  :class="[
-                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                    selectedChildData.permissions.features[feature.key] ? 'translate-x-6' : 'translate-x-1'
-                  ]"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Content Filters -->
-      <div class="bg-white rounded-xl shadow-sm border">
-        <div class="p-6 border-b">
-          <h3 class="text-lg font-semibold text-gray-900">Content Filters</h3>
-          <p class="text-gray-600">Filter inappropriate content and set age-appropriate restrictions</p>
+          <h3 class="text-lg font-semibold text-gray-900">Store Filter Permissions</h3>
+          <p class="text-gray-600">Control what {{ selectedChildData.name }} can see and purchase in the store</p>
         </div>
         <div class="p-6 space-y-6">
-          <!-- Age Appropriate Content -->
+          <!-- Store Categories -->
           <div>
-            <h4 class="font-medium text-gray-900 mb-4">Content Rating</h4>
+            <h4 class="font-medium text-gray-900 mb-4">Store Categories</h4>
+            <div class="space-y-3">
+              <div v-for="category in storeCategories" :key="category.key" class="flex items-center justify-between py-3 border-b last:border-b-0">
+                <div class="flex-1">
+                  <h5 class="font-medium text-gray-900">{{ category.name }}</h5>
+                  <p class="text-sm text-gray-600">{{ category.description }}</p>
+                </div>
+                <button
+                  :class="[
+                    'relative inline-flex h-6 w-11 items-center rounded-full transition-colors ml-4',
+                    selectedChildData.permissions.storeFilter[category.key] ? 'bg-blue-600' : 'bg-gray-200'
+                  ]"
+                  @click="selectedChildData.permissions.storeFilter[category.key] = !selectedChildData.permissions.storeFilter[category.key]"
+                >
+                  <span
+                    :class="[
+                      'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                      selectedChildData.permissions.storeFilter[category.key] ? 'translate-x-6' : 'translate-x-1'
+                    ]"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Age Restrictions -->
+          <div class="border-t pt-6">
+            <h4 class="font-medium text-gray-900 mb-4">Age-Appropriate Content</h4>
             <div class="space-y-2">
-              <label v-for="rating in contentRatings" :key="rating.value" class="flex items-center">
+              <label v-for="rating in ageRatings" :key="rating.value" class="flex items-center">
                 <input
-                  v-model="selectedChildData.permissions.contentFilter.rating"
+                  v-model="selectedChildData.permissions.storeFilter.ageRating"
                   type="radio"
                   :value="rating.value"
                   class="mr-3 text-blue-600"
@@ -198,113 +193,38 @@
             </div>
           </div>
 
-          <!-- Blocked Keywords -->
+          <!-- Price Filters -->
           <div class="border-t pt-6">
-            <h4 class="font-medium text-gray-900 mb-4">Blocked Keywords</h4>
-            <div class="space-y-3">
-              <div class="flex flex-wrap gap-2">
-                <span
-                  v-for="keyword in selectedChildData.permissions.contentFilter.blockedKeywords"
-                  :key="keyword"
-                  class="inline-flex items-center px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full"
-                >
-                  {{ keyword }}
-                  <button class="ml-2 text-red-600 hover:text-red-800" @click="removeBlockedKeyword(keyword)">
-                    <svg
-                      class="w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </span>
-              </div>
-              <div class="flex space-x-2">
-                <input
-                  v-model="newKeyword"
-                  type="text"
-                  placeholder="Add keyword to block"
-                  class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  @keyup.enter="addBlockedKeyword"
-                >
-                <button
-                  class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                  @click="addBlockedKeyword"
-                >
-                  Block
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Spending Limits -->
-      <div class="bg-white rounded-xl shadow-sm border">
-        <div class="p-6 border-b">
-          <h3 class="text-lg font-semibold text-gray-900">Spending Limits</h3>
-          <p class="text-gray-600">Control how {{ selectedChildData.name }} can spend credits and make purchases</p>
-        </div>
-        <div class="p-6 space-y-6">
-          <!-- Monthly Spending Limit -->
-          <div>
-            <h4 class="font-medium text-gray-900 mb-4">Monthly Spending Limit</h4>
-            <div class="flex items-center space-x-3">
-              <span class="text-gray-700">$</span>
-              <input
-                v-model="selectedChildData.permissions.spending.monthlyLimit"
-                type="number"
-                min="0"
-                max="500"
-                class="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-              <span class="text-gray-600">per month</span>
-            </div>
-          </div>
-
-          <!-- Purchase Approval -->
-          <div class="border-t pt-6">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mb-4">
               <div>
-                <h4 class="font-medium text-gray-900">Require Purchase Approval</h4>
-                <p class="text-sm text-gray-600">All purchases must be approved by parent</p>
+                <h4 class="font-medium text-gray-900">Price Range Filter</h4>
+                <p class="text-sm text-gray-600">Hide items above price limit</p>
               </div>
               <button
                 :class="[
                   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  selectedChildData.permissions.spending.requireApproval ? 'bg-blue-600' : 'bg-gray-200'
+                  selectedChildData.permissions.storeFilter.priceFilterEnabled ? 'bg-blue-600' : 'bg-gray-200'
                 ]"
-                @click="selectedChildData.permissions.spending.requireApproval = !selectedChildData.permissions.spending.requireApproval"
+                @click="selectedChildData.permissions.storeFilter.priceFilterEnabled = !selectedChildData.permissions.storeFilter.priceFilterEnabled"
               >
                 <span
                   :class="[
                     'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                    selectedChildData.permissions.spending.requireApproval ? 'translate-x-6' : 'translate-x-1'
+                    selectedChildData.permissions.storeFilter.priceFilterEnabled ? 'translate-x-6' : 'translate-x-1'
                   ]"
                 />
               </button>
             </div>
-          </div>
-
-          <!-- Credit Allowance -->
-          <div class="border-t pt-6">
-            <h4 class="font-medium text-gray-900 mb-4">Weekly Credit Allowance</h4>
-            <div class="flex items-center space-x-3">
+            <div v-if="selectedChildData.permissions.storeFilter.priceFilterEnabled" class="flex items-center space-x-3">
+              <span class="text-gray-700">Max $</span>
               <input
-                v-model="selectedChildData.permissions.spending.weeklyCredits"
+                v-model="selectedChildData.permissions.storeFilter.maxPrice"
                 type="number"
                 min="0"
-                max="1000"
+                max="100"
                 class="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-              <span class="text-gray-600">credits per week</span>
+              <span class="text-gray-600">per item</span>
             </div>
           </div>
         </div>
@@ -327,7 +247,6 @@
 import { ref, computed } from 'vue';
 
 const selectedChild = ref(1);
-const newKeyword = ref('');
 const children = ref([
   {
     id: 1,
@@ -348,23 +267,16 @@ const children = ref([
         startTime: '20:00',
         endTime: '07:00'
       },
-      features: {
-        aiAssistant: true,
-        socialFeatures: false,
-        videoContent: true,
-        downloadContent: true,
-        shareNotes: false,
-        exportData: false,
-        thirdPartyIntegrations: false
-      },
-      contentFilter: {
-        rating: 'age10',
-        blockedKeywords: ['violence', 'inappropriate']
-      },
-      spending: {
-        monthlyLimit: 25,
-        requireApproval: true,
-        weeklyCredits: 100
+      storeFilter: {
+        books: true,
+        games: true,
+        videos: true,
+        accessories: false,
+        toys: true,
+        clothing: false,
+        ageRating: 'age10',
+        priceFilterEnabled: true,
+        maxPrice: 20
       }
     }
   },
@@ -387,23 +299,16 @@ const children = ref([
         startTime: '19:30',
         endTime: '07:30'
       },
-      features: {
-        aiAssistant: false,
-        socialFeatures: false,
-        videoContent: true,
-        downloadContent: false,
-        shareNotes: false,
-        exportData: false,
-        thirdPartyIntegrations: false
-      },
-      contentFilter: {
-        rating: 'age8',
-        blockedKeywords: ['violence', 'scary', 'inappropriate']
-      },
-      spending: {
-        monthlyLimit: 15,
-        requireApproval: true,
-        weeklyCredits: 50
+      storeFilter: {
+        books: true,
+        games: true,
+        videos: false,
+        accessories: false,
+        toys: true,
+        clothing: false,
+        ageRating: 'age8',
+        priceFilterEnabled: true,
+        maxPrice: 15
       }
     }
   },
@@ -426,91 +331,79 @@ const children = ref([
         startTime: '21:30',
         endTime: '06:30'
       },
-      features: {
-        aiAssistant: true,
-        socialFeatures: true,
-        videoContent: true,
-        downloadContent: true,
-        shareNotes: true,
-        exportData: true,
-        thirdPartyIntegrations: false
-      },
-      contentFilter: {
-        rating: 'age12',
-        blockedKeywords: ['inappropriate']
-      },
-      spending: {
-        monthlyLimit: 50,
-        requireApproval: false,
-        weeklyCredits: 200
+      storeFilter: {
+        books: true,
+        games: true,
+        videos: true,
+        accessories: true,
+        toys: false,
+        clothing: true,
+        ageRating: 'age12',
+        priceFilterEnabled: false,
+        maxPrice: 50
       }
     }
   }
 ]);
 
-const featurePermissions = ref([
+const storeCategories = ref([
   {
-    key: 'aiAssistant',
-    name: 'AI Study Assistant',
-    description: 'Access to AI-powered homework help and tutoring'
+    key: 'books',
+    name: 'Educational Books',
+    description: 'Textbooks, workbooks, and educational reading materials'
   },
   {
-    key: 'socialFeatures',
-    name: 'Social Features',
-    description: 'Chat with friends and join study groups'
+    key: 'games',
+    name: 'Educational Games',
+    description: 'Learning games and interactive educational content'
   },
   {
-    key: 'videoContent',
+    key: 'videos',
     name: 'Video Content',
-    description: 'Watch educational videos and tutorials'
+    description: 'Educational videos, tutorials, and documentaries'
   },
   {
-    key: 'downloadContent',
-    name: 'Download Content',
-    description: 'Download notes and materials for offline use'
+    key: 'accessories',
+    name: 'Study Accessories',
+    description: 'Stationery, calculators, and learning tools'
   },
   {
-    key: 'shareNotes',
-    name: 'Share Notes',
-    description: 'Share notes and assignments with classmates'
+    key: 'toys',
+    name: 'Educational Toys',
+    description: 'STEM toys, puzzles, and hands-on learning materials'
   },
   {
-    key: 'exportData',
-    name: 'Export Data',
-    description: 'Export personal data and study materials'
-  },
-  {
-    key: 'thirdPartyIntegrations',
-    name: 'Third-party Integrations',
-    description: 'Connect with external educational tools and platforms'
+    key: 'clothing',
+    name: 'School Clothing',
+    description: 'Uniforms, school-themed apparel, and accessories'
   }
 ]);
 
-const contentRatings = ref([
+const ageRatings = ref([
   {
     value: 'age6',
     name: 'Ages 6+',
-    description: 'Suitable for early elementary students'
+    description: 'Content suitable for early elementary students'
   },
   {
     value: 'age8',
     name: 'Ages 8+',
-    description: 'Suitable for elementary students'
+    description: 'Content suitable for elementary students'
   },
   {
     value: 'age10',
     name: 'Ages 10+',
-    description: 'Suitable for late elementary students'
+    description: 'Content suitable for late elementary students'
   },
   {
     value: 'age12',
     name: 'Ages 12+',
-    description: 'Suitable for middle school students'
+    description: 'Content suitable for middle school students'
   },
   {
     value: 'age14',
     name: 'Ages 14+',
-    description: 'Suitable for high school students'
+    description: 'Content suitable for high school students'
   }
 ]);
 
@@ -518,17 +411,4 @@ const selectedChildData = computed(() => {
   return children.value.find((child) => child.id === selectedChild.value) || children.value[0];
 });
 
-const addBlockedKeyword = () => {
-  if (newKeyword.value.trim() && !selectedChildData.value.permissions.contentFilter.blockedKeywords.includes(newKeyword.value.trim())) {
-    selectedChildData.value.permissions.contentFilter.blockedKeywords.push(newKeyword.value.trim());
-    newKeyword.value = '';
-  }
-};
-
-const removeBlockedKeyword = (keyword: string) => {
-  const index = selectedChildData.value.permissions.contentFilter.blockedKeywords.indexOf(keyword);
-  if (index > -1) {
-    selectedChildData.value.permissions.contentFilter.blockedKeywords.splice(index, 1);
-  }
-};
 </script>

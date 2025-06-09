@@ -1,96 +1,80 @@
 <template>
   <div class="space-y-6">
-    <!-- Family Plan Overview -->
+    <!-- Children Plans Overview -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
-        <h2 class="text-2xl font-bold text-gray-900">Family Subscription</h2>
-      </div>
-      <div class="p-6">
         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-            <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-              <svg
-                class="w-8 h-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold text-gray-900">{{ familyPlan.name }}</h3>
-              <p class="text-gray-600">{{ familyPlan.description }}</p>
-              <p class="text-sm text-gray-500 mt-1">{{ familyPlan.childrenCount }} children • Next billing: {{ familyPlan.nextBilling }}</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <div class="text-3xl font-bold text-gray-900">${{ familyPlan.price }}</div>
-            <div class="text-sm text-gray-500">per month</div>
-          </div>
+          <h2 class="text-2xl font-bold text-gray-900">Children's Subscriptions</h2>
+          <button
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            @click="showSubscriptionModal = true"
+          >
+            View Plans
+          </button>
         </div>
       </div>
-    </div>
-
-    <!-- Children Usage -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Children Usage Overview</h3>
-      </div>
       <div class="p-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div v-for="child in childrenUsage" :key="child.id" class="border rounded-lg p-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div v-for="child in children" :key="child.id" class="border rounded-lg p-6">
             <div class="flex items-center space-x-3 mb-4">
-              <img :src="child.avatar" :alt="child.name" class="w-10 h-10 rounded-full">
+              <img :src="child.avatar" :alt="child.name" class="w-12 h-12 rounded-full">
               <div>
                 <h4 class="font-semibold text-gray-900">{{ child.name }}</h4>
-                <p class="text-sm text-gray-600">{{ child.plan }}</p>
+                <div class="flex items-center space-x-2">
+                  <span
+                    :class="[
+                      'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
+                      child.plan === 'Premium' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                    ]"
+                  >
+                    {{ child.plan }} Plan
+                  </span>
+                  <span v-if="child.plan === 'Premium'" class="text-sm text-gray-600">$25/month</span>
+                  <span v-else class="text-sm text-gray-600">Free</span>
+                </div>
               </div>
             </div>
 
-            <!-- Credits Usage -->
             <div class="space-y-3">
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-600">Credits Used</span>
-                  <span>{{ child.usage.credits.used }} / {{ child.usage.credits.total }}</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-blue-600 h-2 rounded-full" :style="{ width: (child.usage.credits.used / child.usage.credits.total) * 100 + '%' }" />
-                </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Next billing</span>
+                <span class="font-medium">{{ child.nextBilling }}</span>
               </div>
-
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-600">AI Assistance</span>
-                  <span>{{ child.usage.ai.used }} / {{ child.usage.ai.total }}</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-green-600 h-2 rounded-full" :style="{ width: (child.usage.ai.used / child.usage.ai.total) * 100 + '%' }" />
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-gray-600">Screen Time</span>
-                  <span>{{ child.usage.screenTime.used }}h / {{ child.usage.screenTime.limit }}h</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-purple-600 h-2 rounded-full" :style="{ width: (child.usage.screenTime.used / child.usage.screenTime.limit) * 100 + '%' }" />
-                </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Status</span>
+                <span
+                  :class="[
+                    'font-medium',
+                    child.status === 'Active' ? 'text-green-600' : 'text-gray-600'
+                  ]"
+                >
+                  {{ child.status }}
+                </span>
               </div>
             </div>
 
-            <div class="mt-4 pt-3 border-t">
-              <div class="flex justify-between text-xs text-gray-600">
-                <span>Monthly Spending</span>
-                <span>${{ child.spending.thisMonth }}</span>
-              </div>
+            <div class="mt-4 pt-4 border-t space-y-2">
+              <button
+                v-if="child.plan === 'Free'"
+                class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                @click="upgradeChild(child)"
+              >
+                Upgrade to Premium
+              </button>
+              <button
+                v-else
+                class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                @click="manageChildPlan(child)"
+              >
+                Manage Plan
+              </button>
+              <button
+                v-if="child.plan === 'Premium'"
+                class="w-full px-4 py-2 text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
+                @click="cancelChildPlan(child)"
+              >
+                Cancel Plan
+              </button>
             </div>
           </div>
         </div>
@@ -113,69 +97,12 @@
               <p class="text-sm text-gray-600">Expires {{ paymentMethod.expiry }}</p>
             </div>
           </div>
-          <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+          <button
+            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            @click="showBillingModal = true"
+          >
             Update
           </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Family Plan Features -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Family Plan Features</h3>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="space-y-4">
-            <h4 class="font-medium text-gray-900">Included Features</h4>
-            <div class="space-y-3">
-              <div v-for="feature in familyPlan.features" :key="feature.name" class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-green-600 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <div>
-                  <p class="text-gray-900">{{ feature.name }}</p>
-                  <p v-if="feature.description" class="text-sm text-gray-600">{{ feature.description }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <h4 class="font-medium text-gray-900">Parental Controls</h4>
-            <div class="space-y-3">
-              <div v-for="control in parentalControls" :key="control.name" class="flex items-start space-x-3">
-                <svg
-                  class="w-5 h-5 text-blue-600 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-                <div>
-                  <p class="text-gray-900">{{ control.name }}</p>
-                  <p v-if="control.description" class="text-sm text-gray-600">{{ control.description }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -197,7 +124,7 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="bill in billingHistory" :key="bill.id">
+            <tr v-for="bill in paginatedBillingHistory" :key="bill.id">
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ bill.date }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ bill.description }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ bill.amount }}</td>
@@ -220,101 +147,104 @@
           </tbody>
         </table>
       </div>
-    </div>
 
-    <!-- Upgrade Options -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Upgrade Options</h3>
-        <p class="text-gray-600">Add more children or upgrade features</p>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="border rounded-lg p-4">
-            <h4 class="font-semibold text-gray-900 mb-2">Add More Children</h4>
-            <p class="text-gray-600 text-sm mb-4">Add additional children to your family plan</p>
-            <div class="flex items-center justify-between">
-              <span class="text-2xl font-bold text-gray-900">$5.99</span>
-              <span class="text-gray-500">per child/month</span>
-            </div>
-            <button class="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              Add Child
-            </button>
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="px-6 py-4 border-t bg-gray-50">
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-gray-600">
+            Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ Math.min(currentPage * itemsPerPage, billingHistory.length) }} of {{ billingHistory.length }} results
           </div>
+          <div class="flex space-x-2">
+            <button
+              :disabled="currentPage === 1"
+              :class="[
+                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                currentPage === 1
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+              ]"
+              @click="currentPage--"
+            >
+              Previous
+            </button>
 
-          <div class="border rounded-lg p-4">
-            <h4 class="font-semibold text-gray-900 mb-2">Premium Features</h4>
-            <p class="text-gray-600 text-sm mb-4">Unlock advanced analytics and unlimited AI assistance</p>
-            <div class="flex items-center justify-between">
-              <span class="text-2xl font-bold text-gray-900">$15.99</span>
-              <span class="text-gray-500">additional/month</span>
-            </div>
-            <button class="w-full mt-4 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              Learn More
+            <button
+              v-for="page in totalPages"
+              :key="page"
+              :class="[
+                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                page === currentPage
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+              ]"
+              @click="currentPage = page"
+            >
+              {{ page }}
+            </button>
+
+            <button
+              :disabled="currentPage === totalPages"
+              :class="[
+                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                currentPage === totalPages
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+              ]"
+              @click="currentPage++"
+            >
+              Next
             </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Subscription Modal -->
+    <SubscriptionModal
+      :is-open="showSubscriptionModal"
+      :student-name="selectedChild?.name"
+      @close="showSubscriptionModal = false"
+      @plan-selected="handlePlanSelected"
+    />
+
+    <!-- Billing Update Modal -->
+    <BillingUpdateModal
+      :is-open="showBillingModal"
+      @close="showBillingModal = false"
+      @payment-updated="handlePaymentUpdated"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import SubscriptionModal from '../common/SubscriptionModal.vue';
+import BillingUpdateModal from '../common/BillingUpdateModal.vue';
 
-const familyPlan = ref({
-  name: 'Family Pro Plan',
-  description: 'Perfect for families with multiple children',
-  price: 49.99,
-  childrenCount: 3,
-  nextBilling: 'March 15, 2024',
-  features: [
-    { name: 'Up to 5 children', description: 'Add up to 5 children to your account' },
-    { name: 'Unlimited notes per child', description: 'No limits on note creation' },
-    { name: 'AI Study Assistant', description: '1000 queries per child per month' },
-    { name: 'Advanced parental controls', description: 'Screen time, content filters, and more' },
-    { name: 'Family progress reports', description: 'Monthly insights and analytics' },
-    { name: 'Priority support', description: 'Email and chat support' },
-    { name: 'Offline access', description: 'Download content for offline study' }
-  ]
-});
-
-const childrenUsage = ref([
+const children = ref([
   {
     id: 1,
     name: 'Emma Johnson',
     avatar: '/child1-avatar.png',
-    plan: 'Student Pro',
-    usage: {
-      credits: { used: 847, total: 1000 },
-      ai: { used: 342, total: 500 },
-      screenTime: { used: 3.2, limit: 4 }
-    },
-    spending: { thisMonth: 12.50 }
+    plan: 'Premium',
+    status: 'Active',
+    nextBilling: 'March 15, 2024'
   },
   {
     id: 2,
     name: 'Liam Johnson',
     avatar: '/child2-avatar.png',
-    plan: 'Student Basic',
-    usage: {
-      credits: { used: 234, total: 500 },
-      ai: { used: 89, total: 200 },
-      screenTime: { used: 1.8, limit: 2.5 }
-    },
-    spending: { thisMonth: 5.99 }
+    plan: 'Free',
+    status: 'Active',
+    nextBilling: 'N/A'
   },
   {
     id: 3,
     name: 'Sophia Johnson',
     avatar: '/child3-avatar.png',
-    plan: 'Student Pro',
-    usage: {
-      credits: { used: 692, total: 1000 },
-      ai: { used: 445, total: 500 },
-      screenTime: { used: 4.1, limit: 5 }
-    },
-    spending: { thisMonth: 18.75 }
+    plan: 'Premium',
+    status: 'Active',
+    nextBilling: 'March 15, 2024'
   }
 ]);
 
@@ -323,50 +253,135 @@ const paymentMethod = ref({
   expiry: '12/26'
 });
 
-const parentalControls = ref([
-  { name: 'Screen Time Limits', description: 'Set daily and weekly usage limits' },
-  { name: 'Content Filtering', description: 'Age-appropriate content restrictions' },
-  { name: 'Spending Controls', description: 'Monitor and limit purchases' },
-  { name: 'Time Restrictions', description: 'Control when apps can be used' },
-  { name: 'Activity Reports', description: 'Detailed usage and progress reports' },
-  { name: 'Remote Management', description: 'Manage settings from anywhere' }
-]);
-
 const billingHistory = ref([
   {
     id: 1,
     date: 'Feb 15, 2024',
-    description: 'Family Pro Plan - Monthly',
-    amount: 49.99,
+    description: 'Emma Johnson - Premium Plan',
+    amount: 25.00,
     status: 'paid'
   },
   {
     id: 2,
-    date: 'Jan 15, 2024',
-    description: 'Family Pro Plan - Monthly',
-    amount: 49.99,
+    date: 'Feb 15, 2024',
+    description: 'Sophia Johnson - Premium Plan',
+    amount: 25.00,
     status: 'paid'
   },
   {
     id: 3,
-    date: 'Dec 15, 2023',
-    description: 'Family Pro Plan - Monthly + Additional Child',
-    amount: 55.98,
+    date: 'Jan 15, 2024',
+    description: 'Emma Johnson - Premium Plan',
+    amount: 25.00,
     status: 'paid'
   },
   {
     id: 4,
-    date: 'Nov 15, 2023',
-    description: 'Family Basic Plan - Monthly',
-    amount: 29.99,
+    date: 'Jan 15, 2024',
+    description: 'Sophia Johnson - Premium Plan',
+    amount: 25.00,
     status: 'paid'
   },
   {
     id: 5,
-    date: 'Oct 15, 2023',
-    description: 'Family Basic Plan - Monthly',
-    amount: 29.99,
+    date: 'Dec 15, 2023',
+    description: 'Emma Johnson - Premium Plan',
+    amount: 25.00,
+    status: 'paid'
+  },
+  {
+    id: 6,
+    date: 'Dec 15, 2023',
+    description: 'Sophia Johnson - Premium Plan',
+    amount: 25.00,
+    status: 'paid'
+  },
+  {
+    id: 7,
+    date: 'Nov 15, 2023',
+    description: 'Emma Johnson - Premium Plan',
+    amount: 25.00,
+    status: 'paid'
+  },
+  {
+    id: 8,
+    date: 'Nov 15, 2023',
+    description: 'Sophia Johnson - Premium Plan',
+    amount: 25.00,
     status: 'paid'
   }
 ]);
+
+// Modal states
+const showSubscriptionModal = ref(false);
+const showBillingModal = ref(false);
+const selectedChild = ref<any>(null);
+
+// Pagination
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
+const totalPages = computed(() => Math.ceil(billingHistory.value.length / itemsPerPage));
+
+const paginatedBillingHistory = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return billingHistory.value.slice(start, end);
+});
+
+// Methods
+const upgradeChild = (child: any) => {
+  selectedChild.value = child;
+  showSubscriptionModal.value = true;
+};
+
+const manageChildPlan = (child: any) => {
+  selectedChild.value = child;
+  showSubscriptionModal.value = true;
+};
+
+const handlePlanSelected = (plan: 'free' | 'premium', _studentName?: string) => {
+  if (selectedChild.value) {
+    selectedChild.value.plan = plan === 'premium' ? 'Premium' : 'Free';
+    selectedChild.value.nextBilling = plan === 'premium' ? 'March 15, 2024' : 'N/A';
+
+    // Add billing history entry for upgrades
+    if (plan === 'premium') {
+      billingHistory.value.unshift({
+        id: billingHistory.value.length + 1,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        description: `${selectedChild.value.name} - Premium Plan`,
+        amount: 25.00,
+        status: 'paid'
+      });
+    }
+  }
+  selectedChild.value = null;
+};
+
+const handlePaymentUpdated = (data: { card: any; address: any }) => {
+  // Update payment method display with new card info
+  paymentMethod.value.lastFour = data.card.number.slice(-4);
+  paymentMethod.value.expiry = data.card.expiry;
+
+  // Billing address would also be updated in the backend
+  console.log('Updated billing address:', data.address);
+};
+
+const cancelChildPlan = (child: any) => {
+  if (confirm(`Are you sure you want to cancel ${child.name}'s Premium plan? They will lose access to premium features at the end of the billing period.`)) {
+    child.plan = 'Free';
+    child.nextBilling = 'N/A';
+    child.status = 'Cancelled';
+    
+    // Add cancellation entry to billing history
+    billingHistory.value.unshift({
+      id: billingHistory.value.length + 1,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      description: `${child.name} - Plan Cancellation`,
+      amount: 0,
+      status: 'processed'
+    });
+  }
+};
 </script>
