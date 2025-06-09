@@ -1,8 +1,7 @@
 <template>
   <div>
     <!-- Header Section -->
-    <div class="flex flex-wrap justify-between items-center mb-6">
-      <h2 class="text-3xl font-extrabold text-blue-600">SHOP</h2>
+    <div class="flex flex-wrap items-center mb-6 justify-end">
       <div class="flex items-center space-x-4">
         <!-- View Toggle -->
         <div class="flex bg-gray-100 rounded-lg p-1">
@@ -43,8 +42,148 @@
             </svg>
           </button>
         </div>
+
+        <!-- Orders Button -->
+        <div ref="ordersDropdownRef" class="relative">
+          <button
+            class="flex items-center px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+            @click="showOrders = !showOrders"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Orders
+          </button>
+
+          <!-- Orders Dropdown -->
+          <div v-if="showOrders" class="absolute right-0 top-full mt-2 w-96 bg-white rounded-lg shadow-lg border z-50">
+            <div class="p-4">
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">My Orders</h3>
+
+              <!-- Order Tabs -->
+              <div class="flex space-x-1 mb-4 bg-gray-100 rounded-lg p-1">
+                <button
+                  :class="['flex-1 px-3 py-2 rounded text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+                  @click="orderTab = 'current'"
+                >
+                  Current ({{ currentOrders.length }})
+                </button>
+                <button
+                  :class="['flex-1 px-3 py-2 rounded text-sm font-medium transition-colors', orderTab === 'past' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+                  @click="orderTab = 'past'"
+                >
+                  Past ({{ pastOrders.length }})
+                </button>
+              </div>
+
+              <!-- Current Orders -->
+              <div v-if="orderTab === 'current'" class="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
+                <div v-if="currentOrders.length === 0" class="text-center py-8">
+                  <svg
+                    class="w-12 h-12 mx-auto text-gray-300 mb-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <p class="text-gray-500 text-sm">No current orders</p>
+                </div>
+
+                <div v-for="order in currentOrders" :key="order.id" class="border rounded-lg p-3">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-medium text-gray-900">Order #{{ order.id }}</span>
+                    <span :class="['text-xs px-2 py-1 rounded-full', getOrderStatusClass(order.status)]">
+                      {{ order.status }}
+                    </span>
+                  </div>
+                  <div class="flex items-center space-x-2 mb-2">
+                    <img :src="order.items[0].image" :alt="order.items[0].name" class="w-8 h-8 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 truncate">{{ order.items[0].name }}</p>
+                      <p class="text-xs text-gray-600">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : '' }}</p>
+                    </div>
+                    <span class="text-sm font-medium text-blue-600">{{ order.total }}C</span>
+                  </div>
+                  <div class="text-xs text-gray-500 mb-2">{{ order.date }}</div>
+                  <div v-if="order.tracking" class="flex items-center space-x-2 text-xs">
+                    <div class="flex-1 bg-gray-200 rounded-full h-1.5">
+                      <div :class="['h-1.5 rounded-full', getTrackingProgress(order.status)]" :style="{ width: getTrackingWidth(order.status) }" />
+                    </div>
+                    <span class="text-gray-600">{{ getTrackingText(order.status) }}</span>
+                  </div>
+                  <button class="mt-2 text-xs text-blue-600 hover:text-blue-700 font-medium">
+                    Track Order
+                  </button>
+                </div>
+              </div>
+
+              <!-- Past Orders -->
+              <div v-if="orderTab === 'past'" class="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
+                <div v-if="pastOrders.length === 0" class="text-center py-8">
+                  <svg
+                    class="w-12 h-12 mx-auto text-gray-300 mb-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <p class="text-gray-500 text-sm">No past orders</p>
+                </div>
+
+                <div v-for="order in pastOrders" :key="order.id" class="border rounded-lg p-3">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-medium text-gray-900">Order #{{ order.id }}</span>
+                    <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-800">
+                      {{ order.status }}
+                    </span>
+                  </div>
+                  <div class="flex items-center space-x-2 mb-2">
+                    <img :src="order.items[0].image" :alt="order.items[0].name" class="w-8 h-8 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 truncate">{{ order.items[0].name }}</p>
+                      <p class="text-xs text-gray-600">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : '' }}</p>
+                    </div>
+                    <span class="text-sm font-medium text-blue-600">{{ order.total }}C</span>
+                  </div>
+                  <div class="text-xs text-gray-500 mb-2">{{ order.date }}</div>
+                  <div class="flex space-x-2">
+                    <button class="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                      View Receipt
+                    </button>
+                    <button class="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                      Reorder
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Cart Icon -->
-        <div class="relative">
+        <div ref="cartDropdownRef" class="relative">
           <button
             class="flex items-center px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
             @click="showCart = !showCart"
@@ -90,7 +229,7 @@
                 <p class="text-gray-500 text-sm">Your cart is empty</p>
               </div>
 
-              <div v-else class="space-y-3 max-h-64 overflow-y-auto">
+              <div v-else class="space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
                 <div v-for="item in cart" :key="item.id" class="flex items-center space-x-3 p-2 border rounded-lg">
                   <img :src="item.image" :alt="item.name" class="w-10 h-10 object-cover rounded">
                   <div class="flex-1 min-w-0">
@@ -211,57 +350,59 @@
       </div>
 
       <!-- Filters Row -->
-      <div class="flex flex-wrap gap-4 items-center">
-        <!-- Category Filter -->
-        <select
-          v-model="selectedCategory"
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-        >
-          <option value="">All Categories</option>
-          <option v-for="category in categories" :key="category" :value="category">
-            {{ category }}
-          </option>
-        </select>
+      <div class="flex flex-wrap gap-4 items-center justify-between">
+        <div class="flex flex-wrap gap-4 items-center">
+          <!-- Category Filter -->
+          <select
+            v-model="selectedCategory"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+          >
+            <option value="">All Categories</option>
+            <option v-for="category in categories" :key="category" :value="category">
+              {{ category }}
+            </option>
+          </select>
 
-        <!-- Price Filter -->
-        <select
-          v-model="priceFilter"
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-        >
-          <option value="">All Prices</option>
-          <option value="0-10">0-10 Credits</option>
-          <option value="11-30">11-30 Credits</option>
-          <option value="31-50">31-50 Credits</option>
-          <option value="51+">51+ Credits</option>
-        </select>
+          <!-- Price Filter -->
+          <select
+            v-model="priceFilter"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+          >
+            <option value="">All Prices</option>
+            <option value="0-10">0-10 Credits</option>
+            <option value="11-30">11-30 Credits</option>
+            <option value="31-50">31-50 Credits</option>
+            <option value="51+">51+ Credits</option>
+          </select>
 
-        <!-- Sort By -->
-        <select
-          v-model="sortBy"
-          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-        >
-          <option value="name">Sort by Name</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-          <option value="rating">Highest Rated</option>
-          <option value="newest">Newest First</option>
-        </select>
+          <!-- Sort By -->
+          <select
+            v-model="sortBy"
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+          >
+            <option value="name">Sort by Name</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+            <option value="newest">Newest First</option>
+          </select>
 
-        <!-- Clear Filters -->
-        <button
-          v-if="hasActiveFilters"
-          class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 underline"
-          @click="clearFilters"
-        >
-          Clear Filters
-        </button>
+          <!-- Clear Filters -->
+          <button
+            v-if="hasActiveFilters"
+            class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 underline"
+            @click="clearFilters"
+          >
+            Clear Filters
+          </button>
+        </div>
+
+        <!-- Results Info -->
+        <div class="text-sm text-gray-600">
+          Showing {{ filteredItems.length }} of {{ items.length }} products
+          <span v-if="searchQuery"> for "{{ searchQuery }}"</span>
+        </div>
       </div>
-    </div>
-
-    <!-- Results Info -->
-    <div class="mb-4 text-sm text-gray-600">
-      Showing {{ filteredItems.length }} of {{ items.length }} products
-      <span v-if="searchQuery"> for "{{ searchQuery }}"</span>
     </div>
 
     <!-- Wishlist View -->
@@ -557,6 +698,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
+import { useRouter } from 'vue-router';
 import placeholder1 from '../../../../assets/a.png';
 import placeholder2 from '../../../../assets/b.png';
 import placeholder3 from '../../../../assets/c.png';
@@ -688,6 +830,50 @@ const showProductModal = ref(false);
 const selectedProduct = ref<any>(null);
 const currentPage = ref(1);
 const itemsPerPage = ref(12);
+const showOrders = ref(false);
+const orderTab = ref('current');
+const router = useRouter();
+
+// Refs for click outside functionality
+const cartDropdownRef = ref<HTMLElement>();
+const ordersDropdownRef = ref<HTMLElement>();
+
+// Mock order data
+const currentOrders = ref([
+  {
+    id: '12345',
+    items: [{ name: 'KFC Gift Card', image: placeholder2 }],
+    total: 10,
+    status: 'Processing',
+    date: '2 days ago',
+    tracking: true
+  },
+  {
+    id: '12346',
+    items: [{ name: 'Fortnite V-Bucks', image: placeholder1 }],
+    total: 10,
+    status: 'Shipped',
+    date: '3 days ago',
+    tracking: true
+  }
+]);
+
+const pastOrders = ref([
+  {
+    id: '12340',
+    items: [{ name: 'Chicha Morada Tea', image: placeholder4 }],
+    total: 5,
+    status: 'Delivered',
+    date: '1 week ago'
+  },
+  {
+    id: '12341',
+    items: [{ name: 'Pikachu Plush Toy', image: placeholder7 }],
+    total: 20,
+    status: 'Delivered',
+    date: '2 weeks ago'
+  }
+]);
 
 // Categories
 const categories = computed(() => {
@@ -797,7 +983,7 @@ const clearCart = () => {
 
 const goToCheckout = () => {
   showCart.value = false;
-  showCheckout.value = true;
+  router.push('/checkout');
 };
 
 const handlePaymentSuccess = () => {
@@ -863,6 +1049,61 @@ const clearFilters = () => {
   currentPage.value = 1;
 };
 
+// Order helper functions
+const getOrderStatusClass = (status: string) => {
+  switch (status) {
+    case 'Processing':
+      return 'bg-yellow-100 text-yellow-800';
+    case 'Shipped':
+      return 'bg-blue-100 text-blue-800';
+    case 'Delivered':
+      return 'bg-green-100 text-green-800';
+    case 'Pending Payment':
+      return 'bg-red-100 text-red-800';
+    default:
+      return 'bg-gray-100 text-gray-800';
+  }
+};
+
+const getTrackingProgress = (status: string) => {
+  switch (status) {
+    case 'Processing':
+      return 'bg-yellow-400';
+    case 'Shipped':
+      return 'bg-blue-400';
+    case 'Delivered':
+      return 'bg-green-400';
+    default:
+      return 'bg-gray-400';
+  }
+};
+
+const getTrackingWidth = (status: string) => {
+  switch (status) {
+    case 'Processing':
+      return '25%';
+    case 'Shipped':
+      return '75%';
+    case 'Delivered':
+      return '100%';
+    default:
+      return '0%';
+  }
+};
+
+const getTrackingText = (status: string) => {
+  switch (status) {
+    case 'Processing':
+      return 'Order being prepared';
+    case 'Shipped':
+      return 'On the way';
+    case 'Delivered':
+      return 'Delivered';
+    default:
+      return 'Order placed';
+  }
+};
+
 const updateScreenSize = () => {
   if (typeof window !== 'undefined') {
     if (window.innerWidth <= 768) {
@@ -873,16 +1114,41 @@ const updateScreenSize = () => {
   }
 };
 
+// Click outside handler
+const handleClickOutside = (event: Event) => {
+  if (cartDropdownRef.value && !cartDropdownRef.value.contains(event.target as Node)) {
+    showCart.value = false;
+  }
+  if (ordersDropdownRef.value && !ordersDropdownRef.value.contains(event.target as Node)) {
+    showOrders.value = false;
+  }
+};
+
 onMounted(() => {
   if (typeof window !== 'undefined') {
     updateScreenSize();
     window.addEventListener('resize', updateScreenSize);
+    document.addEventListener('click', handleClickOutside);
   }
 });
 
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('resize', updateScreenSize);
+    document.removeEventListener('click', handleClickOutside);
   }
 });
 </script>
+
+<style scoped>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>

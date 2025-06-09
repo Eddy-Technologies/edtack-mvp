@@ -1,9 +1,8 @@
 <template>
-  <div v-if="isOpen && product" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-    <div class="bg-white rounded-lg shadow-xl max-w-7xl w-full max-h-[90vh] overflow-y-auto my-6">
+  <div v-if="isOpen && product" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6" @click="closeModal">
+    <div class="bg-white rounded-lg shadow-xl max-w-7xl w-full max-h-[90vh] overflow-y-auto my-6 scrollbar-hide" @click.stop>
       <!-- Header -->
-      <div class="flex items-center justify-between p-6 border-b">
-        <h2 class="text-2xl font-bold text-gray-900">Product Details</h2>
+      <div class="flex items-center justify-end px-4 pt-4">
         <button
           class="text-gray-400 hover:text-gray-600 transition-colors"
           @click="closeModal"
@@ -508,3 +507,16 @@ watchEffect(() => {
   updateSelectedImage();
 });
 </script>
+
+<style scoped>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>
