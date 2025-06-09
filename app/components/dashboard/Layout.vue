@@ -22,7 +22,7 @@
               {{ userEmail }}
             </p>
             <div class="flex items-center mt-1">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
                 {{ userType === 'student' ? 'Student' : 'Parent' }}
               </span>
             </div>
@@ -33,7 +33,7 @@
       <!-- Chat Button -->
       <div class="px-6 py-4 border-b">
         <button
-          class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-700 transition-colors"
           @click="navigateToRoute({ name: 'Chat', route: '/video' })"
         >
           <svg
@@ -62,7 +62,7 @@
             :class="[
               'flex items-center px-3 py-2 mb-1 text-sm font-medium rounded-lg cursor-pointer transition-colors',
               isActiveRoute(item.route)
-                ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
+                ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-700'
                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
             ]"
             @click="navigateToRoute(item)"
@@ -107,7 +107,7 @@
                 :class="[
                   'flex items-center px-3 py-2 text-sm rounded-lg cursor-pointer transition-colors',
                   isActiveRoute(child.route)
-                    ? 'bg-blue-50 text-blue-700'
+                    ? 'bg-primary-50 text-primary-700'
                     : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
                 ]"
                 @click="navigateToRoute(child)"

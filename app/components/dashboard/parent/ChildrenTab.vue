@@ -1,26 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Header -->
-    <div class="flex items-center justify-between">
-      <h2 class="text-2xl font-bold text-gray-900">Children Management</h2>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-        <svg
-          class="w-4 h-4 inline mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-        Add Child
-      </button>
-    </div>
-
     <!-- Children Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div v-for="child in children" :key="child.id" class="bg-white rounded-xl shadow-sm border">
@@ -105,7 +84,7 @@
           <h4 class="font-medium text-gray-900 mb-3">Recent Activity</h4>
           <div class="space-y-2">
             <div v-for="activity in child.recentActivity" :key="activity.id" class="flex items-center text-sm">
-              <div class="w-2 h-2 bg-blue-400 rounded-full mr-3" />
+              <div class="w-2 h-2 bg-primary-400 rounded-full mr-3" />
               <span class="text-gray-900">{{ activity.action }}</span>
               <span class="text-gray-500 ml-auto">{{ activity.time }}</span>
             </div>
@@ -122,7 +101,7 @@
                 :class="[
                   'text-xs px-2 py-1 rounded-full',
                   subject.performance === 'excellent' ? 'bg-green-100 text-green-800' :
-                  subject.performance === 'good' ? 'bg-blue-100 text-blue-800' :
+                  subject.performance === 'good' ? 'bg-primary-100 text-primary-800' :
                   subject.performance === 'average' ? 'bg-yellow-100 text-yellow-800' :
                   'bg-red-100 text-red-800'
                 ]"
@@ -136,7 +115,7 @@
         <!-- Controls -->
         <div class="p-6">
           <div class="grid grid-cols-2 gap-3">
-            <button class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium">
+            <button class="px-4 py-2 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors text-sm font-medium">
               View Full Report
             </button>
             <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
@@ -151,11 +130,11 @@
               <span class="text-sm text-gray-600">{{ child.screenTime.used }}h / {{ child.screenTime.limit }}h</span>
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2">
-              <div class="bg-blue-600 h-2 rounded-full" :style="{ width: (child.screenTime.used / child.screenTime.limit) * 100 + '%' }" />
+              <div class="bg-primary h-2 rounded-full" :style="{ width: (child.screenTime.used / child.screenTime.limit) * 100 + '%' }" />
             </div>
             <div class="flex justify-between mt-2">
-              <button class="text-xs text-blue-600 hover:text-blue-700">Adjust Limit</button>
-              <button class="text-xs text-blue-600 hover:text-blue-700">View Details</button>
+              <button class="text-xs text-primary hover:text-primary-700">Adjust Limit</button>
+              <button class="text-xs text-primary hover:text-primary-700">View Details</button>
             </div>
           </div>
         </div>
@@ -177,7 +156,7 @@
                     'w-3 h-3 rounded-full mt-1',
                     event.type === 'assignment' ? 'bg-red-400' :
                     event.type === 'test' ? 'bg-yellow-400' :
-                    event.type === 'activity' ? 'bg-blue-400' :
+                    event.type === 'activity' ? 'bg-primary-400' :
                     'bg-green-400'
                   ]"
                 />

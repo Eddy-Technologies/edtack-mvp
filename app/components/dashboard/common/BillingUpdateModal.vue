@@ -1,6 +1,6 @@
 <template>
   <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6" @click="closeModal">
-    <div class="bg-white rounded-lg shadow-xl max-w-md w-full" @click.stop>
+    <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full my-8" @click.stop>
       <!-- Header -->
       <div class="flex items-center justify-between p-6 border-b">
         <h2 class="text-xl font-bold text-gray-900">Update Payment & Billing Information</h2>
@@ -27,123 +27,128 @@
       <!-- Content -->
       <div class="p-6">
         <form @submit.prevent="updatePaymentMethod">
-          <!-- Card Number -->
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
-            <input
-              v-model="cardDetails.number"
-              type="text"
-              placeholder="1234 5678 9012 3456"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              @input="formatCardNumber"
-            >
-          </div>
-
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <!-- Expiry Date -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Expiry Date</label>
-              <input
-                v-model="cardDetails.expiry"
-                type="text"
-                placeholder="MM/YY"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                @input="formatExpiry"
-              >
-            </div>
-
-            <!-- CVC -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">CVC</label>
-              <input
-                v-model="cardDetails.cvc"
-                type="text"
-                placeholder="123"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                maxlength="4"
-              >
-            </div>
-          </div>
-
-          <!-- Cardholder Name -->
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cardholder Name</label>
-            <input
-              v-model="cardDetails.name"
-              type="text"
-              placeholder="John Doe"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-
-          <!-- Billing Address Section -->
-          <div class="border-t pt-6 mb-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Billing Address</h3>
-
-            <!-- Street Address -->
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
-              <input
-                v-model="billingAddress.street"
-                type="text"
-                placeholder="123 Main Street"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <!-- City -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column - Payment Information -->
+            <div class="space-y-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Payment Information</h3>
+              <!-- Card Number -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">City</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
                 <input
-                  v-model="billingAddress.city"
+                  v-model="cardDetails.number"
                   type="text"
-                  placeholder="New York"
+                  placeholder="1234 5678 9012 3456"
                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  @input="formatCardNumber"
                 >
               </div>
 
-              <!-- State -->
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Expiry Date -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Expiry Date</label>
+                  <input
+                    v-model="cardDetails.expiry"
+                    type="text"
+                    placeholder="MM/YY"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    @input="formatExpiry"
+                  >
+                </div>
+
+                <!-- CVC -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">CVC</label>
+                  <input
+                    v-model="cardDetails.cvc"
+                    type="text"
+                    placeholder="123"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    maxlength="4"
+                  >
+                </div>
+              </div>
+
+              <!-- Cardholder Name -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Cardholder Name</label>
                 <input
-                  v-model="billingAddress.state"
+                  v-model="cardDetails.name"
                   type="text"
-                  placeholder="NY"
+                  placeholder="John Doe"
                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <!-- ZIP Code -->
+            <!-- Right Column - Billing Address -->
+            <div class="space-y-6 bg-gray-100 p-6 rounded-lg">
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Billing Address</h3>
+              <!-- Street Address -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">ZIP Code</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
                 <input
-                  v-model="billingAddress.zipCode"
+                  v-model="billingAddress.street"
                   type="text"
-                  placeholder="10001"
+                  placeholder="123 Main Street"
                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
               </div>
 
-              <!-- Country -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                <input
-                  v-model="billingAddress.country"
-                  type="text"
-                  placeholder="United States"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
+              <div class="grid grid-cols-2 gap-4">
+                <!-- City -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">City</label>
+                  <input
+                    v-model="billingAddress.city"
+                    type="text"
+                    placeholder="New York"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                </div>
+
+                <!-- State -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
+                  <input
+                    v-model="billingAddress.state"
+                    type="text"
+                    placeholder="NY"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <!-- ZIP Code -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">ZIP Code</label>
+                  <input
+                    v-model="billingAddress.zipCode"
+                    type="text"
+                    placeholder="10001"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                </div>
+
+                <!-- Country -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                  <input
+                    v-model="billingAddress.country"
+                    type="text"
+                    placeholder="United States"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Re-authentication Section -->
-          <div class="border-t pt-6 mb-6">
+          <div class="border-t pt-8 mt-8 mb-6">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Confirm Your Identity</h3>
-            <div class="mb-4">
+            <div class="max-w-md">
               <label class="block text-sm font-medium text-gray-700 mb-2">Enter Your Password</label>
               <input
                 v-model="authPassword"
@@ -161,7 +166,7 @@
           </div>
 
           <!-- Buttons -->
-          <div class="flex space-x-4">
+          <div class="flex space-x-4 mt-8 mb-4">
             <button
               type="button"
               class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"

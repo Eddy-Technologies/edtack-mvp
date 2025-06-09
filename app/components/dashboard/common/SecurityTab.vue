@@ -14,7 +14,7 @@
             <p class="text-gray-600">{{ userInfo.username }}</p>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="editUsername"
           >
             Change
@@ -28,7 +28,7 @@
             <p class="text-gray-600">{{ userInfo.email }}</p>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="editEmail"
           >
             Change
@@ -42,7 +42,7 @@
             <p class="text-gray-600">••••••••••••</p>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="editPassword"
           >
             Change
@@ -94,7 +94,7 @@
                   class="sr-only peer"
                   @change="toggle2FA"
                 >
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
               </label>
             </div>
             <button
@@ -228,16 +228,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ChangeUsernameModal from './ChangeUsernameModal.vue';
 import ChangeEmailModal from './ChangeEmailModal.vue';
 import ChangePasswordModal from './ChangePasswordModal.vue';
 import TwoFactorModal from './TwoFactorModal.vue';
 import RecoveryCodesModal from './RecoveryCodesModal.vue';
+import { useDashboardData } from '~/composables/useDashboardData';
 
-const userInfo = ref({
-  username: 'john_doe',
-  email: 'john.doe@example.com'
+// Modal states
+const showUsernameModal = ref(false);
+const showEmailModal = ref(false);
+const showPasswordModal = ref(false);
+const show2FAModal = ref(false);
+const showRecoveryModal = ref(false);
+
+const { dashboardData } = useDashboardData();
+
+// Data initialization - get from API or use mock as fallback
+const userInfo = computed(() => {
+  if (dashboardData.value && 'user' in dashboardData.value) {
+    return {
+      username: dashboardData.value.user.name.toLowerCase().replace(' ', '.'),
+      email: dashboardData.value.user.email
+    };
+  }
+  throw new Error('User data not found');
 });
 
 const twoFactorEnabled = ref(true);
@@ -265,13 +281,6 @@ const activeSessions = ref([
     current: false
   }
 ]);
-
-// Modal states
-const showUsernameModal = ref(false);
-const showEmailModal = ref(false);
-const showPasswordModal = ref(false);
-const show2FAModal = ref(false);
-const showRecoveryModal = ref(false);
 
 // Methods
 const editUsername = () => {

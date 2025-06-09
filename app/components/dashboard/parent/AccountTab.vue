@@ -7,7 +7,7 @@
           <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
           <button
             v-if="!isEditing"
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
             @click="startEditing"
           >
             Edit Profile
@@ -55,7 +55,7 @@
           <div class="mt-6 flex space-x-4">
             <button
               type="submit"
-              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
             >
               Save Changes
             </button>
@@ -96,7 +96,7 @@
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-semibold text-gray-900">Children</h3>
           <button
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
             @click="showAddChildModal = true"
           >
             Add Child
@@ -116,7 +116,7 @@
                   <span
                     :class="[
                       'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                      child.plan === 'Premium' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                      child.plan === 'Premium' ? 'bg-primary-100 text-primary-800' : 'bg-gray-100 text-gray-800'
                     ]"
                   >
                     {{ child.plan }} Plan
@@ -126,14 +126,14 @@
             </div>
             <div class="flex items-center space-x-3">
               <button
-                class="px-3 py-1 text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors text-sm"
+                class="px-3 py-1 text-primary border border-primary rounded hover:bg-primary-50 transition-colors text-sm"
                 @click="editChild(child)"
               >
                 Edit
               </button>
               <button
                 class="px-3 py-1 text-red-600 border border-red-300 rounded hover:bg-red-50 transition-colors text-sm"
-                @click="removeChild(child.id)"
+                @click="removeChild(child)"
               >
                 Remove
               </button>
@@ -161,7 +161,7 @@
             </div>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showBillingModal = true"
           >
             Edit
@@ -182,7 +182,7 @@
             </div>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showShippingModal = true"
           >
             Edit
@@ -205,7 +205,7 @@
             <p class="text-gray-600">Manage content restrictions and screen time limits</p>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showParentalControlsModal = true"
           >
             Configure
@@ -224,7 +224,7 @@
               type="checkbox"
               class="sr-only peer"
             >
-            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
           </label>
         </div>
       </div>
@@ -264,6 +264,13 @@
       :is-open="showParentalControlsModal"
       @close="showParentalControlsModal = false"
     />
+
+    <RemoveChildModal
+      :is-open="showRemoveChildModal"
+      :child-name="childToRemove?.name || ''"
+      @close="showRemoveChildModal = false"
+      @confirm="confirmRemoveChild"
+    />
   </div>
 </template>
 
@@ -274,6 +281,7 @@ import EditChildModal from '../common/EditChildModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
 import ShippingAddressModal from '../common/ShippingAddressModal.vue';
 import ParentalControlsModal from '../common/ParentalControlsModal.vue';
+import RemoveChildModal from '../common/RemoveChildModal.vue';
 
 const personalInfo = ref({
   firstName: 'Sarah',
@@ -333,7 +341,9 @@ const showEditChildModal = ref(false);
 const showBillingModal = ref(false);
 const showShippingModal = ref(false);
 const showParentalControlsModal = ref(false);
+const showRemoveChildModal = ref(false);
 const selectedChild = ref(null);
+const childToRemove = ref(null);
 
 // Methods
 const startEditing = () => {
@@ -364,10 +374,17 @@ const editChild = (child: any) => {
   showEditChildModal.value = true;
 };
 
-const removeChild = (childId: number) => {
-  if (confirm('Are you sure you want to remove this child from your account?')) {
-    children.value = children.value.filter((child) => child.id !== childId);
+const removeChild = (child: any) => {
+  childToRemove.value = child;
+  showRemoveChildModal.value = true;
+};
+
+const confirmRemoveChild = () => {
+  if (childToRemove.value) {
+    children.value = children.value.filter((child) => child.id !== childToRemove.value!.id);
+    childToRemove.value = null;
   }
+  showRemoveChildModal.value = false;
 };
 
 // Event handlers

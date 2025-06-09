@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">Children's Subscriptions</h2>
           <button
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
             @click="showSubscriptionModal = true"
           >
             View Plans
@@ -24,7 +24,7 @@
                   <span
                     :class="[
                       'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                      child.plan === 'Premium' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                      child.plan === 'Premium' ? 'bg-primary-100 text-primary-800' : 'bg-gray-100 text-gray-800'
                     ]"
                   >
                     {{ child.plan }} Plan
@@ -56,7 +56,7 @@
             <div class="mt-4 pt-4 border-t space-y-2">
               <button
                 v-if="child.plan === 'Free'"
-                class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                class="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
                 @click="upgradeChild(child)"
               >
                 Upgrade to Premium
@@ -174,7 +174,7 @@
               :class="[
                 'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                 page === currentPage
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
               ]"
               @click="currentPage = page"

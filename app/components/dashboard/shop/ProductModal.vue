@@ -67,7 +67,7 @@
                 :key="index"
                 :class="[
                   'flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors',
-                  selectedImage === image ? 'border-blue-500' : 'border-gray-200 hover:border-gray-300'
+                  selectedImage === image ? 'border-primary-500' : 'border-gray-200 hover:border-gray-300'
                 ]"
                 @click="selectedImage = image"
               >
@@ -80,7 +80,7 @@
           <div class="space-y-6">
             <!-- Product Title & Category -->
             <div>
-              <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-2">
+              <span class="inline-block bg-primary-100 text-primary-800 text-sm px-3 py-1 rounded-full mb-2">
                 {{ product.category }}
               </span>
               <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ product.name }}</h1>
@@ -106,7 +106,7 @@
             <!-- Price -->
             <div class="space-y-2">
               <div class="flex items-center space-x-3">
-                <span class="text-4xl font-bold text-blue-600">{{ product.price }}C</span>
+                <span class="text-4xl font-bold text-primary">{{ product.price }}C</span>
                 <span v-if="product.originalPrice" class="text-2xl text-gray-500 line-through">{{ product.originalPrice }}C</span>
               </div>
               <p class="text-gray-600">≈ ${{ (product.price * 0.1).toFixed(2) }} USD</p>
@@ -183,13 +183,13 @@
             <!-- Action Buttons -->
             <div class="space-y-3">
               <button
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-colors"
+                class="w-full bg-primary hover:bg-primary-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-colors"
                 @click="addToCart"
               >
                 Add to Cart ({{ product.price * quantity }}C)
               </button>
               <button
-                class="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-6 rounded-lg font-semibold text-lg transition-colors"
+                class="w-full border-2 border-primary text-primary hover:bg-primary-50 py-3 px-6 rounded-lg font-semibold text-lg transition-colors"
                 @click="buyNow"
               >
                 Buy Now
@@ -254,7 +254,7 @@
         <div class="mt-12 border-t pt-8">
           <div class="flex items-center justify-between mb-6">
             <h3 class="text-2xl font-bold text-gray-900">Customer Reviews</h3>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+            <button class="bg-primary hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
               Write Review
             </button>
           </div>

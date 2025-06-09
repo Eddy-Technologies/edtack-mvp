@@ -8,7 +8,7 @@
   >
     <!-- Student Components -->
     <template v-if="userType === 'student'">
-      <StudentProfileTab v-if="currentTab === 'profile'" />
+      <StudentOverviewTab v-if="currentTab === 'overview'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
       <StudentSubscriptionTab v-else-if="currentTab === 'subscription' && studentPaysForSubscription" />
       <StudentAccountTab v-else-if="currentTab === 'account'" />
@@ -22,7 +22,7 @@
 
     <!-- Parent Components -->
     <template v-else>
-      <ParentProfileTab v-if="currentTab === 'profile'" />
+      <ParentOverviewTab v-if="currentTab === 'overview'" />
       <ParentSubscriptionTab v-else-if="currentTab === 'subscription'" />
       <ParentAccountTab v-else-if="currentTab === 'account'" />
       <ParentChildrenTab v-else-if="currentTab === 'children'" />
@@ -44,13 +44,13 @@ import placeholder1 from '../../../../assets/default-avatar.png';
 import Layout from '~/components/dashboard/Layout.vue';
 
 // Student Components
-import StudentProfileTab from '~/components/dashboard/student/ProfileTab.vue';
+import StudentOverviewTab from '~/components/dashboard/student/OverviewTab.vue';
 import StudentNotesTab from '~/components/dashboard/student/NotesTab.vue';
 import StudentSubscriptionTab from '~/components/dashboard/student/SubscriptionTab.vue';
 import StudentAccountTab from '~/components/dashboard/student/AccountTab.vue';
 
 // Parent Components
-import ParentProfileTab from '~/components/dashboard/parent/ProfileTab.vue';
+import ParentOverviewTab from '~/components/dashboard/parent/OverviewTab.vue';
 import ParentSubscriptionTab from '~/components/dashboard/parent/SubscriptionTab.vue';
 import ParentAccountTab from '~/components/dashboard/parent/AccountTab.vue';
 import ParentChildrenTab from '~/components/dashboard/parent/ChildrenTab.vue';
@@ -84,7 +84,7 @@ const currentTab = computed(() => {
 // Update page title based on current tab
 const pageTitle = computed(() => {
   const tabTitles = {
-    profile: 'Profile',
+    overview: 'Overview',
     notes: 'Notes',
     subscription: 'Subscription',
     account: 'Account',

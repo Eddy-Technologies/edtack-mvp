@@ -6,7 +6,7 @@
         <!-- View Toggle -->
         <div class="flex bg-gray-100 rounded-lg p-1">
           <button
-            :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'icon' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+            :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'icon' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
             @click="viewMode = 'icon'"
           >
             <svg
@@ -24,7 +24,7 @@
             </svg>
           </button>
           <button
-            :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+            :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'list' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
             @click="viewMode = 'list'"
           >
             <svg
@@ -73,13 +73,13 @@
               <!-- Order Tabs -->
               <div class="flex space-x-1 mb-4 bg-gray-100 rounded-lg p-1">
                 <button
-                  :class="['flex-1 px-3 py-2 rounded text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+                  :class="['flex-1 px-3 py-2 rounded text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
                   @click="orderTab = 'current'"
                 >
                   Current ({{ currentOrders.length }})
                 </button>
                 <button
-                  :class="['flex-1 px-3 py-2 rounded text-sm font-medium transition-colors', orderTab === 'past' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-600 hover:text-gray-900']"
+                  :class="['flex-1 px-3 py-2 rounded text-sm font-medium transition-colors', orderTab === 'past' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
                   @click="orderTab = 'past'"
                 >
                   Past ({{ pastOrders.length }})
@@ -118,7 +118,7 @@
                       <p class="text-sm font-medium text-gray-900 truncate">{{ order.items[0].name }}</p>
                       <p class="text-xs text-gray-600">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : '' }}</p>
                     </div>
-                    <span class="text-sm font-medium text-blue-600">{{ order.total }}C</span>
+                    <span class="text-sm font-medium text-primary">{{ order.total }}C</span>
                   </div>
                   <div class="text-xs text-gray-500 mb-2">{{ order.date }}</div>
                   <div v-if="order.tracking" class="flex items-center space-x-2 text-xs">
@@ -127,7 +127,7 @@
                     </div>
                     <span class="text-gray-600">{{ getTrackingText(order.status) }}</span>
                   </div>
-                  <button class="mt-2 text-xs text-blue-600 hover:text-blue-700 font-medium">
+                  <button class="mt-2 text-xs text-primary hover:text-primary-700 font-medium">
                     Track Order
                   </button>
                 </div>
@@ -165,14 +165,14 @@
                       <p class="text-sm font-medium text-gray-900 truncate">{{ order.items[0].name }}</p>
                       <p class="text-xs text-gray-600">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : '' }}</p>
                     </div>
-                    <span class="text-sm font-medium text-blue-600">{{ order.total }}C</span>
+                    <span class="text-sm font-medium text-primary">{{ order.total }}C</span>
                   </div>
                   <div class="text-xs text-gray-500 mb-2">{{ order.date }}</div>
                   <div class="flex space-x-2">
-                    <button class="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                    <button class="text-xs text-primary hover:text-primary-700 font-medium">
                       View Receipt
                     </button>
-                    <button class="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                    <button class="text-xs text-primary hover:text-primary-700 font-medium">
                       Reorder
                     </button>
                   </div>
@@ -202,7 +202,7 @@
               />
             </svg>
             Cart ({{ cart.length }})
-            <span v-if="cartTotal > 0" class="ml-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+            <span v-if="cartTotal > 0" class="ml-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
               {{ cartTotal }}C
             </span>
           </button>
@@ -290,11 +290,11 @@
               <div v-if="cart.length > 0" class="mt-4 pt-3 border-t">
                 <div class="flex justify-between items-center mb-3">
                   <span class="font-semibold text-gray-900">Total:</span>
-                  <span class="font-bold text-blue-600 text-lg">{{ cartTotal }}C</span>
+                  <span class="font-bold text-primary text-lg">{{ cartTotal }}C</span>
                 </div>
                 <div class="flex space-x-2">
                   <button
-                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                    class="flex-1 bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
                     @click="goToCheckout"
                   >
                     Checkout
@@ -443,9 +443,9 @@
             </button>
           </div>
           <h3 class="font-semibold text-gray-900 mb-1">{{ item.name }}</h3>
-          <p class="text-blue-600 font-medium mb-3">{{ item.price }} Credits</p>
+          <p class="text-primary font-medium mb-3">{{ item.price }} Credits</p>
           <button
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+            class="w-full bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
             @click="addToCart(item)"
           >
             Add to Cart
@@ -463,7 +463,7 @@
         v-for="item in filteredItems"
         :key="item.id"
         class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4 cursor-pointer"
-        @click="quickView(item)"
+        @click="openProductModal(item)"
       >
         <div class="relative mb-4">
           <img
@@ -495,7 +495,7 @@
             -{{ Math.round((1 - item.price / item.originalPrice) * 100) }}%
           </span>
           <!-- Category Badge -->
-          <span class="absolute bottom-2 left-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+          <span class="absolute bottom-2 left-2 bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">
             {{ item.category }}
           </span>
         </div>
@@ -521,23 +521,17 @@
 
           <!-- Price -->
           <div class="flex items-center space-x-2">
-            <span class="text-lg font-bold text-blue-600">{{ item.price }}C</span>
+            <span class="text-lg font-bold text-primary">{{ item.price }}C</span>
             <span v-if="item.originalPrice" class="text-sm text-gray-500 line-through">{{ item.originalPrice }}C</span>
           </div>
 
           <!-- Actions -->
           <div class="flex space-x-2 pt-2">
             <button
-              class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
+              class="w-full bg-primary hover:bg-primary-700 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
               @click.stop="addToCart(item)"
             >
               Add to Cart
-            </button>
-            <button
-              class="px-3 py-2 border border-gray-300 hover:border-gray-400 rounded-lg transition-colors text-sm text-gray-600 hover:text-gray-900"
-              @click.stop="quickView(item)"
-            >
-              Quick View
             </button>
           </div>
         </div>
@@ -554,7 +548,7 @@
         v-for="item in filteredItems"
         :key="item.id"
         class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6 cursor-pointer"
-        @click="quickView(item)"
+        @click="openProductModal(item)"
       >
         <div class="flex items-center space-x-6">
           <div class="relative flex-shrink-0">
@@ -604,14 +598,14 @@
                     </div>
                     <span class="text-sm text-gray-600">({{ item.reviewCount }})</span>
                   </div>
-                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                  <span class="bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">
                     {{ item.category }}
                   </span>
                 </div>
 
                 <!-- Price -->
                 <div class="flex items-center space-x-2">
-                  <span class="text-xl font-bold text-blue-600">{{ item.price }}C</span>
+                  <span class="text-xl font-bold text-primary">{{ item.price }}C</span>
                   <span v-if="item.originalPrice" class="text-lg text-gray-500 line-through">{{ item.originalPrice }}C</span>
                   <span v-if="item.originalPrice" class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
                     -{{ Math.round((1 - item.price / item.originalPrice) * 100) }}%
@@ -622,16 +616,10 @@
               <!-- Actions -->
               <div class="flex flex-col space-y-2 ml-4">
                 <button
-                  class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                  class="bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
                   @click.stop="addToCart(item)"
                 >
                   Add to Cart
-                </button>
-                <button
-                  class="border border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-900 py-2 px-4 rounded-lg transition-colors"
-                  @click.stop="quickView(item)"
-                >
-                  Quick View
                 </button>
               </div>
             </div>
@@ -660,7 +648,7 @@
         <button
           v-for="page in totalPages"
           :key="page"
-          :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', page === currentPage ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50']"
+          :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', page === currentPage ? 'bg-primary text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50']"
           @click="currentPage = page"
         >
           {{ page }}
@@ -1015,7 +1003,7 @@ const addToCart = (item: any) => {
   emit('add-to-cart', updatedCart);
 };
 
-const quickView = (item: any) => {
+const openProductModal = (item: any) => {
   selectedProduct.value = item;
   showProductModal.value = true;
 };
@@ -1055,7 +1043,7 @@ const getOrderStatusClass = (status: string) => {
     case 'Processing':
       return 'bg-yellow-100 text-yellow-800';
     case 'Shipped':
-      return 'bg-blue-100 text-blue-800';
+      return 'bg-primary-100 text-primary-800';
     case 'Delivered':
       return 'bg-green-100 text-green-800';
     case 'Pending Payment':
@@ -1070,7 +1058,7 @@ const getTrackingProgress = (status: string) => {
     case 'Processing':
       return 'bg-yellow-400';
     case 'Shipped':
-      return 'bg-blue-400';
+      return 'bg-primary-400';
     case 'Delivered':
       return 'bg-green-400';
     default:

@@ -48,7 +48,7 @@
           <div class="mt-4 pt-4 border-t">
             <div class="flex justify-between items-center">
               <span class="text-lg font-semibold text-gray-900">Total:</span>
-              <span class="text-2xl font-bold text-blue-600">{{ total }}C</span>
+              <span class="text-2xl font-bold text-primary">{{ total }}C</span>
             </div>
             <p class="text-sm text-gray-600 mt-1">≈ ${{ (total * 0.1).toFixed(2) }} USD</p>
           </div>
@@ -63,14 +63,14 @@
                 v-model="paymentMethod"
                 type="radio"
                 value="credits"
-                class="mr-3 text-blue-600"
+                class="mr-3 text-primary"
               >
               <div class="flex-1">
                 <span class="font-medium text-gray-900">Use Credits</span>
                 <p class="text-sm text-gray-600">Pay with your available credits ({{ availableCredits }}C available)</p>
               </div>
               <svg
-                class="w-6 h-6 text-blue-600"
+                class="w-6 h-6 text-primary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -89,7 +89,7 @@
                 v-model="paymentMethod"
                 type="radio"
                 value="stripe"
-                class="mr-3 text-blue-600"
+                class="mr-3 text-primary"
               >
               <div class="flex-1">
                 <span class="font-medium text-gray-900">Credit/Debit Card</span>
@@ -257,7 +257,7 @@
               'flex-1 px-6 py-3 rounded-lg font-medium transition-colors',
               isProcessing || !canProceed
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-primary text-white hover:bg-primary-700'
             ]"
             @click="processPayment"
           >

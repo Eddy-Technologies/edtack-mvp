@@ -46,14 +46,14 @@
       <div class="border-t pt-4">
         <div class="flex justify-between items-center text-lg font-semibold">
           <span class="text-gray-900">Total:</span>
-          <span class="text-blue-600">{{ totalCredits }}C</span>
+          <span class="text-primary">{{ totalCredits }}C</span>
         </div>
       </div>
 
       <!-- Actions -->
       <div class="flex gap-2">
         <button
-          class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
+          class="flex-1 bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
           @click="checkout"
         >
           Checkout

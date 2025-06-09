@@ -15,7 +15,7 @@
           :key="child.id"
           :class="[
             'p-4 border rounded-lg transition-colors text-left',
-            selectedChild === child.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+            selectedChild === child.id ? 'border-primary-500 bg-primary-50' : 'border-gray-200 hover:border-gray-300'
           ]"
           @click="selectedChild = child.id"
         >
@@ -106,7 +106,7 @@
               <button
                 :class="[
                   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  selectedChildData.permissions.bedtimeMode.enabled ? 'bg-blue-600' : 'bg-gray-200'
+                  selectedChildData.permissions.bedtimeMode.enabled ? 'bg-primary' : 'bg-gray-200'
                 ]"
                 @click="selectedChildData.permissions.bedtimeMode.enabled = !selectedChildData.permissions.bedtimeMode.enabled"
               >
@@ -159,7 +159,7 @@
                 <button
                   :class="[
                     'relative inline-flex h-6 w-11 items-center rounded-full transition-colors ml-4',
-                    selectedChildData.permissions.storeFilter[category.key] ? 'bg-blue-600' : 'bg-gray-200'
+                    selectedChildData.permissions.storeFilter[category.key] ? 'bg-primary' : 'bg-gray-200'
                   ]"
                   @click="selectedChildData.permissions.storeFilter[category.key] = !selectedChildData.permissions.storeFilter[category.key]"
                 >
@@ -183,7 +183,7 @@
                   v-model="selectedChildData.permissions.storeFilter.ageRating"
                   type="radio"
                   :value="rating.value"
-                  class="mr-3 text-blue-600"
+                  class="mr-3 text-primary"
                 >
                 <div>
                   <span class="font-medium text-gray-900">{{ rating.name }}</span>
@@ -203,7 +203,7 @@
               <button
                 :class="[
                   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-                  selectedChildData.permissions.storeFilter.priceFilterEnabled ? 'bg-blue-600' : 'bg-gray-200'
+                  selectedChildData.permissions.storeFilter.priceFilterEnabled ? 'bg-primary' : 'bg-gray-200'
                 ]"
                 @click="selectedChildData.permissions.storeFilter.priceFilterEnabled = !selectedChildData.permissions.storeFilter.priceFilterEnabled"
               >
@@ -235,7 +235,7 @@
         <button class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
           Reset to Default
         </button>
-        <button class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <button class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors">
           Save Changes
         </button>
       </div>

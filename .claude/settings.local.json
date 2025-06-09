@@ -6,7 +6,11 @@
       "Bash(mkdir:*)",
       "Bash(cp:*)",
       "Bash(ls:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)"
     ],
     "deny": []
   }
