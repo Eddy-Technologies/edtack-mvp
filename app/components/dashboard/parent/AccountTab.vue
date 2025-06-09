@@ -198,20 +198,6 @@
       </div>
 
       <div class="p-6 space-y-6">
-        <!-- Parental Controls -->
-        <div class="flex items-center justify-between py-4 border-b">
-          <div>
-            <h4 class="text-lg font-medium text-gray-900">Parental Controls</h4>
-            <p class="text-gray-600">Manage content restrictions and screen time limits</p>
-          </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="showParentalControlsModal = true"
-          >
-            Configure
-          </button>
-        </div>
-
         <!-- Notifications -->
         <div class="flex items-center justify-between py-4">
           <div>

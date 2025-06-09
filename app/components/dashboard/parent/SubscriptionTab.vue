@@ -29,8 +29,6 @@
                   >
                     {{ child.plan }} Plan
                   </span>
-                  <span v-if="child.plan === 'Premium'" class="text-sm text-gray-600">$25/month</span>
-                  <span v-else class="text-sm text-gray-600">Free</span>
                 </div>
               </div>
             </div>
@@ -98,7 +96,7 @@
             </div>
           </div>
           <button
-            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
             @click="showBillingModal = true"
           >
             Update

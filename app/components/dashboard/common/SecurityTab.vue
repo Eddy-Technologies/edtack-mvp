@@ -234,7 +234,7 @@ import ChangeEmailModal from './ChangeEmailModal.vue';
 import ChangePasswordModal from './ChangePasswordModal.vue';
 import TwoFactorModal from './TwoFactorModal.vue';
 import RecoveryCodesModal from './RecoveryCodesModal.vue';
-import { useDashboardData } from '~/composables/useDashboardData';
+// import { useDashboardData } from '~/composables/useDashboardData';
 
 // Modal states
 const showUsernameModal = ref(false);
@@ -243,7 +243,15 @@ const showPasswordModal = ref(false);
 const show2FAModal = ref(false);
 const showRecoveryModal = ref(false);
 
-const { dashboardData } = useDashboardData();
+// const { dashboardData } = useDashboardData(); //TODO
+// Mock data for dashboard
+const dashboardData = ref({
+  user: {
+    name: 'John Doe',
+    email: 'fjaskd@afs.com',
+    avatar: '/default-avatar.png'
+  }
+});
 
 // Data initialization - get from API or use mock as fallback
 const userInfo = computed(() => {
