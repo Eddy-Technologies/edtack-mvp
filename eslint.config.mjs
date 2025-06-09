@@ -10,7 +10,7 @@ export default withNuxt().overrideRules({
   'vue/no-multiple-template-root': ['off'], // temporary fix
   '@stylistic/operator-linebreak': ['error', 'after'],
   '@typescript-eslint/no-explicit-any': 'off',
-  '@typescript-eslint/no-implicit-any': 'off', // temporary fix for all any types
-  '@typescript-eslint/explicit-any': 'off',
-  '@typescript-eslint/no-unused-vars': 'off'
+  // '@typescript-eslint/no-implicit-any': 'off', // temporary fix for all any types
+  // '@typescript-eslint/explicit-any': 'off',
+  // '@typescript-eslint/no-unused-vars': 'off'
 });
