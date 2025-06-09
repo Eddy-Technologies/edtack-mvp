@@ -302,8 +302,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'close'): void;
-  (e: 'payment-success'): void;
+  (e: 'close' | 'payment-success'): void;
 }>();
 
 // Payment state
