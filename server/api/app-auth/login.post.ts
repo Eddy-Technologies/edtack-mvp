@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import type { H3Event } from 'h3';
 import { JWT_SECRET, getSupabaseClient } from '../../utils/authConfig'; // Use dynamic secret fetcher
 // import { signAndSetAppUserCookie } from '../../utils/authHelpers';
-// test
 
 interface AppUserJWTPayload {
   app_user_id: string;
