@@ -55,41 +55,6 @@
       </div>
     </div>
 
-    <!-- Personal Information -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Personal Information</h3>
-      </div>
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-            <p class="text-gray-900">{{ profile.fullName }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-            <p class="text-gray-900">{{ profile.email }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-            <p class="text-gray-900">{{ profile.phone }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-            <p class="text-gray-900">{{ profile.address }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Emergency Contact</label>
-            <p class="text-gray-900">{{ profile.emergencyContact }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Relationship</label>
-            <p class="text-gray-900">{{ profile.relationship }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Children Overview -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
@@ -118,11 +83,7 @@
 
             <div class="space-y-2 text-sm">
               <div class="flex justify-between">
-                <span class="text-gray-600">School:</span>
-                <span class="font-medium">{{ child.school }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Notes Created:</span>
+                <span class="text-gray-600">Assignments Completed:</span>
                 <span class="font-medium">{{ child.notesCount }}</span>
               </div>
               <div class="flex justify-between">
@@ -143,40 +104,6 @@
                 <button class="flex-1 px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded hover:bg-gray-200 transition-colors">
                   Settings
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Family Goals -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Family Learning Goals</h3>
-      </div>
-      <div class="p-6">
-        <div class="space-y-4">
-          <div v-for="goal in familyGoals" :key="goal.id" class="border rounded-lg p-4">
-            <div class="flex items-center justify-between mb-3">
-              <h4 class="font-medium text-gray-900">{{ goal.title }}</h4>
-              <span class="text-sm text-gray-500">{{ goal.dueDate }}</span>
-            </div>
-            <p class="text-sm text-gray-600 mb-3">{{ goal.description }}</p>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
-                <div class="w-full bg-gray-200 rounded-full h-2 max-w-xs">
-                  <div class="bg-primary h-2 rounded-full" :style="{ width: goal.progress + '%' }" />
-                </div>
-                <span class="text-sm text-gray-500">{{ goal.progress }}%</span>
-              </div>
-              <div class="flex -space-x-1">
-                <img
-                  v-for="participant in goal.participants"
-                  :key="participant"
-                  :src="'/child' + participant + '-avatar.png'"
-                  class="w-6 h-6 rounded-full border-2 border-white"
-                >
               </div>
             </div>
           </div>
