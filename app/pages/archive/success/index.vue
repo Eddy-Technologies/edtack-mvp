@@ -32,8 +32,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import type { Cart } from '~/models/Item';
-import CheckoutSuccess from '~/pages/success/CheckoutSuccess.vue';
-import WithdrawSuccess from '~/pages/success/WithdrawSuccess.vue';
+import CheckoutSuccess from '~/pages/archive/success/CheckoutSuccess.vue';
+import WithdrawSuccess from '~/pages/archive/success/WithdrawSuccess.vue';
 
 const route = useRoute();
 

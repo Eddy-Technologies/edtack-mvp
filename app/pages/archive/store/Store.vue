@@ -21,7 +21,7 @@
             :src="item.image"
             :alt="item.name"
             class="w-[150px] h-[150px] object-cover rounded mb-2"
-          />
+          >
           <button
             class="absolute top-2 right-2 bg-black/70 text-white text-xs px-3 py-1 rounded opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
             :aria-label="'Add ' + item.name + ' to Cart'"
@@ -50,7 +50,7 @@
           :src="item.image"
           :alt="item.name"
           class="w-[150px] h-[150px] object-cover rounded mb-2"
-        />
+        >
         <div>
           <h3>{{ item.name }}</h3>
           <p>Price: {{ item.price }} Credits</p>

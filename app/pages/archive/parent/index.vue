@@ -9,5 +9,5 @@
 </template>
 
 <script setup>
-import Children from '~/pages/parent/Children.vue';
+import Children from '~/pages/archive/parent/Children.vue';
 </script>

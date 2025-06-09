@@ -19,9 +19,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Credits from '~/pages/store/Credits.vue';
-import Store from '~/pages/store/Store.vue';
-import Cart from '~/pages/store/Cart.vue';
+import Credits from '~/pages/archive/store/Credits.vue';
+import Store from '~/pages/archive/store/Store.vue';
+import Cart from '~/pages/archive/store/Cart.vue';
 
 // Reactive cart
 const cart = ref([]);

@@ -8,7 +8,7 @@
         :src="background"
         class="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
         alt="practice"
-      />
+      >
       <div
         class="max-w-xl w-full bg-white/90 p-6 rounded-2xl shadow-xl ring-1 ring-black/5 backdrop-blur-md space-y-6 transition-all duration-300 ease-in-out"
       >
@@ -32,9 +32,10 @@
           </div>
 
           <div>
-            <label for="innerLevel" class="block text-sm font-medium text-primary mb-1"
-              >Inner Level</label
-            >
+            <label
+              for="innerLevel"
+              class="block text-sm font-medium text-primary mb-1"
+            >Inner Level</label>
             <select
               id="innerLevel"
               v-model="selectedInnerLevel"
@@ -66,9 +67,10 @@
           </div>
 
           <div>
-            <label for="topic" class="block text-sm font-medium text-primary mb-1"
-              >Topic (Optional)</label
-            >
+            <label
+              for="topic"
+              class="block text-sm font-medium text-primary mb-1"
+            >Topic (Optional)</label>
             <select
               id="topic"
               v-model="selectedTopic"
@@ -83,9 +85,10 @@
           </div>
 
           <div>
-            <label for="numberInput" class="block text-sm font-medium text-primary mb-1"
-              >Questions</label
-            >
+            <label
+              for="numberInput"
+              class="block text-sm font-medium text-primary mb-1"
+            >Questions</label>
             <select
               id="numberInput"
               v-model="numberInput"
@@ -251,9 +254,9 @@ const fetchAnswer = async () => {
   } catch (error: any) {
     console.error('Error fetching quiz:', error);
     errorMsg.value =
-      error?.message === 'Exceeded limit'
-        ? 'Exceeded limit: Unable to generate questions. Please try again later.'
-        : 'An error occurred while generating the quiz.';
+      error?.message === 'Exceeded limit' ?
+        'Exceeded limit: Unable to generate questions. Please try again later.' :
+        'An error occurred while generating the quiz.';
   } finally {
     isLoading.value = false;
   }

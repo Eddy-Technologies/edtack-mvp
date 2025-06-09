@@ -25,8 +25,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import type { Cart } from '~/models/Item';
-import CheckoutSummary from '~/pages/summary/CheckoutSummary.vue';
-import WithdrawSummary from '~/pages/summary/WithdrawSummary.vue';
+import CheckoutSummary from '~/pages/archive/summary/CheckoutSummary.vue';
+import WithdrawSummary from '~/pages/archive/summary/WithdrawSummary.vue';
 
 const route = useRoute();
 
