@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { ref, onBeforeMount, onMounted } from 'vue';
-import data from '../../../assets/questions.json';
+import data from '../../../../assets/questions.json';
 import QuizPage from '~/components/challenge/QuizPage.vue';
 import { useCreditStore } from '~/stores/credit';
 import { useMinimumLoader } from '~/composables/useMinimumLoader';

@@ -45,7 +45,7 @@
       <p class="mb-2 text-sm">
         Do not PayNow as we are in beta testing but if you want to support us, go ahead :)
       </p>
-      <img class="w-40 m-2" :src="PayNow" alt="PayNow">
+      <img class="w-40 m-2" :src="PayNow" alt="PayNow" />
     </div>
 
     <!-- Confirmation Modal -->
@@ -61,7 +61,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import PayNow from '../../../assets/paynow.png';
+import PayNow from '../../../../assets/paynow.png';
 import { useCreditStore } from '~/stores/credit';
 import { useProfileStore } from '~/stores/profile';
 import ConfirmationModal from '~/components/ConfirmationModal.vue'; // Import the modal component

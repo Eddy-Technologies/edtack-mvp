@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full h-screen">
     <div class="relative w-full h-full" @mouseleave="resetOverlay">
-      <img :src="background" class="w-full h-full object-cover" alt="home" />
+      <img :src="background" class="w-full h-full object-cover" alt="home">
 
       <!-- Desktop Overlays -->
       <div
@@ -50,9 +50,7 @@
           class="absolute bottom-0 w-full h-1/2 bg-black/10 text-center text-white text-2xl font-bold flex items-center justify-center z-10"
           @click="routeTo('/onboard')"
         >
-          <span class="drop-shadow-dramatic text-3xl text-[#c8e6ce] font-bold"
-            >Are you a student?</span
-          >
+          <span class="drop-shadow-dramatic text-3xl text-[#c8e6ce] font-bold">Are you a student?</span>
         </div>
       </div>
     </div>
