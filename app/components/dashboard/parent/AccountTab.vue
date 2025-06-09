@@ -14,7 +14,7 @@
           </button>
         </div>
       </div>
-      
+
       <div class="p-6">
         <form v-if="isEditing" @submit.prevent="saveProfile">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -51,7 +51,7 @@
               >
             </div>
           </div>
-          
+
           <div class="mt-6 flex space-x-4">
             <button
               type="submit"
@@ -103,7 +103,7 @@
           </button>
         </div>
       </div>
-      
+
       <div class="p-6">
         <div class="space-y-4">
           <div v-for="child in children" :key="child.id" class="flex items-center justify-between p-4 border rounded-lg">
@@ -148,7 +148,7 @@
       <div class="p-6 border-b">
         <h3 class="text-lg font-semibold text-gray-900">Billing & Address</h3>
       </div>
-      
+
       <div class="p-6 space-y-6">
         <!-- Billing Address -->
         <div class="flex items-center justify-between py-4 border-b">
@@ -196,7 +196,7 @@
       <div class="p-6 border-b">
         <h3 class="text-lg font-semibold text-gray-900">Family Settings</h3>
       </div>
-      
+
       <div class="p-6 space-y-6">
         <!-- Parental Controls -->
         <div class="flex items-center justify-between py-4 border-b">
@@ -224,7 +224,7 @@
               type="checkbox"
               class="sr-only peer"
             >
-            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
           </label>
         </div>
       </div>
@@ -366,7 +366,7 @@ const editChild = (child: any) => {
 
 const removeChild = (childId: number) => {
   if (confirm('Are you sure you want to remove this child from your account?')) {
-    children.value = children.value.filter(child => child.id !== childId);
+    children.value = children.value.filter((child) => child.id !== childId);
   }
 };
 
@@ -376,7 +376,7 @@ const handleChildAdded = (newChild: any) => {
 };
 
 const handleChildUpdated = (updatedChild: any) => {
-  const index = children.value.findIndex(child => child.id === updatedChild.id);
+  const index = children.value.findIndex((child) => child.id === updatedChild.id);
   if (index !== -1) {
     children.value[index] = updatedChild;
   }
@@ -388,7 +388,7 @@ const handlePaymentUpdated = (data: { card: any; address: any }) => {
   if (addressSameAsBilling.value) {
     shippingAddress.value = data.address;
   }
-  
+
   // Handle payment method updates (would typically update payment method state)
   console.log('Payment method updated:', data.card);
   // In a real implementation, you would update payment method state here

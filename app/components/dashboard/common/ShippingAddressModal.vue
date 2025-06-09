@@ -63,7 +63,7 @@ import { ref } from 'vue';
 interface Props {
   isOpen: boolean;
   currentAddress: any;
-  sameAsBilling: boolean;
+  // sameAsBilling: boolean;
 }
 
 defineProps<Props>();
@@ -74,6 +74,12 @@ const addressData = ref({ street: '', city: '', state: '', zipCode: '', country:
 const sameAsBilling = ref(false);
 
 const closeModal = () => emit('close');
-const updateAddress = () => { emit('address-updated', addressData.value); closeModal(); };
-const saveAsBilling = () => { emit('same-as-billing-updated', true); closeModal(); };
+const updateAddress = () => {
+  emit('address-updated', addressData.value);
+  closeModal();
+};
+const saveAsBilling = () => {
+  emit('same-as-billing-updated', true);
+  closeModal();
+};
 </script>

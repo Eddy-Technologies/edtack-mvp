@@ -373,7 +373,7 @@ const cancelChildPlan = (child: any) => {
     child.plan = 'Free';
     child.nextBilling = 'N/A';
     child.status = 'Cancelled';
-    
+
     // Add cancellation entry to billing history
     billingHistory.value.unshift({
       id: billingHistory.value.length + 1,

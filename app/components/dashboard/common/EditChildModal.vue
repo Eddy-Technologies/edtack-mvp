@@ -4,8 +4,18 @@
       <div class="flex items-center justify-between p-6 border-b">
         <h2 class="text-xl font-bold text-gray-900">Edit Child</h2>
         <button class="text-gray-400 hover:text-gray-600" @click="closeModal">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
@@ -43,11 +53,17 @@ interface Props {
 
 defineProps<Props>();
 
-const emit = defineEmits<{ (e: 'close'): void; (e: 'child-updated', child: any): void; }>();
+const emit = defineEmits<{
+  (e: 'close'): void;
+  (e: 'child-updated', child: any): void;
+}>();
 
 const childData = ref({ name: '', grade: '' });
 const grades = ref(['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']);
 
 const closeModal = () => emit('close');
-const updateChild = () => { emit('child-updated', childData.value); closeModal(); };
+const updateChild = () => {
+  emit('child-updated', childData.value);
+  closeModal();
+};
 </script>

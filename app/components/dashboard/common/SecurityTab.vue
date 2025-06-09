@@ -5,7 +5,7 @@
       <div class="p-6 border-b">
         <h2 class="text-2xl font-bold text-gray-900">Login & Security</h2>
       </div>
-      
+
       <div class="p-6 space-y-6">
         <!-- Username -->
         <div class="flex items-center justify-between py-4 border-b">
@@ -56,7 +56,7 @@
       <div class="p-6 border-b">
         <h3 class="text-lg font-semibold text-gray-900">Two-Factor Authentication</h3>
       </div>
-      
+
       <div class="p-6">
         <div class="flex items-center justify-between">
           <div class="flex-1">
@@ -84,7 +84,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="flex items-center space-x-3">
             <div class="flex items-center">
               <label class="relative inline-flex items-center cursor-pointer">
@@ -94,7 +94,7 @@
                   class="sr-only peer"
                   @change="toggle2FA"
                 >
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
               </label>
             </div>
             <button
@@ -106,7 +106,7 @@
             </button>
           </div>
         </div>
-        
+
         <!-- Recovery Codes -->
         <div v-if="twoFactorEnabled" class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
           <div class="flex items-start space-x-3">
@@ -145,7 +145,7 @@
       <div class="p-6 border-b">
         <h3 class="text-lg font-semibold text-gray-900">Active Sessions</h3>
       </div>
-      
+
       <div class="p-6">
         <div class="space-y-4">
           <div v-for="session in activeSessions" :key="session.id" class="flex items-center justify-between py-3 border-b last:border-b-0">
@@ -180,7 +180,7 @@
             </button>
           </div>
         </div>
-        
+
         <div class="mt-6 pt-4 border-t">
           <button
             class="px-4 py-2 text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
@@ -305,13 +305,13 @@ const viewRecoveryCodes = () => {
 
 const revokeSession = (sessionId: number) => {
   if (confirm('Are you sure you want to revoke this session?')) {
-    activeSessions.value = activeSessions.value.filter(session => session.id !== sessionId);
+    activeSessions.value = activeSessions.value.filter((session) => session.id !== sessionId);
   }
 };
 
 const revokeAllSessions = () => {
   if (confirm('Are you sure you want to sign out of all other sessions? You will need to sign in again on those devices.')) {
-    activeSessions.value = activeSessions.value.filter(session => session.current);
+    activeSessions.value = activeSessions.value.filter((session) => session.current);
   }
 };
 

@@ -410,5 +410,4 @@ const ageRatings = ref([
 const selectedChildData = computed(() => {
   return children.value.find((child) => child.id === selectedChild.value) || children.value[0];
 });
-
 </script>

@@ -281,8 +281,8 @@ const addressSameAsBilling = ref(false);
 
 // Computed properties
 const hasShippingAddress = computed(() => {
-  return shippingAddress.value.street.trim() !== '' || 
-         (addressSameAsBilling.value && userPaysForSubscription.value && billingAddress.value.street.trim() !== '');
+  return shippingAddress.value.street.trim() !== '' ||
+    (addressSameAsBilling.value && userPaysForSubscription.value && billingAddress.value.street.trim() !== '');
 });
 
 // Edit mode
