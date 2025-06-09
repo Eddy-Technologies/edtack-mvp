@@ -6,29 +6,29 @@
         {{ children.length }} {{ children.length === 1 ? 'Child' : 'Children' }}
       </div>
     </div>
-    
+
     <!-- Child Tabs -->
     <div class="border-b border-gray-200">
       <nav class="-mb-px flex space-x-8" aria-label="Tabs">
         <button
           v-for="(child, index) in children"
           :key="child.id"
-          @click="selectChild(index)"
           :class="[
             selectedChildIndex === index
               ? 'border-blue-500 text-blue-600'
               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
             'whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors'
           ]"
+          @click="selectChild(index)"
         >
           <div class="flex items-center space-x-2">
-            <img 
-              :src="child.avatar" 
+            <img
+              :src="child.avatar"
               :alt="child.name"
               class="w-6 h-6 rounded-full"
             >
             <span>{{ child.name }}</span>
-            <div 
+            <div
               v-if="child.isOnline"
               class="w-2 h-2 bg-green-400 rounded-full"
               title="Online"
@@ -41,8 +41,8 @@
     <!-- Selected Child Info -->
     <div v-if="selectedChild" class="mt-4 flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <img 
-          :src="selectedChild.avatar" 
+        <img
+          :src="selectedChild.avatar"
           :alt="selectedChild.name"
           class="w-12 h-12 rounded-full"
         >
@@ -59,7 +59,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Quick Stats -->
       <div class="flex items-center space-x-6">
         <div class="text-center">

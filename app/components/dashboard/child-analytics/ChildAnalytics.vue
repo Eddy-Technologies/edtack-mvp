@@ -6,8 +6,18 @@
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              <svg
+                class="w-5 h-5 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
               </svg>
             </div>
           </div>
@@ -23,8 +33,18 @@
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <svg
+                class="w-5 h-5 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
           </div>
@@ -40,8 +60,18 @@
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+              <svg
+                class="w-5 h-5 text-purple-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"
+                />
               </svg>
             </div>
           </div>
@@ -57,8 +87,18 @@
         <div class="flex items-center">
           <div class="flex-shrink-0">
             <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              <svg
+                class="w-5 h-5 text-orange-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
               </svg>
             </div>
           </div>
@@ -83,13 +123,13 @@
             <option value="30">Last 30 days</option>
           </select>
         </div>
-        <div ref="studyTimeChart" class="h-64"></div>
+        <div ref="studyTimeChart" class="h-64" />
       </div>
 
       <!-- Grade Distribution Chart -->
       <div class="bg-white p-6 rounded-xl shadow-sm border">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Subject Performance</h3>
-        <div ref="gradeChart" class="h-64"></div>
+        <div ref="gradeChart" class="h-64" />
       </div>
     </div>
 
@@ -101,12 +141,14 @@
         <div class="space-y-4">
           <div v-for="activity in recentActivities" :key="activity.id" class="flex items-start space-x-3">
             <div class="flex-shrink-0">
-              <div :class="[
-                'w-8 h-8 rounded-full flex items-center justify-center text-white text-sm',
-                activity.type === 'quiz' ? 'bg-blue-500' :
-                activity.type === 'homework' ? 'bg-green-500' :
-                activity.type === 'notes' ? 'bg-purple-500' : 'bg-gray-500'
-              ]">
+              <div
+                :class="[
+                  'w-8 h-8 rounded-full flex items-center justify-center text-white text-sm',
+                  activity.type === 'quiz' ? 'bg-blue-500' :
+                  activity.type === 'homework' ? 'bg-green-500' :
+                  activity.type === 'notes' ? 'bg-purple-500' : 'bg-gray-500'
+                ]"
+              >
                 {{ activity.type === 'quiz' ? 'Q' : activity.type === 'homework' ? 'H' : 'N' }}
               </div>
             </div>
@@ -118,11 +160,13 @@
               <p class="text-sm text-gray-600">{{ activity.description }}</p>
               <div v-if="activity.score" class="flex items-center mt-1">
                 <span class="text-xs text-gray-500">Score: </span>
-                <span :class="[
-                  'text-xs font-medium ml-1',
-                  activity.score >= 80 ? 'text-green-600' :
-                  activity.score >= 60 ? 'text-yellow-600' : 'text-red-600'
-                ]">{{ activity.score }}%</span>
+                <span
+                  :class="[
+                    'text-xs font-medium ml-1',
+                    activity.score >= 80 ? 'text-green-600' :
+                    activity.score >= 60 ? 'text-yellow-600' : 'text-red-600'
+                  ]"
+                >{{ activity.score }}%</span>
               </div>
             </div>
           </div>
@@ -139,10 +183,10 @@
               <span class="text-sm text-gray-600">{{ subject.hours }}h</span>
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2">
-              <div 
+              <div
                 :class="`h-2 rounded-full ${subject.color}`"
                 :style="{ width: `${(subject.hours / maxSubjectHours) * 100}%` }"
-              ></div>
+              />
             </div>
             <div class="flex justify-between text-xs text-gray-500">
               <span>{{ subject.topics }} topics</span>
@@ -175,10 +219,10 @@
                   <span>{{ goal.progress }}%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div 
+                  <div
                     class="h-2 bg-blue-600 rounded-full transition-all duration-300"
                     :style="{ width: `${goal.progress}%` }"
-                  ></div>
+                  />
                 </div>
               </div>
               <div class="text-right">
@@ -293,7 +337,7 @@ const subjectBreakdown = ref([
   { name: 'History', hours: 3.1, topics: 4, performance: 84, color: 'bg-orange-500' }
 ]);
 
-const maxSubjectHours = computed(() => Math.max(...subjectBreakdown.value.map(s => s.hours)));
+const maxSubjectHours = computed(() => Math.max(...subjectBreakdown.value.map((s) => s.hours)));
 
 const learningGoals = ref([
   {
@@ -367,16 +411,16 @@ const subjectPerformanceData = {
 // Chart initialization
 const initStudyTimeChart = () => {
   if (!studyTimeChart.value) return;
-  
+
   studyTimeChartInstance = echarts.init(studyTimeChart.value);
   updateStudyTimeChart();
 };
 
 const initGradeChart = () => {
   if (!gradeChart.value) return;
-  
+
   gradeChartInstance = echarts.init(gradeChart.value);
-  
+
   const option = {
     grid: {
       left: '3%',
@@ -417,15 +461,15 @@ const initGradeChart = () => {
       formatter: '{b}: {c}%'
     }
   };
-  
+
   gradeChartInstance.setOption(option);
 };
 
 const updateStudyTimeChart = () => {
   if (!studyTimeChartInstance) return;
-  
+
   const { categories, data } = generateStudyTimeData(studyTimeRange.value);
-  
+
   const option = {
     grid: {
       left: '3%',
@@ -473,7 +517,7 @@ const updateStudyTimeChart = () => {
       formatter: '{b}: {c} hours'
     }
   };
-  
+
   studyTimeChartInstance.setOption(option);
 };
 
@@ -488,7 +532,7 @@ onMounted(() => {
     initStudyTimeChart();
     initGradeChart();
   }, 100);
-  
+
   // Handle window resize
   window.addEventListener('resize', () => {
     studyTimeChartInstance?.resize();
