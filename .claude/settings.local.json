@@ -3,7 +3,10 @@
     "allow": [
       "Bash(rm:*)",
       "Bash(mv:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(ls:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   }

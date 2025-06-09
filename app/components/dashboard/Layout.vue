@@ -186,8 +186,8 @@ const openSubmenus = ref<string[]>([]);
 const studentNavigation = computed((): NavigationItem[] => {
   const baseItems: NavigationItem[] = [
     {
-      name: 'Profile',
-      route: '/dashboard?tab=profile',
+      name: 'Overview',
+      route: '/dashboard?tab=overview',
       icon: 'UserIcon'
     },
     {
@@ -234,8 +234,8 @@ const studentNavigation = computed((): NavigationItem[] => {
 
 const parentNavigation: NavigationItem[] = [
   {
-    name: 'Profile',
-    route: '/dashboard?tab=profile',
+    name: 'Overview',
+    route: '/dashboard?tab=overview',
     icon: 'UserIcon'
   },
   {
@@ -279,7 +279,8 @@ const currentPageTitle = computed(() => {
 
   // Map tab query parameter to display names
   const tabTitles: Record<string, string> = {
-    profile: 'Profile',
+    overview: 'Overview',
+    profile: 'Profile', // Keep for backward compatibility
     notes: 'Notes',
     subscription: 'Subscription',
     account: 'Account',
