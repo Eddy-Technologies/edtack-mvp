@@ -74,9 +74,24 @@
                   title="Bold"
                   @click="toggleBold"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6V4z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6v-8z" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6V4z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6v-8z"
+                    />
                   </svg>
                 </button>
                 <button
@@ -87,8 +102,18 @@
                   title="Italic"
                   @click="toggleItalic"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 4l4 16m-4-16h4m-4 16h4" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 4l4 16m-4-16h4m-4 16h4"
+                    />
                   </svg>
                 </button>
                 <button
@@ -99,14 +124,24 @@
                   title="Underline"
                   @click="toggleUnderline"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v6a3 3 0 106 0V3M4 21h16" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 3v6a3 3 0 106 0V3M4 21h16"
+                    />
                   </svg>
                 </button>
               </div>
 
               <!-- Divider -->
-              <div class="h-6 w-px bg-gray-300"></div>
+              <div class="h-6 w-px bg-gray-300" />
 
               <!-- Text Alignment -->
               <div class="flex items-center gap-1">
@@ -118,8 +153,18 @@
                   title="Align Left"
                   @click="setTextAlign('left')"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 6h16M4 12h8m-8 6h16"
+                    />
                   </svg>
                 </button>
                 <button
@@ -130,8 +175,18 @@
                   title="Align Center"
                   @click="setTextAlign('center')"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M8 12h8M6 18h12" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 6h16M8 12h8M6 18h12"
+                    />
                   </svg>
                 </button>
                 <button
@@ -142,8 +197,18 @@
                   title="Align Right"
                   @click="setTextAlign('right')"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M12 12h8M10 18h10" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 6h16M12 12h8M10 18h10"
+                    />
                   </svg>
                 </button>
                 <button
@@ -154,12 +219,21 @@
                   title="Justify"
                   @click="setTextAlign('justify')"
                 >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
                   </svg>
                 </button>
               </div>
-
             </div>
           </div>
         </div>
@@ -250,13 +324,13 @@
               class="flex items-center gap-2"
               @click="noteForm.isStarred = !noteForm.isStarred"
             >
-              <span 
-                v-if="noteForm.isStarred" 
-                class="text-lg" 
+              <span
+                v-if="noteForm.isStarred"
+                class="text-lg"
                 style="color: #fbbf24; text-shadow: 0 0 1px #000;"
               >⭐</span>
-              <span 
-                v-else 
+              <span
+                v-else
                 class="text-lg text-gray-400 hover:text-yellow-500"
               >☆</span>
             </button>
