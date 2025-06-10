@@ -1,150 +1,134 @@
 <template>
   <div class="space-y-6">
     <!-- Personal Information -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <div class="flex items-center justify-between">
-          <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
+    <DashboardCard header-title="Personal Information" show-header-border>
+      <template #headerAction>
+        <Button
+          v-if="!isEditing"
+          variant="primary"
+          text="Edit Profile"
+          @clicked="startEditing"
+        />
+      </template>
+      <form v-if="isEditing" @submit.prevent="saveProfile">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+            <input
+              v-model="editForm.firstName"
+              type="text"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+            <input
+              v-model="editForm.lastName"
+              type="text"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+            <input
+              v-model="editForm.phone"
+              type="tel"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+            <input
+              v-model="editForm.dateOfBirth"
+              type="date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+        </div>
+
+        <div class="mt-6 flex space-x-4">
           <Button
-            v-if="!isEditing"
             variant="primary"
-            text="Edit Profile"
-            @clicked="startEditing"
+            text="Save Changes"
+            @clicked="saveProfile"
+          />
+          <Button
+            variant="secondary-gray"
+            text="Cancel"
+            @clicked="cancelEditing"
           />
         </div>
-      </div>
+      </form>
 
-      <div class="p-6">
-        <form v-if="isEditing" @submit.prevent="saveProfile">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-              <input
-                v-model="editForm.firstName"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-              <input
-                v-model="editForm.lastName"
-                type="text"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-              <input
-                v-model="editForm.phone"
-                type="tel"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-              <input
-                v-model="editForm.dateOfBirth"
-                type="date"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
-          </div>
-
-          <div class="mt-6 flex space-x-4">
-            <Button
-              variant="primary"
-              text="Save Changes"
-              @clicked="saveProfile"
-            />
-            <Button
-              variant="secondary-gray"
-              text="Cancel"
-              @clicked="cancelEditing"
-            />
-          </div>
-        </form>
-
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-            <p class="text-gray-900">{{ personalInfo.firstName }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-            <p class="text-gray-900">{{ personalInfo.lastName }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-            <p class="text-gray-900">{{ personalInfo.phone || 'Not provided' }}</p>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-            <p class="text-gray-900">{{ formatDate(personalInfo.dateOfBirth) }}</p>
-          </div>
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+          <p class="text-gray-900">{{ personalInfo.firstName }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+          <p class="text-gray-900">{{ personalInfo.lastName }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+          <p class="text-gray-900">{{ personalInfo.phone || 'Not provided' }}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+          <p class="text-gray-900">{{ formatDate(personalInfo.dateOfBirth) }}</p>
         </div>
       </div>
-    </div>
+    </DashboardCard>
 
     <!-- Children Management -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <div class="flex items-center justify-between">
-          <h3 class="text-lg font-semibold text-gray-900">Children</h3>
-          <Button
-            variant="primary"
-            text="Add Child"
-            @clicked="showAddChildModal = true"
-          />
-        </div>
-      </div>
-
-      <div class="p-6">
-        <div class="space-y-4">
-          <div v-for="child in children" :key="child.id" class="flex items-center justify-between p-4 border rounded-lg">
-            <div class="flex items-center space-x-4">
-              <img :src="child.avatar" :alt="child.name" class="w-12 h-12 rounded-full">
-              <div>
-                <h4 class="font-medium text-gray-900">{{ child.name }}</h4>
-                <p class="text-sm text-gray-600">{{ child.grade }} • {{ child.email }}</p>
-                <div class="flex items-center space-x-2 mt-1">
-                  <span
-                    :class="[
-                      'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                      child.plan === 'Premium' ? 'bg-primary-100 text-primary-800' : 'bg-gray-100 text-gray-800'
-                    ]"
-                  >
-                    {{ child.plan }} Plan
-                  </span>
-                </div>
+    <DashboardCard header-title="Children" show-header-border>
+      <template #headerAction>
+        <Button
+          variant="primary"
+          text="Add Child"
+          @clicked="showAddChildModal = true"
+        />
+      </template>
+      <div class="space-y-4">
+        <div v-for="child in children" :key="child.id" class="flex items-center justify-between p-4 border rounded-lg">
+          <div class="flex items-center space-x-4">
+            <img :src="child.avatar" :alt="child.name" class="w-12 h-12 rounded-full">
+            <div>
+              <h4 class="font-medium text-gray-900">{{ child.name }}</h4>
+              <p class="text-sm text-gray-600">{{ child.grade }} • {{ child.email }}</p>
+              <div class="flex items-center space-x-2 mt-1">
+                <span
+                  :class="[
+                    'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
+                    child.plan === 'Premium' ? 'bg-primary-100 text-primary-800' : 'bg-gray-100 text-gray-800'
+                  ]"
+                >
+                  {{ child.plan }} Plan
+                </span>
               </div>
             </div>
-            <div class="flex items-center space-x-3">
-              <Button
-                variant="secondary"
-                text="Edit"
-                size="sm"
-                @clicked="editChild(child)"
-              />
-              <Button
-                variant="secondary-danger"
-                text="Remove"
-                size="sm"
-                @clicked="removeChild(child)"
-              />
-            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <Button
+              variant="secondary"
+              text="Edit"
+              size="sm"
+              @clicked="editChild(child)"
+            />
+            <Button
+              variant="secondary-danger"
+              text="Remove"
+              size="sm"
+              @clicked="removeChild(child)"
+            />
           </div>
         </div>
       </div>
-    </div>
+    </DashboardCard>
 
     <!-- Billing & Address -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Billing & Address</h3>
-      </div>
-
-      <div class="p-6 space-y-6">
+    <DashboardCard header-title="Billing & Address" show-header-border>
+      <div class="space-y-6">
         <!-- Billing Address -->
         <div class="flex items-center justify-between py-4 border-b">
           <div>
@@ -182,15 +166,11 @@
           />
         </div>
       </div>
-    </div>
+    </DashboardCard>
 
     <!-- Family Settings -->
-    <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Family Settings</h3>
-      </div>
-
-      <div class="p-6 space-y-6">
+    <DashboardCard header-title="Family Settings" show-header-border>
+      <div class="space-y-6">
         <!-- Notifications -->
         <div class="flex items-center justify-between py-4">
           <div>
@@ -207,7 +187,7 @@
           </label>
         </div>
       </div>
-    </div>
+    </DashboardCard>
 
     <!-- Modals -->
     <AddChildModal
@@ -256,6 +236,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Button from '../../common/Button.vue';
+import DashboardCard from '../../common/DashboardCard.vue';
 import AddChildModal from '../common/AddChildModal.vue';
 import EditChildModal from '../common/EditChildModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
