@@ -5,13 +5,12 @@
       <div class="p-6 border-b">
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
-          <button
+          <Button
             v-if="!isEditing"
-            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
-            @click="startEditing"
-          >
-            Edit Profile
-          </button>
+            variant="primary"
+            text="Edit Profile"
+            @clicked="startEditing"
+          />
         </div>
       </div>
 
@@ -53,19 +52,16 @@
           </div>
 
           <div class="mt-6 flex space-x-4">
-            <button
-              type="submit"
-              class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
-            >
-              Save Changes
-            </button>
-            <button
-              type="button"
-              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              @click="cancelEditing"
-            >
-              Cancel
-            </button>
+            <Button
+              variant="primary"
+              text="Save Changes"
+              @clicked="saveProfile"
+            />
+            <Button
+              variant="secondary-gray"
+              text="Cancel"
+              @clicked="cancelEditing"
+            />
           </div>
         </form>
 
@@ -95,12 +91,11 @@
       <div class="p-6 border-b">
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-semibold text-gray-900">Children</h3>
-          <button
-            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
-            @click="showAddChildModal = true"
-          >
-            Add Child
-          </button>
+          <Button
+            variant="primary"
+            text="Add Child"
+            @clicked="showAddChildModal = true"
+          />
         </div>
       </div>
 
@@ -125,18 +120,18 @@
               </div>
             </div>
             <div class="flex items-center space-x-3">
-              <button
-                class="px-3 py-1 text-primary border border-primary rounded hover:bg-primary-50 transition-colors text-sm"
-                @click="editChild(child)"
-              >
-                Edit
-              </button>
-              <button
-                class="px-3 py-1 text-red-600 border border-red-300 rounded hover:bg-red-50 transition-colors text-sm"
-                @click="removeChild(child)"
-              >
-                Remove
-              </button>
+              <Button
+                variant="secondary"
+                text="Edit"
+                size="sm"
+                @clicked="editChild(child)"
+              />
+              <Button
+                variant="secondary-danger"
+                text="Remove"
+                size="sm"
+                @clicked="removeChild(child)"
+              />
             </div>
           </div>
         </div>
@@ -160,12 +155,11 @@
               <p>{{ billingAddress.country }}</p>
             </div>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="showBillingModal = true"
-          >
-            Edit
-          </button>
+          <Button
+            variant="secondary"
+            text="Edit"
+            @clicked="showBillingModal = true"
+          />
         </div>
 
         <!-- Shipping Address -->
@@ -181,12 +175,11 @@
               <p>{{ shippingAddress.country }}</p>
             </div>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="showShippingModal = true"
-          >
-            Edit
-          </button>
+          <Button
+            variant="secondary"
+            text="Edit"
+            @clicked="showShippingModal = true"
+          />
         </div>
       </div>
     </div>
@@ -262,6 +255,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Button from '../../common/Button.vue';
 import AddChildModal from '../common/AddChildModal.vue';
 import EditChildModal from '../common/EditChildModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';

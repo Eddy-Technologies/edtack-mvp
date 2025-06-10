@@ -13,12 +13,11 @@
             <h3 class="text-lg font-medium text-gray-900">Username</h3>
             <p class="text-gray-600">{{ userInfo.username }}</p>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="editUsername"
-          >
-            Change
-          </button>
+          <Button
+            variant="secondary"
+            text="Change"
+            @clicked="editUsername"
+          />
         </div>
 
         <!-- Email -->
@@ -27,26 +26,24 @@
             <h3 class="text-lg font-medium text-gray-900">Email</h3>
             <p class="text-gray-600">{{ userInfo.email }}</p>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="editEmail"
-          >
-            Change
-          </button>
+          <Button
+            variant="secondary"
+            text="Change"
+            @clicked="editEmail"
+          />
         </div>
 
         <!-- Password -->
-        <div class="flex items-center justify-between py-4 border-b">
+        <div class="flex items-center justify-between py-4">
           <div>
             <h3 class="text-lg font-medium text-gray-900">Password</h3>
             <p class="text-gray-600">••••••••••••</p>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="editPassword"
-          >
-            Change
-          </button>
+          <Button
+            variant="secondary"
+            text="Change"
+            @clicked="editPassword"
+          />
         </div>
       </div>
     </div>
@@ -97,13 +94,12 @@
                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
               </label>
             </div>
-            <button
+            <Button
               v-if="twoFactorEnabled"
-              class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-              @click="manage2FA"
-            >
-              Manage
-            </button>
+              variant="secondary-gray"
+              text="Manage"
+              @clicked="manage2FA"
+            />
           </div>
         </div>
 
@@ -128,12 +124,12 @@
               <p class="text-sm text-amber-700 mt-1">
                 Make sure you have saved your recovery codes. You'll need them if you lose access to your authenticator app.
               </p>
-              <button
-                class="mt-2 text-sm text-amber-800 underline hover:text-amber-900"
-                @click="viewRecoveryCodes"
-              >
-                View Recovery Codes
-              </button>
+              <Button
+                variant="secondary"
+                text="View Recovery Codes"
+                extra-classes="mt-2 text-sm"
+                @clicked="viewRecoveryCodes"
+              />
             </div>
           </div>
         </div>
@@ -171,23 +167,22 @@
                 <p v-if="session.current" class="text-xs text-green-600">Current session</p>
               </div>
             </div>
-            <button
+            <Button
               v-if="!session.current"
-              class="px-3 py-1 text-red-600 border border-red-300 rounded hover:bg-red-50 transition-colors text-sm"
-              @click="revokeSession(session.id)"
-            >
-              Revoke
-            </button>
+              variant="secondary-danger"
+              text="Revoke"
+              size="sm"
+              @clicked="revokeSession(session.id)"
+            />
           </div>
         </div>
 
         <div class="mt-6 pt-4 border-t">
-          <button
-            class="px-4 py-2 text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
-            @click="revokeAllSessions"
-          >
-            Sign out of all other sessions
-          </button>
+          <Button
+            variant="secondary-danger"
+            text="Sign out of all other sessions"
+            @clicked="revokeAllSessions"
+          />
         </div>
       </div>
     </div>
@@ -229,6 +224,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import Button from '../../common/Button.vue';
 import ChangeUsernameModal from './ChangeUsernameModal.vue';
 import ChangeEmailModal from './ChangeEmailModal.vue';
 import ChangePasswordModal from './ChangePasswordModal.vue';

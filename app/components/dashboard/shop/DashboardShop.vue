@@ -45,25 +45,28 @@
 
         <!-- Orders Button -->
         <div ref="ordersDropdownRef" class="relative">
-          <button
-            class="flex items-center px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-            @click="showOrders = !showOrders"
+          <Button
+            variant="secondary-gray"
+            text="Orders"
+            size="sm"
+            @clicked="showOrders = !showOrders"
           >
-            <svg
-              class="w-4 h-4 mr-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-            Orders
-          </button>
+            <template #icon>
+              <svg
+                class="w-4 h-4 mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </template>
+          </Button>
 
           <!-- Orders Dropdown -->
           <div v-if="showOrders" class="absolute right-0 top-full mt-2 w-96 bg-white rounded-lg shadow-lg border z-50">
@@ -293,18 +296,17 @@
                   <span class="font-bold text-primary text-lg">{{ cartTotal }}C</span>
                 </div>
                 <div class="flex space-x-2">
-                  <button
-                    class="flex-1 bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
-                    @click="goToCheckout"
-                  >
-                    Checkout
-                  </button>
-                  <button
-                    class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 rounded-lg transition-colors"
-                    @click="clearCart"
-                  >
-                    Clear
-                  </button>
+                  <Button
+                    variant="primary"
+                    text="Checkout"
+                    extra-classes="flex-1"
+                    @clicked="goToCheckout"
+                  />
+                  <Button
+                    variant="secondary-gray"
+                    text="Clear"
+                    @clicked="clearCart"
+                  />
                 </div>
               </div>
             </div>
@@ -388,13 +390,13 @@
           </select>
 
           <!-- Clear Filters -->
-          <button
+          <Button
             v-if="hasActiveFilters"
-            class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 underline"
-            @click="clearFilters"
-          >
-            Clear Filters
-          </button>
+            variant="secondary-gray"
+            text="Clear Filters"
+            size="sm"
+            @clicked="clearFilters"
+          />
         </div>
 
         <!-- Results Info -->
@@ -444,12 +446,12 @@
           </div>
           <h3 class="font-semibold text-gray-900 mb-1">{{ item.name }}</h3>
           <p class="text-primary font-medium mb-3">{{ item.price }} Credits</p>
-          <button
-            class="w-full bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
-            @click="addToCart(item)"
-          >
-            Add to Cart
-          </button>
+          <Button
+            variant="primary"
+            text="Add to Cart"
+            extra-classes="w-full"
+            @clicked="addToCart(item)"
+          />
         </div>
       </div>
     </div>
@@ -527,12 +529,13 @@
 
           <!-- Actions -->
           <div class="flex space-x-2 pt-2">
-            <button
-              class="w-full bg-primary hover:bg-primary-700 text-white py-2 px-3 rounded-lg font-medium transition-colors text-sm"
-              @click.stop="addToCart(item)"
-            >
-              Add to Cart
-            </button>
+            <Button
+              variant="primary"
+              text="Add to Cart"
+              size="sm"
+              extra-classes="w-full"
+              @clicked="addToCart(item)"
+            />
           </div>
         </div>
 
@@ -615,12 +618,11 @@
 
               <!-- Actions -->
               <div class="flex flex-col space-y-2 ml-4">
-                <button
-                  class="bg-primary hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors"
-                  @click.stop="addToCart(item)"
-                >
-                  Add to Cart
-                </button>
+                <Button
+                  variant="primary"
+                  text="Add to Cart"
+                  @clicked="addToCart(item)"
+                />
               </div>
             </div>
 
@@ -685,8 +687,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-
 import { useRouter } from 'vue-router';
+import Button from '../../common/Button.vue';
 import placeholder1 from '../../../../assets/a.png';
 import placeholder2 from '../../../../assets/b.png';
 import placeholder3 from '../../../../assets/c.png';

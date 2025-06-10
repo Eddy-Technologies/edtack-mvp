@@ -5,12 +5,11 @@
       <div class="p-6 border-b">
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">My Subscription</h2>
-          <button
-            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+          <Button
+            variant="primary"
+            text="View Plans"
             @click="showSubscriptionModal = true"
-          >
-            View Plans
-          </button>
+          />
         </div>
       </div>
       <div class="p-6">
@@ -50,13 +49,12 @@
           <div class="text-right">
             <div class="text-3xl font-bold text-gray-900">${{ currentPlan.price }}</div>
             <div class="text-sm text-gray-500">per month</div>
-            <button
+            <Button
               v-if="currentPlan.name === 'Premium'"
-              class="mt-3 px-4 py-2 text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors text-sm"
+              variant="secondary-danger"
+              text="Cancel Plan"
               @click="cancelPlan"
-            >
-              Cancel Plan
-            </button>
+            />
           </div>
         </div>
       </div>
@@ -67,12 +65,11 @@
       <div class="text-center">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
-        <button
-          class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
+        <Button
+          variant="primary"
+          text="Upgrade to Premium - $25/month"
           @click="upgradeAccount"
-        >
-          Upgrade to Premium - $25/month
-        </button>
+        />
       </div>
     </div>
 
@@ -92,12 +89,11 @@
               <p class="text-sm text-gray-600">Expires {{ paymentMethod.expiry }}</p>
             </div>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
+          <Button
+            variant="secondary"
+            text="Update"
             @click="showBillingModal = true"
-          >
-            Update
-          </button>
+          />
         </div>
       </div>
     </div>
@@ -214,6 +210,7 @@
 import { ref, computed } from 'vue';
 import SubscriptionModal from '../common/SubscriptionModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
+import Button from '../../common/Button.vue';
 
 const currentPlan = ref({
   name: 'Premium', // Can be 'Free' or 'Premium'

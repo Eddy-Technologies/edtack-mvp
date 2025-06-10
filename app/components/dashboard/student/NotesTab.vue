@@ -3,25 +3,27 @@
     <!-- Header with Add Note Button -->
     <div class="flex items-center justify-between">
       <h2 class="text-2xl font-bold text-gray-900">My Notes</h2>
-      <button
-        class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
-        @click="openCreateModal"
+      <Button
+        variant="primary"
+        text="New Note"
+        @clicked="openCreateModal"
       >
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-        New Note
-      </button>
+        <template #icon>
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+        </template>
+      </Button>
     </div>
 
     <!-- Search and Filter Bar -->
@@ -372,25 +374,27 @@
       <h3 class="mt-2 text-sm font-medium text-gray-900">No notes yet</h3>
       <p class="mt-1 text-sm text-gray-500">Create your first note to get started organizing your thoughts and study materials.</p>
       <div class="mt-6">
-        <button
-          class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-          @click="openCreateModal"
+        <Button
+          variant="primary"
+          text="New Note"
+          @clicked="openCreateModal"
         >
-          <svg
-            class="-ml-1 mr-2 h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          New Note
-        </button>
+          <template #icon>
+            <svg
+              class="-ml-1 mr-2 h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </template>
+        </Button>
       </div>
     </div>
 
@@ -409,6 +413,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import Button from '../../common/Button.vue';
 import NoteEditorModal from './NoteEditorModal.vue';
 
 interface Note {

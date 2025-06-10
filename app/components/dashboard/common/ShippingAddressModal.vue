@@ -26,7 +26,7 @@
             <span class="text-sm text-gray-700">Same as billing address</span>
           </label>
         </div>
-        <form v-if="!sameAsBilling" @submit.prevent="updateAddress">
+        <div v-if="!sameAsBilling">
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
@@ -44,13 +44,13 @@
             </div>
           </div>
           <div class="flex space-x-4 mt-6">
-            <button type="button" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50" @click="closeModal">Cancel</button>
-            <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save Address</button>
+            <Button variant="secondary-gray" text="Cancel" extra-classes="flex-1" @clicked="closeModal" />
+            <Button variant="primary" text="Save Address" extra-classes="flex-1" @clicked="saveAddress" />
           </div>
-        </form>
+        </div>
         <div v-else class="flex space-x-4 mt-6">
-          <button type="button" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50" @click="closeModal">Cancel</button>
-          <button type="button" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" @click="saveAsBilling">Save</button>
+          <Button variant="secondary-gray" text="Cancel" extra-classes="flex-1" @clicked="closeModal" />
+          <Button variant="primary" text="Save" extra-classes="flex-1" @clicked="saveAsBilling" />
         </div>
       </div>
     </div>
@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Button from '../../common/Button.vue';
 
 interface Props {
   isOpen: boolean;
@@ -75,6 +76,10 @@ const sameAsBilling = ref(false);
 
 const closeModal = () => emit('close');
 const updateAddress = () => {
+  emit('address-updated', addressData.value);
+  closeModal();
+};
+const saveAddress = () => {
   emit('address-updated', addressData.value);
   closeModal();
 };

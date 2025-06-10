@@ -182,18 +182,20 @@
 
             <!-- Action Buttons -->
             <div class="space-y-3">
-              <button
-                class="w-full bg-primary hover:bg-primary-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-colors"
-                @click="addToCart"
-              >
-                Add to Cart ({{ product.price * quantity }}C)
-              </button>
-              <button
-                class="w-full border-2 border-primary text-primary hover:bg-primary-50 py-3 px-6 rounded-lg font-semibold text-lg transition-colors"
-                @click="buyNow"
-              >
-                Buy Now
-              </button>
+              <Button
+                variant="primary"
+                :text="`Add to Cart (${product.price * quantity}C)`"
+                size="lg"
+                extra-classes="w-full"
+                @clicked="addToCart"
+              />
+              <Button
+                variant="secondary"
+                text="Buy Now"
+                size="lg"
+                extra-classes="w-full"
+                @clicked="buyNow"
+              />
             </div>
 
             <!-- Additional Info -->
@@ -369,6 +371,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watchEffect } from 'vue';
+import Button from '../../common/Button.vue';
 
 interface Product {
   id: string;

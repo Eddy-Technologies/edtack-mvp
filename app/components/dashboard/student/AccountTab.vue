@@ -5,13 +5,12 @@
       <div class="p-6 border-b">
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
-          <button
+          <Button
             v-if="!isEditing"
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="startEditing"
-          >
-            Edit Profile
-          </button>
+            variant="secondary"
+            text="Edit Profile"
+            @clicked="startEditing"
+          />
         </div>
       </div>
 
@@ -53,19 +52,16 @@
           </div>
 
           <div class="mt-6 flex space-x-4">
-            <button
-              type="submit"
-              class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            >
-              Save Changes
-            </button>
-            <button
-              type="button"
-              class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-              @click="cancelEditing"
-            >
-              Cancel
-            </button>
+            <Button
+              variant="secondary"
+              text="Save Changes"
+              @clicked="saveProfile"
+            />
+            <Button
+              variant="secondary"
+              text="Cancel"
+              @clicked="cancelEditing"
+            />
           </div>
         </form>
 
@@ -99,12 +95,11 @@
             <h4 class="text-lg font-medium text-gray-900">Grade Level</h4>
             <p class="text-gray-600">{{ academicInfo.grade }}</p>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="showGradeModal = true"
-          >
-            Change
-          </button>
+          <Button
+            variant="secondary"
+            text="Change"
+            @clicked="showGradeModal = true"
+          />
         </div>
 
         <!-- Parent Information -->
@@ -168,12 +163,11 @@
               <p>No payment method on file</p>
             </div>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="showBillingModal = true"
-          >
-            {{ paymentMethod.lastFour ? 'Update' : 'Add Payment Method' }}
-          </button>
+          <Button
+            variant="secondary"
+            :text="paymentMethod.lastFour ? 'Update' : 'Add Payment Method'"
+            @clicked="showBillingModal = true"
+          />
         </div>
 
         <!-- Shipping Address -->
@@ -194,12 +188,11 @@
               <p>No shipping address provided</p>
             </div>
           </div>
-          <button
-            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
-            @click="showShippingModal = true"
-          >
-            {{ hasShippingAddress ? 'Edit' : 'Add' }}
-          </button>
+          <Button
+            variant="secondary"
+            :text="hasShippingAddress ? 'Edit' : 'Add'"
+            @clicked="showShippingModal = true"
+          />
         </div>
       </div>
     </div>
@@ -232,6 +225,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import Button from '../../common/Button.vue';
 import ChangeGradeModal from '../common/ChangeGradeModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
 import ShippingAddressModal from '../common/ShippingAddressModal.vue';

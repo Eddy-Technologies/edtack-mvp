@@ -245,23 +245,20 @@
 
         <!-- Action Buttons -->
         <div class="flex space-x-4">
-          <button
-            class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-            @click="closeModal"
-          >
-            Cancel
-          </button>
-          <button
+          <Button
+            variant="secondary-gray"
+            text="Cancel"
+            extra-classes="flex-1"
+            @clicked="closeModal"
+          />
+          <Button
+            variant="primary"
+            :text="isProcessing ? 'Processing...' : `Complete Order (${total}C)`"
+            extra-classes="flex-1"
             :disabled="isProcessing || !canProceed"
-            :class="[
-              'flex-1 px-6 py-3 rounded-lg font-medium transition-colors',
-              isProcessing || !canProceed
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-primary text-white hover:bg-primary-700'
-            ]"
-            @click="processPayment"
+            @clicked="processPayment"
           >
-            <span v-if="isProcessing" class="flex items-center justify-center">
+            <template v-if="isProcessing" #icon>
               <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                 <circle
                   class="opacity-25"
@@ -273,12 +270,8 @@
                 />
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              Processing...
-            </span>
-            <span v-else>
-              Complete Order ({{ total }}C)
-            </span>
-          </button>
+            </template>
+          </Button>
         </div>
       </div>
     </div>
@@ -287,6 +280,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import Button from '../../common/Button.vue';
 
 interface CartItem {
   id: string;

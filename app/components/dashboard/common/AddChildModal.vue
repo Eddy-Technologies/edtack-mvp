@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="p-6">
-        <form @submit.prevent="addChild">
+        <div>
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
@@ -39,10 +39,10 @@
             </div>
           </div>
           <div class="flex space-x-4 mt-6">
-            <button type="button" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50" @click="closeModal">Cancel</button>
-            <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700">Add Child</button>
+            <Button variant="secondary-gray" text="Cancel" extra-classes="flex-1" @clicked="closeModal" />
+            <Button variant="primary" text="Add Child" extra-classes="flex-1" @clicked="addChild" />
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +50,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Button from '../../common/Button.vue';
 
 interface Props {
   isOpen: boolean;
