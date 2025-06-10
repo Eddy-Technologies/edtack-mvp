@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Overview Header -->
-    <DashboardCard variant="profile">
+    <div class="bg-white rounded-xl shadow-sm border p-6">
       <div class="flex items-center space-x-6">
         <div class="relative">
           <img
@@ -37,78 +37,84 @@
           </div>
         </div>
       </div>
-    </DashboardCard>
+    </div>
 
     <!-- Family Overview -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <DashboardCard variant="stats">
+      <div class="bg-white p-6 rounded-xl shadow-sm border">
         <div class="text-center">
           <div class="text-3xl font-bold text-blue-600">{{ stats.totalChildren }}</div>
           <div class="text-sm text-gray-600 mt-1">Children</div>
         </div>
-      </DashboardCard>
-      <DashboardCard variant="stats">
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm border">
         <div class="text-center">
           <div class="text-3xl font-bold text-green-600">{{ stats.activeToday }}</div>
           <div class="text-sm text-gray-600 mt-1">Active Today</div>
         </div>
-      </DashboardCard>
+      </div>
     </div>
 
     <!-- Children Overview -->
-    <DashboardCard header-title="My Children" show-header-border>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="child in profile.children" :key="child.id" class="border rounded-lg p-4 hover:shadow-md transition-shadow">
-          <div class="flex items-center space-x-3 mb-4">
-            <img :src="child.avatar" :alt="child.name" class="w-12 h-12 rounded-full">
-            <div>
-              <h4 class="font-semibold text-gray-900">{{ child.name }}</h4>
-              <p class="text-sm text-gray-600">{{ child.grade }} • Age {{ child.age }}</p>
+    <div class="bg-white rounded-xl shadow-sm border">
+      <div class="p-6 border-b">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-900">My Children</h3>
+        </div>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="child in profile.children" :key="child.id" class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center space-x-3 mb-4">
+              <img :src="child.avatar" :alt="child.name" class="w-12 h-12 rounded-full">
+              <div>
+                <h4 class="font-semibold text-gray-900">{{ child.name }}</h4>
+                <p class="text-sm text-gray-600">{{ child.grade }} • Age {{ child.age }}</p>
+              </div>
+              <div class="ml-auto">
+                <div
+                  :class="[
+                    'w-3 h-3 rounded-full',
+                    child.isActive ? 'bg-green-400' : 'bg-gray-300'
+                  ]"
+                />
+              </div>
             </div>
-            <div class="ml-auto">
-              <div
-                :class="[
-                  'w-3 h-3 rounded-full',
-                  child.isActive ? 'bg-green-400' : 'bg-gray-300'
-                ]"
-              />
-            </div>
-          </div>
 
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between">
-              <span class="text-gray-600">Assignments Completed:</span>
-              <span class="font-medium">{{ child.notesCount }}</span>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Assignments Completed:</span>
+                <span class="font-medium">{{ child.notesCount }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Study Hours:</span>
+                <span class="font-medium">{{ child.studyHours }}h</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Last Active:</span>
+                <span class="font-medium">{{ child.lastActive }}</span>
+              </div>
             </div>
-            <div class="flex justify-between">
-              <span class="text-gray-600">Study Hours:</span>
-              <span class="font-medium">{{ child.studyHours }}h</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-600">Last Active:</span>
-              <span class="font-medium">{{ child.lastActive }}</span>
-            </div>
-          </div>
 
-          <div class="mt-4 pt-3 border-t">
-            <div class="flex space-x-2">
-              <button class="flex-1 px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded hover:bg-primary-200 transition-colors">
-                View Progress
-              </button>
-              <button class="flex-1 px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded hover:bg-gray-200 transition-colors">
-                Settings
-              </button>
+            <div class="mt-4 pt-3 border-t">
+              <div class="flex space-x-2">
+                <button class="flex-1 px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded hover:bg-primary-200 transition-colors">
+                  View Progress
+                </button>
+                <button class="flex-1 px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded hover:bg-gray-200 transition-colors">
+                  Settings
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </DashboardCard>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import DashboardCard from '../../common/DashboardCard.vue';
 import { useDashboardData } from '~/composables/useDashboardData';
 
 const { dashboardData, shopChildrenData } = useDashboardData();

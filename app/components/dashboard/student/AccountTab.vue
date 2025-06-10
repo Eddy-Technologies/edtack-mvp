@@ -1,88 +1,94 @@
 <template>
   <div class="space-y-6">
     <!-- Personal Information -->
-    <DashboardCard header-title="Personal Information" show-header-border>
-      <template #headerAction>
-        <Button
-          v-if="!isEditing"
-          variant="secondary"
-          text="Edit Profile"
-          @clicked="startEditing"
-        />
-      </template>
-      <form v-if="isEditing" @submit.prevent="saveProfile">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-            <input
-              v-model="editForm.firstName"
-              type="text"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-            <input
-              v-model="editForm.lastName"
-              type="text"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-            <input
-              v-model="editForm.dateOfBirth"
-              type="date"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-            <input
-              v-model="editForm.phone"
-              type="tel"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-        </div>
-
-        <div class="mt-6 flex space-x-4">
+    <div class="bg-white rounded-xl shadow-sm border">
+      <div class="p-6 border-b">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
           <Button
+            v-if="!isEditing"
             variant="secondary"
-            text="Save Changes"
-            @clicked="saveProfile"
+            text="Edit Profile"
+            @clicked="startEditing"
           />
-          <Button
-            variant="secondary"
-            text="Cancel"
-            @clicked="cancelEditing"
-          />
-        </div>
-      </form>
-
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-          <p class="text-gray-900">{{ personalInfo.firstName }}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-          <p class="text-gray-900">{{ personalInfo.lastName }}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-          <p class="text-gray-900">{{ formatDate(personalInfo.dateOfBirth) }}</p>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-          <p class="text-gray-900">{{ personalInfo.phone || 'Not provided' }}</p>
         </div>
       </div>
-    </DashboardCard>
+
+      <div class="p-6">
+        <form v-if="isEditing" @submit.prevent="saveProfile">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+              <input
+                v-model="editForm.firstName"
+                type="text"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+              <input
+                v-model="editForm.lastName"
+                type="text"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+              <input
+                v-model="editForm.dateOfBirth"
+                type="date"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+              <input
+                v-model="editForm.phone"
+                type="tel"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+            </div>
+          </div>
+
+          <div class="mt-6 flex space-x-4">
+            <Button
+              variant="secondary"
+              text="Save Changes"
+              @clicked="saveProfile"
+            />
+            <Button
+              variant="secondary"
+              text="Cancel"
+              @clicked="cancelEditing"
+            />
+          </div>
+        </form>
+
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+            <p class="text-gray-900">{{ personalInfo.firstName }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+            <p class="text-gray-900">{{ personalInfo.lastName }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+            <p class="text-gray-900">{{ formatDate(personalInfo.dateOfBirth) }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <p class="text-gray-900">{{ personalInfo.phone || 'Not provided' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Academic Information -->
-    <DashboardCard>
-      <div class="space-y-6">
+    <div class="bg-white rounded-xl shadow-sm border">
+      <div class="p-6 space-y-6">
         <!-- Grade Level -->
         <div class="flex items-center justify-between py-4">
           <div>
@@ -105,7 +111,7 @@
           </div>
         </div>
       </div>
-    </DashboardCard>
+    </div>
 
     <!-- Subscription Access Notice -->
     <div v-if="!userPaysForSubscription" class="bg-amber-50 border border-amber-200 rounded-xl p-6">
@@ -134,8 +140,12 @@
     </div>
 
     <!-- Address Information -->
-    <DashboardCard header-title="Address Information" show-header-border>
-      <div class="space-y-6">
+    <div class="bg-white rounded-xl shadow-sm border">
+      <div class="p-6 border-b">
+        <h3 class="text-lg font-semibold text-gray-900">Address Information</h3>
+      </div>
+
+      <div class="p-6 space-y-6">
         <!-- Payment & Billing Information (only show if user pays for subscription) -->
         <div v-if="userPaysForSubscription" class="flex items-center justify-between py-4 border-b">
           <div>
@@ -185,7 +195,7 @@
           />
         </div>
       </div>
-    </DashboardCard>
+    </div>
 
     <!-- Modals -->
     <ChangeGradeModal
@@ -216,7 +226,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import Button from '../../common/Button.vue';
-import DashboardCard from '../../common/DashboardCard.vue';
 import ChangeGradeModal from '../common/ChangeGradeModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
 import ShippingAddressModal from '../common/ShippingAddressModal.vue';

@@ -428,11 +428,10 @@
         <p class="text-sm text-gray-400 mt-1">Add some products to your wishlist!</p>
       </div>
       <div v-else class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <DashboardCard
+        <div
           v-for="item in wishlist"
           :key="item.id"
-          variant="product"
-          hoverable
+          class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-4"
         >
           <div class="relative">
             <img :src="item.image" :alt="item.name" class="w-full h-40 object-cover rounded mb-3">
@@ -453,7 +452,7 @@
             extra-classes="w-full"
             @clicked="addToCart(item)"
           />
-        </DashboardCard>
+        </div>
       </div>
     </div>
 
@@ -462,11 +461,10 @@
       v-if="viewMode === 'icon' && !showWishlist"
       class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
-      <DashboardCard
+      <div
         v-for="item in filteredItems"
         :key="item.id"
-        variant="product"
-        clickable
+        class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4 cursor-pointer"
         @click="openProductModal(item)"
       >
         <div class="relative mb-4">
@@ -544,17 +542,15 @@
         <!-- Messages -->
         <p v-if="purchaseMessage === item.id" class="text-green-600 text-sm mt-2">Added to Cart!</p>
         <p v-if="insufficientFundsMessage === item.id" class="text-red-600 text-sm mt-2">Insufficient Funds!</p>
-      </DashboardCard>
+      </div>
     </div>
 
     <!-- List View -->
     <div v-if="viewMode === 'list' && !showWishlist" class="space-y-4">
-      <DashboardCard
+      <div
         v-for="item in filteredItems"
         :key="item.id"
-        hoverable
-        clickable
-        padding="lg"
+        class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6 cursor-pointer"
         @click="openProductModal(item)"
       >
         <div class="flex items-center space-x-6">
@@ -637,7 +633,7 @@
             </div>
           </div>
         </div>
-      </DashboardCard>
+      </div>
     </div>
 
     <!-- Pagination -->
@@ -693,7 +689,6 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../../common/Button.vue';
-import DashboardCard from '../../common/DashboardCard.vue';
 import placeholder1 from '../../../../assets/a.png';
 import placeholder2 from '../../../../assets/b.png';
 import placeholder3 from '../../../../assets/c.png';
