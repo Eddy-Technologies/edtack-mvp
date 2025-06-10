@@ -7,7 +7,7 @@
           <h2 class="text-2xl font-bold text-gray-900">Personal Information</h2>
           <button
             v-if="!isEditing"
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="startEditing"
           >
             Edit Profile
@@ -55,13 +55,13 @@
           <div class="mt-6 flex space-x-4">
             <button
               type="submit"
-              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             >
               Save Changes
             </button>
             <button
               type="button"
-              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
               @click="cancelEditing"
             >
               Cancel
@@ -92,19 +92,15 @@
 
     <!-- Academic Information -->
     <div class="bg-white rounded-xl shadow-sm border">
-      <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Academic Information</h3>
-      </div>
-
       <div class="p-6 space-y-6">
         <!-- Grade Level -->
-        <div class="flex items-center justify-between py-4 border-b">
+        <div class="flex items-center justify-between py-4">
           <div>
             <h4 class="text-lg font-medium text-gray-900">Grade Level</h4>
             <p class="text-gray-600">{{ academicInfo.grade }}</p>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showGradeModal = true"
           >
             Change
@@ -173,7 +169,7 @@
             </div>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showBillingModal = true"
           >
             {{ paymentMethod.lastFour ? 'Update' : 'Add Payment Method' }}
@@ -199,7 +195,7 @@
             </div>
           </div>
           <button
-            class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showShippingModal = true"
           >
             {{ hasShippingAddress ? 'Edit' : 'Add' }}

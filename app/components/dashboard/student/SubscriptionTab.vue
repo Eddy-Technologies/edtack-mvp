@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">My Subscription</h2>
           <button
-            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
             @click="showSubscriptionModal = true"
           >
             View Plans
@@ -68,7 +68,7 @@
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
         <button
-          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
           @click="upgradeAccount"
         >
           Upgrade to Premium - $25/month
@@ -93,7 +93,7 @@
             </div>
           </div>
           <button
-            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
+            class="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors"
             @click="showBillingModal = true"
           >
             Update
