@@ -65,7 +65,9 @@
         >
           <h4 class="font-semibold text-gray-900 mb-2 text-sm">{{ note.title }}</h4>
           <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
-          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden" v-html="note.content" />
+          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden">
+            {{ note.content }}
+          </div>
           <div class="flex items-center justify-between mt-auto">
             <div class="flex gap-1 flex-wrap">
               <span
@@ -102,7 +104,9 @@
         >
           <h4 class="font-semibold text-gray-900 mb-2 text-sm">{{ note.title }}</h4>
           <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
-          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden" v-html="note.content" />
+          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden">
+            {{ note.content }}
+          </div>
           <div class="flex items-center justify-between mt-auto">
             <div class="flex gap-1 flex-wrap">
               <span
