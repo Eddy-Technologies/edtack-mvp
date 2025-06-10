@@ -51,21 +51,21 @@
             <template v-if="loggedIn">
               <button
                 class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('profile')"
+                @click="routeTo('/dashboard?tab=overview')"
               >
                 Profile
               </button>
               <button
                 class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('settings')"
+                @click="routeTo('/dashboard?tab=account')"
               >
                 Settings
               </button>
               <button
                 class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('store')"
+                @click="routeTo('/dashboard?tab=shop')"
               >
-                Store
+                Shop
               </button>
               <button
                 class="block w-full text-left px-4 py-2 hover:bg-gray-100"
