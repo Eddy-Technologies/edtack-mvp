@@ -28,7 +28,7 @@
       <div class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Free Plan -->
-          <div class="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors">
+          <div class="border-2 border-gray-200 rounded-lg p-6 hover:border-primary-300 transition-colors">
             <div class="text-center">
               <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Plan</h3>
               <div class="text-4xl font-bold text-gray-900 mb-4">$0<span class="text-lg text-gray-500">/month</span></div>
@@ -111,14 +111,14 @@
           </div>
 
           <!-- Premium Plan -->
-          <div class="border-2 border-blue-500 rounded-lg p-6 relative bg-blue-50">
+          <div class="border-2 border-primary rounded-lg p-6 relative bg-primary-50">
             <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-              <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
+              <span class="bg-primary text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
             </div>
 
             <div class="text-center">
               <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium Plan</h3>
-              <div class="text-4xl font-bold text-blue-600 mb-4">$25<span class="text-lg text-gray-500">/month</span></div>
+              <div class="text-4xl font-bold text-primary mb-4">$25<span class="text-lg text-gray-500">/month</span></div>
               <p class="text-gray-600 mb-6">Everything you need for comprehensive learning</p>
             </div>
 
@@ -222,7 +222,7 @@
             </div>
 
             <button
-              class="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              class="w-full py-3 px-4 bg-primary text-white rounded-lg hover:bg-primary-700 transition-colors"
               @click="selectPlan('premium')"
             >
               Upgrade to Premium
