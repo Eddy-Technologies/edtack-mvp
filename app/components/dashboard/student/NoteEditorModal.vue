@@ -10,8 +10,88 @@
         :style="{ backgroundColor: noteForm.backgroundColor }"
         class="rounded-xl shadow-xl flex flex-col max-h-[90vh] transition-all duration-200"
       >
-        <!-- Header with Close Button -->
-        <div class="flex justify-end p-4 flex-shrink-0">
+        <!-- Header with Menu and Close Button -->
+        <div class="flex justify-between items-center p-4 flex-shrink-0">
+          <div v-if="editingNote" class="relative">
+            <button
+              class="p-2 text-gray-600 hover:text-gray-800 hover:bg-white/30 rounded-lg transition-colors"
+              title="Note Options"
+              @click="showNoteMenu = !showNoteMenu"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="5" r="2" />
+                <circle cx="12" cy="12" r="2" />
+                <circle cx="12" cy="19" r="2" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div
+              v-if="showNoteMenu"
+              class="absolute left-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+            >
+              <button
+                v-if="!editingNote.isArchived"
+                class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                @click="archiveCurrentNote"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                  />
+                </svg>
+                Archive
+              </button>
+              <button
+                v-else
+                class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                @click="unarchiveCurrentNote"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16l3-3m0 0l3 3m-3-3v8m13-13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2z"
+                  />
+                </svg>
+                Unarchive
+              </button>
+              <button
+                class="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                @click="deleteCurrentNote"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H9a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                Delete
+              </button>
+            </div>
+          </div>
+
           <button
             class="p-2 text-gray-600 hover:text-gray-800 hover:bg-white/30 rounded-lg transition-colors"
             title="Close"
@@ -324,15 +404,24 @@
               class="flex items-center gap-2"
               @click="noteForm.isStarred = !noteForm.isStarred"
             >
-              <span
+              <svg
                 v-if="noteForm.isStarred"
-                class="text-lg"
-                style="color: #fbbf24; text-shadow: 0 0 1px #000;"
-              >⭐</span>
-              <span
+                class="w-5 h-5"
+                fill="#fbbf24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+              <svg
                 v-else
-                class="text-lg text-gray-400 hover:text-yellow-500"
-              >☆</span>
+                class="w-5 h-5"
+                fill="none"
+                stroke="#9ca3af"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
             </button>
 
             <!-- Action Buttons -->
@@ -414,6 +503,7 @@ interface Note {
   tags: string[];
   backgroundColor: string;
   isStarred: boolean;
+  isArchived: boolean;
   createdAt: Date;
   updatedAt: Date;
   wordCount: number;
@@ -429,6 +519,9 @@ const props = defineProps<Props>();
 const emit = defineEmits<{
   close: [];
   save: [note: Partial<Note>];
+  archive: [note: Note];
+  unarchive: [note: Note];
+  delete: [note: Note];
 }>();
 
 // Reactive state
@@ -444,6 +537,7 @@ const newTag = ref('');
 const showDiscardModal = ref(false);
 const hasUnsavedChanges = ref(false);
 const originalFormData = ref<any>(null);
+const showNoteMenu = ref(false);
 
 // Form data
 const noteForm = ref({
@@ -635,6 +729,30 @@ const saveNote = () => {
 
   emit('save', noteData);
   emit('close');
+};
+
+const archiveCurrentNote = () => {
+  if (props.editingNote) {
+    emit('archive', props.editingNote);
+    showNoteMenu.value = false;
+    emit('close');
+  }
+};
+
+const unarchiveCurrentNote = () => {
+  if (props.editingNote) {
+    emit('unarchive', props.editingNote);
+    showNoteMenu.value = false;
+    emit('close');
+  }
+};
+
+const deleteCurrentNote = () => {
+  if (props.editingNote && confirm('Are you sure you want to delete this note?')) {
+    emit('delete', props.editingNote);
+    showNoteMenu.value = false;
+    emit('close');
+  }
 };
 </script>
 

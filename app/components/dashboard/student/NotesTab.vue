@@ -63,11 +63,68 @@
           class="h-64 p-4 rounded-lg border shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col"
           @click="openViewModal(note)"
         >
-          <h4 class="font-semibold text-gray-900 mb-2 text-sm">{{ note.title }}</h4>
-          <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
-          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden">
-            {{ note.content }}
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-semibold text-gray-900 text-sm flex-1">{{ note.title }}</h4>
+            <div class="relative">
+              <button
+                class="p-1 text-gray-400 hover:text-gray-600 rounded"
+                @click.stop="toggleNoteMenu(note.id)"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="5" r="2" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="12" cy="19" r="2" />
+                </svg>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div
+                v-if="activeNoteMenu === note.id"
+                class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+              >
+                <button
+                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  @click.stop="archiveNote(note)"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                    />
+                  </svg>
+                  Archive
+                </button>
+                <button
+                  class="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                  @click.stop="deleteNote(note)"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H9a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
+          <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
+          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden" v-html="note.content" />
           <div class="flex items-center justify-between mt-auto">
             <div class="flex gap-1 flex-wrap">
               <span
@@ -102,11 +159,68 @@
           class="h-64 p-4 rounded-lg border shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col"
           @click="openViewModal(note)"
         >
-          <h4 class="font-semibold text-gray-900 mb-2 text-sm">{{ note.title }}</h4>
-          <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
-          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden">
-            {{ note.content }}
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-semibold text-gray-900 text-sm flex-1">{{ note.title }}</h4>
+            <div class="relative">
+              <button
+                class="p-1 text-gray-400 hover:text-gray-600 rounded"
+                @click.stop="toggleNoteMenu(note.id)"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="5" r="2" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="12" cy="19" r="2" />
+                </svg>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div
+                v-if="activeNoteMenu === note.id"
+                class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+              >
+                <button
+                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  @click.stop="archiveNote(note)"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                    />
+                  </svg>
+                  Archive
+                </button>
+                <button
+                  class="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                  @click.stop="deleteNote(note)"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H9a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
+          <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
+          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden" v-html="note.content" />
           <div class="flex items-center justify-between mt-auto">
             <div class="flex gap-1 flex-wrap">
               <span
@@ -131,6 +245,110 @@
                 class="text-lg text-gray-400 hover:text-yellow-500"
               >☆</span>
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Archived Notes Section -->
+    <div v-if="archivedNotes.length > 0" class="space-y-4">
+      <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+        <svg
+          class="w-5 h-5 text-gray-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          />
+        </svg>
+        Archived Notes
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div
+          v-for="note in archivedNotes"
+          :key="`archived-${note.id}`"
+          :style="{ backgroundColor: note.backgroundColor }"
+          class="h-64 p-4 rounded-lg border shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col opacity-75"
+          @click="openViewModal(note)"
+        >
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-semibold text-gray-900 text-sm flex-1">{{ note.title }}</h4>
+            <div class="relative">
+              <button
+                class="p-1 text-gray-400 hover:text-gray-600 rounded"
+                @click.stop="toggleNoteMenu(note.id)"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="5" r="2" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="12" cy="19" r="2" />
+                </svg>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div
+                v-if="activeNoteMenu === note.id"
+                class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+              >
+                <button
+                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  @click.stop="unarchiveNote(note)"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 16l3-3m0 0l3 3m-3-3v8m13-13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2z"
+                    />
+                  </svg>
+                  Unarchive
+                </button>
+                <button
+                  class="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                  @click.stop="deleteNote(note)"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H9a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-600 mb-2">{{ note.subject }}</p>
+          <div class="text-xs text-gray-700 mb-3 whitespace-pre-wrap flex-1 overflow-hidden" v-html="note.content" />
+          <div class="flex items-center justify-between mt-auto">
+            <div class="flex gap-1 flex-wrap">
+              <span
+                v-for="tag in note.tags.slice(0, 2)"
+                :key="tag"
+                class="px-2 py-1 bg-white text-black text-xs rounded-full border border-black"
+              >
+                {{ tag }}
+              </span>
+            </div>
+            <span class="text-xs text-gray-500">Archived</span>
           </div>
         </div>
       </div>
@@ -182,6 +400,9 @@
       :editing-note="editingNote"
       @close="closeModal"
       @save="handleNoteSave"
+      @archive="archiveNote"
+      @unarchive="unarchiveNote"
+      @delete="deleteNote"
     />
   </div>
 </template>
@@ -198,6 +419,7 @@ interface Note {
   tags: string[];
   backgroundColor: string;
   isStarred: boolean;
+  isArchived: boolean;
   createdAt: Date;
   updatedAt: Date;
   wordCount: number;
@@ -209,6 +431,7 @@ const selectedSubject = ref('');
 const sortBy = ref('recent');
 const showModal = ref(false);
 const editingNote = ref<Note | null>(null);
+const activeNoteMenu = ref<number | null>(null);
 
 // Static data
 const subjects = ref([
@@ -225,6 +448,7 @@ const notes = ref<Note[]>([
     tags: ['algebra', 'equations', 'graphs'],
     backgroundColor: '#fef3c7',
     isStarred: true,
+    isArchived: false,
     createdAt: new Date('2024-01-15'),
     updatedAt: new Date('2024-01-15'),
     wordCount: 1250
@@ -237,6 +461,7 @@ const notes = ref<Note[]>([
     tags: ['biology', 'plants', 'energy'],
     backgroundColor: '#d1fae5',
     isStarred: false,
+    isArchived: false,
     createdAt: new Date('2024-01-14'),
     updatedAt: new Date('2024-01-14'),
     wordCount: 890
@@ -249,6 +474,7 @@ const notes = ref<Note[]>([
     tags: ['literature', 'drama', 'analysis'],
     backgroundColor: '#fce7f3',
     isStarred: true,
+    isArchived: false,
     createdAt: new Date('2024-01-12'),
     updatedAt: new Date('2024-01-12'),
     wordCount: 2100
@@ -261,6 +487,7 @@ const notes = ref<Note[]>([
     tags: ['wwii', 'timeline', 'events', 'history'],
     backgroundColor: '#e9d5ff',
     isStarred: false,
+    isArchived: false,
     createdAt: new Date('2024-01-10'),
     updatedAt: new Date('2024-01-10'),
     wordCount: 1560
@@ -273,6 +500,7 @@ const notes = ref<Note[]>([
     tags: ['biology', 'cellular', 'energy', 'ATP'],
     backgroundColor: '#dbeafe',
     isStarred: true,
+    isArchived: false,
     createdAt: new Date('2024-01-08'),
     updatedAt: new Date('2024-01-08'),
     wordCount: 645
@@ -285,6 +513,7 @@ const notes = ref<Note[]>([
     tags: ['geometry', 'triangles', 'distance', 'applications'],
     backgroundColor: '#fed7aa',
     isStarred: false,
+    isArchived: false,
     createdAt: new Date('2024-01-06'),
     updatedAt: new Date('2024-01-06'),
     wordCount: 432
@@ -297,6 +526,7 @@ const notes = ref<Note[]>([
     tags: ['writing', 'essays', 'structure', 'academic'],
     backgroundColor: '#f3f4f6',
     isStarred: false,
+    isArchived: false,
     createdAt: new Date('2024-01-04'),
     updatedAt: new Date('2024-01-04'),
     wordCount: 789
@@ -309,6 +539,7 @@ const notes = ref<Note[]>([
     tags: ['chemistry', 'bonds', 'ionic', 'covalent'],
     backgroundColor: '#dbeafe',
     isStarred: true,
+    isArchived: false,
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
     wordCount: 523
@@ -317,11 +548,11 @@ const notes = ref<Note[]>([
 
 // Computed properties
 const starredNotes = computed(() => {
-  return notes.value.filter((note) => note.isStarred && matchesFilters(note));
+  return notes.value.filter((note) => note.isStarred && !note.isArchived && matchesFilters(note));
 });
 
 const filteredNotes = computed(() => {
-  let filtered = notes.value.filter((note) => !note.isStarred);
+  let filtered = notes.value.filter((note) => !note.isStarred && !note.isArchived);
 
   // Apply filters
   filtered = filtered.filter(matchesFilters);
@@ -336,6 +567,10 @@ const filteredNotes = computed(() => {
   }
 
   return filtered;
+});
+
+const archivedNotes = computed(() => {
+  return notes.value.filter((note) => note.isArchived);
 });
 
 // Helper function for filtering
@@ -403,6 +638,28 @@ const handleNoteSave = (noteData: Partial<Note>) => {
   }
 };
 
+const toggleNoteMenu = (noteId: number) => {
+  activeNoteMenu.value = activeNoteMenu.value === noteId ? null : noteId;
+};
+
+const archiveNote = (note: Note) => {
+  const index = notes.value.findIndex((n) => n.id === note.id);
+  if (index !== -1) {
+    notes.value[index].isArchived = true;
+    notes.value[index].updatedAt = new Date();
+  }
+  activeNoteMenu.value = null;
+};
+
+const unarchiveNote = (note: Note) => {
+  const index = notes.value.findIndex((n) => n.id === note.id);
+  if (index !== -1) {
+    notes.value[index].isArchived = false;
+    notes.value[index].updatedAt = new Date();
+  }
+  activeNoteMenu.value = null;
+};
+
 const deleteNote = (note: Note) => {
   if (confirm('Are you sure you want to delete this note?')) {
     const index = notes.value.findIndex((n) => n.id === note.id);
@@ -410,6 +667,7 @@ const deleteNote = (note: Note) => {
       notes.value.splice(index, 1);
     }
   }
+  activeNoteMenu.value = null;
 };
 
 const toggleStar = (note: Note) => {
