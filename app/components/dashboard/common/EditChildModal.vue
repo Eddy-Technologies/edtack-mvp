@@ -34,8 +34,18 @@
             </div>
           </div>
           <div class="flex space-x-4 mt-6">
-            <Button variant="secondary-gray" text="Cancel" extra-classes="flex-1" @clicked="closeModal" />
-            <Button variant="primary" text="Update" extra-classes="flex-1" @clicked="updateChild" />
+            <Button
+              variant="secondary-gray"
+              text="Cancel"
+              extra-classes="flex-1"
+              @clicked="closeModal"
+            />
+            <Button
+              variant="primary"
+              text="Update"
+              extra-classes="flex-1"
+              @clicked="updateChild"
+            />
           </div>
         </div>
       </div>

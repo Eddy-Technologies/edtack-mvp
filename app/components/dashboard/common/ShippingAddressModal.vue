@@ -44,13 +44,33 @@
             </div>
           </div>
           <div class="flex space-x-4 mt-6">
-            <Button variant="secondary-gray" text="Cancel" extra-classes="flex-1" @clicked="closeModal" />
-            <Button variant="primary" text="Save Address" extra-classes="flex-1" @clicked="saveAddress" />
+            <Button
+              variant="secondary-gray"
+              text="Cancel"
+              extra-classes="flex-1"
+              @clicked="closeModal"
+            />
+            <Button
+              variant="primary"
+              text="Save Address"
+              extra-classes="flex-1"
+              @clicked="saveAddress"
+            />
           </div>
         </div>
         <div v-else class="flex space-x-4 mt-6">
-          <Button variant="secondary-gray" text="Cancel" extra-classes="flex-1" @clicked="closeModal" />
-          <Button variant="primary" text="Save" extra-classes="flex-1" @clicked="saveAsBilling" />
+          <Button
+            variant="secondary-gray"
+            text="Cancel"
+            extra-classes="flex-1"
+            @clicked="closeModal"
+          />
+          <Button
+            variant="primary"
+            text="Save"
+            extra-classes="flex-1"
+            @clicked="saveAsBilling"
+          />
         </div>
       </div>
     </div>
