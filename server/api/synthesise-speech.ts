@@ -1,8 +1,6 @@
 import { defineEventHandler, readBody, createError } from 'h3';
 import { Buffer } from 'buffer';
 import { GoogleGenAI } from '@google/genai';
-import { Readable } from 'stream';
-import wav from 'wav';
 
 export default defineEventHandler(async (event) => {
   const { text } = await readBody(event);
@@ -32,7 +30,7 @@ export default defineEventHandler(async (event) => {
     });
 
     const base64Data = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-
+    console.log(base64Data.slice(0, 30));
     if (!base64Data) {
       throw createError({ statusCode: 500, message: 'No audio data received from AI model.' });
     }
