@@ -1,5 +1,5 @@
-import { defineEventHandler, readBody, createError } from 'h3';
 import { Buffer } from 'buffer';
+import { defineEventHandler, readBody, createError, send } from 'h3';
 import { GoogleGenAI } from '@google/genai';
 
 export default defineEventHandler(async (event) => {
@@ -18,34 +18,29 @@ export default defineEventHandler(async (event) => {
 
     const response = await genAI.models.generateContent({
       model: 'gemini-2.5-flash-preview-tts',
-      contents: [{ parts: [{ text: 'Say cheerfully: Have a wonderful day!' }] }],
+      contents: [{ parts: [{ text }] }],
       config: {
         responseModalities: ['AUDIO'],
         speechConfig: {
           voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'Kore' },
+            prebuiltVoiceConfig: { voiceName: 'Charon' },
           },
         },
       },
     });
 
     const base64Data = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-    console.log(base64Data.slice(0, 30));
+
     if (!base64Data) {
-      throw createError({ statusCode: 500, message: 'No audio data received from AI model.' });
+      throw new Error('No audio data received from TTS model.');
     }
 
     const audioBuffer = Buffer.from(base64Data, 'base64');
-
-    return new Response(audioBuffer, {
-      headers: {
-        'Content-Type': 'audio/wav',
-        'Content-Length': audioBuffer.toString(),
-        'Accept-Ranges': 'bytes',
-      },
-    });
+    event.node.res.setHeader('Content-Type', 'audio/wav');
+    event.node.res.setHeader('Content-Disposition', 'inline; filename="tts.wav"');
+    return send(event, audioBuffer);
   } catch (error) {
-    console.error('Error in Google TTS API call:', error);
-    throw createError({ statusCode: 500, message: 'Failed to synthesize speech using AI model.' });
+    console.error('TTS error:', error);
+    throw createError({ statusCode: 500, message: 'TTS synthesis failed.' });
   }
 });

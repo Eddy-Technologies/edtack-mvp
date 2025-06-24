@@ -59,16 +59,19 @@ export function useSpeech() {
           `Fetch failed: ${response.status} - ${errorData.message || 'Unknown error'}`
         );
       }
+      const contentType = response.headers.get('Content-Type') || 'audio/wav';
+      const arrayBuffer = await response.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: contentType });
 
-      const fixedBlob = new Blob([await response.arrayBuffer()], { type: 'audio/wav' });
-      const objectUrl = URL.createObjectURL(fixedBlob);
-
+      const objectUrl = URL.createObjectURL(blob);
       if (currentAudioUrl) {
         URL.revokeObjectURL(currentAudioUrl);
       }
       currentAudioUrl = objectUrl;
 
       audioPlayer.value.src = objectUrl;
+      audioPlayer.value.load();
+
       audioPlayer.value.onplaying = () => {
         isSpeaking.value = true;
         isLoadingTTS.value = false;
@@ -81,13 +84,35 @@ export function useSpeech() {
         }
       };
       audioPlayer.value.onerror = (e) => {
-        console.error('Audio playback error:', e);
-        isSpeaking.value = false;
-        isLoadingTTS.value = false;
-        if (currentAudioUrl) {
-          URL.revokeObjectURL(currentAudioUrl);
-          currentAudioUrl = null;
-          audioPlayer.value!.src = '';
+        const err = audioPlayer.value?.error;
+        if (err) {
+          console.error('MediaError code:', err.code);
+          switch (err.code) {
+            case MediaError.MEDIA_ERR_ABORTED:
+              console.error('MEDIA_ERR_ABORTED');
+              break;
+            case MediaError.MEDIA_ERR_NETWORK:
+              console.error('MEDIA_ERR_NETWORK');
+              break;
+            case MediaError.MEDIA_ERR_DECODE:
+              console.error('MEDIA_ERR_DECODE');
+              break;
+            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+              console.error('MEDIA_ERR_SRC_NOT_SUPPORTED');
+              break;
+            default:
+              console.error('Unknown media error');
+          }
+        }
+        console.error('Audio playback error event:', e);
+        // existing cleanup
+      };
+
+      audioPlayer.value.oncanplaythrough = async () => {
+        try {
+          await audioPlayer.value?.play();
+        } catch (e) {
+          console.error('Autoplay blocked or failed:', e);
         }
       };
 
