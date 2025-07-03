@@ -8,12 +8,11 @@
           <h1 class="text-gray-800 text-xl sm:text-2xl font-bold">Eddy</h1>
         </div>
         <div class="flex gap-4">
-          <button
-            class="px-6 py-2 text-sm sm:text-base bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors duration-200 font-medium"
+          <Button
+            variant="primary"
+            text="Login"
             @click="$router.push('/chat')"
-          >
-            Login
-          </button>
+          />
         </div>
       </div>
     </div>
@@ -132,12 +131,11 @@
 
       <!-- Get Started Button -->
       <div class="text-center mt-8 sm:mt-12">
-        <button
-          class="px-8 py-3 text-lg sm:text-xl bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors duration-200 font-semibold"
+        <Button
+          variant="primary"
+          text="Get Started"
           @click="$router.push('/chat')"
-        >
-          Get Started
-        </button>
+        />
       </div>
     </div>
   </div>
