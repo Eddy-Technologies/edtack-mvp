@@ -1,220 +1,283 @@
 <template>
-  <div class="relative w-full min-h-screen bg-background overflow-auto text-center flex flex-col">
-    <!-- Desktop Background Image -->
-    <img
-      v-if="!isMobile"
-      :src="background"
-      class="fixed top-0 left-0 w-full h-full object-cover z-0 transition-all duration-500 ease-in-out"
-      alt="home"
-    >
-
-    <!-- Mobile Background Layer -->
-    <div v-if="isMobile" class="fixed inset-0 z-0 pointer-events-none">
-      <div class="absolute inset-0 bg-background z-0" />
-      <img
-        :src="mobileLeft"
-        class="absolute top-[180px] sm:top-[100px] left-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      >
-      <img
-        :src="mobileRight"
-        class="absolute bottom-0 right-0 w-[180px] sm:w-[200px] h-auto z-10 transition-all duration-500 ease-in-out"
-      >
+  <div class="relative w-full min-h-screen bg-white overflow-auto">
+    <!-- Netflix-style Header -->
+    <div class="relative z-10 p-4 sm:p-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <img src="/logo.png" class="w-[40px] sm:w-[50px] h-auto mr-3">
+          <h1 class="text-gray-800 text-xl sm:text-2xl font-bold">Eddy</h1>
+        </div>
+        <div class="flex gap-4">
+          <button
+            class="px-6 py-2 text-sm sm:text-base bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors duration-200 font-medium"
+            @click="$router.push('/chat')"
+          >
+            Login
+          </button>
+        </div>
+      </div>
     </div>
 
-    <!-- Overlay content -->
-    <div
-      class="relative md:mt-0 mt-10 z-10 pt-10 sm:pt-16 md:pt-16 flex flex-col items-center px-4 sm:px-6"
-    >
-      <!-- Landing Message -->
-      <div class="px-4 sm:px-8 mb-4 max-w-full font-serif mt-2 text-center">
-        <div class="flex items-center justify-center flex-wrap">
-          <h1 class="text-2xl md:text-3xl text-black mr-3">Welcome to Eddy</h1>
-          <img src="/logo.png" class="w-[50px] sm:w-[60px] h-auto">
+    <!-- Main Content -->
+    <div class="relative z-10 px-4 sm:px-8 pb-8">
+      <!-- Avatar Carousel -->
+      <div class="mb-8">
+        <div class="relative overflow-hidden py-12 min-h-[280px]">
+          <!-- Gradient overlays for blur effect -->
+          <div class="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+
+          <!-- Carousel container -->
+          <div
+            class="flex ease-in-out"
+            :class="isTransitioning ? 'transition-transform duration-500' : ''"
+            :style="{ transform: `translateX(calc(50% - ${(adjustedIndex + 0.5) * cardWidth}px))` }"
+          >
+            <div
+              v-for="(avatar, index) in infiniteAvatars"
+              :key="`${avatar.id}-${Math.floor(index / allAvatars.length)}`"
+              class="flex-shrink-0 px-4"
+              :class="[
+                'transition-all duration-500',
+                index === adjustedIndex ? 'scale-100 opacity-100' : 'scale-90 opacity-60 blur-sm'
+              ]"
+              :style="{ width: cardWidth + 'px' }"
+            >
+              <div
+                class="group cursor-pointer"
+                @click="selectAvatar(avatar, index)"
+              >
+                <div class="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-6 text-center hover:from-gray-200 hover:to-gray-300 transition-all duration-300 group-hover:scale-105 shadow-sm hover:shadow-md">
+                  <div class="relative mb-4">
+                    <img
+                      :src="avatar.image"
+                      :alt="avatar.name"
+                      class="w-20 h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
+                    >
+                  </div>
+                  <h5 class="text-gray-800 text-base font-semibold mb-1">{{ avatar.name }}</h5>
+                  <p class="text-gray-600 text-sm">{{ avatar.type }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation buttons -->
+          <button
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 transition-all duration-200 hover:scale-110"
+            @click="previousCard"
+          >
+            <svg
+              class="w-6 h-6 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+
+          <button
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 transition-all duration-200 hover:scale-110"
+            @click="nextCard"
+          >
+            <svg
+              class="w-6 h-6 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
         </div>
-        <h2 class="text-lg sm:text-xl md:text-2xl text-black mt-2 leading-snug">
-          An educational platform where parents can incentivise and motivate
-          <br class="hidden sm:block">
-          their children for consistent and fun learning.
-        </h2>
       </div>
 
-      <div class="flex flex-col mb-4 md:mb-0 items-center justify-center gap-4 w-full">
-        <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto items-center">
-          <!-- Top button centered -->
-          <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-4">
-            <Button
-              text="Login"
-              route="/chat"
-              color="white"
-              size="xl"
-              bold
-              rounded
-              border
-              hover
-              extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-            />
-            <Button
-              text="Try Eddy Now"
-              route="/chat"
-              color="white"
-              size="xl"
-              bold
-              rounded
-              border
-              hover
-              extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-            />
+      <!-- Character Grid -->
+      <div class="mb-8">
+        <h3 class="text-gray-800 text-xl sm:text-2xl font-semibold mb-6 text-center">
+          Browse All Characters
+        </h3>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-4xl mx-auto">
+          <div
+            v-for="(avatar, index) in allAvatars"
+            :key="index"
+            class="group cursor-pointer w-32 sm:w-36"
+            @click="selectAvatar(avatar, index)"
+          >
+            <div class="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-4 sm:p-6 text-center hover:from-gray-200 hover:to-gray-300 transition-all duration-300 group-hover:scale-105 shadow-sm hover:shadow-md">
+              <div class="relative mb-4">
+                <img
+                  :src="avatar.image"
+                  :alt="avatar.name"
+                  class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
+                >
+              </div>
+              <h5 class="text-gray-800 text-sm sm:text-base font-semibold mb-1">{{ avatar.name }}</h5>
+              <p class="text-gray-600 text-xs sm:text-sm">{{ avatar.type }}</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Info Boxes -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:mt-6 gap-5 w-full max-w-[280px] sm:max-w-[600px] mb-5"
-      >
-        <div
-          v-for="(box, i) in infoBoxes"
-          :key="i"
-          class="relative bg-white/70 p-4 sm:p-5 rounded-lg text-black text-center h-[240px] sm:h-[250px] flex flex-col justify-center items-center shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out"
-          @mouseenter="hoveredBoxIndex = i"
-          @mouseleave="hoveredBoxIndex = null"
+      <!-- Get Started Button -->
+      <div class="text-center mt-8 sm:mt-12">
+        <button
+          class="px-8 py-3 text-lg sm:text-xl bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors duration-200 font-semibold"
+          @click="$router.push('/chat')"
         >
-          <!--
-          <div v-if="hoveredBoxIndex === i" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-          <img :src="box.image" class="w-[300px] sm:w-[500px] max-w-[80vw] h-auto object-contain shadow-lg rounded transition-transform duration-300 scale-110" />
-          </div>
-          -->
-          <div>
-            <UIcon :name="box.icon" class="text-[2rem] sm:text-[2.5rem] text-blue-700" />
-          </div>
-          <p class="text-xs sm:text-sm md:text-base font-bold mt-2">
-            {{ box.label }}
-          </p>
-          <p class="text-base sm:text-xl md:text-2xl mt-2 leading-snug">
-            {{ box.description }}
-          </p>
-        </div>
-      </div>
-
-      <!-- Call-to-Actions -->
-      <div class="flex flex-col items-center justify-center gap-4 mb-16 w-full">
-        <!-- Responsive button layout -->
-        <div class="flex flex-col sm:flex-row items-center justify-center text-center gap-4">
-          <Button
-            text="Request Demo"
-            route="/demo"
-            color="black"
-            size="xl"
-            bold
-            rounded
-            border
-            hover
-            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-          />
-          <Button
-            text="About Us"
-            route="/about"
-            color="black"
-            size="xl"
-            bold
-            rounded
-            border
-            hover
-            extra-classes="w-[220px] text-base sm:text-lg md:text-xl"
-          />
-        </div>
+          Get Started
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import home from '../../../assets/home.png';
-import homeMobile from '../../../assets/home-mobile.png';
-import parent from '../../../assets/parent.png';
-import child from '../../../assets/child.png';
-import deposit from '../../../assets/deposit.png';
-import { useRouter } from '#vue-router';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+
+import boyAvatar from '../../../assets/boy.png';
+import girlAvatar from '../../../assets/girl.png';
+import defaultAvatar from '../../../assets/default-avatar.png';
 import Button from '~/components/common/Button.vue';
+import { useRouter } from '#vue-router';
 
 const router = useRouter();
-const background = ref(home);
-const mobileLeft = ref(parent);
-const mobileRight = ref(child);
-const isMobile = ref(false);
-const hoveredBoxIndex = ref(null);
+const selectedAvatar = ref(null);
+const currentIndex = ref(2); // Start from center (index 2 out of 8 cards)
+const cardWidth = ref(280);
+const isTransitioning = ref(false);
 
-const desktopInfoBox = [
+const allAvatars = ref([
   {
-    image: deposit,
-    icon: 'i-heroicons-user-group',
-    label: 'Parent Dashboard',
-    description: 'Top up cash and control settings',
+    id: 1,
+    name: 'Alex',
+    image: boyAvatar,
+    type: 'Explorer'
   },
   {
-    image: deposit,
-    icon: 'i-heroicons-light-bulb',
-    label: 'Earn Rewards',
-    description: 'Earn credits from weekly challenges',
+    id: 2,
+    name: 'Luna',
+    image: girlAvatar,
+    type: 'Scholar'
   },
   {
-    image: deposit,
-    icon: 'i-heroicons-chart-bar',
-    label: 'Track Progress',
-    description: `Track your child's progress with easy to visualise charts`,
+    id: 3,
+    name: 'Sam',
+    image: defaultAvatar,
+    type: 'Scientist'
   },
   {
-    image: deposit,
-    icon: 'i-heroicons-building-storefront',
-    label: 'The Store',
-    description: 'Swap your credits for exciting goodies',
+    id: 4,
+    name: 'Snorlax',
+    image: '/snorlax.png',
+    type: 'Sleepy'
   },
-];
+  {
+    id: 5,
+    name: 'Mystery',
+    image: boyAvatar,
+    type: 'Unknown'
+  },
+  {
+    id: 6,
+    name: 'Future',
+    image: girlAvatar,
+    type: 'Coming Soon'
+  },
+  {
+    id: 7,
+    name: 'Classic',
+    image: defaultAvatar,
+    type: 'Traditional'
+  },
+  {
+    id: 8,
+    name: 'Special',
+    image: '/snorlax.png',
+    type: 'Unique'
+  }
+]);
 
-const mobileInfoBoxes = [
-  {
-    image: deposit,
-    icon: 'i-heroicons-user-group',
-    label: 'Parent Dashboard',
-    description: 'Top up cash and control settings',
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-chart-bar',
-    label: 'Track Progress',
-    description: `Track your child's progress with easy to visualise charts`,
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-light-bulb',
-    label: 'Earn Rewards',
-    description: 'Earn credits from weekly challenges',
-  },
-  {
-    image: deposit,
-    icon: 'i-heroicons-building-storefront',
-    label: 'The Store',
-    description: 'Swap your credits for exciting goodies',
-  },
-];
+// Create infinite scroll array by duplicating cards
+const infiniteAvatars = computed(() => {
+  const avatars = allAvatars.value;
+  return [...avatars, ...avatars, ...avatars]; // Triple the array for seamless scroll
+});
 
-const infoBoxes = computed(() => (isMobile.value ? mobileInfoBoxes : desktopInfoBox));
+// Adjust current index to account for the duplicated arrays
+const adjustedIndex = computed(() => {
+  return currentIndex.value + allAvatars.value.length; // Start from middle array
+});
 
-const checkMobile = () => window.innerWidth <= 768;
-const routeTo = (route) => router.push(route);
-const updateBackground = () => {
-  isMobile.value = checkMobile();
-  background.value = isMobile.value ? homeMobile : home;
+const selectAvatar = (avatar, index) => {
+  selectedAvatar.value = avatar;
+  // Convert infinite array index back to original array index
+  const originalIndex = index % allAvatars.value.length;
+  currentIndex.value = originalIndex;
+  console.log('Selected avatar:', avatar);
 };
 
+const nextCard = () => {
+  isTransitioning.value = true;
+  currentIndex.value++;
+
+  // Check if we've reached the end of the middle array
+  if (currentIndex.value >= allAvatars.value.length) {
+    // Allow the transition to complete, then reset to beginning
+    setTimeout(() => {
+      isTransitioning.value = false;
+      currentIndex.value = 0;
+    }, 500);
+  }
+};
+
+const previousCard = () => {
+  isTransitioning.value = true;
+  currentIndex.value--;
+
+  // Check if we've gone below the beginning of the middle array
+  if (currentIndex.value < 0) {
+    // Allow the transition to complete, then reset to end
+    setTimeout(() => {
+      isTransitioning.value = false;
+      currentIndex.value = allAvatars.value.length - 1;
+    }, 500);
+  }
+};
+
+const goToCard = (index) => {
+  currentIndex.value = index;
+};
+
+// Handle keyboard navigation
+const handleKeydown = (event) => {
+  if (event.key === 'ArrowRight') {
+    nextCard();
+  } else if (event.key === 'ArrowLeft') {
+    previousCard();
+  }
+};
+
+// Add/remove event listeners
 onMounted(() => {
-  updateBackground();
-  window.addEventListener('resize', updateBackground);
+  document.addEventListener('keydown', handleKeydown);
+  // Initialize selected avatar to match current index
+  selectedAvatar.value = allAvatars.value[currentIndex.value];
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateBackground);
+  document.removeEventListener('keydown', handleKeydown);
 });
 </script>
 
