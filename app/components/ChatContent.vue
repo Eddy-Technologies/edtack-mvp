@@ -44,9 +44,9 @@
 <script setup lang="ts">
 import { ref, watch, nextTick, computed, onUnmounted } from 'vue';
 import ChatInput from './ChatInput.vue';
+import PlaybackBubble from './PlaybackBubble.vue';
 import { useChat } from '~/composables/useChat.ts';
 import { useSpeech } from '~/composables/useSpeech.ts';
-import PlaybackBubble from './PlaybackBubble.vue';
 
 interface ChatMessage {
   text: string;

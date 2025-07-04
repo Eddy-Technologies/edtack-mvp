@@ -1,7 +1,6 @@
 <template>
   <div class="w-full flex" :class="isUser ? 'justify-end' : 'justify-center'">
     <div
-      @click="togglePlay"
       class="flex items-center gap-3 p-3 rounded-lg max-w-[75%] cursor-pointer select-none"
       :class="[
         isUser
@@ -10,6 +9,7 @@
             ? 'bg-yellow-100 text-gray-900 border border-yellow-300 shadow-md text-center rounded-br-none'
             : 'text-gray-800 text-center rounded-br-none hover:bg-yellow-50',
       ]"
+      @click="togglePlay"
     >
       <!-- Avatar inside bubble for user -->
       <img
@@ -17,7 +17,7 @@
         src="https://i.pravatar.cc/40"
         alt="User Avatar"
         class="w-8 h-8 rounded-full flex-shrink-0"
-      />
+      >
 
       <!-- Message text -->
       <div class="whitespace-pre-wrap text-left flex-1">
