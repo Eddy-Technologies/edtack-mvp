@@ -5,7 +5,7 @@
         <h1 class="text-3xl font-bold text-gray-800 mb-2">We'd love your feedback!</h1>
         <p class="text-gray-600">Help us improve Eddy by sharing your thoughts and suggestions.</p>
       </div>
-      
+
       <form action="https://formspree.io/f/xgvkdgwj" method="POST" class="space-y-6">
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
@@ -18,7 +18,7 @@
             class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
           >
         </div>
-        
+
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Your Email</label>
           <input
@@ -30,7 +30,7 @@
             class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
           >
         </div>
-        
+
         <div>
           <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Feedback</label>
           <textarea
