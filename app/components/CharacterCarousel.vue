@@ -86,15 +86,22 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import boyAvatar from '../../assets/boy.png';
 import girlAvatar from '../../assets/girl.png';
 import defaultAvatar from '../../assets/default-avatar.png';
+import { useRouter } from '#vue-router';
 
 const props = defineProps({
   modelValue: {
     type: Object,
     default: null
+  },
+  goToChatOnClick: {
+    type: Boolean,
+    default: false
   }
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+const router = useRouter();
 
 const currentIndex = ref(2); // Start from center (index 2 out of 8 cards)
 const cardWidth = ref(280);
@@ -168,6 +175,11 @@ const selectAvatar = (avatar, index) => {
   currentIndex.value = originalIndex;
   emit('update:modelValue', avatar);
   console.log('Selected avatar:', avatar);
+
+  // Navigate to chat if prop is set
+  if (props.goToChatOnClick) {
+    router.push('/chat');
+  }
 };
 
 const nextCard = () => {
