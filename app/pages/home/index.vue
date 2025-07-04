@@ -608,15 +608,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Get Started Button -->
-      <div class="text-center mt-8 sm:mt-12">
-        <Button
-          variant="primary"
-          text="Get Started"
-          @click="$router.push('/chat')"
-        />
-      </div>
     </div>
   </div>
 </template>
