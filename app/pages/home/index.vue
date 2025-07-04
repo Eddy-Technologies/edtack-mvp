@@ -22,7 +22,7 @@
       <!-- Character Carousel -->
       <div class="mb-8">
         <h3 class="text-gray-800 text-xl sm:text-2xl font-semibold mb-6 text-center">
-          Choose Your Character
+          Featured Characters
         </h3>
         <CharacterCarousel v-model="selectedAvatar" :go-to-chat-on-click="true" />
       </div>
@@ -32,24 +32,58 @@
         <h3 class="text-gray-800 text-xl sm:text-2xl font-semibold mb-6 text-center">
           Browse All Characters
         </h3>
-        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-4xl mx-auto">
-          <div
-            v-for="(avatar, index) in allAvatars"
-            :key="index"
-            class="group cursor-pointer w-32 sm:w-36"
-            @click="goToChat(avatar)"
-          >
-            <div class="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-4 sm:p-6 text-center hover:from-gray-200 hover:to-gray-300 transition-all duration-300 group-hover:scale-105 shadow-sm hover:shadow-md">
-              <div class="relative mb-4">
-                <img
-                  :src="avatar.image"
-                  :alt="avatar.name"
-                  class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
-                >
+        <div class="max-w-4xl mx-auto">
+          <!-- 3x3 Grid for first 9 characters -->
+          <div class="grid grid-cols-3 gap-4 sm:gap-6 mb-6">
+            <div
+              v-for="(avatar, index) in allAvatars.slice(0, 9)"
+              :key="index"
+              class="group cursor-pointer"
+              @click="goToChat(avatar)"
+            >
+              <div class="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-3 sm:p-4 text-center hover:from-gray-200 hover:to-gray-300 transition-all duration-300 group-hover:scale-105 shadow-sm hover:shadow-md">
+                <div class="relative mb-3">
+                  <img
+                    :src="avatar.image"
+                    :alt="avatar.name"
+                    class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
+                  >
+                </div>
+                <h5 class="text-gray-800 text-xs sm:text-sm md:text-base font-semibold mb-1">{{ avatar.name }}</h5>
+                <p class="text-gray-600 text-xs sm:text-sm">{{ avatar.type }}</p>
               </div>
-              <h5 class="text-gray-800 text-sm sm:text-base font-semibold mb-1">{{ avatar.name }}</h5>
-              <p class="text-gray-600 text-xs sm:text-sm">{{ avatar.type }}</p>
             </div>
+          </div>
+
+          <!-- Expandable grid for remaining characters -->
+          <div v-if="showAllCharacters && allAvatars.length > 9" class="grid grid-cols-3 gap-4 sm:gap-6 mb-6">
+            <div
+              v-for="(avatar, index) in allAvatars.slice(9)"
+              :key="index + 9"
+              class="group cursor-pointer"
+              @click="goToChat(avatar)"
+            >
+              <div class="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-3 sm:p-4 text-center hover:from-gray-200 hover:to-gray-300 transition-all duration-300 group-hover:scale-105 shadow-sm hover:shadow-md">
+                <div class="relative mb-3">
+                  <img
+                    :src="avatar.image"
+                    :alt="avatar.name"
+                    class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
+                  >
+                </div>
+                <h5 class="text-gray-800 text-xs sm:text-sm md:text-base font-semibold mb-1">{{ avatar.name }}</h5>
+                <p class="text-gray-600 text-xs sm:text-sm">{{ avatar.type }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Show More/Show Less Button -->
+          <div v-if="allAvatars.length > 9" class="text-center">
+            <Button
+              :variant="'secondary'"
+              :text="showAllCharacters ? 'Show Less Characters' : 'Show More Characters'"
+              @click="showAllCharacters = !showAllCharacters"
+            />
           </div>
         </div>
       </div>
@@ -623,6 +657,7 @@ import { useRouter } from '#vue-router';
 
 const router = useRouter();
 const selectedAvatar = ref(null);
+const showAllCharacters = ref(false);
 
 // Demo chat functionality
 const demoInput = ref('');
@@ -682,27 +717,51 @@ const allAvatars = ref([
   },
   {
     id: 5,
-    name: 'Mystery',
-    image: boyAvatar,
-    type: 'Unknown'
+    name: 'Maya',
+    image: girlAvatar,
+    type: 'Artist'
   },
   {
     id: 6,
-    name: 'Future',
-    image: girlAvatar,
-    type: 'Coming Soon'
+    name: 'Zara',
+    image: boyAvatar,
+    type: 'Inventor'
   },
   {
     id: 7,
-    name: 'Classic',
+    name: 'Nova',
     image: defaultAvatar,
-    type: 'Traditional'
+    type: 'Astronomer'
   },
   {
     id: 8,
-    name: 'Special',
+    name: 'Echo',
+    image: girlAvatar,
+    type: 'Musician'
+  },
+  {
+    id: 9,
+    name: 'Sage',
+    image: boyAvatar,
+    type: 'Philosopher'
+  },
+  {
+    id: 10,
+    name: 'River',
+    image: defaultAvatar,
+    type: 'Nature Guide'
+  },
+  {
+    id: 11,
+    name: 'Phoenix',
     image: '/snorlax.png',
-    type: 'Unique'
+    type: 'Storyteller'
+  },
+  {
+    id: 12,
+    name: 'Quest',
+    image: boyAvatar,
+    type: 'Adventurer'
   }
 ]);
 
