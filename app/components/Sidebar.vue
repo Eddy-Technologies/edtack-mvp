@@ -45,6 +45,17 @@
           </ULink>
         </div>
       </div>
+      <div class="px-3">
+        <div class="border-t border-black">
+          <ULink
+            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleChangeCharacter"
+          >
+            <Icon name="i-heroicons-user-circle" class="w-6 h-6" />
+            <span v-if="!isMini" class="truncate">Change Character</span>
+          </ULink>
+        </div>
+      </div>
     </div>
 
     <!-- Avatar & Buttons -->
@@ -90,7 +101,7 @@ import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
 
-const emit = defineEmits(['toggle-sidebar']);
+const emit = defineEmits(['toggle-sidebar', 'change-character']);
 const props = defineProps({
   collapsed: Boolean,
   sidebarWidth: Number,
@@ -131,5 +142,9 @@ const handleShowChatHistory = () => {
     description: 'Chat history shown.',
     icon: 'i-heroicons-clock',
   });
+};
+
+const handleChangeCharacter = () => {
+  emit('change-character');
 };
 </script>

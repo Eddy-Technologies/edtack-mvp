@@ -15,6 +15,7 @@
         :sidebar-width="sidebarWidth"
         :is-mobile="isMobile"
         @toggle-sidebar="toggleSidebar"
+        @change-character="openCharacterModal"
       />
     </div>
 
@@ -103,6 +104,13 @@
       @close="loginModalVisible = false"
       @success="handleLoginSuccess"
     />
+
+    <CharacterSelectionModal
+      :is-open="characterModalVisible"
+      :current-character="currentCharacter"
+      @close="characterModalVisible = false"
+      @select="handleCharacterSelection"
+    />
   </div>
 </template>
 
@@ -112,6 +120,7 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import LoginModal from '@/components/login/LoginModal.vue';
+import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
 
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
@@ -120,6 +129,8 @@ const isMobile = ref(false);
 const menuOpen = ref(false);
 const loggedIn = ref(false);
 const loginModalVisible = ref(false);
+const characterModalVisible = ref(false);
+const currentCharacter = ref(null);
 
 const router = useRouter();
 const routeTo = (path) => router.push(path);
@@ -136,6 +147,17 @@ const logout = () => {
 const handleLoginSuccess = () => {
   loggedIn.value = true;
   loginModalVisible.value = false;
+};
+
+const openCharacterModal = () => {
+  characterModalVisible.value = true;
+  menuOpen.value = false;
+};
+
+const handleCharacterSelection = (character) => {
+  currentCharacter.value = character;
+  console.log('Character selected:', character);
+  // Here you can add logic to update the chat context with the new character
 };
 const toggleSidebar = () => {
   collapsed.value = !collapsed.value;
