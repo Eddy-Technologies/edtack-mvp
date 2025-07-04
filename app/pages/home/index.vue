@@ -96,7 +96,7 @@
         <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
           <div class="grid md:grid-cols-2 gap-0">
             <!-- Character Display (Left) -->
-            <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-8 flex flex-col items-center justify-center min-h-[400px]">
+            <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-8 flex flex-col items-center justify-center min-h-[400px]">
               <div class="text-center">
                 <img
                   :src="demoCharacter.image"
@@ -125,7 +125,7 @@
                   <div
                     class="max-w-[80%] px-4 py-2 rounded-lg"
                     :class="message.isUser
-                      ? 'bg-blue-500 text-white rounded-br-none'
+                      ? 'bg-primary-500 text-white rounded-br-none'
                       : 'bg-gray-100 text-gray-800 rounded-bl-none'"
                   >
                     {{ message.text }}
@@ -149,11 +149,11 @@
                     v-model="demoInput"
                     type="text"
                     placeholder="Ask me anything about math, science, history..."
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     @keypress.enter="sendDemoMessage"
                   >
                   <button
-                    class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 disabled:opacity-50"
+                    class="px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-200 disabled:opacity-50"
                     :disabled="!demoInput.trim() || isTyping"
                     @click="sendDemoMessage"
                   >
@@ -186,7 +186,7 @@
               :key="tab.id"
               class="px-6 py-3 text-sm font-medium transition-colors duration-200 border-b-2"
               :class="activeTab === tab.id
-                ? 'text-blue-600 border-blue-600'
+                ? 'text-primary-600 border-primary-600'
                 : 'text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300'"
               @click="activeTab = tab.id"
             >
@@ -209,9 +209,9 @@
                 <!-- What is Eddy Card -->
                 <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200">
                   <div class="text-center mb-4">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-3">
                       <svg
-                        class="w-6 h-6 text-blue-600"
+                        class="w-6 h-6 text-primary-600"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -448,14 +448,14 @@
                 </div>
 
                 <!-- Premium Plan -->
-                <div class="border-2 border-blue-500 rounded-lg p-6 hover:border-blue-600 transition-colors relative bg-blue-50/30 cursor-pointer" @click="selectPlan('premium')">
+                <div class="border-2 border-primary-500 rounded-lg p-6 hover:border-primary-600 transition-colors relative bg-primary-50/30 cursor-pointer" @click="selectPlan('premium')">
                   <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
+                    <span class="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">Most Popular</span>
                   </div>
 
                   <div class="text-center">
                     <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium Plan</h3>
-                    <div class="text-4xl font-bold text-blue-600 mb-4">$25<span class="text-lg text-gray-500">/month</span></div>
+                    <div class="text-4xl font-bold text-primary-600 mb-4">$25<span class="text-lg text-gray-500">/month</span></div>
                     <p class="text-gray-600 mb-6">Unlock unlimited learning potential</p>
                   </div>
 
@@ -558,7 +558,7 @@
                     </div>
                   </div>
 
-                  <button class="w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                  <button class="w-full py-3 px-4 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors">
                     Start Premium Trial
                   </button>
                 </div>
@@ -568,25 +568,25 @@
                 <h4 class="font-semibold text-gray-800 mb-3 text-center">Family-Friendly Features</h4>
                 <div class="grid md:grid-cols-2 gap-4 text-gray-600">
                   <div class="flex items-center space-x-2">
-                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span>Individual subscriptions per child</span>
                   </div>
                   <div class="flex items-center space-x-2">
-                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span>Comprehensive parental controls</span>
                   </div>
                   <div class="flex items-center space-x-2">
-                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span>Easy payment method management</span>
                   </div>
                   <div class="flex items-center space-x-2">
-                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span>Detailed billing history and invoices</span>
@@ -599,7 +599,7 @@
             <div v-if="activeTab === 'team'" class="space-y-6">
               <h3 class="text-2xl font-bold text-gray-800 mb-6">Our Team</h3>
 
-              <div class="bg-blue-50 rounded-lg p-8 mb-8">
+              <div class="bg-primary-50 rounded-lg p-8 mb-8">
                 <h4 class="text-xl font-semibold text-gray-800 mb-4">The Founders</h4>
                 <p class="text-gray-700 leading-relaxed mb-4">
                   We are a team of like-minded individuals that believe in using artificial intelligence to provide education for all. We met each other at the National University of Singapore (NUS).
