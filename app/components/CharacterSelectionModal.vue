@@ -46,7 +46,7 @@
                 class="relative rounded-lg p-3 text-center transition-all duration-300 group-hover:scale-105 shadow-sm hover:shadow-md"
                 :class="[
                   selectedCharacter?.id === avatar.id
-                    ? 'bg-blue-100 border-2 border-blue-500'
+                    ? 'bg-primary-100 border-2 border-primary-500'
                     : 'bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 border-2 border-transparent'
                 ]"
               >
@@ -57,15 +57,15 @@
                     class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-full object-cover border-2 transition-all duration-300"
                     :class="[
                       selectedCharacter?.id === avatar.id
-                        ? 'border-blue-400'
+                        ? 'border-primary-400'
                         : 'border-gray-300 group-hover:border-gray-400'
                     ]"
                   >
                 </div>
-                <h5 class="text-xs sm:text-sm font-semibold mb-1" :class="selectedCharacter?.id === avatar.id ? 'text-blue-800' : 'text-gray-800'">
+                <h5 class="text-xs sm:text-sm font-semibold mb-1" :class="selectedCharacter?.id === avatar.id ? 'text-primary-800' : 'text-gray-800'">
                   {{ avatar.name }}
                 </h5>
-                <p class="text-xs" :class="selectedCharacter?.id === avatar.id ? 'text-blue-600' : 'text-gray-600'">
+                <p class="text-xs" :class="selectedCharacter?.id === avatar.id ? 'text-primary-600' : 'text-gray-600'">
                   {{ avatar.type }}
                 </p>
               </div>
@@ -83,7 +83,7 @@
           Cancel
         </button>
         <button
-          class="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-6 py-2 bg-primary-600 text-white hover:bg-primary-700 rounded-lg transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           :disabled="!selectedCharacter"
           @click="confirmSelection"
         >
