@@ -2,20 +2,21 @@
   <div>
     <NuxtRouteAnnouncer />
     <NuxtLoadingIndicator />
-    <noscript><iframe
-      src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT"
-      height="0"
-      width="0"
-      style="display: none; visibility: hidden"
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
       ></iframe
-      ></noscript>
+    ></noscript>
     <NuxtPage />
     <UNotifications />
 
     <!-- Feedback Components -->
     <FeedbackButton @open-feedback="openFeedbackModal" />
     <!-- End Feedback Components -->
-
+    <FeedbackModal v-if="showFeedbackModal" @close="closeFeedbackModal" />
     <!--
  <div v-if="!hasConsent" class="fixed bottom-0 left-0 w-full bg-gray-200 p-4 z-50 shadow-md">
  <div class="container mx-auto flex justify-between items-center">
@@ -73,15 +74,6 @@ useHead({
       href: '/logo.png', // relative to public/
     },
   ],
-});
-
-useSeoMeta({
-  title: 'Eddy',
-  ogTitle: 'Eddy - Education for All',
-  description:
-    'Eddy is an AI powered edtech platform that lets you and your child be motivated to learn together and earn rewards',
-  ogImage: '/logo.png',
-  twitterCard: 'summary_large_image',
 });
 
 function giveConsent(agreed: boolean) {

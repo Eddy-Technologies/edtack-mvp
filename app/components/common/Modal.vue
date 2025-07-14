@@ -21,8 +21,8 @@
           ✕
         </button>
 
-        <header v-if="$slots.title" class="mb-4">
-          <slot name="title" />
+        <header v-if="$slots.header">
+          <slot name="header" />
         </header>
 
         <!-- Main Slot -->

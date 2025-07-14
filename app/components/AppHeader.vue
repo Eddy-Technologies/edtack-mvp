@@ -1,42 +1,63 @@
 <template>
-  <ParentHeader v-if="isParent" />
-  <ChildHeader v-else />
-  <!-- <Header v-else /> -->
+  <div class="relative z-10 p-4 sm:p-8 bg-white">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <img src="/logo.png" class="w-[40px] sm:w-[50px] h-auto mr-3" />
+        <h1 class="text-gray-800 text-xl sm:text-2xl font-bold">Eddy</h1>
+      </div>
+      <div class="flex gap-4">
+        <Button variant="primary" text="Login" @click="login" />
+        <Button
+          variant="ghost"
+          class="border border-gray-300"
+          text="Register for Free"
+          @click="register"
+        />
+      </div>
+    </div>
+  </div>
+
+  <LoginModal
+    v-if="loginModalVisible"
+    @close="loginModalVisible = false"
+    @success="handleLoginSuccess"
+    @register="register"
+  />
+  <RegisterModal
+    v-if="registerModalVisible"
+    @close="registerModalVisible = false"
+    @success="handleRegisterSuccess"
+    @login="login"
+  />
 </template>
 
-<script>
-import { ref, watch } from 'vue';
-import { useCreditStore } from '~/stores/credit'; // Import your store
-import { useProfileStore } from '~/stores/profile';
-// import ParentHeader from '~/components/archived/header/ParentHeader.vue';
-// import ChildHeader from '~/components/archived/header/ChildHeader.vue';
-// import BaseHeader from '~/components/header/BaseHeader.vue';
+<script setup>
+import Button from '~/components/common/Button.vue';
+import LoginModal from './login/LoginModal.vue';
+import RegisterModal from './register/RegisterModal.vue';
+import { ref } from 'vue';
 
-export default {
-  components: { ChildHeader, ParentHeader },
-  setup() {
-    const creditStore = useCreditStore();
-    const profileStore = useProfileStore();
-    const isParent = profileStore.profile === '/parent';
-    const isChild =
-      profileStore.profile === '/child' ||
-      profileStore.profile === '/challenge' ||
-      profileStore.profile === '/practice';
-    const defaultChild = creditStore.childCredits[0];
-    const credits = ref(isParent ? creditStore.parentCredits : defaultChild);
+const loggedIn = ref(false);
+const loginModalVisible = ref(false);
+const registerModalVisible = ref(false);
 
-    watch(
-      () => (isParent ? creditStore.parentCredits : creditStore.childCredits), // Watch the credits value in the store
-      (newCredits) => {
-        credits.value = newCredits; // Update the local ref when the store's value changes
-      }
-    );
+const login = () => {
+  registerModalVisible.value = false;
+  loginModalVisible.value = true;
+};
 
-    return {
-      credits,
-      isParent,
-      isChild,
-    };
-  },
+const register = () => {
+  loginModalVisible.value = false;
+  registerModalVisible.value = true;
+};
+
+const handleLoginSuccess = () => {
+  loggedIn.value = true;
+  loginModalVisible.value = false;
+};
+
+const handleRegisterSuccess = () => {
+  loggedIn.value = true;
+  registerModalVisible.value = false;
 };
 </script>

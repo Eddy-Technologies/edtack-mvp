@@ -8,7 +8,7 @@
 
     <template #footer>
       <div class="flex justify-around text-sm text-gray-600">
-        <button class="hover:underline">Sign Up</button>
+        <button class="hover:underline" @click="handleRegister">Sign Up</button>
         <button class="hover:underline">Forgot Password</button>
         <button class="hover:underline">Contact Us</button>
       </div>
@@ -20,7 +20,7 @@
 import Modal from '@/components/common/Modal.vue';
 import LoginForm from '@/components/login/LoginForm.vue';
 
-const emit = defineEmits(['close', 'success']);
+const emit = defineEmits(['close', 'success', 'register']);
 
 const handleClose = () => {
   emit('close');
@@ -30,5 +30,9 @@ const handleClose = () => {
 const handleLogin = () => {
   // Replace with real auth logic, then:
   emit('success');
+};
+
+const handleRegister = () => {
+  emit('register');
 };
 </script>

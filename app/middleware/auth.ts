@@ -38,7 +38,7 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
     );
     // Ensure we are not already on the login page to prevent infinite redirects
     if (to.path !== '/login') {
-      return navigateTo('/login');
+      return navigateTo('/');
     }
   }
   // If either is authenticated, allow access

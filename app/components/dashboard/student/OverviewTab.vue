@@ -8,14 +8,11 @@
             :src="profile.avatar"
             :alt="profile.name"
             class="w-24 h-24 rounded-full object-cover"
+          />
+          <button
+            class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full hover:bg-primary-700 transition-colors"
           >
-          <button class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full hover:bg-primary-700 transition-colors">
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -28,7 +25,9 @@
         <div class="flex-1">
           <h1 class="text-2xl font-bold text-gray-900">{{ profile.name }}</h1>
           <p class="text-gray-600">{{ profile.email }}</p>
-          <p class="text-sm text-gray-500">Grade {{ profile.grade }} • Student ID: {{ profile.studentId }}</p>
+          <p class="text-sm text-gray-500">
+            Grade {{ profile.grade }} • Student ID: {{ profile.studentId }}
+          </p>
           <div class="flex items-center mt-2">
             <div class="flex items-center text-sm text-green-600">
               <div class="w-2 h-2 bg-green-400 rounded-full mr-2" />
@@ -69,7 +68,10 @@
       <div class="p-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div v-for="subject in subjects" :key="subject.name" class="text-center">
-            <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-2" :style="{ backgroundColor: subject.color + '20', color: subject.color }">
+            <div
+              class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-2"
+              :style="{ backgroundColor: subject.color + '20', color: subject.color }"
+            >
               {{ subject.emoji }}
             </div>
             <p class="text-sm font-medium text-gray-900">{{ subject.name }}</p>
@@ -83,7 +85,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import placeholder1 from '../../../../assets/default-avatar.png';
+import placeholder1 from '../../../../assets/eddy.png';
 
 const profile = ref({
   name: 'Alex Johnson',
@@ -96,13 +98,13 @@ const profile = ref({
   school: 'Westfield Middle School',
   parentName: 'Sarah Johnson',
   emergencyContact: '+1 (555) 123-4567',
-  learningStyle: 'Visual & Kinesthetic'
+  learningStyle: 'Visual & Kinesthetic',
 });
 
 const stats = ref({
   totalStudyHours: 342,
   completionRate: 87,
-  rank: 3
+  rank: 3,
 });
 
 const subjects = ref([
@@ -113,6 +115,6 @@ const subjects = ref([
   { name: 'Art', emoji: '🎨', level: 'Beginner', color: '#EF4444' },
   { name: 'Music', emoji: '🎵', level: 'Intermediate', color: '#06B6D4' },
   { name: 'Physical Ed', emoji: '⚽', level: 'Grade Level', color: '#84CC16' },
-  { name: 'Technology', emoji: '💻', level: 'Advanced', color: '#6366F1' }
+  { name: 'Technology', emoji: '💻', level: 'Advanced', color: '#6366F1' },
 ]);
 </script>

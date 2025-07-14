@@ -1,10 +1,10 @@
 <template>
-  <button
-    class="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg z-50"
+  <Button
+    class="fixed bottom-4 right-4 bg-background hover:bg-background-400 text-black font-bold py-2 px-4 rounded-full shadow-lg z-50"
     @click="handleClick"
   >
     Feedback
-  </button>
+  </Button>
 </template>
 
 <script setup lang="ts">

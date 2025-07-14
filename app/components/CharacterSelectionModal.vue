@@ -15,12 +15,7 @@
           class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
           @click="closeModal"
         >
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -47,7 +42,7 @@
                 :class="[
                   selectedCharacter?.id === avatar.id
                     ? 'bg-primary-100 border-2 border-primary-500'
-                    : 'bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 border-2 border-transparent'
+                    : 'bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 border-2 border-transparent',
                 ]"
               >
                 <div class="relative mb-2">
@@ -58,14 +53,24 @@
                     :class="[
                       selectedCharacter?.id === avatar.id
                         ? 'border-primary-400'
-                        : 'border-gray-300 group-hover:border-gray-400'
+                        : 'border-gray-300 group-hover:border-gray-400',
                     ]"
-                  >
+                  />
                 </div>
-                <h5 class="text-xs sm:text-sm font-semibold mb-1" :class="selectedCharacter?.id === avatar.id ? 'text-primary-800' : 'text-gray-800'">
+                <h5
+                  class="text-xs sm:text-sm font-semibold mb-1"
+                  :class="
+                    selectedCharacter?.id === avatar.id ? 'text-primary-800' : 'text-gray-800'
+                  "
+                >
                   {{ avatar.name }}
                 </h5>
-                <p class="text-xs" :class="selectedCharacter?.id === avatar.id ? 'text-primary-600' : 'text-gray-600'">
+                <p
+                  class="text-xs"
+                  :class="
+                    selectedCharacter?.id === avatar.id ? 'text-primary-600' : 'text-gray-600'
+                  "
+                >
                   {{ avatar.type }}
                 </p>
               </div>
@@ -98,17 +103,17 @@
 import { ref, watch } from 'vue';
 import boyAvatar from '../../assets/boy.png';
 import girlAvatar from '../../assets/girl.png';
-import defaultAvatar from '../../assets/default-avatar.png';
+import defaultAvatar from '../../assets/eddy.png';
 
 const props = defineProps({
   isOpen: {
     type: Boolean,
-    default: false
+    default: false,
   },
   currentCharacter: {
     type: Object,
-    default: null
-  }
+    default: null,
+  },
 });
 
 const emit = defineEmits(['close', 'select']);
@@ -120,50 +125,50 @@ const allAvatars = ref([
     id: 1,
     name: 'Alex',
     image: boyAvatar,
-    type: 'Explorer'
+    type: 'Explorer',
   },
   {
     id: 2,
     name: 'Luna',
     image: girlAvatar,
-    type: 'Scholar'
+    type: 'Scholar',
   },
   {
     id: 3,
     name: 'Sam',
     image: defaultAvatar,
-    type: 'Scientist'
+    type: 'Scientist',
   },
   {
     id: 4,
     name: 'Snorlax',
     image: '/snorlax.png',
-    type: 'Sleepy'
+    type: 'Sleepy',
   },
   {
     id: 5,
     name: 'Mystery',
     image: boyAvatar,
-    type: 'Unknown'
+    type: 'Unknown',
   },
   {
     id: 6,
     name: 'Future',
     image: girlAvatar,
-    type: 'Coming Soon'
+    type: 'Coming Soon',
   },
   {
     id: 7,
     name: 'Classic',
     image: defaultAvatar,
-    type: 'Traditional'
+    type: 'Traditional',
   },
   {
     id: 8,
     name: 'Special',
     image: '/snorlax.png',
-    type: 'Unique'
-  }
+    type: 'Unique',
+  },
 ]);
 
 const selectCharacter = (avatar) => {
@@ -182,11 +187,14 @@ const confirmSelection = () => {
 };
 
 // Watch for modal open/close to initialize selected character
-watch(() => props.isOpen, (newValue) => {
-  if (newValue) {
-    selectedCharacter.value = props.currentCharacter || allAvatars.value[0];
+watch(
+  () => props.isOpen,
+  (newValue) => {
+    if (newValue) {
+      selectedCharacter.value = props.currentCharacter || allAvatars.value[0];
+    }
   }
-});
+);
 
 // Handle escape key
 const handleKeydown = (event) => {

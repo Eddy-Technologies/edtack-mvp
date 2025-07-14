@@ -1,5 +1,5 @@
 <template>
-  <Modal :visible="show" @close="handleClose">
+  <Modal @close="handleClose">
     <template #default>
       <FeedbackForm @close="handleFormClose" />
     </template>
@@ -10,10 +10,6 @@
 import FeedbackForm from './FeedbackForm.vue';
 import Modal from '~/components/common/Modal.vue';
 
-defineProps<{
-  show: boolean;
-}>();
-
 const emit = defineEmits(['close']);
 
 function handleClose() {
@@ -21,7 +17,6 @@ function handleClose() {
 }
 
 function handleFormClose() {
-  // This is called when the form itself emits 'close' (e.g., after successful submission)
   emit('close');
 }
 </script>
