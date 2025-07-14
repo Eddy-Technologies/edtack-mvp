@@ -2,7 +2,7 @@
   <div class="relative z-10 p-4 sm:p-8 bg-white">
     <div class="flex items-center justify-between">
       <div class="flex items-center">
-        <img src="/logo.png" class="w-[40px] sm:w-[50px] h-auto mr-3" />
+        <img src="/logo.png" class="w-[40px] sm:w-[50px] h-auto mr-3">
         <h1 class="text-gray-800 text-xl sm:text-2xl font-bold">Eddy</h1>
       </div>
       <div class="flex gap-4">
@@ -32,10 +32,10 @@
 </template>
 
 <script setup>
-import Button from '~/components/common/Button.vue';
+import { ref } from 'vue';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
-import { ref } from 'vue';
+import Button from '~/components/common/Button.vue';
 
 const loggedIn = ref(false);
 const loginModalVisible = ref(false);

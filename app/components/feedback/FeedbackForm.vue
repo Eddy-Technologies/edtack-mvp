@@ -9,7 +9,7 @@
         placeholder="Your Name"
         required
         class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
-      />
+      >
       <input
         v-model="formData.email"
         type="email"
@@ -17,7 +17,7 @@
         placeholder="Your Email"
         required
         class="p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
-      />
+      >
       <textarea
         v-model="formData.message"
         name="message"

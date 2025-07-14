@@ -36,7 +36,7 @@
                 :alt="avatar.name"
                 class="mx-auto rounded-full object-cover border-2 border-gray-300 hover:border-gray-400 transition-all duration-300"
                 style="width: 300px; height: 400px"
-              />
+              >
             </div>
             <h5 class="text-gray-800 text-base font-semibold mb-1">{{ avatar.name }}</h5>
             <p class="text-gray-600 text-sm">{{ avatar.type }}</p>
@@ -50,8 +50,18 @@
       class="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 transition-all duration-200 hover:scale-110"
       @click="previousCard"
     >
-      <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      <svg
+        class="w-6 h-6 text-gray-800"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
       </svg>
     </button>
 
@@ -59,8 +69,18 @@
       class="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 transition-all duration-200 hover:scale-110"
       @click="nextCard"
     >
-      <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      <svg
+        class="w-6 h-6 text-gray-800"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
       </svg>
     </button>
   </div>
@@ -69,8 +89,8 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
-import { useRouter } from '#vue-router';
 import { characters } from '../types/characters.types.js';
+import { useRouter } from '#vue-router';
 
 const props = defineProps({
   modelValue: {

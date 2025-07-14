@@ -10,7 +10,9 @@
     <template v-if="userType === 'student'">
       <StudentOverviewTab v-if="currentTab === 'overview'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
-      <StudentSubscriptionTab v-else-if="currentTab === 'subscription' && studentPaysForSubscription" />
+      <StudentSubscriptionTab
+        v-else-if="currentTab === 'subscription' && studentPaysForSubscription"
+      />
       <StudentAccountTab v-else-if="currentTab === 'account'" />
       <SecurityTab v-else-if="currentTab === 'security'" />
       <ShopTab v-else-if="currentTab === 'shop'" />
@@ -31,7 +33,9 @@
       <ShopTab v-else-if="currentTab === 'shop'" />
       <div v-else class="text-center py-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Family Dashboard</h2>
-        <p class="text-gray-600">Select a section from the sidebar to manage your family's learning journey.</p>
+        <p class="text-gray-600">
+          Select a section from the sidebar to manage your family's learning journey.
+        </p>
       </div>
     </template>
   </Layout>
@@ -40,7 +44,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import placeholder1 from '../../../../assets/default-avatar.png';
+import placeholder1 from '../../../assets/eddy.png';
 import Layout from '~/components/dashboard/Layout.vue';
 
 // Student Components
@@ -63,7 +67,7 @@ import ShopTab from '~/components/dashboard/shop/ShopTab.vue';
 import SecurityTab from '~/components/dashboard/common/SecurityTab.vue';
 
 definePageMeta({
-  middleware: ['auth']
+  middleware: ['auth'],
 });
 
 // This would normally come from user authentication/session
@@ -91,13 +95,13 @@ const pageTitle = computed(() => {
     security: 'Security',
     children: 'Children',
     permissions: 'Permissions',
-    shop: 'Shop'
+    shop: 'Shop',
   };
   return tabTitles[currentTab.value as keyof typeof tabTitles] || 'Dashboard';
 });
 
 // Set page title
 useHead({
-  title: () => `${pageTitle.value} - Dashboard`
+  title: () => `${pageTitle.value} - Dashboard`,
 });
 </script>
