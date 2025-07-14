@@ -51,7 +51,8 @@
                   <img
                     :src="avatar.image"
                     :alt="avatar.name"
-                    class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
+                    class="sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
+                    style="width: 180px; height: 200px"
                   />
                 </div>
                 <h5 class="text-gray-800 text-xs sm:text-sm md:text-base font-semibold mb-1">
