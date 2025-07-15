@@ -1,61 +1,87 @@
 <template>
   <div class="min-h-screen bg-white flex items-center justify-center px-4">
-    <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8 w-full max-w-xl">
+    <div class="w-full max-w-4xl">
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">We'd love your feedback!</h1>
-        <p class="text-gray-600">Help us improve Eddy by sharing your thoughts and suggestions.</p>
+        <h1 class="text-3xl font-bold text-primary mb-2">We need your help!</h1>
+        <p class="text-gray-600 text-md mb-4">
+          We are currently collecting as much surveys as we can to help improve our platform both for parents and students.
+
+          We want to make sure we provide the best experience for all our users and we can only do that with your help.
+        </p>
+        <p class="font-bold mb-4">
+          Help us improve Eddy by sharing your thoughts and suggestions.
+        </p>
       </div>
 
-      <form action="https://formspree.io/f/xgvkdgwj" method="POST" class="space-y-6">
-        <div>
-          <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            placeholder="Enter your name"
-            required
-            class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-          >
+      <!-- Survey buttons layout -->
+      <div class="space-y-6">
+        <!-- First row: Parent and Student surveys -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Parent Survey Card -->
+          <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8">
+            <div class="text-center">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">Parent Survey</h2>
+              <p class="pb-4">This survey will take approximately 8-10 minutes to complete. Your responses are valuable and will help us understand parent perspectives on student learning and education.</p>
+              <Button
+                variant="primary"
+                text="Take Parent Survey"
+                class="w-full"
+                @click="openParentSurvey"
+              />
+            </div>
+          </div>
+
+          <!-- Student Survey Card -->
+          <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8">
+            <div class="text-center">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">Student Survey</h2>
+              <p class="pb-4">
+                This survey will take approximately 10-12 minutes to complete. Your responses are valuable and will help us understand student learning habits and preferences.
+              </p>
+              <Button
+                variant="primary"
+                text="Take Student Survey"
+                class="w-full"
+                @click="openStudentSurvey"
+              />
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Your Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Enter your email address"
-            required
-            class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-          >
+        <!-- Second row: Platform Feedback -->
+        <div class="flex justify-center">
+          <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8 w-full max-w-md">
+            <div class="text-center">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">Platform Feedback Form</h2>
+              <p class="pb-4">Please provide us with any technical feedback or improvements for our platform.</p>
+              <Button
+                variant="primary"
+                text="Give Platform Feedback"
+                class="w-full"
+                @click="openPlatformFeedback"
+              />
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div>
-          <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Feedback</label>
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Share your thoughts, suggestions, or report any issues..."
-            rows="6"
-            required
-            class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-vertical"
-          />
-        </div>
-
-        <div class="flex justify-center pt-4">
-          <Button
-            type="submit"
-            variant="primary"
-            text="Submit Feedback"
-            class="w-full sm:w-auto min-w-[200px]"
-          />
-        </div>
-      </form>
+      <!-- Right side: Embedded form -->
     </div>
   </div>
 </template>
 
 <script setup>
 import Button from '~/components/common/Button.vue';
+
+function openParentSurvey() {
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSdbxaBt-Dhu5MKdNe3SeqJaEoEABQ3vdMmWtPkZZxhBRJVDZw/viewform?usp=header', '_blank');
+}
+
+function openStudentSurvey() {
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSc8lvJDasa55YB-W71hWaDmEur5fvyHSanZGw8-zdJJF_MFjg/viewform?usp=header', '_blank');
+}
+
+function openPlatformFeedback() {
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSf7p6x_ui5jar1s1g1h87UTwoD5asMwH54ZzLIk36Nc9Y5YXw/viewform?usp=header', '_blank');
+}
 </script>

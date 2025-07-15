@@ -8,10 +8,8 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['openFeedback']);
-
 function handleClick() {
-  emit('openFeedback');
+  navigateTo('/feedback');
 }
 </script>
 
