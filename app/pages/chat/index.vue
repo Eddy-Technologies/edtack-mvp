@@ -116,18 +116,18 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import LoginModal from '@/components/login/LoginModal.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
+import { useUsers } from '@/composables/useUsers';
 
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
 const isDragging = ref(false);
 const isMobile = ref(false);
 const menuOpen = ref(false);
-const loggedIn = ref(false);
 const loginModalVisible = ref(false);
 const characterModalVisible = ref(false);
 const currentCharacter = ref(null);
@@ -135,17 +135,23 @@ const currentCharacter = ref(null);
 const router = useRouter();
 const routeTo = (path) => router.push(path);
 
+const { currentAppUser, isLoggedIn, logout: logoutUser } = useUsers();
+const loggedIn = computed(() => isLoggedIn.value);
+
 const login = () => {
   loginModalVisible.value = true;
 };
 
-const logout = () => {
-  loggedIn.value = false;
-  menuOpen.value = false;
+const logout = async () => {
+  try {
+    await logoutUser();
+    menuOpen.value = false;
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
 };
 
 const handleLoginSuccess = () => {
-  loggedIn.value = true;
   loginModalVisible.value = false;
 };
 
