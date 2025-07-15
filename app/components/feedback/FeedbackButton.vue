@@ -1,6 +1,8 @@
 <template>
   <Button
-    class="fixed bottom-4 right-4 bg-background hover:bg-background-400 text-black font-bold py-2 px-4 rounded-full shadow-lg z-50"
+    variant="primary"
+    class="fixed bottom-4 right-4 font-bold py-2 px-4 rounded-full shadow-lg z-50"
+    text="Feedback"
     @click="handleClick"
   >
     Feedback
@@ -8,6 +10,8 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/common/Button.vue';
+
 function handleClick() {
   navigateTo('/feedback');
 }
