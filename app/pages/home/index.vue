@@ -5,7 +5,7 @@
       <!-- Character Carousel -->
       <div class="mb-32">
         <h3 class="text-gray-800 text-xl sm:text-2xl font-semibold mb-6 text-center">
-          Featured Characters
+          Choose Your Learning Buddy
         </h3>
         <CharacterCarousel v-model="selectedAvatar" :go-to-chat-on-click="true" />
       </div>

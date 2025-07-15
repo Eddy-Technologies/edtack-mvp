@@ -6,20 +6,22 @@
           v-model="email"
           type="email"
           placeholder="Email"
-          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
         >
         <input
           v-model="password"
           type="password"
           placeholder="Password"
-          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
         >
-        <button
-          class="w-full py-3 rounded-xl bg-[#c8e6ce] text-black font-semibold hover:bg-green-500 transition"
+        <Button
+          variant="primary"
+          text="Login"
+          class="w-full py-3 rounded-xl font-semibold transition "
           @click="handleLogin"
         >
           Login
-        </button>
+        </Button>
       </div>
     </div>
   </div>
@@ -27,6 +29,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Button from '~/components/common/Button.vue';
 
 const email = ref('');
 const password = ref('');
