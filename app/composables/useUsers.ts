@@ -78,9 +78,9 @@ export function useUsers() {
   // --- Supabase User (Email/Password) Authentication ---
 
   async function loginEmail(email_val: string, password_val: string) {
-    console.log('[useUsers.ts] Calling /api/auth/email-login');
+    console.log('[useUsers.ts] Calling /api/app-auth/email-login');
     try {
-      const response = await $fetch('/api/auth/email-login', {
+      const response = await $fetch('/api/app-auth/email-login', {
         method: 'POST',
         body: { email: email_val, password: password_val },
       });
