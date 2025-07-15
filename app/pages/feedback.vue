@@ -1,6 +1,16 @@
 <template>
   <div class="min-h-screen bg-white flex items-center justify-center px-4">
     <div class="w-full max-w-4xl">
+      <!-- Back Button -->
+      <div class="mb-6">
+        <Button
+          variant="secondary"
+          text="← Back"
+          class="w-auto"
+          @click="goBack"
+        />
+      </div>
+
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-primary mb-2">We need your help!</h1>
         <p class="text-gray-600 text-md mb-4">
@@ -83,5 +93,15 @@ function openStudentSurvey() {
 
 function openPlatformFeedback() {
   window.open('https://docs.google.com/forms/d/e/1FAIpQLSf7p6x_ui5jar1s1g1h87UTwoD5asMwH54ZzLIk36Nc9Y5YXw/viewform?usp=header', '_blank');
+}
+
+function goBack() {
+  const referrer = document.referrer;
+
+  if (referrer && !referrer.includes('/feedback')) {
+    window.history.back();
+  } else {
+    navigateTo('/');
+  }
 }
 </script>
