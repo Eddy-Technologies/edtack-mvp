@@ -2,7 +2,6 @@
   <Button
     variant="primary"
     class="fixed bottom-4 right-4 font-bold py-2 px-4 rounded-full shadow-lg z-50"
-    text="Feedback"
     @click="handleClick"
   >
     Feedback

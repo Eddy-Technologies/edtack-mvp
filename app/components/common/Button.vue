@@ -3,13 +3,26 @@
     :color="color"
     :size="size"
     :variant="variant"
-    :disabled="disabled"
+    :disabled="isDisabled"
     :class="computedClass"
     @click="handleClick"
   >
-    <div class="flex items-center justify-center w-full h-full">
-      <slot name="icon" />
+    <div class="flex items-center justify-center w-full h-full gap-2">
+      <!-- Loading Spinner -->
+      <div
+        v-if="loading"
+        class="animate-spin rounded-full border-2 border-current border-t-transparent"
+        :class="spinnerSizeClass"
+      />
+
+      <!-- Icon slot (hidden when loading) -->
+      <slot v-if="!loading" name="icon" />
+
+      <!-- Text content -->
       <span v-if="text" class="inline-block">{{ text }}</span>
+
+      <!-- Default slot content (hidden when loading) -->
+      <slot v-if="!loading" />
     </div>
   </UButton>
 </template>
@@ -30,13 +43,26 @@ const props = defineProps<{
   border?: boolean;
   hover?: boolean;
   disabled?: boolean;
+  loading?: boolean; // Loading state prop
 }>();
 
 const emit = defineEmits(['clicked']);
 const router = useRouter();
 
+// Computed property to determine if button should be disabled
+const isDisabled = computed(() => {
+  return props.disabled || props.loading;
+});
+
+// Computed property for spinner size based on button size
+const spinnerSizeClass = computed(() => {
+  if (props.size === 'sm') return 'w-4 h-4';
+  if (props.size === 'lg') return 'w-6 h-6';
+  return 'w-5 h-5'; // default/md size
+});
+
 const handleClick = () => {
-  if (props.disabled) return;
+  if (isDisabled.value) return;
   emit('clicked');
   if (props.route !== undefined) router.push(props.route);
 };
@@ -56,8 +82,8 @@ const computedClass = computed(() => {
   if (props.variant === 'secondary-gray') classes.push(`${sizeClasses} border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors`);
   if (props.variant === 'secondary-danger') classes.push(`${sizeClasses} text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors`);
 
-  // Disabled state
-  if (props.disabled) {
+  // Disabled or loading state
+  if (props.disabled || props.loading) {
     classes.push('opacity-50 cursor-not-allowed');
   }
 

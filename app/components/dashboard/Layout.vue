@@ -122,10 +122,20 @@
         <!-- Logout Button -->
         <div class="px-3 mt-8 pt-4 border-t">
           <div
-            class="flex items-center px-3 py-2 text-sm font-medium text-red-600 rounded-lg cursor-pointer hover:bg-red-50 transition-colors"
+            :class="[
+              'flex items-center px-3 py-2 text-sm font-medium rounded-lg cursor-pointer transition-colors',
+              isLoggingOut ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'
+            ]"
             @click="logout"
           >
+            <!-- Loading Spinner -->
+            <div
+              v-if="isLoggingOut"
+              class="w-5 h-5 mr-3 animate-spin rounded-full border-2 border-current border-t-transparent"
+            />
+            <!-- Logout Icon -->
             <svg
+              v-else
               class="w-5 h-5 mr-3"
               fill="none"
               stroke="currentColor"
@@ -138,7 +148,7 @@
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
               />
             </svg>
-            Logout
+            {{ isLoggingOut ? 'Logging out...' : 'Logout' }}
           </div>
         </div>
       </nav>
@@ -157,6 +167,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useUsers } from '~/composables/useUsers';
+import { useSupabaseUser } from '#imports';
 
 interface NavigationItem {
   name: string;
@@ -179,9 +191,15 @@ const props = withDefaults(defineProps<Props>(), {
   userAvatar: '/default-avatar.png',
   studentPaysForSubscription: false
 });
+
 const route = useRoute();
 const router = useRouter();
 const openSubmenus = ref<string[]>([]);
+
+// Get authentication state
+const { currentAppUser, logoutUsername, logoutEmail } = useUsers();
+const supabaseUser = useSupabaseUser();
+const isLoggingOut = ref(false);
 
 const studentNavigation = computed((): NavigationItem[] => {
   const baseItems: NavigationItem[] = [
@@ -320,8 +338,24 @@ const toggleSubmenu = (itemName: string) => {
   }
 };
 
-const logout = () => {
-  router.push('/login');
+const logout = async () => {
+  isLoggingOut.value = true;
+  try {
+    // Determine which logout method to use
+    if (currentAppUser.value) {
+      await logoutUsername();
+    } else if (supabaseUser.value) {
+      await logoutEmail();
+    }
+
+    // Navigate to login page after successful logout
+    router.push('/');
+  } catch (error) {
+    console.error('Logout failed:', error);
+    // TODO: Show error message to user
+  } finally {
+    isLoggingOut.value = false;
+  }
 };
 
 onMounted(() => {

@@ -46,6 +46,8 @@ import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import placeholder1 from '../../../assets/eddy.png';
 import Layout from '~/components/dashboard/Layout.vue';
+import { useUsers } from '~/composables/useUsers';
+import { useSupabaseUser } from '#imports';
 
 // Student Components
 import StudentOverviewTab from '~/components/dashboard/student/OverviewTab.vue';
@@ -70,11 +72,58 @@ definePageMeta({
   middleware: ['auth'],
 });
 
-// This would normally come from user authentication/session
-const userType = ref<'student' | 'parent'>('student');
-const userName = ref('Alex Johnson');
-const userEmail = ref('alex.johnson@example.com');
-const userAvatar = ref(placeholder1);
+// Get authentication state
+const { currentAppUser } = useUsers();
+const supabaseUser = useSupabaseUser();
+
+// Determine current user and user type
+const currentUser = computed(() => {
+  if (currentAppUser.value) {
+    return {
+      id: currentAppUser.value.id,
+      email: currentAppUser.value.email || '',
+      firstName: currentAppUser.value.first_name || '',
+      lastName: currentAppUser.value.last_name || '',
+      type: 'app_user',
+      ...currentAppUser.value
+    };
+  }
+  if (supabaseUser.value) {
+    return {
+      id: supabaseUser.value.id,
+      email: supabaseUser.value.email || '',
+      firstName: supabaseUser.value.user_metadata?.first_name || '',
+      lastName: supabaseUser.value.user_metadata?.last_name || '',
+      type: 'email_user',
+    };
+  }
+  return null;
+});
+
+// User display data
+const userType = computed<'student' | 'parent'>(() => {
+  // TODO: Determine user type from user data/profile
+  // For now, defaulting to student - this should come from user profile
+  return currentUser.value?.level_type === 'parent' ? 'parent' : 'student';
+});
+
+const userName = computed(() => {
+  if (!currentUser.value) return 'User';
+  const firstName = currentUser.value.firstName;
+  const lastName = currentUser.value.lastName;
+  if (firstName && lastName) {
+    return `${firstName} ${lastName}`;
+  }
+  return currentUser.value.email || 'User';
+});
+
+const userEmail = computed(() => {
+  return currentUser.value?.email || 'user@example.com';
+});
+
+const userAvatar = computed(() => {
+  return currentUser.value?.profile_picture_url || placeholder1;
+});
 
 // Student payment responsibility - would come from user/subscription data
 const studentPaysForSubscription = ref(true); // Set to true if student pays, false if parent pays

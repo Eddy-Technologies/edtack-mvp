@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useSupabaseClient } from '#imports';
 import { navigateTo } from '#app';
 
@@ -70,7 +70,6 @@ export function useUsers() {
       await $fetch('/api/app-auth/logout', { method: 'POST' });
       currentAppUser.value = null; // Clear client-side state
       console.log('[useUsers.ts] App user session cleared.');
-      navigateTo('/login'); // Redirect after logout
     } catch (error) {
       console.error('[useUsers.ts] Failed to clear app user session:', error);
       throw error;
@@ -80,37 +79,46 @@ export function useUsers() {
   // --- Supabase User (Email/Password) Authentication ---
 
   async function loginEmail(email_val: string, password_val: string) {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email_val,
-      password: password_val,
-    });
+    console.log('[useUsers.ts] Calling /api/auth/email-login');
+    try {
+      const response = await $fetch('/api/auth/email-login', {
+        method: 'POST',
+        body: { email: email_val, password: password_val },
+      });
 
-    if (error) {
-      console.error('[useUsers.ts] signInWithPassword ERROR:', error);
+      if (response.user) {
+        currentAppUser.value = response.user;
+        console.log('[useUsers.ts] Email login successful, state updated.');
+      }
+      return response;
+    } catch (error: any) {
+      console.error('[useUsers.ts] Email login failed:', error);
       throw error;
     }
-    console.log('[useUsers.ts] signInWithPassword SUCCESS. Full Data received:', data);
-    return true;
   }
 
-  async function signupEmail(email: string, password: string) {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        emailRedirectTo: '/auth/callback',
-      },
-    });
-    if (error) throw error;
-    return true;
+  async function signupEmail(email: string, password: string, firstName: string, lastName: string) {
+    console.log('[useUsers.ts] Calling /api/auth/email-register');
+    try {
+      const response = await $fetch('/api/auth/email-register', {
+        method: 'POST',
+        body: { email, password, firstName, lastName },
+      });
+
+      console.log('[useUsers.ts] Email registration successful:', response);
+      return response;
+    } catch (error: any) {
+      console.error('[useUsers.ts] Email registration failed:', error);
+      throw error;
+    }
   }
 
   async function logoutEmail() {
     // Renamed from general 'logout' to clarify it's for email users
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+    currentAppUser.value = null; // Clear client-side state
     console.log('[useUsers.ts] Email user logged out.');
-    navigateTo('/login'); // Redirect after logout
     return true;
   }
 
@@ -166,14 +174,49 @@ export function useUsers() {
     }
   }
 
+  // --- Enhanced User Display Logic ---
+
+  // Computed property to handle user display name
+  const currentUserDisplayName = computed(() => {
+    if (!currentAppUser.value) return '';
+
+    return currentAppUser.value.firstName ||
+      currentAppUser.value.username ||
+      currentAppUser.value.email?.split('@')[0] ||
+      'User';
+  });
+
+  // Computed property to check if user is logged in
+  const isLoggedIn = computed(() => {
+    return !!currentAppUser.value;
+  });
+
+  // Unified logout function that detects user type internally
+  async function logout() {
+    try {
+      if (currentAppUser.value?.username) {
+        // App user (username/password auth)
+        await logoutUsername();
+      } else {
+        // Email user (Supabase auth)
+        await logoutEmail();
+      }
+      console.log('[useUsers.ts] User logged out successfully.');
+    } catch (error) {
+      console.error('[useUsers.ts] Logout failed:', error);
+      throw error;
+    }
+  }
+
   return {
     currentAppUser, // Reactive state for app_user
+    currentUserDisplayName, // Computed display name
+    isLoggedIn, // Computed login status
+    logout, // Unified logout function
     loginUsername,
     signupUsername,
-    logoutUsername,
     loginEmail,
     signupEmail,
-    logoutEmail,
     getUsers,
     getUserInfoById,
     updateUserInfo,

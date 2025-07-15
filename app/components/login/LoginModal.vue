@@ -19,6 +19,9 @@
 <script setup lang="ts">
 import Modal from '@/components/common/Modal.vue';
 import LoginForm from '@/components/login/LoginForm.vue';
+import { useUsers } from '~/composables/useUsers';
+
+const { currentAppUser } = useUsers();
 
 const emit = defineEmits(['close', 'success', 'register']);
 
@@ -26,10 +29,16 @@ const handleClose = () => {
   emit('close');
 };
 
-// Example: After login succeeds
 const handleLogin = () => {
-  // Replace with real auth logic, then:
+  // Login was successful, emit success event
   emit('success');
+
+  // TODO: Redirect to dashboard or appropriate page after login
+  // TODO: Show success message/toast
+  // TODO: Update global auth state
+
+  // Close modal
+  handleClose();
 };
 
 const handleRegister = () => {

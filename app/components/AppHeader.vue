@@ -5,14 +5,28 @@
         <img src="/logo.png" class="w-[40px] sm:w-[50px] h-auto mr-3">
         <h1 class="text-gray-800 text-xl sm:text-2xl font-bold">Eddy</h1>
       </div>
-      <div class="flex gap-4">
-        <Button variant="primary" text="Login" @click="login" />
-        <Button
-          variant="ghost"
-          class="border border-gray-300"
-          text="Register for Free"
-          @click="register"
-        />
+      <div class="flex gap-4 items-center">
+        <!-- Logged in state -->
+        <div v-if="isLoggedIn" class="flex items-center gap-3">
+          <span class="text-sm text-gray-700">Welcome, {{ currentUserDisplayName }}</span>
+          <Button
+            variant="secondary"
+            :loading="isLoggingOut"
+            :text="isLoggingOut ? 'Logging out...' : 'Logout'"
+            @click="handleLogout"
+          />
+          <!-- TODO: Add user menu dropdown with profile, settings, etc. -->
+        </div>
+
+        <!-- Not logged in state -->
+        <div v-else class="flex gap-4">
+          <Button variant="primary" text="Login" @click="login" />
+          <Button
+            variant="secondary"
+            text="Register for Free"
+            @click="register"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -36,10 +50,13 @@ import { ref } from 'vue';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import Button from '~/components/common/Button.vue';
+import { useUsers } from '~/composables/useUsers';
 
-const loggedIn = ref(false);
+const { currentUserDisplayName, isLoggedIn, logout } = useUsers();
+
 const loginModalVisible = ref(false);
 const registerModalVisible = ref(false);
+const isLoggingOut = ref(false);
 
 const login = () => {
   registerModalVisible.value = false;
@@ -52,12 +69,27 @@ const register = () => {
 };
 
 const handleLoginSuccess = () => {
-  loggedIn.value = true;
   loginModalVisible.value = false;
+  // TODO: Redirect to dashboard or appropriate page
+  // TODO: Show success notification
 };
 
 const handleRegisterSuccess = () => {
-  loggedIn.value = true;
   registerModalVisible.value = false;
+  // TODO: Redirect to dashboard or appropriate page
+  // TODO: Show success notification
+};
+
+const handleLogout = async () => {
+  isLoggingOut.value = true;
+  try {
+    await logout();
+    // TODO: Show logout success message
+  } catch (error) {
+    console.error('Logout failed:', error);
+    // TODO: Show error message
+  } finally {
+    isLoggingOut.value = false;
+  }
 };
 </script>
