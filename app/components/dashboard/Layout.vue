@@ -168,7 +168,6 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUsers } from '~/composables/useUsers';
-import { useSupabaseUser } from '#imports';
 
 interface NavigationItem {
   name: string;
@@ -197,8 +196,7 @@ const router = useRouter();
 const openSubmenus = ref<string[]>([]);
 
 // Get authentication state
-const { currentAppUser, logoutUsername, logoutEmail } = useUsers();
-const supabaseUser = useSupabaseUser();
+const { logout: logoutUser } = useUsers();
 const isLoggingOut = ref(false);
 
 const studentNavigation = computed((): NavigationItem[] => {
@@ -339,15 +337,11 @@ const toggleSubmenu = (itemName: string) => {
 };
 
 const logout = async () => {
+  if (isLoggingOut.value) return;
+
   isLoggingOut.value = true;
   try {
-    // Determine which logout method to use
-    if (currentAppUser.value) {
-      await logoutUsername();
-    } else if (supabaseUser.value) {
-      await logoutEmail();
-    }
-
+    await logoutUser();
     // Navigate to login page after successful logout
     router.push('/');
   } catch (error) {
