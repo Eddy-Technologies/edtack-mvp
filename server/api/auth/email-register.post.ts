@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    if (authError || !newUser.user) {
+    if (authError || !newUser.user || !newUser.session) {
       console.error('Supabase auth.signUp error:', authError);
       throw createError({
         statusCode: 400,
@@ -72,6 +72,14 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Failed to create user profile.',
       });
     }
+
+    setCookie(event, 'supabase_access_token', newUser.session.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+      sameSite: 'lax',
+    });
 
     return {
       user: { ...newUser, user_info_id: newUserInfo.id, ...newUserInfo },

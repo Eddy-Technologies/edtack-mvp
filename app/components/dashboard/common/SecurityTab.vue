@@ -7,7 +7,6 @@
       </div>
 
       <div class="p-6 space-y-6">
-
         <!-- Email -->
         <div class="flex items-center justify-between py-4 border-b">
           <div>

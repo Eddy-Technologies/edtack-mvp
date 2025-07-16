@@ -16,17 +16,11 @@ export default defineEventHandler(async (event) => {
     }
 
     // Clear any additional cookies if needed
-    setCookie(event, 'supabase_access_token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 0, // Set maxAge to 0 to immediately expire the cookie
-      path: '/',
-      sameSite: 'lax',
-    });
+    deleteCookie(event, 'supabase_access_token');
 
-    return { 
+    return {
       message: 'User logged out successfully.',
-      success: true 
+      success: true
     };
   } catch (err: any) {
     console.error('[logout.post.ts] Logout error:', err);
