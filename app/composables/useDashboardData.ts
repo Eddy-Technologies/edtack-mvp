@@ -6,12 +6,12 @@ export const useDashboardData = () => {
   const dashboardData = ref<ParentDashboardRes | null>(null);
   const shopChildrenData = ref(null);
   const error = ref(null);
-  const fetchDashboardData = async (userType: 'student' | 'parent') => {
+  const fetchDashboardData = async (userRole: 'student' | 'parent') => {
     isLoading.value = true;
     error.value = null;
 
     try {
-      dashboardData.value = await fetchDashboard(userType);
+      dashboardData.value = await fetchDashboard(userRole);
     } catch (err) {
       error.value = err;
       console.error('Error fetching dashboard data:', err);
@@ -22,7 +22,7 @@ export const useDashboardData = () => {
 
   const fetchDashboard = async (input): Promise<ParentDashboardRes | null> => {
     if (input !== 'student' && input !== 'parent') {
-      throw new Error('Invalid userType. Must be "student" or "parent".');
+      throw new Error('Invalid userRole. Must be "student" or "parent".');
     }
     let data: ParentDashboardRes | null = null;
     try {
@@ -50,9 +50,9 @@ export const useDashboardData = () => {
     }
   };
 
-  const refreshData = async (userType: 'student' | 'parent') => {
+  const refreshData = async (userRole: 'student' | 'parent') => {
     // Placeholder function - will be implemented later
-    console.log('refreshData called with userType:', userType);
+    console.log('refreshData called with userRole:', userRole);
   };
 
   return {

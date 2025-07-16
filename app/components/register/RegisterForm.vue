@@ -64,22 +64,22 @@
             <button
               type="button"
               class="px-4 py-3 rounded-xl border font-medium transition-colors"
-              :class="userType === USER_TYPE.PARENT
+              :class="userRole === USER_ROLE.PARENT
                 ? 'border-primary-500 bg-primary-50 text-primary-700'
                 : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'"
               :disabled="isLoading"
-              @click="userType = USER_TYPE.PARENT"
+              @click="userRole = USER_ROLE.PARENT"
             >
               Parent
             </button>
             <button
               type="button"
               class="px-4 py-3 rounded-xl border font-medium transition-colors"
-              :class="userType === USER_TYPE.STUDENT
+              :class="userRole === USER_ROLE.STUDENT
                 ? 'border-primary-500 bg-primary-50 text-primary-700'
                 : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'"
               :disabled="isLoading"
-              @click="userType = USER_TYPE.STUDENT"
+              @click="userRole = USER_ROLE.STUDENT"
             >
               Student
             </button>
@@ -87,7 +87,7 @@
         </div>
 
         <!-- Student-specific fields -->
-        <div v-if="userType === USER_TYPE.STUDENT" class="space-y-4">
+        <div v-if="userRole === USER_ROLE.STUDENT" class="space-y-4">
           <!-- Student Level (Required) -->
           <div>
             <select
@@ -152,9 +152,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { USER_ROLE } from '../../constants/User.ts';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
-import { USER_TYPE } from '~/constants/User.ts';
 
 // Form state
 const firstName = ref('');
@@ -166,7 +166,7 @@ const errorMessage = ref('');
 const successMessage = ref('');
 
 // Onboarding fields
-const userType = ref(''); // 'parent' or 'student'
+const userRole = ref(''); // 'parent' or 'student'
 const studentLevel = ref(''); // Required for students
 const acceptTerms = ref(false);
 
@@ -182,11 +182,11 @@ const canSubmit = computed(() => {
     lastName.value.trim() &&
     registerInput.value.trim() &&
     password.value.trim() &&
-    userType.value &&
+    userRole.value &&
     acceptTerms.value;
 
   // Additional validation for students (student level is required)
-  if (userType.value === USER_TYPE.STUDENT) {
+  if (userRole.value === USER_ROLE.STUDENT) {
     return basicFieldsValid && studentLevel.value;
   }
 
@@ -195,11 +195,11 @@ const canSubmit = computed(() => {
 
 const handleRegister = async () => {
   if (!canSubmit.value) {
-    if (!userType.value) {
+    if (!userRole.value) {
       errorMessage.value = 'Please select whether you are a parent or student';
     } else if (!acceptTerms.value) {
       errorMessage.value = 'Please accept the terms and conditions';
-    } else if (userType.value === USER_TYPE.STUDENT && !studentLevel.value) {
+    } else if (userRole.value === USER_ROLE.STUDENT && !studentLevel.value) {
       errorMessage.value = 'Please select your current level';
     } else {
       errorMessage.value = 'Please fill in all required fields';
@@ -219,7 +219,7 @@ const handleRegister = async () => {
   try {
     // Prepare onboarding data
     const onboardingData = {
-      userType: userType.value,
+      userRole: userRole.value,
       studentLevel: studentLevel.value || undefined,
     };
 

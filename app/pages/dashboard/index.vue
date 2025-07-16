@@ -1,13 +1,13 @@
 <template>
   <Layout
-    :user-type="userType"
+    :user-type="userRole"
     :user-name="userName"
     :user-email="userEmail"
     :user-avatar="userAvatar"
     :student-pays-for-subscription="studentPaysForSubscription"
   >
     <!-- Student Components -->
-    <template v-if="userType === 'student'">
+    <template v-if="userRole === 'student'">
       <StudentOverviewTab v-if="currentTab === 'overview'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
       <StudentSubscriptionTab
@@ -45,6 +45,7 @@
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import placeholder1 from '../../../assets/eddy.png';
+import type { USER_ROLE } from '../../constants/User';
 import Layout from '~/components/dashboard/Layout.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useSupabaseUser } from '#imports';
@@ -95,10 +96,8 @@ const currentUser = computed(() => {
 });
 
 // User display data
-const userType = computed<'student' | 'parent'>(() => {
-  // TODO: Determine user type from user data/profile
-  // For now, defaulting to student - this should come from user profile
-  return currentUser.value?.level_type === 'parent' ? 'parent' : 'student';
+const userRole = computed<USER_ROLE>(() => {
+  return currentUser.value.user_role;
 });
 
 const userName = computed(() => {

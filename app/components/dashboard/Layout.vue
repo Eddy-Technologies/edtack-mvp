@@ -23,7 +23,7 @@
             </p>
             <div class="flex items-center mt-1">
               <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
-                {{ userType === 'student' ? 'Student' : 'Parent' }}
+                {{ userRole === USER_ROLE.STUDENT ? USER_ROLE.STUDENT : USER_ROLE.PARENT }}
               </span>
             </div>
           </div>
@@ -167,6 +167,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { USER_ROLE } from '../../constants/User';
 import { useAuth } from '~/composables/useAuth';
 
 interface NavigationItem {
@@ -177,7 +178,7 @@ interface NavigationItem {
 }
 
 interface Props {
-  userType: 'student' | 'parent';
+  userRole: USER_ROLE;
   userName?: string;
   userEmail?: string;
   userAvatar?: string;
@@ -185,9 +186,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  userName: 'User',
-  userEmail: 'user@example.com',
-  userAvatar: '/default-avatar.png',
   studentPaysForSubscription: false
 });
 
@@ -282,7 +280,7 @@ const parentNavigation: NavigationItem[] = [
 ];
 
 const navigationItems = computed(() => {
-  return props.userType === 'student' ? studentNavigation.value : parentNavigation;
+  return props.userRole === USER_ROLE.STUDENT ? studentNavigation.value : parentNavigation;
 });
 
 const currentPageTitle = computed(() => {

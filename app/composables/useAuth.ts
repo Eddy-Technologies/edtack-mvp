@@ -1,3 +1,4 @@
+import type { QueryData } from '@supabase/supabase-js';
 import { useSupabaseClient, useSupabaseUser } from '#imports';
 
 export const useAuth = () => {
@@ -10,7 +11,7 @@ export const useAuth = () => {
     firstName: string,
     lastName: string,
     onboardingData?: {
-      userType: string;
+      userRole: string;
       studentLevel?: string;
     }
   ) => {
@@ -32,7 +33,7 @@ export const useAuth = () => {
       const { data: roleData, error: roleFetchError } = await supabase
         .from('roles')
         .select('id')
-        .eq('role_name', onboardingData?.userType)
+        .eq('role_name', onboardingData?.userRole)
         .single();
       if (roleFetchError) throw roleFetchError;
 
@@ -85,17 +86,17 @@ export const useAuth = () => {
   const getUserProfile = async () => {
     if (!user.value) return null;
 
-    const { data, error } = await supabase
+    const userInfoWithRoleQuery = supabase
       .from('user_infos')
-      .select('*')
+      .select('*, user_roles(role_id, roles(role_name))')
       .eq('user_id', user.value.id)
       .single();
 
-    if (error) {
-      console.error('Error fetching user profile:', error);
-      return null;
-    }
-    return data;
+    // type UserInfoWithRole = QueryData<typeof userInfoWithRoleQuery>;
+    const { data, error } = await userInfoWithRoleQuery;
+    if (error) throw error;
+    console.log('User profile data:', user);
+    return { ...data, user_role: data.user_roles?.[0]?.roles?.role_name }; // user role is same as USER_ROLE
   };
 
   const updateUserProfile = async (updates: Record<string, any>) => {
