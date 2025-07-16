@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-[300px] flex items-center justify-center">
-    <div class="w-[360px] space-y-6 text-center">
+    <div class=" space-y-6 text-center">
       <!-- Registration Header -->
       <div class="text-center">
         <h3 class="text-lg font-medium text-gray-900">Create Your Account</h3>
@@ -18,23 +18,25 @@
 
       <!-- Registration Form -->
       <div class="space-y-4">
-        <!-- First Name -->
-        <input
-          v-model="firstName"
-          type="text"
-          placeholder="First Name"
-          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-          :disabled="isLoading"
-        >
+        <div class="flex flex-row gap-4">
+          <!-- First Name -->
+          <input
+            v-model="firstName"
+            type="text"
+            placeholder="First Name"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+            :disabled="isLoading"
+          >
 
-        <!-- Last Name -->
-        <input
-          v-model="lastName"
-          type="text"
-          placeholder="Last Name"
-          class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-          :disabled="isLoading"
-        >
+          <!-- Last Name -->
+          <input
+            v-model="lastName"
+            type="text"
+            placeholder="Last Name"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+            :disabled="isLoading"
+          >
+        </div>
 
         <!-- Email Input -->
         <input

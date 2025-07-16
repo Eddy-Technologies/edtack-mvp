@@ -42,6 +42,14 @@
           Feedback
         </button>
         <div class="border-t my-1" />
+
+        <button
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+          @click="openSubscriptionModal"
+        >
+          Subscription
+        </button>
+        <div class="border-t my-1" />
         <button
           class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
           @click="handleLogout"
@@ -76,6 +84,13 @@
     @success="handleRegisterSuccess"
     @login="login"
   />
+
+  <!-- Subscription Modal -->
+  <SubscriptionModal
+    v-if="subscriptionModalVisible"
+    :is-visible="subscriptionModalVisible"
+    @close="subscriptionModalVisible = false"
+  />
 </template>
 
 <script setup lang="ts">
@@ -83,6 +98,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
+import SubscriptionModal from './subscription/SubscriptionModal.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useSupabaseUser, useToast } from '#imports';
 import { generateInitials, generateAvatarColor } from '~/utils/avatarUtils';
@@ -105,6 +121,7 @@ const router = useRouter();
 const menuOpen = ref(false);
 const loginModalVisible = ref(false);
 const registerModalVisible = ref(false);
+const subscriptionModalVisible = ref(false);
 
 const { signOut } = useAuth();
 const user = useSupabaseUser();
@@ -177,6 +194,11 @@ const handleLoginSuccess = () => {
 const handleRegisterSuccess = () => {
   registerModalVisible.value = false;
   emit('register-success');
+};
+
+const openSubscriptionModal = () => {
+  subscriptionModalVisible.value = true;
+  menuOpen.value = false;
 };
 
 const handleLogout = async () => {

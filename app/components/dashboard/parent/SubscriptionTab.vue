@@ -198,10 +198,8 @@
 
     <!-- Subscription Modal -->
     <SubscriptionModal
-      :is-open="showSubscriptionModal"
-      :student-name="selectedChild?.name"
+      :is-visible="showSubscriptionModal"
       @close="showSubscriptionModal = false"
-      @plan-selected="handlePlanSelected"
     />
 
     <!-- Billing Update Modal -->
@@ -215,9 +213,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import SubscriptionModal from '../common/SubscriptionModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
 import Button from '../../common/Button.vue';
+import SubscriptionModal from '../../subscription/SubscriptionModal.vue';
 
 const children = ref([
   {
@@ -256,56 +254,56 @@ const billingHistory = ref([
     id: 1,
     date: 'Feb 15, 2024',
     description: 'Emma Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 2,
     date: 'Feb 15, 2024',
     description: 'Sophia Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 3,
     date: 'Jan 15, 2024',
     description: 'Emma Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 4,
     date: 'Jan 15, 2024',
     description: 'Sophia Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 5,
     date: 'Dec 15, 2023',
     description: 'Emma Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 6,
     date: 'Dec 15, 2023',
     description: 'Sophia Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 7,
     date: 'Nov 15, 2023',
     description: 'Emma Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 8,
     date: 'Nov 15, 2023',
     description: 'Sophia Johnson - Premium Plan',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   }
 ]);
@@ -349,7 +347,7 @@ const handlePlanSelected = (plan: 'free' | 'premium', _studentName?: string) => 
         id: billingHistory.value.length + 1,
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         description: `${selectedChild.value.name} - Premium Plan`,
-        amount: 25.00,
+        amount: 29.00,
         status: 'paid'
       });
     }

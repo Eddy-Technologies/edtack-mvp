@@ -67,7 +67,7 @@
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
         <Button
           variant="primary"
-          text="Upgrade to Premium - $25/month"
+          text="Upgrade to Premium - SGD 29/month"
           @click="upgradeAccount"
         />
       </div>
@@ -192,9 +192,9 @@
 
     <!-- Subscription Modal -->
     <SubscriptionModal
-      :is-open="showSubscriptionModal"
+      v-if="showSubscriptionModal"
+      :is-visible="showSubscriptionModal"
       @close="showSubscriptionModal = false"
-      @plan-selected="handlePlanSelected"
     />
 
     <!-- Billing Update Modal -->
@@ -208,14 +208,14 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import SubscriptionModal from '../common/SubscriptionModal.vue';
+import SubscriptionModal from '../../subscription/SubscriptionModal.vue';
 import BillingUpdateModal from '../common/BillingUpdateModal.vue';
 import Button from '../../common/Button.vue';
 
 const currentPlan = ref({
   name: 'Premium', // Can be 'Free' or 'Premium'
   description: 'Everything you need for comprehensive learning',
-  price: 25,
+  price: 29,
   nextBilling: 'March 15, 2024',
   status: 'Active',
   features: [
@@ -238,35 +238,35 @@ const billingHistory = ref([
     id: 1,
     date: 'Feb 15, 2024',
     description: 'Premium Plan - Monthly',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 2,
     date: 'Jan 15, 2024',
     description: 'Premium Plan - Monthly',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 3,
     date: 'Dec 15, 2023',
     description: 'Premium Plan - Monthly',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 4,
     date: 'Nov 15, 2023',
     description: 'Premium Plan - Monthly',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   },
   {
     id: 5,
     date: 'Oct 15, 2023',
     description: 'Premium Plan - Monthly',
-    amount: 25.00,
+    amount: 29.00,
     status: 'paid'
   }
 ]);
@@ -290,42 +290,6 @@ const paginatedBillingHistory = computed(() => {
 // Methods
 const upgradeAccount = () => {
   showSubscriptionModal.value = true;
-};
-
-const handlePlanSelected = (plan: 'free' | 'premium') => {
-  currentPlan.value.name = plan === 'premium' ? 'Premium' : 'Free';
-  currentPlan.value.price = plan === 'premium' ? 25 : 0;
-  currentPlan.value.nextBilling = plan === 'premium' ? 'March 15, 2024' : 'N/A';
-  currentPlan.value.description = plan === 'premium' ?
-    'Everything you need for comprehensive learning' :
-    'Basic features to get started';
-
-  if (plan === 'premium') {
-    currentPlan.value.features = [
-      'Unlimited AI queries',
-      'Advanced study tools',
-      'Unlimited practice questions',
-      'Priority support',
-      'Detailed progress tracking',
-      'Offline access'
-    ];
-
-    // Add billing history entry for upgrade
-    billingHistory.value.unshift({
-      id: billingHistory.value.length + 1,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      description: 'Premium Plan - Monthly',
-      amount: 25.00,
-      status: 'paid'
-    });
-  } else {
-    currentPlan.value.features = [
-      '50 AI queries per month',
-      'Basic study tools',
-      'Limited practice questions',
-      'Community support'
-    ];
-  }
 };
 
 const handlePaymentUpdated = (data: { card: any; address: any }) => {
