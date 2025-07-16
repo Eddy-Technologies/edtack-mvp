@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import Button from '~/components/common/Button.vue';
-import { useUsers } from '~/composables/useUsers';
+import { useAuth } from '~/composables/useAuth';
 
 // Form state
 const firstName = ref('');
@@ -88,7 +88,7 @@ const errorMessage = ref('');
 const successMessage = ref('');
 
 // Auth composable
-const { signupEmail } = useUsers();
+const { signUp } = useAuth();
 
 const emit = defineEmits(['success']);
 
@@ -118,7 +118,7 @@ const handleRegister = async () => {
 
   try {
     // Only email registration is supported
-    const response = await signupEmail(
+    const response = await signUp(
       registerInput.value.trim(),
       password.value,
       firstName.value.trim(),
@@ -126,7 +126,7 @@ const handleRegister = async () => {
     );
     console.log('Email registration successful:', response);
 
-    if (response.needsVerification) {
+    if (response.user && !response.session) {
       successMessage.value = 'Account created! Please check your email for verification.';
     } else {
       successMessage.value = 'Account created successfully!';

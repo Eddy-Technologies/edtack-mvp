@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Button from '~/components/common/Button.vue';
-import { useUsers } from '~/composables/useUsers';
+import { useAuth } from '~/composables/useAuth';
 
 // Form state
 const loginInput = ref('');
@@ -62,7 +62,7 @@ const isLoading = ref(false);
 const errorMessage = ref('');
 
 // Auth composable
-const { loginEmail } = useUsers();
+const { signIn } = useAuth();
 
 const emit = defineEmits(['success']);
 
@@ -77,7 +77,7 @@ const handleLogin = async () => {
 
   try {
     // Only email login is supported
-    const response = await loginEmail(loginInput.value.trim(), password.value);
+    const response = await signIn(loginInput.value.trim(), password.value);
     console.log('Email login successful:', response);
     emit('success');
   } catch (error: any) {

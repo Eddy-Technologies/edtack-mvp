@@ -46,7 +46,7 @@ import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import placeholder1 from '../../../assets/eddy.png';
 import Layout from '~/components/dashboard/Layout.vue';
-import { useUsers } from '~/composables/useUsers';
+import { useAuth } from '~/composables/useAuth';
 import { useSupabaseUser } from '#imports';
 
 // Student Components
@@ -73,28 +73,22 @@ definePageMeta({
 });
 
 // Get authentication state
-const { currentAppUser } = useUsers();
+const { user, getUserProfile } = useAuth();
 const supabaseUser = useSupabaseUser();
+
+// Get user profile data
+const userProfile = await getUserProfile().catch(() => null);
 
 // Determine current user and user type
 const currentUser = computed(() => {
-  if (currentAppUser.value) {
+  if (user.value) {
     return {
-      id: currentAppUser.value.id,
-      email: currentAppUser.value.email || '',
-      firstName: currentAppUser.value.first_name || '',
-      lastName: currentAppUser.value.last_name || '',
+      id: user.value.id,
+      email: user.value.email || '',
+      firstName: userProfile?.first_name || user.value.user_metadata?.first_name || '',
+      lastName: userProfile?.last_name || user.value.user_metadata?.last_name || '',
       type: 'user',
-      ...currentAppUser.value
-    };
-  }
-  if (supabaseUser.value) {
-    return {
-      id: supabaseUser.value.id,
-      email: supabaseUser.value.email || '',
-      firstName: supabaseUser.value.user_metadata?.first_name || '',
-      lastName: supabaseUser.value.user_metadata?.last_name || '',
-      type: 'user',
+      ...userProfile
     };
   }
   return null;

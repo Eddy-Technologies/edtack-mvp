@@ -19,9 +19,6 @@
 <script setup lang="ts">
 import Modal from '@/components/common/Modal.vue';
 import LoginForm from '@/components/login/LoginForm.vue';
-import { useUsers } from '~/composables/useUsers';
-
-const { currentAppUser } = useUsers();
 
 const emit = defineEmits(['close', 'success', 'register']);
 

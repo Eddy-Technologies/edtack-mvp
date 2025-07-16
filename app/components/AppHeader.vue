@@ -50,9 +50,14 @@ import { ref } from 'vue';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import Button from '~/components/common/Button.vue';
-import { useUsers } from '~/composables/useUsers';
+import { useAuth } from '~/composables/useAuth';
+import { useSupabaseUser } from '#imports';
 
-const { currentUserDisplayName, isLoggedIn, logout } = useUsers();
+const { signOut } = useAuth();
+const user = useSupabaseUser();
+const isLoggedIn = computed(() => !!user.value);
+console.log('Current user:', user.value);
+const currentUserDisplayName = computed(() => user.value?.email || '');
 
 const loginModalVisible = ref(false);
 const registerModalVisible = ref(false);
@@ -83,7 +88,7 @@ const handleRegisterSuccess = () => {
 const handleLogout = async () => {
   isLoggingOut.value = true;
   try {
-    await logout();
+    await signOut();
     // TODO: Show logout success message
   } catch (error) {
     console.error('Logout failed:', error);

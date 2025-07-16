@@ -121,7 +121,8 @@ import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import LoginModal from '@/components/login/LoginModal.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
-import { useUsers } from '@/composables/useUsers';
+import { useAuth } from '~/composables/useAuth';
+import { useSupabaseUser } from '#imports';
 
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
@@ -135,8 +136,9 @@ const currentCharacter = ref(null);
 const router = useRouter();
 const routeTo = (path) => router.push(path);
 
-const { currentAppUser, isLoggedIn, logout: logoutUser } = useUsers();
-const loggedIn = computed(() => isLoggedIn.value);
+const { signOut } = useAuth();
+const user = useSupabaseUser();
+const loggedIn = computed(() => !!user.value);
 
 const login = () => {
   loginModalVisible.value = true;
@@ -144,7 +146,7 @@ const login = () => {
 
 const logout = async () => {
   try {
-    await logoutUser();
+    await signOut();
     menuOpen.value = false;
   } catch (error) {
     console.error('Logout failed:', error);

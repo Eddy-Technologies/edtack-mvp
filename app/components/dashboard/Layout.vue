@@ -167,7 +167,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useUsers } from '~/composables/useUsers';
+import { useAuth } from '~/composables/useAuth';
 
 interface NavigationItem {
   name: string;
@@ -196,7 +196,7 @@ const router = useRouter();
 const openSubmenus = ref<string[]>([]);
 
 // Get authentication state
-const { logout: logoutUser } = useUsers();
+const { signOut } = useAuth();
 const isLoggingOut = ref(false);
 
 const studentNavigation = computed((): NavigationItem[] => {
@@ -341,7 +341,7 @@ const logout = async () => {
 
   isLoggingOut.value = true;
   try {
-    await logoutUser();
+    await signOut();
     // Navigate to login page after successful logout
     router.push('/');
   } catch (error) {
