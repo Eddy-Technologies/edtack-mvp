@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // 1. Create user in Supabase auth
-    const { data: authData, error: authError } = await supabase.auth.signUp({
+    const { data: newUser, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -42,36 +42,42 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    if (authError) {
+    if (authError || !newUser.user) {
       console.error('Supabase auth.signUp error:', authError);
       throw createError({
         statusCode: 400,
-        statusMessage: authError.message,
+        statusMessage: authError ? authError.message : 'Failed to create user.'
       });
     }
 
-    if (!authData.user) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Failed to create user account.',
-      });
-    }
+    //  Insert profile data into 'user_infos' table, linked to the new app_user
+    const { data: newUserInfo, error: insertUserInfoError } = await supabase
+      .from('user_infos')
+      .insert({
+        user_id: newUser.user.id,
+        first_name: firstName,
+        last_name: lastName,
+        onboarding_completed: false,
+        is_active: true,
+      })
+      .select(
+        'id, first_name, last_name, gender, address, country_code, postal_code, date_of_birth, level_type, profile_picture_url, onboarding_completed, payment_customer_id, is_active, created_at, updated_at'
+      )
+      .single();
 
-    // 2. Fetch user profile data
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
+    if (insertUserInfoError || !newUserInfo) {
+      console.error('Supabase insert error during user_info registration:', insertUserInfoError);
       throw createError({
-        statusCode: 404,
-        statusMessage: 'User not found.',
+        statusCode: 500,
+        statusMessage: 'Failed to create user profile.',
       });
     }
 
     return {
-      user: {
-        id: user.id,
-        email: user.email
-      },
-      session: authData.session,
+      user: { ...newUser, user_info_id: newUserInfo.id, ...newUserInfo },
+      type: 'user',
+      message: 'Username registration successful!',
+      session: newUser.session,
     };
   } catch (err: any) {
     console.error('Email registration error:', err);

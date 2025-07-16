@@ -52,6 +52,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    setCookie(event, 'supabase_access_token', authData.session.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+      sameSite: 'lax',
+    });
+
     return {
       user: {
         id: user.id,
