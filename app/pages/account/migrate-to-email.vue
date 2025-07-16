@@ -144,7 +144,7 @@ definePageMeta({
   middleware: 'auth-app-user-only', // Changed 'auth' to 'auth-app-user-only'
 });
 
-const { currentAppUser, logoutUsername } = useUsers();
+const { currentAppUser, logout } = useUsers();
 const router = useRouter();
 const toast = useToast();
 
@@ -193,7 +193,7 @@ const handleMigration = async () => {
       timeout: 10000,
     });
 
-    await logoutUsername();
+    await logout();
 
     setTimeout(() => {
       // Redirect after user has time to see the message

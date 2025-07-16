@@ -7,18 +7,6 @@
       </div>
 
       <div class="p-6 space-y-6">
-        <!-- Username -->
-        <div class="flex items-center justify-between py-4 border-b">
-          <div>
-            <h3 class="text-lg font-medium text-gray-900">Username</h3>
-            <p class="text-gray-600">{{ userInfo.username }}</p>
-          </div>
-          <Button
-            variant="secondary"
-            text="Change"
-            @clicked="editUsername"
-          />
-        </div>
 
         <!-- Email -->
         <div class="flex items-center justify-between py-4 border-b">
@@ -188,12 +176,6 @@
     </div>
 
     <!-- Modals -->
-    <ChangeUsernameModal
-      :is-open="showUsernameModal"
-      :current-username="userInfo.username"
-      @close="showUsernameModal = false"
-      @username-updated="handleUsernameUpdated"
-    />
 
     <ChangeEmailModal
       :is-open="showEmailModal"
@@ -225,7 +207,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import Button from '../../common/Button.vue';
-import ChangeUsernameModal from './ChangeUsernameModal.vue';
 import ChangeEmailModal from './ChangeEmailModal.vue';
 import ChangePasswordModal from './ChangePasswordModal.vue';
 import TwoFactorModal from './TwoFactorModal.vue';
@@ -233,7 +214,6 @@ import RecoveryCodesModal from './RecoveryCodesModal.vue';
 // import { useDashboardData } from '~/composables/useDashboardData';
 
 // Modal states
-const showUsernameModal = ref(false);
 const showEmailModal = ref(false);
 const showPasswordModal = ref(false);
 const show2FAModal = ref(false);
@@ -253,7 +233,6 @@ const dashboardData = ref({
 const userInfo = computed(() => {
   if (dashboardData.value && 'user' in dashboardData.value) {
     return {
-      username: dashboardData.value.user.name.toLowerCase().replace(' ', '.'),
       email: dashboardData.value.user.email
     };
   }
@@ -287,10 +266,6 @@ const activeSessions = ref([
 ]);
 
 // Methods
-const editUsername = () => {
-  showUsernameModal.value = true;
-};
-
 const editEmail = () => {
   showEmailModal.value = true;
 };
@@ -329,10 +304,6 @@ const revokeAllSessions = () => {
 };
 
 // Event handlers
-const handleUsernameUpdated = (newUsername: string) => {
-  userInfo.value.username = newUsername;
-};
-
 const handleEmailUpdated = (newEmail: string) => {
   userInfo.value.email = newEmail;
 };

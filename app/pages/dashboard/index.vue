@@ -84,7 +84,7 @@ const currentUser = computed(() => {
       email: currentAppUser.value.email || '',
       firstName: currentAppUser.value.first_name || '',
       lastName: currentAppUser.value.last_name || '',
-      type: 'app_user',
+      type: 'user',
       ...currentAppUser.value
     };
   }
@@ -94,7 +94,7 @@ const currentUser = computed(() => {
       email: supabaseUser.value.email || '',
       firstName: supabaseUser.value.user_metadata?.first_name || '',
       lastName: supabaseUser.value.user_metadata?.last_name || '',
-      type: 'email_user',
+      type: 'user',
     };
   }
   return null;

@@ -13,10 +13,10 @@ export function useUsers() {
     // Only attempt to fetch if not already loaded and on client side
     if (!currentAppUser.value && import.meta.client) {
       try {
-        const response: { user: any; type: string } = await $fetch('/api/app-auth/me');
-        if (response.user && response.type === 'app_user') {
+        const response: { user: any; type: string } = await $fetch('/api/auth/me');
+        if (response.user && response.type === 'user') {
           currentAppUser.value = response.user;
-          console.log('[useUsers.ts] App user session re-hydrated:', response.user.id);
+          console.log('[useUsers.ts] User session re-hydrated:', response.user.id);
         }
       } catch (error) {
         console.debug('[useUsers.ts] No active app user session or session invalid.', error);
@@ -25,57 +25,7 @@ export function useUsers() {
     }
   });
 
-  // --- App User (Username/Password) Authentication ---
-
-  async function loginUsername(username_val: string, password_val: string) {
-    console.log('[useUsers.ts] Calling /api/app-auth/login');
-    try {
-      const response: { user: any; type: string; message: string } = await $fetch(
-        '/api/app-auth/login',
-        {
-          method: 'POST',
-          body: { username: username_val, password: password_val },
-        }
-      );
-
-      if (response.user) {
-        currentAppUser.value = response.user;
-        console.log('[useUsers.ts] App user login successful, state updated.');
-      }
-      return response;
-    } catch (error: any) {
-      console.error('[useUsers.ts] App user login failed:', error);
-      throw error;
-    }
-  }
-
-  async function signupUsername(payload: {
-    firstName: string;
-    lastName: string;
-    username: string;
-    password: string;
-  }) {
-    const response = await $fetch('/api/app-auth/register', {
-      method: 'POST',
-      body: payload,
-    });
-    // Note: Registration does not automatically log in or set a cookie here.
-    // User will need to call loginUsername after successful registration.
-    return response;
-  }
-
-  async function logoutUsername() {
-    try {
-      await $fetch('/api/app-auth/logout', { method: 'POST' });
-      currentAppUser.value = null; // Clear client-side state
-      console.log('[useUsers.ts] App user session cleared.');
-    } catch (error) {
-      console.error('[useUsers.ts] Failed to clear app user session:', error);
-      throw error;
-    }
-  }
-
-  // --- Supabase User (Email/Password) Authentication ---
+  // --- Email/Password Authentication ---
 
   async function loginEmail(email_val: string, password_val: string) {
     console.log('[useUsers.ts] Calling /api/auth/email-login');
@@ -112,13 +62,17 @@ export function useUsers() {
     }
   }
 
-  async function logoutEmail() {
-    // Renamed from general 'logout' to clarify it's for email users
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-    currentAppUser.value = null; // Clear client-side state
-    console.log('[useUsers.ts] Email user logged out.');
-    return true;
+  async function logout() {
+    try {
+      // Call our logout API endpoint which handles Supabase signOut
+      await $fetch('/api/auth/logout', { method: 'POST' });
+      currentAppUser.value = null; // Clear client-side state
+      console.log('[useUsers.ts] User logged out successfully.');
+      return true;
+    } catch (error) {
+      console.error('[useUsers.ts] Logout failed:', error);
+      throw error;
+    }
   }
 
   // --- General User Management (for both types, assuming RLS allows) ---
@@ -162,9 +116,9 @@ export function useUsers() {
         body: { user_info_id },
       });
       console.log(`[useUsers.ts] User deletion successful: ${response.message}`);
-      // If the deleted user was the current app_user, clear their session
+      // If the deleted user was the current user, clear their session
       if (currentAppUser.value?.id === user_info_id) {
-        logoutUsername();
+        logout();
       }
       return true;
     } catch (error: any) {
@@ -180,7 +134,6 @@ export function useUsers() {
     if (!currentAppUser.value) return '';
 
     return currentAppUser.value.firstName ||
-      currentAppUser.value.username ||
       currentAppUser.value.email?.split('@')[0] ||
       'User';
   });
@@ -190,30 +143,11 @@ export function useUsers() {
     return !!currentAppUser.value;
   });
 
-  // Unified logout function that detects user type internally
-  async function logout() {
-    try {
-      if (currentAppUser.value?.username) {
-        // App user (username/password auth)
-        await logoutUsername();
-      } else {
-        // Email user (Supabase auth)
-        await logoutEmail();
-      }
-      console.log('[useUsers.ts] User logged out successfully.');
-    } catch (error) {
-      console.error('[useUsers.ts] Logout failed:', error);
-      throw error;
-    }
-  }
-
   return {
-    currentAppUser, // Reactive state for app_user
+    currentAppUser, // Reactive state for current user
     currentUserDisplayName, // Computed display name
     isLoggedIn, // Computed login status
-    logout, // Unified logout function
-    loginUsername,
-    signupUsername,
+    logout, // Logout function
     loginEmail,
     signupEmail,
     getUsers,

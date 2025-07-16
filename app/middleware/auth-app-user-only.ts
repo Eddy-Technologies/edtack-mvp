@@ -10,10 +10,10 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
   // Client-side rehydration for currentAppUser
   if (import.meta.client && !currentAppUser.value) {
     try {
-      const response: { user: any; type: string } = await $fetch('/api/app-auth/me');
-      if (response.user && response.type === 'app_user') {
+      const response: { user: any; type: string } = await $fetch('/api/auth/me');
+      if (response.user && response.type === 'user') {
         currentAppUser.value = response.user;
-        console.log('[AuthAppUserOnly Middleware] App user session re-hydrated:', response.user.id);
+        console.log('[AuthAppUserOnly Middleware] User session re-hydrated:', response.user.id);
       }
     } catch (error) {
       console.warn(

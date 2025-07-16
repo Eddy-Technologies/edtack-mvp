@@ -1,26 +1,9 @@
 <template>
   <div class="min-h-[300px] flex items-center justify-center">
     <div class="w-[360px] space-y-6 text-center">
-      <!-- Login Type Toggle -->
-      <div class="flex bg-gray-100 rounded-lg p-1">
-        <button
-          :class="[
-            'flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors',
-            loginType === 'username' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
-          ]"
-          @click="loginType = 'username'"
-        >
-          Username
-        </button>
-        <button
-          :class="[
-            'flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors',
-            loginType === 'email' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
-          ]"
-          @click="loginType = 'email'"
-        >
-          Email
-        </button>
+      <!-- Login Type Header -->
+      <div class="text-center">
+        <h3 class="text-lg font-medium text-gray-900">Sign in with Email</h3>
       </div>
 
       <!-- Error Message -->
@@ -30,11 +13,11 @@
 
       <!-- Login Form -->
       <div class="space-y-4">
-        <!-- Username/Email Input -->
+        <!-- Email Input -->
         <input
           v-model="loginInput"
-          :type="loginType === 'email' ? 'email' : 'text'"
-          :placeholder="loginType === 'email' ? 'Email' : 'Username'"
+          type="email"
+          placeholder="Email"
           class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
           :disabled="isLoading"
         >
@@ -73,14 +56,13 @@ import Button from '~/components/common/Button.vue';
 import { useUsers } from '~/composables/useUsers';
 
 // Form state
-const loginType = ref<'username' | 'email'>('username');
 const loginInput = ref('');
 const password = ref('');
 const isLoading = ref(false);
 const errorMessage = ref('');
 
 // Auth composable
-const { loginUsername, loginEmail } = useUsers();
+const { loginEmail } = useUsers();
 
 const emit = defineEmits(['success']);
 
@@ -94,17 +76,10 @@ const handleLogin = async () => {
   errorMessage.value = '';
 
   try {
-    if (loginType.value === 'username') {
-      // TODO: Validate username format (no spaces, special chars, etc.)
-      const response = await loginUsername(loginInput.value.trim(), password.value);
-      console.log('Username login successful:', response);
-      emit('success');
-    } else {
-      // TODO: Validate email format more thoroughly
-      const response = await loginEmail(loginInput.value.trim(), password.value);
-      console.log('Email login successful:', response);
-      emit('success');
-    }
+    // Only email login is supported
+    const response = await loginEmail(loginInput.value.trim(), password.value);
+    console.log('Email login successful:', response);
+    emit('success');
   } catch (error: any) {
     console.error('Login failed:', error);
 

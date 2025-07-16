@@ -19,8 +19,8 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
     try {
       // Attempt to fetch app user info from server to rehydrate state
       // This will set currentAppUser.value if a valid cookie is present
-      const response: { user: any; type: string } = await $fetch('/api/app-auth/me');
-      if (response.user && response.type === 'app_user') {
+      const response: { user: any; type: string } = await $fetch('/api/auth/me');
+      if (response.user && response.type === 'user') {
         currentAppUser.value = response.user; // Manually set it for immediate use in middleware
       }
     } catch (error) {

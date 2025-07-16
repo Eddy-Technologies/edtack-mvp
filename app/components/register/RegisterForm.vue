@@ -1,26 +1,9 @@
 <template>
   <div class="min-h-[300px] flex items-center justify-center">
     <div class="w-[360px] space-y-6 text-center">
-      <!-- Registration Type Toggle -->
-      <div class="flex bg-gray-100 rounded-lg p-1">
-        <button
-          :class="[
-            'flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors',
-            registerType === 'username' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
-          ]"
-          @click="registerType = 'username'"
-        >
-          Username
-        </button>
-        <button
-          :class="[
-            'flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors',
-            registerType === 'email' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
-          ]"
-          @click="registerType = 'email'"
-        >
-          Email
-        </button>
+      <!-- Registration Header -->
+      <div class="text-center">
+        <h3 class="text-lg font-medium text-gray-900">Create Your Account</h3>
       </div>
 
       <!-- Error Message -->
@@ -53,11 +36,11 @@
           :disabled="isLoading"
         >
 
-        <!-- Email/Username Input -->
+        <!-- Email Input -->
         <input
           v-model="registerInput"
-          :type="registerType === 'email' ? 'email' : 'text'"
-          :placeholder="registerType === 'email' ? 'Email' : 'Username'"
+          type="email"
+          placeholder="Email"
           class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
           :disabled="isLoading"
         >
@@ -96,7 +79,6 @@ import Button from '~/components/common/Button.vue';
 import { useUsers } from '~/composables/useUsers';
 
 // Form state
-const registerType = ref<'username' | 'email'>('email');
 const firstName = ref('');
 const lastName = ref('');
 const registerInput = ref('');
@@ -106,7 +88,7 @@ const errorMessage = ref('');
 const successMessage = ref('');
 
 // Auth composable
-const { signupUsername, signupEmail } = useUsers();
+const { signupEmail } = useUsers();
 
 const emit = defineEmits(['success']);
 
@@ -135,40 +117,27 @@ const handleRegister = async () => {
   successMessage.value = '';
 
   try {
-    if (registerType.value === 'username') {
-      // TODO: Validate username format (no spaces, special chars, etc.)
-      const response = await signupUsername({
-        firstName: firstName.value.trim(),
-        lastName: lastName.value.trim(),
-        username: registerInput.value.trim(),
-        password: password.value,
-      });
-      console.log('Username registration successful:', response);
+    // Only email registration is supported
+    const response = await signupEmail(
+      registerInput.value.trim(),
+      password.value,
+      firstName.value.trim(),
+      lastName.value.trim()
+    );
+    console.log('Email registration successful:', response);
+
+    if (response.needsVerification) {
+      successMessage.value = 'Account created! Please check your email for verification.';
+    } else {
       successMessage.value = 'Account created successfully!';
       emit('success');
-    } else {
-      // TODO: Validate email format more thoroughly
-      const response = await signupEmail(
-        registerInput.value.trim(),
-        password.value,
-        firstName.value.trim(),
-        lastName.value.trim()
-      );
-      console.log('Email registration successful:', response);
-
-      if (response.needsVerification) {
-        successMessage.value = 'Account created! Please check your email for verification.';
-      } else {
-        successMessage.value = 'Account created successfully!';
-        emit('success');
-      }
     }
   } catch (error: any) {
     console.error('Registration failed:', error);
 
     // TODO: Improve error message handling based on error type
     if (error.status === 409) {
-      errorMessage.value = 'An account with this email/username already exists.';
+      errorMessage.value = 'An account with this email already exists.';
     } else if (error.status === 429) {
       errorMessage.value = 'Too many attempts. Please try again later.';
     } else {
