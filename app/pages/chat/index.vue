@@ -36,74 +36,17 @@
     <!-- Main Content -->
     <div class="flex flex-col flex-1 h-full relative">
       <!-- Top Bar with User Avatar -->
-      <div class="flex justify-end items-center px-4 py-3 bg-white relative z-10">
-        <div class="relative">
-          <img
-            src="https://i.pravatar.cc/40"
-            alt="User Avatar"
-            class="w-10 h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500"
-            @click="menuOpen = !menuOpen"
-          >
-          <!-- Overflow Menu -->
-          <div
-            v-if="menuOpen"
-            class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-20"
-          >
-            <template v-if="loggedIn">
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('/dashboard?tab=overview')"
-              >
-                Profile
-              </button>
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('/dashboard?tab=account')"
-              >
-                Settings
-              </button>
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('/dashboard?tab=shop')"
-              >
-                Shop
-              </button>
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                @click="routeTo('feedback')"
-              >
-                Feedback
-              </button>
-              <div class="border-t my-1" />
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
-                @click="logout"
-              >
-                Logout
-              </button>
-            </template>
-
-            <template v-else>
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-blue-600"
-                @click="login"
-              >
-                Login
-              </button>
-            </template>
-          </div>
-        </div>
+      <div class="flex justify-end items-center px-4 py-3 bg-white relative z-50">
+        <AuthenticationWidget
+          @login-success="handleLoginSuccess"
+          @register-success="handleRegisterSuccess"
+          @logout="handleLogout"
+        />
       </div>
 
       <!-- Chat Content Below -->
       <ChatContent class="flex-1 overflow-y-auto pb-10" />
     </div>
-
-    <LoginModal
-      v-if="loginModalVisible"
-      @close="loginModalVisible = false"
-      @success="handleLoginSuccess"
-    />
 
     <CharacterSelectionModal
       :is-open="characterModalVisible"
@@ -119,8 +62,8 @@ import { useRouter } from 'vue-router';
 import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
-import LoginModal from '@/components/login/LoginModal.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
+import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useSupabaseUser, useToast } from '#imports';
 
@@ -130,48 +73,32 @@ const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
 const isDragging = ref(false);
 const isMobile = ref(false);
-const menuOpen = ref(false);
-const loginModalVisible = ref(false);
 const characterModalVisible = ref(false);
 const currentCharacter = ref(null);
 
 const router = useRouter();
-const routeTo = (path) => router.push(path);
 
 const { signOut } = useAuth();
 const user = useSupabaseUser();
 const loggedIn = computed(() => !!user.value);
 
-const login = () => {
-  loginModalVisible.value = true;
-};
-
-const logout = async () => {
-  try {
-    await signOut();
-    menuOpen.value = false;
-    toast.add({
-      title: 'Logged out successfully',
-      description: 'See you next time!',
-      color: 'green'
-    });
-  } catch (error) {
-    console.error('Logout failed:', error);
-    toast.add({
-      title: 'Logout failed',
-      description: 'Please try again',
-      color: 'red'
-    });
-  }
-};
-
 const handleLoginSuccess = () => {
-  loginModalVisible.value = false;
+  // Handle any additional actions after successful login
+  // AuthenticationWidget already handles the modal closing
+};
+
+const handleRegisterSuccess = () => {
+  // Handle any additional actions after successful registration
+  // AuthenticationWidget already handles the modal closing
+};
+
+const handleLogout = () => {
+  // Handle any additional actions after logout
+  // AuthenticationWidget already handles the logout process
 };
 
 const openCharacterModal = () => {
   characterModalVisible.value = true;
-  menuOpen.value = false;
 };
 
 const handleCharacterSelection = (character) => {
@@ -221,20 +148,11 @@ const handleResize = () => {
 onMounted(() => {
   handleResize();
   window.addEventListener('resize', handleResize);
-  document.addEventListener('click', onClickOutside);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
-  document.removeEventListener('click', onClickOutside);
 });
-
-const onClickOutside = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  if (!target.closest('.relative')) {
-    menuOpen.value = false;
-  }
-};
 </script>
 
 <style>

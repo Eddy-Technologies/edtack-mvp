@@ -19,7 +19,7 @@
           We want to make sure we provide the best experience for all our users and we can only do that with your help.
         </p>
         <p class="font-bold mb-4">
-          Help us improve Eddy by sharing your thoughts and suggestions.
+          Help us improve Eddy by sharing your thoughts and suggestions. It can be as simple as telling us what other characters you would like to see!
         </p>
       </div>
 
