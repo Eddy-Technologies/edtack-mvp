@@ -4,39 +4,67 @@ export const useAuth = () => {
   const supabase = useSupabaseClient();
   const user = useSupabaseUser();
 
-  const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName,
+  const signUp = async (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    onboardingData?: {
+      userType: string;
+      studentLevel?: string;
+    }
+  ) => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+          },
         },
-      },
-    });
+      });
 
-    if (error) throw error;
+      if (error) throw error;
 
-    // Create user profile in user_infos table
-    if (data.user) {
-      const { error: profileError } = await supabase
+      // Get role_id from roles table
+      const { data: roleData, error: roleFetchError } = await supabase
+        .from('roles')
+        .select('id')
+        .eq('role_name', onboardingData?.userType)
+        .single();
+      if (roleFetchError) throw roleFetchError;
+
+      // Create user profile in user_infos table
+      const { data: userInfo, error: userInfoError } = await supabase
         .from('user_infos')
         .insert({
           user_id: data.user.id,
           first_name: firstName,
           last_name: lastName,
-          onboarding_completed: false,
+          level_type: onboardingData?.studentLevel,
+          onboarding_completed: true,
           is_active: true,
+        })
+        .select()
+        .single();
+
+      if (userInfoError) throw userInfoError;
+
+      const { error: roleError } = await supabase
+        .from('user_roles')
+        .insert({
+          user_info_id: userInfo.id,
+          role_id: roleData.id,
         });
+      if (roleError) throw roleError;
 
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        throw profileError;
-      }
+      return data;
+    } catch (error) {
+      console.error('Sign up error:', error);
+      throw error;
     }
-
-    return data;
   };
 
   const signIn = async (email: string, password: string) => {

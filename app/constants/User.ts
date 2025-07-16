@@ -1,0 +1,5 @@
+export enum USER_TYPE {
+  PARENT = 'PARENT',
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER'
+}
