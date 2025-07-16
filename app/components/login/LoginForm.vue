@@ -42,10 +42,6 @@
           @click="handleLogin"
         />
       </div>
-
-      <!-- TODO: Add "Forgot Password" link -->
-      <!-- TODO: Add "Remember Me" checkbox -->
-      <!-- TODO: Add social login options if needed -->
     </div>
   </div>
 </template>
@@ -54,6 +50,9 @@
 import { ref } from 'vue';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
+import { useToast } from '#imports';
+
+const toast = useToast();
 
 // Form state
 const loginInput = ref('');
@@ -79,6 +78,11 @@ const handleLogin = async () => {
     // Only email login is supported
     const response = await signIn(loginInput.value.trim(), password.value);
     console.log('Email login successful:', response);
+    toast.add({
+      title: 'Login successful',
+      description: 'Welcome back!',
+      color: 'green'
+    });
     emit('success');
   } catch (error: any) {
     console.error('Login failed:', error);
@@ -95,10 +99,4 @@ const handleLogin = async () => {
     isLoading.value = false;
   }
 };
-
-// TODO: Add form validation for username/email format
-// TODO: Add password strength indicator for better UX
-// TODO: Add "Remember Me" functionality
-// TODO: Add social login integration
-// TODO: Add rate limiting feedback
 </script>

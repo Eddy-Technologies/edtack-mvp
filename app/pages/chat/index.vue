@@ -122,7 +122,9 @@ import ChatContent from '@/components/ChatContent.vue';
 import LoginModal from '@/components/login/LoginModal.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
 import { useAuth } from '~/composables/useAuth';
-import { useSupabaseUser } from '#imports';
+import { useSupabaseUser, useToast } from '#imports';
+
+const toast = useToast();
 
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
@@ -148,8 +150,18 @@ const logout = async () => {
   try {
     await signOut();
     menuOpen.value = false;
+    toast.add({
+      title: 'Logged out successfully',
+      description: 'See you next time!',
+      color: 'green'
+    });
   } catch (error) {
     console.error('Logout failed:', error);
+    toast.add({
+      title: 'Logout failed',
+      description: 'Please try again',
+      color: 'red'
+    });
   }
 };
 

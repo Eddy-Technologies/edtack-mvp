@@ -51,7 +51,9 @@ import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
-import { useSupabaseUser } from '#imports';
+import { useSupabaseUser, useToast } from '#imports';
+
+const toast = useToast();
 
 const { signOut } = useAuth();
 const user = useSupabaseUser();
@@ -89,10 +91,18 @@ const handleLogout = async () => {
   isLoggingOut.value = true;
   try {
     await signOut();
-    // TODO: Show logout success message
+    toast.add({
+      title: 'Logged out successfully',
+      description: 'See you next time!',
+      color: 'green'
+    });
   } catch (error) {
     console.error('Logout failed:', error);
-    // TODO: Show error message
+    toast.add({
+      title: 'Logout failed',
+      description: 'Please try again',
+      color: 'red'
+    });
   } finally {
     isLoggingOut.value = false;
   }
