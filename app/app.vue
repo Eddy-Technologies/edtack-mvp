@@ -40,12 +40,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 // Import feedback components
+import { useSupabaseClient } from '#imports';
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
+import { useMeStore } from '~/stores/me';
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
 const consentKey = 'analyticsConsentGiven';
+const meStore = useMeStore();
+const { fetchMe, me } = meStore;
+const supabase = useSupabaseClient();
 
 useHead({
   script: [
@@ -81,7 +86,15 @@ function giveConsent(agreed: boolean) {
   agreedToCookiesScriptConsent.value = agreed;
 }
 
-onMounted(() => {
+onMounted(async () => {
+  // Get me
+  if (!me) {
+    const { data: session } = await supabase.auth.getSession();
+    if (session && !me) {
+      await fetchMe();
+    }
+  }
+
   const storedConsent = localStorage.getItem(consentKey);
   if (storedConsent) {
     hasConsent.value = true;

@@ -1,86 +1,54 @@
 import type { QueryData } from '@supabase/supabase-js';
+import { onMounted } from 'vue';
+import { useMeStore } from '../stores/me';
 import { useSupabaseClient, useSupabaseUser } from '#imports';
+// Import the clearMe function from the store
+export interface SignUpInput {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  onboardingData?: {
+    userRole: string;
+    studentLevel?: string; };
+}
 
 export const useAuth = () => {
   const supabase = useSupabaseClient();
   const user = useSupabaseUser();
+  const meStore = useMeStore();
+  const { clearMe, fetchMe } = meStore;
 
-  const signUp = async (
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    onboardingData?: {
-      userRole: string;
-      studentLevel?: string;
-    }
-  ) => {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-          },
-        },
-      });
-
-      if (error) throw error;
-
-      // Get role_id from roles table
-      const { data: roleData, error: roleFetchError } = await supabase
-        .from('roles')
-        .select('id')
-        .eq('role_name', onboardingData?.userRole)
-        .single();
-      if (roleFetchError) throw roleFetchError;
-
-      // Create user profile in user_infos table
-      const { data: userInfo, error: userInfoError } = await supabase
-        .from('user_infos')
-        .insert({
-          user_id: data.user.id,
-          first_name: firstName,
-          last_name: lastName,
-          level_type: onboardingData?.studentLevel,
-          onboarding_completed: true,
-          is_active: true,
-        })
-        .select()
-        .single();
-
-      if (userInfoError) throw userInfoError;
-
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_info_id: userInfo.id,
-          role_id: roleData.id,
-        });
-      if (roleError) throw roleError;
-
-      return data;
-    } catch (error) {
-      console.error('Sign up error:', error);
-      throw error;
-    }
+  const signUp = async (input: SignUpInput) => {
+    const data = await $fetch('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(input)
+    });
+    console.log('Sign up response:', data);
+    return data;
   };
 
-  const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+  const signIn = async (email_val: string, password_val: string) => {
+    // const body = JSON.stringify();
+    console.log(email_val, email_val);
+    const data = await $fetch('/api/auth/login', {
+      method: 'POST',
+      body: { email: email_val, password: password_val }
     });
-
-    if (error) throw error;
+    fetchMe();
+    console.log('Sign in response:', data);
     return data;
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    await $fetch('/api/auth/logout', {
+      method: 'POST',
+    });
+    // Sign out from Supabase client side
+    await supabase.auth.signOut();
+    clearMe(); // Clear the user store state
+    console.log('User signed out and store cleared');
+    return;
   };
 
   const getUserProfile = async () => {

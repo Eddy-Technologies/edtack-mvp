@@ -1,7 +1,8 @@
 <template>
   <div class="flex gap-4 items-center">
     <!-- Logged in state -->
-    <div v-if="isLoggedIn" class="relative">
+    <div v-if="meIsLoading">TODO: spinner</div>
+    <div v-else-if="isLoggedIn && !meIsLoading" class="relative">
       <div
         :class="[
           'w-10 h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 flex items-center justify-center text-white font-semibold text-sm',
@@ -96,6 +97,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
@@ -103,6 +105,7 @@ import { useAuth } from '~/composables/useAuth';
 import { useSupabaseUser, useToast } from '#imports';
 import { generateInitials, generateAvatarColor } from '~/utils/avatarUtils';
 import Button from '~/components/common/Button.vue';
+import { useMeStore } from '~/stores/me';
 
 // Props for customization
 interface Props {
@@ -124,7 +127,10 @@ const registerModalVisible = ref(false);
 const subscriptionModalVisible = ref(false);
 
 const { signOut } = useAuth();
-const user = useSupabaseUser();
+// const user = useSupabaseUser();
+const meStore = useMeStore();
+const { me: user, meIsLoading } = storeToRefs(meStore);
+
 const isLoggedIn = computed(() => !!user.value);
 
 // User display name
