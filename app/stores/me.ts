@@ -4,7 +4,7 @@ import type { GetMeRes } from '~~/server/api/me.get';
 
 export const useMeStore = defineStore('me', () => {
   const me = ref<GetMeRes | null>(null);
-  const isLoading = ref(true);
+  const isLoading = ref(false);
   const error = ref<any | null>(null);
 
   // Action to fetch user data (as you had before)
