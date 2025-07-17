@@ -44,11 +44,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import placeholder1 from '../../../assets/eddy.png';
 import type { USER_ROLE } from '../../constants/User';
 import Layout from '~/components/dashboard/Layout.vue';
-import { useAuth } from '~/composables/useAuth';
-import { useSupabaseUser } from '#imports';
+import { useMeStore } from '~/stores/me';
 
 // Student Components
 import StudentOverviewTab from '~/components/dashboard/student/OverviewTab.vue';
@@ -74,48 +74,30 @@ definePageMeta({
 });
 
 // Get authentication state
-const { user, getUserProfile } = useAuth();
-const supabaseUser = useSupabaseUser();
-
-// Get user profile data
-const userProfile = await getUserProfile().catch(() => null);
-
-// Determine current user and user type
-const currentUser = computed(() => {
-  if (user.value) {
-    return {
-      id: user.value.id,
-      email: user.value.email || '',
-      firstName: userProfile?.first_name || user.value.user_metadata?.first_name || '',
-      lastName: userProfile?.last_name || user.value.user_metadata?.last_name || '',
-      type: 'user',
-      ...userProfile
-    };
-  }
-  return null;
-});
+const meStore = useMeStore();
+const { me: user } = storeToRefs(meStore);
 
 // User display data
 const userRole = computed<USER_ROLE>(() => {
-  return currentUser.value.user_role;
+  return user.value?.user_role as USER_ROLE;
 });
 
 const userName = computed(() => {
-  if (!currentUser.value) return 'User';
-  const firstName = currentUser.value.firstName;
-  const lastName = currentUser.value.lastName;
+  if (!user.value) return 'User';
+  const firstName = user.value.first_name;
+  const lastName = user.value.last_name;
   if (firstName && lastName) {
     return `${firstName} ${lastName}`;
   }
-  return currentUser.value.email || 'User';
+  return user.value.email || 'User';
 });
 
 const userEmail = computed(() => {
-  return currentUser.value?.email || 'user@example.com';
+  return user.value?.email || 'user@example.com';
 });
 
 const userAvatar = computed(() => {
-  return currentUser.value?.profile_picture_url || placeholder1;
+  return user.value?.profile_picture_url || placeholder1;
 });
 
 // Student payment responsibility - would come from user/subscription data

@@ -3,16 +3,7 @@
     <!-- Logged in state -->
     <div v-if="meIsLoading" class="animate-spin rounded-full border-2 border-current border-t-transparent w-4 h-4" />
     <div v-else-if="isLoggedIn && !meIsLoading" class="relative">
-      <div
-        :class="[
-          'w-10 h-10 rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 flex items-center justify-center text-white font-semibold text-sm',
-          avatarColor
-        ]"
-        :title="`Welcome, ${currentUserDisplayName}`"
-        @click="menuOpen = !menuOpen"
-      >
-        {{ userInitials }}
-      </div>
+      <UserAvatar @click="menuOpen = !menuOpen" />
       <!-- Dropdown Menu -->
       <div
         v-if="menuOpen"
@@ -101,9 +92,9 @@ import { storeToRefs } from 'pinia';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
+import UserAvatar from './dashboard/common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
-import { useSupabaseUser, useToast } from '#imports';
-import { generateInitials, generateAvatarColor } from '~/utils/avatarUtils';
+import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
 
@@ -132,48 +123,6 @@ const meStore = useMeStore();
 const { me: user, meIsLoading } = storeToRefs(meStore);
 
 const isLoggedIn = computed(() => !!user.value);
-
-// User display name
-const currentUserDisplayName = computed(() => {
-  if (!user.value) return '';
-
-  const firstName = user.value.user_metadata?.first_name;
-  const lastName = user.value.user_metadata?.last_name;
-
-  if (firstName && lastName) {
-    return `${firstName} ${lastName}`;
-  } else if (firstName) {
-    return firstName;
-  } else {
-    return user.value.email || '';
-  }
-});
-
-// Generate user initials and avatar color
-const userInitials = computed(() => {
-  if (!user.value) return '';
-
-  const firstName = user.value.user_metadata?.first_name;
-  const lastName = user.value.user_metadata?.last_name;
-  const email = user.value.email;
-
-  return generateInitials(firstName, lastName, email);
-});
-
-const avatarColor = computed(() => {
-  if (!user.value) return 'bg-gray-500';
-
-  const firstName = user.value.user_metadata?.first_name;
-  const lastName = user.value.user_metadata?.last_name;
-  const email = user.value.email;
-
-  // Use full name for color generation, fallback to email
-  const nameForColor = firstName && lastName ?
-    `${firstName} ${lastName}` :
-    firstName || lastName || email || '';
-
-  return generateAvatarColor(nameForColor);
-});
 
 // Navigation helper
 const routeTo = (path: string) => {

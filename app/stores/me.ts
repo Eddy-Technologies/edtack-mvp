@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue'; // Or use `useState` if you need Nuxt's SSR shared state for *some* parts
-import type { GetMeRes } from '~~/server/api/me.get';
+import type { GetMeRes } from '../../server/api/me.get';
 
 export const useMeStore = defineStore('me', () => {
   const me = ref<GetMeRes | null>(null);

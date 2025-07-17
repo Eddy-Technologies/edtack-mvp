@@ -18,6 +18,7 @@ export interface GetMeRes {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  user_role: string;
 }
 
 export default defineEventHandler(async (event) => {
@@ -37,9 +38,7 @@ export default defineEventHandler(async (event) => {
     // Fetch user profile data from user_infos table
     const { data: userInfo, error: userInfoError } = await supabase
       .from('user_infos')
-      .select(
-        'id, user_id, first_name, last_name, gender, address, country_code, postal_code, date_of_birth, level_type, profile_picture_url, onboarding_completed, payment_customer_id, is_active, created_at, updated_at'
-      )
+      .select('*, user_roles(roles(*))')
       .eq('user_id', user.id)
       .single();
 
@@ -60,6 +59,7 @@ export default defineEventHandler(async (event) => {
       email: user.email,
       user_info_id: userInfo.id,
       ...userInfo,
+      user_role: userInfo.user_roles[0].roles.role_name
     } as GetMeRes;
   } catch (err: any) {
     // If the error is already a H3Error (from createError), re-throw it

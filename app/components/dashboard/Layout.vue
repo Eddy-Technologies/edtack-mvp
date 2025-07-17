@@ -12,7 +12,7 @@
       <div class="px-6 py-4 border-b bg-gray-50">
         <div class="flex items-center space-x-3">
           <div class="flex-shrink-0">
-            <img class="w-10 h-10 rounded-full object-cover" :src="userAvatar" :alt="userName">
+            <UserAvatar />
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-gray-900 truncate">
@@ -168,6 +168,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { USER_ROLE } from '../../constants/User';
+import UserAvatar from './common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
 
 interface NavigationItem {

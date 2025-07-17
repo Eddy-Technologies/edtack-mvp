@@ -1,47 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Overview Header -->
-    <div class="bg-white rounded-xl shadow-sm border p-6">
-      <div class="flex items-center space-x-6">
-        <div class="relative">
-          <img
-            :src="profile.avatar"
-            :alt="profile.name"
-            class="w-24 h-24 rounded-full object-cover"
-          >
-          <button
-            class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full hover:bg-primary-700 transition-colors"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              />
-            </svg>
-          </button>
-        </div>
-        <div class="flex-1">
-          <h1 class="text-2xl font-bold text-gray-900">{{ profile.name }}</h1>
-          <p class="text-gray-600">{{ profile.email }}</p>
-          <p class="text-sm text-gray-500">
-            Grade {{ profile.grade }} • Student ID: {{ profile.studentId }}
-          </p>
-          <div class="flex items-center mt-2">
-            <div class="flex items-center text-sm text-green-600">
-              <div class="w-2 h-2 bg-green-400 rounded-full mr-2" />
-              Online
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <OverviewHeader :show-edit-button="true" />
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -91,6 +51,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import placeholder1 from '../../../../assets/eddy.png';
+import OverviewHeader from '../OverviewHeader.vue';
 
 const profile = ref({
   name: 'Alex Johnson',

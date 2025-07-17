@@ -35,7 +35,7 @@ export function generateInitials(firstName?: string, lastName?: string, email?: 
  * @param input - String to generate color from (name or email)
  * @returns Tailwind CSS background color class
  */
-export function generateAvatarColor(input: string = ''): string {
+export function generateAvatarColor(input: string = 'a'): string {
   const colors = [
     'bg-blue-500',
     'bg-green-500',
@@ -58,4 +58,14 @@ export function generateAvatarColor(input: string = ''): string {
   // Use absolute value and modulo to get color index
   const colorIndex = Math.abs(hash) % colors.length;
   return colors[colorIndex];
+}
+
+export function getDisplayFullName(firstName: string, lastName: string, email: string) {
+  if (firstName && lastName) {
+    return `${firstName} ${lastName}`;
+  } else if (firstName) {
+    return firstName;
+  } else {
+    return email || '';
+  }
 }
