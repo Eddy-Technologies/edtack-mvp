@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4 items-center">
     <!-- Logged in state -->
-    <div v-if="meIsLoading">TODO: spinner</div>
+    <div v-if="meIsLoading" class="animate-spin rounded-full border-2 border-current border-t-transparent w-4 h-4" />
     <div v-else-if="isLoggedIn && !meIsLoading" class="relative">
       <div
         :class="[
