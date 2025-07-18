@@ -1,96 +1,71 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import type { SignUpInput } from '~~/app/composables/useAuth';
+import type { SignUpReq } from '~~/app/composables/useAuth';
+import { USER_ROLE } from '~~/app/constants/User';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
-  const { email, password, firstName, lastName, onboardingData }: SignUpInput = await readBody(event);
+  const body: SignUpReq = await readBody(event);
 
-  // Validate required fields
-  if (!email || !password || !firstName || !lastName || !onboardingData) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Email, password, first name, and last name are required for registration.',
-    });
+  // Simple validation
+  const requiredFields = ['email', 'password', 'firstName', 'lastName', 'acceptTerms'];
+  for (const field of requiredFields) {
+    if (!body[field as keyof SignUpReq]) {
+      throw createError({ statusCode: 400, statusMessage: `Missing required field: ${field}` });
+    }
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid email address.' });
+  }
+  if (body.password.length < 6) {
+    throw createError({ statusCode: 400, statusMessage: 'Password must be at least 6 characters.' });
   }
 
-  // Basic email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Please enter a valid email address.',
-    });
-  }
-
-  // Password validation
-  if (password.length < 6) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Password must be at least 6 characters long.',
-    });
-  }
-
+  let supabaseUserId: string | undefined;
   try {
-    // 1. Create user in Supabase auth
-    const { data: newUser, error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-        },
-      },
+    // 1. Create user in Supabase Auth
+    const { data: supabaseUser, error: authError } = await supabase.auth.signUp({
+      email: body.email,
+      password: body.password,
+      options: { data: { first_name: body.firstName, last_name: body.lastName } },
     });
+    if (authError || !supabaseUser.user) throw authError;
+    supabaseUserId = supabaseUser.user.id;
 
-    if (authError || !newUser.user) throw authError;
-
-    // Get role_id from roles table
-    const { data: roleData, error: roleFetchError } = await supabase
-      .from('roles')
-      .select('id')
-      .eq('role_name', onboardingData.userRole)
-      .single();
-    if (roleFetchError) throw roleFetchError;
-
-    // Create user profile in user_infos table
-    const { data: userInfo, error: userInfoError } = await supabase
-      .from('user_infos')
-      .insert({
-        user_id: newUser.user.id,
-        first_name: firstName,
-        last_name: lastName,
-        level_type: onboardingData?.studentLevel,
-        onboarding_completed: true,
-        is_active: true,
-      })
-      .select()
-      .single();
-
-    if (userInfoError) throw userInfoError;
-
-    const { error: roleError } = await supabase
-      .from('user_roles')
-      .insert({
-        user_info_id: userInfo.id,
-        role_id: roleData.id,
+    // 2. Call SQL function to insert all app tables in a single transaction
+    const { error: appError } = await supabase.rpc(
+      'register_user_app_tables',
+      {
+        p_user_id: supabaseUserId,
+        p_first_name: body.firstName,
+        p_last_name: body.lastName,
+        p_email: body.email,
+        p_user_role: body.userRole,
+        p_student_level: body.userRole === USER_ROLE.STUDENT ? body.studentLevel : null,
+      } as any
+    );
+    if (appError) {
+      // Clean up Auth user if app table insert fails
+      await supabase.auth.admin.deleteUser(supabaseUserId);
+      throw createError({
+        statusCode: 500,
+        statusMessage: appError.message || 'Failed to create user profile.',
       });
-    if (roleError) throw roleError;
+    }
 
-    // setCookie(event, 'supabase_access_token', newUser.session.access_token, {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === 'production',
-    //   maxAge: 60 * 60 * 24 * 7, // 7 days
-    //   path: '/',
-    //   sameSite: 'lax',
-    // });
-
-    return newUser;
+    return { user: supabaseUser.user };
   } catch (err: any) {
+    // Clean up dangling auth user if created
+    if (supabaseUserId) {
+      try {
+        await supabase.auth.admin.deleteUser(supabaseUserId);
+      } catch (cleanupErr) {
+        console.error('Failed to clean up auth user:', cleanupErr);
+      }
+    }
     console.error('Email registration error:', err);
     throw createError({
       statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || err.message || 'Registration failed.',
+      statusMessage: err.statusMessage || 'Registration failed.',
     });
   }
 });

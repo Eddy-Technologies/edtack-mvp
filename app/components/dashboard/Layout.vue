@@ -205,11 +205,11 @@ const studentNavigation = computed((): NavigationItem[] => {
       route: '/dashboard?tab=overview',
       icon: 'UserIcon'
     },
-    {
-      name: 'Notes',
-      route: '/dashboard?tab=notes',
-      icon: 'DocumentTextIcon'
-    }
+    // {
+    //   name: 'Notes',
+    //   route: '/dashboard?tab=notes',
+    //   icon: 'DocumentTextIcon'
+    // }
   ];
 
   // Only add subscription if student pays for it
@@ -227,11 +227,11 @@ const studentNavigation = computed((): NavigationItem[] => {
       route: '/dashboard?tab=shop',
       icon: 'ShoppingBagIcon'
     },
-    {
-      name: 'Account',
-      route: '/dashboard?tab=account',
-      icon: 'CogIcon'
-    },
+    // {
+    //   name: 'Account',
+    //   route: '/dashboard?tab=account',
+    //   icon: 'CogIcon'
+    // },
     {
       name: 'Security',
       route: '/dashboard?tab=security',

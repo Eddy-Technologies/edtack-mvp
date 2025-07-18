@@ -3,14 +3,14 @@ import { onMounted } from 'vue';
 import { useMeStore } from '../stores/me';
 import { useSupabaseClient, useSupabaseUser } from '#imports';
 // Import the clearMe function from the store
-export interface SignUpInput {
+export interface SignUpReq {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  onboardingData?: {
-    userRole: string;
-    studentLevel?: string; };
+  userRole: string;
+  studentLevel?: string;
+  acceptTerms: boolean; // Optional, can be used for terms acceptance
 }
 
 export const useAuth = () => {
@@ -19,10 +19,10 @@ export const useAuth = () => {
   const meStore = useMeStore();
   const { clearMe, fetchMe } = meStore;
 
-  const signUp = async (input: SignUpInput) => {
+  const signUp = async (input: SignUpReq) => {
     const data = await $fetch('/api/auth/register', {
       method: 'POST',
-      body: JSON.stringify(input)
+      body: input
     });
     console.log('Sign up response:', data);
     return data;

@@ -38,7 +38,7 @@
 
         <!-- Email Input -->
         <input
-          v-model="registerInput"
+          v-model="email"
           type="email"
           placeholder="Email"
           class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -87,31 +87,14 @@
         </div>
 
         <!-- Student-specific fields -->
-        <div v-if="userRole === USER_ROLE.STUDENT" class="space-y-4">
-          <!-- Student Level (Required) -->
-          <div>
-            <select
-              v-model="studentLevel"
-              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-              :disabled="isLoading"
-            >
-              <option value="">Select your current level *</option>
-              <option value="primary-1">Primary 1</option>
-              <option value="primary-2">Primary 2</option>
-              <option value="primary-3">Primary 3</option>
-              <option value="primary-4">Primary 4</option>
-              <option value="primary-5">Primary 5</option>
-              <option value="primary-6">Primary 6</option>
-              <option value="secondary-1">Secondary 1</option>
-              <option value="secondary-2">Secondary 2</option>
-              <option value="secondary-3">Secondary 3</option>
-              <option value="secondary-4">Secondary 4</option>
-              <option value="secondary-5">Secondary 5</option>
-              <option value="jc-1">Junior College 1</option>
-              <option value="jc-2">Junior College 2</option>
-            </select>
-          </div>
-        </div>
+        <!-- Student Level (Required) -->
+        <USelect
+          v-if="userRole === USER_ROLE.STUDENT"
+          v-model="studentLevel"
+          :disabled="isLoading"
+          placeholder="Select your level"
+          :options="levelOptions"
+        />
 
         <!-- Terms and Conditions -->
         <div class="flex items-start space-x-3 text-left">
@@ -152,27 +135,31 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { USER_ROLE } from '../../constants/User.ts';
+import { USER_ROLE, STUDENT_LEVEL } from '../../constants/User.ts';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
+
+// // Create level options for students using constant STUDENT_LEVEL with label as the value
+const levelOptions = computed(() => Object.entries(STUDENT_LEVEL).map(([key, value]) => ({
+  value: key,
+  label: value,
+})));
 
 // Form state
 const firstName = ref('');
 const lastName = ref('');
-const registerInput = ref('');
 const password = ref('');
-const isLoading = ref(false);
-const errorMessage = ref('');
-const successMessage = ref('');
-
-// Onboarding fields
+const email = ref('');
 const userRole = ref(''); // 'parent' or 'student'
 const studentLevel = ref(''); // Required for students
 const acceptTerms = ref(false);
 
+const isLoading = ref(false);
+const errorMessage = ref('');
+const successMessage = ref('');
+
 // Auth composable
 const { signUp } = useAuth();
-
 const emit = defineEmits(['success']);
 
 // Form validation
@@ -180,10 +167,10 @@ const canSubmit = computed(() => {
   const basicFieldsValid = !isLoading.value &&
     firstName.value.trim() &&
     lastName.value.trim() &&
-    registerInput.value.trim() &&
+    email.value.trim() &&
     password.value.trim() &&
     userRole.value &&
-    acceptTerms.value;
+    acceptTerms.value === true;
 
   // Additional validation for students (student level is required)
   if (userRole.value === USER_ROLE.STUDENT) {
@@ -217,20 +204,16 @@ const handleRegister = async () => {
   successMessage.value = '';
 
   try {
-    // Prepare onboarding data
-    const onboardingData = {
-      userRole: userRole.value,
-      studentLevel: studentLevel.value || undefined,
-    };
-
     // Only email registration is supported
-    const response = await signUp(
-      registerInput.value.trim(),
-      password.value,
-      firstName.value.trim(),
-      lastName.value.trim(),
-      onboardingData
-    );
+    const response = await signUp({
+      email: email.value.trim(),
+      password: password.value,
+      firstName: firstName.value.trim(),
+      lastName: lastName.value.trim(),
+      userRole: userRole.value,
+      studentLevel: studentLevel.value,
+      acceptTerms: acceptTerms.value,
+    });
     console.log('Email registration successful:', response);
 
     if (response.user && !response.session) {
