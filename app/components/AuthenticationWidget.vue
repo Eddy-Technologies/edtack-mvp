@@ -17,7 +17,7 @@
         </button>
         <button
           class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          @click="routeTo('/dashboard?tab=account')"
+          @click="routeTo('/dashboard?tab=security')"
         >
           Settings
         </button>

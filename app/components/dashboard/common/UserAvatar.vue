@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'rounded-full cursor-pointer hover:ring-2 hover:ring-blue-500 flex items-center justify-center text-white font-semibold bg-primary',
+      'rounded-full cursor-pointer hover:bg-primary/90 flex items-center justify-center text-white font-semibold bg-primary',
       sizeClasses,
     ]"
     :title="`Welcome, ${user.userDisplayFullName}`"
