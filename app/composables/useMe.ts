@@ -1,24 +1,27 @@
 import { ref } from 'vue';
 import type { GetMeRes } from '../../server/api/me.get';
+import { useSupabaseClient } from '#imports';
 
 export function useMe() {
   const data = ref<GetMeRes | null>(null);
   const isLoading = ref(false);
   const error = ref<any | null>(null);
+  const supabase = useSupabaseClient();
 
   async function fetchMe() {
     isLoading.value = true;
     error.value = null;
     try {
-      data.value = await $fetch<GetMeRes>('/api/me');
+      const result = await $fetch<GetMeRes>('/api/me');
+      data.value = result;
     } catch (e: any) {
       error.value = e;
       data.value = null;
-      throw e;
     } finally {
       isLoading.value = false;
     }
+    return { data: data.value, error: error.value };
   }
 
-  return { data, isLoading, error, fetchMe };
+  return { meIsLoading: isLoading, fetchMe };
 }

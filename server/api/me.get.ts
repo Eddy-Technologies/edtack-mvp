@@ -6,7 +6,7 @@ export interface GetMeRes {
   user_info_id: string;
   first_name: string;
   last_name: string;
-  gener?: string;
+  gender?: string;
   address?: string;
   country_code?: string;
   postal_code?: string;

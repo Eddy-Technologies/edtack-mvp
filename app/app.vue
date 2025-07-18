@@ -48,8 +48,7 @@ import { useMeStore } from '~/stores/me';
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
 const consentKey = 'analyticsConsentGiven';
-const meStore = useMeStore();
-const { fetchMe, me } = meStore;
+const me = useMeStore();
 const supabase = useSupabaseClient();
 
 useHead({
@@ -87,13 +86,13 @@ function giveConsent(agreed: boolean) {
 }
 
 onMounted(async () => {
-  // Get me
-  if (!me) {
-    const { data: session } = await supabase.auth.getSession();
-    if (session && !me) {
-      await fetchMe();
-    }
-  }
+  // // Get me
+  // if (!me) {
+  //   const { data: session } = await supabase.auth.getSession();
+  //   if (session && !me) {
+  //     await fetchMe();
+  //   }
+  // }
 
   const storedConsent = localStorage.getItem(consentKey);
   if (storedConsent) {

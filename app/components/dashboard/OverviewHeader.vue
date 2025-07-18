@@ -15,14 +15,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
 import { useMeStore } from '../../stores/me';
 import { getDisplayFullName } from '../../utils/avatarUtils';
 import UserAvatar from './common/UserAvatar.vue';
 import { USER_ROLE } from '~/constants/User';
 
-const meStore = useMeStore();
-const { me: user } = storeToRefs(meStore);
+const user = useMeStore();
 
 interface Props {
   showEditButton?: boolean;
@@ -33,19 +31,19 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const name = computed(() => {
-  if (!user.value) return '';
-  const { first_name, last_name, email } = user.value;
+  if (!user) return '';
+  const { first_name, last_name, email } = user;
   return getDisplayFullName(first_name, last_name, email);
 });
 
 const email = computed(() => {
-  if (!user.value) return '';
-  return user.value.email || 'user@example.com';
+  if (!user) return '';
+  return user.email || 'user@example.com';
 });
 
 const roleDescription = computed(() => {
-  if (!user.value) return;
-  const role = user.value.user_role === USER_ROLE.PARENT ? 'Parent' : 'Student';
+  if (!user) return;
+  const role = user.user_role === USER_ROLE.PARENT ? 'Parent' : 'Student';
   return `${role} account`;
 
   // TODO: include grade for student

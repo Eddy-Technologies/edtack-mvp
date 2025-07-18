@@ -1,8 +1,6 @@
-import type { QueryData } from '@supabase/supabase-js';
-import { onMounted } from 'vue';
 import { useMeStore } from '../stores/me';
-import { useSupabaseClient, useSupabaseUser } from '#imports';
-// Import the clearMe function from the store
+import { useSupabaseClient } from '#imports';
+
 export interface SignUpReq {
   email: string;
   password: string;
@@ -15,29 +13,24 @@ export interface SignUpReq {
 
 export const useAuth = () => {
   const supabase = useSupabaseClient();
-  const user = useSupabaseUser();
-  const meStore = useMeStore();
-  const { clearMe, fetchMe } = meStore;
 
   const signUp = async (input: SignUpReq) => {
     const data = await $fetch('/api/auth/register', {
       method: 'POST',
       body: input
     });
-    fetchMe();
     console.log('Sign up response:', data);
     return data;
   };
 
   const signIn = async (email_val: string, password_val: string) => {
-    // const body = JSON.stringify();
-    console.log(email_val, email_val);
     const data = await $fetch('/api/auth/login', {
       method: 'POST',
       body: { email: email_val, password: password_val }
     });
-    fetchMe();
     console.log('Sign in response:', data);
+    const { fetchAndSetMe } = useMeStore();
+    fetchAndSetMe();
     return data;
   };
 
@@ -47,59 +40,24 @@ export const useAuth = () => {
     });
     // Sign out from Supabase client side
     await supabase.auth.signOut();
-    clearMe(); // Clear the user store state
-    console.log('User signed out and store cleared');
+    const { resetMe } = useMeStore();
+    resetMe();
+    console.log('User signed out');
     return;
   };
 
-  const getUserProfile = async () => {
-    if (!user.value) return null;
-
-    const userInfoWithRoleQuery = supabase
-      .from('user_infos')
-      .select('*, user_roles(role_id, roles(role_name))')
-      .eq('user_id', user.value.id)
-      .single();
-
-    // type UserInfoWithRole = QueryData<typeof userInfoWithRoleQuery>;
-    const { data, error } = await userInfoWithRoleQuery;
-    if (error) throw error;
-    console.log('User profile data:', user);
-    return { ...data, user_role: data.user_roles?.[0]?.roles?.role_name }; // user role is same as USER_ROLE
-  };
-
-  const updateUserProfile = async (updates: Record<string, any>) => {
-    if (!user.value) throw new Error('No user logged in');
-
-    const { data, error } = await supabase
-      .from('user_infos')
-      .update(updates)
-      .eq('user_id', user.value.id)
-      .select()
-      .single();
-
-    if (error) throw error;
-    return data;
-  };
-
-  // Computed properties for easier access
-  const isLoggedIn = computed(() => !!user.value);
-
-  const userDisplayName = computed(() => {
-    if (!user.value) return 'User';
-    return user.value.user_metadata?.first_name ||
-      user.value.email?.split('@')[0] ||
-      'User';
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'INITIAL_SESSION' && session) {
+      console.log('User signed initial sess onAuthStateChange:', session);
+      const { fetchAndSetMe } = useMeStore();
+      fetchAndSetMe();
+    }
+    // Currently, we are not handling other events like 'SIGNED_IN', 'SIGNED_OUT', etc. because it does not work.
   });
 
   return {
-    user: readonly(user),
-    isLoggedIn,
-    userDisplayName,
     signUp,
     signIn,
     signOut,
-    getUserProfile,
-    updateUserProfile,
   };
 };

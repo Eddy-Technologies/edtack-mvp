@@ -1,13 +1,12 @@
 <template>
   <Layout
-    :user-type="userRole"
-    :user-name="userName"
-    :user-email="userEmail"
-    :user-avatar="userAvatar"
+    :user-type="user.user_role"
+    :user-name="user.userDisplayFullName"
+    :user-email="user.email"
     :student-pays-for-subscription="studentPaysForSubscription"
   >
     <!-- Student Components -->
-    <template v-if="userRole === 'STUDENT'">
+    <template v-if="user.user_role === USER_ROLE.STUDENT">
       <StudentOverviewTab v-if="currentTab === 'overview'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
       <StudentSubscriptionTab
@@ -44,8 +43,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import placeholder1 from '../../../assets/eddy.png';
 import Layout from '~/components/dashboard/Layout.vue';
 import { useMeStore } from '~/stores/me';
 
@@ -58,46 +55,23 @@ import StudentAccountTab from '~/components/dashboard/student/AccountTab.vue';
 // Parent Components
 import ParentOverviewTab from '~/components/dashboard/parent/OverviewTab.vue';
 import ParentSubscriptionTab from '~/components/dashboard/parent/SubscriptionTab.vue';
-import ParentAccountTab from '~/components/dashboard/parent/AccountTab.vue';
-import ParentChildrenTab from '~/components/dashboard/parent/ChildrenTab.vue';
-import ParentPermissionsTab from '~/components/dashboard/parent/PermissionsTab.vue';
+// import ParentAccountTab from '~/components/dashboard/parent/AccountTab.vue';
+// import ParentChildrenTab from '~/components/dashboard/parent/ChildrenTab.vue';
+// import ParentPermissionsTab from '~/components/dashboard/parent/PermissionsTab.vue';
 
 // Shop Components
 import ShopTab from '~/components/dashboard/shop/ShopTab.vue';
 
 // Shared Components
 import SecurityTab from '~/components/dashboard/common/SecurityTab.vue';
+import { USER_ROLE } from '~/constants/User';
 
 definePageMeta({
   middleware: ['auth'],
 });
 
 // Get authentication state
-const meStore = useMeStore();
-const { me: user } = storeToRefs(meStore);
-
-// User display data
-const userRole = computed(() => {
-  return user.value?.user_role;
-});
-
-const userName = computed(() => {
-  if (!user.value) return 'User';
-  const firstName = user.value.first_name;
-  const lastName = user.value.last_name;
-  if (firstName && lastName) {
-    return `${firstName} ${lastName}`;
-  }
-  return user.value.email || 'User';
-});
-
-const userEmail = computed(() => {
-  return user.value?.email || 'user@example.com';
-});
-
-const userAvatar = computed(() => {
-  return user.value?.profile_picture_url || placeholder1;
-});
+const user = useMeStore();
 
 // Student payment responsibility - would come from user/subscription data
 const studentPaysForSubscription = ref(true); // Set to true if student pays, false if parent pays

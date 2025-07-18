@@ -2,7 +2,7 @@
   <div class="flex gap-4 items-center">
     <!-- Logged in state -->
     <div v-if="meIsLoading" class="animate-spin rounded-full border-2 border-current border-t-transparent w-4 h-4" />
-    <div v-else-if="isLoggedIn && !meIsLoading" class="relative">
+    <div v-else-if="user.isLoggedIn && !meIsLoading" class="relative">
       <UserAvatar @click="menuOpen = !menuOpen" />
       <!-- Dropdown Menu -->
       <div
@@ -88,7 +88,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
@@ -97,6 +96,9 @@ import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
+import { useMe } from '~/composables/useMe';
+
+const { meIsLoading } = useMe();
 
 // Props for customization
 interface Props {
@@ -118,11 +120,7 @@ const registerModalVisible = ref(false);
 const subscriptionModalVisible = ref(false);
 
 const { signOut } = useAuth();
-// const user = useSupabaseUser();
-const meStore = useMeStore();
-const { me: user, meIsLoading } = storeToRefs(meStore);
-
-const isLoggedIn = computed(() => !!user.value);
+const user = useMeStore();
 
 // Navigation helper
 const routeTo = (path: string) => {
