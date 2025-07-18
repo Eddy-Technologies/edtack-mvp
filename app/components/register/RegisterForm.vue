@@ -215,13 +215,8 @@ const handleRegister = async () => {
       acceptTerms: acceptTerms.value,
     });
     console.log('Email registration successful:', response);
-
-    if (response.user && !response.session) {
-      successMessage.value = 'Account created! Please check your email for verification.';
-    } else {
-      successMessage.value = 'Account created successfully!';
-      emit('success');
-    }
+    successMessage.value = 'Account created successfully!';
+    emit('success');
   } catch (error: any) {
     console.error('Registration failed:', error);
 

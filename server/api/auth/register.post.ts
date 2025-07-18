@@ -29,50 +29,32 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'You must accept the terms and conditions.' });
   }
 
-  let supabaseUserId: string | undefined;
   try {
-    // 1. Create user in Supabase Auth
+    // Create user in Supabase Auth - database trigger will handle user_infos creation
     const { data: supabaseUser, error: authError } = await supabase.auth.signUp({
       email: body.email,
       password: body.password,
-      options: { data: { first_name: body.firstName, last_name: body.lastName } },
+      options: {
+        data: {
+          email: body.email,
+          first_name: body.firstName,
+          last_name: body.lastName,
+          user_role: body.userRole,
+          student_level: body.studentLevel || null,
+        }
+      },
     });
-    if (authError || !supabaseUser.user) throw authError;
-    supabaseUserId = supabaseUser.user.id;
 
-    // 2. Call SQL function to insert all app tables in a single transaction
-    const { error: appError } = await supabase.rpc(
-      'register_user_app_tables',
-      {
-        p_user_id: supabaseUserId,
-        p_first_name: body.firstName,
-        p_last_name: body.lastName,
-        p_email: body.email,
-        p_user_role: body.userRole,
-        p_student_level: body.userRole === USER_ROLE.STUDENT ? body.studentLevel : null,
-      } as any
-    );
-    if (appError) {
+    if (authError || !supabaseUser.user) {
       throw createError({
-        statusCode: 500,
-        statusMessage: appError.message || 'Failed to create user profile.',
+        statusCode: 400,
+        statusMessage: authError?.message || 'Registration failed.',
       });
     }
 
     return { user: supabaseUser.user };
   } catch (err: any) {
-    // if (supabaseUserId) {
-    //   try {
-    //     await supabasePrivileged.auth.admin.deleteUser(supabaseUserId);
-    //     console.log(`Cleaned up dangling auth user with ID: ${supabaseUserId}`);
-    //   } catch (cleanupErr) {
-    //     console.error('Failed to clean up auth user:', cleanupErr);
-    //   }
-    // } else {
-    //   console.log('No auth user to clean up.');
-    // }
-
-    console.error('Email registration error:', err);
+    console.error('Registration error:', err);
     throw createError({
       statusCode: err.statusCode || 500,
       statusMessage: err.statusMessage || 'Registration failed.',

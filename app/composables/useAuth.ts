@@ -24,6 +24,7 @@ export const useAuth = () => {
       method: 'POST',
       body: input
     });
+    fetchMe();
     console.log('Sign up response:', data);
     return data;
   };
