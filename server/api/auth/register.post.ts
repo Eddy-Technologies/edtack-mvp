@@ -19,6 +19,15 @@ export default defineEventHandler(async (event) => {
   if (body.password.length < 6) {
     throw createError({ statusCode: 400, statusMessage: 'Password must be at least 6 characters.' });
   }
+  if (!Object.values(USER_ROLE).includes(body.userRole as USER_ROLE)) {
+    throw createError({ statusCode: 400, statusMessage: 'Invalid user role.' });
+  }
+  if (body.userRole === USER_ROLE.STUDENT && !body.studentLevel) {
+    throw createError({ statusCode: 400, statusMessage: 'Student level is required for students.' });
+  }
+  if (!body.acceptTerms) {
+    throw createError({ statusCode: 400, statusMessage: 'You must accept the terms and conditions.' });
+  }
 
   let supabaseUserId: string | undefined;
   try {
@@ -44,8 +53,6 @@ export default defineEventHandler(async (event) => {
       } as any
     );
     if (appError) {
-      // Clean up Auth user if app table insert fails
-      await supabase.auth.admin.deleteUser(supabaseUserId);
       throw createError({
         statusCode: 500,
         statusMessage: appError.message || 'Failed to create user profile.',
@@ -54,14 +61,17 @@ export default defineEventHandler(async (event) => {
 
     return { user: supabaseUser.user };
   } catch (err: any) {
-    // Clean up dangling auth user if created
-    if (supabaseUserId) {
-      try {
-        await supabase.auth.admin.deleteUser(supabaseUserId);
-      } catch (cleanupErr) {
-        console.error('Failed to clean up auth user:', cleanupErr);
-      }
-    }
+    // if (supabaseUserId) {
+    //   try {
+    //     await supabasePrivileged.auth.admin.deleteUser(supabaseUserId);
+    //     console.log(`Cleaned up dangling auth user with ID: ${supabaseUserId}`);
+    //   } catch (cleanupErr) {
+    //     console.error('Failed to clean up auth user:', cleanupErr);
+    //   }
+    // } else {
+    //   console.log('No auth user to clean up.');
+    // }
+
     console.error('Email registration error:', err);
     throw createError({
       statusCode: err.statusCode || 500,
