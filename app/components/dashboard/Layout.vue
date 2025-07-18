@@ -248,11 +248,11 @@ const parentNavigation: NavigationItem[] = [
     route: '/dashboard?tab=overview',
     icon: 'UserIcon'
   },
-  {
-    name: 'Children',
-    route: '/dashboard?tab=children',
-    icon: 'UsersIcon'
-  },
+  // {
+  //   name: 'Statistics',
+  //   route: '/dashboard?tab=children',
+  //   icon: 'UsersIcon'
+  // },
   {
     name: 'Shop',
     route: '/dashboard?tab=shop',
@@ -263,16 +263,16 @@ const parentNavigation: NavigationItem[] = [
     route: '/dashboard?tab=subscription',
     icon: 'CreditCardIcon'
   },
-  {
-    name: 'Permissions',
-    route: '/dashboard?tab=permissions',
-    icon: 'LockClosedIcon'
-  },
-  {
-    name: 'Account',
-    route: '/dashboard?tab=account',
-    icon: 'CogIcon'
-  },
+  // {
+  //   name: 'Permissions',
+  //   route: '/dashboard?tab=permissions',
+  //   icon: 'LockClosedIcon'
+  // },
+  // {
+  //   name: 'Account',
+  //   route: '/dashboard?tab=account',
+  //   icon: 'CogIcon'
+  // },
   {
     name: 'Security',
     route: '/dashboard?tab=security',

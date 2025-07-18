@@ -7,7 +7,7 @@
     :student-pays-for-subscription="studentPaysForSubscription"
   >
     <!-- Student Components -->
-    <template v-if="userRole === 'student'">
+    <template v-if="userRole === 'STUDENT'">
       <StudentOverviewTab v-if="currentTab === 'overview'" />
       <StudentNotesTab v-else-if="currentTab === 'notes'" />
       <StudentSubscriptionTab
@@ -26,9 +26,9 @@
     <template v-else>
       <ParentOverviewTab v-if="currentTab === 'overview'" />
       <ParentSubscriptionTab v-else-if="currentTab === 'subscription'" />
-      <ParentAccountTab v-else-if="currentTab === 'account'" />
-      <ParentChildrenTab v-else-if="currentTab === 'children'" />
-      <ParentPermissionsTab v-else-if="currentTab === 'permissions'" />
+      <!-- <ParentAccountTab v-else-if="currentTab === 'account'" /> -->
+      <!-- <ParentChildrenTab v-else-if="currentTab === 'statistics'" /> -->
+      <!-- <ParentPermissionsTab v-else-if="currentTab === 'permissions'" /> -->
       <SecurityTab v-else-if="currentTab === 'security'" />
       <ShopTab v-else-if="currentTab === 'shop'" />
       <div v-else class="text-center py-12">
@@ -46,7 +46,6 @@ import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import placeholder1 from '../../../assets/eddy.png';
-import type { USER_ROLE } from '../../constants/User';
 import Layout from '~/components/dashboard/Layout.vue';
 import { useMeStore } from '~/stores/me';
 
@@ -78,8 +77,8 @@ const meStore = useMeStore();
 const { me: user } = storeToRefs(meStore);
 
 // User display data
-const userRole = computed<USER_ROLE>(() => {
-  return user.value?.user_role as USER_ROLE;
+const userRole = computed(() => {
+  return user.value?.user_role;
 });
 
 const userName = computed(() => {
