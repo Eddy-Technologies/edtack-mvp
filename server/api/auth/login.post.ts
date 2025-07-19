@@ -1,3 +1,4 @@
+import { isAuthError } from '@supabase/supabase-js';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 export default defineEventHandler(async (event) => {
@@ -29,18 +30,37 @@ export default defineEventHandler(async (event) => {
     });
 
     if (error || !data) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Please register before logging in.',
-      });
+      throw error; // This will be caught by the catch block
     }
 
     return { data, error };
   } catch (err: any) {
     console.error('Email login error:', err);
+
+    let message = '';
+    let statusCode = err.status || 500;
+    const statusMessage = err.statusMessage || 'Login failed.';
+
+    if (isAuthError(err)) {
+      if (err.status) {
+        statusCode = err.status;
+      }
+
+      if (err.code === 'email_not_confirmed') {
+        message = 'Email address not confirmed. Please check your inbox for the confirmation link.';
+      } else if (err.code === 'invalid_credentials') {
+        message = 'Invalid email or password.';
+      } else if (err.code === 'email_address_invalid') {
+        message = 'Invalid email address format. Please enter a valid email.';
+      } else {
+        message = 'An unexpected error occurred during login. Please try again later.';
+      }
+    }
+
     throw createError({
-      statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || err.message || 'Login failed.',
+      statusCode: statusCode,
+      statusMessage: statusMessage,
+      message: message
     });
   }
 });

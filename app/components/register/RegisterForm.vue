@@ -220,15 +220,8 @@ const handleRegister = async () => {
     emit('success', successMessage);
   } catch (error: any) {
     console.error('Registration failed:', error);
-
-    // TODO: Improve error message handling based on error type
-    if (error.status === 409) {
-      errorMessage.value = 'An account with this email already exists.';
-    } else if (error.status === 429) {
-      errorMessage.value = 'Too many attempts. Please try again later.';
-    } else {
-      errorMessage.value = 'Registration failed. Please try again or contact support.';
-    }
+    // Use error message from server if available, error.message does not display correctly
+    errorMessage.value = error.data.message || 'Registration failed. Please try again.';
   } finally {
     isLoading.value = false;
   }

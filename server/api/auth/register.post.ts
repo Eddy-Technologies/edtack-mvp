@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Create user in Supabase Auth - database trigger will handle user_infos creation
-    const { data: supabaseUser, error: authError } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: body.email,
       password: body.password,
       options: {
@@ -45,14 +45,10 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    if (authError || !supabaseUser.user) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: authError?.message || 'Registration failed.',
-      });
+    if (error || !data) {
+      throw error; // This will be caught by the catch block
     }
-
-    return { user: supabaseUser.user };
+    return { user: data.user };
   } catch (err: any) {
     console.error('Registration error:', err);
     throw createError({

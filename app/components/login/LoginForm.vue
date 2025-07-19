@@ -98,16 +98,9 @@ const handleLogin = async () => {
     });
     emit('success');
   } catch (error: any) {
-    console.error('Login failed:', error);
-
-    // TODO: Improve error message handling based on error type
-    if (error.status === 401) {
-      errorMessage.value = 'Invalid credentials. Please try again.';
-    } else if (error.status === 429) {
-      errorMessage.value = 'Too many attempts. Please try again later.';
-    } else {
-      errorMessage.value = error.message || 'Login failed. Please try again.';
-    }
+    console.log('Login failed:', error.message);
+    // Use error message from server if available, cannot use error.message directly
+    errorMessage.value = error.data.message || 'Login failed. Please try again.';
   } finally {
     isLoading.value = false;
   }
