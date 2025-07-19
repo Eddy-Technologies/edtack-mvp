@@ -58,14 +58,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
-import { useAuth } from '~/composables/useAuth';
-import { useSupabaseUser, useToast } from '#imports';
 
 const toast = useToast();
 
@@ -75,12 +72,6 @@ const isDragging = ref(false);
 const isMobile = ref(false);
 const characterModalVisible = ref(false);
 const currentCharacter = ref(null);
-
-const router = useRouter();
-
-const { signOut } = useAuth();
-const user = useSupabaseUser();
-const loggedIn = computed(() => !!user.value);
 
 const handleLoginSuccess = () => {
   // Handle any additional actions after successful login

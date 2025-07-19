@@ -1,7 +1,6 @@
 import { defineNuxtRouteMiddleware, navigateTo } from '#app';
 import { useSupabaseUser } from '#imports';
 
-// TODO: Do we still this need?
 export default defineNuxtRouteMiddleware((to, _from) => {
   const user = useSupabaseUser();
 

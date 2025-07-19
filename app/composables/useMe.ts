@@ -1,12 +1,10 @@
 import { ref } from 'vue';
 import type { GetMeRes } from '../../server/api/me.get';
-import { useSupabaseClient } from '#imports';
 
 export function useMe() {
   const data = ref<GetMeRes | null>(null);
   const isLoading = ref(false);
   const error = ref<any | null>(null);
-  const supabase = useSupabaseClient();
 
   async function fetchMe() {
     isLoading.value = true;
