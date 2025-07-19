@@ -64,6 +64,7 @@
   <!-- Login Modal -->
   <LoginModal
     v-if="loginModalVisible"
+    :message="loginSuccessMessage"
     @close="loginModalVisible = false"
     @success="handleLoginSuccess"
     @register="register"
@@ -118,6 +119,7 @@ const menuOpen = ref(false);
 const loginModalVisible = ref(false);
 const registerModalVisible = ref(false);
 const subscriptionModalVisible = ref(false);
+const loginSuccessMessage = ref('');
 
 const { signOut } = useAuth();
 const user = useMeStore();
@@ -131,6 +133,7 @@ const routeTo = (path: string) => {
 // Authentication actions
 const login = () => {
   registerModalVisible.value = false;
+  loginSuccessMessage.value = '';
   loginModalVisible.value = true;
 };
 
@@ -144,8 +147,10 @@ const handleLoginSuccess = () => {
   emit('login-success');
 };
 
-const handleRegisterSuccess = () => {
+const handleRegisterSuccess = (message?: string) => {
   registerModalVisible.value = false;
+  loginSuccessMessage.value = message || 'Registration successful! Please log in with your new account.';
+  loginModalVisible.value = true;
   emit('register-success');
 };
 

@@ -4,7 +4,7 @@
       <h2 class="text-xl font-semibold text-center">Welcome to Eddy</h2>
     </template>
 
-    <LoginForm @success="handleLogin" />
+    <LoginForm :message="props.message" @success="handleLogin" />
 
     <template #footer>
       <div class="flex justify-around text-sm text-gray-600">
@@ -19,6 +19,14 @@
 <script setup lang="ts">
 import Modal from '@/components/common/Modal.vue';
 import LoginForm from '@/components/login/LoginForm.vue';
+
+interface Props {
+  message?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  message: ''
+});
 
 const emit = defineEmits(['close', 'success', 'register']);
 

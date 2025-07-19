@@ -9,11 +9,6 @@
         <p class="text-red-600 text-sm">{{ errorMessage }}</p>
       </div>
 
-      <!-- Success Message -->
-      <div v-if="successMessage" class="bg-green-50 border border-green-200 rounded-lg p-3">
-        <p class="text-green-600 text-sm">{{ successMessage }}</p>
-      </div>
-
       <!-- Registration Form -->
       <div class="space-y-4">
         <div class="flex flex-row gap-4">
@@ -138,6 +133,7 @@ import { ref, computed } from 'vue';
 import { USER_ROLE, STUDENT_LEVEL } from '../../constants/User.ts';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
+import { useToast } from '#imports';
 
 // // Create level options for students using constant STUDENT_LEVEL with label as the value
 const levelOptions = computed(() => Object.entries(STUDENT_LEVEL).map(([key, value]) => ({
@@ -156,7 +152,8 @@ const acceptTerms = ref(false);
 
 const isLoading = ref(false);
 const errorMessage = ref('');
-const successMessage = ref('');
+
+const toast = useToast();
 
 // Auth composable
 const { signUp } = useAuth();
@@ -201,7 +198,6 @@ const handleRegister = async () => {
 
   isLoading.value = true;
   errorMessage.value = '';
-  successMessage.value = '';
 
   try {
     // Only email registration is supported
@@ -215,8 +211,13 @@ const handleRegister = async () => {
       acceptTerms: acceptTerms.value,
     });
     console.log('Email registration successful:', response);
-    successMessage.value = 'Account created successfully!';
-    emit('success');
+    const successMessage = 'Registration successful! Please check your email to confirm your account, then log in below.';
+    toast.add({
+      title: 'Registration Successful',
+      description: 'You can now log in with your new account after you have confirmed your email.',
+      color: 'green'
+    });
+    emit('success', successMessage);
   } catch (error: any) {
     console.error('Registration failed:', error);
 
@@ -226,7 +227,7 @@ const handleRegister = async () => {
     } else if (error.status === 429) {
       errorMessage.value = 'Too many attempts. Please try again later.';
     } else {
-      errorMessage.value = error.message || 'Registration failed. Please try again.';
+      errorMessage.value = 'Registration failed. Please try again or contact support.';
     }
   } finally {
     isLoading.value = false;

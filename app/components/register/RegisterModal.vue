@@ -24,8 +24,8 @@ const handleClose = () => {
   emit('close');
 };
 
-const handleRegister = () => {
-  emit('success');
+const handleRegister = (message?: string) => {
+  emit('success', message);
 };
 
 const handleLogin = () => {

@@ -6,6 +6,11 @@
         <h3 class="text-lg font-medium text-gray-900">Sign in with Email</h3>
       </div>
 
+      <!-- Success Message -->
+      <div v-if="props.message" class="bg-green-50 border border-green-200 rounded-lg p-3">
+        <p class="text-green-600 text-sm">{{ props.message }}</p>
+      </div>
+
       <!-- Error Message -->
       <div v-if="errorMessage" class="bg-red-50 border border-red-200 rounded-lg p-3">
         <p class="text-red-600 text-sm">{{ errorMessage }}</p>
@@ -51,6 +56,14 @@ import { ref } from 'vue';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
+
+interface Props {
+  message?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  message: ''
+});
 
 const toast = useToast();
 
