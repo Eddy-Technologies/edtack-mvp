@@ -64,8 +64,6 @@ import ChatContent from '@/components/ChatContent.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 
-const toast = useToast();
-
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
 const isDragging = ref(false);
