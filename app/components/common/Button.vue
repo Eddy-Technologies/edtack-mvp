@@ -2,7 +2,6 @@
   <UButton
     :color="color"
     :size="size"
-    :variant="variant"
     :disabled="isDisabled"
     :class="computedClass"
     @click="handleClick"
