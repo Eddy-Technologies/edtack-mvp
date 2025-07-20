@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '../utils/authConfig';
+import { serverSupabaseUser } from '#supabase/server';
 
 export interface GetMeRes {
   id: string;
@@ -25,13 +26,12 @@ export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
 
   try {
-    // Get the authenticated user from Supabase
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const user = await serverSupabaseUser(event);
 
-    if (authError || !user) {
+    if (!user) {
       throw createError({
         statusCode: 401,
-        statusMessage: 'Not authenticated',
+        statusMessage: 'Not authenticated'
       });
     }
 
