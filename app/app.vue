@@ -40,16 +40,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 // Import feedback components
-import { useSupabaseClient } from '#imports';
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
-import { useMeStore } from '~/stores/me';
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
 const consentKey = 'analyticsConsentGiven';
-const me = useMeStore();
-const supabase = useSupabaseClient();
 
 useHead({
   script: [
