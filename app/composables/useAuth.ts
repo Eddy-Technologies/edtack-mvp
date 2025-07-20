@@ -45,14 +45,6 @@ export const useAuth = () => {
     return;
   };
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'INITIAL_SESSION' && session) {
-      console.log('User signed initial sess onAuthStateChange:', session);
-      fetchAndSetMe();
-    }
-    // Currently, we are not handling other events like 'SIGNED_IN', 'SIGNED_OUT', etc. because it does not work.
-  });
-
   return {
     signUp,
     signIn,
