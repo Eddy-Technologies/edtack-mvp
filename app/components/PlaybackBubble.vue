@@ -1,42 +1,29 @@
 <template>
-  <div class="w-full flex" :class="isUser ? 'justify-end' : 'justify-center'">
+  <div class="w-full flex px-4" :class="isUser ? 'justify-end' : 'justify-center'">
     <div
-      class="flex items-center gap-3 p-3 rounded-lg max-w-[75%] cursor-pointer select-none"
+      class="flex gap-3 p-3 rounded-lg cursor-pointer select-none"
       :class="[
         isUser
-          ? 'bg-green-100 text-gray-800 rounded-bl-none text-left'
-          : isPlaying
-            ? 'bg-yellow-100 text-gray-900 border border-yellow-300 shadow-md text-center rounded-br-none'
-            : 'text-gray-800 text-center rounded-br-none hover:bg-yellow-50',
+          ? 'bg-green-100 text-gray-800 rounded-bl-none text-left max-w-[75%] w-auto items-center'
+          : isFirst
+            ? 'text-gray-800 text-center rounded-br-none hover:bg-yellow-50 max-w-[1000px] w-full box-border'
+            : 'text-gray-800 text-left rounded-br-none hover:bg-yellow-50 max-w-[1000px] w-full box-border',
       ]"
       @click="togglePlay"
     >
-      <!-- Avatar inside bubble for user -->
       <img
         v-if="isUser"
         src="https://i.pravatar.cc/40"
         alt="User Avatar"
         class="w-8 h-8 rounded-full flex-shrink-0"
-      >
+      />
 
-      <!-- Message text -->
-      <div class="whitespace-pre-wrap text-left flex-1">
+      <div
+        class="whitespace-pre-wrap flex-shrink min-w-0"
+        :class="isFirst ? 'text-center' : 'text-left'"
+      >
         <template v-if="isLoading">
-          <svg
-            class="w-4 h-4 animate-spin text-gray-600 inline-block"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            />
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-          </svg>
+          <!-- spinner svg -->
         </template>
         <template v-else>
           {{ text }}
@@ -53,6 +40,7 @@ const props = defineProps<{
   text: string;
   isUser: boolean;
   playable: boolean;
+  isFirst: boolean;
 }>();
 
 const isPlaying = ref(false);

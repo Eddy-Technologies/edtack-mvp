@@ -7,7 +7,7 @@
         placeholder="Type something here"
         class="flex-1 p-3 border rounded-lg text-sm"
         @keydown.enter="emitMessage"
-      >
+      />
       <Button
         icon="i-heroicons-arrow-right-20-solid"
         color="black"
@@ -21,6 +21,14 @@
     </div>
 
     <div class="mt-2 flex flex-wrap gap-2 text-sm">
+      <button
+        v-for="text in autocomplete"
+        :key="text"
+        class="bg-gray-100 px-3 py-1 rounded hover:bg-gray-200"
+        @click="appendText(text)"
+      >
+        {{ text }}
+      </button>
       <button
         v-for="suggestion in suggestions"
         :key="suggestion"
@@ -40,13 +48,9 @@ import Button from '~/components/common/Button.vue';
 const emit = defineEmits(['send']);
 const input = ref('');
 
-const suggestions = [
-  'Attach a file or image',
-  'Help me with my schoolwork',
-  'Give me a quiz',
-  'Mark my paper',
-  'Explain my textbook',
-];
+const autocomplete = ['Give me a lesson on Area in Math', 'Help me with my schoolwork on '];
+
+const suggestions = ['Give me a quiz', 'Mark my paper', 'Explain my textbook'];
 
 const emitMessage = () => {
   if (!input.value.trim()) return;
@@ -56,5 +60,9 @@ const emitMessage = () => {
 
 const sendSuggestion = (text: string) => {
   emit('send', text);
+};
+
+const appendText = (text: string) => {
+  input.value = text;
 };
 </script>

@@ -50,10 +50,22 @@ export default defineEventHandler(async (event) => {
     }
     return { user: data.user };
   } catch (err: any) {
-    console.error('Registration error:', err);
+    console.error('Registration error:', {
+      message: err.message,
+      details: err.details,
+      hint: err.hint,
+      code: err.code,
+      statusCode: err.statusCode,
+      full_error: err
+    });
     throw createError({
       statusCode: err.statusCode || 500,
-      statusMessage: err.statusMessage || 'Registration failed.',
+      statusMessage: err.message || err.statusMessage || 'Registration failed.',
+      data: {
+        details: err.details,
+        hint: err.hint,
+        code: err.code
+      }
     });
   }
 });
