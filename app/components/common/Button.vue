@@ -77,7 +77,7 @@ const computedClass = computed(() => {
 
   // Variant styles
   if (props.variant === 'primary') classes.push(`${sizeClasses} bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors`);
-  if (props.variant === 'secondary') classes.push(`${sizeClasses} text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors`);
+  if (props.variant === 'secondary') classes.push(`${sizeClasses} bg-white text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors`);
   if (props.variant === 'secondary-gray') classes.push(`${sizeClasses} border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors`);
   if (props.variant === 'secondary-danger') classes.push(`${sizeClasses} text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors`);
 
