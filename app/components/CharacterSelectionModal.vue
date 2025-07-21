@@ -15,12 +15,7 @@
           class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
           @click="closeModal"
         >
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -60,7 +55,7 @@
                         ? 'border-primary-400'
                         : 'border-gray-300 group-hover:border-gray-400',
                     ]"
-                  >
+                  />
                 </div>
                 <h5
                   class="text-xs sm:text-sm font-semibold mb-1"
@@ -109,6 +104,7 @@ import { ref, watch } from 'vue';
 import boyAvatar from '../../assets/boy.png';
 import girlAvatar from '../../assets/girl.png';
 import defaultAvatar from '../../assets/eddy.png';
+import { characters } from '~/types/characters.types.js';
 
 const props = defineProps({
   isOpen: {
@@ -125,56 +121,7 @@ const emit = defineEmits(['close', 'select']);
 
 const selectedCharacter = ref(null);
 
-const allAvatars = ref([
-  {
-    id: 1,
-    name: 'Alex',
-    image: boyAvatar,
-    type: 'Explorer',
-  },
-  {
-    id: 2,
-    name: 'Luna',
-    image: girlAvatar,
-    type: 'Scholar',
-  },
-  {
-    id: 3,
-    name: 'Sam',
-    image: defaultAvatar,
-    type: 'Scientist',
-  },
-  {
-    id: 4,
-    name: 'Snorlax',
-    image: '/snorlax.png',
-    type: 'Sleepy',
-  },
-  {
-    id: 5,
-    name: 'Mystery',
-    image: boyAvatar,
-    type: 'Unknown',
-  },
-  {
-    id: 6,
-    name: 'Future',
-    image: girlAvatar,
-    type: 'Coming Soon',
-  },
-  {
-    id: 7,
-    name: 'Classic',
-    image: defaultAvatar,
-    type: 'Traditional',
-  },
-  {
-    id: 8,
-    name: 'Special',
-    image: '/snorlax.png',
-    type: 'Unique',
-  },
-]);
+const allAvatars = ref(characters);
 
 const selectCharacter = (avatar) => {
   selectedCharacter.value = avatar;

@@ -1,15 +1,18 @@
 <template>
   <div class="flex flex-col h-full w-full bg-white overflow-hidden">
-    <!-- Scrollable Message Area -->
     <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4">
-      <!-- Playback Messages -->
-      <TextBubble :is-loading="false" :is-first="true" text="Talk to Snorlax..." />
-      <ChatMessage
-        v-for="(block, index) in messageStream"
+      <div class="whitespace-pre-wrap flex-shrink min-w-0 text-center">Talk to Snorlax...</div>
+
+      <!-- Render all playback units flattened across entire messageStream -->
+      <component
+        v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
-        :block="block"
-        :index="index"
+        :is="unit.component"
+        v-bind="unit.props"
+        :startPlayback="currentPlaybackIndex === index"
+        @finish="handleFinish"
       />
+
       <div ref="bottomAnchor" />
     </div>
   </div>
@@ -21,13 +24,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, onUnmounted } from 'vue';
+import { ref, computed, nextTick, onUnmounted } from 'vue';
 import ChatInput from './ChatInput.vue';
-import ChatMessage from './ChatMessage.vue';
+import TextBubble from '@/components/playback/TextBubble.vue';
+import SlideBubble from '@/components/playback/SlideBubble.vue';
+import QuestionBubble from '@/components/playback/QuestionBubble.vue';
 import { useChat } from '~/composables/useChat';
 import { useSpeech } from '~/composables/useSpeech';
 import { useLesson } from '~/composables/useLesson';
-import TextBubble from '~/components/playback/TextBubble.vue';
 
 const messageStream = ref<any[]>([]);
 
@@ -37,18 +41,60 @@ const conversationSummary = ref('Snorlax is a sleepy Pokémon who loves naps.');
 const MAX_CONTEXT_MESSAGES = 6;
 
 const isPlayingAllowed = ref(false);
+const currentPlaybackIndex = ref(0);
 
-const {
-  isSpeaking,
-  isLoadingTTS,
-  speakLastAssistantMessage,
-  stopSpeaking,
-  toggleAudioPlayer,
-  onSpeechEnd,
-} = useSpeech();
-
+const { speakLastAssistantMessage, stopSpeaking, toggleAudioPlayer, onSpeechEnd } = useSpeech();
 const { getLessonBundle } = useLesson();
 
+// Flatten the entire messageStream into an ordered array of playback units
+const flattenedPlaybackUnits = computed(() => {
+  const units: any[] = [];
+  messageStream.value.forEach((block, blockIndex) => {
+    if (block.type === 'text' && block.text) {
+      units.push({
+        component: TextBubble,
+        props: {
+          text: block.text,
+          isFirst: blockIndex === 0,
+        },
+      });
+    }
+    if (block.type === 'slides' && Array.isArray(block.slides)) {
+      block.slides.forEach((slide) => {
+        units.push({
+          component: SlideBubble,
+          props: {
+            slide,
+            isUser: false,
+            startPlayback: false, // controlled globally by parent
+          },
+        });
+      });
+    }
+    if (block.type === 'questions' && Array.isArray(block.questions)) {
+      block.questions.forEach((question) => {
+        units.push({
+          component: QuestionBubble,
+          props: {
+            text: question,
+            isFirst: false,
+          },
+        });
+      });
+    }
+  });
+  return units;
+});
+
+// When one bubble finishes, move to the next
+function handleFinish() {
+  currentPlaybackIndex.value++;
+  nextTick(() => {
+    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+// Handle user sending a message or lesson request
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
 
@@ -59,7 +105,8 @@ const handleSend = async (text: string) => {
     isPlayingAllowed.value = false;
     await nextTick();
     bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-    // 1. Add user message
+
+    // Add user message
     messageStream.value.push({
       type: 'text',
       text,
@@ -67,7 +114,7 @@ const handleSend = async (text: string) => {
       playable: false,
     });
 
-    // 2. Add placeholder for assistant response
+    // Add placeholder for assistant
     messageStream.value.push({
       type: 'text',
       text: '',
@@ -75,7 +122,7 @@ const handleSend = async (text: string) => {
       playable: false,
     });
 
-    // Prepare messages for API — only take last 6 from stream filtered as text blocks
+    // Prepare recent context
     const recentMessages = messageStream.value
       .filter((m) => m.type === 'text')
       .slice(-MAX_CONTEXT_MESSAGES)
@@ -118,7 +165,6 @@ const handleSend = async (text: string) => {
         });
       });
     } catch (err) {
-      // On error, replace placeholder with error text
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
         type: 'text',
@@ -147,7 +193,6 @@ const constructLesson = (text: string) => {
     return;
   }
 
-  // Build lesson stream: intro text, slides block, questions block
   const stream: any[] = [];
 
   stream.push({
@@ -171,7 +216,6 @@ const constructLesson = (text: string) => {
     });
   }
 
-  // Replace messageStream with the lesson content
   messageStream.value = [...messageStream.value, ...stream];
 
   nextTick(() => {

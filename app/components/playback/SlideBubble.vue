@@ -1,21 +1,88 @@
 <template>
-  <div class="whitespace-pre-wrap flex-shrink min-w-0 text-left">
-    <div class="p-20 bg-gray-100 rounded-lg shadow">
-      <h2 class="text-lg font-semibold mb-2">
-        {{ slide.part_label || slide.title }}
-      </h2>
-      <div v-html="cleanContent(slide.content)" />
-    </div>
+  <div class="min-w-0 text-left">
+    <h2 class="text-lg font-semibold mb-2 whitespace-pre-wrap">{{ displayedTitle }}</h2>
+    <div v-if="isTyping" class="whitespace-pre-wrap">{{ displayedText }}</div>
+    <div v-else v-html="processedHtml" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, watch, onBeforeUnmount } from 'vue';
+
 const props = defineProps<{
   slide: any;
   isUser: boolean;
+  startPlayback: boolean;
 }>();
 
-function cleanContent(raw: string) {
-  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image: $1]');
+const emit = defineEmits(['finish']);
+
+const displayedTitle = ref('');
+const displayedText = ref('');
+const isTyping = ref(false);
+const processedHtml = ref('');
+let intervalId: number | null = null;
+
+function stripImages(raw: string) {
+  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image]');
 }
+
+function convertImages(raw: string) {
+  return raw.replace(
+    /&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g,
+    `<img src="https://picsum.photos/id/1/200/300" alt="Slide image" class="my-2 max-w-full rounded-md"/>`
+  );
+}
+
+function typeSlideSimultaneous(title: string, content: string) {
+  displayedTitle.value = '';
+  displayedText.value = '';
+  isTyping.value = true;
+
+  // Split title and content into char arrays
+  const titleChars = title.split('');
+  const contentChars = content.split('');
+  const maxLength = Math.max(titleChars.length, contentChars.length);
+  let i = 0;
+
+  intervalId = window.setInterval(() => {
+    if (i < titleChars.length) {
+      displayedTitle.value += titleChars[i];
+    }
+    if (i < contentChars.length) {
+      displayedText.value += contentChars[i];
+    }
+    i++;
+
+    if (i >= maxLength && intervalId !== null) {
+      clearInterval(intervalId);
+      intervalId = null;
+      isTyping.value = false;
+      processedHtml.value = convertImages(props.slide.content || '');
+      emit('finish');
+    }
+  }, 5);
+}
+
+watch(
+  () => props.startPlayback,
+  (start) => {
+    if (intervalId !== null) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+    if (start) {
+      const titleText = (props.slide.part_label || props.slide.title || '').toString();
+      const contentText = stripImages(props.slide.content || '').toString();
+      typeSlideSimultaneous(titleText, contentText);
+    }
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(() => {
+  if (intervalId !== null) {
+    clearInterval(intervalId);
+  }
+});
 </script>

@@ -7,25 +7,25 @@ import defaultAvatar from '../../assets/eddy.png';
 
 export const characters = [
   {
-    id: 1,
+    id: 4,
     name: 'Mickey',
     image: historyAvatar,
     type: 'History',
   },
   {
-    id: 2,
+    id: 5,
     name: 'Sherlock',
     image: socialAvatar,
     type: 'Social Studies',
   },
   {
-    id: 3,
+    id: 1,
     name: 'Eddy',
     image: defaultAvatar,
     type: 'General',
   },
   {
-    id: 4,
+    id: 2,
     name: 'Winne the Pooh',
     image: biologyAvatar,
     type: 'Biology',
@@ -37,7 +37,7 @@ export const characters = [
     type: 'Chemistry',
   },
   {
-    id: 6,
+    id: 3,
     name: 'Future',
     image: snorlaxAvatar,
     type: 'Coming soon..',
