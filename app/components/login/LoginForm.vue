@@ -53,6 +53,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { validateEmail } from '../../../utils/validation';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
@@ -81,6 +82,12 @@ const emit = defineEmits(['success']);
 const handleLogin = async () => {
   if (!loginInput.value.trim() || !password.value.trim()) {
     errorMessage.value = 'Please fill in all fields';
+    return;
+  }
+
+  const emailValidation = validateEmail(loginInput.value.trim());
+  if (!emailValidation.isValid) {
+    errorMessage.value = emailValidation.error || 'Invalid email';
     return;
   }
 

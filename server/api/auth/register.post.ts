@@ -1,6 +1,7 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { SignUpReq } from '~~/app/composables/useAuth';
 import { USER_ROLE } from '~~/app/constants/User';
+import { validateEmail, validatePassword } from '~~/utils/validation';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
@@ -13,11 +14,13 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: `Missing required field: ${field}` });
     }
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
-    throw createError({ statusCode: 400, statusMessage: 'Invalid email address.' });
+  const emailValidation = validateEmail(body.email);
+  if (!emailValidation.isValid) {
+    throw createError({ statusCode: 400, statusMessage: emailValidation.error });
   }
-  if (body.password.length < 6) {
-    throw createError({ statusCode: 400, statusMessage: 'Password must be at least 6 characters.' });
+  const passwordValidation = validatePassword(body.password);
+  if (!passwordValidation.isValid) {
+    throw createError({ statusCode: 400, statusMessage: passwordValidation.error });
   }
   if (!Object.values(USER_ROLE).includes(body.userRole as USER_ROLE)) {
     throw createError({ statusCode: 400, statusMessage: 'Invalid user role.' });
