@@ -130,7 +130,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { USER_ROLE, STUDENT_LEVEL } from '../../constants/User.ts';
+import { validateEmail, validatePassword } from '~~/utils';
+import { USER_ROLE, STUDENT_LEVEL } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
@@ -191,8 +192,15 @@ const handleRegister = async () => {
     return;
   }
 
-  if (password.value.length < 6) {
-    errorMessage.value = 'Password must be at least 6 characters long';
+  const emailValidation = validateEmail(email.value.trim());
+  if (!emailValidation.isValid) {
+    errorMessage.value = emailValidation.error || 'Invalid email';
+    return;
+  }
+
+  const passwordValidation = validatePassword(password.value);
+  if (!passwordValidation.isValid) {
+    errorMessage.value = passwordValidation.error || 'Invalid password';
     return;
   }
 

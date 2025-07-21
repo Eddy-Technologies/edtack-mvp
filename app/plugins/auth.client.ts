@@ -7,6 +7,7 @@ export default defineNuxtPlugin(async () => {
   console.log('Auth client plugin initialized');
   const supabase = useSupabaseClient();
   const { fetchAndSetMe, resetMe } = useMeStore();
+  const router = useRouter();
 
   // Listen for changes
   supabase.auth.onAuthStateChange((event, session) => {
@@ -21,6 +22,7 @@ export default defineNuxtPlugin(async () => {
     } else if (event === 'SIGNED_OUT') {
       console.log('User signed out from auth state change');
       resetMe();
+      router.push('/');
     } else if (event === 'USER_UPDATED' && session) {
       console.log('User profile updated');
       fetchAndSetMe();

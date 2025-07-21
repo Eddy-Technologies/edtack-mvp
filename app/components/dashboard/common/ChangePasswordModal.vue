@@ -61,6 +61,13 @@
             <p v-if="errorMessage" class="mt-1 text-sm text-red-600">{{ errorMessage }}</p>
           </div>
 
+          <!-- Logout Warning -->
+          <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p class="text-sm text-red-700 text-center">
+              After password change, you will be logged out for security reasons. You'll need to log back in with your new password.
+            </p>
+          </div>
+
           <!-- Password Requirements -->
           <div class="mb-6 p-3 bg-gray-50 border border-gray-200 rounded-lg">
             <h4 class="text-sm font-medium text-gray-900 mb-2">Password Requirements:</h4>
@@ -70,18 +77,6 @@
                   {{ passwordValidation.length ? '✓' : '○' }}
                 </span>
                 <span class="ml-2">At least 8 characters</span>
-              </li>
-              <li class="flex items-center">
-                <span :class="passwordValidation.uppercase ? 'text-green-600' : 'text-gray-400'">
-                  {{ passwordValidation.uppercase ? '✓' : '○' }}
-                </span>
-                <span class="ml-2">One uppercase letter</span>
-              </li>
-              <li class="flex items-center">
-                <span :class="passwordValidation.lowercase ? 'text-green-600' : 'text-gray-400'">
-                  {{ passwordValidation.lowercase ? '✓' : '○' }}
-                </span>
-                <span class="ml-2">One lowercase letter</span>
               </li>
               <li class="flex items-center">
                 <span :class="passwordValidation.number ? 'text-green-600' : 'text-gray-400'">
@@ -123,6 +118,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { validatePassword } from '~~/utils';
+import { useToast } from '#imports';
+import { useAuth } from '~/composables/useAuth';
 
 interface Props {
   isOpen: boolean;
@@ -140,15 +138,17 @@ const confirmPassword = ref('');
 const isProcessing = ref(false);
 const errorMessage = ref('');
 
+const toast = useToast();
+const { signOut } = useAuth();
+
 const passwordValidation = computed(() => ({
   length: newPassword.value.length >= 8,
-  uppercase: /[A-Z]/.test(newPassword.value),
-  lowercase: /[a-z]/.test(newPassword.value),
   number: /\d/.test(newPassword.value)
 }));
 
 const isPasswordValid = computed(() => {
-  return Object.values(passwordValidation.value).every(Boolean);
+  const validation = validatePassword(newPassword.value);
+  return validation.isValid;
 });
 
 const isFormValid = computed(() => {
@@ -184,13 +184,34 @@ const updatePassword = async () => {
   errorMessage.value = '';
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await $fetch('/api/auth/update-password', {
+      method: 'POST',
+      body: {
+        currentPassword: currentPassword.value,
+        newPassword: newPassword.value
+      }
+    });
+
+    // Sign out client-side to sync with server-side logout
+    await signOut();
+    
+    toast.add({
+      title: 'Password Updated',
+      description: 'Your password has been successfully updated. Please log in again.',
+      color: 'green'
+    });
 
     emit('password-updated');
     closeModal();
   } catch (error: any) {
-    errorMessage.value = error.message || 'Failed to update password. Please try again.';
+    const errorMsg = error.data?.message || error.message || 'Failed to update password. Please try again.';
+    errorMessage.value = errorMsg;
+
+    toast.add({
+      title: 'Password Update Failed',
+      description: errorMsg,
+      color: 'red'
+    });
   } finally {
     isProcessing.value = false;
   }

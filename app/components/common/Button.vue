@@ -1,7 +1,7 @@
 <template>
   <UButton
     :color="color"
-    :size="size"
+    :size="buttonSize"
     :disabled="isDisabled"
     :class="computedClass"
     @click="handleClick"
@@ -45,6 +45,10 @@ const props = defineProps<{
   disabled?: boolean;
   loading?: boolean; // Loading state prop
 }>();
+
+const buttonSize = computed(() => {
+  return props.size || 'md'; // Default to 'md' if not specified
+});
 
 const emit = defineEmits(['clicked']);
 const router = useRouter();

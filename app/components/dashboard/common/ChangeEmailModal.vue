@@ -60,9 +60,9 @@
             <p v-if="errorMessage" class="mt-1 text-sm text-red-600">{{ errorMessage }}</p>
           </div>
 
-          <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p class="text-sm text-blue-800">
-              We'll send a verification email to your new address. You'll need to verify it before the change takes effect.
+          <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p class="text-sm text-red-700 text-center">
+              After email change, you will be logged out. We'll send a verification email to your new address. You'll need to verify it before the change takes effect.
             </p>
           </div>
 
@@ -97,6 +97,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { validateEmail } from '~~/utils';
+import { useAuth } from '~/composables/useAuth';
+import { useToast } from '#imports';
 
 interface Props {
   isOpen: boolean;
@@ -115,6 +118,9 @@ const password = ref('');
 const isProcessing = ref(false);
 const errorMessage = ref('');
 
+const { signOut } = useAuth();
+const toast = useToast();
+
 const closeModal = () => {
   emit('close');
   resetForm();
@@ -130,23 +136,44 @@ const resetForm = () => {
 const updateEmail = async () => {
   if (!newEmail.value || !password.value) return;
 
+  const emailValidation = validateEmail(newEmail.value);
+  if (!emailValidation.isValid) {
+    errorMessage.value = emailValidation.error || 'Invalid email';
+    return;
+  }
+
   isProcessing.value = true;
   errorMessage.value = '';
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await $fetch('/api/auth/update-email', {
+      method: 'POST',
+      body: {
+        newEmail: newEmail.value,
+        password: password.value
+      }
+    });
 
-    // Simulate validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(newEmail.value)) {
-      throw new Error('Please enter a valid email address');
-    }
-
+    // Sign out client-side to sync with server-side logout
+    await signOut();
+    
+    toast.add({
+      title: 'Email Update Started',
+      description: 'Please check your new email to verify the change. You have been logged out.',
+      color: 'green'
+    });
+    
     emit('email-updated', newEmail.value);
     closeModal();
   } catch (error: any) {
-    errorMessage.value = error.message || 'Failed to update email. Please try again.';
+    const errorMsg = error.data?.message || error.message || 'Failed to update email. Please try again.';
+    errorMessage.value = errorMsg;
+    
+    toast.add({
+      title: 'Email Update Failed',
+      description: errorMsg,
+      color: 'red'
+    });
   } finally {
     isProcessing.value = false;
   }
