@@ -3,6 +3,7 @@
     <!-- Scrollable Message Area -->
     <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4">
       <!-- Playback Messages -->
+      <TextBubble :is-loading="false" :is-first="true" text="Talk to Snorlax..." />
       <ChatMessage
         v-for="(block, index) in messageStream"
         :key="index"
@@ -15,46 +16,20 @@
 
   <!-- Sticky Controls & Chat Input -->
   <div class="sticky bottom-0 bg-white p-10 z-10 flex flex-col items-center gap-4">
-    <div class="flex gap-4">
-      <button
-        :disabled="isLoadingTTS || !isPlayingAllowed || (!isSpeaking && !hasAssistantMessages)"
-        class="px-4 py-2 text-white rounded-lg disabled:opacity-50"
-        :class="{
-          'bg-blue-500 hover:bg-blue-600': !isSpeaking && !isLoadingTTS,
-          'bg-yellow-500 hover:bg-yellow-600': isSpeaking,
-          'bg-gray-400': isLoadingTTS,
-        }"
-        @click="togglePlayback"
-      >
-        <span v-if="isLoadingTTS">Loading Audio...</span>
-        <span v-else-if="isSpeaking">Pause Speech</span>
-        <span v-else>Play Last Response</span>
-      </button>
-
-      <button
-        :disabled="!isSpeaking && !isLoadingTTS"
-        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50"
-        @click="stopAudio"
-      >
-        Stop Speech
-      </button>
-    </div>
-
     <ChatInput @send="handleSend" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onUnmounted } from 'vue';
+import { ref, nextTick, onUnmounted } from 'vue';
 import ChatInput from './ChatInput.vue';
 import ChatMessage from './ChatMessage.vue';
 import { useChat } from '~/composables/useChat';
 import { useSpeech } from '~/composables/useSpeech';
 import { useLesson } from '~/composables/useLesson';
+import TextBubble from '~/components/playback/TextBubble.vue';
 
-const messageStream = ref<any[]>([
-  { type: 'text', text: 'Talk to Snorlax...', isUser: false, playable: false },
-]);
+const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
@@ -74,15 +49,11 @@ const {
 
 const { getLessonBundle } = useLesson();
 
-const hasAssistantMessages = computed(() =>
-  messageStream.value.some((m) => !m.isUser && m.type === 'text' && m.text.trim().length > 0)
-);
-
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
 
   if (text.includes('lesson')) {
-    await constructLesson(text);
+    constructLesson(text);
   } else {
     stopSpeaking();
     isPlayingAllowed.value = false;
