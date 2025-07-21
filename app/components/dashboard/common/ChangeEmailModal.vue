@@ -48,6 +48,17 @@
             >
           </div>
 
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Email</label>
+            <input
+              v-model="confirmEmail"
+              type="email"
+              placeholder="Confirm new email address"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              :class="{ 'border-red-300': errorMessage }"
+            >
+          </div>
+
           <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
             <input
@@ -77,10 +88,10 @@
             </button>
             <button
               type="submit"
-              :disabled="isProcessing || !newEmail || !password"
+              :disabled="isProcessing || !newEmail || !confirmEmail || !password"
               :class="[
                 'flex-1 px-4 py-2 rounded-lg font-medium transition-colors',
-                isProcessing || !newEmail || !password
+                isProcessing || !newEmail || !confirmEmail || !password
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
               ]"
@@ -106,7 +117,7 @@ interface Props {
   currentEmail: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
   (e: 'close'): void;
@@ -114,6 +125,7 @@ const emit = defineEmits<{
 }>();
 
 const newEmail = ref('');
+const confirmEmail = ref('');
 const password = ref('');
 const isProcessing = ref(false);
 const errorMessage = ref('');
@@ -128,6 +140,7 @@ const closeModal = () => {
 
 const resetForm = () => {
   newEmail.value = '';
+  confirmEmail.value = '';
   password.value = '';
   errorMessage.value = '';
   isProcessing.value = false;
@@ -142,6 +155,16 @@ const updateEmail = async () => {
     return;
   }
 
+  if (newEmail.value === props.currentEmail) {
+    errorMessage.value = 'New email must be different from current email';
+    return;
+  }
+
+  if (newEmail.value !== confirmEmail.value) {
+    errorMessage.value = 'Email addresses do not match';
+    return;
+  }
+
   isProcessing.value = true;
   errorMessage.value = '';
 
@@ -150,25 +173,26 @@ const updateEmail = async () => {
       method: 'POST',
       body: {
         newEmail: newEmail.value,
+        confirmEmail: confirmEmail.value,
         password: password.value
       }
     });
 
     // Sign out client-side to sync with server-side logout
     await signOut();
-    
+
     toast.add({
       title: 'Email Update Started',
       description: 'Please check your new email to verify the change. You have been logged out.',
       color: 'green'
     });
-    
+
     emit('email-updated', newEmail.value);
     closeModal();
   } catch (error: any) {
     const errorMsg = error.data?.message || error.message || 'Failed to update email. Please try again.';
     errorMessage.value = errorMsg;
-    
+
     toast.add({
       title: 'Email Update Failed',
       description: errorMsg,

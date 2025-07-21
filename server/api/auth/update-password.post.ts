@@ -4,12 +4,19 @@ import { validatePassword } from '~~/utils/validation';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
-  const { currentPassword, newPassword } = await readBody(event);
+  const { currentPassword, newPassword, confirmPassword } = await readBody(event);
 
-  if (!currentPassword || !newPassword) {
+  if (!currentPassword || !newPassword || !confirmPassword) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Current password and new password are required.',
+      statusMessage: 'Current password, new password, and confirm password are required.',
+    });
+  }
+
+  if (newPassword !== confirmPassword) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'New passwords do not match.',
     });
   }
 

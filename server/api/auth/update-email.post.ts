@@ -4,12 +4,19 @@ import { validateEmail } from '~~/utils/validation';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
-  const { newEmail, password } = await readBody(event);
+  const { newEmail, confirmEmail, password } = await readBody(event);
 
-  if (!newEmail || !password) {
+  if (!newEmail || !confirmEmail || !password) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'New email and current password are required.',
+      statusMessage: 'New email, confirm email, and current password are required.',
+    });
+  }
+
+  if (newEmail !== confirmEmail) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Email addresses do not match.',
     });
   }
 
@@ -28,6 +35,14 @@ export default defineEventHandler(async (event) => {
       throw createError({
         statusCode: 401,
         statusMessage: 'Not authenticated'
+      });
+    }
+
+    // Check if new email is the same as current email
+    if (newEmail === user.email) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'New email must be different from current email'
       });
     }
 

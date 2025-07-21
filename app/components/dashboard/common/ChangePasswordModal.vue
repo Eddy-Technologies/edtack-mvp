@@ -188,7 +188,8 @@ const updatePassword = async () => {
       method: 'POST',
       body: {
         currentPassword: currentPassword.value,
-        newPassword: newPassword.value
+        newPassword: newPassword.value,
+        confirmPassword: confirmPassword.value
       }
     });
 
