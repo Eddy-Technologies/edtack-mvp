@@ -24,15 +24,15 @@
           <h2 class="text-lg font-semibold mb-2">
             {{ slide.part_label || slide.title }}
           </h2>
-          <div v-html="cleanContent(slide.content)"></div>
+          <div v-html="cleanContent(slide.content)" />
         </div>
       </SwiperSlide>
     </Swiper>
 
     <!-- Questions List -->
     <PlaybackBubble
-      v-else-if="block.type === 'questions'"
       v-for="(q, idx) in block.questions"
+      v-else-if="block.type === 'questions'"
       :key="`question-${idx}`"
       :text="q"
       :is-user="false"

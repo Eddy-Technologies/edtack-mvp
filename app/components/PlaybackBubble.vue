@@ -16,7 +16,7 @@
         src="https://i.pravatar.cc/40"
         alt="User Avatar"
         class="w-8 h-8 rounded-full flex-shrink-0"
-      />
+      >
 
       <div
         class="whitespace-pre-wrap flex-shrink min-w-0"
