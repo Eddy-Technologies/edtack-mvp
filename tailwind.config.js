@@ -60,5 +60,5 @@ module.exports = {
     { pattern: /text-background-\d{2,3}/ },
   ],
   plugins: [],
-  darkMode: 'false',
+  darkMode: false,
 };
