@@ -48,9 +48,9 @@
 import { ref, computed, nextTick, onUnmounted } from 'vue';
 import ChatInput from './ChatInput.vue';
 import ChatMessage from './ChatMessage.vue';
-import { useChat } from '~/composables/useChat.ts';
-import { useSpeech } from '~/composables/useSpeech.ts';
-import { useLesson } from '~/composables/useLesson.ts';
+import { useChat } from '~/composables/useChat';
+import { useSpeech } from '~/composables/useSpeech';
+import { useLesson } from '~/composables/useLesson';
 
 const messageStream = ref<any[]>([
   { type: 'text', text: 'Talk to Snorlax...', isUser: false, playable: false },

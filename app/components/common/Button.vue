@@ -29,12 +29,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import type { ButtonColor, ButtonSize } from '#ui/types';
 
 const props = defineProps<{
   text?: string;
   route?: string;
-  color?: string;
-  size?: 'sm' | 'md' | 'lg' | string;
+  color?: ButtonColor;
+  size?: ButtonSize;
   variant?: 'primary' | 'secondary' | 'secondary-gray' | 'secondary-danger';
   extraClasses?: string; // Additional Tailwind classes (supports extra-classes in kebab-case)
   bold?: boolean;
