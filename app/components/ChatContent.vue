@@ -5,11 +5,11 @@
 
       <!-- Render all playback units flattened across entire messageStream -->
       <component
+        :is="unit.component"
         v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
-        :is="unit.component"
         v-bind="unit.props"
-        :startPlayback="currentPlaybackIndex === index"
+        :start-playback="currentPlaybackIndex === index"
         @finish="handleFinish"
       />
 

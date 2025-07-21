@@ -5,7 +5,7 @@
       :src="currentAvatar.src"
       alt="Avatar"
       class="w-full h-full object-contain"
-    />
+    >
     <video
       v-else-if="currentAvatar?.type === 'video'"
       :src="currentAvatar.src"

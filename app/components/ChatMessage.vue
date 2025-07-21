@@ -13,15 +13,15 @@
         src="https://i.pravatar.cc/40"
         alt="User Avatar"
         class="w-8 h-8 rounded-full flex-shrink-0"
-      />
+      >
 
       <!-- Flatten all content into one ordered list -->
       <component
+        :is="entry.component"
         v-for="(entry, idx) in unifiedBlocks"
         :key="idx"
-        :is="entry.component"
         v-bind="entry.props"
-        :startPlayback="globalPlaybackIndex === localPlaybackStart + idx"
+        :start-playback="globalPlaybackIndex === localPlaybackStart + idx"
         @finish="handleFinish(idx)"
       />
     </div>

@@ -15,7 +15,12 @@
           class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
           @click="closeModal"
         >
-          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            class="w-6 h-6 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -55,7 +60,7 @@
                         ? 'border-primary-400'
                         : 'border-gray-300 group-hover:border-gray-400',
                     ]"
-                  />
+                  >
                 </div>
                 <h5
                   class="text-xs sm:text-sm font-semibold mb-1"

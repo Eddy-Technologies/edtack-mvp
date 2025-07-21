@@ -59,11 +59,11 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
-import { useRouter, useRoute } from 'vue-router';
 
 const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
