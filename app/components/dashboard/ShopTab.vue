@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import DashboardShop from './DashboardShop.vue';
+import DashboardShop from './shop/DashboardShop.vue';
 
 // Reactive cart
 const cart = ref([]);

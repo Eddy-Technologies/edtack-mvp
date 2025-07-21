@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useMeStore } from '../../../stores/me';
+import { useMeStore } from '../../stores/me';
 
 interface Props {
   size?: 'default' | 'large';

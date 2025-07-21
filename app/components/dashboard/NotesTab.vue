@@ -413,8 +413,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import Button from '../../common/Button.vue';
-import NoteEditorModal from './NoteEditorModal.vue';
+import Button from '../common/Button.vue';
+import NoteEditorModal from './notes/NoteEditorModal.vue';
 
 interface Note {
   id: number;

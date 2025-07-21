@@ -1,70 +1,30 @@
 <template>
   <Layout
-    :user-type="user.user_role"
     :user-name="user.userDisplayFullName"
     :user-email="user.email"
-    :student-pays-for-subscription="studentPaysForSubscription"
   >
-    <!-- Student Components -->
-    <template v-if="user.user_role === USER_ROLE.STUDENT">
-      <StudentOverviewTab v-if="currentTab === 'overview'" />
-      <StudentNotesTab v-else-if="currentTab === 'notes'" />
-      <StudentSubscriptionTab
-        v-else-if="currentTab === 'subscription' && studentPaysForSubscription"
-      />
-      <StudentAccountTab v-else-if="currentTab === 'account'" />
-      <SecurityTab v-else-if="currentTab === 'security'" />
-      <ShopTab v-else-if="currentTab === 'shop'" />
-      <div v-else class="text-center py-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
-        <p class="text-gray-600">Select a section from the sidebar to get started.</p>
-      </div>
-    </template>
-
-    <!-- Parent Components -->
-    <template v-else>
-      <ParentOverviewTab v-if="currentTab === 'overview'" />
-      <ParentSubscriptionTab v-else-if="currentTab === 'subscription'" />
-      <!-- <ParentAccountTab v-else-if="currentTab === 'account'" /> -->
-      <!-- <ParentChildrenTab v-else-if="currentTab === 'statistics'" /> -->
-      <!-- <ParentPermissionsTab v-else-if="currentTab === 'permissions'" /> -->
-      <SecurityTab v-else-if="currentTab === 'security'" />
-      <ShopTab v-else-if="currentTab === 'shop'" />
-      <div v-else class="text-center py-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Family Dashboard</h2>
-        <p class="text-gray-600">
-          Select a section from the sidebar to manage your family's learning journey.
-        </p>
-      </div>
-    </template>
+    <OverviewTab v-if="currentTab === 'overview'" />
+    <SubscriptionTab v-else-if="currentTab === 'subscription'" />
+    <SettingsTab v-else-if="currentTab === 'settings'" />
+    <ShopTab v-else-if="currentTab === 'shop'" />
+    <div v-else class="text-center py-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
+      <p class="text-gray-600">Select a section from the sidebar to get started.</p>
+    </div>
   </Layout>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import Layout from '~/components/dashboard/Layout.vue';
 import { useMeStore } from '~/stores/me';
 
-// Student Components
-import StudentOverviewTab from '~/components/dashboard/student/OverviewTab.vue';
-import StudentNotesTab from '~/components/dashboard/student/NotesTab.vue';
-import StudentSubscriptionTab from '~/components/dashboard/student/SubscriptionTab.vue';
-import StudentAccountTab from '~/components/dashboard/student/AccountTab.vue';
-
-// Parent Components
-import ParentOverviewTab from '~/components/dashboard/parent/OverviewTab.vue';
-import ParentSubscriptionTab from '~/components/dashboard/parent/SubscriptionTab.vue';
-// import ParentAccountTab from '~/components/dashboard/parent/AccountTab.vue';
-// import ParentChildrenTab from '~/components/dashboard/parent/ChildrenTab.vue';
-// import ParentPermissionsTab from '~/components/dashboard/parent/PermissionsTab.vue';
-
-// Shop Components
-import ShopTab from '~/components/dashboard/shop/ShopTab.vue';
-
-// Shared Components
-import SecurityTab from '~/components/dashboard/common/SecurityTab.vue';
-import { USER_ROLE } from '~/constants/User';
+// Unified Components
+import OverviewTab from '~/components/dashboard/OverviewTab.vue';
+import SubscriptionTab from '~/components/dashboard/SubscriptionTab.vue';
+import ShopTab from '~/components/dashboard/ShopTab.vue';
+import SettingsTab from '~/components/dashboard/SettingsTab.vue';
 
 definePageMeta({
   middleware: ['auth'],
@@ -73,25 +33,18 @@ definePageMeta({
 // Get authentication state
 const user = useMeStore();
 
-// Student payment responsibility - would come from user/subscription data
-const studentPaysForSubscription = ref(true); // Set to true if student pays, false if parent pays
-
-// Get current tab from route query or default to 'profile'
+// Get current tab from route query or default to 'overview'
 const route = useRoute();
 const currentTab = computed(() => {
-  return (route.query.tab as string) || 'profile';
+  return (route.query.tab as string) || 'overview';
 });
 
 // Update page title based on current tab
 const pageTitle = computed(() => {
   const tabTitles = {
     overview: 'Overview',
-    notes: 'Notes',
     subscription: 'Subscription',
-    account: 'Account',
-    security: 'Security',
-    children: 'Children',
-    permissions: 'Permissions',
+    settings: 'Settings',
     shop: 'Shop',
   };
   return tabTitles[currentTab.value as keyof typeof tabTitles] || 'Dashboard';

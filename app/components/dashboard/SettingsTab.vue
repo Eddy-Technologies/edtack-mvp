@@ -3,7 +3,7 @@
     <!-- Username & Password Section -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
-        <h2 class="text-2xl font-bold text-gray-900">Login & Security</h2>
+        <h2 class="text-2xl font-bold text-gray-900">Account Settings</h2>
       </div>
 
       <div class="p-6 space-y-6">
@@ -205,12 +205,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import Button from '../../common/Button.vue';
-import ChangeEmailModal from './ChangeEmailModal.vue';
-import ChangePasswordModal from './ChangePasswordModal.vue';
-import TwoFactorModal from './TwoFactorModal.vue';
-import RecoveryCodesModal from './RecoveryCodesModal.vue';
-// import { useDashboardData } from '~/composables/useDashboardData';
+import ChangeEmailModal from './common/ChangeEmailModal.vue';
+import ChangePasswordModal from './common/ChangePasswordModal.vue';
+import TwoFactorModal from './common/TwoFactorModal.vue';
+import RecoveryCodesModal from './common/RecoveryCodesModal.vue';
+import Button from '~/components/common/Button.vue';
 
 // Modal states
 const showEmailModal = ref(false);

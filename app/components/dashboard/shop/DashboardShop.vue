@@ -667,21 +667,6 @@
     </div>
 
     <!-- Product Modal -->
-    <ProductModal
-      :is-open="showProductModal"
-      :product="selectedProduct"
-      @close="showProductModal = false"
-      @add-to-cart="addToCartFromModal"
-      @toggle-wishlist="toggleWishlist"
-    />
-
-    <!-- Checkout Modal -->
-    <CheckoutModal
-      :is-open="showCheckout"
-      :cart="cart"
-      @close="showCheckout = false"
-      @payment-success="handlePaymentSuccess"
-    />
   </div>
 </template>
 
@@ -697,8 +682,6 @@ import placeholder5 from '../../../../assets/e.png';
 import placeholder6 from '../../../../assets/f.png';
 import placeholder7 from '../../../../assets/g.png';
 import placeholder8 from '../../../../assets/h.png';
-import CheckoutModal from './CheckoutModal.vue';
-import ProductModal from './ProductModal.vue';
 
 const props = defineProps<{
   cart: Array<any>;

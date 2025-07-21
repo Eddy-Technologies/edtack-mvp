@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useMeStore } from '../../stores/me';
-import { getDisplayFullName } from '../../utils/avatarUtils';
-import UserAvatar from './common/UserAvatar.vue';
+import { useMeStore } from '../../../stores/me';
+import UserAvatar from '~/components/common/UserAvatar.vue';
+import { getDisplayFullName } from '~/utils/avatarUtils';
 import { USER_ROLE } from '~/constants/User';
 
 const user = useMeStore();

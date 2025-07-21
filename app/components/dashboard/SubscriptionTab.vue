@@ -208,9 +208,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import SubscriptionModal from '../../subscription/SubscriptionModal.vue';
-import BillingUpdateModal from '../common/BillingUpdateModal.vue';
-import Button from '../../common/Button.vue';
+import Button from '../common/Button.vue';
+import SubscriptionModal from '../subscription/SubscriptionModal.vue';
+import BillingUpdateModal from './common/BillingUpdateModal.vue';
 
 const currentPlan = ref({
   name: 'Premium', // Can be 'Free' or 'Premium'

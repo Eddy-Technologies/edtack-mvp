@@ -79,7 +79,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import OverviewHeader from '../OverviewHeader.vue';
+import OverviewHeader from './overview/OverviewHeader.vue';
 import { useDashboardData } from '~/composables/useDashboardData';
 
 const { dashboardData, shopChildrenData } = useDashboardData();

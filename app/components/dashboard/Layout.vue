@@ -21,11 +21,6 @@
             <p class="text-xs text-gray-500 truncate">
               {{ userEmail }}
             </p>
-            <div class="flex items-center mt-1">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
-                {{ userRole === USER_ROLE.STUDENT ? USER_ROLE.STUDENT : USER_ROLE.PARENT }}
-              </span>
-            </div>
           </div>
         </div>
       </div>
@@ -165,10 +160,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { USER_ROLE } from '../../constants/User';
-import UserAvatar from './common/UserAvatar.vue';
+import UserAvatar from '~/components/common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
 
 interface NavigationItem {
@@ -179,16 +173,12 @@ interface NavigationItem {
 }
 
 interface Props {
-  userRole: USER_ROLE;
   userName?: string;
   userEmail?: string;
   userAvatar?: string;
-  studentPaysForSubscription?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  studentPaysForSubscription: false
-});
+const props = defineProps<Props>();
 
 const route = useRoute();
 const router = useRouter();
@@ -198,110 +188,28 @@ const openSubmenus = ref<string[]>([]);
 const { signOut } = useAuth();
 const isLoggingOut = ref(false);
 
-const studentNavigation = computed((): NavigationItem[] => {
-  const baseItems: NavigationItem[] = [
-    {
-      name: 'Overview',
-      route: '/dashboard?tab=overview',
-      icon: 'UserIcon'
-    },
-    // {
-    //   name: 'Notes',
-    //   route: '/dashboard?tab=notes',
-    //   icon: 'DocumentTextIcon'
-    // }
-  ];
-
-  // Only add subscription if student pays for it
-  if (props.studentPaysForSubscription) {
-    baseItems.push({
-      name: 'Subscription',
-      route: '/dashboard?tab=subscription',
-      icon: 'CreditCardIcon'
-    });
-  }
-
-  baseItems.push(
-    {
-      name: 'Shop',
-      route: '/dashboard?tab=shop',
-      icon: 'ShoppingBagIcon'
-    },
-    // {
-    //   name: 'Account',
-    //   route: '/dashboard?tab=account',
-    //   icon: 'CogIcon'
-    // },
-    {
-      name: 'Security',
-      route: '/dashboard?tab=security',
-      icon: 'ShieldCheckIcon'
-    }
-  );
-
-  return baseItems;
-});
-
-const parentNavigation: NavigationItem[] = [
+const navigationItems: NavigationItem[] = [
   {
     name: 'Overview',
     route: '/dashboard?tab=overview',
     icon: 'UserIcon'
-  },
-  // {
-  //   name: 'Statistics',
-  //   route: '/dashboard?tab=children',
-  //   icon: 'UsersIcon'
-  // },
-  {
-    name: 'Shop',
-    route: '/dashboard?tab=shop',
-    icon: 'ShoppingBagIcon'
   },
   {
     name: 'Subscription',
     route: '/dashboard?tab=subscription',
     icon: 'CreditCardIcon'
   },
-  // {
-  //   name: 'Permissions',
-  //   route: '/dashboard?tab=permissions',
-  //   icon: 'LockClosedIcon'
-  // },
-  // {
-  //   name: 'Account',
-  //   route: '/dashboard?tab=account',
-  //   icon: 'CogIcon'
-  // },
   {
-    name: 'Security',
-    route: '/dashboard?tab=security',
-    icon: 'ShieldCheckIcon'
+    name: 'Shop',
+    route: '/dashboard?tab=shop',
+    icon: 'ShoppingBagIcon'
+  },
+  {
+    name: 'Settings',
+    route: '/dashboard?tab=settings',
+    icon: 'CogIcon'
   }
 ];
-
-const navigationItems = computed(() => {
-  return props.userRole === USER_ROLE.STUDENT ? studentNavigation.value : parentNavigation;
-});
-
-const currentPageTitle = computed(() => {
-  const currentTab = route.query.tab as string;
-
-  // Map tab query parameter to display names
-  const tabTitles: Record<string, string> = {
-    overview: 'Overview',
-    profile: 'Profile', // Keep for backward compatibility
-    notes: 'Notes',
-    subscription: 'Subscription',
-    account: 'Account',
-    security: 'Security',
-    children: 'Children',
-    permissions: 'Permissions',
-    shop: 'Shop'
-  };
-
-  return tabTitles[currentTab] || 'Dashboard';
-});
 
 const isActiveRoute = (itemRoute?: string) => {
   if (!itemRoute) return false;
@@ -352,7 +260,7 @@ const logout = async () => {
 };
 
 onMounted(() => {
-  for (const item of navigationItems.value) {
+  for (const item of navigationItems) {
     if (item.children) {
       const hasActiveChild = item.children.some((child) => child.route === route.path);
       if (hasActiveChild && !openSubmenus.value.includes(item.name)) {

@@ -17,7 +17,7 @@
         </button>
         <button
           class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          @click="routeTo('/dashboard?tab=security')"
+          @click="routeTo('/dashboard?tab=settings')"
         >
           Settings
         </button>
@@ -92,7 +92,7 @@ import { useRouter } from 'vue-router';
 import LoginModal from './login/LoginModal.vue';
 import RegisterModal from './register/RegisterModal.vue';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
-import UserAvatar from './dashboard/common/UserAvatar.vue';
+import UserAvatar from './common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
