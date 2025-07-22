@@ -1,14 +1,5 @@
-import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
-
-const stripe = new Stripe(useRuntimeConfig().stripeSecretKey, {
-  apiVersion: '2025-06-30.basil'
-});
-
-const supabase = createClient(
-  useRuntimeConfig().private.supabaseUrl,
-  useRuntimeConfig().private.supabaseServiceRoleKey
-);
+import { getSupabaseClient } from '#imports';
+import { getStripe } from '../../plugins/stripe';
 
 export default defineEventHandler(async (event) => {
   if (event.node.req.method !== 'POST') {
@@ -19,13 +10,14 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    const { userId, planType } = body;
+    const { userId, priceId } = body;
 
-    if (!userId || !planType) {
+    if (!userId || !priceId) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Missing required parameters: userId, planType'
+        statusMessage: 'Missing required parameters: userId, priceId'
       });
     }
 
@@ -57,19 +49,20 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get subscription plan
-    const { data: plan, error: planError } = await supabase
-      .from('subscription_plans')
-      .select('*')
-      .eq('plan_type', planType)
-      .single();
+    // Get Stripe price information
+    const stripe = getStripe();
+    const price = await stripe.prices.retrieve(priceId, {
+      expand: ['product']
+    });
 
-    if (planError || !plan) {
+    if (!price) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Subscription plan not found'
+        statusMessage: 'Price not found'
       });
     }
+
+    const product = price.product as Stripe.Product;
 
     // Create or get Stripe customer
     let customerId = userInfo.payment_customer_id;
@@ -91,17 +84,6 @@ export default defineEventHandler(async (event) => {
         .eq('id', userInfo.id);
     }
 
-    // Get Stripe Price
-    const product = await stripe.products.retrieve(plan.stripe_product_id, {
-      expand: ['default_price']
-    });
-
-    if (!product.default_price) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Plan price not found in Stripe'
-      });
-    }
 
     // Create Setup Intent for saving payment method and immediate subscription
     const setupIntent = await stripe.setupIntents.create({
@@ -111,8 +93,8 @@ export default defineEventHandler(async (event) => {
       metadata: {
         user_info_id: userInfo.id,
         user_id: userId,
-        plan_id: plan.id,
-        plan_type: planType,
+        price_id: priceId,
+        product_id: product.id,
         action: 'create_subscription'
       }
     });
@@ -122,10 +104,14 @@ export default defineEventHandler(async (event) => {
       clientSecret: setupIntent.client_secret,
       customerId,
       planDetails: {
-        id: plan.id,
-        name: plan.display_name,
-        price: plan.price_sgd,
-        interval: plan.interval_type
+        id: price.id,
+        name: product.name,
+        description: product.description,
+        price: price.unit_amount ? (price.unit_amount / 100) : 0,
+        currency: price.currency.toUpperCase(),
+        interval: price.recurring?.interval || 'month',
+        priceId: price.id,
+        productId: product.id
       }
     };
   } catch (error: any) {

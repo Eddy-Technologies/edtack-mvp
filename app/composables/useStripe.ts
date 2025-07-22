@@ -9,18 +9,6 @@ export interface StripeCustomerPortal {
   url: string;
 }
 
-export interface CustomCheckoutSession {
-  success: boolean;
-  clientSecret: string;
-  customerId: string;
-  planDetails: {
-    id: string;
-    name: string;
-    price: number;
-    interval: string;
-  };
-}
-
 export interface StripeProductPrice {
   id: string;
   unit_amount: number;
@@ -101,43 +89,6 @@ export const useStripe = () => {
   };
 
   /**
-   * Create a custom checkout session with setup intent
-   */
-  const createCustomCheckoutSession = async (planType: string): Promise<CustomCheckoutSession> => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const { data: { user } } = await useSupabaseClient().auth.getUser();
-
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const response = await $fetch('/api/subscription/custom-checkout', {
-        method: 'POST',
-        body: {
-          planType,
-          userId: user.id
-        }
-      });
-
-      if (!response?.success || !response.clientSecret) {
-        throw new Error('Invalid custom checkout response');
-      }
-
-      return response as CustomCheckoutSession;
-    } catch (err: any) {
-      console.error('Failed to create custom checkout:', err);
-      const message = err.data?.message || err.message || 'Failed to create custom checkout';
-      error.value = message;
-      throw new Error(message);
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  /**
    * Create a Stripe customer portal session for billing management
    */
   const createCustomerPortalSession = async (): Promise<StripeCustomerPortal> => {
@@ -152,7 +103,7 @@ export const useStripe = () => {
         throw new Error('User not authenticated');
       }
 
-      const response = await $fetch('/api/stripe/customer-portal', {
+      const response = await $fetch('/api/subscription/customer-portal', {
         method: 'POST',
         body: {
           userId: user.id
@@ -188,9 +139,10 @@ export const useStripe = () => {
         throw new Error('User not authenticated');
       }
 
-      const response = await $fetch('/api/subscription/cancel', {
+      const response = await $fetch('/api/subscription/manage', {
         method: 'POST',
         body: {
+          action: 'cancel',
           userId: user.id,
           reason
         }
@@ -221,9 +173,10 @@ export const useStripe = () => {
         throw new Error('User not authenticated');
       }
 
-      const response = await $fetch('/api/subscription/upgrade', {
+      const response = await $fetch('/api/subscription/manage', {
         method: 'POST',
         body: {
+          action: 'upgrade',
           userId: user.id,
           newPlanType
         }
@@ -248,7 +201,7 @@ export const useStripe = () => {
     error.value = null;
 
     try {
-      const response = await $fetch('/api/subscription/products', {
+      const response = await $fetch('/api/subscription/catalog', {
         method: 'GET'
       }) as ProductsResponse;
       console.log('Fetched products:', response);
@@ -261,6 +214,33 @@ export const useStripe = () => {
     } catch (err: any) {
       console.error('Failed to get products:', err);
       const message = err.data?.message || err.message || 'Failed to fetch products';
+      error.value = message;
+      throw new Error(message);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  /**
+   * Get specific plan details by plan type
+   */
+  const getPlan = async (planType: string): Promise<any> => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await $fetch(`/api/subscription/catalog?planType=${planType}`, {
+        method: 'GET'
+      });
+
+      if (!response?.success) {
+        throw new Error('Failed to fetch plan details');
+      }
+
+      return response.product;
+    } catch (err: any) {
+      console.error('Failed to get plan:', err);
+      const message = err.data?.message || err.message || 'Failed to fetch plan details';
       error.value = message;
       throw new Error(message);
     } finally {
@@ -282,9 +262,10 @@ export const useStripe = () => {
         throw new Error('User not authenticated');
       }
 
-      const response = await $fetch('/api/subscription/update-payment-method', {
+      const response = await $fetch('/api/subscription/manage', {
         method: 'POST',
         body: {
+          action: 'update-payment',
           userId: user.id,
           paymentMethodId
         }
@@ -308,26 +289,6 @@ export const useStripe = () => {
     console.log('Redirecting to Stripe Checkout for plan:', planType);
     const session = await createCheckoutSession(planType);
     await navigateTo(session.url, { external: true });
-  };
-
-  /**
-   * Redirect to custom checkout page
-   */
-  const redirectToCustomCheckout = async (planType: string, planDetails?: any) => {
-    const query: any = {
-      type: planType
-    };
-
-    if (planDetails) {
-      query.plan = planDetails.name;
-      query.price = planDetails.price;
-      query.interval = planDetails.interval;
-    }
-
-    await navigateTo({
-      path: '/subscription/custom-checkout',
-      query
-    });
   };
 
   /**
@@ -358,14 +319,36 @@ export const useStripe = () => {
   };
 
   /**
-   * Handle custom checkout
+   * Confirm subscription with setup intent
    */
-  const handleCustomCheckout = async (planType: string, planDetails?: any) => {
+  const confirmSubscription = async (setupIntentId: string, planType: string): Promise<{ success: boolean; subscriptionId?: string; message: string }> => {
+    loading.value = true;
+    error.value = null;
+
     try {
-      await redirectToCustomCheckout(planType, planDetails);
+      const { data: { user } } = await useSupabaseClient().auth.getUser();
+
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const response = await $fetch('/api/subscription/confirm', {
+        method: 'POST',
+        body: {
+          setupIntentId,
+          userId: user.id,
+          planType
+        }
+      });
+
+      return response as { success: boolean; subscriptionId?: string; message: string };
     } catch (err: any) {
-      console.error('Custom checkout failed:', err);
-      throw err;
+      console.error('Subscription confirmation error:', err);
+      const message = err.data?.message || err.message || 'Failed to confirm subscription';
+      error.value = message;
+      throw new Error(message);
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -399,9 +382,9 @@ export const useStripe = () => {
 
     // Checkout operations
     createCheckoutSession,
-    createCustomCheckoutSession,
     createCustomerPortalSession,
     getProducts,
+    getPlan,
 
     // Subscription management
     cancelSubscription,
@@ -409,12 +392,11 @@ export const useStripe = () => {
     updatePaymentMethod,
 
     // Navigation helpers
-    redirectToCustomCheckout,
     redirectToCustomerPortal,
 
     // Composite handlers
     handleCheckout,
-    handleCustomCheckout,
-    handleCustomerPortal
+    handleCustomerPortal,
+    confirmSubscription
   };
 };

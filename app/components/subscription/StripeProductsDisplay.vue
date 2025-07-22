@@ -79,7 +79,7 @@
           v-for="product in sortedProducts"
           :key="product.id"
           :class="[
-            'rounded-2xl p-8 relative transition-all duration-200 hover:shadow-lg',
+            'rounded-2xl p-8 relative transition-all duration-200',
             isPopular(product.name) ? 'bg-primary/10': 'bg-white'
           ]"
         >
@@ -177,7 +177,7 @@ const error = ref<string | null>(null);
 const selectedInterval = ref<'month' | 'year'>('month');
 
 // Stripe composable
-const { getProducts, handleCustomCheckout } = useStripe();
+const { getProducts, handleCheckout } = useStripe();
 
 // Computed
 const sortedProducts = computed(() => {
@@ -342,17 +342,13 @@ const selectPlan = async (product: StripeProduct) => {
       throw new Error('No price found for selected plan');
     }
 
-    // Create plan details for the checkout
-    const planDetails = {
-      name: product.name,
-      price: selectedPrice.unit_amount ?
-          (selectedPrice.unit_amount / 100).toString() :
-        '0',
-      interval: selectedPrice.recurring?.interval || 'month'
-    };
-
-    const planType = getPlanType(product);
-    await handleCustomCheckout(planType, planDetails);
+    // Navigate to checkout with priceId
+    await navigateTo({
+      path: '/subscription/checkout',
+      query: {
+        priceId: selectedPrice.id
+      }
+    });
   } catch (err: any) {
     console.error('Failed to start checkout:', err);
     error.value = err.message || 'Failed to start checkout process';

@@ -1,18 +1,10 @@
-import Stripe from 'stripe';
-
-const stripe = new Stripe(useRuntimeConfig().stripeSecretKey, {
-  apiVersion: '2025-06-30.basil'
-});
+import type Stripe from 'stripe';
+import { getStripe } from '../../plugins/stripe';
 
 export default defineEventHandler(async (event) => {
-  if (event.node.req.method !== 'GET') {
-    throw createError({
-      statusCode: 405,
-      statusMessage: 'Method not allowed'
-    });
-  }
-
   try {
+    const stripe = getStripe();
+
     // Retrieve all active products
     const products = await stripe.products.list({
       active: true,

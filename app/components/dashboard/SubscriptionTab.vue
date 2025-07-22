@@ -78,20 +78,15 @@
     </div>
 
     <!-- Upgrade Section -->
-    <div v-if="currentPlan && !currentPlan.isPremium" class="bg-secondary/30 rounded-xl border p-6">
+    <div v-if="currentPlan && !currentPlan.isPremium" class="bg-orange-100 rounded-xl border-2 border-orange-200 p-6">
       <div class="text-center">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
         <div class="space-x-4">
           <Button
-            variant="secondary"
-            text="Use Stripe Checkout - SGD 29/month"
-            @click="upgradeAccount"
-          />
-          <Button
             variant="primary"
-            text="Custom Checkout - SGD 29/month"
-            @click="startCustomCheckout"
+            text="Upgrade Now!"
+            @click="upgradeAccount"
           />
         </div>
       </div>
@@ -307,7 +302,7 @@ import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import BillingUpdateModal from './common/BillingUpdateModal.vue';
 
 const { subscriptionStatus, fetchSubscriptionStatus, handleCustomerPortal, isLoading, isPremium } = useSubscription();
-const { cancelSubscription, upgradeSubscription, handleCustomCheckout, isLoading: stripeLoading } = useStripe();
+const { cancelSubscription, upgradeSubscription, isLoading: stripeLoading } = useStripe();
 
 // Modal states
 const showSubscriptionModal = ref(false);
@@ -386,15 +381,6 @@ const handleUpgradeToYearly = async () => {
     console.error('Failed to upgrade subscription:', error);
     // Show error message
   }
-};
-
-const startCustomCheckout = () => {
-  const planDetails = {
-    name: 'Premium Plan',
-    price: 29,
-    interval: 'month'
-  };
-  handleCustomCheckout('premium_monthly', planDetails);
 };
 
 const manageBilling = async () => {

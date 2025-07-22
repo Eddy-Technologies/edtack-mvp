@@ -1,311 +1,423 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
-        <div class="text-center mb-8">
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">Premium Plan Checkout</h1>
-          <p class="text-gray-600">Complete your subscription to unlock unlimited learning</p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Order Summary -->
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
-
-            <div class="space-y-4">
-              <div class="flex justify-between items-center">
-                <span class="text-gray-600">Premium Plan</span>
-                <span class="font-semibold text-gray-900">SGD 29.00</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-600">Billing Cycle</span>
-                <span class="text-gray-900">Monthly</span>
-              </div>
-              <div class="border-t pt-4">
-                <div class="flex justify-between items-center">
-                  <span class="text-lg font-semibold text-gray-900">Total</span>
-                  <span class="text-lg font-bold text-primary-600">SGD 29.00/month</span>
-                </div>
-              </div>
+  <div class="min-h-screen bg-white">
+    <div class="grid md:grid-cols-2 min-h-screen">
+      <!-- Left Sidebar - Plan Summary -->
+      <div class="bg-white p-8">
+        <div class="max-w-md mx-auto">
+          <!-- Header -->
+          <div class="mb-8">
+            <div class="flex items-center text-sm text-gray-500 mb-2">
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-600 text-white mr-2">
+                Sandbox
+              </span>
+              <span>New business sandbox</span>
             </div>
+            <h1 class="text-2xl text-gray-700 mb-2">Subscribe to {{ planDetails?.name }}</h1>
+          </div>
 
-            <div class="mt-6 p-4 bg-primary-50 rounded-lg">
-              <h3 class="font-semibold text-primary-900 mb-2">What's included:</h3>
-              <ul class="text-sm text-primary-800 space-y-1">
-                <li>• Unlimited AI queries</li>
-                <li>• Advanced study tools</li>
-                <li>• Unlimited practice questions</li>
-                <li>• Priority support</li>
-                <li>• Detailed progress tracking</li>
-                <li>• Offline access</li>
-              </ul>
+          <!-- Pricing -->
+          <div class="mb-8">
+            <div class="flex items-baseline mb-2">
+              <span class="text-5xl font-normal text-gray-900">{{ planDetails?.currency }} {{ monthlyPrice }}</span>
+              <span class="text-lg text-gray-500 ml-2">per<br>month</span>
             </div>
           </div>
 
-          <!-- Payment Form -->
-          <div>
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Information</h2>
+          <!-- Plan Details Card -->
+          <div class="border border-gray-200 rounded-lg p-6 mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-medium text-gray-900">{{ planDetails?.name }}</span>
+              <span class="text-gray-900">{{ planDetails?.currency }} {{ monthlyPrice }}</span>
+            </div>
+            <p class="text-sm text-gray-500 mb-4">{{ planDetails?.description }}</p>
+            <p class="text-sm text-gray-500 mb-4">Billed {{ useAnnualBilling ? 'annually' : 'monthly' }}</p>
 
-            <form class="space-y-4" @submit.prevent="handleSubmit">
-              <!-- Payment Method -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Payment Method
-                </label>
-                <div class="grid grid-cols-2 gap-4">
-                  <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input
-                      v-model="paymentMethod"
-                      type="radio"
-                      value="card"
-                      class="mr-3"
-                    >
-                    <span class="text-gray-700">Credit Card</span>
-                  </label>
-                  <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input
-                      v-model="paymentMethod"
-                      type="radio"
-                      value="stripe"
-                      class="mr-3"
-                    >
-                    <span class="text-gray-700">Stripe</span>
-                  </label>
-                </div>
+            <!-- Annual Billing Toggle -->
+            <div v-if="planDetails?.hasYearlyOption" class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+              <div class="flex items-center">
+                <input
+                  v-model="useAnnualBilling"
+                  type="checkbox"
+                  class="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                >
+                <span class="ml-2 text-sm text-gray-700">Save {{ planDetails?.currency }} {{ planDetails?.yearlySavings }} with annual billing</span>
               </div>
+              <span class="text-sm font-medium text-green-700">{{ planDetails?.currency }} {{ planDetails?.yearlyEquivalentPrice.toFixed(2) }}/month</span>
+            </div>
+          </div>
 
-              <!-- Card Details -->
-              <div v-if="paymentMethod === 'card'" class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Card Number
-                  </label>
-                  <input
-                    v-model="cardNumber"
-                    type="text"
-                    placeholder="1234 5678 9012 3456"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    :disabled="isLoading"
-                  >
-                </div>
+          <!-- Summary -->
+          <div class="space-y-3 mb-6">
+            <div class="flex justify-between">
+              <span class="text-gray-700">Subtotal</span>
+              <span class="text-gray-900">{{ planDetails?.currency }} {{ currentPrice }}</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-gray-900">Total due today</span>
+              <span class="text-gray-900">{{ planDetails?.currency }} {{ currentPrice }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                      Expiry Date
-                    </label>
-                    <input
-                      v-model="expiryDate"
-                      type="text"
-                      placeholder="MM/YY"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      :disabled="isLoading"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                      CVV
-                    </label>
-                    <input
-                      v-model="cvv"
-                      type="text"
-                      placeholder="123"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      :disabled="isLoading"
-                    >
-                  </div>
-                </div>
-              </div>
+      <!-- Right Panel - Payment Form -->
+      <div class="bg-gray-50 p-8">
+        <div class="max-w-md mx-auto">
+          <h2 class="text-xl font-medium text-gray-900 mb-8">Pay with card</h2>
 
-              <!-- Stripe Integration -->
-              <div v-if="paymentMethod === 'stripe'" class="p-4 bg-gray-50 rounded-lg">
-                <p class="text-gray-600 text-sm mb-2">
-                  Stripe payment integration will be implemented here
-                </p>
-                <div class="h-12 bg-white border border-gray-300 rounded-lg flex items-center justify-center">
-                  <span class="text-gray-500">Stripe Payment Element</span>
-                </div>
-              </div>
-
-              <!-- Billing Address -->
+          <form class="space-y-6" @submit.prevent="handleSubmit">
+            <!-- Contact Information -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Contact information</label>
               <div class="space-y-4">
-                <h3 class="text-lg font-medium text-gray-900">Billing Address</h3>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                      First Name
-                    </label>
-                    <input
-                      v-model="billingAddress.firstName"
-                      type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      :disabled="isLoading"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                      Last Name
-                    </label>
-                    <input
-                      v-model="billingAddress.lastName"
-                      type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      :disabled="isLoading"
-                    >
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Address
-                  </label>
+                <div class="relative">
                   <input
-                    v-model="billingAddress.address"
-                    type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    :disabled="isLoading"
+                    v-model="contactInfo.email"
+                    type="email"
+                    placeholder="email@example.com"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10 bg-gray-50"
+                    :disabled="true"
+                    required
                   >
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                      City
-                    </label>
-                    <input
-                      v-model="billingAddress.city"
-                      type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      :disabled="isLoading"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                      Postal Code
-                    </label>
-                    <input
-                      v-model="billingAddress.postalCode"
-                      type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      :disabled="isLoading"
-                    >
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Country
-                  </label>
-                  <select
-                    v-model="billingAddress.country"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    :disabled="isLoading"
-                  >
-                    <option value="">Select Country</option>
-                    <option value="SG">Singapore</option>
-                    <option value="MY">Malaysia</option>
-                    <option value="TH">Thailand</option>
-                    <option value="US">United States</option>
-                    <option value="UK">United Kingdom</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Submit Button -->
-              <button
-                type="submit"
-                class="w-full py-3 px-4 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="isLoading || !isFormValid"
-              >
-                <span v-if="isLoading" class="flex items-center justify-center">
                   <svg
-                    class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
+                    class="absolute left-3 top-3.5 h-5 w-5 text-gray-400"
                     fill="none"
                     viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <circle
-                      class="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="4"
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
                     />
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Processing...
-                </span>
-                <span v-else>Complete Subscription</span>
-              </button>
-            </form>
-          </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-4">Payment method</label>
+
+              <!-- Payment Element Section -->
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm text-gray-600 mb-2">Payment details</label>
+
+                  <!-- Stripe Payment Element will be mounted here -->
+                  <div v-if="stripeLoaded">
+                    <div id="payment-element" class="stripe-payment-element" />
+                  </div>
+
+                  <!-- Loading state for Stripe -->
+                  <div v-else class="animate-pulse">
+                    <div class="h-16 bg-gray-200 rounded-lg" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm text-gray-600 mb-2">Cardholder name</label>
+                  <input
+                    v-model="cardholderName"
+                    type="text"
+                    placeholder="Full name on card"
+                    class="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    :disabled="isLoading"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full py-3 px-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              :disabled="isLoading || !isFormValid"
+            >
+              <span v-if="isLoading" class="flex items-center justify-center">
+                <svg
+                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  />
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Processing...
+              </span>
+              <span v-else>Subscribe</span>
+            </button>
+
+            <!-- Terms -->
+            <p class="text-xs text-gray-500 text-center">
+              By subscribing, you authorize New business sandbox to charge you according to the terms until you cancel.
+            </p>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-center space-x-4 pt-4 text-xs text-gray-400">
+              <span>Powered by <strong>stripe</strong></span>
+              <button type="button" class="hover:text-gray-600">Terms</button>
+              <button type="button" class="hover:text-gray-600">Privacy</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useToast } from '#imports';
+<script setup lang="ts">
+import { ref, computed, onMounted, nextTick } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { loadStripe } from '@stripe/stripe-js';
+import type { Stripe, StripeElements, StripePaymentElement } from '@stripe/stripe-js';
 
 const router = useRouter();
-const toast = useToast();
-const { handleCheckout } = useStripe();
+const route = useRoute();
+const { createCheckoutSession } = useStripe();
+
+// Stripe integration
+const stripe = ref<Stripe | null>(null);
+const elements = ref<StripeElements | null>(null);
+const paymentElement = ref<StripePaymentElement | null>(null);
+const stripeLoaded = ref(false);
+const clientSecret = ref('');
+const setupIntentId = ref('');
 
 // Form state
 const isLoading = ref(false);
-const paymentMethod = ref('card');
-const cardNumber = ref('');
-const expiryDate = ref('');
-const cvv = ref('');
 
-const billingAddress = ref({
-  firstName: '',
-  lastName: '',
-  address: '',
-  city: '',
-  postalCode: '',
-  country: ''
+// Contact info
+const contactInfo = ref({
+  email: ''
 });
 
-// Form validation
-const isFormValid = computed(() => {
-  const addressValid = billingAddress.value.firstName &&
-    billingAddress.value.lastName &&
-    billingAddress.value.address &&
-    billingAddress.value.city &&
-    billingAddress.value.postalCode &&
-    billingAddress.value.country;
+// Billing info
+const cardholderName = ref('');
 
-  if (paymentMethod.value === 'card') {
-    return cardNumber.value && expiryDate.value && cvv.value && addressValid;
+// Plan details
+const planDetails = ref<any>(null);
+const useAnnualBilling = ref(false);
+
+// Computed properties
+const monthlyPrice = computed(() => {
+  if (!planDetails.value) return '0.00';
+
+  if (useAnnualBilling.value && planDetails.value.hasYearlyOption) {
+    return planDetails.value.yearlyEquivalentPrice.toFixed(2);
+  }
+  return planDetails.value.monthlyPrice.toFixed(2);
+});
+
+const currentPrice = computed(() => {
+  if (!planDetails.value) return '0.00';
+
+  if (useAnnualBilling.value && planDetails.value.hasYearlyOption) {
+    return planDetails.value.yearlyPrice.toFixed(2);
+  }
+  return planDetails.value.monthlyPrice.toFixed(2);
+});
+
+const isFormValid = computed(() => {
+  return planDetails.value &&
+    contactInfo.value.email &&
+    cardholderName.value &&
+    stripeLoaded.value;
+});
+
+// Load user email
+const loadUserEmail = async () => {
+  try {
+    const { data: { user } } = await useSupabaseClient().auth.getUser();
+    if (user?.email) {
+      contactInfo.value.email = user.email;
+    }
+  } catch (error) {
+    console.error('Failed to load user email:', error);
+    throw error;
+  }
+};
+
+// Load plan details from API using priceId
+const loadPlanDetails = async () => {
+  const priceId = route.query.priceId as string;
+
+  if (!priceId) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Price ID is required'
+    });
   }
 
-  return addressValid;
-});
+  try {
+    const response = await createCheckoutSession(priceId);
+    planDetails.value = response.planDetails;
+    clientSecret.value = response.clientSecret;
+    setupIntentId.value = response.clientSecret.split('_secret_')[0];
+  } catch (error: any) {
+    console.error('Failed to load plan details:', error);
+    throw createError({
+      statusCode: error.statusCode || 500,
+      statusMessage: error.message || 'Failed to load plan details'
+    });
+  }
+};
+
+// Initialize Stripe
+const initializeStripe = async () => {
+  try {
+    const runtimeConfig = useRuntimeConfig();
+    stripe.value = await loadStripe(runtimeConfig.public.stripePublishableKey);
+
+    if (!stripe.value) {
+      throw new Error('Failed to load Stripe');
+    }
+
+    elements.value = stripe.value.elements({
+      clientSecret: clientSecret.value,
+      appearance: {
+        theme: 'stripe',
+        variables: {
+          colorPrimary: '#2563eb',
+          colorBackground: '#ffffff',
+          colorText: '#374151',
+          colorDanger: '#ef4444',
+          fontFamily: 'system-ui, sans-serif',
+          spacingUnit: '4px',
+          borderRadius: '6px'
+        }
+      }
+    });
+
+    paymentElement.value = elements.value.create('payment', {
+      layout: 'tabs'
+    });
+
+    stripeLoaded.value = true;
+
+    await nextTick();
+
+    // Wait for DOM element to be available
+    const checkElement = () => {
+      const paymentEl = document.getElementById('payment-element');
+
+      if (paymentEl) {
+        paymentElement.value!.mount('#payment-element');
+      } else {
+        // Retry after a short delay
+        setTimeout(checkElement, 100);
+      }
+    };
+
+    checkElement();
+  } catch (error) {
+    console.error('Stripe initialization error:', error);
+    throw error;
+  }
+};
+
+// Setup intent is already created in loadPlanDetails
 
 // Handle form submission
 const handleSubmit = async () => {
-  if (!isFormValid.value) return;
+  if (!isFormValid.value || !stripe.value || !elements.value || !planDetails.value) {
+    return;
+  }
 
   isLoading.value = true;
 
   try {
-    // Use Stripe composable to handle checkout for monthly premium plan
-    await handleCheckout('premium_monthly');
-  } catch (error) {
-    console.error('Checkout error:', error);
-    toast.add({
-      title: 'Payment Failed',
-      description: error.data?.message || error.message || 'There was an error processing your payment. Please try again.',
-      color: 'red'
+    // Setup intent is already created during initialization
+
+    const { error, setupIntent } = await stripe.value.confirmSetup({
+      elements: elements.value,
+      confirmParams: {
+        return_url: `${window.location.origin}/subscription/success`,
+        payment_method_data: {
+          billing_details: {
+            name: cardholderName.value,
+            email: contactInfo.value.email
+          }
+        }
+      },
+      redirect: 'if_required'
     });
+
+    if (error) {
+      throw new Error(error.message || 'Payment setup failed');
+    }
+
+    if (setupIntent && setupIntent.status === 'succeeded') {
+      // Confirm subscription creation
+      const priceId = route.query.priceId as string;
+
+      await $fetch('/api/subscription/confirm', {
+        method: 'POST',
+        body: {
+          setupIntentId: setupIntent.id,
+          userId: (await useSupabaseClient().auth.getUser()).data.user?.id,
+          priceId
+        }
+      });
+
+      // Navigate to success page
+      await router.push({
+        path: '/subscription/success',
+        query: {
+          setup_intent: setupIntent.id,
+          plan: planDetails.value.name,
+          amount: currentPrice.value
+        }
+      });
+    }
+  } catch (error: any) {
+    console.error('Checkout error:', error);
+    throw error;
   } finally {
     isLoading.value = false;
   }
 };
+
+// Initialize everything on mount with proper error handling
+onMounted(async () => {
+  try {
+    await loadUserEmail();
+    await loadPlanDetails(); // This sets clientSecret
+    await initializeStripe(); // This now has access to clientSecret
+  } catch (error: any) {
+    // Redirect back to previous page or subscription page
+    console.error('Initialization error:', error);
+    await router.push('/subscription');
+  }
+});
 </script>
+
+<style scoped>
+.stripe-payment-element {
+  min-height: 64px;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: white;
+}
+
+/* Focus styles for Payment Element */
+.stripe-payment-element:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Error styles for Payment Element */
+.stripe-payment-element--invalid {
+  border-color: #ef4444;
+}
+</style>
