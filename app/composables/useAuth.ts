@@ -45,9 +45,35 @@ export const useAuth = () => {
     return;
   };
 
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        }
+      }
+    });
+
+    if (error) {
+      throw error;
+    }
+
+    return { data, error };
+  };
+
+  const signUpWithGoogle = async () => {
+    // For OAuth, sign up and sign in are the same flow
+    return signInWithGoogle();
+  };
+
   return {
     signUp,
     signIn,
     signOut,
+    signInWithGoogle,
+    signUpWithGoogle,
   };
 };
