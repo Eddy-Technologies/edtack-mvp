@@ -48,6 +48,17 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  app: {
+    head: {
+      script: [
+        {
+          async: true,
+          src: 'https://js.stripe.com/v3/pricing-table.js',
+        },
+      ],
+    },
+  },
   devtools: { enabled: true },
 
   runtimeConfig: {
@@ -59,6 +70,7 @@ export default defineNuxtConfig({
       supabaseServiceRoleKey:
         process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
+      stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     },
   },
 

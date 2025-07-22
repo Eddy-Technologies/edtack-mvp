@@ -49,29 +49,27 @@
           <div class="text-right">
             <div class="text-3xl font-bold text-gray-900">${{ currentPlan.price }}</div>
             <div class="text-sm text-gray-500">per month</div>
-            <Button
-              v-if="currentPlan.name === 'Premium'"
-              variant="secondary-danger"
-              text="Cancel Plan"
-              @click="cancelPlan"
-            />
+            <div v-if="currentPlan.name === 'Premium'" class="space-y-2 mt-3">
+              <Button
+                variant="secondary"
+                text="Manage Billing"
+                :loading="loading"
+                @click="openCustomerPortal"
+              />
+              <Button
+                variant="secondary-danger"
+                text="Cancel Plan"
+                :loading="loading"
+                @click="cancelPlan"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Upgrade Section -->
-    <div v-if="currentPlan.name === 'Free'" class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200 p-6">
-      <div class="text-center">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
-        <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
-        <Button
-          variant="primary"
-          text="Upgrade to Premium - SGD 29/month"
-          @click="upgradeAccount"
-        />
-      </div>
-    </div>
+    <!-- <div v-if="currentPlan.name === 'Free'" class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200 p-6" /> -->
 
     <!-- Payment Method (only show if not free plan) -->
     <div v-if="currentPlan.name !== 'Free'" class="bg-white rounded-xl shadow-sm border">
@@ -79,10 +77,10 @@
         <h3 class="text-lg font-semibold text-gray-900">Payment Method</h3>
       </div>
       <div class="p-6">
-        <div class="flex items-center justify-between">
+        <div v-if="paymentMethod.lastFour" class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
             <div class="w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-400 rounded flex items-center justify-center">
-              <span class="text-white text-xs font-bold">VISA</span>
+              <span class="text-white text-xs font-bold">{{ paymentMethod.brand || 'CARD' }}</span>
             </div>
             <div>
               <p class="font-medium text-gray-900">•••• •••• •••• {{ paymentMethod.lastFour }}</p>
@@ -91,9 +89,13 @@
           </div>
           <Button
             variant="secondary"
-            text="Update"
-            @click="showBillingModal = true"
+            text="Update via Stripe"
+            :loading="loading"
+            @click="openCustomerPortal"
           />
+        </div>
+        <div v-else class="text-center py-4">
+          <p class="text-gray-500">No payment method on file</p>
         </div>
       </div>
     </div>
@@ -101,9 +103,15 @@
     <!-- Billing History -->
     <div class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Billing History TODO</h3>
+        <h3 class="text-lg font-semibold text-gray-900">Billing History</h3>
       </div>
-      <div class="overflow-x-auto">
+      <div v-if="loading" class="p-6 text-center">
+        <p class="text-gray-500">Loading billing history...</p>
+      </div>
+      <div v-else-if="billingHistory.length === 0" class="p-6 text-center">
+        <p class="text-gray-500">No billing history available</p>
+      </div>
+      <div v-else class="overflow-x-auto">
         <table class="w-full">
           <thead class="bg-gray-50">
             <tr>
@@ -132,7 +140,14 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <button class="text-blue-600 hover:text-blue-700">Download</button>
+                <button
+                  v-if="bill.invoiceUrl"
+                  class="text-blue-600 hover:text-blue-700"
+                  @click="downloadInvoice(bill.invoiceUrl)"
+                >
+                  Download
+                </button>
+                <span v-else class="text-gray-400">N/A</span>
               </td>
             </tr>
           </tbody>
@@ -207,69 +222,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import BillingUpdateModal from './common/BillingUpdateModal.vue';
 
 const currentPlan = ref({
-  name: 'Premium', // Can be 'Free' or 'Premium'
-  description: 'Everything you need for comprehensive learning',
-  price: 29,
-  nextBilling: 'March 15, 2024',
+  name: 'Free', // Can be 'Free' or 'Premium'
+  description: 'Basic features to get started',
+  price: 0,
+  nextBilling: 'N/A',
   status: 'Active',
+  stripeSubscriptionId: null,
   features: [
-    'Unlimited AI queries',
-    'Advanced study tools',
-    'Unlimited practice questions',
-    'Priority support',
-    'Detailed progress tracking',
-    'Offline access'
+    '50 AI queries per month',
+    'Basic study tools',
+    'Limited practice questions',
+    'Community support'
   ]
 });
 
 const paymentMethod = ref({
-  lastFour: '4242',
-  expiry: '12/26'
+  lastFour: null,
+  expiry: null,
+  brand: null
 });
 
-const billingHistory = ref([
-  {
-    id: 1,
-    date: 'Feb 15, 2024',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 2,
-    date: 'Jan 15, 2024',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 3,
-    date: 'Dec 15, 2023',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 4,
-    date: 'Nov 15, 2023',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 5,
-    date: 'Oct 15, 2023',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  }
-]);
+const billingHistory = ref([]);
+const loading = ref(false);
+const error = ref(null);
 
 // Modal states
 const showSubscriptionModal = ref(false);
@@ -287,42 +268,143 @@ const paginatedBillingHistory = computed(() => {
   return billingHistory.value.slice(start, end);
 });
 
+// Stripe API functions
+const fetchSubscription = async () => {
+  try {
+    loading.value = true;
+    const response = await $fetch('/api/stripe/subscription', {
+      method: 'GET'
+    });
+
+    if (response.subscription) {
+      const sub = response.subscription;
+      currentPlan.value = {
+        name: 'Premium',
+        description: 'Everything you need for comprehensive learning',
+        price: sub.items.data[0].price.unit_amount / 100,
+        nextBilling: new Date(sub.current_period_end * 1000).toLocaleDateString(),
+        status: sub.status === 'active' ? 'Active' : 'Inactive',
+        stripeSubscriptionId: sub.id,
+        features: [
+          'Unlimited AI queries',
+          'Advanced study tools',
+          'Unlimited practice questions',
+          'Priority support',
+          'Detailed progress tracking',
+          'Offline access'
+        ]
+      };
+
+      // Get payment method info
+      if (sub.default_payment_method) {
+        const pm = response.paymentMethod;
+        if (pm && pm.card) {
+          paymentMethod.value = {
+            lastFour: pm.card.last4,
+            expiry: `${pm.card.exp_month}/${pm.card.exp_year.toString().slice(-2)}`,
+            brand: pm.card.brand.toUpperCase()
+          };
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Failed to fetch subscription:', err);
+    error.value = 'Failed to load subscription data';
+  } finally {
+    loading.value = false;
+  }
+};
+
+const fetchBillingHistory = async () => {
+  try {
+    const response = await $fetch('/api/stripe/billing-history', {
+      method: 'GET'
+    });
+
+    if (response.invoices) {
+      billingHistory.value = response.invoices.map((invoice: any) => ({
+        id: invoice.id,
+        date: new Date(invoice.created * 1000).toLocaleDateString(),
+        description: invoice.lines.data[0]?.description || 'Premium Plan',
+        amount: (invoice.amount_paid / 100).toFixed(2),
+        status: invoice.status === 'paid' ? 'paid' : invoice.status,
+        invoiceUrl: invoice.hosted_invoice_url
+      }));
+    }
+  } catch (err) {
+    console.error('Failed to fetch billing history:', err);
+  }
+};
+
+const cancelSubscription = async () => {
+  if (!confirm('Are you sure you want to cancel your Premium plan? You will lose access to premium features at the end of your billing period.')) {
+    return;
+  }
+
+  try {
+    loading.value = true;
+    const response = await $fetch('/api/stripe/cancel-subscription', {
+      method: 'POST',
+      body: {
+        subscriptionId: currentPlan.value.stripeSubscriptionId
+      }
+    });
+
+    if (response.success) {
+      // Update UI to reflect cancellation
+      currentPlan.value.status = 'Cancelled';
+      // Refresh subscription data
+      await fetchSubscription();
+    }
+  } catch (err) {
+    console.error('Failed to cancel subscription:', err);
+    error.value = 'Failed to cancel subscription';
+  } finally {
+    loading.value = false;
+  }
+};
+
+const openCustomerPortal = async () => {
+  try {
+    loading.value = true;
+    const response = await $fetch('/api/stripe/customer-portal', {
+      method: 'POST'
+    });
+
+    if (response.url) {
+      window.open(response.url, '_blank');
+    }
+  } catch (err) {
+    console.error('Failed to open customer portal:', err);
+    error.value = 'Failed to open customer portal';
+  } finally {
+    loading.value = false;
+  }
+};
+
+const downloadInvoice = (invoiceUrl: string) => {
+  if (invoiceUrl) {
+    window.open(invoiceUrl, '_blank');
+  }
+};
+
 // Methods
 const upgradeAccount = () => {
   showSubscriptionModal.value = true;
 };
 
-const handlePaymentUpdated = (data: { card: any; address: any }) => {
-  // Update payment method display with new card info
-  paymentMethod.value.lastFour = data.card.number.slice(-4);
-  paymentMethod.value.expiry = data.card.expiry;
-
-  // Billing address would also be updated in the backend
-  console.log('Updated billing address:', data.address);
+const handlePaymentUpdated = async () => {
+  // Refresh subscription data after payment update
+  await fetchSubscription();
+  showBillingModal.value = false;
 };
 
 const cancelPlan = () => {
-  if (confirm('Are you sure you want to cancel your Premium plan? You will lose access to premium features at the end of your billing period.')) {
-    currentPlan.value.name = 'Free';
-    currentPlan.value.price = 0;
-    currentPlan.value.nextBilling = 'N/A';
-    currentPlan.value.status = 'Cancelled';
-    currentPlan.value.description = 'Basic features to get started';
-    currentPlan.value.features = [
-      '50 AI queries per month',
-      'Basic study tools',
-      'Limited practice questions',
-      'Community support'
-    ];
-
-    // Add cancellation entry to billing history
-    billingHistory.value.unshift({
-      id: billingHistory.value.length + 1,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      description: 'Plan Cancellation',
-      amount: 0,
-      status: 'processed'
-    });
-  }
+  cancelSubscription();
 };
+
+onMounted(async () => {
+  await fetchSubscription();
+  await fetchBillingHistory();
+});
 </script>
