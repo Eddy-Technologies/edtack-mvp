@@ -1,25 +1,31 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="text-center">
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-          Create your account
-        </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Or
-          <NuxtLink
-            to="/login"
-            class="font-medium text-primary-600 hover:text-primary-500"
-          >
-            sign in to your existing account
-          </NuxtLink>
-        </p>
-      </div>
+    <!-- Logo in top right -->
+    <div class="absolute top-4 left-4">
+      <NuxtLink to="/" class="text-primary-600 hover:text-primary-500">
+        <AppIcon class="w-12 h-12 mr-3" />
+      </NuxtLink>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <div class="space-y-6">
+          <!-- Header -->
+          <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+              Create your account
+            </h2>
+            <p class="mt-2 text-sm text-gray-600">
+              Or
+              <NuxtLink
+                to="/login"
+                class="font-medium text-primary-600 hover:text-primary-500"
+              >
+                sign in to your existing account
+              </NuxtLink>
+            </p>
+          </div>
+
           <!-- Error Message -->
           <div v-if="errorMessage" class="bg-red-50 border border-red-200 rounded-lg p-3">
             <p class="text-red-600 text-sm">{{ errorMessage }}</p>
