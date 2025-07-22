@@ -22,7 +22,7 @@ export default defineNuxtPlugin(async () => {
     } else if (event === 'SIGNED_OUT') {
       console.log('User signed out from auth state change');
       resetMe();
-      router.push('/');
+      router.push('/login');
     } else if (event === 'USER_UPDATED' && session) {
       console.log('User profile updated');
       fetchAndSetMe();

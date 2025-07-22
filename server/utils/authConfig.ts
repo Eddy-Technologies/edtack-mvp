@@ -1,6 +1,7 @@
 import type { H3Event } from 'h3';
 import { serverSupabaseClient, serverSupabaseServiceRole } from '#supabase/server';
 import { useRuntimeConfig } from '#imports'; // Nuxt runtime config
+import type { Database } from '~~/types/supabase';
 
 const config = useRuntimeConfig();
 
@@ -86,5 +87,5 @@ export function getPrivilegedSupabaseClient(event: H3Event) {
 // Example: helper to get RLS-aware client in event handlers (already part of your codebase)
 // You typically use this in API routes
 export async function getSupabaseClient(event: H3Event) {
-  return await serverSupabaseClient(event);
+  return await serverSupabaseClient<Database>(event);
 }
