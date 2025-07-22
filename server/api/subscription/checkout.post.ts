@@ -1,5 +1,5 @@
-import { getSupabaseClient } from '#imports';
 import { getStripe } from '../../plugins/stripe';
+import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
   if (event.node.req.method !== 'POST') {
@@ -83,7 +83,6 @@ export default defineEventHandler(async (event) => {
         .update({ payment_customer_id: customerId })
         .eq('id', userInfo.id);
     }
-
 
     // Create Setup Intent for saving payment method and immediate subscription
     const setupIntent = await stripe.setupIntents.create({

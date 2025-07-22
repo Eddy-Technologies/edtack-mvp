@@ -1,5 +1,5 @@
-import { getSupabaseClient } from '#imports';
 import { getStripe } from '../../plugins/stripe';
+import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
   if (event.node.req.method !== 'POST') {

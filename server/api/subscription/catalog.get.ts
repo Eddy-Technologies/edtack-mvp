@@ -1,5 +1,5 @@
-import { getSupabaseClient } from '#imports';
 import { getStripe } from '../../plugins/stripe';
+import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
   if (event.node.req.method !== 'GET') {
@@ -12,10 +12,10 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const stripe = getStripe();
-    
+
     // Check if this is a request for a specific plan
     const planType = getQuery(event).planType as string;
-    
+
     if (planType) {
       // Handle specific plan request (from old plans/[planType] functionality)
       return await getSpecificPlan(supabase, stripe, planType);
@@ -25,11 +25,11 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error: any) {
     console.error('Failed to retrieve catalog:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: error.message || 'Failed to retrieve catalog'
