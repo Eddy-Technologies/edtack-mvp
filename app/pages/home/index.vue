@@ -53,7 +53,7 @@
                     :alt="avatar.name"
                     class="sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
                     style="width: 180px; height: 200px"
-                  />
+                  >
                 </div>
                 <h5 class="text-gray-800 text-xs sm:text-sm md:text-base font-semibold mb-1">
                   {{ avatar.name }}
@@ -82,7 +82,7 @@
                     :src="avatar.image"
                     :alt="avatar.name"
                     class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto rounded-full object-cover border-2 border-gray-300 group-hover:border-gray-400 transition-all duration-300"
-                  />
+                  >
                 </div>
                 <h5 class="text-gray-800 text-xs sm:text-sm md:text-base font-semibold mb-1">
                   {{ avatar.name }}
@@ -483,7 +483,7 @@ const showAllCharacters = ref(false);
 const demoInput = ref('');
 const isTyping = ref(false);
 const demoMessages = ref([
-  { text: "Hi! I'm Luna, your AI tutor. What would you like to learn today?", isUser: false },
+  { text: 'Hi! I\'m Luna, your AI tutor. What would you like to learn today?', isUser: false },
 ]);
 
 const demoCharacter = ref({
@@ -493,7 +493,7 @@ const demoCharacter = ref({
   type: 'AI Scholar',
 });
 
-const currentDemoMessage = ref("Hi there! I'm here to help you learn. Ask me anything!");
+const currentDemoMessage = ref('Hi there! I\'m here to help you learn. Ask me anything!');
 
 const demoSuggestions = ref([
   'Explain photosynthesis',
@@ -503,16 +503,16 @@ const demoSuggestions = ref([
 ]);
 
 const demoResponses = {
-  photosynthesis:
+  'photosynthesis':
     'Photosynthesis is how plants make food using sunlight, water, and carbon dioxide. The chloroplasts in plant cells capture light energy and convert it into chemical energy!',
-  algebra:
+  'algebra':
     'Algebra is like solving puzzles with numbers and letters! The key is to isolate the variable by doing the same operation to both sides of the equation. What specific algebra topic would you like help with?',
   'world war 2':
     'World War 2 lasted from 1939-1945 and involved many countries. It ended when Germany surrendered in May 1945 and Japan surrendered in August 1945 after the atomic bombs.',
-  volcanoes:
+  'volcanoes':
     'Volcanoes form when molten rock (magma) from deep inside Earth rises to the surface. The pressure builds up until it erupts, creating mountains of hardened lava and ash!',
-  default:
-    "That's a great question! I can help you understand complex topics by breaking them down into simple, easy-to-understand explanations. What specific area would you like to explore?",
+  'default':
+    'That\'s a great question! I can help you understand complex topics by breaking them down into simple, easy-to-understand explanations. What specific area would you like to explore?',
 };
 
 const allAvatars = ref(characters);
@@ -587,7 +587,7 @@ const faqs = ref([
   {
     question: 'What is Eddy and how does it work?',
     answer:
-      "Eddy is an AI-powered educational platform featuring customized Large Language Models designed specifically for education. Our AI tutors provide personalized learning experiences, adapt to your child's learning pace, and offer curriculum-aligned content across multiple subjects.",
+      'Eddy is an AI-powered educational platform featuring customized Large Language Models designed specifically for education. Our AI tutors provide personalized learning experiences, adapt to your child\'s learning pace, and offer curriculum-aligned content across multiple subjects.',
   },
   {
     question: 'What subjects does Eddy cover?',
@@ -597,7 +597,7 @@ const faqs = ref([
   {
     question: 'How do the AI characters work?',
     answer:
-      "Choose from multiple AI tutors including Alex the Explorer, Luna the Scholar, Sam the Scientist, and more. Each character has a unique personality and teaching style to match your child's preferences and learning style.",
+      'Choose from multiple AI tutors including Alex the Explorer, Luna the Scholar, Sam the Scientist, and more. Each character has a unique personality and teaching style to match your child\'s preferences and learning style.',
   },
   {
     question: 'Is Eddy safe for children?',
@@ -610,9 +610,9 @@ const faqs = ref([
       'Students earn credits by completing quizzes and challenges. Credits can be used in our shop system for educational materials and rewards, encouraging continued learning and engagement.',
   },
   {
-    question: "Can parents track their child's progress?",
+    question: 'Can parents track their child\'s progress?',
     answer:
-      "Absolutely! Our parent dashboard provides detailed progress tracking, study hours, completion rates, and comprehensive analytics to help you monitor your child's learning journey.",
+      'Absolutely! Our parent dashboard provides detailed progress tracking, study hours, completion rates, and comprehensive analytics to help you monitor your child\'s learning journey.',
   },
   {
     question: 'What devices can I use Eddy on?',

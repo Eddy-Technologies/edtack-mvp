@@ -195,7 +195,7 @@ const updatePassword = async () => {
 
     // Sign out client-side to sync with server-side logout
     await signOut();
-    
+
     toast.add({
       title: 'Password Updated',
       description: 'Your password has been successfully updated. Please log in again.',
