@@ -63,7 +63,7 @@ async function handleCancel(supabase: any, stripe: Stripe, body: any) {
   }
 
   // Cancel subscription in Stripe
-  await stripe.subscriptions.cancel(userInfo., {
+  await stripe.subscriptions.cancel(userInfo.payment_customer_id, {
     cancellation_details: {
       comment: reason || 'Cancelled by user'
     }
