@@ -52,12 +52,26 @@
           <div class="text-right">
             <div class="text-3xl font-bold text-gray-900">SGD {{ currentPlan?.price || '0' }}</div>
             <div class="text-sm text-gray-500">per {{ currentPlan?.interval || 'month' }}</div>
-            <Button
-              v-if="currentPlan?.isPremium"
-              variant="secondary"
-              text="Manage Billing"
-              @click="manageBilling"
-            />
+            <div class="mt-2 space-x-2">
+              <Button
+                v-if="currentPlan?.isPremium"
+                variant="secondary"
+                text="Manage Billing"
+                @click="manageBilling"
+              />
+              <Button
+                v-if="currentPlan?.isPremium && currentPlan?.planType === 'premium_monthly'"
+                variant="secondary"
+                text="Upgrade to Yearly"
+                @click="showUpgradeModal = true"
+              />
+              <Button
+                v-if="currentPlan?.isPremium"
+                variant="secondary-danger"
+                text="Cancel Plan"
+                @click="showCancelSubscription"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -68,11 +82,18 @@
       <div class="text-center">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
-        <Button
-          variant="primary"
-          text="Upgrade to Premium - SGD 29/month"
-          @click="upgradeAccount"
-        />
+        <div class="space-x-4">
+          <Button
+            variant="secondary"
+            text="Use Stripe Checkout - SGD 29/month"
+            @click="upgradeAccount"
+          />
+          <Button
+            variant="primary"
+            text="Custom Checkout - SGD 29/month"
+            @click="startCustomCheckout"
+          />
+        </div>
       </div>
     </div>
 
@@ -140,6 +161,142 @@
       @close="showBillingModal = false"
       @payment-updated="handlePaymentUpdated"
     />
+
+    <!-- Cancel Subscription Modal -->
+    <div v-if="showCancelModal" class="fixed inset-0 z-50 overflow-y-auto">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          @click="showCancelModal = false"
+        />
+
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg
+                  class="h-6 w-6 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L3.35 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  Cancel Subscription
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    Are you sure you want to cancel your subscription? You'll continue to have access until the end of your current billing period.
+                  </p>
+                  <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      Why are you canceling? (Optional)
+                    </label>
+                    <select
+                      v-model="cancellationReason"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Select a reason...</option>
+                      <option v-for="reason in cancellationReasons" :key="reason" :value="reason">
+                        {{ reason }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <Button
+              variant="secondary-danger"
+              text="Cancel Subscription"
+              :loading="stripeLoading"
+              class="w-full sm:w-auto sm:ml-3"
+              @click="handleCancelSubscription"
+            />
+            <Button
+              variant="secondary"
+              text="Keep Subscription"
+              class="mt-3 w-full sm:mt-0 sm:w-auto"
+              @click="showCancelModal = false"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upgrade to Yearly Modal -->
+    <div v-if="showUpgradeModal" class="fixed inset-0 z-50 overflow-y-auto">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div
+          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          @click="showUpgradeModal = false"
+        />
+
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg
+                  class="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  Upgrade to Yearly Plan
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    Save 17% by switching to our yearly plan. You'll be charged SGD 290 now and your next billing date will be extended by 12 months.
+                  </p>
+                  <div class="mt-4 p-4 bg-green-50 rounded-lg">
+                    <div class="flex">
+                      <div class="text-sm">
+                        <p class="font-medium text-green-800">Savings: SGD 58/year</p>
+                        <p class="text-green-600">Monthly equivalent: SGD 24.17/month</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <Button
+              variant="primary"
+              text="Upgrade to Yearly"
+              :loading="stripeLoading"
+              class="w-full sm:w-auto sm:ml-3"
+              @click="handleUpgradeToYearly"
+            />
+            <Button
+              variant="secondary"
+              text="Stay Monthly"
+              class="mt-3 w-full sm:mt-0 sm:w-auto"
+              @click="showUpgradeModal = false"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -150,10 +307,24 @@ import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import BillingUpdateModal from './common/BillingUpdateModal.vue';
 
 const { subscriptionStatus, fetchSubscriptionStatus, handleCustomerPortal, isLoading, isPremium } = useSubscription();
+const { cancelSubscription, upgradeSubscription, handleCustomCheckout, isLoading: stripeLoading } = useStripe();
 
 // Modal states
 const showSubscriptionModal = ref(false);
 const showBillingModal = ref(false);
+const showCancelModal = ref(false);
+const showUpgradeModal = ref(false);
+
+// Cancellation form
+const cancellationReason = ref('');
+const cancellationReasons = [
+  'Too expensive',
+  'Not using enough',
+  'Missing features',
+  'Technical issues',
+  'Switching to competitor',
+  'Other'
+];
 
 const currentPlan = computed(() => {
   if (!subscriptionStatus.value) return null;
@@ -178,7 +349,8 @@ const currentPlan = computed(() => {
     features: plan.features || [],
     isPremium: subscriptionStatus.value.isPremium,
     isTrialing: subscriptionStatus.value.isTrialing,
-    interval: plan.interval_type
+    interval: plan.interval_type,
+    planType: plan.plan_type
   };
 });
 
@@ -193,7 +365,36 @@ const paymentMethod = ref({
 
 // Methods
 const upgradeAccount = () => {
-  showSubscriptionModal.value = true;
+  if (currentPlan.value?.planType === 'premium_monthly') {
+    // Show upgrade to yearly modal
+    showUpgradeModal.value = true;
+  } else {
+    // Show general subscription modal
+    showSubscriptionModal.value = true;
+  }
+};
+
+const handleUpgradeToYearly = async () => {
+  try {
+    const response = await upgradeSubscription('premium_yearly');
+    if (response.success) {
+      showUpgradeModal.value = false;
+      await fetchSubscriptionStatus();
+      // Show success message
+    }
+  } catch (error: any) {
+    console.error('Failed to upgrade subscription:', error);
+    // Show error message
+  }
+};
+
+const startCustomCheckout = () => {
+  const planDetails = {
+    name: 'Premium Plan',
+    price: 29,
+    interval: 'month'
+  };
+  handleCustomCheckout('premium_monthly', planDetails);
 };
 
 const manageBilling = async () => {
@@ -205,6 +406,24 @@ const manageBilling = async () => {
   } catch (error: any) {
     console.error('Failed to open billing portal:', error);
     // Fallback is already handled by handleCustomerPortal
+  }
+};
+
+const showCancelSubscription = () => {
+  showCancelModal.value = true;
+};
+
+const handleCancelSubscription = async () => {
+  try {
+    const response = await cancelSubscription(cancellationReason.value);
+    if (response.success) {
+      showCancelModal.value = false;
+      await fetchSubscriptionStatus();
+      // Show success message
+    }
+  } catch (error: any) {
+    console.error('Failed to cancel subscription:', error);
+    // Show error message
   }
 };
 

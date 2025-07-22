@@ -18,17 +18,13 @@
         </button>
       </div>
 
-      <!-- <SubscriptionPlans :is-modal="true" @close="closeModal" /> -->
-      <stripe-pricing-table
-        pricing-table-id="prctbl_1RnYsF2ennKEEze8SxzrXmI5"
-        publishable-key="pk_test_51RmqmU2ennKEEze82gSWEvmABvBIVugAVmR5NKvMxW1braDV3rc4DeO0SQulwsqoe4Zl7BT8yK5Bw4kk7vkm7BU100SRjRNxVK"
-      />
+      <StripeProductsDisplay />
     </div>
   </div>
 </template>
 
 <script setup>
-import SubscriptionPlans from './SubscriptionPlans.vue';
+import StripeProductsDisplay from './StripeProductsDisplay.vue';
 
 defineProps({
   isVisible: {
