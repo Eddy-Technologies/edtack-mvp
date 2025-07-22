@@ -8,13 +8,14 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
   // Check if user is authenticated
   if (!user) {
     console.log(
-      `[Auth Middleware] User not authenticated. Redirecting to home from ${to.path}`
+      `[Auth Middleware] User not authenticated. Redirecting to login from ${to.path}`
     );
 
-    // Prevent redirect loop if already on home page
-    if (to.path !== '/') {
-      return navigateTo('/');
+    // Prevent redirect loop if already on login page
+    if (to.path !== '/login') {
+      return navigateTo(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
     }
+    return;
   }
 
   // If user is authenticated, allow access

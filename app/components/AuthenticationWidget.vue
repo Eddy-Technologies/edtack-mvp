@@ -61,23 +61,6 @@
     </div>
   </div>
 
-  <!-- Login Modal -->
-  <LoginModal
-    v-if="loginModalVisible"
-    :message="loginSuccessMessage"
-    @close="loginModalVisible = false"
-    @success="handleLoginSuccess"
-    @register="register"
-  />
-
-  <!-- Register Modal -->
-  <RegisterModal
-    v-if="registerModalVisible"
-    @close="registerModalVisible = false"
-    @success="handleRegisterSuccess"
-    @login="login"
-  />
-
   <!-- Subscription Modal -->
   <SubscriptionModal
     v-if="subscriptionModalVisible"
@@ -89,8 +72,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import LoginModal from './login/LoginModal.vue';
-import RegisterModal from './register/RegisterModal.vue';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
 import UserAvatar from './common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
@@ -116,10 +97,7 @@ const emit = defineEmits(['login-success', 'register-success', 'logout']);
 const toast = useToast();
 const router = useRouter();
 const menuOpen = ref(false);
-const loginModalVisible = ref(false);
-const registerModalVisible = ref(false);
 const subscriptionModalVisible = ref(false);
-const loginSuccessMessage = ref('');
 
 const { signOut } = useAuth();
 const user = useMeStore();
@@ -132,26 +110,11 @@ const routeTo = (path: string) => {
 
 // Authentication actions
 const login = () => {
-  registerModalVisible.value = false;
-  loginSuccessMessage.value = '';
-  loginModalVisible.value = true;
+  router.push('/login');
 };
 
 const register = () => {
-  loginModalVisible.value = false;
-  registerModalVisible.value = true;
-};
-
-const handleLoginSuccess = () => {
-  loginModalVisible.value = false;
-  emit('login-success');
-};
-
-const handleRegisterSuccess = (message?: string) => {
-  registerModalVisible.value = false;
-  loginSuccessMessage.value = message || 'Registration successful! Please log in with your new account.';
-  loginModalVisible.value = true;
-  emit('register-success');
+  router.push('/register');
 };
 
 const openSubscriptionModal = () => {

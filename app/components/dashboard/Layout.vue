@@ -250,7 +250,7 @@ const logout = async () => {
   try {
     await signOut();
     // Navigate to login page after successful logout
-    router.push('/');
+    router.push('/login');
   } catch (error) {
     console.error('Logout failed:', error);
     // TODO: Show error message to user
