@@ -297,7 +297,6 @@ const handleSubmit = async () => {
   try {
     // Use Stripe composable to handle checkout for monthly premium plan
     await handleCheckout('premium_monthly');
-    
   } catch (error) {
     console.error('Checkout error:', error);
     toast.add({

@@ -100,7 +100,6 @@ export default defineEventHandler(async (event) => {
       .eq('stripe_event_id', stripeEvent.id);
 
     return { received: true };
-
   } catch (error: any) {
     console.error('Webhook processing error:', error);
     throw createError({

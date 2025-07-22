@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
           plan_type: 'free',
           features: [
             'Limited AI queries per month',
-            'Basic study tools', 
+            'Basic study tools',
             'Limited practice questions',
             'Community support'
           ]
@@ -106,10 +106,9 @@ export default defineEventHandler(async (event) => {
       isPremium: subscription.subscription_plans?.plan_type?.includes('premium') || false,
       isTrialing: subscription.status === 'trialing'
     };
-
   } catch (error: any) {
     console.error('Subscription status error:', error);
-    
+
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.message || 'Failed to get subscription status'

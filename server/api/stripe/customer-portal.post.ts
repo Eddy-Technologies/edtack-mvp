@@ -59,10 +59,9 @@ export default defineEventHandler(async (event) => {
     return {
       url: session.url
     };
-
   } catch (error: any) {
     console.error('Customer portal error:', error);
-    
+
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.message || 'Failed to create customer portal session'

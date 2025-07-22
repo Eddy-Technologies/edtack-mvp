@@ -388,7 +388,6 @@ const processSubscription = async () => {
 
     // Use Stripe composable to handle checkout
     await handleCheckout(planType);
-
   } catch (error: any) {
     console.error('Subscription error:', error);
     errorMessage.value = error.message || 'Subscription failed. Please try again.';

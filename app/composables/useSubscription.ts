@@ -48,7 +48,7 @@ export const useSubscription = () => {
 
     try {
       const { data: { user } } = await useSupabaseClient().auth.getUser();
-      
+
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -79,7 +79,7 @@ export const useSubscription = () => {
     isTrialing,
     currentPlan,
     fetchSubscriptionStatus,
-    
+
     // Stripe operations
     createCheckoutSession: stripe.createCheckoutSession,
     createCustomerPortalSession: stripe.createCustomerPortalSession,
@@ -87,7 +87,7 @@ export const useSubscription = () => {
     redirectToCustomerPortal: stripe.redirectToCustomerPortal,
     handleCheckout: stripe.handleCheckout,
     handleCustomerPortal: stripe.handleCustomerPortal,
-    
+
     refresh: fetchSubscriptionStatus
   };
 };
