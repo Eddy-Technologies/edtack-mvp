@@ -78,7 +78,7 @@
     </div>
 
     <!-- Upgrade Section -->
-    <div v-if="currentPlan && !currentPlan.isPremium" class="bg-primary-50 rounded-xl border p-6">
+    <div v-if="currentPlan && !currentPlan.isPremium" class="bg-secondary/30 rounded-xl border p-6">
       <div class="text-center">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
