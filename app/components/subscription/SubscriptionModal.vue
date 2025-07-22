@@ -18,7 +18,11 @@
         </button>
       </div>
 
-      <SubscriptionPlans :is-modal="true" @close="closeModal" />
+      <!-- <SubscriptionPlans :is-modal="true" @close="closeModal" /> -->
+      <stripe-pricing-table
+        pricing-table-id="prctbl_1RnYsF2ennKEEze8SxzrXmI5"
+        publishable-key="pk_test_51RmqmU2ennKEEze82gSWEvmABvBIVugAVmR5NKvMxW1braDV3rc4DeO0SQulwsqoe4Zl7BT8yK5Bw4kk7vkm7BU100SRjRNxVK"
+      />
     </div>
   </div>
 </template>
@@ -38,4 +42,13 @@ const emit = defineEmits(['close']);
 const closeModal = () => {
   emit('close');
 };
+
+onMounted(() => {
+  if (!document.querySelector('script[src="https://js.stripe.com/v3/pricing-table.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'https://js.stripe.com/v3/pricing-table.js';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+});
 </script>

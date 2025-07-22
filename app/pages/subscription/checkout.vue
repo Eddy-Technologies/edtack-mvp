@@ -254,6 +254,7 @@ import { useToast } from '#imports';
 
 const router = useRouter();
 const toast = useToast();
+const { handleCheckout } = useStripe();
 
 // Form state
 const isLoading = ref(false);
@@ -294,22 +295,14 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
-    // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Show success message
-    toast.add({
-      title: 'Subscription Activated!',
-      description: 'Welcome to Premium! You now have unlimited access to all features.',
-      color: 'green'
-    });
-
-    // Redirect to dashboard
-    router.push('/dashboard?tab=subscription');
+    // Use Stripe composable to handle checkout for monthly premium plan
+    await handleCheckout('premium_monthly');
+    
   } catch (error) {
+    console.error('Checkout error:', error);
     toast.add({
       title: 'Payment Failed',
-      description: 'There was an error processing your payment. Please try again.',
+      description: error.data?.message || error.message || 'There was an error processing your payment. Please try again.',
       color: 'red'
     });
   } finally {

@@ -41,7 +41,7 @@
         <div class="bg-white rounded-lg shadow-sm border p-6 relative">
           <div class="text-center mb-6">
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Monthly Plan</h3>
-            <div class="text-3xl font-bold text-gray-900 mb-1">$9.99</div>
+            <div class="text-3xl font-bold text-gray-900 mb-1">SGD 29</div>
             <div class="text-sm text-gray-600">per month</div>
           </div>
 
@@ -128,7 +128,7 @@
 
           <div class="text-center mb-6">
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Yearly Plan</h3>
-            <div class="text-3xl font-bold text-gray-900 mb-1">$99.99</div>
+            <div class="text-3xl font-bold text-gray-900 mb-1">SGD 290</div>
             <div class="text-sm text-gray-600">per year</div>
             <div class="text-sm text-green-600 font-medium">Save 17%</div>
           </div>
@@ -221,7 +221,7 @@
               <p class="text-sm text-gray-600">{{ selectedPlan === 'monthly' ? 'Billed monthly' : 'Billed annually' }}</p>
             </div>
             <div class="text-right">
-              <div class="text-lg font-bold text-gray-900">{{ selectedPlan === 'monthly' ? '$9.99' : '$99.99' }}</div>
+              <div class="text-lg font-bold text-gray-900">{{ selectedPlan === 'monthly' ? 'SGD 29' : 'SGD 290' }}</div>
               <div class="text-sm text-gray-600">{{ selectedPlan === 'monthly' ? '/month' : '/year' }}</div>
             </div>
           </div>
@@ -290,7 +290,7 @@
           class="w-full py-3 rounded-xl font-semibold text-lg mt-6"
           :disabled="!canProceed || isProcessing"
           :loading="isProcessing"
-          :text="isProcessing ? 'Processing...' : `Subscribe for ${selectedPlan === 'monthly' ? '$9.99/month' : '$99.99/year'}`"
+          :text="isProcessing ? 'Processing...' : `Subscribe for ${selectedPlan === 'monthly' ? 'SGD 29/month' : 'SGD 290/year'}`"
           @click="processSubscription"
         />
 
@@ -320,14 +320,18 @@
 import { ref, computed } from 'vue';
 import Button from '~/components/common/Button.vue';
 
+const { handleCheckout, isLoading: stripeLoading, error: stripeError } = useStripe();
+
 definePageMeta({
   middleware: ['auth']
 });
 
 // State
 const selectedPlan = ref('');
-const isProcessing = ref(false);
 const errorMessage = ref('');
+
+// Computed properties for processing state
+const isProcessing = computed(() => stripeLoading.value);
 
 // Card details
 const cardDetails = ref({
@@ -376,29 +380,18 @@ const formatExpiry = (event: Event) => {
 const processSubscription = async () => {
   if (!canProceed.value) return;
 
-  isProcessing.value = true;
   errorMessage.value = '';
 
   try {
-    // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Determine plan type based on selection
+    const planType = selectedPlan.value === 'yearly' ? 'premium_yearly' : 'premium_monthly';
 
-    // Simulate success/failure
-    const success = Math.random() > 0.1; // 90% success rate
+    // Use Stripe composable to handle checkout
+    await handleCheckout(planType);
 
-    if (!success) {
-      throw new Error('Payment failed. Please check your card details and try again.');
-    }
-
-    // TODO: Process actual payment via Stripe
-    // TODO: Update user subscription status in database
-
-    // Redirect to success page or dashboard
-    await navigateTo('/dashboard');
   } catch (error: any) {
+    console.error('Subscription error:', error);
     errorMessage.value = error.message || 'Subscription failed. Please try again.';
-  } finally {
-    isProcessing.value = false;
   }
 };
 </script>

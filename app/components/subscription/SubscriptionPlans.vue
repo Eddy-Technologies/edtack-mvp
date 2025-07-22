@@ -11,7 +11,6 @@
       <!-- Free Plan -->
       <div
         class="border-2 border-gray-200 rounded-lg p-6 hover:border-gray-300 transition-colors cursor-pointer"
-        @click="selectPlan('free')"
       >
         <div class="text-center">
           <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Plan</h3>
@@ -52,7 +51,6 @@
       <!-- Premium Plan -->
       <div
         class="border-2 border-primary-500 rounded-lg p-6 hover:border-primary-600 transition-colors relative bg-primary-50/30 cursor-pointer"
-        @click="selectPlan('premium')"
       >
         <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
           <span
@@ -96,8 +94,8 @@
         </div>
 
         <Button
-          disabled
-          class="w-full py-3 px-4 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
+          variant="primary"
+          class="w-full py-3 px-4"
           @click="handlePremiumTrialClick"
         >
           Start Premium Trial
@@ -121,11 +119,7 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 const router = useRouter();
-
-const selectPlan = (plan) => {
-  // Handle plan selection logic
-  console.log('Selected plan:', plan);
-};
+const { handleCheckout } = useStripe();
 
 const handleFreeTrialClick = () => {
   // If in modal, just close modal without navigation
@@ -133,17 +127,31 @@ const handleFreeTrialClick = () => {
     emit('close');
     return;
   }
-  // Navigate to chat for free trial (only when not in modal)
-  router.push('/chat');
 };
 
-const handlePremiumTrialClick = () => {
+const handlePremiumTrialClick = async () => {
   // If in modal, just close modal without navigation
   if (props.isModal) {
     emit('close');
     return;
   }
-  // Navigate to subscription checkout (only when not in modal)
-  router.push('/subscription/checkout');
+
+  try {
+    // Get current user to check authentication
+    const supabase = useSupabaseClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      // Redirect to login if not authenticated
+      router.push('/login');
+      return;
+    }
+
+    // Use Stripe composable with fallback to checkout page
+    await handleCheckout('premium_monthly', '/subscription/checkout');
+  } catch (error) {
+    console.error('Premium subscription error:', error);
+    // Fallback is already handled by handleCheckout
+  }
 };
 </script>

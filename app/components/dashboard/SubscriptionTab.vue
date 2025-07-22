@@ -31,29 +31,32 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-xl font-semibold text-gray-900">{{ currentPlan.name }} Plan</h3>
-              <p class="text-gray-600">{{ currentPlan.description }}</p>
+              <h3 class="text-xl font-semibold text-gray-900">{{ currentPlan?.name || 'Loading...' }}</h3>
+              <p class="text-gray-600">{{ currentPlan?.description || 'Loading subscription details...' }}</p>
               <div class="flex items-center space-x-2 mt-1">
                 <span
                   :class="[
                     'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                    currentPlan.name === 'Premium' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
+                    currentPlan?.isPremium ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
                   ]"
                 >
-                  {{ currentPlan.status }}
+                  {{ currentPlan?.status || 'Loading...' }}
                 </span>
-                <span class="text-sm text-gray-500">Next billing: {{ currentPlan.nextBilling }}</span>
+                <span v-if="currentPlan?.isTrialing" class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                  Trial
+                </span>
+                <span v-if="currentPlan?.nextBilling !== 'N/A'" class="text-sm text-gray-500">Next billing: {{ currentPlan?.nextBilling }}</span>
               </div>
             </div>
           </div>
           <div class="text-right">
-            <div class="text-3xl font-bold text-gray-900">${{ currentPlan.price }}</div>
-            <div class="text-sm text-gray-500">per month</div>
+            <div class="text-3xl font-bold text-gray-900">SGD {{ currentPlan?.price || '0' }}</div>
+            <div class="text-sm text-gray-500">per {{ currentPlan?.interval || 'month' }}</div>
             <Button
-              v-if="currentPlan.name === 'Premium'"
-              variant="secondary-danger"
-              text="Cancel Plan"
-              @click="cancelPlan"
+              v-if="currentPlan?.isPremium"
+              variant="secondary"
+              text="Manage Billing"
+              @click="manageBilling"
             />
           </div>
         </div>
@@ -61,7 +64,7 @@
     </div>
 
     <!-- Upgrade Section -->
-    <div v-if="currentPlan.name === 'Free'" class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200 p-6">
+    <div v-if="currentPlan && !currentPlan.isPremium" class="bg-primary-50 rounded-xl border p-6">
       <div class="text-center">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlock Premium Features</h3>
         <p class="text-gray-600 mb-4">Get unlimited access to all our learning tools and AI assistance</p>
@@ -73,8 +76,8 @@
       </div>
     </div>
 
-    <!-- Payment Method (only show if not free plan) -->
-    <div v-if="currentPlan.name !== 'Free'" class="bg-white rounded-xl shadow-sm border">
+    <!-- Payment Method (only show if premium plan) -->
+    <div v-if="currentPlan && currentPlan.isPremium" class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
         <h3 class="text-lg font-semibold text-gray-900">Payment Method</h3>
       </div>
@@ -92,100 +95,34 @@
           <Button
             variant="secondary"
             text="Update"
-            @click="showBillingModal = true"
+            @click="manageBilling"
           />
         </div>
       </div>
     </div>
 
     <!-- Billing History -->
-    <div class="bg-white rounded-xl shadow-sm border">
+    <div v-if="currentPlan && currentPlan.isPremium" class="bg-white rounded-xl shadow-sm border">
       <div class="p-6 border-b">
-        <h3 class="text-lg font-semibold text-gray-900">Billing History TODO</h3>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <tr v-for="bill in paginatedBillingHistory" :key="bill.id">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ bill.date }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ bill.description }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ bill.amount }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  :class="[
-                    'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                    bill.status === 'paid' ? 'bg-green-100 text-green-800' :
-                    bill.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
-                  ]"
-                >
-                  {{ bill.status }}
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <button class="text-blue-600 hover:text-blue-700">Download</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination -->
-      <div v-if="totalPages > 1" class="px-6 py-4 border-t bg-gray-50">
         <div class="flex items-center justify-between">
-          <div class="text-sm text-gray-600">
-            Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ Math.min(currentPage * itemsPerPage, billingHistory.length) }} of {{ billingHistory.length }} results
-          </div>
-          <div class="flex space-x-2">
-            <button
-              :disabled="currentPage === 1"
-              :class="[
-                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                currentPage === 1
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-              ]"
-              @click="currentPage--"
-            >
-              Previous
-            </button>
-
-            <button
-              v-for="page in totalPages"
-              :key="page"
-              :class="[
-                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                page === currentPage
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-              ]"
-              @click="currentPage = page"
-            >
-              {{ page }}
-            </button>
-
-            <button
-              :disabled="currentPage === totalPages"
-              :class="[
-                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                currentPage === totalPages
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-              ]"
-              @click="currentPage++"
-            >
-              Next
-            </button>
-          </div>
+          <h3 class="text-lg font-semibold text-gray-900">Billing History</h3>
+          <Button
+            variant="secondary"
+            text="View Full History"
+            @click="manageBilling"
+          />
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-gray-600">
+          View your complete billing history, download invoices, and manage payment methods through our secure customer portal.
+        </p>
+        <div class="mt-4">
+          <Button
+            variant="primary"
+            text="Open Billing Portal"
+            @click="manageBilling"
+          />
         </div>
       </div>
     </div>
@@ -207,84 +144,51 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import BillingUpdateModal from './common/BillingUpdateModal.vue';
 
-const currentPlan = ref({
-  name: 'Premium', // Can be 'Free' or 'Premium'
-  description: 'Everything you need for comprehensive learning',
-  price: 29,
-  nextBilling: 'March 15, 2024',
-  status: 'Active',
-  features: [
-    'Unlimited AI queries',
-    'Advanced study tools',
-    'Unlimited practice questions',
-    'Priority support',
-    'Detailed progress tracking',
-    'Offline access'
-  ]
-});
-
-const paymentMethod = ref({
-  lastFour: '4242',
-  expiry: '12/26'
-});
-
-const billingHistory = ref([
-  {
-    id: 1,
-    date: 'Feb 15, 2024',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 2,
-    date: 'Jan 15, 2024',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 3,
-    date: 'Dec 15, 2023',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 4,
-    date: 'Nov 15, 2023',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  },
-  {
-    id: 5,
-    date: 'Oct 15, 2023',
-    description: 'Premium Plan - Monthly',
-    amount: 29.00,
-    status: 'paid'
-  }
-]);
+const { subscriptionStatus, fetchSubscriptionStatus, handleCustomerPortal, isLoading, isPremium } = useSubscription();
 
 // Modal states
 const showSubscriptionModal = ref(false);
 const showBillingModal = ref(false);
 
-// Pagination
-const currentPage = ref(1);
-const itemsPerPage = 5;
+const currentPlan = computed(() => {
+  if (!subscriptionStatus.value) return null;
 
-const totalPages = computed(() => Math.ceil(billingHistory.value.length / itemsPerPage));
+  const plan = subscriptionStatus.value.currentPlan;
+  const subscription = subscriptionStatus.value.subscription;
 
-const paginatedBillingHistory = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return billingHistory.value.slice(start, end);
+  return {
+    name: plan.display_name,
+    description: plan.description || 'Basic features to get started',
+    price: plan.price_sgd,
+    nextBilling: subscription?.currentPeriodEnd ?
+        new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }) :
+      'N/A',
+    status: subscription?.status ?
+      subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1) :
+      'Free',
+    features: plan.features || [],
+    isPremium: subscriptionStatus.value.isPremium,
+    isTrialing: subscriptionStatus.value.isTrialing,
+    interval: plan.interval_type
+  };
+});
+
+onMounted(() => {
+  fetchSubscriptionStatus();
+});
+
+const paymentMethod = ref({
+  lastFour: '••••',
+  expiry: 'MM/YY'
 });
 
 // Methods
@@ -292,37 +196,21 @@ const upgradeAccount = () => {
   showSubscriptionModal.value = true;
 };
 
-const handlePaymentUpdated = (data: { card: any; address: any }) => {
-  // Update payment method display with new card info
-  paymentMethod.value.lastFour = data.card.number.slice(-4);
-  paymentMethod.value.expiry = data.card.expiry;
-
-  // Billing address would also be updated in the backend
-  console.log('Updated billing address:', data.address);
+const manageBilling = async () => {
+  try {
+    // Use Stripe composable with fallback to billing modal
+    await handleCustomerPortal(() => {
+      showBillingModal.value = true;
+    });
+  } catch (error: any) {
+    console.error('Failed to open billing portal:', error);
+    // Fallback is already handled by handleCustomerPortal
+  }
 };
 
-const cancelPlan = () => {
-  if (confirm('Are you sure you want to cancel your Premium plan? You will lose access to premium features at the end of your billing period.')) {
-    currentPlan.value.name = 'Free';
-    currentPlan.value.price = 0;
-    currentPlan.value.nextBilling = 'N/A';
-    currentPlan.value.status = 'Cancelled';
-    currentPlan.value.description = 'Basic features to get started';
-    currentPlan.value.features = [
-      '50 AI queries per month',
-      'Basic study tools',
-      'Limited practice questions',
-      'Community support'
-    ];
-
-    // Add cancellation entry to billing history
-    billingHistory.value.unshift({
-      id: billingHistory.value.length + 1,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      description: 'Plan Cancellation',
-      amount: 0,
-      status: 'processed'
-    });
-  }
+const handlePaymentUpdated = (data: { card: any; address: any }) => {
+  // Refresh subscription status after payment update
+  fetchSubscriptionStatus();
+  console.log('Updated billing info:', data);
 };
 </script>
