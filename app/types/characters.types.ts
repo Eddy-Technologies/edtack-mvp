@@ -13,7 +13,7 @@ export const characters = [
     type: 'History',
   },
   {
-    id: 5,
+    id: 6,
     name: 'Sherlock',
     image: socialAvatar,
     type: 'Social Studies',

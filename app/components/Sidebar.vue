@@ -8,11 +8,11 @@
         alt="eddy"
         class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
         @click="routeTo('/')"
-      >
+      />
       <Button
         :icon="isMini ? 'i-heroicons-arrow-right-20-solid' : 'i-heroicons-arrow-left-20-solid'"
         color="black"
-        size="l"
+        size="lg"
         bold
         rounded
         hover
@@ -58,10 +58,22 @@
       </div>
     </div>
 
+    <div class="mt-4">
+      <div ref="waveformRef" class="w-full h-20"></div>
+      <div class="flex justify-center mt-2">
+        <button
+          @click="togglePlayback"
+          class="bg-primary text-white px-4 py-1 rounded shadow hover:bg-blue-700"
+        >
+          {{ isPlaying ? 'Pause' : 'Play' }} Audio
+        </button>
+      </div>
+    </div>
+
     <!-- Avatar & Buttons -->
     <div class="p-4">
       <div class="relative bg-gray-700 rounded-xl shadow-inner p-2 min-h-[180px] w-full">
-        <Avatar />
+        <Avatar :is-playing="isPlaying" />
         <div
           class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4"
           :class="isMini ? 'flex-col items-center gap-3' : 'flex-row'"
@@ -94,12 +106,16 @@
   </aside>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue';
 import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
+import WaveSurfer from 'wavesurfer.js';
+import { useAudioStore } from '~/stores/audio';
+
+const audioStore = useAudioStore();
 
 const emit = defineEmits(['toggle-sidebar', 'change-character']);
 const props = defineProps({
@@ -116,6 +132,7 @@ const isMini = computed(
   () => props.collapsed || props.isMobile || (props.sidebarWidth ?? 999) < 150
 );
 
+// Button handlers
 const handleCall = () => {
   toast.add({ title: 'Call', description: 'Calling...', icon: 'i-heroicons-phone-20-solid' });
 };
@@ -147,4 +164,57 @@ const handleShowChatHistory = () => {
 const handleChangeCharacter = () => {
   emit('change-character');
 };
+
+// 🎵 WaveSurfer Audio Player
+const waveformRef = ref<HTMLElement | null>(null);
+const isPlaying = ref(false);
+let wavesurfer: WaveSurfer | null = null;
+
+const togglePlayback = () => {
+  if (!wavesurfer) return;
+  if (isPlaying.value) {
+    wavesurfer.pause();
+  } else {
+    wavesurfer.play();
+  }
+  isPlaying.value = !isPlaying.value;
+};
+
+onMounted(() => {
+  if (!waveformRef.value) return;
+
+  wavesurfer = WaveSurfer.create({
+    container: waveformRef.value,
+    waveColor: '#d1d5db', // Tailwind gray-300
+    progressColor: '#14b8a6', // Tailwind blue-500
+    height: 50,
+    barWidth: 2,
+    responsive: true,
+    cursorWidth: 0,
+  });
+
+  // Initially load if audio URL exists
+  if (audioStore.audioUrl) {
+    wavesurfer.load(audioStore.audioUrl);
+  }
+
+  // Watch for changes in the audio URL from the store
+  watch(
+    () => audioStore.audioUrl,
+    (newUrl) => {
+      if (newUrl && wavesurfer) {
+        wavesurfer.load(newUrl);
+        isPlaying.value = false; // reset play state
+      }
+    }
+  );
+
+  wavesurfer.on('finish', () => {
+    isPlaying.value = false;
+  });
+});
+
+onBeforeUnmount(() => {
+  wavesurfer?.destroy();
+});
 </script>

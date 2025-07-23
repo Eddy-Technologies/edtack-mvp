@@ -1,9 +1,8 @@
 <template>
   <div class="flex flex-col h-full w-full bg-white overflow-hidden">
     <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4">
-      <div class="whitespace-pre-wrap flex-shrink min-w-0 text-center">Talk to Snorlax...</div>
+      <div class="whitespace-pre-wrap flex-shrink min-w-0 text-center">Talk to Eddy...</div>
 
-      <!-- Render all playback units flattened across entire messageStream -->
       <component
         :is="unit.component"
         v-for="(unit, index) in flattenedPlaybackUnits"
@@ -37,13 +36,15 @@ const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
-const conversationSummary = ref('Snorlax is a sleepy Pokémon who loves naps.');
+const conversationSummary = ref(
+  'Eddy is a lion character that talks and is highly intelligent, he educates with passion.'
+);
 const MAX_CONTEXT_MESSAGES = 6;
 
 const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
 
-const { speakLastAssistantMessage, stopSpeaking, toggleAudioPlayer, onSpeechEnd } = useSpeech();
+const { speakLastAssistantMessage, onSpeechEnd } = useSpeech();
 const { getLessonBundle } = useLesson();
 
 // Flatten the entire messageStream into an ordered array of playback units
@@ -101,7 +102,6 @@ const handleSend = async (text: string) => {
   if (text.includes('lesson')) {
     constructLesson(text);
   } else {
-    stopSpeaking();
     isPlayingAllowed.value = false;
     await nextTick();
     bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -179,7 +179,6 @@ const handleSend = async (text: string) => {
 };
 
 const constructLesson = (text: string) => {
-  stopSpeaking();
   isPlayingAllowed.value = false;
 
   const lesson = getLessonBundle(text);
@@ -277,18 +276,4 @@ function formatLessonPart(item: any, allItems: any[]): string {
 
   return output;
 }
-
-const togglePlayback = () => {
-  if (!isPlayingAllowed.value) return;
-  toggleAudioPlayer();
-};
-
-const stopAudio = () => {
-  stopSpeaking();
-  isPlayingAllowed.value = true;
-};
-
-onUnmounted(() => {
-  stopSpeaking();
-});
 </script>

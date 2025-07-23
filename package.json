@@ -48,6 +48,7 @@
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
     "wav": "^1.0.2",
+    "wavesurfer.js": "^7.10.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
