@@ -532,7 +532,7 @@ const selectAvatar = (avatar, index) => {
 
 const goToChat = (avatar) => {
   selectedAvatar.value = avatar;
-  router.push('/chat');
+  router.push(`/chat/${avatar.id}`);
 };
 
 const sendDemoMessage = () => {
