@@ -109,6 +109,9 @@ dependencies:
   wav:
     specifier: ^1.0.2
     version: 1.0.2
+  wavesurfer.js:
+    specifier: ^7.10.0
+    version: 7.10.0
   zod:
     specifier: ^3.24.2
     version: 3.25.23
@@ -11969,6 +11972,10 @@ packages:
       stream-parser: 0.3.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /wavesurfer.js@7.10.0:
+    resolution: {integrity: sha512-GiyAHdorqGtUYG5fe4BfTf5lmtSLhrXoHeNlMsR80JOiOZxOrIOv9QaIR8RnqlleJ6D8R9cqvZKR9lfJcWcapg==}
     dev: false
 
   /web-namespaces@2.0.1:

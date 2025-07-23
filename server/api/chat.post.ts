@@ -1,5 +1,6 @@
 // In-memory summary, replace with DB/persistent store in prod
-let conversationSummary = 'Snorlax is a sleepy Pokémon who loves naps.';
+let conversationSummary =
+  'Eddy is a lion character that talks and is highly intelligent, he educates with passion.';
 
 export default defineEventHandler(async (event) => {
   const { messages } = await readBody(event);
