@@ -28,18 +28,40 @@
       >
         <div class="cursor-pointer" @click="selectAvatar(avatar, index)">
           <div
-            class="relative bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-6 text-center hover:from-gray-200 hover:to-gray-300 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md h-[500px] flex flex-col justify-center"
+            class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[500px] flex flex-col"
           >
-            <div class="relative mb-4">
+            <!-- Blurred background with gradient to primary -->
+            <div
+              class="absolute inset-0"
+              :style="{
+                backgroundImage: `url(${avatar.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                filter: 'blur(15px)',
+                transform: 'scale(1.2)'
+              }"
+            />
+            <div class="absolute inset-0 bg-gradient-to-br from-gray via-transparent to-gray-600" />
+
+            <!-- Image container - top 70% -->
+            <div class="relative z-10 flex-grow overflow-hidden" style="height: 90%">
               <img
                 :src="avatar.image"
                 :alt="avatar.name"
-                class="mx-auto rounded-full object-cover border-2 border-gray-300 hover:border-gray-400 transition-all duration-300"
-                style="width: 300px; height: 400px"
+                class="w-full h-full object-cover"
+                :style="{
+                  objectPosition: 'top',
+                  transform: 'scale(1.1) translateY(10%)'
+                }"
               >
             </div>
-            <h5 class="text-gray-800 text-base font-semibold mb-1">{{ avatar.name }}</h5>
-            <p class="text-gray-600 text-sm">{{ avatar.type }}</p>
+
+            <!-- Text area - bottom 30% -->
+            <div class="relative z-10 p-4 flex flex-col justify-center items-center text-center" style="height: 20%">
+              <h5 class="text-white text-base font-semibold mb-1 drop-shadow-lg">{{ avatar.name }}</h5>
+              <p class="text-white/90 text-sm drop-shadow-md">{{ avatar.type }}</p>
+            </div>
           </div>
         </div>
       </div>
