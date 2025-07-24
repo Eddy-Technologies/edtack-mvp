@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue';
 import type Stripe from 'stripe';
-import type { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~/constants/Stripe';
 
 export interface StripeCustomerPortal {
   url: string;
