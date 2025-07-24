@@ -1,8 +1,8 @@
 import { Buffer } from 'buffer';
-import { defineEventHandler, readBody, createError } from 'h3';
-import { GoogleGenAI } from '@google/genai';
 import { writeFile } from 'fs/promises';
 import path from 'path';
+import { defineEventHandler, readBody, createError } from 'h3';
+import { GoogleGenAI } from '@google/genai';
 
 export default defineEventHandler(async (event) => {
   const { text } = await readBody(event);

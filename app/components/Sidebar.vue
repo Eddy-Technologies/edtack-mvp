@@ -8,7 +8,7 @@
         alt="eddy"
         class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
         @click="routeTo('/')"
-      />
+      >
       <Button
         :icon="isMini ? 'i-heroicons-arrow-right-20-solid' : 'i-heroicons-arrow-left-20-solid'"
         color="black"
@@ -59,11 +59,11 @@
     </div>
 
     <div class="mt-4">
-      <div ref="waveformRef" class="w-full h-20"></div>
+      <div ref="waveformRef" class="w-full h-20" />
       <div class="flex justify-center mt-2">
         <button
-          @click="togglePlayback"
           class="bg-primary text-white px-4 py-1 rounded shadow hover:bg-blue-700"
+          @click="togglePlayback"
         >
           {{ isPlaying ? 'Pause' : 'Play' }} Audio
         </button>
@@ -109,10 +109,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue';
+import WaveSurfer from 'wavesurfer.js';
 import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
-import WaveSurfer from 'wavesurfer.js';
 import { useAudioStore } from '~/stores/audio';
 
 const audioStore = useAudioStore();
