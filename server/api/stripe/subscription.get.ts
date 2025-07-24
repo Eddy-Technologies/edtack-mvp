@@ -1,7 +1,12 @@
+import type Stripe from 'stripe';
+import { getSupabaseClient } from '#imports';
+
 export default defineEventHandler(async (event) => {
   try {
-    const { user } = await requireUserSession(event);
-    
+    const supabase = await getSupabaseClient(event);
+    const stripe = getStripe();
+    const { data: { user } } = await supabase.auth.getUser();
+
     if (!user) {
       throw createError({
         statusCode: 401,
@@ -9,47 +14,24 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get Stripe secret key from runtime config
-    const config = useRuntimeConfig();
-    const stripe = require('stripe')(config.stripeSecretKey);
-
+    const userInfo = await supabase
+      .from('user_infos')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+    if (!userInfo.data || !userInfo.data?.payment_customer_id) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'User payment information not found'
+      });
+    }
     // Find customer by email
-    const customers = await stripe.customers.list({
-      email: user.email,
-      limit: 1
+    const customer: Stripe.Customer = await stripe.customers.retrieve(userInfo.data.payment_customer_id, {
+      expand: ['subscriptions']
     });
-
-    if (customers.data.length === 0) {
-      return { subscription: null, paymentMethod: null };
-    }
-
-    const customer = customers.data[0];
-
-    // Get active subscriptions
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customer.id,
-      status: 'active',
-      limit: 1
-    });
-
-    if (subscriptions.data.length === 0) {
-      return { subscription: null, paymentMethod: null };
-    }
-
-    const subscription = subscriptions.data[0];
-    let paymentMethod = null;
-
-    // Get payment method details if available
-    if (subscription.default_payment_method) {
-      paymentMethod = await stripe.paymentMethods.retrieve(
-        subscription.default_payment_method
-      );
-    }
-
-    return {
-      subscription,
-      paymentMethod
-    };
+    // filter active subscription
+    const activeSubscription = customer.subscriptions?.data.find((sub) => sub.status === 'active');
+    return activeSubscription || null;
   } catch (error) {
     console.error('Failed to fetch subscription:', error);
     throw createError({
