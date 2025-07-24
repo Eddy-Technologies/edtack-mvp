@@ -32,8 +32,9 @@ export default defineEventHandler(async (event) => {
 
     // Get Stripe Customer with expanded subscriptions and payment sources
     const customer = await stripe.customers.retrieve(
-      userInfo.payment_customer_id, {
-        expand: ['subscriptions', 'delinquent', 'default_source', 'invoice_settings.default_payment_method']
+      userInfo.payment_customer_id,
+      {
+        expand: ['subscriptions']
       }
     );
 
@@ -44,16 +45,23 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get the active subscription if it exists
-    const activeSubscription = customer.subscriptions?.data[0];
-
+    // Filter subscription - by default each user only can have one active subscription
+    const subscriptionsList = customer.subscriptions?.data || [];
+    const filterSubscriptions = () => {
+      if (subscriptionsList.length > 1) {
+        return subscriptionsList.filter((sub) => sub.status === 'active')[0];
+      }
+      return subscriptionsList[0];
+    };
+    const subscription = filterSubscriptions();
+    // To get plan details, use subscription?.items?.data[0]?.plan if items exist
+    const plan = subscription?.items?.data[0]?.plan;
     return {
       id: customer.id,
       email: customer.email,
       name: customer.name,
-      subscription: activeSubscription,
-      defaultSource: customer.default_source,
-      invoiceDefaultPaymentMethod: customer.invoice_settings?.default_payment_method,
+      subscriptionDisplayName: subscription?.metadata.display_name || null,
+      plan: plan || null,
       delinquent: customer.delinquent
     };
   } catch (error: any) {

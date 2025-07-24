@@ -17,7 +17,7 @@
           <div class="flex items-center space-x-4">
             <AppIcon class="w-12 h-12 mr-3" />
             <div>
-              <h3 class="text-xl font-semibold text-gray-900">{{ currentPlan?.name || 'Loading...' }}</h3>
+              <h3 class="text-xl font-semibold text-gray-900">{{ currentPlan?.subscriptionDisplayName || 'Loading...' }}</h3>
               <p class="text-gray-600">{{ currentPlan?.description || 'Loading subscription details...' }}</p>
               <div class="flex items-center space-x-2 mt-1">
                 <span v-if="currentPlan?.nextBilling !== 'N/A'" class="text-sm text-gray-500">Next billing: {{ currentPlan?.nextBilling }}</span>
@@ -73,26 +73,26 @@
       :is-visible="showSubscriptionModal"
       @close="showSubscriptionModal = false"
     />
-
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import type Stripe from 'stripe';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 
-const { customer, fetchCustomer, redirectToCustomerPortal, isLoading } = useSubscription();
+const { fetchCustomer, redirectToCustomerPortal } = useSubscription();
+const customer = ref<CustomerResponse | null>(null);
+const isLoading = ref(false);
 
 // Modal states
 const showSubscriptionModal = ref(false);
 
 const currentPlan = computed(() => {
-  const subscription = customer.value?.subscription;
+  const plan = customer.value?.plan;
 
-  // If no subscription, return free plan
-  if (!subscription) {
+  // If no plan, return free plan
+  if (!plan) {
     return {
       name: 'Free Plan',
       description: 'Basic features to get started',
@@ -105,25 +105,34 @@ const currentPlan = computed(() => {
     };
   }
 
-  // Extract data from Stripe subscription
-  const subscriptionItem = subscription.items?.data[0];
-  const price = subscriptionItem?.price;
-  const product = price?.product as Stripe.Product;
+  // Extract data from Stripe plan object
+  const product = plan.product;
+  console.log('Current Plan:', plan);
 
   return {
-    name: product?.name,
-    description: product?.description,
-    price: price?.unit_amount ? (price.unit_amount / 100) : 0,
-    status: subscription.status ?
-      subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1) :
-      'Unknown',
+    name: customer.value?.subscriptionDisplayName || product?.name || 'Subscription',
+    description: product?.description || 'Premium subscription',
+    price: plan.amount ? (plan.amount / 100) : 0,
+    currency: plan.currency?.toUpperCase() || 'SGD',
+    status: plan.active ? 'Active' : 'Inactive',
     features: product?.marketing_features?.map((f) => f.name) || [],
-    interval: price?.recurring?.interval,
-    planType: product?.metadata?.plan_type
+    interval: plan.interval || 'month',
+    planType: product?.metadata?.plan_type || 'premium'
   };
 });
 
+const loadCustomer = async () => {
+  try {
+    isLoading.value = true;
+    customer.value = await fetchCustomer();
+  } catch (err) {
+    console.error('Error loading customer:', err);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
 onMounted(() => {
-  fetchCustomer();
+  loadCustomer();
 });
 </script>

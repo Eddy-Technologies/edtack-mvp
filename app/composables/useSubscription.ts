@@ -39,9 +39,8 @@ export interface CustomerResponse {
   id: string;
   email: string;
   name: string;
-  subscription?: Stripe.Subscription;
-  invoiceDefaultPaymentMethod?: Stripe.PaymentMethod;
-  defaultSource: Stripe.PaymentMethod;
+  subscriptionDisplayName: string | null;
+  plan: any | null; // Stripe.Plan object
   delinquent: boolean;
 }
 
@@ -239,7 +238,7 @@ export const useSubscription = () => {
   };
 
   return {
-    customer,
+    // customer,
     isLoading,
     hasError,
     error: readonly(error),
