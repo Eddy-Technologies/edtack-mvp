@@ -11,12 +11,12 @@ export function useStripe() {
   // Open Stripe customer portal in new tab
   async function openCustomerPortal(email?: string) {
     let portalUrl = customerPortalUrl;
-    
+
     // Add prefilled email if provided
     if (email) {
       portalUrl += `?prefilled_email=${encodeURIComponent(email)}`;
     }
-    
+
     // Open in new tab with security attributes
     window.open(portalUrl, '_blank', 'noopener,noreferrer');
   }
