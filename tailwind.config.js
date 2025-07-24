@@ -17,7 +17,19 @@ module.exports = {
           800: '#084a42',
           900: '#042521',
         },
-        'secondary': '#f59e0b', // e.g., orange
+        'secondary': {
+          DEFAULT: '#f59e0b',
+          50: '#FFF5EE',
+          100: '#FFEADC',
+          200: '#FFD8BD',
+          300: '#FFC390',
+          400: '#FFB15B',
+          500: '#F59E0B',
+          600: '#C27C07',
+          700: '#8F5A03',
+          800: '#623C01',
+          900: '#351F00',
+        },
         'accent': '#10b981', // greenish accent
         'background': {
           DEFAULT: '#c8e6ce',
