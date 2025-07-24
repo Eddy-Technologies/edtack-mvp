@@ -168,7 +168,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
-import type { StripeProduct, StripeProductPrice } from '~/composables/useStripe';
+import type { StripeProduct, StripeProductPrice } from '~/composables/useSubscription';
 
 // State
 const products = ref<StripeProduct[]>([]);
@@ -177,7 +177,7 @@ const error = ref<string | null>(null);
 const selectedInterval = ref<'month' | 'year'>('month');
 
 // Stripe composable
-const { getProducts, handleCheckout } = useStripe();
+const { getProducts, handleCheckout } = useSubscription();
 
 // Computed
 const sortedProducts = computed(() => {

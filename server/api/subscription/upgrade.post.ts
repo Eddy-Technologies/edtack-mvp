@@ -1,14 +1,6 @@
-import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
-
-const stripe = new Stripe(useRuntimeConfig().stripeSecretKey, {
-  apiVersion: '2025-06-30.basil'
-});
-
-const supabase = createClient(
-  useRuntimeConfig().private.supabaseUrl,
-  useRuntimeConfig().private.supabaseServiceRoleKey
-);
+import type Stripe from 'stripe';
+import { getStripe } from '../../utils/stripe';
+import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
   if (event.node.req.method !== 'POST') {
@@ -19,6 +11,8 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const supabase = await getSupabaseClient(event);
+    const stripe = getStripe();
     const body = await readBody(event);
     const { userId, newPlanType } = body;
 

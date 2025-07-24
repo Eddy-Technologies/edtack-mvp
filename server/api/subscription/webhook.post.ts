@@ -1,4 +1,4 @@
-import { getStripe } from '../../plugins/stripe';
+import { getStripe } from '../../utils/stripe';
 import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
@@ -104,12 +104,14 @@ export default defineEventHandler(async (event) => {
 
 async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
   if (session.mode === 'subscription' && session.subscription) {
+    const stripe = getStripe();
     const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
     await handleSubscriptionUpdated(subscription);
   }
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
+  const supabase = await getSupabaseClient();
   const userInfoId = subscription.metadata.user_info_id;
   const planId = subscription.metadata.plan_id;
 

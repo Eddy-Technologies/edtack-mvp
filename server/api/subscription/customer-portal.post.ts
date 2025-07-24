@@ -1,4 +1,5 @@
-import { getStripe } from '../../plugins/stripe';
+import type Stripe from 'stripe';
+import { getStripe } from '../../utils/stripe';
 import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {

@@ -1,15 +1,10 @@
-import { getStripe } from '../../plugins/stripe';
+import type Stripe from 'stripe';
+import { getStripe } from '../../utils/stripe';
 import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
-  if (event.node.req.method !== 'POST') {
-    throw createError({
-      statusCode: 405,
-      statusMessage: 'Method not allowed'
-    });
-  }
-
   try {
+    const stripe = getStripe();
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
     const { userId, priceId } = body;
@@ -20,11 +15,18 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Missing required parameters: userId, priceId'
       });
     }
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Unauthorized: User not authenticated'
+      });
+    }
 
     // Get user info
     const { data: userInfo, error: userError } = await supabase
       .from('user_infos')
-      .select('id, payment_customer_id, first_name, last_name')
+      .select('*')
       .eq('user_id', userId)
       .single();
 
@@ -35,22 +37,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get user email
-    const { data: userEmail, error: emailError } = await supabase
-      .from('users')
-      .select('email')
-      .eq('id', userId)
-      .single();
-
-    if (emailError || !userEmail) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User email not found'
-      });
-    }
-
     // Get Stripe price information
-    const stripe = getStripe();
     const price = await stripe.prices.retrieve(priceId, {
       expand: ['product']
     });
@@ -68,7 +55,7 @@ export default defineEventHandler(async (event) => {
     let customerId = userInfo.payment_customer_id;
     if (!customerId) {
       const customer = await stripe.customers.create({
-        email: userEmail.email,
+        email: user.email || '',
         name: `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim(),
         metadata: {
           user_info_id: userInfo.id,
@@ -84,11 +71,11 @@ export default defineEventHandler(async (event) => {
         .eq('id', userInfo.id);
     }
 
-    // Create Setup Intent for saving payment method and immediate subscription
-    const setupIntent = await stripe.setupIntents.create({
+    // Create payment intent for immediate payment and then subscription
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: price.unit_amount!,
+      currency: price.currency,
       customer: customerId,
-      payment_method_types: ['card'],
-      usage: 'off_session',
       metadata: {
         user_info_id: userInfo.id,
         user_id: userId,
@@ -100,7 +87,9 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      clientSecret: setupIntent.client_secret,
+      sessionId: paymentIntent.id,
+      url: `/subscription/checkout?payment_intent=${paymentIntent.id}`,
+      clientSecret: paymentIntent.client_secret,
       customerId,
       planDetails: {
         id: price.id,
