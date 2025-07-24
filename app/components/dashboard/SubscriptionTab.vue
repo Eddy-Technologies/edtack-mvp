@@ -54,7 +54,7 @@
                 variant="secondary"
                 text="Manage Billing"
                 :loading="loading"
-                @click="openCustomerPortal"
+                @click="handleOpenCustomerPortal"
               />
             </div>
           </div>
@@ -75,6 +75,7 @@
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
+import { openCustomerPortal } from '~/composables/useStripe';
 
 const currentPlan = ref({
   name: 'Free', // Can be 'Free' or 'Premium'
@@ -107,6 +108,7 @@ const fetchSubscription = async () => {
     if (response?.subscription) {
       const sub = response.subscription;
       currentPlan.value = {
+        email: sub.customer_email,
         name: 'Premium',
         description: 'Everything you need for comprehensive learning',
         price: sub.items.data[0].price.unit_amount / 100,
@@ -130,21 +132,8 @@ const fetchSubscription = async () => {
   }
 };
 
-const openCustomerPortal = async () => {
-  try {
-    loading.value = true;
-    const response = await $fetch('/api/stripe/customer-portal', {
-      method: 'POST'
-    });
-
-    if (response.url) {
-      window.open(response.url, '_blank');
-    }
-  } catch (err) {
-    console.error('Failed to open customer portal:', err);
-  } finally {
-    loading.value = false;
-  }
+const handleOpenCustomerPortal = () => {
+  openCustomerPortal();// TODO: email
 };
 
 onMounted(async () => {

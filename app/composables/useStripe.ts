@@ -9,7 +9,7 @@ export function useStripe() {
   }
 
   // Open Stripe customer portal in new tab
-  async function openCustomerPortal(email?: string) {
+  function openCustomerPortal(email?: string) {
     let portalUrl = customerPortalUrl;
 
     // Add prefilled email if provided

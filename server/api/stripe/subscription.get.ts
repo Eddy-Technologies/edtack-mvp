@@ -14,24 +14,34 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const userInfo = await supabase
-      .from('user_infos')
-      .select('*')
-      .eq('user_id', user.id)
-      .single();
-    if (!userInfo.data || !userInfo.data?.payment_customer_id) {
+    // Find customer by email
+    const customer: Stripe.Customer = await stripe.customers.search({
+      query: `email:'${user.email}'`,
+      limit: 1,
+      expand: ['subscriptions']
+    }).then((res) => res.data[0]);
+
+    if (!customer) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'User payment information not found'
+        statusMessage: 'Customer not found'
       });
     }
-    // Find customer by email
-    const customer: Stripe.Customer = await stripe.customers.retrieve(userInfo.data.payment_customer_id, {
-      expand: ['subscriptions']
-    });
-    // filter active subscription
-    const activeSubscription = customer.subscriptions?.data.find((sub) => sub.status === 'active');
-    return activeSubscription || null;
+    return {
+      id: customer.id,
+      email: customer.email,
+      subscriptions: customer.subscriptions?.data.map((sub) => ({
+        id: sub.id,
+        status: sub.status,
+        plan: {
+          id: sub.items.data[0].price.id,
+          amount: sub.items.data[0].price.unit_amount,
+          currency: sub.items.data[0].price.currency,
+          interval: sub.items.data[0].price.recurring?.interval,
+          product: sub.items.data[0].price.product
+        }
+      }))
+    };
   } catch (error) {
     console.error('Failed to fetch subscription:', error);
     throw createError({
