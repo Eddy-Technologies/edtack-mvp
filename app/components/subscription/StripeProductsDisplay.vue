@@ -168,7 +168,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
-import type { StripeProduct, StripeProductPrice } from '~/composables/useSubscription';
+import type { StripeProduct } from '~/composables/useSubscription';
 
 // State
 const products = ref<StripeProduct[]>([]);
@@ -177,7 +177,7 @@ const error = ref<string | null>(null);
 const selectedInterval = ref<'month' | 'year'>('month');
 
 // Stripe composable
-const { getProducts, handleCheckout } = useSubscription();
+const { getProducts } = useSubscription();
 
 // Computed
 const sortedProducts = computed(() => {
@@ -280,19 +280,6 @@ const hasYearlyPricing = (product: StripeProduct): boolean => {
   return product.prices.some((price) => price.recurring?.interval === 'year');
 };
 
-const getMonthlyEquivalent = (product: StripeProduct): string => {
-  const yearlyPrice = product.prices.find((price) =>
-    price.recurring?.interval === 'year'
-  );
-
-  if (yearlyPrice?.unit_amount) {
-    const monthlyEquivalent = yearlyPrice.unit_amount / 12;
-    return (monthlyEquivalent / 100).toFixed(0);
-  }
-
-  return '0';
-};
-
 const getYearlySavings = (product: StripeProduct): string => {
   const monthlyPrice = product.prices.find((price) =>
     price.recurring?.interval === 'month'
@@ -308,21 +295,6 @@ const getYearlySavings = (product: StripeProduct): string => {
   }
 
   return '0';
-};
-
-const getPlanType = (product: StripeProduct): string => {
-  const name = product.name.toLowerCase();
-  const interval = selectedInterval.value;
-
-  if (name.includes('free')) {
-    return `free_${interval}ly`;
-  } else if (name.includes('pro')) {
-    return `pro_${interval}ly`;
-  } else if (name.includes('max')) {
-    return `max_${interval}ly`;
-  }
-
-  return `${name.replace(/\s+/g, '_')}_${interval}ly`;
 };
 
 const selectPlan = async (product: StripeProduct) => {
@@ -360,11 +332,3 @@ onMounted(() => {
   fetchPlans();
 });
 </script>
-
-<style scoped>
-.subscription-plans-container {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
-</style>
