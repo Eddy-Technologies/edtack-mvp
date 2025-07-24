@@ -75,7 +75,9 @@
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
-import { openCustomerPortal } from '~/composables/useStripe';
+import { useStripe } from '#imports';
+
+const { openCustomerPortal } = useStripe();
 
 const currentPlan = ref({
   name: 'Free', // Can be 'Free' or 'Premium'

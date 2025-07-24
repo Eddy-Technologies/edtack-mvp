@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     const customer: Stripe.Customer = await stripe.customers.search({
       query: `email:'${user.email}'`,
       limit: 1,
-      expand: ['subscriptions']
+      expand: ['data.subscriptions']
     }).then((res) => res.data[0]);
 
     if (!customer) {
