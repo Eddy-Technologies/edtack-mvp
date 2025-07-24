@@ -56,17 +56,14 @@
         <div class="flex gap-3">
           <Button
             variant="primary"
-            text="Customer Portal"
+            text="Manage Subscription"
             :disabled="!customer"
             @click="handleCustomerPortal"
           />
-          <Button
-            variant="secondary"
-            text="Cancel Subscription"
-            :disabled="!customer"
-            @click="handleCancelSubscription"
-          />
         </div>
+        <p class="text-sm text-gray-600 mt-3">
+          Use the Customer Portal to update payment methods, view invoices, cancel your subscription, and more.
+        </p>
       </div>
     </div>
 
@@ -77,30 +74,6 @@
       @close="showSubscriptionModal = false"
     />
 
-    <!-- Simple Cancel Confirmation -->
-    <div v-if="showCancelConfirmation" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-6">
-      <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Cancel Subscription</h3>
-        <p class="text-sm text-gray-600 mb-6">
-          Are you sure you want to cancel your subscription? You'll continue to have access until the end of your current billing period.
-        </p>
-        <div class="flex gap-3">
-          <Button
-            variant="secondary"
-            text="Keep Subscription"
-            class="flex-1"
-            @click="showCancelConfirmation = false"
-          />
-          <Button
-            variant="secondary-danger"
-            text="Cancel Subscription"
-            :loading="isLoading"
-            class="flex-1"
-            @click="confirmCancel"
-          />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -110,11 +83,10 @@ import type Stripe from 'stripe';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 
-const { customer, fetchCustomer, handleCustomerPortal, isLoading, cancelSubscription } = useSubscription();
+const { customer, fetchCustomer, handleCustomerPortal, isLoading } = useSubscription();
 
 // Modal states
 const showSubscriptionModal = ref(false);
-const showCancelConfirmation = ref(false);
 
 const currentPlan = computed(() => {
   const subscription = customer.value?.subscription;
@@ -154,21 +126,4 @@ const currentPlan = computed(() => {
 onMounted(() => {
   fetchCustomer();
 });
-
-// Methods
-const handleCancelSubscription = () => {
-  showCancelConfirmation.value = true;
-};
-
-const confirmCancel = async () => {
-  try {
-    const response = await cancelSubscription();
-    if (response.success) {
-      showCancelConfirmation.value = false;
-      await fetchCustomer();
-    }
-  } catch (error: any) {
-    console.error('Failed to cancel subscription:', error);
-  }
-};
 </script>

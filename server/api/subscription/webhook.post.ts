@@ -113,19 +113,36 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const supabase = await getSupabaseClient();
   const userInfoId = subscription.metadata.user_info_id;
-  const planId = subscription.metadata.plan_id;
-
-  if (!userInfoId || !planId) {
-    console.error('Missing user_info_id or plan_id in subscription metadata');
-    return;
+  
+  // For embedded checkout, we need to get the user info from the customer
+  if (!userInfoId) {
+    const stripe = getStripe();
+    const customer = await stripe.customers.retrieve(subscription.customer as string);
+    if (customer.deleted) {
+      console.error('Customer was deleted');
+      return;
+    }
+    
+    const customerUserInfoId = customer.metadata?.user_info_id;
+    if (!customerUserInfoId) {
+      console.error('Missing user_info_id in customer metadata');
+      return;
+    }
   }
 
+  const finalUserInfoId = userInfoId || subscription.metadata.user_info_id;
+
+  // Get price details for plan_id
+  const stripe = getStripe();
+  const subscriptionItem = subscription.items.data[0];
+  const price = await stripe.prices.retrieve(subscriptionItem.price.id);
+  
   // Upsert subscription
   await supabase
     .from('user_subscriptions')
     .upsert({
-      user_info_id: userInfoId,
-      plan_id: planId,
+      user_info_id: finalUserInfoId,
+      plan_id: price.lookup_key || price.id, // Use lookup_key or fallback to price ID
       stripe_subscription_id: subscription.id,
       stripe_customer_id: subscription.customer as string,
       status: subscription.status as any,
@@ -140,7 +157,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       onConflict: 'stripe_subscription_id'
     });
 
-  console.log(`Subscription ${subscription.status} for user ${userInfoId}`);
+  console.log(`Subscription ${subscription.status} for user ${finalUserInfoId}`);
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {

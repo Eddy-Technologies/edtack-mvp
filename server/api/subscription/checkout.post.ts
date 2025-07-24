@@ -1,4 +1,3 @@
-import type Stripe from 'stripe';
 import { getStripe } from '../../utils/stripe';
 import { getSupabaseClient } from '#imports';
 
@@ -37,20 +36,6 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get Stripe price information
-    const price = await stripe.prices.retrieve(priceId, {
-      expand: ['product']
-    });
-
-    if (!price) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Price not found'
-      });
-    }
-
-    const product = price.product as Stripe.Product;
-
     // Create or get Stripe customer
     let customerId = userInfo.payment_customer_id;
     if (!customerId) {
@@ -71,42 +56,28 @@ export default defineEventHandler(async (event) => {
         .eq('id', userInfo.id);
     }
 
-    // Create payment intent for immediate payment and then subscription
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: price.unit_amount!,
-      currency: price.currency,
+    // Create embedded checkout session
+    const session = await stripe.checkout.sessions.create({
+      ui_mode: 'embedded',
+      mode: 'subscription',
+      line_items: [{
+        price: priceId,
+        quantity: 1,
+      }],
       customer: customerId,
-      metadata: {
-        user_info_id: userInfo.id,
-        user_id: userId,
-        price_id: priceId,
-        product_id: product.id,
-        action: 'create_subscription'
-      }
+      return_url: `${process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/subscription/return?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return {
       success: true,
-      sessionId: paymentIntent.id,
-      url: `/subscription/checkout?payment_intent=${paymentIntent.id}`,
-      clientSecret: paymentIntent.client_secret,
-      customerId,
-      planDetails: {
-        id: price.id,
-        name: product.name,
-        description: product.description,
-        price: price.unit_amount ? (price.unit_amount / 100) : 0,
-        currency: price.currency.toUpperCase(),
-        interval: price.recurring?.interval || 'month',
-        priceId: price.id,
-        productId: product.id
-      }
+      clientSecret: session.client_secret,
+      customerId
     };
   } catch (error: any) {
-    console.error('Custom checkout setup error:', error);
+    console.error('Embedded checkout setup error:', error);
     throw createError({
       statusCode: error.statusCode || 500,
-      statusMessage: error.message || 'Failed to setup custom checkout'
+      statusMessage: error.message || 'Failed to setup embedded checkout'
     });
   }
 });

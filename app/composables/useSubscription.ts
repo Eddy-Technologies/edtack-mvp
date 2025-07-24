@@ -48,20 +48,14 @@ export interface CustomerResponse {
 
 export interface StripeSubscriptionCheckoutResponse {
   success: boolean;
-  sessionId: string;
-  url: string;
   clientSecret: string;
   customerId: string;
-  planDetails: {
-    id: string;
-    name: string;
-    description: string | null;
-    price: number;
-    currency: string;
-    interval: 'month' | 'year';
-    priceId: string;
-    productId: string;
-  };
+}
+
+export interface SessionStatusResponse {
+  status: 'complete' | 'open' | 'expired';
+  customer_email: string | null;
+  client_secret?: string | null;
 }
 
 export const useSubscription = () => {
@@ -122,7 +116,7 @@ export const useSubscription = () => {
         }
       });
 
-      if (!response?.url) {
+      if (!response?.clientSecret) {
         throw new Error('Invalid checkout session response');
       }
 
@@ -130,6 +124,26 @@ export const useSubscription = () => {
     } catch (err: any) {
       console.error('Failed to create checkout session:', err);
       const message = err.data?.message || err.message || 'Failed to create checkout session';
+      error.value = message;
+      throw new Error(message);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const getSessionStatus = async (sessionId: string): Promise<SessionStatusResponse> => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response: SessionStatusResponse = await $fetch('/api/subscription/session-status', {
+        params: { session_id: sessionId }
+      });
+
+      return response;
+    } catch (err: any) {
+      console.error('Failed to get session status:', err);
+      const message = err.data?.message || err.message || 'Failed to get session status';
       error.value = message;
       throw new Error(message);
     } finally {
@@ -170,65 +184,7 @@ export const useSubscription = () => {
     }
   };
 
-  const cancelSubscription = async (reason?: string): Promise<{ success: boolean; message: string }> => {
-    loading.value = true;
-    error.value = null;
 
-    try {
-      const { data: { user } } = await useSupabaseClient().auth.getUser();
-
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const response = await $fetch('/api/subscription/cancel', {
-        method: 'POST',
-        body: {
-          userId: user.id,
-          reason
-        }
-      });
-
-      return response as { success: boolean; message: string };
-    } catch (err: any) {
-      console.error('Failed to cancel subscription:', err);
-      const message = err.data?.message || err.message || 'Failed to cancel subscription';
-      error.value = message;
-      throw new Error(message);
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  const upgradeSubscription = async (newPlanType: string): Promise<{ success: boolean; message: string }> => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const { data: { user } } = await useSupabaseClient().auth.getUser();
-
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const response = await $fetch('/api/subscription/upgrade', {
-        method: 'POST',
-        body: {
-          userId: user.id,
-          newPlanType
-        }
-      });
-
-      return response as { success: boolean; message: string };
-    } catch (err: any) {
-      console.error('Failed to upgrade subscription:', err);
-      const message = err.data?.message || err.message || 'Failed to upgrade subscription';
-      error.value = message;
-      throw new Error(message);
-    } finally {
-      loading.value = false;
-    }
-  };
 
   const getProducts = async (): Promise<ProductsResponse> => {
     loading.value = true;
@@ -279,91 +235,14 @@ export const useSubscription = () => {
   //   }
   // };
 
-  const updatePaymentMethod = async (paymentMethodId: string): Promise<{ success: boolean; message: string }> => {
-    loading.value = true;
-    error.value = null;
 
-    try {
-      const { data: { user } } = await useSupabaseClient().auth.getUser();
-
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const response = await $fetch('/api/subscription/update-payment-method', {
-        method: 'POST',
-        body: {
-          userId: user.id,
-          paymentMethodId
-        }
-      });
-
-      return response as { success: boolean; message: string };
-    } catch (err: any) {
-      console.error('Failed to update payment method:', err);
-      const message = err.data?.message || err.message || 'Failed to update payment method';
-      error.value = message;
-      throw new Error(message);
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  const redirectToCheckout = async (priceId: string) => {
-    console.log('Redirecting to Stripe Checkout for price:', priceId);
-    const session = await createCheckoutSession(priceId);
-    await navigateTo(session.url, { external: true });
-  };
 
   const redirectToCustomerPortal = async () => {
     const portal = await createCustomerPortalSession();
     await navigateTo(portal.url, { external: true });
   };
 
-  const handleCheckout = async (priceId: string, fallbackRoute?: string) => {
-    try {
-      await redirectToCheckout(priceId);
-    } catch (err: any) {
-      console.error('Checkout failed:', err);
 
-      if (fallbackRoute) {
-        await navigateTo(fallbackRoute);
-      }
-
-      throw err;
-    }
-  };
-
-  const confirmSubscription = async (setupIntentId: string, planType: string): Promise<{ success: boolean; subscriptionId?: string; message: string }> => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const { data: { user } } = await useSupabaseClient().auth.getUser();
-
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const response = await $fetch('/api/subscription/confirm', {
-        method: 'POST',
-        body: {
-          setupIntentId,
-          userId: user.id,
-          planType
-        }
-      });
-
-      return response.success;
-    } catch (err: any) {
-      console.error('Subscription confirmation error:', err);
-      const message = err.data?.message || err.message || 'Failed to confirm subscription';
-      error.value = message;
-      throw new Error(message);
-    } finally {
-      loading.value = false;
-    }
-  };
 
   const handleCustomerPortal = async (fallbackAction?: () => void) => {
     try {
@@ -388,16 +267,10 @@ export const useSubscription = () => {
     clearError,
     fetchCustomer,
     createCheckoutSession,
+    getSessionStatus,
     createCustomerPortalSession,
     getProducts,
-    // getPlan,
-    cancelSubscription,
-    upgradeSubscription,
-    updatePaymentMethod,
-    redirectToCheckout,
     redirectToCustomerPortal,
-    handleCheckout,
     handleCustomerPortal,
-    confirmSubscription,
   };
 };
