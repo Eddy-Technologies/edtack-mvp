@@ -1,6 +1,3 @@
-import { Buffer } from 'buffer';
-import { writeFile } from 'fs/promises';
-import path from 'path';
 import { defineEventHandler, readBody, createError } from 'h3';
 import { GoogleGenAI } from '@google/genai';
 
@@ -10,7 +7,7 @@ export default defineEventHandler(async (event) => {
   if (!text || typeof text !== 'string') {
     throw createError({
       statusCode: 400,
-      message: 'Text content (string) is required for speech synthesis.',
+      message: 'Text content is required.',
     });
   }
 
@@ -39,15 +36,13 @@ export default defineEventHandler(async (event) => {
 
     const audioBuffer = Buffer.from(inlineData.data, 'base64');
 
-    // ✅ Save the file to the server's /public/tts/ directory
+    // Save to Nitro storage
     const filename = `speech.wav`;
-    const filePath = path.resolve('public', filename);
-    await writeFile(filePath, audioBuffer);
+    await useStorage('assets:public').setItemRaw(filename, audioBuffer);
 
-    // ✅ Respond with success and file path (for client download link)
     return {
       success: true,
-      path: `/public/${filename}`, // relative public path
+      path: `/public/${filename}`, // for downloading from client
       filename,
     };
   } catch (error) {
