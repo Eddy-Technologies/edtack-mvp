@@ -10,8 +10,8 @@
     <!-- Stripe Pricing Table -->
 
     <stripe-pricing-table
-      pricing-table-id="prctbl_1RnYsF2ennKEEze8SxzrXmI5"
-      publishable-key="pk_test_51RmqmU2ennKEEze82gSWEvmABvBIVugAVmR5NKvMxW1braDV3rc4DeO0SQulwsqoe4Zl7BT8yK5Bw4kk7vkm7BU100SRjRNxVK"
+      :pricing-table-id="config.public.stripePricingTableId"
+      :publishable-key="config.public.stripePublishableKey"
       :customer-email="me.email"
     />
   </div>
@@ -20,6 +20,7 @@
 <script setup>
 // import me from meStore
 const me = useMeStore();
+const config = useRuntimeConfig();
 
 const props = defineProps({
   isModal: {

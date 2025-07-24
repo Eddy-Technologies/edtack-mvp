@@ -1,7 +1,12 @@
+import { getSupabaseClient } from '#imports';
+
 export default defineEventHandler(async (event) => {
   try {
-    const { user } = await requireUserSession(event);
-    
+    const supabase = await getSupabaseClient(event);
+    const { data: { user } } = await supabase.auth.getUser();
+    const baseUrl = useRuntimeConfig().public.baseUrl;
+    const stripe = getStripe();
+
     if (!user) {
       throw createError({
         statusCode: 401,
@@ -9,29 +14,23 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get Stripe secret key from runtime config
-    const config = useRuntimeConfig();
-    const stripe = require('stripe')(config.stripeSecretKey);
-
     // Find customer by email
-    const customers = await stripe.customers.list({
+    const customer = await stripe.customers.list({
       email: user.email,
       limit: 1
     });
 
-    if (customers.data.length === 0) {
+    if (!customer) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Customer not found'
       });
     }
 
-    const customer = customers.data[0];
-
     // Create customer portal session
     const session = await stripe.billingPortal.sessions.create({
-      customer: customer.id,
-      return_url: `${getOrigin(event)}/dashboard?tab=subscription`
+      customer: customer.data[0].id,
+      return_url: `${baseUrl}/dashboard?tab=subscription`
     });
 
     return {
@@ -43,12 +42,5 @@ export default defineEventHandler(async (event) => {
       statusCode: 500,
       statusMessage: 'Failed to create customer portal session'
     });
-  }
-
-  function getOrigin(event: any) {
-    const headers = getHeaders(event);
-    const protocol = headers['x-forwarded-proto'] || 'http';
-    const host = headers.host || headers['x-forwarded-host'];
-    return `${protocol}://${host}`;
   }
 });
