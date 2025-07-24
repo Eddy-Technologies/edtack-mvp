@@ -56,6 +56,21 @@ export interface SessionStatusResponse {
   status: 'complete' | 'open' | 'expired';
   customer_email: string | null;
   client_secret?: string | null;
+  plan?: {
+    name: string;
+    description: string | null;
+    price: number;
+    currency: string;
+    interval: string;
+    features: string[];
+  } | null;
+  invoice?: {
+    amount_total: number;
+    currency: string;
+    payment_method_types: string[];
+    invoice_creation: any;
+    payment_status: string;
+  } | null;
 }
 
 export const useSubscription = () => {
@@ -184,8 +199,6 @@ export const useSubscription = () => {
     }
   };
 
-
-
   const getProducts = async (): Promise<ProductsResponse> => {
     loading.value = true;
     error.value = null;
@@ -211,38 +224,10 @@ export const useSubscription = () => {
     }
   };
 
-  // const getPlan = async (planType: string): Promise<any> => {
-  //   loading.value = true;
-  //   error.value = null;
-
-  //   try {
-  //     const response = await $fetch(`/api/subscription/plans/${planType}`, {
-  //       method: 'GET'
-  //     });
-
-  //     if (!response?.success) {
-  //       throw new Error('Failed to fetch plan details');
-  //     }
-
-  //     return response.product;
-  //   } catch (err: any) {
-  //     console.error('Failed to get plan:', err);
-  //     const message = err.data?.message || err.message || 'Failed to fetch plan details';
-  //     error.value = message;
-  //     throw new Error(message);
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // };
-
-
-
   const redirectToCustomerPortal = async () => {
     const portal = await createCustomerPortalSession();
     await navigateTo(portal.url, { external: true });
   };
-
-
 
   const handleCustomerPortal = async (fallbackAction?: () => void) => {
     try {
