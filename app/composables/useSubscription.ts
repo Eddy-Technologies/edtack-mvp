@@ -223,14 +223,10 @@ export const useSubscription = () => {
     }
   };
 
-  const redirectToCustomerPortal = async () => {
-    const portal = await createCustomerPortalSession();
-    await navigateTo(portal.url, { external: true });
-  };
-
-  const handleCustomerPortal = async (fallbackAction?: () => void) => {
+  const redirectToCustomerPortal = async (fallbackAction?: () => void) => {
     try {
-      await redirectToCustomerPortal();
+      const portal = await createCustomerPortalSession();
+      await navigateTo(portal.url, { external: true });
     } catch (err: any) {
       console.error('Customer portal failed:', err);
 
@@ -255,6 +251,5 @@ export const useSubscription = () => {
     createCustomerPortalSession,
     getProducts,
     redirectToCustomerPortal,
-    handleCustomerPortal,
   };
 };

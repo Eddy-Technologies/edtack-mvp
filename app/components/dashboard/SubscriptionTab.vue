@@ -58,7 +58,7 @@
             variant="primary"
             text="Manage Subscription"
             :disabled="!customer"
-            @click="handleCustomerPortal"
+            @click="redirectToCustomerPortal"
           />
         </div>
         <p class="text-sm text-gray-600 mt-3">
@@ -83,7 +83,7 @@ import type Stripe from 'stripe';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 
-const { customer, fetchCustomer, handleCustomerPortal, isLoading } = useSubscription();
+const { customer, fetchCustomer, redirectToCustomerPortal, isLoading } = useSubscription();
 
 // Modal states
 const showSubscriptionModal = ref(false);

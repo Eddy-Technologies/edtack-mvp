@@ -1,4 +1,3 @@
-import type Stripe from 'stripe';
 import { getStripe } from '../../utils/stripe';
 import { getSupabaseClient } from '#imports';
 
@@ -15,6 +14,7 @@ export default defineEventHandler(async (event) => {
     const stripe = getStripe();
     const body = await readBody(event);
     const { userId } = body;
+    const baseUrl = useRuntimeConfig().public.baseUrl;
 
     if (!userId) {
       throw createError({
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
     // Create Stripe customer portal session
     const session = await stripe.billingPortal.sessions.create({
       customer: userInfo.payment_customer_id,
-      return_url: `${useRuntimeConfig().public.baseUrl}/dashboard?tab=subscription`,
+      return_url: `${baseUrl}/dashboard?tab=subscription`,
     });
 
     return {

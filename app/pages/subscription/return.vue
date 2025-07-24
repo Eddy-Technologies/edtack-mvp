@@ -140,7 +140,7 @@
           </NuxtLink>
           <button
             class="bg-white text-gray-700 border border-gray-300 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-            @click="redirectToCustomerPortal"
+            @click="handleCustomerPortal"
           >
             Manage Subscription
           </button>
@@ -222,7 +222,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const { getSessionStatus, handleCustomerPortal } = useSubscription();
+const { getSessionStatus, redirectToCustomerPortal } = useSubscription();
 const { stripePromise } = useStripe();
 
 const loading = ref(true);
@@ -272,9 +272,9 @@ const mountRetryCheckout = async (clientSecret: string) => {
   }
 };
 
-const redirectToCustomerPortal = async () => {
+const handleCustomerPortal = async () => {
   try {
-    await handleCustomerPortal();
+    await redirectToCustomerPortal();
   } catch (error) {
     console.error('Failed to redirect to customer portal:', error);
   }
