@@ -1,6 +1,7 @@
 import type Stripe from 'stripe';
 import { getSupabaseClient } from '#imports';
 import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
+import { STRIPE_CUSTOMER } from '~~/utils/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -23,18 +24,19 @@ export default defineEventHandler(async (event) => {
     }).then((res) => res.data[0]);
 
     if (!customer) {
-      return null; // No customer found, return null
+      return { stripeCustomerState: STRIPE_CUSTOMER.NOT_EXISTENT }; // No customer found, return null
     }
 
     const activeSubscription = customer.subscriptions?.data.find((sub) => sub.status === 'active');
     if (!activeSubscription) {
-      return 'CUSTOMER_HAS_NO_ACTIVE_SUBSCRIPTION'; // No active subscription found
+      return { stripeCustomerState: STRIPE_CUSTOMER.NO_ACTIVE_SUBSCRIPTION, email: customer.email }; // No active subscription found
     }
 
     const price = await getPriceWithProductByPriceId(activeSubscription.plan.id);
     return {
-      id: customer.id,
+      stripeCustomerState: STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION,
       email: customer.email,
+      id: customer.id,
       subscriptionId: activeSubscription.id,
       subscriptionStatus: activeSubscription.status,
       ...price

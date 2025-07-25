@@ -34,7 +34,7 @@
         </div>
 
         <!-- No Customer State -->
-        <div v-else-if="subscription === null" class="text-center py-8">
+        <div v-else-if="stripeCustomerState === STRIPE_CUSTOMER.NOT_EXISTENT" class="text-center py-8">
           <div class="flex items-center justify-center mb-4">
             <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center">
               <AppIcon class="w-10 h-10 text-gray-400" />
@@ -52,17 +52,17 @@
         </div>
 
         <!-- Customer Has No Active Subscription -->
-        <div v-else-if="subscription === 'CUSTOMER_HAS_NO_ACTIVE_SUBSCRIPTION'" class="text-center py-8">
+        <div v-else-if="stripeCustomerState === STRIPE_CUSTOMER.NO_ACTIVE_SUBSCRIPTION" class="text-center py-8">
           <div class="flex items-center justify-center mb-4">
-            <div class="w-16 h-16 bg-yellow-100 rounded-xl flex items-center justify-center">
-              <AppIcon class="w-10 h-10 text-yellow-600" />
+            <div class="w-16 h-16 rounded-xl flex items-center justify-center">
+              <AppIcon class="w-18 h-18" />
             </div>
           </div>
           <h3 class="text-xl font-semibold text-gray-900 mb-2">No Active Subscription</h3>
           <p class="text-gray-600 mb-4">You currently have no active subscription. Manage your account to reactivate or change your plan.</p>
           <Button
             variant="secondary"
-            text="Manage Subscription"
+            text="Open Customer Portal"
             :loading="loading"
             :disabled="loading"
             @click="handleOpenCustomerPortal"
@@ -70,7 +70,7 @@
         </div>
 
         <!-- Active Subscription Data -->
-        <div v-else-if="subscription && typeof subscription === 'object'" class="flex items-center justify-between">
+        <div v-else-if="stripeCustomerState === STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION" class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
             <div class="w-16 h-16 rounded-xl flex items-center justify-center">
               <AppIcon class="w-12 h-12 text-white" />
@@ -122,7 +122,7 @@
 
     <!-- Manage Billing Card (only show for active subscriptions or customers with no active subscription) -->
     <div
-      v-if="subscription && (typeof subscription === 'object' || subscription === 'CUSTOMER_HAS_NO_ACTIVE_SUBSCRIPTION')"
+      v-if="stripeCustomerState === STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION"
       class="bg-white rounded-xl shadow-sm border"
     >
       <div class="p-6">
@@ -197,11 +197,13 @@ import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import { useStripe } from '#imports';
+import { STRIPE_CUSTOMER } from '~~/utils/constants';
 
 const { openCustomerPortal } = useStripe();
 
 const loading = ref(false);
 const subscription = ref<any | null>(null);
+const stripeCustomerState = ref<string | null>(null);
 
 // Modal states
 const showSubscriptionModal = ref(false);
@@ -214,6 +216,7 @@ const fetchSubscription = async () => {
       method: 'GET'
     });
     subscription.value = response;
+    stripeCustomerState.value = response.stripeCustomerState;
   } catch (err) {
     console.error('Failed to fetch subscription:', err);
   } finally {
