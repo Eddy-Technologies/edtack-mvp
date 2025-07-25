@@ -54,6 +54,8 @@ export default defineEventHandler(async (event) => {
 
     // Check if onboarding already completed
     if (userInfo.onboarding_completed) {
+      console.error('Onboarding already completed for user:', user.id);
+      // Return early if onboarding is already completed
       return {
         message: 'Onboarding already completed',
         user_info_id: userInfo.id
@@ -63,7 +65,6 @@ export default defineEventHandler(async (event) => {
     // Prepare update data
     const updateData: any = {
       onboarding_completed: true,
-      updated_at: new Date().toISOString()
     };
 
     // Update name fields if provided

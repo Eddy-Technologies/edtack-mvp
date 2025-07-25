@@ -14,6 +14,7 @@ export interface SignUpReq {
 export const useAuth = () => {
   const supabase = useSupabaseClient();
   const { fetchAndSetMe, resetMe } = useMeStore();
+  const baseUrl = useRuntimeConfig().public.baseUrl;
 
   const signUp = async (input: SignUpReq) => {
     const data = await $fetch('/api/auth/register', {
@@ -46,14 +47,11 @@ export const useAuth = () => {
   };
 
   const signInWithGoogle = async () => {
+    console.log('Signing in with Google and callback to:', `${baseUrl}/auth/api/callback`);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        }
+        redirectTo: `${baseUrl}/auth/api/callback`,
       }
     });
 
@@ -64,16 +62,10 @@ export const useAuth = () => {
     return { data, error };
   };
 
-  const signUpWithGoogle = async () => {
-    // For OAuth, sign up and sign in are the same flow
-    return signInWithGoogle();
-  };
-
   return {
     signUp,
     signIn,
     signOut,
     signInWithGoogle,
-    signUpWithGoogle,
   };
 };

@@ -1,52 +1,18 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="text-center">
-        <AppIcon class="mx-auto h-12 w-auto" />
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-          Complete your profile
-        </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Let's set up your account to personalize your experience
-        </p>
-      </div>
-    </div>
-
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <div class="space-y-6">
+          <AppIcon class="mx-auto h-12 w-auto" />
+          <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            Complete your profile
+          </h2>
+          <p class="mt-2 text-center text-sm text-gray-600">
+            Let's set up your account to personalize your experience
+          </p>
           <!-- Error Message -->
           <div v-if="errorMessage" class="bg-red-50 border border-red-200 rounded-lg p-3">
             <p class="text-red-600 text-sm">{{ errorMessage }}</p>
-          </div>
-
-          <!-- Welcome Message with User Info -->
-          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div class="flex items-center space-x-3">
-              <div class="flex-shrink-0">
-                <svg
-                  class="w-5 h-5 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </div>
-              <div>
-                <p class="text-blue-800 font-medium">
-                  Welcome{{ firstName ? `, ${firstName}` : '' }}!
-                </p>
-                <p class="text-blue-600 text-sm">
-                  Your account has been created successfully.
-                </p>
-              </div>
-            </div>
           </div>
 
           <form class="space-y-6" @submit.prevent="completeOnboarding">
@@ -101,19 +67,18 @@
             </div>
 
             <!-- Additional Info (Optional) -->
-            <div class="space-y-4">
+            <div v-if="!firstName || !lastName" class="space-y-4">
               <h3 class="text-sm font-medium text-gray-900">
-                Additional Information (Optional)
+                Additional Information
               </h3>
-
               <!-- Name fields if not already filled -->
-              <div v-if="!firstName || !lastName" class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700">First Name</label>
                   <input
                     v-model="firstNameInput"
                     type="text"
-                    :placeholder="firstName || 'First Name'"
+                    :placeholder="'First Name'"
                     class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     :disabled="isLoading"
                   >
@@ -123,7 +88,7 @@
                   <input
                     v-model="lastNameInput"
                     type="text"
-                    :placeholder="lastName || 'Last Name'"
+                    :placeholder="'Last Name'"
                     class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     :disabled="isLoading"
                   >

@@ -48,11 +48,24 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  app: {
+    head: {
+      script: [
+        {
+          async: true,
+          src: 'https://js.stripe.com/v3/pricing-table.js',
+        },
+      ],
+    },
+  },
   devtools: { enabled: true },
 
   runtimeConfig: {
-    stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
-    stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
+    public: {
+      stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+      stripePricingTableId: process.env.NUXT_PUBLIC_STRIPE_PRICING_TABLE_ID,
+    },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
       googleAIStudioApiKey: process.env.VITE_GOOGLE_AI_STUDIO_API_KEY,
@@ -61,11 +74,8 @@ export default defineNuxtConfig({
       supabaseServiceRoleKey:
         process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
+      stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
     },
-    public: {
-      stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-      baseUrl: process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000',
-    }
   },
 
   supabase: {

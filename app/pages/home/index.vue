@@ -377,45 +377,7 @@ import { useRouter } from '#vue-router';
 const router = useRouter();
 const selectedAvatar = ref(null);
 const showAllCharacters = ref(false);
-
-// Demo chat functionality
-const demoInput = ref('');
-const isTyping = ref(false);
-const demoMessages = ref([
-  { text: 'Hi! I\'m Luna, your AI tutor. What would you like to learn today?', isUser: false },
-]);
-
-const demoCharacter = ref({
-  id: 2,
-  name: 'Luna',
-  image: girlAvatar,
-  type: 'AI Scholar',
-});
-
-const currentDemoMessage = ref('Hi there! I\'m here to help you learn. Ask me anything!');
-
-const demoSuggestions = ref([
-  'Explain photosynthesis',
-  'Help with algebra',
-  'World War 2 facts',
-  'How do volcanoes work?',
-]);
-
-const demoResponses = {
-  'photosynthesis':
-    'Photosynthesis is how plants make food using sunlight, water, and carbon dioxide. The chloroplasts in plant cells capture light energy and convert it into chemical energy!',
-  'algebra':
-    'Algebra is like solving puzzles with numbers and letters! The key is to isolate the variable by doing the same operation to both sides of the equation. What specific algebra topic would you like help with?',
-  'world war 2':
-    'World War 2 lasted from 1939-1945 and involved many countries. It ended when Germany surrendered in May 1945 and Japan surrendered in August 1945 after the atomic bombs.',
-  'volcanoes':
-    'Volcanoes form when molten rock (magma) from deep inside Earth rises to the surface. The pressure builds up until it erupts, creating mountains of hardened lava and ash!',
-  'default':
-    'That\'s a great question! I can help you understand complex topics by breaking them down into simple, easy-to-understand explanations. What specific area would you like to explore?',
-};
-
 const allAvatars = ref(characters);
-
 const browseCharacters = ref(null);
 
 const scrollToCharacters = () => {
@@ -424,51 +386,9 @@ const scrollToCharacters = () => {
   }
 };
 
-const selectAvatar = (avatar, index) => {
-  selectedAvatar.value = avatar;
-  console.log('Selected avatar:', avatar);
-};
-
 const goToChat = (avatar) => {
   selectedAvatar.value = avatar;
   router.push(`/chat/${avatar.id}`);
-};
-
-const sendDemoMessage = () => {
-  if (!demoInput.value.trim() || isTyping.value) return;
-
-  const userMessage = demoInput.value.trim();
-  demoMessages.value.push({ text: userMessage, isUser: true });
-  demoInput.value = '';
-
-  // Show typing indicator
-  isTyping.value = true;
-  currentDemoMessage.value = 'Thinking...';
-
-  // Simulate AI response after delay
-  setTimeout(() => {
-    const response = getResponse(userMessage);
-    demoMessages.value.push({ text: response, isUser: false });
-    currentDemoMessage.value = response;
-    isTyping.value = false;
-  }, 1500);
-};
-
-const sendSuggestion = (suggestion) => {
-  demoInput.value = suggestion;
-  sendDemoMessage();
-};
-
-const getResponse = (input) => {
-  const lowerInput = input.toLowerCase();
-
-  if (lowerInput.includes('photosynthesis')) return demoResponses.photosynthesis;
-  if (lowerInput.includes('algebra') || lowerInput.includes('math')) return demoResponses.algebra;
-  if (lowerInput.includes('world war') || lowerInput.includes('ww2'))
-    return demoResponses['world war 2'];
-  if (lowerInput.includes('volcano')) return demoResponses.volcanoes;
-
-  return demoResponses.default;
 };
 
 // Tabs functionality
@@ -530,14 +450,6 @@ const toggleFaq = (index) => {
     openFaqs.value = openFaqs.value.filter((i) => i !== index);
   } else {
     openFaqs.value.push(index);
-  }
-};
-
-const selectPlan = (planType) => {
-  if (planType === 'premium') {
-    router.push('/checkout');
-  } else {
-    router.push('/dashboard');
   }
 };
 </script>

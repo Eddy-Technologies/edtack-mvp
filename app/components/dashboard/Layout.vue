@@ -199,11 +199,11 @@ const navigationItems: NavigationItem[] = [
     route: '/dashboard?tab=subscription',
     icon: 'CreditCardIcon'
   },
-  {
-    name: 'Shop',
-    route: '/dashboard?tab=shop',
-    icon: 'ShoppingBagIcon'
-  },
+  // {
+  //   name: 'Shop',
+  //   route: '/dashboard?tab=shop',
+  //   icon: 'ShoppingBagIcon'
+  // },
   {
     name: 'Settings',
     route: '/dashboard?tab=settings',
@@ -213,11 +213,6 @@ const navigationItems: NavigationItem[] = [
 
 const isActiveRoute = (itemRoute?: string) => {
   if (!itemRoute) return false;
-
-  // Handle store route separately (external route)
-  if (itemRoute === '/store') {
-    return route.path === '/store';
-  }
 
   // Handle dashboard query-based routes
   if (itemRoute.startsWith('/dashboard?tab=')) {
