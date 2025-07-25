@@ -4,6 +4,7 @@
     :size="buttonSize"
     :disabled="isDisabled"
     :class="computedClass"
+    :type="type"
     @click="handleClick"
   >
     <div class="flex items-center justify-center w-full h-full gap-2">
@@ -32,6 +33,7 @@ import { useRouter } from 'vue-router';
 import type { ButtonColor, ButtonSize } from '#ui/types';
 
 const props = defineProps<{
+  type?: 'button' | 'submit' | 'reset';
   text?: string;
   route?: string;
   color?: ButtonColor;

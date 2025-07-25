@@ -14,6 +14,7 @@ export interface SignUpReq {
 export const useAuth = () => {
   const supabase = useSupabaseClient();
   const { fetchAndSetMe, resetMe } = useMeStore();
+  const baseUrl = useRuntimeConfig().public.baseUrl;
 
   const signUp = async (input: SignUpReq) => {
     const data = await $fetch('/api/auth/register', {
@@ -49,11 +50,7 @@ export const useAuth = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        }
+        redirectTo: `${baseUrl}/auth/callback`,
       }
     });
 
@@ -64,9 +61,14 @@ export const useAuth = () => {
     return { data, error };
   };
 
-  const signUpWithGoogle = async () => {
-    // For OAuth, sign up and sign in are the same flow
-    return signInWithGoogle();
+  // This function is used to exchange the authorization code for a session used in OAuth PKCE flow
+  const exchangeCodeForSession = async (code: string) => {
+    const data = await $fetch('/api/auth/exchange-code', {
+      method: 'POST',
+      body: { code }
+    });
+
+    return data;
   };
 
   return {
@@ -74,6 +76,6 @@ export const useAuth = () => {
     signIn,
     signOut,
     signInWithGoogle,
-    signUpWithGoogle,
+    exchangeCodeForSession
   };
 };
