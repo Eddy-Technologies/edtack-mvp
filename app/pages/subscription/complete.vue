@@ -238,9 +238,9 @@ const checkSessionStatus = async () => {
   try {
     loading.value = true;
 
-    const sessionId = route.query.checkout_session as string;
+    const sessionId = route.query.session_id as string;
     if (!sessionId) {
-      throw new Error('Missing checkout session ID');
+      throw new Error('Missing session ID');
     }
 
     const response = await getSessionStatus(sessionId);

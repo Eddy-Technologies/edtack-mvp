@@ -6,6 +6,25 @@
         <p class="text-gray-600">Setting up checkout...</p>
       </div>
 
+      <div v-else-if="customerExists" class="bg-primary-50 border border-primary-200 rounded-lg p-6 text-center">
+        <h3 class="text-lg font-semibold mb-2">Customer Portal</h3>
+        <p class="text-primary-600 mb-4">{{ customerMessage }}</p>
+        <div class="space-y-3">
+          <button
+            class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+            @click="redirectToPortal"
+          >
+            Go to Customer Portal
+          </button>
+          <button
+            class="w-full bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            @click="$router.back()"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+
       <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
         <h3 class="text-lg font-semibold text-red-800 mb-2">Checkout Error</h3>
         <p class="text-red-600 mb-4">{{ error }}</p>
@@ -21,7 +40,7 @@
       <div
         id="checkout"
         class="bg-white rounded-lg shadow-lg overflow-hidden"
-        :class="{ hidden: loading || error }"
+        :class="{ hidden: loading || error || customerExists }"
       >
         <!-- Stripe's embedded checkout form will appear here -->
       </div>
@@ -30,9 +49,13 @@
 </template>
 
 <script setup lang="ts">
-import type Stripe from 'stripe';
 import { ref, onMounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
+
+definePageMeta({
+  layout: false,
+  middleware: ['auth'] // Ensure user is authenticated
+});
 
 const route = useRoute();
 
@@ -41,7 +64,10 @@ const { stripePromise } = useStripe();
 
 const loading = ref(true);
 const error = ref<string | null>(null);
-const checkoutInstance = ref<any>(null);
+const checkoutInstance = ref<any>(null); // TODO: Use proper Stripe types
+const customerExists = ref(false);
+const customerMessage = ref<string>('');
+const loginUrl = ref<string>('');
 
 const cleanupCheckout = () => {
   if (checkoutInstance.value) {
@@ -81,6 +107,15 @@ const initializeEmbeddedCheckout = async () => {
     // Create checkout session
     const session = await createCheckoutSession(priceId);
 
+    // Check if customer already exists
+    if (session.customerExists) {
+      customerExists.value = true;
+      customerMessage.value = session.message || 'Customer already exists. Please use the customer portal.';
+      loginUrl.value = session.loginUrl || '';
+      loading.value = false;
+      return;
+    }
+
     // Initialize Stripe
     const stripe = await stripePromise();
     if (!stripe) {
@@ -114,6 +149,12 @@ const initializeEmbeddedCheckout = async () => {
     error.value = err.message || 'Failed to initialize checkout';
   } finally {
     loading.value = false;
+  }
+};
+
+const redirectToPortal = () => {
+  if (loginUrl.value) {
+    window.location.href = loginUrl.value;
   }
 };
 

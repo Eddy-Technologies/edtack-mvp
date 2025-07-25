@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
     const { userId, priceId } = body;
+    const baseUrl = useRuntimeConfig().public.baseUrl;
 
     if (!userId || !priceId) {
       throw createError({
@@ -36,25 +37,44 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Create or get Stripe customer
-    let customerId = userInfo.payment_customer_id;
-    if (!customerId) {
-      const customer = await stripe.customers.create({
-        email: user.email || '',
-        name: `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim(),
-        metadata: {
-          user_info_id: userInfo.id,
-          user_id: userId
-        }
-      });
-      customerId = customer.id;
+    // Check if customer already exists with this email
+    const existingCustomers = await stripe.customers.list({
+      email: user.email || '',
+      limit: 1
+    });
 
-      // Update user_infos with customer ID
-      await supabase
-        .from('user_infos')
-        .update({ payment_customer_id: customerId })
-        .eq('id', userInfo.id);
+    if (existingCustomers.data.length > 0) {
+      // Customer exists in Stripe, return login URL with prefilled email
+      const encodedEmail = encodeURIComponent(user.email || '');
+      const runtimeConfig = useRuntimeConfig();
+      const loginUrl = `${runtimeConfig.stripeCustomerPortalUrl}?prefilled_email=${encodedEmail}`;
+
+      return {
+        success: false,
+        customerExists: true,
+        loginUrl: loginUrl,
+        message: 'Customer already exists. Please use the customer portal to manage your subscription.'
+      };
     }
+
+    // No existing customer in Stripe, create new one
+    const customer = await stripe.customers.create({
+      email: user.email || '',
+      name: `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim(),
+      metadata: {
+        user_info_id: userInfo.id,
+        user_id: userId
+      }
+    });
+
+    // Update user_infos with new customer ID
+    await supabase
+      .from('user_infos')
+      .update({ payment_customer_id: customer.id })
+      .eq('id', userInfo.id);
+
+    const customerId = customer.id;
+    console.log(baseUrl, 'Customer ID:', customerId);
 
     // Create embedded checkout session
     const session = await stripe.checkout.sessions.create({
@@ -65,7 +85,7 @@ export default defineEventHandler(async (event) => {
         quantity: 1,
       }],
       customer: customerId,
-      return_url: `${process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/subscription/return?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${baseUrl}/subscription/complete?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return {
