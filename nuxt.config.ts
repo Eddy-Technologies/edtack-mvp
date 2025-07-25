@@ -81,7 +81,12 @@ export default defineNuxtConfig({
   supabase: {
     url: process.env.NUXT_PUBLIC_SUPABASE_URL,
     key: process.env.NUXT_PUBLIC_SUPABASE_KEY,
-    redirect: false, // Set to true if you want to use the redirect URL for authentication
+    redirect: true, // Set to true if you want to use the redirect URL for authentication
+    redirectOptions: {
+      login: '/login',
+      callback: '/api/auth/callback', // Your server callback
+      exclude: ['/'] // Pages that don't require auth
+    }
   },
 
   vite: {
