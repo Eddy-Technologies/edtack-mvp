@@ -8,55 +8,176 @@
           <Button
             variant="primary"
             text="View Plans"
+            :loading="loading"
+            :disabled="loading"
             @click="showSubscriptionModal = true"
           />
         </div>
       </div>
       <div class="p-6">
-        <div class="flex items-center justify-between">
+        <!-- Loading State -->
+        <div v-if="loading && !subscription" class="animate-pulse">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="w-16 h-16 bg-gray-200 rounded-xl" />
+              <div>
+                <div class="h-6 bg-gray-200 rounded w-32 mb-2" />
+                <div class="h-4 bg-gray-200 rounded w-48 mb-2" />
+                <div class="h-4 bg-gray-200 rounded w-24" />
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="h-8 bg-gray-200 rounded w-20 mb-2" />
+              <div class="h-4 bg-gray-200 rounded w-16" />
+            </div>
+          </div>
+        </div>
+
+        <!-- No Customer State -->
+        <div v-else-if="subscription === null" class="text-center py-8">
+          <div class="flex items-center justify-center mb-4">
+            <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center">
+              <AppIcon class="w-10 h-10 text-gray-400" />
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No Subscription</h3>
+          <p class="text-gray-600 mb-4">You don't have a subscription yet. Get started with one of our plans!</p>
+          <Button
+            variant="primary"
+            text="Subscribe Now"
+            :loading="loading"
+            :disabled="loading"
+            @click="showSubscriptionModal = true"
+          />
+        </div>
+
+        <!-- Customer Has No Active Subscription -->
+        <div v-else-if="subscription === 'CUSTOMER_HAS_NO_ACTIVE_SUBSCRIPTION'" class="text-center py-8">
+          <div class="flex items-center justify-center mb-4">
+            <div class="w-16 h-16 bg-yellow-100 rounded-xl flex items-center justify-center">
+              <AppIcon class="w-10 h-10 text-yellow-600" />
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No Active Subscription</h3>
+          <p class="text-gray-600 mb-4">You currently have no active subscription. Manage your account to reactivate or change your plan.</p>
+          <Button
+            variant="secondary"
+            text="Manage Subscription"
+            :loading="loading"
+            :disabled="loading"
+            @click="handleOpenCustomerPortal"
+          />
+        </div>
+
+        <!-- Active Subscription Data -->
+        <div v-else-if="subscription && typeof subscription === 'object'" class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
-            <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-              <svg
-                class="w-8 h-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                />
-              </svg>
+            <div class="w-16 h-16 rounded-xl flex items-center justify-center">
+              <AppIcon class="w-12 h-12 text-white" />
             </div>
             <div>
-              <h3 class="text-xl font-semibold text-gray-900">{{ currentPlan.name }} Plan</h3>
-              <p class="text-gray-600">{{ currentPlan.description }}</p>
-              <div class="flex items-center space-x-2 mt-1">
-                <span
-                  :class="[
-                    'inline-flex px-2 py-1 text-xs font-semibold rounded-full',
-                    currentPlan.name === 'Premium' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
-                  ]"
+              <span class="flex items-center space-x-2">
+                <h3 class="text-xl font-semibold text-gray-900">{{ subscription.productName }}</h3>
+                <UBadge
+                  :color="subscription.subscriptionStatus === 'active' ? 'primary' :
+                    subscription.subscriptionStatus === 'past_due' ? 'red' : 'gray'"
                 >
-                  {{ currentPlan.status }}
-                </span>
-                <span class="text-sm text-gray-500">Next billing: {{ currentPlan.nextBilling }}</span>
+                  {{ subscription.subscriptionStatus }}
+                </UBadge>
+              </span>
+              <p class="text-gray-600">{{ subscription.productDescription || 'Active subscription plan' }}</p>
+
+              <!-- Marketing Features -->
+              <div v-if="subscription.marketingFeatures && subscription.marketingFeatures.length > 0" class="mt-2">
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li v-for="feature in subscription.marketingFeatures" :key="feature" class="flex items-center">
+                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2" />
+                    {{ feature }}
+                  </li>
+                </ul>
               </div>
+
+              <div class="flex items-center space-x-2 mt-1" />
             </div>
           </div>
           <div class="text-right">
-            <div class="text-3xl font-bold text-gray-900">${{ currentPlan.price }}</div>
-            <div class="text-sm text-gray-500">per month</div>
-            <div v-if="currentPlan.name === 'Premium'" class="space-y-2 mt-3">
-              <Button
-                variant="secondary"
-                text="Manage Billing"
-                :loading="loading"
-                @click="handleOpenCustomerPortal"
+            <div class="text-3xl font-bold text-gray-900">${{ subscription.amount }}</div>
+            <div class="text-sm text-gray-500">per {{ subscription.monthOrYear || 'month' }}</div>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div v-else class="text-center py-8">
+          <p class="text-gray-500">Unable to load subscription information.</p>
+          <Button
+            variant="secondary"
+            text="Retry"
+            :loading="loading"
+            class="mt-2"
+            @click="fetchSubscription"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Billing Card (only show for active subscriptions or customers with no active subscription) -->
+    <div
+      v-if="subscription && (typeof subscription === 'object' || subscription === 'CUSTOMER_HAS_NO_ACTIVE_SUBSCRIPTION')"
+      class="bg-white rounded-xl shadow-sm border"
+    >
+      <div class="p-6">
+        <div class="flex items-start space-x-4">
+          <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg
+              class="w-6 h-6 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
               />
-            </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Billing Management</h3>
+            <p class="text-gray-600 mb-4">
+              Access your customer portal to manage all aspects of your billing and subscription:
+            </p>
+            <ul class="text-sm text-gray-600 space-y-2 mb-4">
+              <li class="flex items-center">
+                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2" />
+                Update payment methods and billing information
+              </li>
+              <li class="flex items-center">
+                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2" />
+                Upgrade or downgrade your subscription plan
+              </li>
+              <li class="flex items-center">
+                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2" />
+                View payment history and download invoices
+              </li>
+              <li class="flex items-center">
+                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2" />
+                Manage subscription settings and preferences
+              </li>
+            </ul>
+            <Button
+              variant="secondary"
+              text="Open Customer Portal"
+              :loading="loading"
+              :disabled="loading"
+              @click="handleOpenCustomerPortal"
+            />
           </div>
         </div>
       </div>
@@ -79,54 +200,20 @@ import { useStripe } from '#imports';
 
 const { openCustomerPortal } = useStripe();
 
-const currentPlan = ref({
-  name: 'Free', // Can be 'Free' or 'Premium'
-  description: 'Basic features to get started',
-  price: 0,
-  nextBilling: 'N/A',
-  status: 'Active',
-  stripeSubscriptionId: null,
-  features: [
-    '50 AI queries per month',
-    'Basic study tools',
-    'Limited practice questions',
-    'Community support'
-  ]
-});
-
 const loading = ref(false);
+const subscription = ref<any | null>(null);
 
 // Modal states
 const showSubscriptionModal = ref(false);
 
 // Stripe API functions
 const fetchSubscription = async () => {
+  loading.value = true;
   try {
-    loading.value = true;
     const response = await $fetch('/api/stripe/subscription', {
       method: 'GET'
     });
-
-    if (response?.subscription) {
-      const sub = response.subscription;
-      currentPlan.value = {
-        email: sub.customer_email,
-        name: 'Premium',
-        description: 'Everything you need for comprehensive learning',
-        price: sub.items.data[0].price.unit_amount / 100,
-        nextBilling: new Date(sub.current_period_end * 1000).toLocaleDateString(),
-        status: sub.status === 'active' ? 'Active' : 'Inactive',
-        stripeSubscriptionId: sub.id,
-        features: [
-          'Unlimited AI queries',
-          'Advanced study tools',
-          'Unlimited practice questions',
-          'Priority support',
-          'Detailed progress tracking',
-          'Offline access'
-        ]
-      };
-    }
+    subscription.value = response;
   } catch (err) {
     console.error('Failed to fetch subscription:', err);
   } finally {
@@ -135,7 +222,7 @@ const fetchSubscription = async () => {
 };
 
 const handleOpenCustomerPortal = () => {
-  openCustomerPortal();// TODO: email
+  openCustomerPortal(subscription.value.email);
 };
 
 onMounted(async () => {

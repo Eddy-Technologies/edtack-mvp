@@ -1,5 +1,6 @@
 import type Stripe from 'stripe';
 import { getSupabaseClient } from '#imports';
+import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -22,25 +23,21 @@ export default defineEventHandler(async (event) => {
     }).then((res) => res.data[0]);
 
     if (!customer) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Customer not found'
-      });
+      return null; // No customer found, return null
     }
+
+    const activeSubscription = customer.subscriptions?.data.find((sub) => sub.status === 'active');
+    if (!activeSubscription) {
+      return 'CUSTOMER_HAS_NO_ACTIVE_SUBSCRIPTION'; // No active subscription found
+    }
+
+    const price = await getPriceWithProductByPriceId(activeSubscription.plan.id);
     return {
       id: customer.id,
       email: customer.email,
-      subscriptions: customer.subscriptions?.data.map((sub) => ({
-        id: sub.id,
-        status: sub.status,
-        plan: {
-          id: sub.items.data[0].price.id,
-          amount: sub.items.data[0].price.unit_amount,
-          currency: sub.items.data[0].price.currency,
-          interval: sub.items.data[0].price.recurring?.interval,
-          product: sub.items.data[0].price.product
-        }
-      }))
+      subscriptionId: activeSubscription.id,
+      subscriptionStatus: activeSubscription.status,
+      ...price
     };
   } catch (error) {
     console.error('Failed to fetch subscription:', error);
