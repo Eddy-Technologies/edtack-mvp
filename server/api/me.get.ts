@@ -55,10 +55,10 @@ export default defineEventHandler(async (event) => {
 
     // Return combined user data
     return {
+      ...userInfo,
       id: user.id,
       email: user.email,
       user_info_id: userInfo.id,
-      ...userInfo,
       user_role: userInfo.user_roles[0].roles.role_name
     } as GetMeRes;
   } catch (err: any) {
