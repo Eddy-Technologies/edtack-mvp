@@ -39,7 +39,7 @@
           class="block w-full text-left px-4 py-2 hover:bg-gray-100"
           @click="openSubscriptionModal"
         >
-          Subscription
+          Upgrade Plan
         </button>
         <div class="border-t my-1" />
         <button
