@@ -103,106 +103,6 @@
         </div>
       </div>
 
-      <!-- Demo Chat Section -->
-      <!--
-      <div class="mb-12">
-        <h3 class="text-gray-800 text-xl sm:text-2xl font-semibold mb-6 text-center">
-          Try Our AI Tutor
-        </h3>
-        <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-          <div class="grid md:grid-cols-2 gap-0">
-             Character Display (Left)
-            <div
-              class="bg-gradient-to-br from-primary-50 to-primary-100 p-8 flex flex-col items-center justify-center min-h-[400px]"
-            >
-              <div class="text-center">
-                <img
-                  :src="demoCharacter.image"
-                  :alt="demoCharacter.name"
-                  class="w-32 h-32 mx-auto rounded-full object-cover border-4 border-white shadow-lg mb-4"
-                />
-                <h4 class="text-xl font-bold text-gray-800 mb-2">{{ demoCharacter.name }}</h4>
-                <p class="text-gray-600 mb-4">{{ demoCharacter.type }}</p>
-                <div class="bg-white rounded-lg p-4 shadow-sm max-w-sm">
-                  <p class="text-gray-700 text-sm leading-relaxed">
-                    {{ currentDemoMessage }}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            Chat Interface (Right)
-            <div class="bg-white p-6 flex flex-col min-h-[400px]">
-              <div class="flex-1 overflow-y-auto mb-4 space-y-3">
-                <div
-                  v-for="(message, index) in demoMessages"
-                  :key="index"
-                  class="flex"
-                  :class="message.isUser ? 'justify-end' : 'justify-start'"
-                >
-                  <div
-                    class="max-w-[80%] px-4 py-2 rounded-lg"
-                    :class="
-                      message.isUser
-                        ? 'bg-primary-500 text-white rounded-br-none'
-                        : 'bg-gray-100 text-gray-800 rounded-bl-none'
-                    "
-                  >
-                    {{ message.text }}
-                  </div>
-                </div>
-                <div v-if="isTyping" class="flex justify-start">
-                  <div class="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg rounded-bl-none">
-                    <div class="flex space-x-1">
-                      <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div
-                        class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                        style="animation-delay: 0.1s"
-                      />
-                      <div
-                        class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                        style="animation-delay: 0.2s"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-               Input Area
-              <div class="border-t pt-4">
-                <div class="flex gap-3">
-                  <input
-                    v-model="demoInput"
-                    type="text"
-                    placeholder="Ask me anything about math, science, history..."
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    @keypress.enter="sendDemoMessage"
-                  />
-                  <button
-                    class="px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-200 disabled:opacity-50"
-                    :disabled="!demoInput.trim() || isTyping"
-                    @click="sendDemoMessage"
-                  >
-                    Send
-                  </button>
-                </div>
-                <div class="mt-3 flex flex-wrap gap-2">
-                  <button
-                    v-for="suggestion in demoSuggestions"
-                    :key="suggestion"
-                    class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200"
-                    @click="sendSuggestion(suggestion)"
-                  >
-                    {{ suggestion }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      -->
-
       <!-- Information Tabs Section -->
       <div class="mb-12">
         <div class="max-w-6xl mx-auto">
@@ -478,45 +378,7 @@ import { useRouter } from '#vue-router';
 const router = useRouter();
 const selectedAvatar = ref(null);
 const showAllCharacters = ref(false);
-
-// Demo chat functionality
-const demoInput = ref('');
-const isTyping = ref(false);
-const demoMessages = ref([
-  { text: 'Hi! I\'m Luna, your AI tutor. What would you like to learn today?', isUser: false },
-]);
-
-const demoCharacter = ref({
-  id: 2,
-  name: 'Luna',
-  image: girlAvatar,
-  type: 'AI Scholar',
-});
-
-const currentDemoMessage = ref('Hi there! I\'m here to help you learn. Ask me anything!');
-
-const demoSuggestions = ref([
-  'Explain photosynthesis',
-  'Help with algebra',
-  'World War 2 facts',
-  'How do volcanoes work?',
-]);
-
-const demoResponses = {
-  'photosynthesis':
-    'Photosynthesis is how plants make food using sunlight, water, and carbon dioxide. The chloroplasts in plant cells capture light energy and convert it into chemical energy!',
-  'algebra':
-    'Algebra is like solving puzzles with numbers and letters! The key is to isolate the variable by doing the same operation to both sides of the equation. What specific algebra topic would you like help with?',
-  'world war 2':
-    'World War 2 lasted from 1939-1945 and involved many countries. It ended when Germany surrendered in May 1945 and Japan surrendered in August 1945 after the atomic bombs.',
-  'volcanoes':
-    'Volcanoes form when molten rock (magma) from deep inside Earth rises to the surface. The pressure builds up until it erupts, creating mountains of hardened lava and ash!',
-  'default':
-    'That\'s a great question! I can help you understand complex topics by breaking them down into simple, easy-to-understand explanations. What specific area would you like to explore?',
-};
-
 const allAvatars = ref(characters);
-
 const browseCharacters = ref(null);
 
 const scrollToCharacters = () => {
@@ -525,51 +387,9 @@ const scrollToCharacters = () => {
   }
 };
 
-const selectAvatar = (avatar, index) => {
-  selectedAvatar.value = avatar;
-  console.log('Selected avatar:', avatar);
-};
-
 const goToChat = (avatar) => {
   selectedAvatar.value = avatar;
   router.push(`/chat/${avatar.id}`);
-};
-
-const sendDemoMessage = () => {
-  if (!demoInput.value.trim() || isTyping.value) return;
-
-  const userMessage = demoInput.value.trim();
-  demoMessages.value.push({ text: userMessage, isUser: true });
-  demoInput.value = '';
-
-  // Show typing indicator
-  isTyping.value = true;
-  currentDemoMessage.value = 'Thinking...';
-
-  // Simulate AI response after delay
-  setTimeout(() => {
-    const response = getResponse(userMessage);
-    demoMessages.value.push({ text: response, isUser: false });
-    currentDemoMessage.value = response;
-    isTyping.value = false;
-  }, 1500);
-};
-
-const sendSuggestion = (suggestion) => {
-  demoInput.value = suggestion;
-  sendDemoMessage();
-};
-
-const getResponse = (input) => {
-  const lowerInput = input.toLowerCase();
-
-  if (lowerInput.includes('photosynthesis')) return demoResponses.photosynthesis;
-  if (lowerInput.includes('algebra') || lowerInput.includes('math')) return demoResponses.algebra;
-  if (lowerInput.includes('world war') || lowerInput.includes('ww2'))
-    return demoResponses['world war 2'];
-  if (lowerInput.includes('volcano')) return demoResponses.volcanoes;
-
-  return demoResponses.default;
 };
 
 // Tabs functionality
@@ -631,14 +451,6 @@ const toggleFaq = (index) => {
     openFaqs.value = openFaqs.value.filter((i) => i !== index);
   } else {
     openFaqs.value.push(index);
-  }
-};
-
-const selectPlan = (planType) => {
-  if (planType === 'premium') {
-    router.push('/checkout');
-  } else {
-    router.push('/dashboard');
   }
 };
 </script>
