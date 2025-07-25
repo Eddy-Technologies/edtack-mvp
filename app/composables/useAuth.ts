@@ -47,10 +47,11 @@ export const useAuth = () => {
   };
 
   const signInWithGoogle = async () => {
+    console.log('Signing in with Google and callback to:', `${baseUrl}/auth/api/callback`);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${baseUrl}/auth/callback`,
+        redirectTo: `${baseUrl}/auth/api/callback`,
       }
     });
 
@@ -61,21 +62,10 @@ export const useAuth = () => {
     return { data, error };
   };
 
-  // This function is used to exchange the authorization code for a session used in OAuth PKCE flow
-  const exchangeCodeForSession = async (code: string) => {
-    const data = await $fetch('/api/auth/exchange-code', {
-      method: 'POST',
-      body: { code }
-    });
-
-    return data;
-  };
-
   return {
     signUp,
     signIn,
     signOut,
     signInWithGoogle,
-    exchangeCodeForSession
   };
 };
