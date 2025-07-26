@@ -38,21 +38,20 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check if customer already exists with this email
-    const existingCustomers = await stripe.customers.list({
+    const existingCustomer = await stripe.customers.list({
       email: user.email || '',
       limit: 1
     });
 
-    if (existingCustomers.data.length > 0) {
+    if (existingCustomer.data.length > 0) {
       // Customer exists in Stripe, return login URL with prefilled email
       const encodedEmail = encodeURIComponent(user.email || '');
       const runtimeConfig = useRuntimeConfig();
-      const loginUrl = `${runtimeConfig.stripeCustomerPortalUrl}?prefilled_email=${encodedEmail}`;
 
       return {
         success: false,
         customerExists: true,
-        loginUrl: loginUrl,
+        loginUrl: `${runtimeConfig.public.stripeCustomerPortalUrl}?prefilled_email=${encodedEmail}`, // N Code customer portal URL
         message: 'Customer already exists. Please use the customer portal to manage your subscription.'
       };
     }

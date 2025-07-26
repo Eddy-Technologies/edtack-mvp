@@ -10,18 +10,20 @@
         <h3 class="text-lg font-semibold mb-2">Customer Portal</h3>
         <p class="text-primary-600 mb-4">{{ customerMessage }}</p>
         <div class="space-y-3">
-          <button
-            class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+          <Button
+            class="w-full"
+            variant="primary"
             @click="redirectToPortal"
           >
             Go to Customer Portal
-          </button>
-          <button
-            class="w-full bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-            @click="$router.back()"
+          </Button>
+          <Button
+            class="w-full"
+            variant="secondary"
+            @click="$router.push('/')"
           >
             Go Back
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -51,6 +53,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
+import Button from '~/components/common/Button.vue';
 
 definePageMeta({
   layout: false,
