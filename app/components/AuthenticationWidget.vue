@@ -1,8 +1,12 @@
 <template>
   <div class="flex gap-4 items-center">
+    <!-- Loading state - skeleton -->
+    <div v-if="user.isInitializing" class="flex gap-4 items-center">
+      <!-- Skeleton for buttons (most common case) -->
+      <div class="w-16 h-8 bg-gray-200 rounded animate-pulse" />
+    </div>
     <!-- Logged in state -->
-    <div v-if="meIsLoading" class="animate-spin rounded-full border-2 border-current border-t-transparent w-4 h-4" />
-    <div v-else-if="user.isLoggedIn && !meIsLoading" class="relative">
+    <div v-else-if="user.isLoggedIn" class="relative">
       <UserAvatar @click="menuOpen = !menuOpen" />
       <!-- Dropdown Menu -->
       <div
@@ -78,9 +82,6 @@ import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
-import { useMe } from '~/composables/useMe';
-
-const { meIsLoading } = useMe();
 
 // Props for customization
 interface Props {

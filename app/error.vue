@@ -63,23 +63,6 @@ const getTitle = () => {
   }
 };
 
-const getMessage = () => {
-  if (props.error?.statusMessage) {
-    return props.error.statusMessage;
-  }
-
-  switch (props.error?.statusCode) {
-    case 404:
-      return 'The page you are looking for could not be found. It might have been moved, deleted, or you entered the wrong URL.';
-    case 403:
-      return 'You do not have permission to access this resource. Please contact support if you believe this is an error.';
-    case 429:
-      return 'You have made too many requests in a short period. Please wait a moment and try again.';
-    default:
-      return 'An unexpected error occurred. Please try again or contact support if the problem persists.';
-  }
-};
-
 const goHome = () => {
   window.location.href = '/';
 };
