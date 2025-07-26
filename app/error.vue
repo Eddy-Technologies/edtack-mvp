@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-    <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
+    <UCard class="max-w-md w-full text-center p-8">
       <!-- Eddy Logo -->
       <div class="mb-6">
         <img src="/logo.png" alt="Eddy" class="w-16 h-16 mx-auto">
@@ -43,7 +43,7 @@
         >eddytech.ai@gmail.com
         </a>
       </p>
-    </div>
+    </UCard>
   </div>
 </template>
 
