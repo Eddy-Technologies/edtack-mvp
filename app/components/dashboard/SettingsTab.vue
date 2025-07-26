@@ -14,14 +14,18 @@
             <p class="text-gray-600">{{ userInfo.email }}</p>
           </div>
           <Button
+            v-if="user.auth_provider === 'email'"
             variant="secondary"
             text="Change"
             @clicked="editEmail"
           />
+          <p v-else class="text-sm text-gray-500">
+            Managed by {{ getProviderDisplayName(user.auth_provider) }}
+          </p>
         </div>
 
         <!-- Password -->
-        <div class="flex items-center justify-between py-4">
+        <div v-if="user.auth_provider === 'email'" class="flex items-center justify-between py-4">
           <div>
             <h3 class="text-lg font-medium text-gray-900">Password</h3>
             <p class="text-gray-600">••••••••••••</p>
@@ -84,6 +88,20 @@ const editEmail = () => {
 
 const editPassword = () => {
   showPasswordModal.value = true;
+};
+
+// Helper function to display provider names nicely
+const getProviderDisplayName = (provider: string) => {
+  switch (provider) {
+    case 'google':
+      return 'Google';
+    case 'facebook':
+      return 'Facebook';
+    case 'github':
+      return 'GitHub';
+    default:
+      return provider.charAt(0).toUpperCase() + provider.slice(1);
+  }
 };
 
 // Event handlers

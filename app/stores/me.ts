@@ -21,6 +21,7 @@ export const useMeStore = defineStore('me', {
     is_active: false,
     created_at: '',
     updated_at: '',
+    auth_provider: 'email',
     isInitialized: false,
   }),
 
