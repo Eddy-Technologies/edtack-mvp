@@ -301,6 +301,7 @@ const selectPlan = async (product: StripeProduct) => {
   // Handle free plan
   if (product.name.includes('Free') || getCurrentPrice(product) === '0') {
     // For free plans, you might want to just redirect to dashboard or register
+    await navigateTo({ path: '/' });
     return;
   }
 
