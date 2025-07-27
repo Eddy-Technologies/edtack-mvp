@@ -7,6 +7,7 @@
     <SubscriptionTab v-else-if="currentTab === 'subscription'" />
     <SettingsTab v-else-if="currentTab === 'settings'" />
     <ShopTab v-else-if="currentTab === 'shop'" />
+    <CreditsTab v-else-if="currentTab === 'credits'" />
     <div v-else class="text-center py-12">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
       <p class="text-gray-600">Select a section from the sidebar to get started.</p>
@@ -24,6 +25,7 @@ import { useMeStore } from '~/stores/me';
 import OverviewTab from '~/components/dashboard/OverviewTab.vue';
 import SubscriptionTab from '~/components/dashboard/SubscriptionTab.vue';
 import ShopTab from '~/components/dashboard/ShopTab.vue';
+import CreditsTab from '~/components/dashboard/CreditsTab.vue';
 import SettingsTab from '~/components/dashboard/SettingsTab.vue';
 
 definePageMeta({
@@ -46,6 +48,7 @@ const pageTitle = computed(() => {
     subscription: 'Subscription',
     settings: 'Settings',
     shop: 'Shop',
+    credits: 'Credits',
   };
   return tabTitles[currentTab.value as keyof typeof tabTitles] || 'Dashboard';
 });

@@ -456,9 +456,36 @@
       </div>
     </div>
 
+    <!-- Loading State -->
+    <div v-if="isLoadingProducts" class="text-center py-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
+      <p class="text-gray-600">Loading shop products...</p>
+    </div>
+
+    <!-- Error State -->
+    <div v-else-if="productsError" class="text-center py-12">
+      <svg
+        class="w-12 h-12 mx-auto text-red-400 mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <p class="text-red-600 mb-4">{{ productsError }}</p>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" @click="loadProducts">
+        Try Again
+      </button>
+    </div>
+
     <!-- Products Grid (Icon View) -->
     <div
-      v-if="viewMode === 'icon' && !showWishlist"
+      v-else-if="viewMode === 'icon' && !showWishlist"
       class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
       <div
@@ -546,7 +573,7 @@
     </div>
 
     <!-- List View -->
-    <div v-if="viewMode === 'list' && !showWishlist" class="space-y-4">
+    <div v-else-if="viewMode === 'list' && !showWishlist && !isLoadingProducts && !productsError" class="space-y-4">
       <div
         v-for="item in filteredItems"
         :key="item.id"
@@ -692,100 +719,52 @@ const emit = defineEmits<{
   (e: 'add-to-cart', updatedCart: any[]): void;
 }>();
 
-// Enhanced product data with e-commerce features
-const items = [
-  {
-    id: '1',
-    name: 'Chicha Morada Tea',
-    description: 'Premium purple corn tea with authentic Peruvian flavor',
-    price: 5,
-    originalPrice: 8,
-    image: placeholder4,
-    category: 'Food & Beverages',
-    rating: 4.5,
-    reviewCount: 128,
-    isNew: false
-  },
-  {
-    id: '2',
-    name: 'KFC Gift Card',
-    description: 'Enjoy delicious fried chicken with this $10 gift card',
-    price: 10,
-    image: placeholder2,
-    category: 'Gift Cards',
-    rating: 4.8,
-    reviewCount: 256,
-    isNew: true
-  },
-  {
-    id: '3',
-    name: 'Fortnite V-Bucks',
-    description: '1000 V-Bucks for in-game purchases and battle pass',
-    price: 10,
-    image: placeholder1,
-    category: 'Gaming',
-    rating: 4.7,
-    reviewCount: 891,
-    isNew: false
-  },
-  {
-    id: '4',
-    name: 'Riot Games RP',
-    description: 'Riot Points for League of Legends and Valorant skins',
-    price: 30,
-    originalPrice: 35,
-    image: placeholder3,
-    category: 'Gaming',
-    rating: 4.6,
-    reviewCount: 445,
-    isNew: false
-  },
-  {
-    id: '5',
-    name: 'Roblox Premium',
-    description: 'Monthly Roblox Premium subscription with Robux',
-    price: 30,
-    image: placeholder5,
-    category: 'Gaming',
-    rating: 4.4,
-    reviewCount: 672,
-    isNew: false
-  },
-  {
-    id: '6',
-    name: 'Labubu Collectible',
-    description: 'Limited edition Labubu figurine - perfect for collectors',
-    price: 99,
-    originalPrice: 120,
-    image: placeholder6,
-    category: 'Collectibles',
-    rating: 4.9,
-    reviewCount: 89,
-    isNew: true
-  },
-  {
-    id: '7',
-    name: 'Pikachu Plush Toy',
-    description: 'Adorable Pokemon Pikachu soft plush toy - 12 inches',
-    price: 20,
-    image: placeholder7,
-    category: 'Toys',
-    rating: 4.8,
-    reviewCount: 334,
-    isNew: false
-  },
-  {
-    id: '8',
-    name: 'Steam Wallet Code',
-    description: '$30 Steam wallet credit for games and DLC purchases',
-    price: 30,
-    image: placeholder8,
-    category: 'Gaming',
-    rating: 4.9,
-    reviewCount: 1205,
-    isNew: false
-  },
-];
+// Use unified credit management for balance updates
+const { handleTransaction, hasSufficientBalance } = useCredit();
+
+// Products data from Stripe API (shop products only)
+const items = ref<any[]>([]);
+const isLoadingProducts = ref(true);
+const productsError = ref<string | null>(null);
+
+const loadProducts = async () => {
+  try {
+    isLoadingProducts.value = true;
+    productsError.value = null;
+
+    // TODO: STRIPE API CALL - Get shop products only
+    // Expected API response structure:
+    // {
+    //   products: Array<{
+    //     id: string,                    // Stripe product ID
+    //     name: string,
+    //     description: string,
+    //     price: number,                 // In credits
+    //     originalPrice?: number,        // In credits (if on sale)
+    //     image: string,
+    //     category: string,
+    //     rating: number,
+    //     reviewCount: number,
+    //     isNew: boolean,
+    //     metadata: {
+    //       stripe_product_id: string,
+    //       stripe_price_id: string,
+    //       product_type: 'shop'         // Only shop products returned
+    //     }
+    //   }>,
+    //   total: number
+    // }
+
+    const response = await $fetch('/api/shop/products');
+    items.value = response.products || [];
+  } catch (error) {
+    console.error('Failed to load shop products:', error);
+    productsError.value = 'Failed to load products. Please try again.';
+    items.value = [];
+  } finally {
+    isLoadingProducts.value = false;
+  }
+};
 
 // Reactive state
 const purchaseMessage = ref<string | null>(null);
@@ -850,13 +829,13 @@ const pastOrders = ref([
 
 // Categories
 const categories = computed(() => {
-  const cats = new Set(items.map((item) => item.category));
+  const cats = new Set(items.value.map((item) => item.category));
   return Array.from(cats).sort();
 });
 
 // Filtering and sorting
 const filteredItems = computed(() => {
-  let filtered = [...items];
+  let filtered = [...items.value];
 
   // Search filter
   if (searchQuery.value) {
@@ -969,23 +948,79 @@ const handlePaymentSuccess = () => {
 };
 
 // Functions
-const addToCart = (item: any) => {
-  const updatedCart = [...props.cart];
-  const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
+const addToCart = async (item: any) => {
+  try {
+    // TODO: STRIPE API CALL - Purchase with customer balance
+    // Expected API call structure:
+    // POST /api/shop/purchase
+    // Body: {
+    //   item_id: string,               // Stripe product ID
+    //   quantity: number,              // Default 1
+    //   use_credits: boolean           // Default true
+    // }
+    // Response: {
+    //   success: boolean,
+    //   orderId: string,
+    //   message: string,
+    //   details: {
+    //     productName: string,
+    //     quantity: number,
+    //     creditsUsed: number,
+    //     paymentIntentId: string
+    //   }
+    // }
 
-  if (existingItem) {
-    existingItem.quantity++;
-  } else {
-    updatedCart.push({ ...item, quantity: 1 });
+    const purchaseResponse = await $fetch('/api/shop/purchase', {
+      method: 'POST',
+      body: {
+        item_id: item.id,
+        quantity: 1,
+        use_credits: true
+      }
+    });
+
+    if (purchaseResponse.success) {
+      // Update balance optimistically
+      const creditsUsed = purchaseResponse.details?.creditsUsed || item.price * 100; // Convert to cents
+      handleTransaction(creditsUsed, 'purchase', `Purchase: ${item.name}`);
+
+      // Show success message
+      purchaseMessage.value = item.id;
+      setTimeout(() => {
+        purchaseMessage.value = null;
+      }, 3000);
+
+      // For now, still add to cart for UI purposes
+      // In a real implementation, you might redirect to orders or show purchase confirmation
+      const updatedCart = [...props.cart];
+      const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
+
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        updatedCart.push({ ...item, quantity: 1 });
+      }
+
+      emit('add-to-cart', updatedCart);
+
+      console.log('Purchase successful:', purchaseResponse.details);
+    } else {
+      throw new Error('Purchase failed');
+    }
+  } catch (error: any) {
+    console.error('Purchase failed:', error);
+
+    // Check if it's an insufficient funds error
+    if (error.data?.message?.includes('Insufficient')) {
+      insufficientFundsMessage.value = item.id;
+      setTimeout(() => {
+        insufficientFundsMessage.value = null;
+      }, 3000);
+    } else {
+      // Show generic error
+      alert('Purchase failed. Please try again.');
+    }
   }
-
-  // Show success message
-  purchaseMessage.value = item.id;
-  setTimeout(() => {
-    purchaseMessage.value = null;
-  }, 2000);
-
-  emit('add-to-cart', updatedCart);
 };
 
 const openProductModal = (item: any) => {
@@ -1103,6 +1138,9 @@ onMounted(() => {
     window.addEventListener('resize', updateScreenSize);
     document.addEventListener('click', handleClickOutside);
   }
+
+  // Load products from Stripe API
+  loadProducts();
 });
 
 onUnmounted(() => {

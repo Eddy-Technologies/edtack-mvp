@@ -201,11 +201,16 @@ const navigationItems: NavigationItem[] = [
     route: '/dashboard?tab=subscription',
     icon: 'CreditCardIcon'
   },
-  // {
-  //   name: 'Shop',
-  //   route: '/dashboard?tab=shop',
-  //   icon: 'ShoppingBagIcon'
-  // },
+  {
+    name: 'Shop',
+    route: '/dashboard?tab=shop',
+    icon: 'ShoppingBagIcon'
+  },
+  {
+    name: 'Credits',
+    route: '/dashboard?tab=credits',
+    icon: 'CurrencyDollarIcon'
+  },
   {
     name: 'Settings',
     route: '/dashboard?tab=settings',

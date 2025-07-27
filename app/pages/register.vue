@@ -219,7 +219,7 @@ const toast = useToast();
 const router = useRouter();
 
 // Auth composable
-const { signUp, signUpWithGoogle } = useAuth();
+const { signUp, signInWithGoogle } = useAuth();
 
 // Form validation
 const canSubmit = computed(() => {
@@ -306,7 +306,7 @@ const handleGoogleRegister = async () => {
     isLoading.value = true;
     errorMessage.value = '';
 
-    await signUpWithGoogle();
+    await signInWithGoogle();
 
     // User will be redirected to Google, then back to /auth/callback
     // The auth plugin will handle the rest
