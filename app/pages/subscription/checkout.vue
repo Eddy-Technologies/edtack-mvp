@@ -6,7 +6,7 @@
         <p class="text-gray-600">Setting up checkout...</p>
       </div>
 
-      <div v-else-if="customerExists" class="bg-primary-50 border border-primary-200 rounded-lg p-6 text-center">
+      <!-- <div v-else-if="customerExists" class="bg-primary-50 border border-primary-200 rounded-lg p-6 text-center">
         <h3 class="text-lg font-semibold mb-2">Customer Portal</h3>
         <p class="text-primary-600 mb-4">{{ customerMessage }}</p>
         <div class="space-y-3">
@@ -25,7 +25,7 @@
             Go Back
           </Button>
         </div>
-      </div>
+      </div> -->
 
       <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
         <h3 class="text-lg font-semibold text-red-800 mb-2">Checkout Error</h3>
@@ -42,7 +42,6 @@
       <div
         id="checkout"
         class="bg-white rounded-lg shadow-lg overflow-hidden"
-        :class="{ hidden: loading || error || customerExists }"
       >
         <!-- Stripe's embedded checkout form will appear here -->
       </div>
@@ -68,7 +67,7 @@ const { stripePromise } = useStripe();
 const loading = ref(true);
 const error = ref<string | null>(null);
 const checkoutInstance = ref<any>(null); // TODO: Use proper Stripe types
-const customerExists = ref(false);
+
 const customerMessage = ref<string>('');
 const loginUrl = ref<string>('');
 
@@ -110,14 +109,14 @@ const initializeEmbeddedCheckout = async () => {
     // Create checkout session
     const session = await createCheckoutSession(priceId);
 
-    // Check if customer already exists
-    if (session.customerExists) {
-      customerExists.value = true;
-      customerMessage.value = session.message || 'Customer already exists. Please use the customer portal.';
-      loginUrl.value = session.loginUrl || '';
-      loading.value = false;
-      return;
-    }
+    // // Check if customer already exists
+    // if (session.customerExists) {
+    //   customerExists.value = true;
+    //   customerMessage.value = session.message || 'Customer already exists. Please use the customer portal.';
+    //   loginUrl.value = session.loginUrl || '';
+    //   loading.value = false;
+    //   return;
+    // }
 
     // Initialize Stripe
     const stripe = await stripePromise();

@@ -37,43 +37,27 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check if customer already exists with this email
-    const existingCustomer = await stripe.customers.list({
-      email: user.email || '',
+    // Check if user already has a subscription
+    const activeSubscription = await stripe.subscriptions.list({
+      customer: userInfo.payment_customer_id,
+      status: 'active',
       limit: 1
     });
 
-    if (existingCustomer.data.length > 0) {
-      // Customer exists in Stripe, return login URL with prefilled email
-      const encodedEmail = encodeURIComponent(user.email || '');
-      const runtimeConfig = useRuntimeConfig();
+    if (!userInfo.payment_customer_id) {
+      // TODO: Create a new customer if not exists
+      // Update user_infos with new customer ID
+      // await supabase
+      //   .from('user_infos')
+      //   .update({ payment_customer_id: customer.id })
+      //   .eq('id', userInfo.id);
 
-      return {
-        success: false,
-        customerExists: true,
-        loginUrl: `${runtimeConfig.public.stripeCustomerPortalUrl}?prefilled_email=${encodedEmail}`, // N Code customer portal URL
-        message: 'Customer already exists. Please use the customer portal to manage your subscription.'
-      };
+      // const customerId = customer.id;
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Payment customer ID not found for user'
+      });
     }
-
-    // No existing customer in Stripe, create new one
-    const customer = await stripe.customers.create({
-      email: user.email || '',
-      name: `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim(),
-      metadata: {
-        user_info_id: userInfo.id,
-        user_id: userId
-      }
-    });
-
-    // Update user_infos with new customer ID
-    await supabase
-      .from('user_infos')
-      .update({ payment_customer_id: customer.id })
-      .eq('id', userInfo.id);
-
-    const customerId = customer.id;
-    console.log(baseUrl, 'Customer ID:', customerId);
 
     // Create embedded checkout session
     const session = await stripe.checkout.sessions.create({
@@ -83,14 +67,14 @@ export default defineEventHandler(async (event) => {
         price: priceId,
         quantity: 1,
       }],
-      customer: customerId,
+      customer: userInfo.payment_customer_id,
       return_url: `${baseUrl}/subscription/complete?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return {
       success: true,
       clientSecret: session.client_secret,
-      customerId
+      customerId: userInfo.payment_customer_id
     };
   } catch (error: any) {
     console.error('Embedded checkout setup error:', error);

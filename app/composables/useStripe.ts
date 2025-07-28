@@ -2,7 +2,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 export function useStripe() {
   const config = useRuntimeConfig();
-  
+
   const stripePromise = () => {
     return loadStripe(config.public.stripePublishableKey);
   };

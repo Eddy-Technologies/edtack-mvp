@@ -1,26 +1,6 @@
 import type Stripe from 'stripe';
 import type { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
 
-export interface StripeProductPrice {
-  id: string;
-  unit_amount: number;
-  currency: string;
-  recurring: {
-    interval: 'month' | 'year';
-    interval_count: number;
-  } | null;
-  type: 'one_time' | 'recurring';
-}
-
-export interface CustomerResponse {
-  id: string;
-  email: string;
-  name: string;
-  subscriptionDisplayName: string | null;
-  plan: any | null; // Stripe.Plan object
-  delinquent: boolean;
-}
-
 export interface StripeSubscriptionCheckoutResponse {
   success: boolean;
   clientSecret?: string;
@@ -50,7 +30,7 @@ export const useSubscription = () => {
       if (!user) {
         throw new Error('User not authenticated');
       }
-      const response: StripeSubscriptionCheckoutResponse = await $fetch('/api/subscription/checkout', {
+      const response = await $fetch('/api/subscription/checkout', {
         method: 'POST',
         body: {
           priceId,
