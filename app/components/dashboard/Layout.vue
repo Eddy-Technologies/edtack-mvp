@@ -4,7 +4,9 @@
     <div class="w-64 bg-white shadow-lg">
       <!-- Logo -->
       <div class="flex items-center px-6 py-4 border-b">
-        <AppIcon class="w-8 h-8 mr-3" />
+        <NuxtLink to="/">
+          <AppIcon class="w-8 h-8 mr-3" />
+        </NuxtLink>
         <span class="text-xl font-semibold text-gray-800">Dashboard</span>
       </div>
 

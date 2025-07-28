@@ -2,9 +2,14 @@ import { defineStore } from 'pinia';
 import { useMe } from '~/composables/useMe';
 import { generateInitials, getDisplayFullName } from '~/utils/avatarUtils';
 import type { GetMeRes } from '~~/server/api/me.get';
+import { useSupabaseClient } from '#imports';
+
+interface MeState extends GetMeRes {
+  isInitialized: boolean;
+}
 
 export const useMeStore = defineStore('me', {
-  state: (): GetMeRes => ({
+  state: (): MeState => ({
     id: '',
     user_info_id: '',
     email: '',
@@ -16,6 +21,8 @@ export const useMeStore = defineStore('me', {
     is_active: false,
     created_at: '',
     updated_at: '',
+    auth_provider: 'email',
+    isInitialized: false,
   }),
 
   actions: {
@@ -24,6 +31,27 @@ export const useMeStore = defineStore('me', {
     },
     resetMe() {
       this.$reset();
+    },
+    setInitialized(value: boolean = true) {
+      this.isInitialized = value;
+    },
+    async initialize() {
+      try {
+        const supabase = useSupabaseClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          // User is authenticated, fetch their profile
+          await this.fetchAndSetMe();
+        } else {
+          // No user session, just mark as initialized
+          this.setInitialized(true);
+        }
+      } catch (error) {
+        console.error('Error during authentication initialization:', error);
+        // Still mark as initialized to prevent infinite loading
+        this.setInitialized(true);
+      }
     },
     fetchAndSetMe: async function () {
       try {
@@ -41,6 +69,7 @@ export const useMeStore = defineStore('me', {
         this.setMe(data);
         return data;
       } finally {
+        this.setInitialized(true);
         console.log('User profile fetch completed');
       }
     },
@@ -48,6 +77,7 @@ export const useMeStore = defineStore('me', {
   getters: {
     // Check if user is logged in by getting supabase user session
     isLoggedIn: (state) => !!state.id,
+    isInitializing: (state) => !state.isInitialized,
     userDisplayName: (state) => {
       if (!state.first_name && !state.email) return 'User';
       return state.first_name || state.email.split('@')[0] || 'User';

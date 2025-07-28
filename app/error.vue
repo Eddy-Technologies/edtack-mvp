@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-    <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
+    <UCard class="max-w-md w-full text-center p-8">
       <!-- Eddy Logo -->
       <div class="mb-6">
         <img src="/logo.png" alt="Eddy" class="w-16 h-16 mx-auto">
@@ -43,7 +43,7 @@
         >eddytech.ai@gmail.com
         </a>
       </p>
-    </div>
+    </UCard>
   </div>
 </template>
 
@@ -60,23 +60,6 @@ const getTitle = () => {
       return 'Too Many Requests';
     default:
       return 'Something Went Wrong';
-  }
-};
-
-const getMessage = () => {
-  if (props.error?.statusMessage) {
-    return props.error.statusMessage;
-  }
-
-  switch (props.error?.statusCode) {
-    case 404:
-      return 'The page you are looking for could not be found. It might have been moved, deleted, or you entered the wrong URL.';
-    case 403:
-      return 'You do not have permission to access this resource. Please contact support if you believe this is an error.';
-    case 429:
-      return 'You have made too many requests in a short period. Please wait a moment and try again.';
-    default:
-      return 'An unexpected error occurred. Please try again or contact support if the problem persists.';
   }
 };
 

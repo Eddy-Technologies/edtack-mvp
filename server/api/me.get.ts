@@ -20,6 +20,7 @@ export interface GetMeRes {
   created_at: string;
   updated_at: string;
   user_role: string;
+  auth_provider: string;
 }
 
 export default defineEventHandler(async (event) => {
@@ -53,13 +54,17 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Get auth provider from Supabase user metadata
+    const authProvider = user.app_metadata?.provider || 'email';
+
     // Return combined user data
     return {
       ...userInfo,
       id: user.id,
       email: user.email,
       user_info_id: userInfo.id,
-      user_role: userInfo.user_roles[0].roles.role_name
+      user_role: userInfo.user_roles[0].roles.role_name,
+      auth_provider: authProvider
     } as GetMeRes;
   } catch (err: any) {
     // If the error is already a H3Error (from createError), re-throw it
