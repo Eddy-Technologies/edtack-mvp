@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
         throw new Error(`Invalid USD amount in cents: ${usdAmountInCents}`);
       }
 
-      // Add credit to Stripe Customer Balance 
+      // Add credit to Stripe Customer Balance
       // Positive amount = customer gets store credit
       const balanceTransaction = await stripe.customers.createBalanceTransaction(recipientCustomerId, {
         amount: usdAmountInCents,
@@ -66,8 +66,8 @@ export default defineEventHandler(async (event) => {
         description: `Top-up: $${usdAmount} SGD → ${creditsAmount} credits`,
         metadata: {
           operation_type: 'topup',
-          payment_intent_id: typeof session.payment_intent === 'string' ? 
-            session.payment_intent : 
+          payment_intent_id: typeof session.payment_intent === 'string' ?
+            session.payment_intent :
             session.payment_intent?.id,
           credits_awarded: creditsAmount.toString()
         }

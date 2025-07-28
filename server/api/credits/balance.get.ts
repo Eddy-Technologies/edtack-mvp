@@ -27,8 +27,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return { 
-      balance: customer.balance, 
+    return {
+      balance: customer.balance,
       currency: customer.currency ? customer.currency : 'SGD',
       customerId: customer.id // Include customer ID for caching
     };

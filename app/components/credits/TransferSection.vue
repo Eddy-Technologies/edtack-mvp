@@ -129,7 +129,6 @@
           <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
           {{ isLoading ? 'Transferring...' : `Transfer $${(transferAmount || 0).toFixed(2)} SGD` }}
         </button>
-
       </div>
     </div>
   </div>
@@ -189,7 +188,7 @@ const handleTransfer = async () => {
     }
   } catch (error) {
     console.error('Transfer failed:', error);
-    
+
     // Revert optimistic updates on error
     handleCreditTransfer(selectedChild.value, 'parent', transferAmountInCents, 'Reverting failed transfer');
 
