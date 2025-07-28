@@ -311,7 +311,7 @@
 
             <!-- Subscription Tab -->
             <div v-if="activeTab === 'subscription'" class="space-y-8">
-              <SubscriptionPlans />
+              <SubscriptionStripeProductsDisplay />
             </div>
 
             <!-- Team Tab -->
@@ -372,7 +372,6 @@ import girlAvatar from '../../../assets/girl.png';
 import { characters } from '../../types/characters.types.js';
 import Button from '~/components/common/Button.vue';
 import CharacterCarousel from '~/components/CharacterCarousel.vue';
-import SubscriptionPlans from '~/components/subscription/SubscriptionPlans.vue';
 import { useRouter } from '#vue-router';
 
 const router = useRouter();

@@ -180,6 +180,9 @@
             />
           </div>
         </div>
+        <p class="text-sm text-gray-600 mt-3">
+          Use the Customer Portal to update payment methods, view invoices, cancel your subscription, and more.
+        </p>
       </div>
     </div>
 
@@ -212,7 +215,7 @@ const showSubscriptionModal = ref(false);
 const fetchSubscription = async () => {
   loading.value = true;
   try {
-    const response = await $fetch('/api/stripe/subscription', {
+    const response = await $fetch('/api/subscription/customer', {
       method: 'GET'
     });
     subscription.value = response;

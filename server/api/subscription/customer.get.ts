@@ -34,12 +34,12 @@ export default defineEventHandler(async (event) => {
 
     const price = await getPriceWithProductByPriceId(activeSubscription.plan.id);
     return {
+      ...price,
       stripeCustomerState: STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION,
       email: customer.email,
       id: customer.id,
       subscriptionId: activeSubscription.id,
       subscriptionStatus: activeSubscription.status,
-      ...price
     };
   } catch (error) {
     console.error('Failed to fetch subscription:', error);

@@ -47,11 +47,11 @@ export const useAuth = () => {
   };
 
   const signInWithGoogle = async () => {
-    console.log('Signing in with Google and callback to:', `${baseUrl}/auth/api/callback`);
+    console.log('Signing in with Google and callback to:', `${baseUrl}/api/auth/callback`);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${baseUrl}/auth/api/callback`,
+        redirectTo: `${baseUrl}/api/auth/callback`,
       }
     });
 

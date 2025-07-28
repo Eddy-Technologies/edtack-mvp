@@ -190,6 +190,7 @@ const handleGoogleLogin = async () => {
     isLoading.value = true;
     errorMessage.value = '';
 
+    console.log('Initiating Google login...');
     await signInWithGoogle();
 
     // User will be redirected to Google, then back to /auth/callback

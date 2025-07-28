@@ -18,13 +18,13 @@
         </button>
       </div>
 
-      <SubscriptionPlans :is-modal="true" @close="closeModal" />
+      <StripeProductsDisplay />
     </div>
   </div>
 </template>
 
 <script setup>
-import SubscriptionPlans from './SubscriptionPlans.vue';
+import StripeProductsDisplay from './StripeProductsDisplay.vue';
 
 defineProps({
   isVisible: {
@@ -38,4 +38,13 @@ const emit = defineEmits(['close']);
 const closeModal = () => {
   emit('close');
 };
+
+onMounted(() => {
+  if (!document.querySelector('script[src="https://js.stripe.com/v3/pricing-table.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'https://js.stripe.com/v3/pricing-table.js';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+});
 </script>
