@@ -215,7 +215,7 @@ const showSubscriptionModal = ref(false);
 const fetchSubscription = async () => {
   loading.value = true;
   try {
-    const response = await $fetch('/api/stripe/subscription', {
+    const response = await $fetch('/api/subscription/customer', {
       method: 'GET'
     });
     subscription.value = response;
