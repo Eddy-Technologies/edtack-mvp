@@ -76,6 +76,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
       stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
+      stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
     },
   },
 
