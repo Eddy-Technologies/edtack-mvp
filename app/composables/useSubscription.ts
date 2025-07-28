@@ -1,4 +1,5 @@
-import { ref, computed } from 'vue';
+import type Stripe from 'stripe';
+import type { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
 
 export interface StripeProductPrice {
   id: string;
@@ -9,25 +10,6 @@ export interface StripeProductPrice {
     interval_count: number;
   } | null;
   type: 'one_time' | 'recurring';
-}
-
-export interface StripeProduct {
-  id: string;
-  name: string;
-  description: string | null;
-  active: boolean;
-  metadata: Record<string, string>;
-  images: string[];
-  marketing_features: Array<{
-    name: string;
-  }> | null;
-  prices: StripeProductPrice[];
-  default_price: StripeProductPrice | null;
-}
-
-export interface ProductsResponse {
-  success: boolean;
-  products: StripeProduct[];
 }
 
 export interface CustomerResponse {
@@ -46,6 +28,19 @@ export interface StripeSubscriptionCheckoutResponse {
   customerExists?: boolean;
   loginUrl?: string;
   message?: string;
+}
+
+export interface GetProductResponse {
+  id: string;
+  priceId: string;
+  name: string;
+  amount: number;
+  currency: string;
+  description: string;
+  marketing_features: Stripe.Product.MarketingFeature[];
+  metadata: Stripe.Metadata;
+  priceLookupKey: STRIPE_SUBSCRIPTION_LOOKUP_KEY;
+  interval?: Stripe.Price.Recurring.Interval;
 }
 
 export const useSubscription = () => {
@@ -79,12 +74,12 @@ export const useSubscription = () => {
     }
   };
 
-  const getProducts = async (): Promise<ProductsResponse> => {
+  const getProducts = async (): Promise<GetProductResponse[]> => {
     try {
       const response = await $fetch('/api/subscription/products', {
         method: 'GET'
-      }) as ProductsResponse;
-      return response;
+      });
+      return response as GetProductResponse[];
     } catch (err: any) {
       console.error('Failed to get products:', err);
       const message = err.data?.message || err.message || 'Failed to fetch products';

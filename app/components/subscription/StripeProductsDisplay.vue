@@ -44,47 +44,19 @@
     </div>
 
     <!-- Products Display -->
-    <div v-else-if="products.length > 0" class="space-y-8">
-      <!-- Monthly/Yearly Toggle -->
-      <div class="flex justify-center">
-        <div class="bg-gray-100 rounded-full p-1 flex">
-          <Button
-            :class="[
-              'px-6 py-2 rounded-full font-medium transition-all duration-200',
-              selectedInterval === 'month'
-                ? 'bg-primary text-white shadow-sm hover:bg-primary'
-                : 'bg-gray-100 text-gray-400 hover:bg-primary/60 hover:text-gray-100'
-            ]"
-            @click="selectedInterval = 'month'"
-          >
-            Monthly
-          </Button>
-          <Button
-            :class="[
-              'px-6 py-2 rounded-full font-medium transition-all duration-200',
-              selectedInterval === 'year'
-                ? 'bg-primary-500 text-white shadow-sm hover:bg-primary'
-                : 'bg-gray-100 text-gray-400 hover:bg-primary/60 hover:text-gray-100'
-            ]"
-            @click="selectedInterval = 'year'"
-          >
-            Yearly
-          </Button>
-        </div>
-      </div>
-
+    <div v-else-if="sortedProducts.length > 0" class="space-y-8">
       <!-- Products Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
         <div
           v-for="product in sortedProducts"
           :key="product.id"
           :class="[
             'rounded-2xl p-8 relative transition-all duration-200',
-            isPopular(product.name) ? 'bg-primary/10': 'bg-white'
+            isPopular(product.priceLookupKey) ? 'bg-primary/10': 'border border-primary bg-white'
           ]"
         >
           <!-- Most Popular Badge -->
-          <div v-if="isPopular(product.name)" class="absolute top-4 right-4">
+          <div v-if="isPopular(product.priceLookupKey)" class="absolute top-4 right-4">
             <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-secondary text-white">
               Most popular
             </span>
@@ -99,43 +71,28 @@
 
             <!-- Pricing Display -->
             <div class="mb-8">
-              <div class="flex items text-left mb-2">
-                <span class="text-5xl font-bold text-gray-900">
-                  SGD {{ getMonthlyPrice(product) }}
+              <div class="flex items-end text-center mb-2">
+                <span class="text-5xl font-bold text-gray-900 uppercase">
+                  {{ product.currency }} {{ product.amount / 100 }}
                 </span>
-                <span class="text-gray-600 ml-2">
-                  per<br>month
+                <span class="text-gray-600 ml-2 text-lg">
+                  per {{ product.interval === 'month' ? 'month' : 'year' }}
                 </span>
-              </div>
-
-              <!-- Yearly billing info -->
-              <div v-if="selectedInterval === 'year' && hasYearlyPricing(product)" class="text-left">
-                <div class="text-sm text-gray-600">
-                  Billed annually at SGD {{ getYearlyPrice(product) }}/year
-                </div>
-                <div class="text-sm text-secondary font-medium mt-1">
-                  Save SGD {{ getYearlySavings(product) }} every year!
-                </div>
               </div>
 
               <!-- Monthly billing info -->
-              <div v-else-if="selectedInterval === 'month'" class="text-center">
-                <div class="text-sm text-gray-600">
-                  Billed monthly
-                </div>
+              <div v-if="product.priceLookupKey !== STRIPE_LOOKUP_KEYS.EDDY_FREE" class="text-center mt-8">
+                <Button
+                  :class="[
+                    'w-full py-4 px-6 rounded-xl font-medium transition-all duration-200',
+                  ]"
+                  :variant="'primary'"
+                  @click="selectPlan(product)"
+                >
+                  Subscribe
+                </Button>
               </div>
             </div>
-
-            <!-- Subscribe Button -->
-            <Button
-              :class="[
-                'w-full py-3 px-6 rounded-xl font-medium transition-all duration-200 mb-8',
-              ]"
-              :variant="'primary'"
-              @click="selectPlan(product)"
-            >
-              Subscribe
-            </Button>
 
             <!-- Features -->
             <div class="text-left">
@@ -168,13 +125,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
-import type { StripeProduct } from '~/composables/useSubscription';
+import type { GetProductResponse } from '~/composables/useSubscription';
+import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
+import type { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
 
 // State
-const products = ref<StripeProduct[]>([]);
+const products = ref<GetProductResponse[]>();
 const loading = ref(false);
 const error = ref<string | null>(null);
-const selectedInterval = ref<'month' | 'year'>('month');
 
 // Stripe composable
 const { getProducts } = useSubscription();
@@ -182,12 +140,12 @@ const { getProducts } = useSubscription();
 // Computed
 const sortedProducts = computed(() => {
   // Sort products: Free, Pro, Max
-  const order = ['Eddy Free', 'Eddy Pro', 'Eddy Max'];
-  return [...products.value].sort((a, b) => {
-    const aIndex = order.indexOf(a.name);
-    const bIndex = order.indexOf(b.name);
+  const order = [STRIPE_LOOKUP_KEYS.EDDY_FREE, STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY];
+  return products.value?.slice().sort((a, b) => {
+    const aIndex = order.indexOf(a.priceLookupKey);
+    const bIndex = order.indexOf(b.priceLookupKey);
     return aIndex - bIndex;
-  });
+  }) || [];
 });
 
 // Methods
@@ -197,7 +155,7 @@ const fetchPlans = async () => {
 
   try {
     const response = await getProducts();
-    products.value = response.products;
+    products.value = response;
   } catch (err: any) {
     error.value = err.message || 'Failed to load subscription plans';
   } finally {
@@ -205,121 +163,24 @@ const fetchPlans = async () => {
   }
 };
 
-const formatPrice = (amount: number | null, currency: string) => {
-  if (amount === null || amount === 0) return '0';
-
-  return (amount / 100).toString();
+const isPopular = (lookupKey: STRIPE_SUBSCRIPTION_LOOKUP_KEY): boolean => {
+  return lookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY;
 };
 
-const getMonthlyPrice = (product: StripeProduct): string => {
-  // If yearly tab is selected, show monthly equivalent of yearly price
-  if (selectedInterval.value === 'year') {
-    const yearlyPrice = product.prices.find((price) =>
-      price.recurring?.interval === 'year'
-    );
-
-    if (yearlyPrice?.unit_amount) {
-      const monthlyEquivalent = yearlyPrice.unit_amount / 12;
-      return (monthlyEquivalent / 100).toFixed(0);
-    }
-  }
-
-  // Otherwise, return the actual monthly price
-  const monthlyPrice = product.prices.find((price) =>
-    price.recurring?.interval === 'month'
-  );
-
-  if (monthlyPrice) {
-    return formatPrice(monthlyPrice.unit_amount, monthlyPrice.currency);
-  }
-
-  // Fallback to default price if it's monthly
-  if (product.default_price?.recurring?.interval === 'month') {
-    return formatPrice(product.default_price.unit_amount, product.default_price.currency);
-  }
-
-  // For free plans or if no monthly price exists
-  return '0';
-};
-
-const getYearlyPrice = (product: StripeProduct): string => {
-  const yearlyPrice = product.prices.find((price) =>
-    price.recurring?.interval === 'year'
-  );
-
-  if (yearlyPrice) {
-    return formatPrice(yearlyPrice.unit_amount, yearlyPrice.currency);
-  }
-
-  return '0';
-};
-
-const getCurrentPrice = (product: StripeProduct): string => {
-  // Find the price for the selected interval
-  const targetPrice = product.prices.find((price) =>
-    price.recurring?.interval === selectedInterval.value
-  );
-
-  if (targetPrice) {
-    return formatPrice(targetPrice.unit_amount, targetPrice.currency);
-  }
-
-  // Fallback to default price
-  if (product.default_price) {
-    return formatPrice(product.default_price.unit_amount, product.default_price.currency);
-  }
-
-  return '0';
-};
-
-const isPopular = (productName: string): boolean => {
-  return productName.includes('Pro');
-};
-
-const hasYearlyPricing = (product: StripeProduct): boolean => {
-  return product.prices.some((price) => price.recurring?.interval === 'year');
-};
-
-const getYearlySavings = (product: StripeProduct): string => {
-  const monthlyPrice = product.prices.find((price) =>
-    price.recurring?.interval === 'month'
-  );
-  const yearlyPrice = product.prices.find((price) =>
-    price.recurring?.interval === 'year'
-  );
-
-  if (monthlyPrice?.unit_amount && yearlyPrice?.unit_amount) {
-    const monthlyTotal = monthlyPrice.unit_amount * 12;
-    const savings = monthlyTotal - yearlyPrice.unit_amount;
-    return (savings / 100).toFixed(0);
-  }
-
-  return '0';
-};
-
-const selectPlan = async (product: StripeProduct) => {
+const selectPlan = async (product: GetProductResponse) => {
   // Handle free plan
-  if (product.name.includes('Free') || getCurrentPrice(product) === '0') {
+  if (product.priceLookupKey === STRIPE_LOOKUP_KEYS.EDDY_FREE) {
     // For free plans, you might want to just redirect to dashboard or register
     await navigateTo({ path: '/' });
     return;
   }
 
   try {
-    // Find the price for the selected interval
-    const selectedPrice = product.prices.find((price) =>
-      price.recurring?.interval === selectedInterval.value
-    ) || product.default_price;
-
-    if (!selectedPrice) {
-      throw new Error('No price found for selected plan');
-    }
-
     // Navigate to checkout with priceId
     await navigateTo({
       path: '/subscription/checkout',
       query: {
-        priceId: selectedPrice.id
+        priceId: product.priceId
       }
     });
   } catch (err: any) {
