@@ -177,7 +177,7 @@ const selectPlan = async (product: GetProductResponse) => {
 
   try {
     const meStore = useMeStore();
-    
+
     // 1. Check if user is logged in
     if (!meStore.isLoggedIn) {
       // 2. If not logged in, redirect to login

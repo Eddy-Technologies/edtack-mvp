@@ -113,7 +113,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const supabase = await getSupabaseClient();
   const userInfoId = subscription.metadata.user_info_id;
-  
+
   // For embedded checkout, we need to get the user info from the customer
   if (!userInfoId) {
     const stripe = getStripe();
@@ -122,7 +122,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       console.error('Customer was deleted');
       return;
     }
-    
+
     const customerUserInfoId = customer.metadata?.user_info_id;
     if (!customerUserInfoId) {
       console.error('Missing user_info_id in customer metadata');
@@ -136,7 +136,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const stripe = getStripe();
   const subscriptionItem = subscription.items.data[0];
   const price = await stripe.prices.retrieve(subscriptionItem.price.id);
-  
+
   // Upsert subscription
   await supabase
     .from('user_subscriptions')
