@@ -125,7 +125,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
-import type { GetProductResponse } from '~/composables/useSubscription';
+import type { GetProductResponse } from '~/composables/useStripe';
 import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
 import type { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
 
@@ -135,7 +135,7 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 
 // Stripe composable
-const { getProducts } = useSubscription();
+const { getProducts } = useStripe();
 
 // Computed
 const sortedProducts = computed(() => {
@@ -176,13 +176,35 @@ const selectPlan = async (product: GetProductResponse) => {
   }
 
   try {
-    // Navigate to checkout with priceId
-    await navigateTo({
-      path: '/subscription/checkout',
-      query: {
-        priceId: product.priceId
-      }
-    });
+    const meStore = useMeStore();
+    
+    // 1. Check if user is logged in
+    if (!meStore.isLoggedIn) {
+      // 2. If not logged in, redirect to login
+      await navigateTo('/login');
+      return;
+    }
+
+    // 3. If logged in, check if payment_customer_id exists
+    if (meStore.payment_customer_id) {
+      // If yes, redirect to external stripe customer portal
+      const { openCustomerPortal } = useStripe();
+      openCustomerPortal(meStore.email);
+      return;
+    }
+
+    // 4. If no payment_customer_id, check if onboarded
+    if (!meStore.onboarding_completed) {
+      // If not onboarded, redirect to onboard page
+      await navigateTo('/onboarding');
+      return;
+    }
+
+    // If user is logged in, has no payment_customer_id, and is onboarded,
+    // this means they need to subscribe first - redirect to customer portal
+    // Note: This case should be rare as users should have payment_customer_id after first subscription
+    const { openCustomerPortal } = useStripe();
+    openCustomerPortal(meStore.email);
   } catch (err: any) {
     console.error('Failed to start checkout:', err);
     error.value = err.message || 'Failed to start checkout process';

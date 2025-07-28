@@ -18,10 +18,11 @@ export const useMeStore = defineStore('me', {
     user_role: '',
     level_type: undefined,
     onboarding_completed: false,
+    payment_customer_id: undefined,
     is_active: false,
     created_at: '',
     updated_at: '',
-    auth_provider: 'email',
+    auth_provider: '',
     isInitialized: false,
   }),
 
