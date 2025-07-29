@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
+import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
 
 let stripeInstance: Stripe | null = null;
 interface StripeCustomerData {
@@ -65,7 +65,7 @@ export async function createStripeCustomer({ email, firstName, lastName, user_in
     try {
       // Get the free monthly price using lookup key
       const prices = await stripe.prices.list({
-        lookup_keys: [STRIPE_SUBSCRIPTION_LOOKUP_KEY.EDDY_FREE_MONTHLY],
+        lookup_keys: [STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY],
         expand: ['data.product']
       });
 
@@ -88,7 +88,7 @@ export async function createStripeCustomer({ email, firstName, lastName, user_in
 
         console.log(`Created free subscription ${subscription.id} for customer ${customer.id}`);
       } else {
-        console.warn(`Free monthly price with lookup key ${STRIPE_SUBSCRIPTION_LOOKUP_KEY.EDDY_FREE_MONTHLY} not found`);
+        console.warn(`Free monthly price with lookup key ${STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY} not found`);
       }
     } catch (subscriptionError) {
       console.error('Failed to create free subscription for customer:', subscriptionError);

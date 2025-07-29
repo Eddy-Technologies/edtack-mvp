@@ -1,6 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
-import { OPERATION_TYPE } from '~~/utils/stripe';
+import { OPERATION_TYPE } from '~~/utils/constants';
 
 export default defineEventHandler(async (event) => {
   try {

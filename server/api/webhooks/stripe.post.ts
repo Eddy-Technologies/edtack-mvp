@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
-import { OPERATION_TYPE } from '~~/utils/stripe';
+import { OPERATION_TYPE } from '~~/utils/constants';
 
 export default defineEventHandler(async (event) => {
   try {

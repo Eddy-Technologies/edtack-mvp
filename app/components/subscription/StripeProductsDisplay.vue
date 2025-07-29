@@ -81,7 +81,7 @@
               </div>
 
               <!-- Monthly billing info -->
-              <div v-if="product.priceLookupKey !== STRIPE_LOOKUP_KEYS.EDDY_FREE" class="text-center mt-8">
+              <div v-if="product.priceLookupKey !== STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY" class="text-center mt-8">
                 <Button
                   :class="[
                     'w-full py-4 px-6 rounded-xl font-medium transition-all duration-200',
@@ -127,7 +127,6 @@ import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import type { GetProductResponse } from '~/composables/useStripe';
 import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
-import type { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
 
 // State
 const products = ref<GetProductResponse[]>();
@@ -140,7 +139,7 @@ const { getProducts } = useStripe();
 // Computed
 const sortedProducts = computed(() => {
   // Sort products: Free, Pro, Max
-  const order = [STRIPE_LOOKUP_KEYS.EDDY_FREE, STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY];
+  const order = [STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY, STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY];
   return products.value?.slice().sort((a, b) => {
     const aIndex = order.indexOf(a.priceLookupKey);
     const bIndex = order.indexOf(b.priceLookupKey);
@@ -163,13 +162,13 @@ const fetchPlans = async () => {
   }
 };
 
-const isPopular = (lookupKey: STRIPE_SUBSCRIPTION_LOOKUP_KEY): boolean => {
+const isPopular = (lookupKey: string): boolean => {
   return lookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY;
 };
 
 const selectPlan = async (product: GetProductResponse) => {
   // Handle free plan
-  if (product.priceLookupKey === STRIPE_LOOKUP_KEYS.EDDY_FREE) {
+  if (product.priceLookupKey === STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY) {
     // For free plans, you might want to just redirect to dashboard or register
     await navigateTo({ path: '/' });
     return;
