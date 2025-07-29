@@ -19,7 +19,8 @@ CREATE INDEX IF NOT EXISTS idx_stripe_webhook_events_processed ON stripe_webhook
 CREATE TABLE IF NOT EXISTS credit_transactions (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
-  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('purchase', 'transfer_in', 'transfer_out', 'usage', 'refund')),
+  transaction_type TEXT NOT NULL,
+  currency TEXT NOT NULL,
   amount INTEGER NOT NULL, -- Credits amount (can be negative for usage/transfers out)
   stripe_payment_intent_id TEXT, -- For purchases from Stripe
   stripe_checkout_session_id TEXT, -- For checkout sessions

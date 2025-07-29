@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
           break;
 
         default:
-          console.log(`Unhandled event type: ${stripeEvent.type}`);
+          return;
       }
 
       // Mark event as processed
@@ -96,10 +96,11 @@ export default defineEventHandler(async (event) => {
 
 // Handle customer creation (backup mechanism for edge cases)
 async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event) {
+  console.log('Handling customer.created event');
   const customer = event.data.object as Stripe.Customer;
 
   if (!customer.email) {
-    console.log('Customer has no email, skipping user update');
+    console.log(`[StripeWebhook] Customer has no email, skipping user update`);
     return;
   }
 
@@ -111,11 +112,11 @@ async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event
     .single();
 
   if (error || !userInfo) {
-    console.log(`No user found with email ${customer.email}`);
+    console.log(`[StripeWebhook] No user found with email ${customer.email}`);
     return;
   }
   if (userInfo.payment_customer_id) {
-    console.log(`User ${userInfo.id} already has a payment_customer_id, skipping update`);
+    console.log(`[StripeWebhook] User ${userInfo.id} already has a payment_customer_id, skipping update`);
     return; // Already has a customer ID, no need to update
   }
 
@@ -129,10 +130,11 @@ async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event
 
 // Handle completed checkout sessions
 async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.Event) {
+  console.log(`[StripeWebhook] Handling checkout.session.completed event`);
   const session = event.data.object as Stripe.Checkout.Session;
 
   if (!session.customer || !session.payment_intent) {
-    console.log('Checkout session missing customer or payment_intent');
+    console.log(`[StripeWebhook] Checkout session missing customer or payment_intent`);
     return;
   }
 
@@ -144,29 +146,38 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     .single();
 
   if (error || !userInfo) {
-    console.log(`No user found with payment_customer_id ${session.customer}`);
-    return;
+    throw createError({
+      statusCode: 404,
+      statusMessage: `User not found for payment_customer_id ${session.customer}`
+    });
   }
 
   // Check if this is a credit purchase (based on metadata or line items)
   if (session.metadata?.operation_type === OPERATION_TYPE.CREDIT_TOPUP || session.mode === 'payment') {
     // Create credit transaction
-    await supabase
+    const { error: creditTransactionError } = await supabase
       .from('credit_transactions')
       .insert({
         user_info_id: userInfo.id,
         transaction_type: OPERATION_TYPE.CREDIT_TOPUP,
+        currency: session.currency?.toUpperCase() || 'SGD',
         amount: session.amount_total,
         stripe_payment_intent_id: session.payment_intent,
         stripe_checkout_session_id: session.id,
         description: `Credit purchase via Stripe`,
-        metadata: {
+        metadata: JSON.stringify({
           stripe_session: session.id,
           amount_sgd_cents: session.amount_total,
-        }
+        })
       });
+    if (creditTransactionError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Failed to create credit transaction for user ${userInfo.id}`
+      });
+    }
 
-    console.log(`Created credit transaction for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD, type: ${OPERATION_TYPE.CREDIT_TOPUP}`);
+    console.log(`[StripeWebhook] Created credit transaction for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD, type: ${OPERATION_TYPE.CREDIT_TOPUP}`);
   }
 
   // Check if this is a product purchase
@@ -176,7 +187,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     const unitPrice = Math.floor((session.amount_total || 0) / quantity);
 
     // Create purchase record
-    const { data: purchase } = await supabase
+    const { error: purchaseError } = await supabase
       .from('user_purchases')
       .insert({
         user_info_id: userInfo.id,
@@ -191,11 +202,19 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       })
       .select()
       .single();
+    if (purchaseError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Failed to create purchase record for user ${userInfo.id}`
+      });
+    }
+    console.log(`[StripeWebhook] Processed checkout session and user purchase for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD`);
   }
 }
 
 // Handle customer cash balance transactions (transfers)
 async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Stripe.Event) {
+  console.log('Handling customer_cash_balance_transaction.created event');
   const transaction = event.data.object as Stripe.CustomerCashBalanceTransaction;
 
   if (!transaction.customer) {
@@ -211,8 +230,10 @@ async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Str
     .single();
 
   if (error || !userInfo) {
-    console.log(`No user found with payment_customer_id ${transaction.customer}`);
-    return;
+    throw createError({
+      statusCode: 404,
+      statusMessage: `User not found for payment_customer_id ${transaction.customer}`
+    });
   }
 
   // Parse transfer information from description
@@ -243,21 +264,29 @@ async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Str
   }
 
   // Create credit transaction record
-  await supabase
+  const { error: creditTransactionError } = await supabase
     .from('credit_transactions')
     .insert({
       user_info_id: userInfo.id,
       transaction_type: transactionType,
       amount: transaction.net_amount,
+      currency: transaction.currency?.toUpperCase() || 'SGD',
       stripe_payment_intent_id: transaction.id,
       stripe_checkout_session_id: transaction.id,
       description: description,
-      metadata: {
+      metadata: JSON.stringify({
         stripe_customer_id: transaction.customer,
         currency: transaction.currency,
         ...transferMetadata
-      }
+      })
     });
 
-  console.log(`Created credit transaction for user ${userInfo.id}: ${transaction.net_amount} ${transaction.currency}, type: ${transactionType}`);
+  if (creditTransactionError) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Failed to create credit transaction for user ${userInfo.id}`
+    });
+  }
+
+  console.log(`[StripeWebhook] Created credit transaction for user ${userInfo.id}: ${transaction.net_amount} ${transaction.currency}, type: ${transactionType}`);
 }
