@@ -81,7 +81,7 @@ export function getPrivilegedSupabaseClient(event: H3Event) {
   }
 
   // This client uses the service role key automatically
-  return serverSupabaseServiceRole(event);
+  return serverSupabaseServiceRole<Database>(event);
 }
 
 // Example: helper to get RLS-aware client in event handlers (already part of your codebase)

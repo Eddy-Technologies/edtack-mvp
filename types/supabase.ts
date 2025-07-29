@@ -1,12 +1,18 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
 
 export type Database = {
   graphql_public: {
     Tables: {
-      [_ in never]: never;
+      [_ in never]: never
     };
     Views: {
-      [_ in never]: never;
+      [_ in never]: never
     };
     Functions: {
       graphql: {
@@ -20,10 +26,10 @@ export type Database = {
       };
     };
     Enums: {
-      [_ in never]: never;
+      [_ in never]: never
     };
     CompositeTypes: {
-      [_ in never]: never;
+      [_ in never]: never
     };
   };
   public: {
@@ -95,6 +101,237 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
+      };
+      credit_transactions: {
+        Row: {
+          amount: number;
+          created_at: string | null;
+          description: string | null;
+          from_user_info_id: string | null;
+          id: string;
+          metadata: Json | null;
+          stripe_checkout_session_id: string | null;
+          stripe_payment_intent_id: string | null;
+          to_user_info_id: string | null;
+          transaction_type: string;
+          user_info_id: string;
+        };
+        Insert: {
+          amount: number;
+          created_at?: string | null;
+          description?: string | null;
+          from_user_info_id?: string | null;
+          id?: string;
+          metadata?: Json | null;
+          stripe_checkout_session_id?: string | null;
+          stripe_payment_intent_id?: string | null;
+          to_user_info_id?: string | null;
+          transaction_type: string;
+          user_info_id: string;
+        };
+        Update: {
+          amount?: number;
+          created_at?: string | null;
+          description?: string | null;
+          from_user_info_id?: string | null;
+          id?: string;
+          metadata?: Json | null;
+          stripe_checkout_session_id?: string | null;
+          stripe_payment_intent_id?: string | null;
+          to_user_info_id?: string | null;
+          transaction_type?: string;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'credit_transactions_from_user_info_id_fkey';
+            columns: ['from_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_from_user_info_id_fkey';
+            columns: ['from_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_from_user_info_id_fkey';
+            columns: ['from_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_to_user_info_id_fkey';
+            columns: ['to_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_to_user_info_id_fkey';
+            columns: ['to_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_to_user_info_id_fkey';
+            columns: ['to_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'credit_transactions_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      document_chunks: {
+        Row: {
+          chunk_content: string;
+          chunk_end_pos: number | null;
+          chunk_index: number;
+          chunk_start_pos: number | null;
+          chunk_type: string | null;
+          created_at: string | null;
+          embedding: string | null;
+          id: number;
+          parent_document_id: number;
+        };
+        Insert: {
+          chunk_content: string;
+          chunk_end_pos?: number | null;
+          chunk_index: number;
+          chunk_start_pos?: number | null;
+          chunk_type?: string | null;
+          created_at?: string | null;
+          embedding?: string | null;
+          id?: number;
+          parent_document_id: number;
+        };
+        Update: {
+          chunk_content?: string;
+          chunk_end_pos?: number | null;
+          chunk_index?: number;
+          chunk_start_pos?: number | null;
+          chunk_type?: string | null;
+          created_at?: string | null;
+          embedding?: string | null;
+          id?: number;
+          parent_document_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_chunks_parent_document_id_fkey';
+            columns: ['parent_document_id'];
+            isOneToOne: false;
+            referencedRelation: 'education_documents';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      education_documents: {
+        Row: {
+          cache_key: string | null;
+          chapter: string | null;
+          charts: Json | null;
+          content: string;
+          content_hash: string | null;
+          content_type: string | null;
+          created_at: string | null;
+          custom_metadata: Json | null;
+          difficulty: string | null;
+          docling_metadata: Json | null;
+          docling_type: string | null;
+          embedding: string | null;
+          equations: Json | null;
+          figures: Json | null;
+          id: number;
+          images: Json | null;
+          language: string | null;
+          level: string;
+          page_number: number | null;
+          source_file: string;
+          subject_id: string;
+          syllabus_id: string | null;
+          tables: Json | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          cache_key?: string | null;
+          chapter?: string | null;
+          charts?: Json | null;
+          content: string;
+          content_hash?: string | null;
+          content_type?: string | null;
+          created_at?: string | null;
+          custom_metadata?: Json | null;
+          difficulty?: string | null;
+          docling_metadata?: Json | null;
+          docling_type?: string | null;
+          embedding?: string | null;
+          equations?: Json | null;
+          figures?: Json | null;
+          id?: number;
+          images?: Json | null;
+          language?: string | null;
+          level: string;
+          page_number?: number | null;
+          source_file: string;
+          subject_id: string;
+          syllabus_id?: string | null;
+          tables?: Json | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          cache_key?: string | null;
+          chapter?: string | null;
+          charts?: Json | null;
+          content?: string;
+          content_hash?: string | null;
+          content_type?: string | null;
+          created_at?: string | null;
+          custom_metadata?: Json | null;
+          difficulty?: string | null;
+          docling_metadata?: Json | null;
+          docling_type?: string | null;
+          embedding?: string | null;
+          equations?: Json | null;
+          figures?: Json | null;
+          id?: number;
+          images?: Json | null;
+          language?: string | null;
+          level?: string;
+          page_number?: number | null;
+          source_file?: string;
+          subject_id?: string;
+          syllabus_id?: string | null;
+          tables?: Json | null;
+          updated_at?: string | null;
+        };
+        Relationships: [];
       };
       family_group_constraints: {
         Row: {
@@ -436,6 +673,33 @@ export type Database = {
         Update: {
           id?: number;
           role_name?: string;
+        };
+        Relationships: [];
+      };
+      stripe_webhook_events: {
+        Row: {
+          created_at: string | null;
+          data: Json | null;
+          event_type: string;
+          id: string;
+          processed: boolean | null;
+          stripe_event_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          data?: Json | null;
+          event_type: string;
+          id?: string;
+          processed?: boolean | null;
+          stripe_event_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          data?: Json | null;
+          event_type?: string;
+          id?: string;
+          processed?: boolean | null;
+          stripe_event_id?: string;
         };
         Relationships: [];
       };
@@ -882,13 +1146,104 @@ export type Database = {
       };
     };
     Functions: {
-      [_ in never]: never;
+      binary_quantize: {
+        Args: { '': string } | { '': unknown };
+        Returns: unknown;
+      };
+      halfvec_avg: {
+        Args: { '': number[] };
+        Returns: unknown;
+      };
+      halfvec_out: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      halfvec_send: {
+        Args: { '': unknown };
+        Returns: string;
+      };
+      halfvec_typmod_in: {
+        Args: { '': unknown[] };
+        Returns: number;
+      };
+      hnsw_bit_support: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      hnsw_halfvec_support: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      hnsw_sparsevec_support: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      hnswhandler: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      ivfflat_bit_support: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      ivfflat_halfvec_support: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      ivfflathandler: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      l2_norm: {
+        Args: { '': unknown } | { '': unknown };
+        Returns: number;
+      };
+      l2_normalize: {
+        Args: { '': string } | { '': unknown } | { '': unknown };
+        Returns: unknown;
+      };
+      sparsevec_out: {
+        Args: { '': unknown };
+        Returns: unknown;
+      };
+      sparsevec_send: {
+        Args: { '': unknown };
+        Returns: string;
+      };
+      sparsevec_typmod_in: {
+        Args: { '': unknown[] };
+        Returns: number;
+      };
+      vector_avg: {
+        Args: { '': number[] };
+        Returns: string;
+      };
+      vector_dims: {
+        Args: { '': string } | { '': unknown };
+        Returns: number;
+      };
+      vector_norm: {
+        Args: { '': string };
+        Returns: number;
+      };
+      vector_out: {
+        Args: { '': string };
+        Returns: unknown;
+      };
+      vector_send: {
+        Args: { '': string };
+        Returns: string;
+      };
+      vector_typmod_in: {
+        Args: { '': unknown[] };
+        Returns: number;
+      };
     };
     Enums: {
-      [_ in never]: never;
+      [_ in never]: never
     };
     CompositeTypes: {
-      [_ in never]: never;
+      [_ in never]: never
     };
   };
 };
@@ -912,8 +1267,10 @@ export type Tables<
     }
       ? R
       : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
-    ? (DefaultSchema['Tables'] & DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] &
+    DefaultSchema['Views'])
+    ? (DefaultSchema['Tables'] &
+      DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R;
       }
         ? R
@@ -967,7 +1324,9 @@ export type TablesUpdate<
     : never;
 
 export type Enums<
-  DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums'] | { schema: keyof Database },
+  DefaultSchemaEnumNameOrOptions extends
+  | keyof DefaultSchema['Enums']
+  | { schema: keyof Database },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof Database;
   }
