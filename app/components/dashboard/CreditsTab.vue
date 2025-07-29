@@ -8,9 +8,10 @@
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Credit Management</h1>
             <p class="text-gray-600">Manage your family's credit balance and transfers</p>
           </div>
-          <button
+          <Button
             :disabled="isLoading"
-            class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+            variant="primary"
+            is-loading="isLoading"
             @click="handleRefresh"
           >
             <svg
@@ -27,7 +28,7 @@
               />
             </svg>
             {{ isLoading ? 'Refreshing...' : 'Refresh' }}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -49,6 +50,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import Button from '../common/Button.vue';
 import CreditBalance from '~/components/credits/CreditBalance.vue';
 import TopUpSection from '~/components/credits/TopUpSection.vue';
 import TransferSection from '~/components/credits/TransferSection.vue';

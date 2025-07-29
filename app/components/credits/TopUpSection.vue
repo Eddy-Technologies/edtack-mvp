@@ -1,20 +1,8 @@
 <template>
   <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-    <div class="flex items-center mb-4">
-      <div class="bg-green-100 rounded-full p-2 mr-3">
-        <svg
-          class="w-6 h-6 text-green-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-          />
-        </svg>
+    <div class="flex items-center mb-4 space-x-2">
+      <div class="flex items-center justify-center w-10 h-10 bg-primary-100 rounded-full">
+        <UIcon name="i-lucide-circle-plus" :size="24" class="text-primary-500" />
       </div>
       <h3 class="text-xl font-semibold text-gray-900">Top Up Credits</h3>
     </div>
@@ -31,7 +19,7 @@
           :class="[
             'p-4 rounded-lg border-2 transition-colors text-center',
             selectedAmount === amount.value
-              ? 'border-blue-500 bg-blue-50 text-blue-700'
+              ? 'border-primary-500 bg-primary-50 text-primary-700'
               : 'border-gray-200 hover:border-gray-300 text-gray-700'
           ]"
           @click="selectedAmount = amount.value"
@@ -66,7 +54,7 @@
     <!-- Top Up Button -->
     <button
       :disabled="!selectedAmount || selectedAmount < 1 || isLoading"
-      class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+      class="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
       @click="handleTopUp"
     >
       <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
@@ -76,19 +64,7 @@
     <!-- Payment Methods Info -->
     <div class="mt-4 p-3 bg-gray-50 rounded-lg">
       <div class="flex items-center text-sm text-gray-600">
-        <svg
-          class="w-4 h-4 mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+        <UIcon name="i-lucide-circle-check" class="w-5 h-5 mr-2" />
         Secure payment powered by Stripe
       </div>
     </div>

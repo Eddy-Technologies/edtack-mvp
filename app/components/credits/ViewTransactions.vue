@@ -1,20 +1,8 @@
 <template>
   <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-    <div class="flex items-center mb-4">
-      <div class="bg-green-100 rounded-full p-2 mr-3">
-        <svg
-          class="w-6 h-6 text-green-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        </svg>
+    <div class="flex items-center mb-4 space-x-2">
+      <div class="flex items-center justify-center w-10 h-10 bg-orange-100 rounded-full">
+        <UIcon name="i-lucide-history" class="text-orange-600" size="24" />
       </div>
       <h3 class="text-xl font-semibold text-gray-900">Transaction History</h3>
     </div>
@@ -51,19 +39,7 @@
     <!-- Transactions List -->
     <div v-else>
       <div v-if="transactions.length === 0" class="text-center py-8">
-        <svg
-          class="w-12 h-12 mx-auto text-gray-300 mb-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        </svg>
+        <UIcon name="i-lucide-file-text" class="text-gray-400" size="48" />
         <p class="text-gray-500">No transactions yet</p>
         <p class="text-gray-400 text-sm mt-1">Your credit transactions will appear here</p>
       </div>
@@ -78,20 +54,11 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
               <!-- Transaction Type Icon -->
-              <div :class="getTransactionIcon(transaction.transaction_type).class">
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    :d="getTransactionIcon(transaction.transaction_type).path"
-                  />
-                </svg>
+              <div
+                class="flex items-center justify-center w-10 h-10 rounded-full"
+                :class="getTransactionIcon(transaction.transaction_type).bgColor"
+              >
+                <UIcon :name="getTransactionIcon(transaction.transaction_type).name" :class="getTransactionIcon(transaction.transaction_type).textColor" size="20" />
               </div>
 
               <div>
@@ -156,7 +123,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-
+import Button from '../common/Button.vue';
 // State
 const transactions = ref<any[]>([]);
 const pagination = ref<any>(null);
@@ -215,11 +182,11 @@ const formatDate = (dateString: string) => {
 // Get transaction type label
 const getTransactionLabel = (type: string) => {
   const labels = {
-    CREDIT_TOPUP: 'Credit Top-up',
-    TRANSFER_IN: 'Credit Received',
-    TRANSFER_OUT: 'Credit Sent',
-    BALANCE_ADJUSTMENT: 'Balance Adjustment',
-    PURCHASE: 'Credit Purchase',
+    credit_topup: 'Credit Top-up',
+    transfer_in: 'Credit Received',
+    transfer_out: 'Credit Sent',
+    balance_adjustment: 'Balance Adjustment',
+    purchase: 'Credit Purchase',
   };
   return labels[type] || type.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 };
@@ -227,25 +194,30 @@ const getTransactionLabel = (type: string) => {
 // Get transaction type icon
 const getTransactionIcon = (type: string) => {
   const icons = {
-    CREDIT_TOPUP: {
-      class: 'bg-green-100 rounded-full p-2 text-green-600',
-      path: 'M12 6v6l4-2'
+    credit_topup: {
+      textColor: 'text-primary',
+      bgColor: 'bg-primary-100',
+      name: 'i-lucide-circle-plus'
     },
-    BALANCE_ADJUSTMENT: {
-      class: 'bg-yellow-100 rounded-full p-2 text-yellow-600',
-      path: 'M12 6v6l4-2'
+    balance_adjustment: {
+      textColor: 'text-gray-600',
+      bgColor: 'bg-gray-100',
+      name: 'i-lucide-wrench'
     },
-    TRANSFER_IN: {
-      class: 'bg-blue-100 rounded-full p-2 text-blue-600',
-      path: 'M7 16l-4-4m0 0l4-4m-4 4h18'
+    transfer_in: {
+      bgColor: 'bg-green-100',
+      textColor: 'text-green-600',
+      name: 'i-lucide-circle-dollar-sign'
     },
-    TRANSFER_OUT: {
-      class: 'bg-orange-100 rounded-full p-2 text-orange-600',
-      path: 'M17 8l4 4m0 0l-4 4m4-4H3'
+    transfer_out: {
+      textColor: 'text-red-600',
+      bgColor: 'bg-red-100',
+      name: 'i-lucide-circle-dollar-sign'
     },
-    PURCHASE: {
-      class: 'bg-red-100 rounded-full p-2 text-red-600',
-      path: 'M16 11V7a4 4 0 00-8 0v4M8 11v6a2 2 0 002 2h4a2 2 0 002-2v-6M8 11h8'
+    purchase: {
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-100',
+      name: 'i-lucide-shopping-basket'
     },
   };
 
