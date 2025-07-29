@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import { STRIPE_SUBSCRIPTION_LOOKUP_KEY } from '~~/utils/stripe';
 
 let stripeInstance: Stripe | null = null;
 interface StripeCustomerData {
@@ -48,6 +49,7 @@ export async function createStripeCustomer({ email, firstName, lastName, user_in
 
     const customerName = [firstName, lastName].filter(Boolean).join(' ').trim() || undefined;
 
+    // Create customer
     const customer = await stripe.customers.create({
       email,
       name: customerName,
@@ -58,10 +60,46 @@ export async function createStripeCustomer({ email, firstName, lastName, user_in
     });
 
     console.log(`Created Stripe customer ${customer.id} for email ${email}`);
+
+    // Create free subscription for the customer
+    try {
+      // Get the free monthly price using lookup key
+      const prices = await stripe.prices.list({
+        lookup_keys: [STRIPE_SUBSCRIPTION_LOOKUP_KEY.EDDY_FREE_MONTHLY],
+        expand: ['data.product']
+      });
+
+      if (prices.data.length > 0) {
+        const freePrice = prices.data[0];
+
+        const subscription = await stripe.subscriptions.create({
+          customer: customer.id,
+          items: [
+            {
+              price: freePrice.id,
+            },
+          ],
+          metadata: {
+            user_info_id: user_info_id,
+            plan_type: 'free',
+            auto_created: 'true'
+          }
+        });
+
+        console.log(`Created free subscription ${subscription.id} for customer ${customer.id}`);
+      } else {
+        console.warn(`Free monthly price with lookup key ${STRIPE_SUBSCRIPTION_LOOKUP_KEY.EDDY_FREE_MONTHLY} not found`);
+      }
+    } catch (subscriptionError) {
+      console.error('Failed to create free subscription for customer:', subscriptionError);
+      // Don't fail customer creation if subscription fails
+      // Customer can be created manually later or during onboarding
+    }
+
     return customer.id;
   } catch (error) {
     console.error('Failed to create Stripe customer:', error);
-    // Don't throw error - we don't want OAuth setup to fail due to Stripe issues
+    // Don't throw error - we don't want user creation to fail due to Stripe issues
     return null;
   }
 }
