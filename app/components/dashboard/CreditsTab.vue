@@ -34,13 +34,14 @@
       <!-- Credit Balance Section -->
       <div class="grid gap-6 mb-8">
         <CreditBalance />
-        <TransferSection />
         <TopUpSection />
+        <TransferSection v-if="isParent" />
       </div>
 
       <!-- Family Management -->
       <div class="mb-8">
-        <FamilyManagementSection />
+        <FamilyManagementSection v-if="isParent" />
+        <ViewTransactions />
       </div>
     </div>
   </div>
@@ -52,9 +53,10 @@ import CreditBalance from '~/components/credits/CreditBalance.vue';
 import TopUpSection from '~/components/credits/TopUpSection.vue';
 import TransferSection from '~/components/credits/TransferSection.vue';
 import FamilyManagementSection from '~/components/credits/FamilyManagementSection.vue';
+import ViewTransactions from '~/components/credits/ViewTransactions.vue';
 
 // Single fetch point for all credit data
-const { fetchCredits, refreshCredits, isLoading } = useCredit();
+const { fetchCredits, refreshCredits, isLoading, isParent } = useCredit();
 
 // Fetch credit data when Credits tab loads
 onMounted(async () => {
