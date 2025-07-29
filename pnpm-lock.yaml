@@ -109,6 +109,9 @@ importers:
       swiper:
         specifier: ^11.2.10
         version: 11.2.10
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
       vue:
         specifier: ^3.5.13
         version: 3.5.14(typescript@5.8.3)

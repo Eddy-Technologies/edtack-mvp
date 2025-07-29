@@ -117,14 +117,18 @@ async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event
 
   // Find user by email and update payment_customer_id
   const { data: userInfo, error } = await supabase
-    .from('user_infos')
-    .select('id')
+    .from('all_users')
+    .select('id, payment_customer_id')
     .eq('email', customer.email)
     .single();
 
   if (error || !userInfo) {
     console.log(`No user found with email ${customer.email}`);
     return;
+  }
+  if (userInfo.payment_customer_id) {
+    console.log(`User ${userInfo.id} already has a payment_customer_id, skipping update`);
+    return; // Already has a customer ID, no need to update
   }
 
   await supabase
