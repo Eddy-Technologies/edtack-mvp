@@ -172,7 +172,7 @@ const handleTransfer = async () => {
     const transferResponse = await $fetch('/api/credits/transfer', {
       method: 'POST',
       body: {
-        toUserId: selectedChild.value,
+        toUserInfoId: selectedChild.value,
         amount: transferAmount.value,
       },
     });
