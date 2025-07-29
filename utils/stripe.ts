@@ -6,3 +6,10 @@ export enum STRIPE_SUBSCRIPTION_LOOKUP_KEY {
   EDDY_MAX_MONTHLY = 'EDDY_MAX_MONTHLY',
   EDDY_MAX_YEARLY = 'EDDY_MAX_YEARLY',
 }
+
+export enum OPERATION_TYPE {
+  CREDIT_TOPUP = 'credit_topup',
+  TRANSFER_OUT = 'transfer_out',
+  TRANSFER_IN = 'transfer_in',
+  BALANCE_ADJUSTMENT = 'balance_adjustment',
+}

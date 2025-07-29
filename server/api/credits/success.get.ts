@@ -1,5 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
+import { OPERATION_TYPE } from '~~/utils/stripe';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -26,7 +27,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Extract metadata from session
-    const { recipient_type, recipient_customer_id, child_id, amount, credits, app_user_id } = session.metadata || {};
+    const { recipient_customer_id, amount, credits } = session.metadata || {};
 
     const creditsAmount = parseInt(credits || '0');
     const usdAmount = parseInt(amount || '0');
@@ -65,10 +66,10 @@ export default defineEventHandler(async (event) => {
         currency: 'sgd',
         description: `Top-up: $${usdAmount} SGD → ${creditsAmount} credits`,
         metadata: {
-          operation_type: 'topup',
+          operation_type: OPERATION_TYPE.CREDIT_TOPUP,
           payment_intent_id: typeof session.payment_intent === 'string' ?
             session.payment_intent :
-            session.payment_intent?.id,
+            session.payment_intent?.id || '',
           credits_awarded: creditsAmount.toString()
         }
       });
@@ -76,34 +77,11 @@ export default defineEventHandler(async (event) => {
       console.log(`Successfully added ${usdAmountInCents} cents (${usdAmount} SGD) to customer ${recipientCustomerId}. Balance transaction ID: ${balanceTransaction.id}`);
     } catch (balanceError) {
       console.error('Failed to add credits to Stripe balance:', balanceError);
-      console.error('Balance error details:', balanceError.message);
-      // Continue anyway - we'll record the transaction for manual processing
+      // Continue anyway - webhook will handle the transaction record
     }
 
-    // Record transaction in database for audit trail
-    try {
-      const { error: insertError } = await supabase
-        .from('credit_transactions')
-        .update({
-          status: 'completed',
-          stripe_payment_intent_id: typeof session.payment_intent === 'string' ?
-            session.payment_intent :
-            session.payment_intent?.id,
-          metadata: {
-            ...session.metadata,
-            payment_status: session.payment_status,
-            amount_total: session.amount_total,
-            currency: session.currency
-          }
-        })
-        .eq('stripe_transaction_id', session_id);
-
-      if (insertError) {
-        console.error('Database transaction update failed:', insertError);
-      }
-    } catch (dbError) {
-      console.error('Failed to update database transaction:', dbError);
-    }
+    // Note: Database credit_transactions record is handled by webhook
+    // This endpoint only handles Stripe customer balance operations
 
     // Redirect to dashboard with success message
     const redirectUrl = `/dashboard?tab=credits&success=true&credits=${creditsAmount}&amount=${usdAmount}`;

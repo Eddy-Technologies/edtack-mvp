@@ -1,5 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
+import { OPERATION_TYPE } from '~~/utils/stripe';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -51,7 +52,8 @@ export default defineEventHandler(async (event) => {
               name: 'Credit Top-up',
               description: `Add ${amount} SGD to your account`,
               metadata: {
-                product_type: 'credit_topup'
+                product_type: 'credit_topup',
+                operation_type: OPERATION_TYPE.CREDIT_TOPUP, // Use enum for operation type        operation_type: OPERATION_TYPE.CREDIT_TOPUP, // Use enum for operation type
               }
             },
           },
@@ -67,7 +69,7 @@ export default defineEventHandler(async (event) => {
         amount: amount.toString(),
         credits: (amount * 10).toString(), // 1 USD = 10 credits
         user_id: user.id,
-        operation_type: 'topup'
+        operation_type: OPERATION_TYPE.CREDIT_TOPUP, // Use enum for operation type
       },
     });
 

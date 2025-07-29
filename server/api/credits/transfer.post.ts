@@ -52,8 +52,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check parent's current balance
-    const parentCustomer = await stripe.customers.retrieve(parentWithChildren.id);
+    // Check parent's current balance using payment_customer_id
+    const parentCustomer = await stripe.customers.retrieve(parentWithChildren.payment_customer_id);
     if (parentCustomer.deleted) {
       throw createError({
         statusCode: 404,
@@ -89,38 +89,13 @@ export default defineEventHandler(async (event) => {
     const newParentBalance = Math.floor((updatedParentCustomer.ending_balance) / 100);
     const newChildBalance = Math.floor((updatedChildCustomer.ending_balance) / 100);
 
-    // Record transaction in database for audit trail
-    let transactionId = `transfer_${Date.now()}`;
-
-    const { data: transactionData, error: insertError } = await supabase
-      .from('credit_transactions')
-      .insert({
-        user_info_id: parentWithChildren.id,
-        transaction_type: 'transfer',
-        amount: -amount,
-        stripe_payment_intent_id: transactionId,
-        stripe_checkout_session_id: transactionId,
-        description: `Transferred ${amount} credits to child ${toUserInfoId}`,
-        metadata: {
-          to_user_info_id: toUserInfoId,
-          from_user_info_id: parentWithChildren.id,
-          amount_sgd_cents: amountInCents
-        }
-      })
-      .select('id')
-      .single();
-
-    if (insertError) {
-      console.error('Failed to record transaction:', insertError);
-    } else if (transactionData) {
-      transactionId = transactionData.id;
-    }
-
+    // Transaction recording will be handled by webhook when Stripe fires customer.cash_balance_transaction.created
     return {
       success: true,
       newParentBalance,
       newChildBalance,
-      transactionId
+      parentTransactionId: updatedParentCustomer.id,
+      childTransactionId: updatedChildCustomer.id
     };
   } catch (error: any) {
     console.error('Failed to transfer credits:', error);

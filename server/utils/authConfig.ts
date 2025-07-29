@@ -19,6 +19,10 @@ console.log(
   '[AuthConfig] SUPABASE_SERVICE_ROLE_KEY available:',
   config.private.supabaseServiceRoleKey ? 'Yes (set)' : 'No (NOT SET)'
 );
+console.log(
+  '[AuthConfig] STRIPE_WEBHOOK_SECRET:',
+  config.private.stripeWebhookSecret ? 'Yes (set)' : 'No (NOT SET)'
+);
 console.log('[AuthConfig] Initializing configuration...');
 
 // Export sensitive keys for use in other server files

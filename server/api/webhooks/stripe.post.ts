@@ -1,12 +1,13 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
+import { OPERATION_TYPE } from '~~/utils/stripe';
 
 export default defineEventHandler(async (event) => {
   try {
     const stripe = getStripe();
     const body = await readRawBody(event);
     const signature = getHeader(event, 'stripe-signature');
-    const webhookSecret = useRuntimeConfig().stripeWebhookSecret;
+    const webhookSecret = useRuntimeConfig().private.stripeWebhookSecret;
     const privilegedSupabase = await getPrivilegedSupabaseClient(event);
 
     if (!signature || !webhookSecret) {
@@ -53,28 +54,15 @@ export default defineEventHandler(async (event) => {
     try {
       switch (stripeEvent.type) {
         case 'customer.created':
-        case 'customer.updated':
           await handleCustomerEvent(privilegedSupabase, stripeEvent);
           break;
 
         case 'checkout.session.completed':
-          await handleCheckoutCompleted(privilegedSupabase, stripeEvent, stripe);
+          await handleCheckoutCompleted(privilegedSupabase, stripeEvent);
           break;
 
-        case 'payment_intent.succeeded':
-          await handlePaymentSucceeded(privilegedSupabase, stripeEvent);
-          break;
-
-        case 'invoice.payment_succeeded':
-          await handleInvoicePaymentSucceeded(privilegedSupabase, stripeEvent);
-          break;
-
-        case 'customer.subscription.created':
-        case 'customer.subscription.updated':
-        case 'customer.subscription.deleted':
-          // Note: We're using Stripe as source of truth for subscriptions
-          // These events are logged but not processed for local storage
-          console.log(`Subscription event ${stripeEvent.type} logged but not processed locally`);
+        case 'customer_cash_balance_transaction.created':
+          await handleCashBalanceTransaction(privilegedSupabase, stripeEvent);
           break;
 
         default:
@@ -106,7 +94,7 @@ export default defineEventHandler(async (event) => {
   }
 });
 
-// Handle customer creation/updates
+// Handle customer creation (backup mechanism for edge cases)
 async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event) {
   const customer = event.data.object as Stripe.Customer;
 
@@ -140,7 +128,7 @@ async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event
 }
 
 // Handle completed checkout sessions
-async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.Event, stripe: Stripe) {
+async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.Event) {
   const session = event.data.object as Stripe.Checkout.Session;
 
   if (!session.customer || !session.payment_intent) {
@@ -148,47 +136,37 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     return;
   }
 
-  // Get customer to find user
-  const customer = await stripe.customers.retrieve(session.customer as string) as Stripe.Customer;
-  if (!customer.email) {
-    console.log('Customer has no email, cannot process checkout');
-    return;
-  }
-
-  // Find user
+  // Find user directly by payment_customer_id (much faster and more reliable)
   const { data: userInfo, error } = await supabase
     .from('user_infos')
     .select('id')
-    .eq('email', customer.email)
+    .eq('payment_customer_id', session.customer)
     .single();
 
   if (error || !userInfo) {
-    console.log(`No user found with email ${customer.email}`);
+    console.log(`No user found with payment_customer_id ${session.customer}`);
     return;
   }
 
   // Check if this is a credit purchase (based on metadata or line items)
-  if (session.metadata?.type === 'credit_topup' || session.mode === 'payment') {
-    const amountTotal = session.amount_total || 0;
-    const creditAmount = Math.floor(amountTotal / 10); // 1 SGD cent = 0.1 credits, so 100 cents = 10 credits
-
+  if (session.metadata?.operation_type === OPERATION_TYPE.CREDIT_TOPUP || session.mode === 'payment') {
     // Create credit transaction
     await supabase
       .from('credit_transactions')
       .insert({
         user_info_id: userInfo.id,
-        transaction_type: 'purchase',
-        amount: creditAmount,
+        transaction_type: OPERATION_TYPE.CREDIT_TOPUP,
+        amount: session.amount_total,
         stripe_payment_intent_id: session.payment_intent,
         stripe_checkout_session_id: session.id,
         description: `Credit purchase via Stripe`,
         metadata: {
           stripe_session: session.id,
-          amount_sgd_cents: amountTotal
+          amount_sgd_cents: session.amount_total,
         }
       });
 
-    console.log(`Created credit transaction for user ${userInfo.id}: ${creditAmount} credits`);
+    console.log(`Created credit transaction for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD, type: ${OPERATION_TYPE.CREDIT_TOPUP}`);
   }
 
   // Check if this is a product purchase
@@ -213,75 +191,73 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       })
       .select()
       .single();
-
-    if (purchase) {
-      // Grant product access
-      await grantProductAccess(supabase, userInfo.id, productId, purchase.id);
-      console.log(`Created purchase and granted access for user ${userInfo.id}, product ${productId}`);
-    }
   }
 }
 
-// Handle successful payment intents
-async function handlePaymentSucceeded(supabase: any, event: Stripe.Event) {
-  const paymentIntent = event.data.object as Stripe.PaymentIntent;
+// Handle customer cash balance transactions (transfers)
+async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Stripe.Event) {
+  const transaction = event.data.object as Stripe.CustomerCashBalanceTransaction;
 
-  // Update any pending purchases to completed
-  await supabase
-    .from('user_purchases')
-    .update({ status: 'completed' })
-    .eq('stripe_payment_intent_id', paymentIntent.id)
-    .eq('status', 'pending');
-
-  console.log(`Updated purchases for payment intent ${paymentIntent.id}`);
-}
-
-// Handle invoice payment succeeded (for subscriptions)
-async function handleInvoicePaymentSucceeded(supabase: any, event: Stripe.Event) {
-  const invoice = event.data.object as Stripe.Invoice;
-
-  if (!invoice.customer) {
+  if (!transaction.customer) {
+    console.log('Cash balance transaction has no customer, skipping');
     return;
   }
 
-  // This is logged but since we're using Stripe as source of truth for subscriptions,
-  // we don't create local records
-  console.log(`Invoice payment succeeded for customer ${invoice.customer}: ${invoice.amount_paid / 100} ${invoice.currency}`);
-}
-
-// Grant access to a product
-async function grantProductAccess(supabase: any, userInfoId: string, productId: string, purchaseId: string) {
-  // Get product details to determine access duration
-  const { data: product } = await supabase
-    .from('products')
-    .select('access_duration_days')
-    .eq('id', productId)
+  // Find user by payment_customer_id
+  const { data: userInfo, error } = await supabase
+    .from('user_infos')
+    .select('id')
+    .eq('payment_customer_id', transaction.customer as string)
     .single();
 
-  let expiresAt = null;
-  if (product?.access_duration_days) {
-    const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + product.access_duration_days);
-    expiresAt = expiryDate.toISOString();
+  if (error || !userInfo) {
+    console.log(`No user found with payment_customer_id ${transaction.customer}`);
+    return;
   }
 
-  // Deactivate any existing access for this user/product combo
-  await supabase
-    .from('user_product_access')
-    .update({ is_active: false })
-    .eq('user_info_id', userInfoId)
-    .eq('product_id', productId)
-    .eq('is_active', true);
+  // Parse transfer information from description
+  const description = transaction.description || '';
+  let transactionType = OPERATION_TYPE.BALANCE_ADJUSTMENT;
+  let transferMetadata = {};
 
-  // Grant new access
+  if (description.includes('Transfer') && description.includes('credits to child')) {
+    transactionType = OPERATION_TYPE.TRANSFER_OUT;
+    // Extract child info from description if available
+    const childMatch = description.match(/Transfer (\d+) credits to child/);
+    if (childMatch) {
+      transferMetadata = {
+        transfer_type: 'parent_to_child',
+        credits_transferred: childMatch[1]
+      };
+    }
+  } else if (description.includes('Received') && description.includes('credits from parent')) {
+    transactionType = OPERATION_TYPE.TRANSFER_IN;
+    // Extract parent info from description if available
+    const parentMatch = description.match(/Received (\d+) credits from parent/);
+    if (parentMatch) {
+      transferMetadata = {
+        transfer_type: 'parent_to_child',
+        credits_received: parentMatch[1]
+      };
+    }
+  }
+
+  // Create credit transaction record
   await supabase
-    .from('user_product_access')
+    .from('credit_transactions')
     .insert({
-      user_info_id: userInfoId,
-      product_id: productId,
-      purchase_id: purchaseId,
-      access_type: 'purchased',
-      expires_at: expiresAt,
-      is_active: true
+      user_info_id: userInfo.id,
+      transaction_type: transactionType,
+      amount: transaction.net_amount,
+      stripe_payment_intent_id: transaction.id,
+      stripe_checkout_session_id: transaction.id,
+      description: description,
+      metadata: {
+        stripe_customer_id: transaction.customer,
+        currency: transaction.currency,
+        ...transferMetadata
+      }
     });
+
+  console.log(`Created credit transaction for user ${userInfo.id}: ${transaction.net_amount} ${transaction.currency}, type: ${transactionType}`);
 }
