@@ -56,7 +56,6 @@ export default defineEventHandler(async (event) => {
 
     // Get auth provider from Supabase user metadata
     const authProvider = user.app_metadata?.provider;
-    console.log('Auth provider:', authProvider);
 
     // Return combined user data
     return {
