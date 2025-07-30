@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '#imports';
 
+// This file handles the OAuth callback from an external authentication provider
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
   try {

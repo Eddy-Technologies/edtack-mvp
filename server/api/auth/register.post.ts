@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { SignUpReq } from '~~/app/composables/useAuth';
 import { USER_ROLE } from '~~/app/constants/User';
@@ -8,7 +7,7 @@ import { createStripeCustomer } from '~~/server/utils/stripe';
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
   const body: SignUpReq = await readBody(event);
-  const uuid: string = uuidv4();
+  const uuid: string = crypto.randomUUID();
 
   // Simple validation
   const requiredFields = ['email', 'password', 'firstName', 'lastName', 'acceptTerms'];
