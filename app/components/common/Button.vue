@@ -5,6 +5,7 @@
     :disabled="isDisabled"
     :class="computedClass"
     :type="type"
+    :icon="icon"
     @click="handleClick"
   >
     <div class="flex items-center justify-center w-full h-full gap-2">
@@ -46,6 +47,7 @@ const props = defineProps<{
   hover?: boolean;
   disabled?: boolean;
   loading?: boolean; // Loading state prop
+  icon?: string; // Icon name for UIcon component
 }>();
 
 const buttonSize = computed(() => {

@@ -3,24 +3,11 @@
     <div class="bg-white rounded-lg shadow-xl max-w-7xl w-full max-h-[90vh] overflow-y-auto my-6 scrollbar-hide" @click.stop>
       <!-- Header -->
       <div class="flex items-center justify-end px-4 pt-4">
-        <button
+        <Button
           class="text-gray-400 hover:text-gray-600 transition-colors"
+          icon="i-lucide-x"
           @click="closeModal"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+        />
       </div>
 
       <!-- Content -->
@@ -40,24 +27,11 @@
                 -{{ Math.round((1 - product.price / product.originalPrice) * 100) }}% OFF
               </span>
               <!-- Wishlist Button -->
-              <button
+              <Button
                 class="absolute top-4 right-4 p-3 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow"
+                icon="i-lucide-heart"
                 @click="toggleWishlist"
-              >
-                <svg
-                  :class="['w-6 h-6', isInWishlist ? 'text-red-500' : 'text-gray-400']"
-                  :fill="isInWishlist ? 'currentColor' : 'none'"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-              </button>
+              />
             </div>
 
             <!-- Thumbnail Images -->
@@ -90,14 +64,13 @@
             <!-- Rating -->
             <div class="flex items-center space-x-3">
               <div class="flex text-yellow-400">
-                <svg
+                <UIcon
                   v-for="i in 5"
                   :key="i"
-                  :class="['w-5 h-5', i <= product.rating ? 'fill-current' : 'fill-gray-200']"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
+                  name="i-lucide-star"
+                  :class="['w-5 h-5', i <= product.rating ? 'fill-current text-yellow-400' : 'text-gray-200']"
+                  size="20"
+                />
               </div>
               <span class="text-lg font-medium text-gray-900">{{ product.rating }}/5</span>
               <span class="text-gray-600">({{ product.reviewCount }} reviews)</span>
@@ -117,19 +90,9 @@
               <h3 class="text-lg font-semibold text-gray-900">Features:</h3>
               <ul class="space-y-2">
                 <li v-for="feature in productFeatures" :key="feature" class="flex items-center space-x-2">
-                  <svg
-                    class="w-5 h-5 text-green-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                  <div class="flex items-center justify-center w-5 h-5 text-green-500">
+                    <UIcon name="i-lucide-check" size="20" />
+                  </div>
                   <span class="text-gray-700">{{ feature }}</span>
                 </li>
               </ul>
@@ -139,44 +102,18 @@
             <div class="space-y-2">
               <label class="text-lg font-semibold text-gray-900">Quantity:</label>
               <div class="flex items-center space-x-3">
-                <button
+                <Button
                   :disabled="quantity <= 1"
                   class="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  icon="i-lucide-minus"
                   @click="quantity > 1 && quantity--"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M20 12H4"
-                    />
-                  </svg>
-                </button>
+                />
                 <span class="text-xl font-semibold px-4">{{ quantity }}</span>
-                <button
+                <Button
                   class="p-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  icon="i-lucide-plus"
                   @click="quantity++"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                </button>
+                />
               </div>
             </div>
 
@@ -201,51 +138,21 @@
             <!-- Additional Info -->
             <div class="pt-4 border-t space-y-2">
               <div class="flex items-center space-x-2 text-sm text-gray-600">
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 8h14M5 8a2 2 0 110-4h1.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H15a2 2 0 012 2v2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V10a2 2 0 00-2-2H5z"
-                  />
-                </svg>
+                <div class="flex items-center justify-center w-4 h-4">
+                  <UIcon name="i-lucide-package" size="16" />
+                </div>
                 <span>Free delivery on orders over 50C</span>
               </div>
               <div class="flex items-center space-x-2 text-sm text-gray-600">
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+                <div class="flex items-center justify-center w-4 h-4">
+                  <UIcon name="i-lucide-check-circle" size="16" />
+                </div>
                 <span>30-day return guarantee</span>
               </div>
               <div class="flex items-center space-x-2 text-sm text-gray-600">
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
+                <div class="flex items-center justify-center w-4 h-4">
+                  <UIcon name="i-lucide-shield-check" size="16" />
+                </div>
                 <span>Secure payment processing</span>
               </div>
             </div>
@@ -268,14 +175,13 @@
                 <span class="text-4xl font-bold text-gray-900">{{ product.rating }}</span>
                 <div>
                   <div class="flex text-yellow-400 mb-1">
-                    <svg
+                    <UIcon
                       v-for="i in 5"
                       :key="i"
-                      :class="['w-6 h-6', i <= product.rating ? 'fill-current' : 'fill-gray-200']"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
+                      name="i-lucide-star"
+                      :class="['w-6 h-6', i <= product.rating ? 'fill-current text-yellow-400' : 'text-gray-200']"
+                      size="24"
+                    />
                   </div>
                   <p class="text-gray-600">Based on {{ product.reviewCount }} reviews</p>
                 </div>
@@ -307,14 +213,13 @@
                       <h4 class="font-semibold text-gray-900">{{ review.name }}</h4>
                       <div class="flex items-center space-x-2">
                         <div class="flex text-yellow-400">
-                          <svg
+                          <UIcon
                             v-for="i in 5"
                             :key="i"
-                            :class="['w-4 h-4', i <= review.rating ? 'fill-current' : 'fill-gray-200']"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                          </svg>
+                            name="i-lucide-star"
+                            :class="['w-4 h-4', i <= review.rating ? 'fill-current text-yellow-400' : 'text-gray-200']"
+                            size="16"
+                          />
                         </div>
                         <span class="text-sm text-gray-500">{{ review.date }}</span>
                       </div>
@@ -334,23 +239,10 @@
                     >
                   </div>
                   <div class="flex items-center space-x-4 mt-3 text-sm text-gray-500">
-                    <button class="flex items-center space-x-1 hover:text-gray-700">
-                      <svg
-                        class="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                        />
-                      </svg>
+                    <Button class="flex items-center space-x-1 hover:text-gray-700" icon="i-lucide-thumbs-up" @click="review.helpful++">
                       <span>Helpful ({{ review.helpful }})</span>
-                    </button>
-                    <button class="hover:text-gray-700">Reply</button>
+                    </Button>
+                    <Button class="hover:text-gray-700">Reply</Button>
                   </div>
                 </div>
               </div>

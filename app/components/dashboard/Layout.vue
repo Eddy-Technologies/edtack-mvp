@@ -29,25 +29,13 @@
 
       <!-- Chat Button -->
       <div class="px-6 py-4 border-b">
-        <button
+        <Button
           class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-700 transition-colors"
+          icon="i-lucide-message-circle"
           @click="navigateToRoute({ name: 'Chat', route: '/chat' })"
         >
-          <svg
-            class="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-2.697-.413L4 21l1.413-6.297A8.955 8.955 0 014 12C4 7.582 7.582 4 12 4s8 3.582 8 8z"
-            />
-          </svg>
           Back to Chat
-        </button>
+        </Button>
       </div>
 
       <!-- Navigation -->
@@ -81,19 +69,9 @@
                 <component :is="item.icon" class="w-5 h-5 mr-3" />
                 {{ item.name }}
               </div>
-              <svg
-                :class="['w-4 h-4 transition-transform', openSubmenus.includes(item.name) ? 'rotate-90' : '']"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <div :class="['transition-transform', openSubmenus.includes(item.name) ? 'rotate-90' : '']">
+                <UIcon name="i-lucide-chevron-right" class="w-4 h-4" />
+              </div>
             </div>
 
             <!-- Submenu -->
@@ -131,20 +109,9 @@
               class="w-5 h-5 mr-3 animate-spin rounded-full border-2 border-current border-t-transparent"
             />
             <!-- Logout Icon -->
-            <svg
-              v-else
-              class="w-5 h-5 mr-3"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
+            <div v-else class="flex items-center justify-center w-5 h-5 mr-3">
+              <UIcon name="i-lucide-log-out" class="w-5 h-5" />
+            </div>
             {{ isLoggingOut ? 'Logging out...' : 'Logout' }}
           </div>
         </div>
