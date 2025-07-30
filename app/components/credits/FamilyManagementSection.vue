@@ -2,19 +2,9 @@
   <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
     <div class="flex items-center mb-4">
       <div class="bg-blue-100 rounded-full p-2 mr-3">
-        <svg
-          class="w-6 h-6 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-          />
-        </svg>
+        <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+          <UIcon name="i-lucide-users-round" class="text-blue-700" size="24" />
+        </div>
       </div>
       <h3 class="text-xl font-semibold text-gray-900">Family Management</h3>
     </div>
@@ -27,19 +17,9 @@
 
     <!-- Error State -->
     <div v-else-if="error" class="text-center py-8">
-      <svg
-        class="w-12 h-12 mx-auto text-red-400 mb-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
+      <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+        <UIcon name="i-lucide-user-round" class="text-blue-700" size="20" />
+      </div>
       <p class="text-red-600 mb-4">{{ error }}</p>
       <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" @click="loadFamilyData">
         Try Again
@@ -50,19 +30,9 @@
     <div v-else>
       <!-- Non-parent message -->
       <div v-if="!isParent" class="text-center py-8">
-        <svg
-          class="w-12 h-12 mx-auto text-gray-300 mb-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-          />
-        </svg>
+        <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+          <UIcon name="i-lucide-users-round" class="text-blue-700" size="20" />
+        </div>
         <p class="text-gray-500 text-sm">Only parents can manage family members</p>
         <p class="text-gray-400 text-xs mt-1">Contact your parent to be added to their family</p>
       </div>
@@ -158,20 +128,8 @@
               class="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
             >
               <div class="flex items-center space-x-3">
-                <div class="bg-green-100 rounded-full p-2">
-                  <svg
-                    class="w-5 h-5 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
+                <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+                  <UIcon name="i-lucide-user-round" class="text-blue-700" size="20" />
                 </div>
                 <div>
                   <div class="font-medium text-gray-900">{{ child.name }}</div>
@@ -196,20 +154,8 @@
               class="flex items-center justify-between p-4 border border-yellow-200 bg-yellow-50 rounded-lg"
             >
               <div class="flex items-center space-x-3">
-                <div class="bg-yellow-100 rounded-full p-2">
-                  <svg
-                    class="w-5 h-5 text-yellow-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                <div class="flex items-center justify-center w-10 h-10 bg-orange-100 rounded-full">
+                  <UIcon name="i-lucide-user-round" class="text-orange-700" size="20" />
                 </div>
                 <div>
                   <div class="font-medium text-gray-900">{{ invitation.childName }}</div>
@@ -226,19 +172,9 @@
 
         <!-- Empty State -->
         <div v-if="children.length === 0 && pendingInvitations.length === 0" class="text-center py-8">
-          <svg
-            class="w-12 h-12 mx-auto text-gray-300 mb-3"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-            />
-          </svg>
+          <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+            <UIcon name="i-lucide-user-round" class="text-blue-700" size="20" />
+          </div>
           <p class="text-gray-500">No children added yet</p>
           <p class="text-gray-400 text-sm mt-1">Use the form above to invite your first child</p>
         </div>
@@ -249,20 +185,8 @@
     <div v-if="showConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
         <div class="flex items-center mb-4">
-          <div class="bg-blue-100 rounded-full p-2 mr-3">
-            <svg
-              class="w-6 h-6 text-blue-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
+          <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+            <UIcon name="i-lucide-circle-plus" class="text-blue-700" size="20" />
           </div>
           <h3 class="text-lg font-semibold text-gray-900">Confirm Add Child</h3>
         </div>

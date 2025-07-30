@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
-import { OPERATION_TYPE } from '~~/utils/constants';
+import { OPERATION_TYPE, ORDER_STATUS } from '~~/utils/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -32,25 +32,15 @@ export default defineEventHandler(async (event) => {
     // Check if we've already processed this event (idempotency)
     const { data: existingEvent } = await privilegedSupabase
       .from('stripe_webhook_events')
-      .select('processed')
+      .select('id')
       .eq('stripe_event_id', stripeEvent.id)
       .single();
 
-    if (existingEvent?.processed) {
+    if (existingEvent) {
       return { received: true, message: 'Event already processed' };
     }
 
-    // Store the event for idempotency
-    await privilegedSupabase
-      .from('stripe_webhook_events')
-      .upsert({
-        stripe_event_id: stripeEvent.id,
-        event_type: stripeEvent.type,
-        processed: false,
-        data: JSON.stringify(stripeEvent.data.object),
-      });
-
-    // Process the event based on type
+    // Process the event based on type - only store events we actually handle
     try {
       switch (stripeEvent.type) {
         case 'customer.created':
@@ -66,20 +56,24 @@ export default defineEventHandler(async (event) => {
           break;
 
         default:
-          return;
+          // Don't store unhandled event types
+          return { received: true, message: 'Event type not handled' };
       }
 
-      // Mark event as processed
+      // Store the event after successful processing
       await privilegedSupabase
         .from('stripe_webhook_events')
-        .update({ processed: true })
-        .eq('stripe_event_id', stripeEvent.id);
+        .insert({
+          stripe_event_id: stripeEvent.id,
+          event_type: stripeEvent.type,
+          processed: true,
+          data: JSON.stringify(stripeEvent.data.object),
+        });
 
       return { received: true };
     } catch (processingError) {
       console.error(`Error processing ${stripeEvent.type}:`, processingError);
 
-      // Don't mark as processed if there was an error
       throw createError({
         statusCode: 500,
         statusMessage: `Error processing ${stripeEvent.type}`
@@ -160,7 +154,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       .insert({
         user_info_id: userInfo.id,
         transaction_type: OPERATION_TYPE.CREDIT_TOPUP,
-        currency: session.currency?.toUpperCase() || 'SGD',
+        currency: session.currency?.toUpperCase(),
         amount: session.amount_total,
         stripe_payment_intent_id: session.payment_intent,
         stripe_checkout_session_id: session.id,
@@ -183,7 +177,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
   // Check if this is a product purchase
   if (session.metadata?.product_id) {
     const productId = session.metadata.product_id;
-    const quantity = parseInt(session.metadata?.quantity || '1');
+    const quantity = parseInt(session.metadata?.quantity);
     const unitPrice = Math.floor((session.amount_total || 0) / quantity);
 
     // Create purchase record
@@ -194,11 +188,11 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
         product_id: productId,
         stripe_payment_intent_id: session.payment_intent,
         stripe_checkout_session_id: session.id,
-        status: 'completed',
+        status: ORDER_STATUS.PAID,
         quantity,
         unit_price_cents: unitPrice,
-        total_amount_cents: session.amount_total || 0,
-        currency: session.currency?.toUpperCase() || 'SGD'
+        total_amount_cents: session.amount_total,
+        currency: session.currency?.toUpperCase()
       })
       .select()
       .single();

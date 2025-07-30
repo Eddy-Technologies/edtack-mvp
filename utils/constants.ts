@@ -19,3 +19,25 @@ export enum OPERATION_TYPE {
   TRANSFER_IN = 'transfer_in',
   BALANCE_ADJUSTMENT = 'balance_adjustment',
 }
+
+export const ORDER_STATUS = {
+  // Standard order statuses
+  PAID: 'paid',
+  PROCESSING: 'processing',
+  SHIPPED: 'shipped',
+  IN_TRANSIT: 'in_transit',
+  DELIVERED: 'delivered',
+
+  // Product-specific statuses
+  RETURNED: 'returned',
+  FAILED_TO_DELIVER: 'failed_to_deliver',
+
+  // Payment change statuses
+  REFUND_REQUESTED: 'refund_requested',
+  REFUND_IN_PROGRESS: 'refund_in_progress',
+  REFUNDED: 'refunded',
+
+  CANCEL_REQUESTED: 'cancel_requested',
+  CANCEL_IN_PROGRESS: 'cancel_in_progress',
+  CANCELLED: 'cancelled',
+};
