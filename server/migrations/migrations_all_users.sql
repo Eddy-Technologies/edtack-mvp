@@ -32,9 +32,3 @@ FROM user_infos ui
 LEFT JOIN auth.users au ON ui.user_id = au.id
 LEFT JOIN app_users appu ON ui.app_user_id = appu.id;
 
-
- -- Drop trigger (if exists)
-  DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
-
-  -- Drop function (if exists) 
-  DROP FUNCTION IF EXISTS public.handle_new_user();
