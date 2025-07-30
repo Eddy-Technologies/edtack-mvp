@@ -57,6 +57,20 @@ export default defineEventHandler(async (event) => {
       user_info_id: uuid
     });
 
+    // Get the role ID first for the trigger to use
+    const { data: roleData } = await supabase
+      .from('roles')
+      .select('id')
+      .eq('role_name', body.userRole)
+      .single();
+
+    if (!roleData) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: `Invalid user role: ${body.userRole}`
+      });
+    }
+
     // Create user_infos record with all registration data
     const { data: newUserInfo, error: userInfoError } = await supabase
       .from('user_infos')
@@ -69,8 +83,9 @@ export default defineEventHandler(async (event) => {
         payment_customer_id: paymentCustomerId,
         is_active: true,
         onboarding_completed: true, // Registration users complete onboarding during signup
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        raw_user_meta_data: {
+          user_role: body.userRole,
+        }
       })
       .select('id')
       .single();
@@ -83,52 +98,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Create user email record
-    const { error: emailError } = await supabase
-      .from('user_emails')
-      .insert({
-        user_info_id: uuid,
-        email: body.email,
-        is_primary: true,
-        created_at: new Date().toISOString()
-      });
-
-    if (emailError) {
-      console.error('Error creating user_emails record:', emailError);
-      // Don't throw error here as user_infos was created successfully
-    }
-
-    // Get the role ID and create user role assignment
-    const { data: roleData } = await supabase
-      .from('roles')
-      .select('id')
-      .eq('role_name', body.userRole)
-      .single();
-
-    if (roleData) {
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_info_id: uuid,
-          role_id: roleData.id
-        });
-
-      if (roleError) {
-        console.error('Error creating user_roles record:', roleError);
-        // Don't throw error here as user_infos was created successfully
-      }
-    }
-
     return { user };
   } catch (err: any) {
-    console.error('Registration error:', {
-      message: err.message,
-      details: err.details,
-      hint: err.hint,
-      code: err.code,
-      statusCode: err.statusCode,
-      full_error: err
-    });
     throw createError({
       statusCode: err.statusCode || 500,
       statusMessage: err.message || err.statusMessage || 'Registration failed.',

@@ -46,24 +46,37 @@ export default defineEventHandler(async (event) => {
       .select('*')
       .eq('user_id', user.id)
       .single();
+
+    if (userInfo?.onboarding_completed) {
+      console.error('Onboarding already completed for user:', user.id);
+      // Return early if onboarding is already completed
+      return {
+        message: 'Onboarding already completed',
+      };
+    }
+
     const firstName = body.firstName?.trim();
     const lastName = body.lastName?.trim();
 
     // Create userInfo if it doesn't exist
     if (!userInfo) {
-      const uuid = crypto.randomUUID();
+      const userInfoId = crypto.randomUUID();
+
+      // Role assignment will be handled automatically by the handle_new_user_info trigger
 
       // Create Stripe customer
       const stripeCustomerId = await createStripeCustomer({
         email: user.email!,
         firstName,
         lastName,
-        user_info_id: uuid
+        user_info_id: userInfoId
       });
+
+      // Insert new user_info record
       const { data: newUserInfo, error: insertError } = await supabase
         .from('user_infos')
         .insert({
-          id: uuid,
+          id: userInfoId,
           user_id: user.id,
           onboarding_completed: true,
           first_name: firstName,
@@ -71,6 +84,9 @@ export default defineEventHandler(async (event) => {
           payment_customer_id: stripeCustomerId,
           level_type: body.studentLevel || null,
           is_active: true,
+          raw_user_meta_data: {
+            user_role: body.userRole,
+          }
         })
         .select('*')
         .single();
@@ -82,91 +98,8 @@ export default defineEventHandler(async (event) => {
         });
       }
 
+      // user_roles will be created automatically by the handle_new_user_info trigger
       userInfo = newUserInfo;
-    } else {
-      // Update existing user_info with new data}
-
-      // Check if onboarding already completed
-      if (userInfo.onboarding_completed) {
-        console.error('Onboarding already completed for user:', user.id);
-        // Return early if onboarding is already completed
-        return {
-          message: 'Onboarding already completed',
-          user_info_id: userInfo.id
-        };
-      }
-
-      // Update user_infos record
-      const { error: updateError } = await supabase
-        .from('user_infos')
-        .update({
-          first_name: firstName,
-          last_name: lastName,
-          level_type: body.studentLevel || null,
-          onboarding_completed: true,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', userInfo.id);
-
-      if (updateError) {
-        console.error('Error updating user_infos:', updateError);
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Failed to update user profile'
-        });
-      }
-    }
-    // Get the role ID for the selected user role
-    const { data: role, error: roleError } = await supabase
-      .from('roles')
-      .select('id')
-      .eq('role_name', body.userRole)
-      .single();
-
-    if (roleError || !role) {
-      console.error('Error finding role:', roleError);
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Invalid user role'
-      });
-    }
-
-    // Check if user_roles record already exists
-    const { data: existingUserRole } = await supabase
-      .from('user_roles')
-      .select('id')
-      .eq('user_info_id', userInfo.id)
-      .single();
-
-    if (existingUserRole) {
-      // Update existing role
-      const { error: roleUpdateError } = await supabase
-        .from('user_roles')
-        .update({
-          role_id: role.id,
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_info_id', userInfo.id);
-
-      if (roleUpdateError) {
-        console.error('Error updating user role:', roleUpdateError);
-        // Don't throw error here as main profile was updated successfully
-      }
-    } else {
-      // Create new user_roles record
-      const { error: roleInsertError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_info_id: userInfo.id,
-          role_id: role.id,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        });
-
-      if (roleInsertError) {
-        console.error('Error creating user role:', roleInsertError);
-        // Don't throw error here as main profile was updated successfully
-      }
     }
 
     return {
