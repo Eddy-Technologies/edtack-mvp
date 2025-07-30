@@ -1,7 +1,11 @@
--- Database Migrations for Storefront Products and Purchases
+-- Database Migrations for Storefront Products and Purchases (Updated)
 -- Run these commands in your Supabase SQL Editor AFTER running migrations_webhook_credits.sql
+-- This version removes the user_product_access feature as it's not needed
 
--- 1. Create products table for storefront product catalog
+-- 1. Drop user_product_access table if it exists (cleanup)
+DROP TABLE IF EXISTS user_product_access CASCADE;
+
+-- 2. Create products table for storefront product catalog
 CREATE TABLE IF NOT EXISTS products (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   stripe_product_id TEXT UNIQUE, -- Reference to Stripe product
@@ -12,7 +16,6 @@ CREATE TABLE IF NOT EXISTS products (
   price_cents INTEGER NOT NULL, -- Price in cents
   currency TEXT DEFAULT 'SGD',
   digital_content_url TEXT, -- For digital downloads
-  access_duration_days INTEGER, -- How long access lasts (null = permanent)
   credit_amount INTEGER, -- For credit products
   category TEXT,
   prerequisites TEXT[], -- Array of required product IDs or conditions
@@ -28,60 +31,42 @@ CREATE INDEX IF NOT EXISTS idx_products_type ON products(product_type);
 CREATE INDEX IF NOT EXISTS idx_products_active ON products(is_active);
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
 
--- 2. Create user_purchases table for storefront purchase records
+-- 3. Create user_purchases table for storefront purchase records (simplified)
 CREATE TABLE IF NOT EXISTS user_purchases (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
-  product_id UUID NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
   stripe_payment_intent_id TEXT,
   stripe_checkout_session_id TEXT,
   purchase_date TIMESTAMPTZ DEFAULT NOW(),
-  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'refunded', 'cancelled')),
+  status TEXT NOT NULL DEFAULT 'paid' CHECK (status IN (
+    'paid', 'processing', 'shipped', 'in_transit', 'delivered', 
+    'returned', 'failed_to_deliver', 'refund_requested', 
+    'refund_in_progress', 'refunded', 'cancel_requested', 
+    'cancel_in_progress', 'cancelled'
+  )),
   quantity INTEGER DEFAULT 1,
-  unit_price_cents INTEGER NOT NULL,
   total_amount_cents INTEGER NOT NULL,
   currency TEXT DEFAULT 'SGD',
-  access_expires_at TIMESTAMPTZ, -- When access expires (null = permanent)
-  refunded_at TIMESTAMPTZ,
-  metadata JSONB, -- Additional purchase data
+  metadata JSONB, -- Purchase data including items array
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Add indexes
+-- Add indexes for user_purchases
 CREATE INDEX IF NOT EXISTS idx_user_purchases_user_info_id ON user_purchases(user_info_id);
-CREATE INDEX IF NOT EXISTS idx_user_purchases_product_id ON user_purchases(product_id);
 CREATE INDEX IF NOT EXISTS idx_user_purchases_status ON user_purchases(status);
 CREATE INDEX IF NOT EXISTS idx_user_purchases_stripe_payment_intent ON user_purchases(stripe_payment_intent_id);
 CREATE INDEX IF NOT EXISTS idx_user_purchases_purchase_date ON user_purchases(purchase_date DESC);
 
--- 3. Create user_product_access table for access control
-CREATE TABLE IF NOT EXISTS user_product_access (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
-  product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-  purchase_id UUID REFERENCES user_purchases(id) ON DELETE CASCADE,
-  access_type TEXT NOT NULL DEFAULT 'purchased' CHECK (access_type IN ('purchased', 'granted', 'trial', 'promotional')),
-  granted_at TIMESTAMPTZ DEFAULT NOW(),
-  expires_at TIMESTAMPTZ, -- When access expires (null = permanent)
-  usage_count INTEGER DEFAULT 0,
-  max_usage INTEGER, -- Maximum uses allowed (null = unlimited)
-  is_active BOOLEAN DEFAULT TRUE,
-  metadata JSONB, -- Additional access data
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- 4. Add balance_transactions table improvements (if not already added)
+-- Add stripe_transaction_id column to balance_transactions for better integration
+ALTER TABLE balance_transactions 
+ADD COLUMN IF NOT EXISTS stripe_transaction_id TEXT,
+ADD COLUMN IF NOT EXISTS related_order_id UUID REFERENCES user_purchases(id) ON DELETE SET NULL;
 
--- Add indexes
-CREATE INDEX IF NOT EXISTS idx_user_product_access_user_info_id ON user_product_access(user_info_id);
-CREATE INDEX IF NOT EXISTS idx_user_product_access_product_id ON user_product_access(product_id);
-CREATE INDEX IF NOT EXISTS idx_user_product_access_active ON user_product_access(is_active);
-CREATE INDEX IF NOT EXISTS idx_user_product_access_expires ON user_product_access(expires_at);
-
--- Add unique constraint to prevent duplicate active access
-CREATE UNIQUE INDEX IF NOT EXISTS idx_user_product_access_unique_active 
-ON user_product_access(user_info_id, product_id) 
-WHERE is_active = TRUE;
+-- Add index for better query performance
+CREATE INDEX IF NOT EXISTS idx_balance_transactions_stripe_transaction_id ON balance_transactions(stripe_transaction_id);
+CREATE INDEX IF NOT EXISTS idx_balance_transactions_related_order_id ON balance_transactions(related_order_id);
 
 -- Add triggers to update updated_at timestamps
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -99,13 +84,9 @@ CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products
 CREATE TRIGGER update_user_purchases_updated_at BEFORE UPDATE ON user_purchases
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_user_product_access_updated_at BEFORE UPDATE ON user_product_access
-    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
 -- Enable Row Level Security (RLS) on new tables
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_purchases ENABLE ROW LEVEL SECURITY;
-ALTER TABLE user_product_access ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies
 -- Products: Everyone can view active products
@@ -118,13 +99,12 @@ CREATE POLICY "Users can view own purchases" ON user_purchases
     SELECT id FROM user_infos WHERE user_id = auth.uid()
   ));
 
--- User product access: Users can view their own access
-CREATE POLICY "Users can view own product access" ON user_product_access
-  FOR SELECT USING (user_info_id IN (
-    SELECT id FROM user_infos WHERE user_id = auth.uid()
-  ));
-
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON products TO service_role;
 GRANT ALL ON user_purchases TO service_role;
-GRANT ALL ON user_product_access TO service_role;
+
+-- Comments for documentation
+COMMENT ON TABLE products IS 'Product catalog for storefront items';
+COMMENT ON TABLE user_purchases IS 'Purchase records for storefront transactions - no access control needed, purchases are for physical/virtual goods';
+COMMENT ON COLUMN user_purchases.metadata IS 'Contains items array with product details, checkout info, and payment method';
+COMMENT ON COLUMN user_purchases.status IS 'Order fulfillment status using ORDER_STATUS constants';
