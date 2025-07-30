@@ -1,127 +1,203 @@
-# <img src="./public/favicon.svg" alt="chat github" style="width:28px; vertical-align: middle;"> Chat GitHub: Search GitHub in Plain English
+# EdTack MVP - Educational Technology Platform
 
-[![CHAT GITHUB HOME](/assets/home.png)](https://chat-github.nuxt.dev)
-
-## Try It Out
-
-Chat GitHub Demo: <https://chat-github.nuxt.dev>
-
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?template=chat-github)
-
-## Overview
-
-Chat GitHub is an innovative tool that allows you to search and explore GitHub using natural language queries, powered by AI. Say goodbye to complex search parameters and hello to intuitive, conversation-style GitHub exploration.
-
-[Read the blog post on how I created Chat GitHub](https://rajeev.dev/building-a-chat-interface-to-search-github?ref=github-repo).
-
-[![CHAT GITHUB](/assets/chat.png)](https://chat-github.nuxt.dev)
+EdTack is an AI-powered educational technology platform that enables family-based learning with credit management, AI tutoring, and performance tracking.
 
 ## Features
 
-- **Natural Language Search:** Query GitHub using plain English, no need for complex search parameters.
-- **Comprehensive GitHub Data:** Search across multiple GitHub endpoints:
-  - Users (/search/users)
-  - Repositories (/search/repositories)
-  - Issues (/search/issues)
-  - Commits (/search/commits)
-- **AI-Powered Responses:** Leverages OpenAI to interpret queries and provide concise, relevant information.
-- **User Authentication:** Secure access via GitHub OAuth.
-- **Trending Users:** Discover popular GitHub users based on search trends.
-- **Anonymized Query Logging:** Privacy-focused logging of search queries for analytics and trending features.
+- **Multi-Authentication System**: Supabase Auth + OAuth + Custom JWT sessions
+- **Family Management**: Parent-child relationships with credit transfers
+- **AI-Powered Tutoring**: Google Gemini integration for personalized education
+- **Credit System**: Stripe-integrated payment system (1 credit = 10 cents SGD)
+- **Educational Content**: Question generation, performance tracking, and analytics
+- **Subscription Management**: Automated Stripe billing and webhook processing
 
-## Built with
+## Tech Stack
 
-- [Nuxt](https://nuxt.com): Vue.js framework for the application foundation
-- [Nuxt UI](https://ui.nuxt.com): Module for creating a sleek and responsive interface
-- [Nuxt Auth Utils](https://github.com/atinux/nuxt-auth-utils): Module for user authentication
-- [NuxtHub](https://hub.nuxt.com): Backend (`database`, `cache` etc.), deployment and administration platform for Nuxt, powered by Cloudflare
-- [Nuxt MDC](https://github.com/nuxt-modules/mdc): For parsing and displaying chat messages
-- [Open AI](https://openai.com): For intelligently searching and interpreting GitHub data in real-time.
-- [OctoKit/Rest](https://github.com/octokit/rest.js): For interacting with the GitHub Rest APIs.
+- **Framework**: Nuxt 3 with TypeScript
+- **Database**: Supabase (PostgreSQL) with Row Level Security
+- **Payments**: Stripe with subscription management
+- **AI**: Google Gemini 2.0 Flash for educational content
+- **Authentication**: Supabase Auth + OAuth providers
+- **Deployment**: NuxtHub (Cloudflare)
 
-## Setup
+## Project Structure
+
+```
+server/
+├── api/
+│   ├── auth/           # Authentication endpoints
+│   ├── credits/        # Credit management
+│   ├── chat.post.ts    # AI tutoring
+│   ├── questions.post.ts # Educational content
+│   ├── shop/           # Product management
+│   └── webhooks/       # Stripe webhook processing
+├── utils/
+│   ├── authConfig.ts   # Auth utilities and Supabase clients
+│   ├── stripe.ts       # Stripe integration
+│   └── useGenAi.ts     # Google AI integration
+middleware/
+└── auth.ts             # Route protection
+types/
+└── database.types.ts   # Auto-generated Supabase types
+```
+
+## Getting Started
 
 ### Prerequisites
 
-Apart from the usual Node and package manager dependencies, you should have the following ready for running the project:
+- Node.js 18+ and npm/pnpm
+- Supabase account and project
+- Stripe account (test mode for development)
+- Google AI Studio API key
 
-- **A GitHub account:** To generate GITHUB_TOKEN to make API queries, and creating an OAuth App for authentication
-- **An OpenAI account:** To create an OpenAI API key
+### Installation
 
-### Install dependencies
-
+1. Clone the repository
 ```bash
+git clone <repository-url>
+cd edtack-mvp
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
 pnpm install
 ```
 
-### Environment Variables
-
-Rename `.env.example` file present in the project root to `.env` and add the following missing values:
-
+3. Set up environment variables
 ```bash
-NUXT_SESSION_PASSWORD=at_least_32_chars_string
-NUXT_OAUTH_GITHUB_CLIENT_ID=github_oauth_client_id
-NUXT_OAUTH_GITHUB_CLIENT_SECRET=github_oauth_client_secret
-NUXT_GITHUB_TOKEN=your_personal_access_token
-OPENAI_API_KEY=your_openai_api_key
+cp .env.example .env
 ```
 
-## Usage
-
-### Running the Development Server
-
+Configure the following environment variables:
 ```bash
-pnpm dev
+# Supabase
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Google AI
+GOOGLE_AI_STUDIO_API_KEY=your_google_ai_api_key
+
+# JWT
+JWT_SECRET=your_jwt_secret_key
 ```
 
-The app will be available at `http://localhost:3000`.
+4. Set up database
+   - Create tables using Supabase dashboard or migrations
+   - Enable Row Level Security (RLS) policies
+   - Generate TypeScript types: `npm run db:types`
 
-### Searching GitHub
+5. Configure Stripe
+   - Set up products and pricing in Stripe dashboard
+   - Configure webhook endpoint for your development environment
 
-After logging in with your GitHub credentials, you can start querying GitHub data using natural language. Here are some example queries to get you started:
+### Development
 
-- "How many stars does the nuxt/nuxt repo has?"
-- "Which one is my most starred repo?"
-- "Find atinux's first ever commit." etc.
+```bash
+npm run dev
+```
 
-Tips for effective searching:
+The application will be available at `http://localhost:3000`.
 
-- Use GitHub usernames for more accurate results when searching for specific users.
-- Be as specific as possible in your queries for the best results.
-- Keep queries relatively simple. Complex queries may not work as expected.
-- 'Use exact dates / time range for queries involving time (e.g., prefer 2024 over last year).'.
-- Remember, the app can only access public data unless your `GITHUB_TOKEN` has additional permissions.
+### Key Development Commands
 
-Note: GitHub API has rate limits. If you encounter any issues, wait a few minutes before trying again.
+```bash
+# Development server
+npm run dev
+
+# Generate database types
+npm run db:types
+
+# Build for production
+npm run build
+
+# Production preview
+npm run preview
+```
+
+## Architecture Overview
+
+### Authentication Flow
+- **Supabase Auth**: Primary authentication with email/password and OAuth
+- **Custom JWT**: App-specific user sessions via secure cookies
+- **RLS Policies**: Database-level security for user data isolation
+
+### Payment System
+- **Credit-Based**: 1 credit = 10 cents SGD
+- **Family Transfers**: Parents can transfer credits to children
+- **Webhook Processing**: Automated transaction recording via Stripe webhooks
+- **Subscription Management**: Automatic billing and customer management
+
+### AI Integration
+- **Educational Content**: AI-generated questions and explanations
+- **Conversation Context**: Maintains chat history for personalized tutoring
+- **Performance Tracking**: Analytics on user progress and engagement
+
+## Database Schema
+
+### Core Tables
+- `user_infos`: User profiles with payment integration
+- `user_roles`, `roles`: Role-based access control
+- `credit_transactions`: Financial transaction history
+- `parent_child`: Family relationship management
+- `groups`, `group_memberships`: Class/family grouping
+- `questions`, `question_options`: Educational content
+- `education_documents`, `document_chunks`: Content with embeddings
+
+### Key Business Rules
+- Family credit transfers between parent-child accounts
+- RLS policies ensure user data isolation
+- Automatic free subscription creation for new users
+- Webhook idempotency using Stripe event IDs
+
+## Development Guidelines
+
+### Adding New API Endpoints
+1. Create route file in `/server/api/[feature]/[method].ts`
+2. Use `defineEventHandler` pattern
+3. Add authentication check for protected routes
+4. Implement input validation
+5. Follow error handling patterns with `createError`
+
+### Database Changes
+1. Make schema changes via Supabase dashboard
+2. Update RLS policies as needed
+3. Regenerate TypeScript types
+4. Test with both user and service role clients
+
+### Documentation
+- Update `CLAUDE.md` for architectural changes
+- Follow existing code patterns and conventions
+- Maintain consistent error handling and response formats
 
 ## Deployment
 
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?template=chat-github)
-
-Before you can deploy the project you should have the following:
-
-- [NuxtHub Account](https://hub.nuxt.com): For managing NuxtHub apps, database & cache in development / production
-- [Cloudflare Account](https://cloudflare.com): Used behind the scenes by NuxtHub
-
-Once you're ready, you can deploy using either the following ways:
-
-### Deploy via NuxtHub Admin
-
-- Push your code to a GitHub repository.
-- Link the repository with NuxtHub.
-- Do not forget to add the environment variables
-- Deploy from the Admin console.
-
-[Learn more about Git integration](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci)
-
-### Deploy via NuxtHub CLI
+The application is designed for deployment on NuxtHub (Cloudflare):
 
 ```bash
 npx nuxthub deploy
 ```
 
-[Learn more about CLI deployment](https://hub.nuxt.com/docs/getting-started/deploy#nuxthub-cli)
+### Production Environment Setup
+1. Configure production Supabase project
+2. Set up production Stripe account and webhooks
+3. Add all environment variables to deployment platform
+4. Test payment flows and webhook processing
+
+## Contributing
+
+1. Follow existing code patterns and conventions
+2. Update documentation for significant changes
+3. Test authentication and payment flows
+4. Ensure RLS policies work correctly
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+[Add your license information here]
