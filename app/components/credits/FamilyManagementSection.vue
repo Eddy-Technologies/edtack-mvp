@@ -1,10 +1,8 @@
 <template>
   <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
     <div class="flex items-center mb-4">
-      <div class="bg-blue-100 rounded-full p-2 mr-3">
-        <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
-          <UIcon name="i-lucide-users-round" class="text-blue-700" size="24" />
-        </div>
+      <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full mr-2">
+        <UIcon name="i-lucide-users-round" class="text-blue-700" />
       </div>
       <h3 class="text-xl font-semibold text-gray-900">Family Management</h3>
     </div>
