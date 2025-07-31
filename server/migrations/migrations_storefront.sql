@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS products (
   currency TEXT DEFAULT 'SGD',
   image_url TEXT, -- Product image URL
   category TEXT,
+  stock_count INTEGER NOT NULL DEFAULT 0, -- Available stock count
+  sku TEXT, -- Stock Keeping Unit - use product-specific unique identifier
   -- Discount fields
   discount_percentage DECIMAL(5,2), -- Percentage discount (0.00 to 100.00)
   discount_amount_cents INTEGER, -- Fixed discount amount in cents
