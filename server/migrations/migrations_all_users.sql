@@ -39,46 +39,102 @@ LEFT JOIN app_users appu ON ui.app_user_id = appu.id;
   -- Drop function (if exists) 
   DROP FUNCTION IF EXISTS public.handle_new_user();
 
--- Function to handle new user_info creation
-CREATE OR REPLACE FUNCTION public.handle_new_user_info()
-RETURNS TRIGGER AS $$
+-- RPC function to atomically update user_infos with related tables
+CREATE OR REPLACE FUNCTION public.update_user_info_with_relations(
+  p_user_info_id UUID,
+  p_user_id UUID,
+  p_first_name TEXT,
+  p_last_name TEXT,
+  p_payment_customer_id TEXT,
+  p_is_active BOOLEAN,
+  p_onboarding_completed BOOLEAN,
+  p_role_name TEXT,
+  p_email TEXT,
+  p_level_type TEXT DEFAULT NULL
+) RETURNS JSONB
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
 DECLARE
+  v_user_info RECORD;
   v_role_id INT;
-  v_user_email text;
-  v_user_role text;
+  v_role_name TEXT;
+  v_result JSONB;
 BEGIN
-  RAISE LOG 'Trigger started for user_info_id: %', NEW.id;
-  RAISE LOG 'Storing raw_user_meta_data: %', NEW.raw_user_meta_data;  -- Print start
-  
-  SELECT id INTO v_role_id FROM public.roles WHERE role_name = NEW.raw_user_meta_data ->> 'user_role';
-  RAISE LOG '[handle_new_user] Selected role_id: % for role: %', v_role_id, NEW.raw_user_meta_data ->> 'user_role';  -- Print variable
-  
-  -- Get user email from auth.users if user_id exists
-  SELECT email
-  INTO v_user_email
-  FROM auth.users 
-  WHERE id = NEW.user_id;
+  RAISE LOG '[update_user_info_with_relations] Starting for user_info_id: %', p_user_info_id;
 
-  RAISE LOG '[handle_new_user_info] Found email: % for user_id: %', v_user_email, NEW.user_id;
+  -- Insert or update user_infos record
+  INSERT INTO public.user_infos (
+    id, user_id, first_name, last_name, level_type, 
+    payment_customer_id, is_active, onboarding_completed, created_at, updated_at
+  ) VALUES (
+    p_user_info_id,
+    p_user_id,
+    p_first_name,
+    p_last_name,
+    p_level_type,
+    p_payment_customer_id,
+    p_is_active,
+    p_onboarding_completed,
+    NOW(),
+    NOW()
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    user_id = EXCLUDED.user_id,
+    first_name = EXCLUDED.first_name,
+    last_name = EXCLUDED.last_name,
+    level_type = EXCLUDED.level_type,
+    payment_customer_id = EXCLUDED.payment_customer_id,
+    is_active = EXCLUDED.is_active,
+    onboarding_completed = EXCLUDED.onboarding_completed,
+    updated_at = NOW()
+  RETURNING * INTO v_user_info;
 
-  -- Create user_emails record if email exists
-  INSERT INTO public.user_emails (user_info_id, email, is_primary) 
-  VALUES (NEW.id, v_user_email, true);
-  RAISE LOG '[handle_new_user_info] Inserted user_emails with email: %', v_user_email;
 
-  SELECT id INTO v_role_id FROM public.roles WHERE role_name = v_user_role;
-  RAISE LOG '[handle_new_user_info] Selected role_id: % for role: %', v_role_id, v_user_role;
+  RAISE LOG '[update_user_info_with_relations] Updated user_infos for: %', p_user_info_id;
+
+  -- Handle role assignment if provided
+  IF p_role_name IS NOT NULL THEN
+    -- Delete existing roles
+    DELETE FROM public.user_roles WHERE user_info_id = p_user_info_id;
+    RAISE LOG '[update_user_info_with_relations] Deleted existing roles for: %', p_user_info_id;
+
+    -- Insert new role
+    SELECT id INTO v_role_id FROM public.roles WHERE role_name = p_role_name;
     
-  INSERT INTO public.user_roles (user_info_id, role_id)
-  VALUES (NEW.id, v_role_id);
-  RAISE LOG '[handle_new_user_info] Inserted user_roles with role_id: %', v_role_id;
+    IF v_role_id IS NULL THEN
+      RAISE EXCEPTION '[update_user_info_with_relations] Invalid role name: %', p_role_name;
+    END IF;
 
-  RETURN NEW;
+    INSERT INTO public.user_roles (user_info_id, role_id)
+    VALUES (p_user_info_id, v_role_id);
+    
+    RAISE LOG '[update_user_info_with_relations] Inserted role % (%)', p_role_name, v_role_id;
+  END IF;
+
+  -- Handle email if provided
+  IF p_email IS NOT NULL THEN
+    -- Delete existing emails
+    DELETE FROM public.user_emails WHERE user_info_id = p_user_info_id;
+    RAISE LOG '[update_user_info_with_relations] Deleted existing emails for: %', p_user_info_id;
+
+    -- Insert new email as primary
+    INSERT INTO public.user_emails (user_info_id, email, is_primary)
+    VALUES (p_user_info_id, p_email, true);
+    
+    RAISE LOG '[update_user_info_with_relations] Inserted email: %', p_email;
+  END IF;
+
+  -- Return updated user info with relations
+  SELECT jsonb_build_object(
+    'user_info', row_to_json(v_user_info),
+    'success', true,
+    'message', 'User info updated successfully'
+  ) INTO v_result;
+
+  RAISE LOG '[update_user_info_with_relations] Completed successfully for: %', p_user_info_id;
+  RETURN v_result;
+
 EXCEPTION WHEN OTHERS THEN
-  RAISE EXCEPTION '[handle_new_user_info] Failed to process user_info: %', SQLERRM;
+  RAISE EXCEPTION '[update_user_info_with_relations] Failed: %', SQLERRM;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-CREATE OR REPLACE TRIGGER on_user_info_created
-AFTER INSERT ON public.user_infos
-FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_info();
+$$;

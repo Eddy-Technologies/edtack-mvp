@@ -57,41 +57,22 @@ export default defineEventHandler(async (event) => {
       user_info_id: uuid
     });
 
-    // Get the role ID first for the trigger to use
-    const { data: roleData } = await supabase
-      .from('roles')
-      .select('id')
-      .eq('role_name', body.userRole)
-      .single();
+    // Use RPC to atomically create user_infos with relations
+    const { data: rpcResult, error: rpcError } = await supabase.rpc('update_user_info_with_relations', {
+      p_user_info_id: uuid,
+      p_user_id: user.id,
+      p_first_name: body.firstName,
+      p_last_name: body.lastName,
+      p_level_type: body.studentLevel || null,
+      p_payment_customer_id: paymentCustomerId,
+      p_is_active: true,
+      p_onboarding_completed: true,
+      p_role_name: body.userRole,
+      p_email: user.email
+    });
 
-    if (!roleData) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: `Invalid user role: ${body.userRole}`
-      });
-    }
-
-    // Create user_infos record with all registration data
-    const { data: newUserInfo, error: userInfoError } = await supabase
-      .from('user_infos')
-      .insert({
-        id: uuid,
-        user_id: user.id,
-        first_name: body.firstName,
-        last_name: body.lastName,
-        level_type: body.studentLevel || null,
-        payment_customer_id: paymentCustomerId,
-        is_active: true,
-        onboarding_completed: true, // Registration users complete onboarding during signup
-        raw_user_meta_data: {
-          user_role: body.userRole,
-        }
-      })
-      .select('id')
-      .single();
-
-    if (userInfoError || !newUserInfo) {
-      console.error('Error creating user_infos record:', userInfoError);
+    if (rpcError || !rpcResult) {
+      console.error('Error creating user profile via RPC:', rpcError);
       throw createError({
         statusCode: 500,
         statusMessage: 'Failed to create user profile'

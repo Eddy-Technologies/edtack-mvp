@@ -62,8 +62,6 @@ export default defineEventHandler(async (event) => {
     if (!userInfo) {
       const userInfoId = crypto.randomUUID();
 
-      // Role assignment will be handled automatically by the handle_new_user_info trigger
-
       // Create Stripe customer
       const stripeCustomerId = await createStripeCustomer({
         email: user.email!,
@@ -72,34 +70,30 @@ export default defineEventHandler(async (event) => {
         user_info_id: userInfoId
       });
 
-      // Insert new user_info record
-      const { data: newUserInfo, error: insertError } = await supabase
-        .from('user_infos')
-        .insert({
-          id: userInfoId,
-          user_id: user.id,
-          onboarding_completed: true,
-          first_name: firstName,
-          last_name: lastName,
-          payment_customer_id: stripeCustomerId,
-          level_type: body.studentLevel || null,
-          is_active: true,
-          raw_user_meta_data: {
-            user_role: body.userRole,
-          }
-        })
-        .select('*')
-        .single();
+      // Use RPC to atomically create user_infos with relations
+      const { data: rpcResult, error: rpcError } = await supabase.rpc('update_user_info_with_relations', {
+        p_user_info_id: userInfoId,
+        p_user_id: user.id,
+        p_first_name: firstName,
+        p_last_name: lastName,
+        p_level_type: body.studentLevel || null,
+        p_payment_customer_id: stripeCustomerId,
+        p_is_active: true,
+        p_onboarding_completed: true,
+        p_role_name: body.userRole,
+        p_email: user.email
+      });
 
-      if (insertError || !newUserInfo) {
+      if (rpcError || !rpcResult) {
+        console.error('Error creating user profile via RPC:', rpcError);
         throw createError({
           statusCode: 500,
           statusMessage: 'Failed to create user profile'
         });
       }
 
-      // user_roles will be created automatically by the handle_new_user_info trigger
-      userInfo = newUserInfo;
+      // Set userInfo from RPC result
+      userInfo = rpcResult.user_info;
     }
 
     return {
