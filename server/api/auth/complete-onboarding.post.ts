@@ -1,5 +1,7 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { serverSupabaseUser } from '#supabase/server';
+import { createStripeCustomer } from '~~/server/utils/stripe';
+import { USER_ROLE } from '~/constants/User';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
@@ -24,7 +26,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (body.userRole === 'STUDENT' && !body.studentLevel) {
+    if (body.userRole === USER_ROLE.STUDENT && !body.studentLevel) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Student level is required for student accounts'
@@ -38,113 +40,60 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get user's current user_infos record
-    const { data: userInfo, error: userInfoError } = await supabase
+    // Get user's current user_infos record or create if it doesn't exist
+    let { data: userInfo } = await supabase
       .from('user_infos')
-      .select('id, onboarding_completed')
+      .select('*')
       .eq('user_id', user.id)
       .single();
 
-    if (userInfoError || !userInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User profile not found'
-      });
-    }
-
-    // Check if onboarding already completed
-    if (userInfo.onboarding_completed) {
+    if (userInfo?.onboarding_completed) {
       console.error('Onboarding already completed for user:', user.id);
       // Return early if onboarding is already completed
       return {
         message: 'Onboarding already completed',
-        user_info_id: userInfo.id
       };
     }
 
-    // Prepare update data
-    const updateData: any = {
-      onboarding_completed: true,
-    };
+    const firstName = body.firstName?.trim();
+    const lastName = body.lastName?.trim();
 
-    // Update name fields if provided
-    if (body.firstName) {
-      updateData.first_name = body.firstName.trim();
-    }
-    if (body.lastName) {
-      updateData.last_name = body.lastName.trim();
-    }
+    // Create userInfo if it doesn't exist
+    if (!userInfo) {
+      const userInfoId = crypto.randomUUID();
 
-    // Add student level if user is a student
-    if (body.userRole === 'STUDENT' && body.studentLevel) {
-      updateData.level_type = body.studentLevel;
-    }
-
-    // Update user_infos record
-    const { error: updateError } = await supabase
-      .from('user_infos')
-      .update(updateData)
-      .eq('id', userInfo.id);
-
-    if (updateError) {
-      console.error('Error updating user_infos:', updateError);
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to update user profile'
+      // Create Stripe customer
+      const stripeCustomerId = await createStripeCustomer({
+        email: user.email!,
+        firstName,
+        lastName,
+        user_info_id: userInfoId
       });
-    }
 
-    // Get the role ID for the selected user role
-    const { data: role, error: roleError } = await supabase
-      .from('roles')
-      .select('id')
-      .eq('role_name', body.userRole)
-      .single();
-
-    if (roleError || !role) {
-      console.error('Error finding role:', roleError);
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Invalid user role'
+      // Use RPC to atomically create user_infos with relations
+      const { data: rpcResult, error: rpcError } = await supabase.rpc('update_user_info_with_relations', {
+        p_user_info_id: userInfoId,
+        p_user_id: user.id,
+        p_first_name: firstName,
+        p_last_name: lastName,
+        p_level_type: body.studentLevel || null,
+        p_payment_customer_id: stripeCustomerId,
+        p_is_active: true,
+        p_onboarding_completed: true,
+        p_role_name: body.userRole,
+        p_email: user.email
       });
-    }
 
-    // Check if user_roles record already exists
-    const { data: existingUserRole } = await supabase
-      .from('user_roles')
-      .select('id')
-      .eq('user_info_id', userInfo.id)
-      .single();
-
-    if (existingUserRole) {
-      // Update existing role
-      const { error: roleUpdateError } = await supabase
-        .from('user_roles')
-        .update({
-          role_id: role.id,
-          updated_at: new Date().toISOString()
-        })
-        .eq('user_info_id', userInfo.id);
-
-      if (roleUpdateError) {
-        console.error('Error updating user role:', roleUpdateError);
-        // Don't throw error here as main profile was updated successfully
-      }
-    } else {
-      // Create new user_roles record
-      const { error: roleInsertError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_info_id: userInfo.id,
-          role_id: role.id,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+      if (rpcError || !rpcResult) {
+        console.error('Error creating user profile via RPC:', rpcError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to create user profile'
         });
-
-      if (roleInsertError) {
-        console.error('Error creating user role:', roleInsertError);
-        // Don't throw error here as main profile was updated successfully
       }
+
+      // Set userInfo from RPC result
+      userInfo = rpcResult.user_info;
     }
 
     return {

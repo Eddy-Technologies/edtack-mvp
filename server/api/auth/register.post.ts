@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { SignUpReq } from '~~/app/composables/useAuth';
 import { USER_ROLE } from '~~/app/constants/User';
@@ -8,7 +7,7 @@ import { createStripeCustomer } from '~~/server/utils/stripe';
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
   const body: SignUpReq = await readBody(event);
-  const uuid: string = uuidv4();
+  const uuid: string = crypto.randomUUID();
 
   // Simple validation
   const requiredFields = ['email', 'password', 'firstName', 'lastName', 'acceptTerms'];
@@ -58,78 +57,30 @@ export default defineEventHandler(async (event) => {
       user_info_id: uuid
     });
 
-    // Create user_infos record with all registration data
-    const { data: newUserInfo, error: userInfoError } = await supabase
-      .from('user_infos')
-      .insert({
-        id: uuid,
-        user_id: user.id,
-        first_name: body.firstName,
-        last_name: body.lastName,
-        level_type: body.studentLevel || null,
-        payment_customer_id: paymentCustomerId,
-        is_active: true,
-        onboarding_completed: true, // Registration users complete onboarding during signup
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      })
-      .select('id')
-      .single();
+    // Use RPC to atomically create user_infos with relations
+    const { data: rpcResult, error: rpcError } = await supabase.rpc('update_user_info_with_relations', {
+      p_user_info_id: uuid,
+      p_user_id: user.id,
+      p_first_name: body.firstName,
+      p_last_name: body.lastName,
+      p_level_type: body.studentLevel || null,
+      p_payment_customer_id: paymentCustomerId,
+      p_is_active: true,
+      p_onboarding_completed: true,
+      p_role_name: body.userRole,
+      p_email: user.email
+    });
 
-    if (userInfoError || !newUserInfo) {
-      console.error('Error creating user_infos record:', userInfoError);
+    if (rpcError || !rpcResult) {
+      console.error('Error creating user profile via RPC:', rpcError);
       throw createError({
         statusCode: 500,
         statusMessage: 'Failed to create user profile'
       });
     }
 
-    // Create user email record
-    const { error: emailError } = await supabase
-      .from('user_emails')
-      .insert({
-        user_info_id: uuid,
-        email: body.email,
-        is_primary: true,
-        created_at: new Date().toISOString()
-      });
-
-    if (emailError) {
-      console.error('Error creating user_emails record:', emailError);
-      // Don't throw error here as user_infos was created successfully
-    }
-
-    // Get the role ID and create user role assignment
-    const { data: roleData } = await supabase
-      .from('roles')
-      .select('id')
-      .eq('role_name', body.userRole)
-      .single();
-
-    if (roleData) {
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_info_id: uuid,
-          role_id: roleData.id
-        });
-
-      if (roleError) {
-        console.error('Error creating user_roles record:', roleError);
-        // Don't throw error here as user_infos was created successfully
-      }
-    }
-
     return { user };
   } catch (err: any) {
-    console.error('Registration error:', {
-      message: err.message,
-      details: err.details,
-      hint: err.hint,
-      code: err.code,
-      statusCode: err.statusCode,
-      full_error: err
-    });
     throw createError({
       statusCode: err.statusCode || 500,
       statusMessage: err.message || err.statusMessage || 'Registration failed.',
