@@ -102,6 +102,42 @@ export type Database = {
           },
         ];
       };
+      codes: {
+        Row: {
+          category: string;
+          code: string;
+          created_at: string | null;
+          description: string | null;
+          id: string;
+          is_active: boolean | null;
+          name: string;
+          sort_order: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          category: string;
+          code: string;
+          created_at?: string | null;
+          description?: string | null;
+          id?: string;
+          is_active?: boolean | null;
+          name: string;
+          sort_order?: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          category?: string;
+          code?: string;
+          created_at?: string | null;
+          description?: string | null;
+          id?: string;
+          is_active?: boolean | null;
+          name?: string;
+          sort_order?: number;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
       credit_transactions: {
         Row: {
           amount: number;
@@ -210,131 +246,6 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
-      };
-      document_chunks: {
-        Row: {
-          chunk_content: string;
-          chunk_end_pos: number | null;
-          chunk_index: number;
-          chunk_start_pos: number | null;
-          chunk_type: string | null;
-          created_at: string | null;
-          embedding: string | null;
-          id: number;
-          parent_document_id: number;
-        };
-        Insert: {
-          chunk_content: string;
-          chunk_end_pos?: number | null;
-          chunk_index: number;
-          chunk_start_pos?: number | null;
-          chunk_type?: string | null;
-          created_at?: string | null;
-          embedding?: string | null;
-          id?: number;
-          parent_document_id: number;
-        };
-        Update: {
-          chunk_content?: string;
-          chunk_end_pos?: number | null;
-          chunk_index?: number;
-          chunk_start_pos?: number | null;
-          chunk_type?: string | null;
-          created_at?: string | null;
-          embedding?: string | null;
-          id?: number;
-          parent_document_id?: number;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'document_chunks_parent_document_id_fkey';
-            columns: ['parent_document_id'];
-            isOneToOne: false;
-            referencedRelation: 'education_documents';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      education_documents: {
-        Row: {
-          cache_key: string | null;
-          chapter: string | null;
-          charts: Json | null;
-          content: string;
-          content_hash: string | null;
-          content_type: string | null;
-          created_at: string | null;
-          custom_metadata: Json | null;
-          difficulty: string | null;
-          docling_metadata: Json | null;
-          docling_type: string | null;
-          embedding: string | null;
-          equations: Json | null;
-          figures: Json | null;
-          id: number;
-          images: Json | null;
-          language: string | null;
-          level: string;
-          page_number: number | null;
-          source_file: string;
-          subject_id: string;
-          syllabus_id: string | null;
-          tables: Json | null;
-          updated_at: string | null;
-        };
-        Insert: {
-          cache_key?: string | null;
-          chapter?: string | null;
-          charts?: Json | null;
-          content: string;
-          content_hash?: string | null;
-          content_type?: string | null;
-          created_at?: string | null;
-          custom_metadata?: Json | null;
-          difficulty?: string | null;
-          docling_metadata?: Json | null;
-          docling_type?: string | null;
-          embedding?: string | null;
-          equations?: Json | null;
-          figures?: Json | null;
-          id?: number;
-          images?: Json | null;
-          language?: string | null;
-          level: string;
-          page_number?: number | null;
-          source_file: string;
-          subject_id: string;
-          syllabus_id?: string | null;
-          tables?: Json | null;
-          updated_at?: string | null;
-        };
-        Update: {
-          cache_key?: string | null;
-          chapter?: string | null;
-          charts?: Json | null;
-          content?: string;
-          content_hash?: string | null;
-          content_type?: string | null;
-          created_at?: string | null;
-          custom_metadata?: Json | null;
-          difficulty?: string | null;
-          docling_metadata?: Json | null;
-          docling_type?: string | null;
-          embedding?: string | null;
-          equations?: Json | null;
-          figures?: Json | null;
-          id?: number;
-          images?: Json | null;
-          language?: string | null;
-          level?: string;
-          page_number?: number | null;
-          source_file?: string;
-          subject_id?: string;
-          syllabus_id?: string | null;
-          tables?: Json | null;
-          updated_at?: string | null;
-        };
-        Relationships: [];
       };
       family_group_constraints: {
         Row: {
@@ -457,6 +368,145 @@ export type Database = {
         };
         Relationships: [];
       };
+      order_items: {
+        Row: {
+          created_at: string | null;
+          delivered_at: string | null;
+          external_status: string | null;
+          fulfillment_provider: string | null;
+          fulfillment_webhook_data: Json | null;
+          id: string;
+          order_id: string;
+          product_id: string;
+          quantity: number;
+          shipped_at: string | null;
+          status_code: string;
+          total_price_cents: number;
+          tracking_number: string | null;
+          unit_price_cents: number;
+        };
+        Insert: {
+          created_at?: string | null;
+          delivered_at?: string | null;
+          external_status?: string | null;
+          fulfillment_provider?: string | null;
+          fulfillment_webhook_data?: Json | null;
+          id?: string;
+          order_id: string;
+          product_id: string;
+          quantity?: number;
+          shipped_at?: string | null;
+          status_code: string;
+          total_price_cents: number;
+          tracking_number?: string | null;
+          unit_price_cents: number;
+        };
+        Update: {
+          created_at?: string | null;
+          delivered_at?: string | null;
+          external_status?: string | null;
+          fulfillment_provider?: string | null;
+          fulfillment_webhook_data?: Json | null;
+          id?: string;
+          order_id?: string;
+          product_id?: string;
+          quantity?: number;
+          shipped_at?: string | null;
+          status_code?: string;
+          total_price_cents?: number;
+          tracking_number?: string | null;
+          unit_price_cents?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'order_items_order_id_fkey';
+            columns: ['order_id'];
+            isOneToOne: false;
+            referencedRelation: 'orders';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'order_items_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      orders: {
+        Row: {
+          confirmed_at: string | null;
+          created_at: string | null;
+          currency: string | null;
+          id: string;
+          notes: string | null;
+          order_number: string;
+          paid_at: string | null;
+          payment_method: string | null;
+          pending_at: string | null;
+          status_code: string;
+          stripe_balance_transaction_id: string | null;
+          total_amount_cents: number;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          confirmed_at?: string | null;
+          created_at?: string | null;
+          currency?: string | null;
+          id?: string;
+          notes?: string | null;
+          order_number: string;
+          paid_at?: string | null;
+          payment_method?: string | null;
+          pending_at?: string | null;
+          status_code: string;
+          stripe_balance_transaction_id?: string | null;
+          total_amount_cents: number;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          confirmed_at?: string | null;
+          created_at?: string | null;
+          currency?: string | null;
+          id?: string;
+          notes?: string | null;
+          order_number?: string;
+          paid_at?: string | null;
+          payment_method?: string | null;
+          pending_at?: string | null;
+          status_code?: string;
+          stripe_balance_transaction_id?: string | null;
+          total_amount_cents?: number;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'orders_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'orders_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'orders_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       parent_child: {
         Row: {
           child_user_info_id: string;
@@ -517,6 +567,69 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
+      };
+      products: {
+        Row: {
+          category: string | null;
+          created_at: string | null;
+          currency: string | null;
+          description: string | null;
+          discount_amount_cents: number | null;
+          discount_end_date: string | null;
+          discount_percentage: number | null;
+          discount_start_date: string | null;
+          id: string;
+          image_url: string | null;
+          is_active: boolean | null;
+          metadata: Json | null;
+          name: string;
+          price_cents: number;
+          product_type: string;
+          sku: string | null;
+          stock_count: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          category?: string | null;
+          created_at?: string | null;
+          currency?: string | null;
+          description?: string | null;
+          discount_amount_cents?: number | null;
+          discount_end_date?: string | null;
+          discount_percentage?: number | null;
+          discount_start_date?: string | null;
+          id?: string;
+          image_url?: string | null;
+          is_active?: boolean | null;
+          metadata?: Json | null;
+          name: string;
+          price_cents: number;
+          product_type: string;
+          sku?: string | null;
+          stock_count?: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          category?: string | null;
+          created_at?: string | null;
+          currency?: string | null;
+          description?: string | null;
+          discount_amount_cents?: number | null;
+          discount_end_date?: string | null;
+          discount_percentage?: number | null;
+          discount_start_date?: string | null;
+          id?: string;
+          image_url?: string | null;
+          is_active?: boolean | null;
+          metadata?: Json | null;
+          name?: string;
+          price_cents?: number;
+          product_type?: string;
+          sku?: string | null;
+          stock_count?: number;
+          updated_at?: string | null;
+        };
+        Relationships: [];
       };
       question_correct_answers: {
         Row: {
@@ -1150,97 +1263,20 @@ export type Database = {
       };
     };
     Functions: {
-      binary_quantize: {
-        Args: { '': string } | { '': unknown };
-        Returns: unknown;
-      };
-      halfvec_avg: {
-        Args: { '': number[] };
-        Returns: unknown;
-      };
-      halfvec_out: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      halfvec_send: {
-        Args: { '': unknown };
-        Returns: string;
-      };
-      halfvec_typmod_in: {
-        Args: { '': unknown[] };
-        Returns: number;
-      };
-      hnsw_bit_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      hnsw_halfvec_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      hnsw_sparsevec_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      hnswhandler: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      ivfflat_bit_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      ivfflat_halfvec_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      ivfflathandler: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      l2_norm: {
-        Args: { '': unknown } | { '': unknown };
-        Returns: number;
-      };
-      l2_normalize: {
-        Args: { '': string } | { '': unknown } | { '': unknown };
-        Returns: unknown;
-      };
-      sparsevec_out: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      sparsevec_send: {
-        Args: { '': unknown };
-        Returns: string;
-      };
-      sparsevec_typmod_in: {
-        Args: { '': unknown[] };
-        Returns: number;
-      };
-      vector_avg: {
-        Args: { '': number[] };
-        Returns: string;
-      };
-      vector_dims: {
-        Args: { '': string } | { '': unknown };
-        Returns: number;
-      };
-      vector_norm: {
-        Args: { '': string };
-        Returns: number;
-      };
-      vector_out: {
-        Args: { '': string };
-        Returns: unknown;
-      };
-      vector_send: {
-        Args: { '': string };
-        Returns: string;
-      };
-      vector_typmod_in: {
-        Args: { '': unknown[] };
-        Returns: number;
+      update_user_info_with_relations: {
+        Args: {
+          p_user_info_id: string;
+          p_user_id: string;
+          p_first_name: string;
+          p_last_name: string;
+          p_payment_customer_id: string;
+          p_is_active: boolean;
+          p_onboarding_completed: boolean;
+          p_role_name: string;
+          p_email: string;
+          p_level_type?: string;
+        };
+        Returns: Json;
       };
     };
     Enums: {
@@ -1252,21 +1288,25 @@ export type Database = {
   };
 };
 
-type DefaultSchema = Database[Extract<keyof Database, 'public'>];
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>;
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, 'public'>];
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
   | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
-  | { schema: keyof Database },
+  | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database;
+    schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
-      Database[DefaultSchemaTableNameOrOptions['schema']]['Views'])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
-    Database[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+    DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R;
     }
       ? R
@@ -1284,14 +1324,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
   | keyof DefaultSchema['Tables']
-  | { schema: keyof Database },
+  | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database;
+    schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
     Insert: infer I;
   }
     ? I
@@ -1307,14 +1349,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
   | keyof DefaultSchema['Tables']
-  | { schema: keyof Database },
+  | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database;
+    schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
     Update: infer U;
   }
     ? U
@@ -1330,14 +1374,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
   | keyof DefaultSchema['Enums']
-  | { schema: keyof Database },
+  | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database;
+    schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
     ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
     : never;
@@ -1345,14 +1391,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
   | keyof DefaultSchema['CompositeTypes']
-  | { schema: keyof Database },
+  | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database;
+    schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
     ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never;

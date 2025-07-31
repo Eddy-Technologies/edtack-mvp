@@ -1,12 +1,15 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
-import { OPERATION_TYPE } from '~~/utils/constants';
+import { codeService, getOperationTypes } from '~~/server/services/codeService';
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const stripe = getStripe();
     const body = await readBody(event);
+
+    // Get operation codes
+    const operationCodes = await getOperationTypes(supabase);
     const { amount, recipient_type } = body;
     const baseUrl = useRuntimeConfig().public.baseUrl;
 
@@ -25,24 +28,23 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'User not authenticated'
       });
     }
-    const customers = await stripe.customers.list({
-      email: user.email, // Use actual user email
-      limit: 1
-    });
+    // Get user info
+    const { data: userInfo, error: userError } = await supabase
+      .from('user_infos')
+      .select('id, payment_customer_id')
+      .eq('user_id', user.id)
+      .single();
 
-    if (customers.data.length === 0) {
+    if (userError || !userInfo.payment_customer_id) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Stripe customer not found'
+        statusMessage: 'User info not found'
       });
     }
 
-    // Determine recipient customer ID for metadata
-    const recipientCustomerId = customers.data[0].id;
-
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
-      customer: recipientCustomerId, // Always charge the recipient
+      customer: userInfo.payment_customer_id, // Always charge the recipient
       line_items: [
         {
           price_data: {
@@ -53,7 +55,7 @@ export default defineEventHandler(async (event) => {
               description: `Add ${amount} SGD to your account`,
               metadata: {
                 product_type: 'credit_topup',
-                operation_type: OPERATION_TYPE.CREDIT_TOPUP, // Use enum for operation type        operation_type: OPERATION_TYPE.CREDIT_TOPUP, // Use enum for operation type
+                operation_type: operationCodes.credit_topup, // Use database-driven operation type
               }
             },
           },
@@ -65,11 +67,10 @@ export default defineEventHandler(async (event) => {
       cancel_url: `${baseUrl}/dashboard?tab=credits`,
       metadata: {
         recipient_type,
-        recipient_customer_id: recipientCustomerId,
+        recipient_customer_id: userInfo.payment_customer_id,
         amount: amount.toString(),
-        credits: (amount * 10).toString(), // 1 USD = 10 credits
         user_id: user.id,
-        operation_type: OPERATION_TYPE.CREDIT_TOPUP, // Use enum for operation type
+        operation_type: operationCodes.credit_topup, // Use database-driven operation type
       },
     });
 

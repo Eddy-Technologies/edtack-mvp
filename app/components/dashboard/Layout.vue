@@ -131,6 +131,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import Button from '../common/Button.vue';
 import UserAvatar from '~/components/common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
 
@@ -172,6 +173,11 @@ const navigationItems: NavigationItem[] = [
     name: 'Shop',
     route: '/dashboard?tab=shop',
     icon: 'ShoppingBagIcon'
+  },
+  {
+    name: 'Orders',
+    route: '/dashboard?tab=orders',
+    icon: 'ClipboardListIcon'
   },
   {
     name: 'Credits',

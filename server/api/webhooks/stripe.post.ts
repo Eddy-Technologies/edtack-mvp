@@ -1,6 +1,14 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
-import { OPERATION_TYPE, ORDER_STATUS } from '~~/utils/constants';
+import { getCodes, getOperationTypes } from '~~/server/services/codeService';
+
+// Generate order number function
+function generateOrderNumber(): string {
+  const now = new Date();
+  const yearMonth = now.getFullYear().toString() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  const timestamp = now.getTime().toString().slice(-6); // Use last 6 digits of timestamp for uniqueness
+  return `ORD-${yearMonth}-${timestamp}`;
+}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -146,14 +154,17 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     });
   }
 
+  // Get operation codes
+  const operationCodes = await getOperationTypes(supabase);
+
   // Check if this is a credit purchase (based on metadata or line items)
-  if (session.metadata?.operation_type === OPERATION_TYPE.CREDIT_TOPUP || session.mode === 'payment') {
+  if (session.metadata?.operation_type === operationCodes.credit_topup || session.mode === 'payment') {
     // Create credit transaction
     const { error: creditTransactionError } = await supabase
       .from('credit_transactions')
       .insert({
         user_info_id: userInfo.id,
-        transaction_type: OPERATION_TYPE.CREDIT_TOPUP,
+        transaction_type: operationCodes.credit_topup,
         currency: session.currency?.toUpperCase(),
         amount: session.amount_total,
         stripe_payment_intent_id: session.payment_intent,
@@ -171,7 +182,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       });
     }
 
-    console.log(`[StripeWebhook] Created credit transaction for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD, type: ${OPERATION_TYPE.CREDIT_TOPUP}`);
+    console.log(`[StripeWebhook] Created credit transaction for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD, type: ${operationCodes.credit_topup}`);
   }
 
   // Check if this is a product purchase
@@ -180,29 +191,54 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     const quantity = parseInt(session.metadata?.quantity);
     const unitPrice = Math.floor((session.amount_total || 0) / quantity);
 
-    // Create purchase record
-    const { error: purchaseError } = await supabase
-      .from('user_purchases')
+    // Get status codes
+    const statusCodes = await getCodes(supabase, 'order_status');
+
+    // Create order record
+    const orderNumber = generateOrderNumber();
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
       .insert({
+        order_number: orderNumber,
         user_info_id: userInfo.id,
-        product_id: productId,
-        stripe_payment_intent_id: session.payment_intent,
-        stripe_checkout_session_id: session.id,
-        status: ORDER_STATUS.PAID,
-        quantity,
-        unit_price_cents: unitPrice,
+        status_code: statusCodes.PAID,
         total_amount_cents: session.amount_total,
-        currency: session.currency?.toUpperCase()
+        currency: session.currency?.toUpperCase() || 'SGD',
+        payment_method: 'stripe_checkout',
+        stripe_balance_transaction_id: session.id,
+        paid_at: new Date().toISOString(),
+        notes: `Stripe checkout purchase - External fulfillment`
       })
       .select()
       .single();
-    if (purchaseError) {
+
+    if (orderError) {
       throw createError({
         statusCode: 500,
-        statusMessage: `Failed to create purchase record for user ${userInfo.id}`
+        statusMessage: `Failed to create order record for user ${userInfo.id}`
       });
     }
-    console.log(`[StripeWebhook] Processed checkout session and user purchase for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD`);
+
+    // Create order item
+    const { error: itemError } = await supabase
+      .from('order_items')
+      .insert({
+        order_id: order.id,
+        product_id: productId,
+        quantity,
+        unit_price_cents: unitPrice,
+        total_price_cents: session.amount_total,
+        status_code: statusCodes.PAID // Order items start as paid since payment processed
+      });
+
+    if (itemError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Failed to create order item for order ${order.id}`
+      });
+    }
+
+    console.log(`[StripeWebhook] Processed checkout session and created order ${order.order_number} for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD`);
   }
 }
 
@@ -215,6 +251,9 @@ async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Str
     console.log('Cash balance transaction has no customer, skipping');
     return;
   }
+
+  // Get operation codes
+  const operationCodes = await getCodes(supabase, 'operation_type');
 
   // Find user by payment_customer_id
   const { data: userInfo, error } = await supabase
@@ -232,11 +271,11 @@ async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Str
 
   // Parse transfer information from description
   const description = transaction.description || '';
-  let transactionType = OPERATION_TYPE.BALANCE_ADJUSTMENT;
+  let transactionType = operationCodes.balance_adjustment;
   let transferMetadata = {};
 
   if (description.includes('Transfer') && description.includes('credits to child')) {
-    transactionType = OPERATION_TYPE.TRANSFER_OUT;
+    transactionType = operationCodes.transfer_out;
     // Extract child info from description if available
     const childMatch = description.match(/Transfer (\d+) credits to child/);
     if (childMatch) {
@@ -246,7 +285,7 @@ async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Str
       };
     }
   } else if (description.includes('Received') && description.includes('credits from parent')) {
-    transactionType = OPERATION_TYPE.TRANSFER_IN;
+    transactionType = operationCodes.transfer_in;
     // Extract parent info from description if available
     const parentMatch = description.match(/Received (\d+) credits from parent/);
     if (parentMatch) {

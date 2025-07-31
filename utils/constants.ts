@@ -13,31 +13,8 @@ export const STRIPE_LOOKUP_KEYS = {
   EDDY_MAX_YEARLY: 'EDDY_MAX_YEARLY',
 };
 
-export enum OPERATION_TYPE {
-  CREDIT_TOPUP = 'credit_topup',
-  TRANSFER_OUT = 'transfer_out',
-  TRANSFER_IN = 'transfer_in',
-  BALANCE_ADJUSTMENT = 'balance_adjustment',
-}
+// OPERATION_TYPE enum removed - now using database-driven codes table (category='operation_type')
+// Access operation types via codeService.getOperationTypeCodes() instead of hardcoded constants
 
-export const ORDER_STATUS = {
-  // Standard order statuses
-  PAID: 'paid',
-  PROCESSING: 'processing',
-  SHIPPED: 'shipped',
-  IN_TRANSIT: 'in_transit',
-  DELIVERED: 'delivered',
-
-  // Product-specific statuses
-  RETURNED: 'returned',
-  FAILED_TO_DELIVER: 'failed_to_deliver',
-
-  // Payment change statuses
-  REFUND_REQUESTED: 'refund_requested',
-  REFUND_IN_PROGRESS: 'refund_in_progress',
-  REFUNDED: 'refunded',
-
-  CANCEL_REQUESTED: 'cancel_requested',
-  CANCEL_IN_PROGRESS: 'cancel_in_progress',
-  CANCELLED: 'cancelled',
-};
+// ORDER_STATUS constants removed - now using database-driven codes table (category='order_status')  
+// Access statuses via codeService.getOrderStatusCodes() instead of hardcoded constants

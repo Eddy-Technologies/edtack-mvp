@@ -1,6 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
-import { OPERATION_TYPE } from '~~/utils/constants';
+import { getCodes } from '~~/server/services/codeService';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -27,10 +27,9 @@ export default defineEventHandler(async (event) => {
     }
 
     // Extract metadata from session
-    const { recipient_customer_id, amount, credits } = session.metadata || {};
+    const { recipient_customer_id, amount } = session.metadata || {};
 
-    const creditsAmount = parseInt(credits || '0');
-    const usdAmount = parseInt(amount || '0');
+    const sgdAmount = parseInt(amount || '0');
 
     // Add credits to recipient's Stripe Customer Balance
     const recipientCustomerId = recipient_customer_id || session.customer as string;
@@ -46,37 +45,37 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-      // Validate we have credits to add
-      if (creditsAmount <= 0) {
-        throw new Error(`Invalid credits amount: ${creditsAmount}`);
+      // Validate we have amount to add
+      if (sgdAmount <= 0) {
+        throw new Error(`Invalid SGD amount: ${sgdAmount}`);
       }
 
-      // Convert USD amount to cents for Stripe balance transaction
+      // Convert SGD amount to cents for Stripe balance transaction
       // Note: For customer balance, positive amount = credit added to customer
-      const usdAmountInCents = usdAmount * 100;
+      const sgdAmountInCents = sgdAmount * 100;
 
-      if (usdAmountInCents <= 0) {
-        throw new Error(`Invalid USD amount in cents: ${usdAmountInCents}`);
+      if (sgdAmountInCents <= 0) {
+        throw new Error(`Invalid SGD amount in cents: ${sgdAmountInCents}`);
       }
 
-      // Add credit to Stripe Customer Balance
+      // Add SGD balance to Stripe Customer Balance
       // Positive amount = customer gets store credit
       const balanceTransaction = await stripe.customers.createBalanceTransaction(recipientCustomerId, {
-        amount: usdAmountInCents,
+        amount: sgdAmountInCents,
         currency: 'sgd',
-        description: `Top-up: $${usdAmount} SGD → ${creditsAmount} credits`,
+        description: `Top-up: $${sgdAmount} SGD`,
         metadata: {
-          operation_type: OPERATION_TYPE.CREDIT_TOPUP,
+          operation_type: (await getCodes(supabase, 'operation_type')).credit_topup,
           payment_intent_id: typeof session.payment_intent === 'string' ?
             session.payment_intent :
             session.payment_intent?.id || '',
-          credits_awarded: creditsAmount.toString()
+          sgd_amount: sgdAmount.toString()
         }
       });
 
-      console.log(`Successfully added ${usdAmountInCents} cents (${usdAmount} SGD) to customer ${recipientCustomerId}. Balance transaction ID: ${balanceTransaction.id}`);
+      console.log(`Successfully added ${sgdAmountInCents} cents (${sgdAmount} SGD) to customer ${recipientCustomerId}. Balance transaction ID: ${balanceTransaction.id}`);
     } catch (balanceError) {
-      console.error('Failed to add credits to Stripe balance:', balanceError);
+      console.error('Failed to add SGD balance to Stripe balance:', balanceError);
       // Continue anyway - webhook will handle the transaction record
     }
 
@@ -84,7 +83,7 @@ export default defineEventHandler(async (event) => {
     // This endpoint only handles Stripe customer balance operations
 
     // Redirect to dashboard with success message
-    const redirectUrl = `/dashboard?tab=credits&success=true&credits=${creditsAmount}&amount=${usdAmount}`;
+    const redirectUrl = `/dashboard?tab=credits&success=true&amount=${sgdAmount}`;
     return sendRedirect(event, redirectUrl);
   } catch (error) {
     console.error('Failed to process payment success:', error);
