@@ -38,6 +38,8 @@ LEFT JOIN app_users appu ON ui.app_user_id = appu.id;
 
   -- Drop function (if exists) 
   DROP FUNCTION IF EXISTS public.handle_new_user();
+  DROP FUNCTION IF EXISTS public.handle_new_user_info() CASCADE;
+    DROP FUNCTION IF EXISTS public.update_user_info_with_relations() CASCADE;
 
 -- RPC function to atomically update user_infos with related tables
 CREATE OR REPLACE FUNCTION public.update_user_info_with_relations(
