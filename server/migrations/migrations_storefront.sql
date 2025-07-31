@@ -78,10 +78,6 @@ CREATE TABLE IF NOT EXISTS order_items (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Enable Row Level Security (RLS) on new tables
-ALTER TABLE products ENABLE ROW LEVEL SECURITY;
-ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
-ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON products TO service_role;
