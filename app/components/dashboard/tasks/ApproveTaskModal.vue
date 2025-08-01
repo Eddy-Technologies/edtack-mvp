@@ -107,8 +107,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'close'): void;
-  (e: 'task-reviewed'): void;
+  (e: 'close' | 'task-reviewed'): void;
 }>();
 
 // Form state
