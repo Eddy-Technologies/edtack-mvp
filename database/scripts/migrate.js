@@ -66,53 +66,53 @@ async function runMigrations() {
       'level_types.sql',
       'codes.sql',
       'subjects.sql',
-      
+
       // User-related tables
-      'user_infos.sql',          // references level_types
-      'user_roles.sql',          // references user_infos, roles
-      'user_credits.sql',        // references user_infos
-      'parent_child.sql',        // references user_infos
-      
+      'user_infos.sql', // references level_types
+      'user_roles.sql', // references user_infos, roles
+      'user_credits.sql', // references user_infos
+      'parent_child.sql', // references user_infos
+
       // Content tables
-      'syllabus.sql',            // references subjects
-      'questions.sql',           // references syllabus
-      'question_options.sql',    // references questions
+      'syllabus.sql', // references subjects
+      'questions.sql', // references syllabus
+      'question_options.sql', // references questions
       'question_correct_answers.sql', // references questions, question_options
-      
+
       // User interaction tables
-      'user_question_attempts.sql',   // references user_infos, questions
-      'user_question_answers.sql',    // references user_question_attempts, question_options
-      
+      'user_question_attempts.sql', // references user_infos, questions
+      'user_question_answers.sql', // references user_question_attempts, question_options
+
       // Commerce tables
-      'products.sql',            // no dependencies
-      'orders.sql',              // references user_infos
-      'order_items.sql',         // references orders, products
-      'wishlists.sql',           // references user_infos, products
-      
+      'products.sql', // no dependencies
+      'orders.sql', // references user_infos
+      'order_items.sql', // references orders, products
+      'wishlists.sql', // references user_infos, products
+
       // Task and transaction tables
-      'user_tasks.sql',          // references user_infos
+      'user_tasks.sql', // references user_infos
       'credit_transactions.sql', // references user_infos
-      
+
       // Event tracking
       'stripe_webhook_events.sql', // no dependencies
-      
+
       // Views and functions (must be last)
       'functions.sql'
     ];
 
     // Verify all files exist
-    const existingFiles = fs.readdirSync(tablesDir).filter(file => file.endsWith('.sql'));
-    const missingFiles = orderedFiles.filter(file => !existingFiles.includes(file));
-    const extraFiles = existingFiles.filter(file => !orderedFiles.includes(file));
-    
+    const existingFiles = fs.readdirSync(tablesDir).filter((file) => file.endsWith('.sql'));
+    const missingFiles = orderedFiles.filter((file) => !existingFiles.includes(file));
+    const extraFiles = existingFiles.filter((file) => !orderedFiles.includes(file));
+
     if (missingFiles.length > 0) {
       throw new Error(`Missing expected files: ${missingFiles.join(', ')}`);
     }
-    
+
     if (extraFiles.length > 0) {
       log(`⚠️  Found unexpected files (will be skipped): ${extraFiles.join(', ')}`, 'yellow');
     }
-    
+
     const files = orderedFiles;
 
     if (files.length === 0) {
