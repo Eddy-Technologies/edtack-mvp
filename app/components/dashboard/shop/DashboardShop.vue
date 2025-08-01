@@ -1,118 +1,6 @@
 <template>
   <div>
     <div>
-      <!-- Header Section -->
-      <div class="flex flex-wrap items-center mb-6 justify-end">
-        <div class="flex items-center space-x-4">
-          <!-- Credit Balance Display -->
-          <div class="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-4 py-2">
-            <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full mr-3">
-              <UIcon name="i-lucide-coins" class="text-blue-600" size="18" />
-            </div>
-            <div>
-              <p class="text-xs text-gray-600 font-medium">Available Credits</p>
-              <p class="text-lg font-bold text-blue-700">{{ formattedBalance }}</p>
-            </div>
-          </div>
-          <!-- View Toggle -->
-          <div class="flex bg-gray-100 rounded-lg p-1">
-            <button
-              :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'icon' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
-              @click="viewMode = 'icon'"
-            >
-              <div class="flex items-center justify-center w-4 h-4">
-                <UIcon name="i-lucide-grid-3x3" size="16" />
-              </div>
-            </button>
-            <button
-              :class="['px-3 py-1 rounded text-sm transition-colors', viewMode === 'list' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
-              @click="viewMode = 'list'"
-            >
-              <div class="flex items-center justify-center w-4 h-4">
-                <UIcon name="i-lucide-menu" size="16" />
-              </div>
-            </button>
-          </div>
-
-          <!-- Cart Icon -->
-          <div ref="cartDropdownRef" class="relative">
-            <Button
-              class="flex items-center px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-              icon="i-lucide-shopping-cart"
-              @click="showCart = !showCart"
-            >
-              Cart ({{ cart.length }})
-              <span v-if="cartTotal > 0" class="ml-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
-                S${{ (cartTotal).toFixed(2) }}
-              </span>
-            </Button>
-
-            <!-- Cart Dropdown -->
-            <div v-if="showCart" class="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border z-50">
-              <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-900 mb-3">Shopping Cart</h3>
-
-                <div v-if="cart.length === 0" class="text-center py-8">
-                  <div class="flex items-center justify-center w-12 h-12 mx-auto text-gray-300 mb-3">
-                    <UIcon name="i-lucide-shopping-cart" size="48" />
-                  </div>
-                  <p class="text-gray-500 text-sm">Your cart is empty</p>
-                </div>
-
-                <div v-else class="space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
-                  <div v-for="item in cart" :key="item.id" class="flex items-center space-x-3 p-2 border rounded-lg">
-                    <img :src="item.image" :alt="item.name" class="w-10 h-10 object-cover rounded">
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-medium text-gray-900 truncate">{{ item.name }}</p>
-                      <p class="text-xs text-gray-600">S${{ (item.price).toFixed(2) }} × {{ item.quantity }}</p>
-                    </div>
-                    <div class="flex items-center space-x-1">
-                      <Button icon="i-lucide-minus" class="p-1 text-gray-400 hover:text-gray-600" @click="updateCartQuantity(item, -1)" />
-                      <span class="text-sm font-medium">{{ item.quantity }}</span>
-                      <Button icon="i-lucide-plus" class="p-1 text-gray-400 hover:text-gray-600" @click="updateCartQuantity(item, 1)" />
-                      <Button
-                        icon="i-lucide-trash-2"
-                        class="p-1 text-red-400 hover:text-red-600"
-                        @click="removeFromCart(item)"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div v-if="cart.length > 0" class="mt-4 pt-3 border-t">
-                  <div class="flex justify-between items-center mb-3">
-                    <span class="font-semibold text-gray-900">Total:</span>
-                    <span class="font-bold text-primary text-lg">S${{ (cartTotal).toFixed(2) }}</span>
-                  </div>
-                  <div class="flex space-x-2">
-                    <Button
-                      variant="primary"
-                      text="Purchase Now"
-                      extra-classes="flex-1"
-                      @clicked="goToCheckout"
-                    />
-                    <Button
-                      variant="secondary-gray"
-                      text="Clear"
-                      @clicked="clearCart"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Wishlist Toggle -->
-          <Button
-            :class="['px-3 py-2 rounded-lg text-sm font-medium transition-colors', showWishlist ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700']"
-            variant="secondary-gray"
-            icon="i-lucide-heart"
-            @click="showWishlist = !showWishlist"
-          >
-            {{ showWishlist ? 'Shop' : 'Wishlist' }} ({{ wishlist.length }})
-          </Button>
-        </div>
-      </div>
 
       <!-- Search and Filters -->
       <div class="mb-6 space-y-4">
@@ -252,9 +140,9 @@
         </button>
       </div>
 
-      <!-- Products Grid (Icon View) -->
+      <!-- Products Grid -->
       <div
-        v-else-if="viewMode === 'icon' && !showWishlist"
+        v-else-if="!showWishlist"
         class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
         <div
@@ -292,23 +180,8 @@
             </span>
           </div>
 
-          <div class="space-y-2">
-            <h3 class="font-semibold text-gray-900 line-clamp-2">{{ item.name }}</h3>
-            <p class="text-sm text-gray-600">{{ item.description }}</p>
-
-            <!-- Rating -->
-            <div class="flex items-center space-x-1">
-              <div class="flex text-yellow-400">
-                <UIcon
-                  v-for="i in 5"
-                  :key="i"
-                  name="i-lucide-star"
-                  :class="['w-4 h-4', i <= item.rating ? 'fill-current text-yellow-400' : 'text-gray-200']"
-                  size="16"
-                />
-              </div>
-              <span class="text-sm text-gray-600">({{ item.reviewCount }})</span>
-            </div>
+          <div class="space-y-3">
+            <h3 class="font-semibold text-gray-900 line-clamp-1">{{ item.name }}</h3>
 
             <!-- Price -->
             <div class="flex items-center space-x-2">
@@ -317,7 +190,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="flex space-x-2 pt-2">
+            <div class="flex space-x-2">
               <Button
                 variant="primary"
                 text="Add to Cart"
@@ -334,89 +207,6 @@
         </div>
       </div>
 
-      <!-- List View -->
-      <div v-else-if="viewMode === 'list' && !showWishlist && !isLoadingProducts && !productsError" class="space-y-4">
-        <div
-          v-for="item in filteredItems"
-          :key="item.id"
-          class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-6 cursor-pointer"
-          @click="openProductModal(item)"
-        >
-          <div class="flex items-center space-x-6">
-            <div class="relative flex-shrink-0">
-              <img
-                :src="item.image"
-                :alt="item.name"
-                class="w-24 h-24 object-cover rounded-lg"
-              >
-              <button
-                class="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
-                @click.stop="toggleWishlist(item)"
-              >
-                <div class="flex items-center justify-center w-4 h-4">
-                  <UIcon
-                    name="i-lucide-heart"
-                    :class="['w-4 h-4', isInWishlist(item.id) ? 'text-red-500 fill-current' : 'text-gray-400']"
-                    size="16"
-                  />
-                </div>
-              </button>
-            </div>
-
-            <div class="flex-1 min-w-0">
-              <div class="flex items-start justify-between">
-                <div class="flex-1">
-                  <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ item.name }}</h3>
-                  <p class="text-gray-600 text-sm mb-2">{{ item.description }}</p>
-
-                  <!-- Rating and Category -->
-                  <div class="flex items-center space-x-4 mb-3">
-                    <div class="flex items-center space-x-1">
-                      <div class="flex text-yellow-400">
-                        <UIcon
-                          v-for="i in 5"
-                          :key="i"
-                          name="i-lucide-star"
-                          :class="['w-4 h-4', i <= item.rating ? 'fill-current text-yellow-400' : 'text-gray-200']"
-                          size="16"
-                        />
-                      </div>
-                      <span class="text-sm text-gray-600">({{ item.reviewCount }})</span>
-                    </div>
-                    <span class="bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">
-                      {{ item.category }}
-                    </span>
-                  </div>
-
-                  <!-- Price -->
-                  <div class="flex items-center space-x-2">
-                    <span class="text-xl font-bold text-primary">S${{ (item.price).toFixed(2) }}</span>
-                    <span v-if="item.originalPrice" class="text-lg text-gray-500 line-through">S${{ (item.originalPrice).toFixed(2) }}</span>
-                    <span v-if="item.originalPrice" class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                      -{{ Math.round((1 - item.price / item.originalPrice) * 100) }}%
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="flex flex-col space-y-2 ml-4">
-                  <Button
-                    variant="primary"
-                    text="Add to Cart"
-                    @clicked="addToCart(item)"
-                  />
-                </div>
-              </div>
-
-              <!-- Messages -->
-              <div class="mt-3">
-                <p v-if="purchaseMessage === item.id" class="text-green-600 text-sm">Added to Cart!</p>
-                <p v-if="insufficientFundsMessage === item.id" class="text-red-600 text-sm">Insufficient Funds!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Pagination -->
       <div v-if="!showWishlist && filteredItems.length > itemsPerPage" class="flex justify-center mt-8">
@@ -462,6 +252,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from '../../common/Button.vue';
 import ProductModal from './ProductModal.vue';
 
@@ -470,12 +261,13 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'credits-updated', updatedCredits: number): void;
   (e: 'add-to-cart', updatedCart: any[]): void;
 }>();
 
+const router = useRouter();
+
 // Use unified credit management for balance updates
-const { handleTransaction, hasSufficientBalance, formattedBalance, fetchCredits } = useCredit();
+const { formattedBalance, fetchCredits } = useCredit();
 
 // Products data from database (shop products only)
 const items = ref<any[]>([]);
@@ -499,25 +291,40 @@ const loadProducts = async () => {
   }
 };
 
+const loadWishlist = async () => {
+  try {
+    const response = await $fetch('/api/wishlist/list');
+    wishlist.value = response.items?.map((item: any) => ({
+      id: item.product.id,
+      name: item.product.name,
+      description: item.product.description,
+      price: item.product.price,
+      originalPrice: item.product.originalPrice,
+      image: item.product.image,
+      category: item.product.category,
+      rating: 0, // Set default values for missing fields
+      reviewCount: 0
+    })) || [];
+    console.log(`[DashboardShop] Loaded ${wishlist.value.length} wishlist items`);
+  } catch (error) {
+    console.error('Failed to load wishlist:', error);
+    wishlist.value = [];
+  }
+};
+
 // Reactive state
 const purchaseMessage = ref<string | null>(null);
 const insufficientFundsMessage = ref<string | null>(null);
-const viewMode = ref<'icon' | 'list'>('icon');
 const searchQuery = ref('');
 const selectedCategory = ref('');
 const priceFilter = ref('');
 const sortBy = ref('name');
 const showWishlist = ref(false);
 const wishlist = ref<any[]>([]);
-const showCart = ref(false);
-const showCheckout = ref(false);
 const showProductModal = ref(false);
 const selectedProduct = ref<any>(null);
 const currentPage = ref(1);
 const itemsPerPage = ref(12);
-
-// Refs for click outside functionality
-const cartDropdownRef = ref<HTMLElement>();
 
 // Categories
 const categories = computed(() => {
@@ -590,93 +397,41 @@ const isInWishlist = (itemId: string) => {
   return wishlist.value.some((item) => item.id === itemId);
 };
 
-const toggleWishlist = (item: any) => {
-  const index = wishlist.value.findIndex((w) => w.id === item.id);
-  if (index > -1) {
-    wishlist.value.splice(index, 1);
-  } else {
-    wishlist.value.push(item);
-  }
-};
-
-// Cart functions
-const updateCartQuantity = (item: any, change: number) => {
-  const updatedCart = [...props.cart];
-  const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
-
-  if (existingItem) {
-    existingItem.quantity += change;
-    if (existingItem.quantity <= 0) {
-      const index = updatedCart.indexOf(existingItem);
-      updatedCart.splice(index, 1);
-    }
-  }
-
-  emit('add-to-cart', updatedCart);
-};
-
-const removeFromCart = (item: any) => {
-  const updatedCart = props.cart.filter((cartItem) => cartItem.id !== item.id);
-  emit('add-to-cart', updatedCart);
-};
-
-const clearCart = () => {
-  emit('add-to-cart', []);
-  showCart.value = false;
-};
-
-const goToCheckout = async () => {
+const toggleWishlist = async (item: any) => {
+  const isCurrentlyInWishlist = isInWishlist(item.id);
+  
   try {
-    if (props.cart.length === 0) {
-      alert('Your cart is empty!');
-      return;
-    }
-
-    // Purchase the entire cart
-    const purchaseResponse = await $fetch('/api/shop/purchase', {
-      method: 'POST',
-      body: {
-        items: props.cart, // Send entire cart array
-        use_credits: true
+    if (isCurrentlyInWishlist) {
+      // Remove from wishlist
+      await $fetch('/api/wishlist/remove', {
+        method: 'POST',
+        body: { product_id: item.id }
+      });
+      const index = wishlist.value.findIndex((w) => w.id === item.id);
+      if (index > -1) {
+        wishlist.value.splice(index, 1);
       }
-    });
-
-    if (purchaseResponse.success) {
-      // Update balance optimistically (amount in cents)
-      const sgdUsedCents = purchaseResponse.details?.totalCostCents || 0;
-      handleTransaction(sgdUsedCents, 'purchase', `Purchase: ${purchaseResponse.details.totalItems} items`);
-
-      // Clear cart after successful purchase
-      emit('add-to-cart', []);
-      showCart.value = false;
-
-      // Show success message
-      alert(`Purchase successful! Order ${purchaseResponse.details.orderNumber}\nTotal: S$${purchaseResponse.details.totalCostSGD} SGD`);
-
-      console.log('Purchase successful:', purchaseResponse.details);
     } else {
-      throw new Error('Purchase failed');
+      // Add to wishlist
+      await $fetch('/api/wishlist/add', {
+        method: 'POST',
+        body: { product_id: item.id }
+      });
+      wishlist.value.push(item);
     }
-  } catch (error: any) {
-    console.error('Checkout failed:', error);
-
-    // Check if it's an insufficient funds error
-    if (error.data?.message?.includes('Insufficient funds')) {
-      alert(`Insufficient funds! ${error.data.message}`);
-    } else {
-      // Show generic error
-      alert('Purchase failed. Please try again.');
-    }
+  } catch (error) {
+    console.error('Failed to update wishlist:', error);
+    // Show error message to user
+    insufficientFundsMessage.value = item.id;
+    setTimeout(() => {
+      insufficientFundsMessage.value = null;
+    }, 2000);
   }
 };
 
-const handlePaymentSuccess = () => {
-  // Clear cart after successful payment
-  emit('add-to-cart', []);
-  showCheckout.value = false;
-
-  // Show success message
-  alert('Payment successful! Thank you for your purchase.');
+// Navigation functions
+const goToCart = () => {
+  router.push('/dashboard?tab=cart');
 };
 
 // Functions
@@ -734,41 +489,16 @@ const clearFilters = () => {
   currentPage.value = 1;
 };
 
-const updateScreenSize = () => {
-  if (typeof window !== 'undefined') {
-    if (window.innerWidth <= 768) {
-      viewMode.value = 'list';
-    } else {
-      viewMode.value = 'icon';
-    }
-  }
-};
-
-// Click outside handler
-const handleClickOutside = (event: Event) => {
-  if (cartDropdownRef.value && !cartDropdownRef.value.contains(event.target as Node)) {
-    showCart.value = false;
-  }
-};
 
 onMounted(() => {
-  if (typeof window !== 'undefined') {
-    updateScreenSize();
-    window.addEventListener('resize', updateScreenSize);
-    document.addEventListener('click', handleClickOutside);
-  }
-
   // Load products from database API
   loadProducts();
+
+  // Load existing wishlist
+  loadWishlist();
 
   // Load user credits
   fetchCredits();
 });
 
-onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', updateScreenSize);
-    document.removeEventListener('click', handleClickOutside);
-  }
-});
 </script>

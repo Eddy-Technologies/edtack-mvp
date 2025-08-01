@@ -59,9 +59,7 @@ export default defineEventHandler(async (event) => {
           await handleCheckoutCompleted(privilegedSupabase, stripeEvent);
           break;
 
-        case 'customer_cash_balance_transaction.created':
-          await handleCashBalanceTransaction(privilegedSupabase, stripeEvent);
-          break;
+        // Removed customer_cash_balance_transaction handling for internal credit system
 
         default:
           // Don't store unhandled event types
@@ -159,7 +157,33 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
 
   // Check if this is a credit purchase (based on metadata or line items)
   if (session.metadata?.operation_type === operationCodes.credit_topup || session.mode === 'payment') {
-    // Create credit transaction
+    // Add credits to user's internal balance
+    const { error: creditUpdateError } = await supabase
+      .from('user_credits')
+      .update({
+        credit: supabase.raw(`credit + ${session.amount_total}`)
+      })
+      .eq('user_info_id', userInfo.id);
+
+    if (creditUpdateError) {
+      console.error('Failed to update internal credits:', creditUpdateError);
+      // Try to create the record if it doesn't exist
+      const { error: insertError } = await supabase
+        .from('user_credits')
+        .insert({
+          user_info_id: userInfo.id,
+          credit: session.amount_total
+        });
+
+      if (insertError) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: `Failed to add credits to user ${userInfo.id}`
+        });
+      }
+    }
+
+    // Create credit transaction record
     const { error: creditTransactionError } = await supabase
       .from('credit_transactions')
       .insert({
@@ -167,14 +191,16 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
         transaction_type: operationCodes.credit_topup,
         currency: session.currency?.toUpperCase(),
         amount: session.amount_total,
+        description: `Credit purchase via Stripe`,
+        is_internal: true,
         stripe_payment_intent_id: session.payment_intent,
         stripe_checkout_session_id: session.id,
-        description: `Credit purchase via Stripe`,
         metadata: JSON.stringify({
           stripe_session: session.id,
           amount_sgd_cents: session.amount_total,
         })
       });
+      
     if (creditTransactionError) {
       throw createError({
         statusCode: 500,
@@ -182,144 +208,145 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       });
     }
 
-    console.log(`[StripeWebhook] Created credit transaction for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD, type: ${operationCodes.credit_topup}`);
+    console.log(`[StripeWebhook] Added ${session.amount_total} cents to internal credits for user ${userInfo.id}, type: ${operationCodes.credit_topup}`);
   }
 
-  // Check if this is a product purchase
-  if (session.metadata?.product_id) {
-    const productId = session.metadata.product_id;
-    const quantity = parseInt(session.metadata?.quantity);
-    const unitPrice = Math.floor((session.amount_total || 0) / quantity);
+  // Check if this is a parent-approved credit purchase
+  if (session.metadata?.order_id) {
+    const orderId = session.metadata.order_id;
+    const childUserInfoId = session.metadata.child_user_info_id;
 
     // Get status codes
     const statusCodes = await getCodes(supabase, 'order_status');
 
-    // Create order record
-    const orderNumber = generateOrderNumber();
-    const { data: order, error: orderError } = await supabase
+    // Update existing order to paid status
+    const { error: updateOrderError } = await supabase
       .from('orders')
-      .insert({
-        order_number: orderNumber,
-        user_info_id: userInfo.id,
-        status_code: statusCodes.PAID,
-        total_amount_cents: session.amount_total,
-        currency: session.currency?.toUpperCase() || 'SGD',
-        payment_method: 'stripe_checkout',
-        stripe_balance_transaction_id: session.id,
+      .update({
+        status_code: statusCodes.paid || 'paid',
+        payment_method: 'parent_approved_stripe',
+        stripe_balance_transaction_id: session.payment_intent,
         paid_at: new Date().toISOString(),
-        notes: `Stripe checkout purchase - External fulfillment`
+        notes: supabase.raw(`notes || ' - Parent payment completed via Stripe'`)
       })
-      .select()
+      .eq('id', orderId);
+
+    if (updateOrderError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Failed to update order ${orderId} to paid status`
+      });
+    }
+
+    // Update order items to paid status
+    const { error: updateItemsError } = await supabase
+      .from('order_items')
+      .update({
+        status_code: statusCodes.paid || 'paid'
+      })
+      .eq('order_id', orderId);
+
+    if (updateItemsError) {
+      console.error('Failed to update order items status:', updateItemsError);
+    }
+
+    // Get order total for credit deduction
+    const { data: order } = await supabase
+      .from('orders')
+      .select('total_amount_cents, order_number')
+      .eq('id', orderId)
       .single();
 
-    if (orderError) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: `Failed to create order record for user ${userInfo.id}`
-      });
+    if (order && childUserInfoId) {
+      // Now deduct the reserved credits and remove from reserved
+      const { error: deductError } = await supabase
+        .from('user_credits')
+        .update({
+          credit: supabase.raw(`credit - ${order.total_amount_cents}`),
+          reserved_credit: supabase.raw(`reserved_credit - ${order.total_amount_cents}`)
+        })
+        .eq('user_info_id', childUserInfoId);
+
+      if (deductError) {
+        console.error('Failed to deduct credits after parent payment:', deductError);
+      }
+
+      // Create credit transaction record
+      const operationCodes = await getCodes(supabase, 'operation_type');
+      const { error: transactionError } = await supabase
+        .from('credit_transactions')
+        .insert({
+          user_info_id: childUserInfoId,
+          transaction_type: operationCodes.purchase || 'purchase',
+          amount: -order.total_amount_cents, // Negative for deduction
+          currency: 'SGD',
+          description: `Purchase: ${order.order_number} (Parent approved)`,
+          is_internal: true,
+          stripe_payment_intent_id: session.payment_intent,
+          stripe_checkout_session_id: session.id,
+          metadata: JSON.stringify({
+            order_id: orderId,
+            order_number: order.order_number,
+            parent_approved: true,
+            parent_user_info_id: session.metadata.parent_user_info_id
+          })
+        });
+
+      if (transactionError) {
+        console.error('Failed to create credit transaction:', transactionError);
+      }
     }
 
-    // Create order item
-    const { error: itemError } = await supabase
-      .from('order_items')
-      .insert({
-        order_id: order.id,
-        product_id: productId,
-        quantity,
-        unit_price_cents: unitPrice,
-        total_price_cents: session.amount_total,
-        status_code: statusCodes.PAID // Order items start as paid since payment processed
-      });
+    console.log(`[StripeWebhook] Parent approved purchase completed for order ${orderId}: ${session.amount_total} cents`);
+  } 
+  // Check if this is a direct product purchase (not parent-approved)
+  else if (session.metadata?.user_info_id && session.metadata?.operation_type === operationCodes.purchase) {
+    // This is a direct purchase (use_credits = false)
+    // Find the pending order by user and amount
+    const { data: pendingOrder } = await supabase
+      .from('orders')
+      .select('id, order_number')
+      .eq('user_info_id', userInfo.id)
+      .eq('status_code', 'pending_payment')
+      .eq('total_amount_cents', session.amount_total)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
 
-    if (itemError) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: `Failed to create order item for order ${order.id}`
-      });
+    if (pendingOrder) {
+      // Get status codes
+      const statusCodes = await getCodes(supabase, 'order_status');
+
+      // Update order to paid
+      const { error: updateError } = await supabase
+        .from('orders')
+        .update({
+          status_code: statusCodes.paid || 'paid',
+          stripe_balance_transaction_id: session.payment_intent,
+          paid_at: new Date().toISOString(),
+          notes: supabase.raw(`notes || ' - Direct payment completed via Stripe'`)
+        })
+        .eq('id', pendingOrder.id);
+
+      if (updateError) {
+        console.error('Failed to update direct purchase order:', updateError);
+      }
+
+      // Update order items
+      const { error: updateItemsError } = await supabase
+        .from('order_items')
+        .update({
+          status_code: statusCodes.paid || 'paid'
+        })
+        .eq('order_id', pendingOrder.id);
+
+      if (updateItemsError) {
+        console.error('Failed to update order items for direct purchase:', updateItemsError);
+      }
+
+      console.log(`[StripeWebhook] Direct purchase completed for order ${pendingOrder.order_number}: ${session.amount_total} cents`);
     }
-
-    console.log(`[StripeWebhook] Processed checkout session and created order ${order.order_number} for user ${userInfo.id}: ${session.amount_total} cents or ${session.amount_total / 100} SGD`);
   }
 }
 
-// Handle customer cash balance transactions (transfers)
-async function handleCashBalanceTransaction(supabase: SupabaseClient, event: Stripe.Event) {
-  console.log('Handling customer_cash_balance_transaction.created event');
-  const transaction = event.data.object as Stripe.CustomerCashBalanceTransaction;
-
-  if (!transaction.customer) {
-    console.log('Cash balance transaction has no customer, skipping');
-    return;
-  }
-
-  // Get operation codes
-  const operationCodes = await getCodes(supabase, 'operation_type');
-
-  // Find user by payment_customer_id
-  const { data: userInfo, error } = await supabase
-    .from('user_infos')
-    .select('id')
-    .eq('payment_customer_id', transaction.customer as string)
-    .single();
-
-  if (error || !userInfo) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: `User not found for payment_customer_id ${transaction.customer}`
-    });
-  }
-
-  // Parse transfer information from description
-  const description = transaction.description || '';
-  let transactionType = operationCodes.balance_adjustment;
-  let transferMetadata = {};
-
-  if (description.includes('Transfer') && description.includes('credits to child')) {
-    transactionType = operationCodes.transfer_out;
-    // Extract child info from description if available
-    const childMatch = description.match(/Transfer (\d+) credits to child/);
-    if (childMatch) {
-      transferMetadata = {
-        transfer_type: 'parent_to_child',
-        credits_transferred: childMatch[1]
-      };
-    }
-  } else if (description.includes('Received') && description.includes('credits from parent')) {
-    transactionType = operationCodes.transfer_in;
-    // Extract parent info from description if available
-    const parentMatch = description.match(/Received (\d+) credits from parent/);
-    if (parentMatch) {
-      transferMetadata = {
-        transfer_type: 'parent_to_child',
-        credits_received: parentMatch[1]
-      };
-    }
-  }
-
-  // Create credit transaction record
-  const { error: creditTransactionError } = await supabase
-    .from('credit_transactions')
-    .insert({
-      user_info_id: userInfo.id,
-      transaction_type: transactionType,
-      amount: transaction.net_amount,
-      currency: transaction.currency?.toUpperCase() || 'SGD',
-      stripe_payment_intent_id: transaction.id,
-      stripe_checkout_session_id: transaction.id,
-      description: description,
-      metadata: JSON.stringify({
-        stripe_customer_id: transaction.customer,
-        currency: transaction.currency,
-        ...transferMetadata
-      })
-    });
-
-  if (creditTransactionError) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: `Failed to create credit transaction for user ${userInfo.id}`
-    });
-  }
-
-  console.log(`[StripeWebhook] Created credit transaction for user ${userInfo.id}: ${transaction.net_amount} ${transaction.currency}, type: ${transactionType}`);
-}
+// Note: handleCashBalanceTransaction removed - no longer needed for internal credit system

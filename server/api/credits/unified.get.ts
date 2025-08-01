@@ -1,10 +1,8 @@
-import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
-    const stripe = getStripe();
 
     // Get authenticated user
     const { data: { user } } = await supabase.auth.getUser();
@@ -29,6 +27,33 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Get user's internal credit balance
+    let { data: userCredits } = await supabase
+      .from('user_credits')
+      .select('credit, updated_at')
+      .eq('user_info_id', userInfo.id)
+      .single();
+
+    // If no credit record exists, create one
+    if (!userCredits) {
+      const { data: newCredit, error: insertError } = await supabase
+        .from('user_credits')
+        .insert({
+          user_info_id: userInfo.id,
+          credit: 0
+        })
+        .select('credit, updated_at')
+        .single();
+
+      if (insertError) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to initialize credit balance'
+        });
+      }
+      userCredits = newCredit;
+    }
+
     // Check if user has children (is a parent)
     const { data: parentWithChildren } = await supabase
       .from('user_infos')
@@ -43,51 +68,80 @@ export default defineEventHandler(async (event) => {
       .single();
 
     const hasChildren = parentWithChildren?.parent_child && parentWithChildren.parent_child.length > 0;
-    const parentCustomer = await stripe.customers.search({
-      query: `email:'${user.email}'`,
-      limit: 1,
-    });
 
     if (hasChildren) {
-      const childrenCustomer = await Promise.all(parentWithChildren.parent_child.map(async (child) => {
-        const customer = await stripe.customers.search({
-          query: `email:'${child.all_users.email}'`,
-          limit: 1,
-        });
+      // Get children's credit balances
+      const childUserInfoIds = parentWithChildren.parent_child.map(child => child.child_user_info_id);
+      
+      const { data: childrenCredits } = await supabase
+        .from('user_credits')
+        .select('user_info_id, credit, updated_at')
+        .in('user_info_id', childUserInfoIds);
+
+      const childrenData = await Promise.all(parentWithChildren.parent_child.map(async (child) => {
+        const childCredit = childrenCredits?.find(c => c.user_info_id === child.child_user_info_id);
+        
+        // If child doesn't have credit record, create one
+        if (!childCredit) {
+          const { data: newChildCredit } = await supabase
+            .from('user_credits')
+            .insert({
+              user_info_id: child.child_user_info_id,
+              credit: 0
+            })
+            .select('credit, updated_at')
+            .single();
+
+          return {
+            userInfoId: child.child_user_info_id,
+            email: child.all_users.email,
+            firstName: child.all_users.first_name,
+            lastName: child.all_users.last_name,
+            balance: 0,
+            currency: 'SGD',
+            updatedAt: newChildCredit?.updated_at
+          };
+        }
+
         return {
           userInfoId: child.child_user_info_id,
           email: child.all_users.email,
           firstName: child.all_users.first_name,
           lastName: child.all_users.last_name,
-          customerId: customer?.data[0]?.id || null,
-          balance: customer?.data[0]?.balance || 0,
-          currency: customer?.data[0]?.currency || 'SGD'
+          balance: childCredit.credit,
+          currency: 'SGD',
+          updatedAt: childCredit.updated_at
         };
       }));
 
       return {
         user: {
           email: user.email,
-          customerId: parentCustomer?.data[0]?.id,
-          balance: parentCustomer?.data[0]?.balance,
-          currency: parentCustomer?.data[0]?.currency
+          balance: userCredits.credit,
+          currency: 'SGD',
+          updatedAt: userCredits.updated_at
         },
-        children: childrenCustomer,
+        children: childrenData,
         fetchedAt: new Date().toISOString()
       };
     } else {
       return {
         user: {
           email: user.email,
-          customerId: parentCustomer?.data[0]?.id,
-          balance: parentCustomer?.data[0]?.balance,
-          currency: parentCustomer?.data[0]?.currency
+          balance: userCredits.credit,
+          currency: 'SGD',
+          updatedAt: userCredits.updated_at
         },
         fetchedAt: new Date().toISOString()
       };
     }
   } catch (error) {
     console.error('Failed to get unified credit data:', error);
+    
+    if (error.statusCode) {
+      throw error;
+    }
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Failed to retrieve credit data'

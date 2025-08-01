@@ -7,25 +7,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import DashboardShop from './shop/DashboardShop.vue';
 
-// Reactive cart
-const cart = ref([]);
+const props = defineProps<{
+  cart: Array<any>;
+}>();
 
-// Update cart after an item is added
+const emit = defineEmits<{
+  (e: 'add-to-cart', updatedCart: any[]): void;
+}>();
+
+// Pass through cart updates to parent
 const addToCart = (updatedCart: any[]) => {
-  cart.value = updatedCart;
-};
-
-// Clear all items
-const clearCart = () => {
-  cart.value = [];
-};
-
-// Update cart from child (e.g., delete/edit)
-const updateCart = (updatedCart: any[]) => {
-  cart.value = updatedCart;
+  emit('add-to-cart', updatedCart);
 };
 </script>
 

@@ -885,6 +885,149 @@ export type Database = {
           },
         ];
       };
+      task_credit: {
+        Row: {
+          approval_notes: string | null;
+          approved_at: string | null;
+          category: string | null;
+          child_user_info_id: string;
+          completed_at: string | null;
+          completion_notes: string | null;
+          created_at: string | null;
+          credit: number;
+          description: string | null;
+          due_date: string | null;
+          id: string;
+          name: string;
+          parent_user_info_id: string;
+          priority: string | null;
+          status: string;
+          subtitle: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          approval_notes?: string | null;
+          approved_at?: string | null;
+          category?: string | null;
+          child_user_info_id: string;
+          completed_at?: string | null;
+          completion_notes?: string | null;
+          created_at?: string | null;
+          credit?: number;
+          description?: string | null;
+          due_date?: string | null;
+          id?: string;
+          name: string;
+          parent_user_info_id: string;
+          priority?: string | null;
+          status?: string;
+          subtitle?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          approval_notes?: string | null;
+          approved_at?: string | null;
+          category?: string | null;
+          child_user_info_id?: string;
+          completed_at?: string | null;
+          completion_notes?: string | null;
+          created_at?: string | null;
+          credit?: number;
+          description?: string | null;
+          due_date?: string | null;
+          id?: string;
+          name?: string;
+          parent_user_info_id?: string;
+          priority?: string | null;
+          status?: string;
+          subtitle?: string | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'task_credit_child_user_info_id_fkey';
+            columns: ['child_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'task_credit_child_user_info_id_fkey';
+            columns: ['child_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'task_credit_child_user_info_id_fkey';
+            columns: ['child_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'task_credit_parent_user_info_id_fkey';
+            columns: ['parent_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'task_credit_parent_user_info_id_fkey';
+            columns: ['parent_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'task_credit_parent_user_info_id_fkey';
+            columns: ['parent_user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_credits: {
+        Row: {
+          credit: number;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          credit?: number;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          credit?: number;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_credits_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: true;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'user_credits_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: true;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'user_credits_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: true;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       user_emails: {
         Row: {
           created_at: string | null;
@@ -1205,6 +1348,59 @@ export type Database = {
           },
           {
             foreignKeyName: 'user_roles_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      wishlists: {
+        Row: {
+          created_at: string | null;
+          id: string;
+          product_id: string;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: string;
+          product_id: string;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: string;
+          product_id?: string;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'wishlists_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'wishlists_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'all_users';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'wishlists_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'leaderboard';
+            referencedColumns: ['user_info_id'];
+          },
+          {
+            foreignKeyName: 'wishlists_user_info_id_fkey';
             columns: ['user_info_id'];
             isOneToOne: false;
             referencedRelation: 'user_infos';

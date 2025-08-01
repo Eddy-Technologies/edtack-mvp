@@ -103,54 +103,109 @@ export default defineEventHandler(async (event) => {
       };
     });
 
-    // Check if user has Stripe customer and sufficient balance
-    if (use_credits && userInfo.payment_customer_id) {
-      const customer = await stripe.customers.retrieve(userInfo.payment_customer_id);
-      console.log(customer);
+    // Handle payment flow based on use_credits parameter
+    let orderStatus;
+    let paymentMethod;
+    let paidAt = null;
+    let stripeCheckoutUrl = null;
 
-      if (customer.balance < totalCostCents) {
+    if (use_credits) {
+      // FLOW 1: Credit Purchase → Parent Approval Required
+      
+      // Get user's internal credit balance (including reserved credits)
+      const { data: userCredits, error: creditsError } = await supabase
+        .from('user_credits')
+        .select('credit, reserved_credit')
+        .eq('user_info_id', userInfo.id)
+        .single();
+
+      if (creditsError || !userCredits) {
         throw createError({
           statusCode: 400,
-          statusMessage: `Insufficient funds. Required: $${(totalCostCents / 100).toFixed(2)} SGD, Available: $${(customer.balance / 100).toFixed(2)} SGD`
+          statusMessage: 'User credit balance not found. Please contact support.'
         });
       }
 
-      // Deduct amount from customer balance
-      const itemsDescription = orderItems.length === 1 ?
-        `${orderItems[0].name} (x${orderItems[0].quantity})` :
-        `${orderItems.length} items (${items.reduce((sum, item) => sum + item.quantity, 0)} total)`;
+      const availableCredits = userCredits.credit - (userCredits.reserved_credit || 0);
+      
+      if (availableCredits < totalCostCents) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Insufficient available credits. Required: $${(totalCostCents / 100).toFixed(2)} SGD, Available: $${(availableCredits / 100).toFixed(2)} SGD`
+        });
+      }
 
-      await stripe.customers.createBalanceTransaction(userInfo.payment_customer_id, {
-        amount: -totalCostCents, // Negative amount deducts from balance
-        currency: 'sgd',
-        description: `Purchase: ${itemsDescription}`,
+      // Reserve credits for parent approval (don't deduct yet)
+      const { error: reserveError } = await supabase
+        .from('user_credits')
+        .update({
+          reserved_credit: supabase.raw(`reserved_credit + ${totalCostCents}`)
+        })
+        .eq('user_info_id', userInfo.id);
+
+      if (reserveError) {
+        console.error('Failed to reserve credits:', reserveError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to reserve credits for approval'
+        });
+      }
+
+      orderStatus = statusCodes.pending_parent_approval || 'pending_parent_approval';
+      paymentMethod = 'credits_pending_approval';
+      
+    } else {
+      // FLOW 2: Direct Credit Card Purchase
+      
+      // Create Stripe checkout session
+      const baseUrl = useRuntimeConfig().public.baseUrl;
+      
+      const session = await stripe.checkout.sessions.create({
+        line_items: orderItems.map(item => ({
+          price_data: {
+            currency: 'sgd',
+            unit_amount: item.price_cents,
+            product_data: {
+              name: item.name,
+              metadata: {
+                product_id: item.product_id
+              }
+            }
+          },
+          quantity: item.quantity
+        })),
+        mode: 'payment',
+        success_url: `${baseUrl}/shop/order-success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/shop?cancelled=true`,
         metadata: {
+          user_info_id: userInfo.id,
           operation_type: operationCodes.purchase,
           total_items: orderItems.length.toString(),
-          total_quantity: items.reduce((sum, item) => sum + item.quantity, 0).toString(),
-          order_summary: JSON.stringify(orderItems.map((item) => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price_cents
-          })))
+          total_quantity: items.reduce((sum, item) => sum + item.quantity, 0).toString()
         }
       });
+
+      orderStatus = statusCodes.pending_payment || 'pending_payment';
+      paymentMethod = 'stripe_checkout';
+      stripeCheckoutUrl = session.url;
     }
 
-    // Create order record (replaces user_purchases)
+    // Create order record with appropriate status
     const orderNumber = generateOrderNumber();
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .insert({
         order_number: orderNumber,
         user_info_id: userInfo.id,
-        status_code: statusCodes.paid, // Start as paid since payment already processed
+        status_code: orderStatus,
         total_amount_cents: totalCostCents,
-        currency: 'SGD', // Now explicitly set instead of using default
-        payment_method: use_credits ? 'customer_balance' : 'other', // Now explicitly set
-        stripe_balance_transaction_id: null, // Will be updated after Stripe transaction
-        paid_at: new Date().toISOString(),
-        notes: `Purchase of ${orderItems.length} item${orderItems.length > 1 ? 's' : ''} - External fulfillment`
+        currency: 'SGD',
+        payment_method: paymentMethod,
+        stripe_balance_transaction_id: stripeCheckoutUrl ? null : null, // Will be updated by webhook
+        paid_at: paidAt,
+        notes: use_credits 
+          ? `Credit purchase pending parent approval - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`
+          : `Direct purchase - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''} - External fulfillment`
       })
       .select()
       .single();
@@ -163,14 +218,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Create order items
+    // Create order items with appropriate status
     const orderItemsData = orderItems.map((item) => ({
       order_id: order.id,
       product_id: item.product_id,
       quantity: item.quantity,
       unit_price_cents: item.price_cents,
       total_price_cents: item.subtotal_cents,
-      status_code: statusCodes.paid // Order items start as paid since payment processed
+      status_code: orderStatus // Match order status
     }));
 
     const { error: itemsError } = await supabase
@@ -185,11 +240,40 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Find all parents for notification (if credit purchase)
+    let parentNotifications = null;
+    if (use_credits) {
+      const { data: parents } = await supabase
+        .from('parent_child')
+        .select(`
+          parent_user_info_id,
+          parent_info:user_infos!parent_child_parent_user_info_id_fkey(
+            all_users!user_infos_user_id_fkey(email, first_name, last_name)
+          )
+        `)
+        .eq('child_user_info_id', userInfo.id);
+
+      parentNotifications = parents?.map(p => ({
+        userInfoId: p.parent_user_info_id,
+        email: p.parent_info?.all_users?.email,
+        name: `${p.parent_info?.all_users?.first_name} ${p.parent_info?.all_users?.last_name}`
+      })) || [];
+
+      console.log(`[Purchase] Notifying ${parentNotifications.length} parents about credit purchase approval needed for order ${order.order_number}`);
+    }
+
     return {
       success: true,
       orderId: order.id,
       orderNumber: order.order_number,
-      message: `Successfully purchased ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`,
+      status: orderStatus,
+      requiresParentApproval: use_credits,
+      stripeCheckoutUrl: stripeCheckoutUrl,
+      message: use_credits 
+        ? `Order created! Waiting for parent approval to complete purchase.`
+        : stripeCheckoutUrl 
+          ? `Redirecting to payment...`
+          : `Successfully purchased ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`,
       details: {
         orderNumber: order.order_number,
         items: orderItems,
@@ -197,8 +281,9 @@ export default defineEventHandler(async (event) => {
         totalQuantity: items.reduce((sum, item) => sum + item.quantity, 0),
         totalCostCents,
         totalCostSGD: (totalCostCents / 100).toFixed(2),
-        paymentMethod: use_credits ? 'customer_balance' : 'other',
-        status: statusCodes.paid
+        paymentMethod: paymentMethod,
+        status: orderStatus,
+        parentsToNotify: parentNotifications
       }
     };
   } catch (error) {

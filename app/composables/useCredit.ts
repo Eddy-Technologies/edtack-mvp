@@ -1,21 +1,21 @@
 import { ref, computed } from 'vue';
 
-// Unified credit state - updated for new API structure
+// Unified credit state - updated for internal credit system
 const creditData = ref<{
   user: {
     email: string;
-    customerId: string | null;
     balance: number;
     currency: string;
+    updatedAt: string;
   };
   children?: Array<{
     userInfoId: string;
     email: string;
     firstName: string;
     lastName: string;
-    customerId: string | null;
     balance: number;
     currency: string;
+    updatedAt: string;
   }>;
   fetchedAt: string;
 } | null>(null);
@@ -36,7 +36,6 @@ export const useCredit = () => {
     return `${balanceInDollars.value.toFixed(2)} ${currency}`;
   });
   const currency = computed(() => creditData.value?.user?.currency || 'SGD');
-  const customerId = computed(() => creditData.value?.user?.customerId);
 
   // Family computed values
   const isParent = computed(() => {
@@ -49,7 +48,6 @@ export const useCredit = () => {
       email: child.email,
       firstName: child.firstName,
       lastName: child.lastName,
-      customerId: child.customerId,
       balance: child.balance,
       currency: child.currency,
       name: `${child.firstName} ${child.lastName}`,
@@ -233,7 +231,6 @@ export const useCredit = () => {
     balanceInDollars: readonly(balanceInDollars),
     formattedBalance: readonly(formattedBalance),
     currency: readonly(currency),
-    customerId: readonly(customerId),
 
     // Family data
     isParent: readonly(isParent),
