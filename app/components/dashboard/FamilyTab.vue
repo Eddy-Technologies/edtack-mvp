@@ -86,7 +86,7 @@
               Pending Invitations
             </h2>
           </div>
-          
+
           <div class="divide-y divide-gray-200">
             <div
               v-for="invitation in pendingInvitations"
@@ -98,7 +98,7 @@
                   <div class="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-full flex-shrink-0">
                     <UIcon name="i-lucide-mail" class="text-yellow-700" size="20" />
                   </div>
-                  
+
                   <div class="flex-1 min-w-0">
                     <h3 class="text-lg font-semibold text-gray-900">{{ invitation.email }}</h3>
                     <p class="text-gray-600 mb-2">Invitation sent</p>
@@ -110,7 +110,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="flex items-center space-x-2 ml-4">
                   <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
                     Pending
@@ -309,7 +309,7 @@ const loadFamily = async () => {
       const allMembers = response.familyMembers || [];
       familyMembers.value = allMembers.filter((member: any) => member.status === 'active');
       pendingInvitations.value = allMembers.filter((member: any) => member.status === 'pending');
-      
+
       isParent.value = response.isParent || false;
       totalTasks.value = response.totalTasks || 0;
     } else {

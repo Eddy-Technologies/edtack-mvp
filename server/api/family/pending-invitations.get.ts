@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const formattedInvitations = invitations?.map(invitation => ({
+    const formattedInvitations = invitations?.map((invitation) => ({
       id: invitation.id,
       groupId: invitation.group_id,
       groupName: invitation.groups.name,

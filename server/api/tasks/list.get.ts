@@ -132,8 +132,8 @@ export default defineEventHandler(async (event) => {
       .select('roles(role_name)')
       .eq('user_info_id', userInfo.id);
 
-    const isParent = (createdGroups && createdGroups.length > 0) || 
-                     (userRoles && userRoles.some(ur => ur.roles.role_name === 'PARENT'));
+    const isParent = (createdGroups && createdGroups.length > 0) ||
+      (userRoles && userRoles.some((ur) => ur.roles.role_name === 'PARENT'));
 
     return {
       success: true,

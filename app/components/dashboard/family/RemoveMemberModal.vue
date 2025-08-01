@@ -9,8 +9,8 @@
       </div>
 
       <p class="text-gray-600 mb-4">
-        Are you sure you want to remove 
-        <strong>{{ member?.userDisplayFullName || member?.email }}</strong> 
+        Are you sure you want to remove
+        <strong>{{ member?.userDisplayFullName || member?.email }}</strong>
         from your family group? This action cannot be undone.
       </p>
 
@@ -49,7 +49,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  close: [];
+  'close': [];
   'member-removed': [];
 }>();
 

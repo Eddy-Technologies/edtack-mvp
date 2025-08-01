@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
 
     // Get or create parent's family group
     let groupId;
-    
+
     // Check if parent already has a group they created
     const { data: existingGroup } = await supabase
       .from('groups')

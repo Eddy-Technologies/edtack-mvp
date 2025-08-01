@@ -67,43 +67,43 @@ export default defineEventHandler(async (event) => {
     const formattedItems = wishlistItems
       ?.filter((item) => item.products && item.products.is_active)
       ?.map((item) => {
-      const product = item.products;
-      let finalPrice = product.price_cents;
-      let originalPrice = null;
+        const product = item.products;
+        let finalPrice = product.price_cents;
+        let originalPrice = null;
 
-      // Calculate discounted price if applicable
-      if (product.discount_percentage || product.discount_amount_cents) {
-        originalPrice = product.price_cents;
-        if (product.discount_percentage) {
-          finalPrice = Math.round(product.price_cents * (1 - product.discount_percentage / 100));
-        } else if (product.discount_amount_cents) {
-          finalPrice = Math.max(0, product.price_cents - product.discount_amount_cents);
+        // Calculate discounted price if applicable
+        if (product.discount_percentage || product.discount_amount_cents) {
+          originalPrice = product.price_cents;
+          if (product.discount_percentage) {
+            finalPrice = Math.round(product.price_cents * (1 - product.discount_percentage / 100));
+          } else if (product.discount_amount_cents) {
+            finalPrice = Math.max(0, product.price_cents - product.discount_amount_cents);
+          }
         }
-      }
 
-      return {
-        id: item.id,
-        addedAt: item.created_at,
-        product: {
-          id: product.id,
-          name: product.name,
-          description: product.description,
-          price: finalPrice / 100, // Convert cents to dollars
-          priceCents: finalPrice,
-          originalPrice: originalPrice ? originalPrice / 100 : null,
-          originalPriceCents: originalPrice,
-          currency: product.currency || 'SGD',
-          image: product.image_url || '/placeholder-product.jpg',
-          category: product.category,
-          stockCount: product.stock_count || 0,
-          inStock: (product.stock_count || 0) > 0,
-          metadata: product.metadata,
-          // Additional computed fields for frontend
-          hasDiscount: !!originalPrice,
-          discountPercentage: originalPrice ? Math.round((1 - finalPrice / originalPrice) * 100) : 0
-        }
-      };
-    }) || [];
+        return {
+          id: item.id,
+          addedAt: item.created_at,
+          product: {
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: finalPrice / 100, // Convert cents to dollars
+            priceCents: finalPrice,
+            originalPrice: originalPrice ? originalPrice / 100 : null,
+            originalPriceCents: originalPrice,
+            currency: product.currency || 'SGD',
+            image: product.image_url || '/placeholder-product.jpg',
+            category: product.category,
+            stockCount: product.stock_count || 0,
+            inStock: (product.stock_count || 0) > 0,
+            metadata: product.metadata,
+            // Additional computed fields for frontend
+            hasDiscount: !!originalPrice,
+            discountPercentage: originalPrice ? Math.round((1 - finalPrice / originalPrice) * 100) : 0
+          }
+        };
+      }) || [];
 
     // Get total count for pagination (we'll filter active products in app logic)
     const { count } = await supabase

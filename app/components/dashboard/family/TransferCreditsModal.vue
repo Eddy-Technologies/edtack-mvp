@@ -18,7 +18,7 @@
 
       <div class="mb-4">
         <p class="text-gray-700">
-          Transfer credits to 
+          Transfer credits to
           <strong>{{ member?.userDisplayFullName || member?.email }}</strong>
         </p>
       </div>
@@ -81,7 +81,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  close: [];
+  'close': [];
   'transfer-completed': [];
 }>();
 

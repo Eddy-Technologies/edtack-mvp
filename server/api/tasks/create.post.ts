@@ -73,11 +73,11 @@ export default defineEventHandler(async (event) => {
 
     // Check if assignee is in any of the creator's groups
     let canAssignTask = false;
-    
-    groupRelation?.forEach(creatorGroup => {
+
+    groupRelation?.forEach((creatorGroup) => {
       if (creatorGroup.groups.created_by === creatorInfo.id) {
         const hasAssignee = creatorGroup.groups.group_members.some(
-          member => member.user_info_id === assignee_user_info_id && member.status === 'active'
+          (member) => member.user_info_id === assignee_user_info_id && member.status === 'active'
         );
         if (hasAssignee) {
           canAssignTask = true;

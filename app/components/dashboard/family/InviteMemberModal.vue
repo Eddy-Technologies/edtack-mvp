@@ -67,7 +67,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  close: [];
+  'close': [];
   'member-invited': [];
 }>();
 

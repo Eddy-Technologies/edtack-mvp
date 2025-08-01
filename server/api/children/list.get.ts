@@ -65,20 +65,20 @@ export default defineEventHandler(async (event) => {
     const children = [];
     const childrenMap = new Map();
 
-    groupMembers?.forEach(groupMember => {
+    groupMembers?.forEach((groupMember) => {
       const group = groupMember.groups;
-      
+
       // Only process groups created by this user
       if (group.created_by === userInfo.id) {
-        group.group_members.forEach(member => {
+        group.group_members.forEach((member) => {
           // Skip self and inactive members
           if (member.user_info_id === userInfo.id || member.status !== 'active') {
             return;
           }
 
           // Check if this is a child (not a parent)
-          const isParent = member.user.user_roles.some(role => role.roles.role_name === 'PARENT');
-          
+          const isParent = member.user.user_roles.some((role) => role.roles.role_name === 'PARENT');
+
           if (!isParent && !childrenMap.has(member.user_info_id)) {
             childrenMap.set(member.user_info_id, {
               id: member.user.id,

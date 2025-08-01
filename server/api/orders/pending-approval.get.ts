@@ -56,9 +56,9 @@ export default defineEventHandler(async (event) => {
 
     // Extract child user IDs from groups created by this parent
     const childUserIds = [];
-    groupMembers?.forEach(groupMember => {
+    groupMembers?.forEach((groupMember) => {
       if (groupMember.groups.created_by === parentInfo.id) {
-        groupMember.groups.group_members.forEach(member => {
+        groupMember.groups.group_members.forEach((member) => {
           if (member.user_info_id !== parentInfo.id && member.status === 'active') {
             childUserIds.push(member.user_info_id);
           }

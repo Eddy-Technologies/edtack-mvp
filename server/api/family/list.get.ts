@@ -75,21 +75,21 @@ export default defineEventHandler(async (event) => {
 
     // Extract family members from groups (both active and pending)
     const membersMap = new Map();
-    
-    userGroups?.forEach(userGroup => {
+
+    userGroups?.forEach((userGroup) => {
       // Only process family groups
       if (userGroup.groups.group_type !== 'family') return;
-      
-      userGroup.groups.group_members.forEach(member => {
+
+      userGroup.groups.group_members.forEach((member) => {
         // Skip self
         if (member.user_info_id === userInfo.id) return;
-        
+
         // Skip if already added (user might be in multiple groups)
         if (membersMap.has(member.user_info_id)) return;
-        
+
         const userInfo = member.user_infos;
-        const isParentMember = userInfo.user_roles.some(role => role.roles.role_name === 'PARENT');
-        
+        const isParentMember = userInfo.user_roles.some((role) => role.roles.role_name === 'PARENT');
+
         membersMap.set(member.user_info_id, {
           id: member.id, // Use group_member id for invitations
           user_info_id: member.user_info_id,
@@ -105,7 +105,7 @@ export default defineEventHandler(async (event) => {
         });
       });
     });
-    
+
     familyMembers = Array.from(membersMap.values());
 
     return {

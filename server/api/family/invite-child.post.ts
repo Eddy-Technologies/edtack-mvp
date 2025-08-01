@@ -108,9 +108,9 @@ export default defineEventHandler(async (event) => {
       if (existingMembership) {
         throw createError({
           statusCode: 400,
-          statusMessage: existingMembership.status === 'pending' 
-            ? 'An invitation is already pending for this user.' 
-            : 'This user is already a member of your family group.'
+          statusMessage: existingMembership.status === 'pending' ?
+            'An invitation is already pending for this user.' :
+            'This user is already a member of your family group.'
         });
       }
 
@@ -150,7 +150,7 @@ export default defineEventHandler(async (event) => {
       // For non-existing users, we'll create a placeholder invitation
       // In a real implementation with email service, this would send an invitation email
       // with a signup link that includes the family group ID
-      
+
       throw createError({
         statusCode: 400,
         statusMessage: 'User with this email does not exist. Please ask them to create an account first, then invite them.'

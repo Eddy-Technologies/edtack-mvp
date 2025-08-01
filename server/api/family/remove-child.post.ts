@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
     for (const groupMember of sharedGroups || []) {
       if (groupMember.groups.created_by === parentInfo.id) {
         const hasChild = groupMember.groups.group_members.some(
-          member => member.user_info_id === childId && member.status === 'active'
+          (member) => member.user_info_id === childId && member.status === 'active'
         );
         if (hasChild) {
           targetGroup = groupMember.groups;

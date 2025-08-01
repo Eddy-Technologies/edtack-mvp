@@ -65,11 +65,11 @@ export default defineEventHandler(async (event) => {
 
     // Check if recipient is in any of the sender's groups
     let canTransfer = false;
-    
-    groupRelation?.forEach(senderGroup => {
+
+    groupRelation?.forEach((senderGroup) => {
       if (senderGroup.groups.created_by === senderInfo.id) {
         const hasRecipient = senderGroup.groups.group_members.some(
-          member => member.user_info_id === to_user_info_id && member.status === 'active'
+          (member) => member.user_info_id === to_user_info_id && member.status === 'active'
         );
         if (hasRecipient) {
           canTransfer = true;

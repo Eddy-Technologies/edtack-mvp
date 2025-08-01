@@ -88,11 +88,11 @@ export default defineEventHandler(async (event) => {
 
     // Check if child is in any of the parent's groups
     let hasPermission = false;
-    
-    groupRelation?.forEach(parentGroup => {
+
+    groupRelation?.forEach((parentGroup) => {
       if (parentGroup.groups.created_by === parentInfo.id) {
         const hasChild = parentGroup.groups.group_members.some(
-          member => member.user_info_id === order.user_info_id && member.status === 'active'
+          (member) => member.user_info_id === order.user_info_id && member.status === 'active'
         );
         if (hasChild) {
           hasPermission = true;
