@@ -3,14 +3,14 @@
 /**
  * Database Seed Script
  * Runs the consolidated seed file: database/seeds/all_seeds.sql
- * 
+ *
  * Usage: node database/scripts/seed.js
  * or: pnpm db:seed
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
 
 // Color codes for console output
 const colors = {
@@ -30,28 +30,21 @@ function log(message, color = 'reset') {
 function executeSQL(filePath, description) {
   try {
     log(`\n📁 ${description}...`, 'blue');
-    
+
     if (!fs.existsSync(filePath)) {
       throw new Error(`File not found: ${filePath}`);
     }
 
-    const sqlContent = fs.readFileSync(filePath, 'utf8');
-    
-    // Write to temp file and execute via Supabase CLI
-    const tempFile = path.join(process.cwd(), '.temp_seed.sql');
-    fs.writeFileSync(tempFile, sqlContent);
-    
-    const command = `pnpm supabase db push --file ${tempFile}`;
+    // Use psql directly with local database connection
+    const dbUrl = 'postgresql://postgres:postgres@127.0.0.1:54322/postgres';
+    const command = `psql "${dbUrl}" -f "${filePath}"`;
     log(`   Running seed data insertion...`, 'cyan');
-    
-    const output = execSync(command, { 
+
+    const output = execSync(command, {
       encoding: 'utf8',
       stdio: 'pipe'
     });
-    
-    // Clean up temp file
-    fs.unlinkSync(tempFile);
-    
+
     log(`   ✅ ${description} completed`, 'green');
     return output;
   } catch (error) {
@@ -66,14 +59,13 @@ async function runSeeds() {
 
     const projectRoot = process.cwd();
     const seedFile = path.join(projectRoot, 'database/seeds/all_seeds.sql');
-    
+
     // Execute the seed file
     executeSQL(seedFile, 'Inserting seed data');
-    
+
     log('\n🎉 Database seeding completed successfully!', 'green');
     log('📊 All reference data, system codes, and sample products inserted', 'cyan');
     log('💡 Tip: Check your database to verify the data was inserted correctly', 'yellow');
-    
   } catch (error) {
     log(`\n💥 Seeding failed: ${error.message}`, 'red');
     process.exit(1);

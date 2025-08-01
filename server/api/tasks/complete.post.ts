@@ -23,26 +23,26 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get child's user_info_id
-    const { data: childInfo, error: childError } = await supabase
+    // Get assignee's user_info_id
+    const { data: assigneeInfo, error: assigneeError } = await supabase
       .from('user_infos')
       .select('id')
       .eq('user_id', user.id)
       .single();
 
-    if (childError || !childInfo) {
+    if (assigneeError || !assigneeInfo) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Child user info not found'
+        statusMessage: 'Assignee user info not found'
       });
     }
 
-    // Get the task and verify child owns it
+    // Get the task and verify assignee owns it
     const { data: task, error: taskError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .select('*')
       .eq('id', task_id)
-      .eq('child_user_info_id', childInfo.id)
+      .eq('assignee_user_info_id', assigneeInfo.id)
       .single();
 
     if (taskError || !task) {
@@ -62,14 +62,14 @@ export default defineEventHandler(async (event) => {
 
     // Update task to completed status
     const { data: updatedTask, error: updateError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .update({
         status: 'completed',
         completion_notes: completion_notes || null,
         completed_at: new Date().toISOString()
       })
       .eq('id', task_id)
-      .eq('child_user_info_id', childInfo.id)
+      .eq('assignee_user_info_id', assigneeInfo.id)
       .select()
       .single();
 

@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
 
     const {
-      child_user_info_id,
+      assignee_user_info_id,
       name,
       subtitle,
       description,
@@ -17,10 +17,10 @@ export default defineEventHandler(async (event) => {
     } = body;
 
     // Validate required fields
-    if (!child_user_info_id || !name || credit === undefined) {
+    if (!assignee_user_info_id || !name || credit === undefined) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'child_user_info_id, name, and credit are required'
+        statusMessage: 'assignee_user_info_id, name, and credit are required'
       });
     }
 
@@ -33,26 +33,26 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get parent's user_info_id
-    const { data: parentInfo, error: parentError } = await supabase
+    // Get creator's user_info_id
+    const { data: creatorInfo, error: creatorError } = await supabase
       .from('user_infos')
       .select('id')
       .eq('user_id', user.id)
       .single();
 
-    if (parentError || !parentInfo) {
+    if (creatorError || !creatorInfo) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Parent user info not found'
+        statusMessage: 'Creator user info not found'
       });
     }
 
-    // Verify that the child belongs to this parent
+    // Verify that the assignee belongs to this creator (parent-child relationship)
     const { data: parentChildRelation, error: relationError } = await supabase
       .from('parent_child')
       .select('id')
-      .eq('parent_user_info_id', parentInfo.id)
-      .eq('child_user_info_id', child_user_info_id)
+      .eq('parent_user_info_id', creatorInfo.id)
+      .eq('child_user_info_id', assignee_user_info_id)
       .single();
 
     if (relationError || !parentChildRelation) {
@@ -64,10 +64,10 @@ export default defineEventHandler(async (event) => {
 
     // Create the task
     const { data: task, error: taskError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .insert({
-        parent_user_info_id: parentInfo.id,
-        child_user_info_id,
+        creator_user_info_id: creatorInfo.id,
+        assignee_user_info_id,
         name,
         subtitle: subtitle || null,
         description: description || null,

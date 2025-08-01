@@ -35,12 +35,12 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get the task and verify it belongs to this child
+    // Get the task and verify it belongs to this assignee
     const { data: task, error: taskError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .select('*')
       .eq('id', taskId)
-      .eq('child_user_info_id', userInfo.id)
+      .eq('assignee_user_info_id', userInfo.id)
       .single();
 
     if (taskError || !task) {
@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
 
     // Update task status to in_progress
     const { error: updateError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .update({
         status: 'in_progress',
         updated_at: new Date().toISOString()

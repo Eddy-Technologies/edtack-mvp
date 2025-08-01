@@ -3,14 +3,14 @@
 /**
  * Database Reset Script
  * Runs: drop_all.sql → migrate.js → seed.js
- * 
+ *
  * Usage: node database/scripts/reset.js
  * or: pnpm db:reset
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
 
 // Color codes for console output
 const colors = {
@@ -30,20 +30,20 @@ function log(message, color = 'reset') {
 function executeSQL(filePath, description) {
   try {
     log(`\n📁 ${description}...`, 'blue');
-    
+
     if (!fs.existsSync(filePath)) {
       throw new Error(`File not found: ${filePath}`);
     }
 
     // Using Supabase CLI to execute SQL
-    const command = `pnpm supabase db reset --linked`;
+    const command = `pnpm supabase db reset`;
     log(`   Running: ${command}`, 'cyan');
-    
-    const output = execSync(command, { 
+
+    const output = execSync(command, {
       encoding: 'utf8',
       stdio: 'pipe'
     });
-    
+
     log(`   ✅ ${description} completed`, 'green');
     return output;
   } catch (error) {
@@ -59,17 +59,16 @@ async function resetDatabase() {
 
     const projectRoot = process.cwd();
     const dropFile = path.join(projectRoot, 'database/drop/drop_all.sql');
-    
+
     // Step 1: Drop all tables (using Supabase reset instead of manual drop)
     log('\n🗑️  Step 1: Resetting database...', 'yellow');
     executeSQL(dropFile, 'Database reset');
-    
+
     // Note: Supabase db reset automatically runs migrations and seeds
     // so we don't need to run migrate.js and seed.js separately
-    
+
     log('\n🎉 Database reset completed successfully!', 'green');
     log('📊 Database is now ready with all tables and seed data', 'cyan');
-    
   } catch (error) {
     log(`\n💥 Database reset failed: ${error.message}`, 'red');
     process.exit(1);

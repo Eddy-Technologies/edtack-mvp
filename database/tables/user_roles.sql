@@ -7,13 +7,12 @@ CREATE TABLE user_roles (
 );
 
 -- Trigger function to enforce user role rules based on user_infos links
--- Ensures 'parent'/'teacher' roles are only assigned to profiles linked to auth.users
+-- Ensures all users must be linked to auth.users (no app_users allowed)
 CREATE OR REPLACE FUNCTION enforce_user_role_user_type()
 RETURNS TRIGGER AS $$
 DECLARE
   role_name_val TEXT;
   linked_user_id UUID;
-  linked_app_user_id UUID;
 BEGIN
   RAISE LOG '[enforce_user_role_user_type] user_info_id: %, role_id: %', NEW.user_info_id, NEW.role_id;
 
@@ -33,20 +32,15 @@ BEGIN
 
   RAISE LOG 'Processing role: %', role_name_val;
 
-  -- Fetch the linked auth.users.id and app_users.id from user_infos
-  SELECT user_id, app_user_id INTO linked_user_id, linked_app_user_id
+  -- Fetch the linked auth.users.id from user_infos
+  SELECT user_id INTO linked_user_id
   FROM public.user_infos WHERE id = NEW.user_info_id;
 
-  RAISE LOG 'Getting user_id: %, app_user_id: %', linked_user_id, linked_app_user_id;
+  RAISE LOG 'Getting user_id: %', linked_user_id;
 
-  IF role_name_val IN ('PARENT', 'TEACHER') THEN
-    -- Parents and Teachers must be linked to auth.users (email/phone)
-    IF linked_user_id IS NULL OR linked_app_user_id IS NOT NULL THEN
-      RAISE EXCEPTION '[enforce_user_role_user_type] Roles "parent" and "teacher" must be assigned to profiles linked to auth.users (user_id only)';
-    END IF;
-  ELSIF role_name_val = 'STUDENT' THEN
-    -- Students can be linked to either auth.users or app_users.
-    NULL; -- No additional check needed here for student
+  -- All users must be linked to auth.users
+  IF linked_user_id IS NULL THEN
+    RAISE EXCEPTION '[enforce_user_role_user_type] All users must be linked to auth.users (user_id required)';
   END IF;
 
   RETURN NEW;

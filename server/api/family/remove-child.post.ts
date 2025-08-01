@@ -77,13 +77,13 @@ export default defineEventHandler(async (event) => {
 
     // 1. Cancel all pending tasks for this child from this parent
     const { error: tasksError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .update({
         status: 'cancelled',
         updated_at: new Date().toISOString()
       })
-      .eq('parent_user_info_id', parentInfo.user_info_id)
-      .eq('child_user_info_id', childId)
+      .eq('creator_user_info_id', parentInfo.user_info_id)
+      .eq('assignee_user_info_id', childId)
       .in('status', ['pending', 'in_progress', 'completed']);
 
     if (tasksError) {

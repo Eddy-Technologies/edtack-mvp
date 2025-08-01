@@ -6,35 +6,35 @@ CREATE TABLE parent_child (
   UNIQUE (parent_user_info_id, child_user_info_id) -- A parent-child pair is unique
 );
 
--- Trigger function to prevent cyclic parenting and ensure parent is auth.users
+-- Trigger function to prevent cyclic parenting and ensure users are linked to auth.users
 CREATE OR REPLACE FUNCTION prevent_cyclic_parenting()
 RETURNS TRIGGER AS $$
 DECLARE
   parent_auth_id UUID;
   child_auth_id UUID;
-  child_app_auth_id UUID;
 BEGIN
   -- Fetch auth.users.id for the parent (enforce parent is auth.users)
   SELECT user_id INTO parent_auth_id
   FROM user_infos WHERE id = NEW.parent_user_info_id;
 
   IF parent_auth_id IS NULL THEN
-    RAISE EXCEPTION 'Parent must be an email/phone-based user (linked to auth.users).';
+    RAISE EXCEPTION 'Parent must be linked to auth.users.';
   END IF;
 
-  -- Fetch auth.users.id and app_users.id for the child
-  SELECT user_id, app_user_id INTO child_auth_id, child_app_auth_id
+  -- Fetch auth.users.id for the child
+  SELECT user_id INTO child_auth_id
   FROM user_infos WHERE id = NEW.child_user_info_id;
+
+  IF child_auth_id IS NULL THEN
+    RAISE EXCEPTION 'Child must be linked to auth.users.';
+  END IF;
 
   -- A user cannot be their own parent (direct link check)
   IF NEW.parent_user_info_id = NEW.child_user_info_id THEN
     RAISE EXCEPTION 'A user cannot be their own parent.';
   END IF;
 
-  -- Simplified cyclic parenting check:
-  -- This check is complex with mixed auth types. A full, robust cycle check
-  -- would require more advanced graph traversal logic considering both user_id and app_user_id paths.
-  -- For this schema, we'll check if the child's user_info_id is an ancestor of the parent's user_info_id.
+  -- Cyclic parenting check using recursive CTE
   IF EXISTS (
     WITH RECURSIVE ancestry AS (
       SELECT pc.parent_user_info_id AS ancestor_info_id, pc.child_user_info_id AS current_child_info_id

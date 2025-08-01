@@ -37,11 +37,11 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Build query - user can be either parent or child
+    // Build query - user can be either creator or assignee
     let tasksQuery = supabase
-      .from('task_credit')
+      .from('user_tasks')
       .select('*')
-      .or(`parent_user_info_id.eq.${userInfo.id},child_user_info_id.eq.${userInfo.id}`)
+      .or(`creator_user_info_id.eq.${userInfo.id},assignee_user_info_id.eq.${userInfo.id}`)
       .order('created_at', { ascending: false })
       .range(parseInt(offset as string), parseInt(offset as string) + parseInt(limit as string) - 1);
 
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (child_user_info_id) {
-      tasksQuery = tasksQuery.eq('child_user_info_id', child_user_info_id);
+      tasksQuery = tasksQuery.eq('assignee_user_info_id', child_user_info_id);
     }
 
     if (priority) {
@@ -75,8 +75,8 @@ export default defineEventHandler(async (event) => {
     // Format the response
     const formattedTasks = tasks?.map((task) => ({
       id: task.id,
-      parentUserInfoId: task.parent_user_info_id,
-      childUserInfoId: task.child_user_info_id,
+      creatorUserInfoId: task.creator_user_info_id,
+      assigneeUserInfoId: task.assignee_user_info_id,
       name: task.name,
       subtitle: task.subtitle,
       description: task.description,
@@ -92,28 +92,28 @@ export default defineEventHandler(async (event) => {
       approvedAt: task.approved_at,
       createdAt: task.created_at,
       updatedAt: task.updated_at,
-      parentInfo: {
-        firstName: task.parent_info?.all_users?.first_name,
-        lastName: task.parent_info?.all_users?.last_name,
-        email: task.parent_info?.all_users?.email
+      creatorInfo: {
+        firstName: task.creator_info?.all_users?.first_name,
+        lastName: task.creator_info?.all_users?.last_name,
+        email: task.creator_info?.all_users?.email
       },
-      childInfo: {
-        firstName: task.child_info?.all_users?.first_name,
-        lastName: task.child_info?.all_users?.last_name,
-        email: task.child_info?.all_users?.email
+      assigneeInfo: {
+        firstName: task.assignee_info?.all_users?.first_name,
+        lastName: task.assignee_info?.all_users?.last_name,
+        email: task.assignee_info?.all_users?.email
       },
       // Helper field to determine user's role in this task
-      userRole: task.parent_user_info_id === userInfo.id ? 'parent' : 'child'
+      userRole: task.creator_user_info_id === userInfo.id ? 'creator' : 'assignee'
     })) || [];
 
     // Get count for pagination
     let countQuery = supabase
-      .from('task_credit')
+      .from('user_tasks')
       .select('*', { count: 'exact', head: true })
-      .or(`parent_user_info_id.eq.${userInfo.id},child_user_info_id.eq.${userInfo.id}`);
+      .or(`creator_user_info_id.eq.${userInfo.id},assignee_user_info_id.eq.${userInfo.id}`);
 
     if (status) countQuery = countQuery.eq('status', status);
-    if (child_user_info_id) countQuery = countQuery.eq('child_user_info_id', child_user_info_id);
+    if (child_user_info_id) countQuery = countQuery.eq('assignee_user_info_id', child_user_info_id);
     if (priority) countQuery = countQuery.eq('priority', priority);
     if (category) countQuery = countQuery.eq('category', category);
 

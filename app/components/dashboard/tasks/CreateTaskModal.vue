@@ -21,7 +21,7 @@
               Assign to Child *
             </label>
             <select
-              v-model="form.child_user_info_id"
+              v-model="form.assignee_user_info_id"
               required
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
@@ -177,7 +177,7 @@ const emit = defineEmits<{
 
 // Form state
 const form = ref({
-  child_user_info_id: '',
+  assignee_user_info_id: '',
   name: '',
   subtitle: '',
   description: '',
@@ -216,7 +216,7 @@ const createTask = async () => {
     const response = await $fetch('/api/tasks/create', {
       method: 'POST',
       body: {
-        child_user_info_id: form.value.child_user_info_id,
+        assignee_user_info_id: form.value.assignee_user_info_id,
         name: form.value.name,
         subtitle: form.value.subtitle || null,
         description: form.value.description || null,
@@ -230,7 +230,7 @@ const createTask = async () => {
     if (response.success) {
       // Reset form
       form.value = {
-        child_user_info_id: '',
+        assignee_user_info_id: '',
         name: '',
         subtitle: '',
         description: '',

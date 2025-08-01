@@ -36,7 +36,7 @@ supabase start
 ```bash
 # Test migration only
 pnpm db:migrate
-# ✅ Should create all 30 tables (001-028 + views + functions)
+# ✅ Should create all ~22 tables (remaining after cleanup + views + functions)
 
 # Test seeding only  
 pnpm db:seed
@@ -68,7 +68,7 @@ SELECT schemaname, tablename
 FROM pg_tables 
 WHERE schemaname = 'public' 
 ORDER BY tablename;
--- ✅ Should show 28+ tables
+-- ✅ Should show ~22 tables
 
 -- 2. Verify seed data
 SELECT 'Roles' as type, count(*) as count FROM roles
@@ -183,7 +183,7 @@ psql $DATABASE_URL -f database/tables/001_app_users.sql
 ## 🔍 **Testing Checklist**
 
 ### **Database Structure Tests:**
-- [ ] All 30 table files execute without errors
+- [ ] All ~22 table files execute without errors
 - [ ] All foreign key relationships are valid
 - [ ] All indexes are created
 - [ ] All triggers function correctly

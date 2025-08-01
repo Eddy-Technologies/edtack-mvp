@@ -8,18 +8,11 @@ This directory contains all database-related files organized for easy management
 database/
 ├── README.md                    # This documentation
 ├── tables/                      # Individual table files (1 per table)
-│   ├── 001_app_users.sql       # Custom user authentication
 │   ├── 002_roles.sql           # User roles (PARENT, TEACHER, STUDENT)
 │   ├── 003_level_types.sql     # Education levels (Primary 1-6, etc.)
-│   ├── 004_user_infos.sql      # User profile data + triggers
-│   ├── 005_user_emails.sql     # User email management
-│   ├── 006_user_phones.sql     # User phone management
+│   ├── 004_user_infos.sql      # User profile data (includes email) + triggers
 │   ├── 007_user_roles.sql      # User-role relationships + triggers
-│   ├── 008_parent_child.sql    # Parent-child relationships + triggers
-│   ├── 009_groups.sql          # Groups (class/family)
-│   ├── 010_group_memberships.sql
-│   ├── 011_family_group_constraints.sql + triggers
-│   ├── 012_class_group_constraints.sql + triggers
+│   ├── 008_parent_child.sql    # Parent-child relationships + triggers  
 │   ├── 013_subjects.sql        # Singapore curriculum subjects
 │   ├── 014_syllabus.sql        # Curriculum syllabus structure
 │   ├── 015_questions.sql       # Question bank
@@ -34,7 +27,7 @@ database/
 │   ├── 024_orders.sql          # Order management
 │   ├── 025_order_items.sql     # Order line items
 │   ├── 026_wishlists.sql       # User wishlists
-│   ├── 027_task_credit.sql     # Task-based credit earning
+│   ├── 027_user_tasks.sql      # Task-based credit earning
 │   ├── 028_stripe_webhook_events.sql # Stripe webhook tracking
 │   ├── 100_views.sql           # Database views (all_users, leaderboard)
 │   └── 200_functions.sql       # Shared functions and extensions
@@ -65,10 +58,10 @@ pnpm db:types
 
 ## 📋 Table Organization
 
-### **Core User System (001-012)**
-- Authentication, roles, user profiles
+### **Core User System (002-008)**
+- User roles, profiles (email included)
 - Parent-child relationships
-- Group management (family/class)
+- Simplified auth (auth.users only)
 
 ### **Question System (013-019)**
 - Singapore curriculum subjects

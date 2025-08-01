@@ -24,26 +24,26 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get parent's user_info_id
-    const { data: parentInfo, error: parentError } = await supabase
+    // Get creator's user_info_id
+    const { data: creatorInfo, error: creatorError } = await supabase
       .from('user_infos')
       .select('id')
       .eq('user_id', user.id)
       .single();
 
-    if (parentError || !parentInfo) {
+    if (creatorError || !creatorInfo) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Parent user info not found'
+        statusMessage: 'Creator user info not found'
       });
     }
 
-    // Get the task and verify parent owns it
+    // Get the task and verify creator owns it
     const { data: task, error: taskError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .select('*')
       .eq('id', task_id)
-      .eq('parent_user_info_id', parentInfo.id)
+      .eq('creator_user_info_id', creatorInfo.id)
       .single();
 
     if (taskError || !task) {
@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
         .update({
           credit: supabase.raw(`credit + ${task.credit}`)
         })
-        .eq('user_info_id', task.child_user_info_id);
+        .eq('user_info_id', task.assignee_user_info_id);
 
       if (creditError) {
         console.error('Failed to award credits:', creditError);
@@ -88,16 +88,16 @@ export default defineEventHandler(async (event) => {
       const { error: transactionError } = await supabase
         .from('credit_transactions')
         .insert({
-          user_info_id: task.child_user_info_id,
+          user_info_id: task.assignee_user_info_id,
           transaction_type: operationCodes.task_reward || 'task_reward',
           amount: task.credit,
           currency: 'SGD',
           description: `Task completed: ${task.name}`,
           is_internal: true,
-          task_credit_id: task.id,
+          user_task_id: task.id,
           metadata: JSON.stringify({
             task_name: task.name,
-            parent_user_info_id: task.parent_user_info_id,
+            creator_user_info_id: task.creator_user_info_id,
             completion_date: task.completed_at
           })
         });
@@ -110,14 +110,14 @@ export default defineEventHandler(async (event) => {
 
     // Update task status
     const { data: updatedTask, error: updateError } = await supabase
-      .from('task_credit')
+      .from('user_tasks')
       .update({
         status: newStatus,
         approval_notes: approval_notes || null,
         approved_at: new Date().toISOString()
       })
       .eq('id', task_id)
-      .eq('parent_user_info_id', parentInfo.id)
+      .eq('creator_user_info_id', creatorInfo.id)
       .select()
       .single();
 
