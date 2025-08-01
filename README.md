@@ -148,7 +148,6 @@ pnpm preview         # Preview production build
 
 ### Authentication Flow
 - **Supabase Auth**: Clean authentication with email/password and OAuth
-- **RLS Policies**: Database-level security for user data isolation
 - **User Management**: Centralized user data in `user_infos` table
 
 ### Task & Credit System
@@ -210,7 +209,6 @@ functions.sql               # Database functions and views
 - **Task Workflow**: Parent creates → Child completes → Parent approves → Credits awarded
 - **Family Relationships**: Parent-child linkage enables task assignment and credit transfers
 - **Credit System**: All transactions tracked with full audit history
-- **RLS Policies**: Database-level security ensures user data isolation
 - **Webhook Idempotency**: Stripe events processed exactly once using event IDs
 
 ## Development Guidelines
@@ -226,7 +224,6 @@ functions.sql               # Database functions and views
 1. Add new table file to `/database/tables/` with semantic naming
 2. Update migration script dependency order if needed
 3. Run `pnpm db:fresh` to test complete migration
-4. Update RLS policies as needed
 5. Regenerate TypeScript types with `pnpm db:types`
 6. Test with both user and service role clients
 
@@ -254,7 +251,6 @@ npx nuxthub deploy
 1. Follow existing code patterns and conventions
 2. Update documentation for significant changes
 3. Test authentication and payment flows
-4. Ensure RLS policies work correctly
 
 ## License
 

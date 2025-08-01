@@ -119,21 +119,21 @@ export default defineEventHandler(async (event) => {
 
     const { count } = await countQuery;
 
-    // Check if user is a parent by checking their user_role or parent_child relationships
-    const { data: parentRelationships } = await supabase
-      .from('parent_child')
+    // Check if user is a parent by checking if they created any groups
+    const { data: createdGroups } = await supabase
+      .from('groups')
       .select('id')
-      .eq('parent_user_info_id', userInfo.id)
+      .eq('created_by', userInfo.id)
       .limit(1);
 
-    // Get user info to check role
-    const { data: userDetails } = await supabase
-      .from('user_infos')
-      .select('user_role')
-      .eq('id', userInfo.id)
-      .single();
+    // Also check user roles
+    const { data: userRoles } = await supabase
+      .from('user_roles')
+      .select('roles(role_name)')
+      .eq('user_info_id', userInfo.id);
 
-    const isParent = (userDetails?.user_role === 'parent') || (parentRelationships && parentRelationships.length > 0);
+    const isParent = (createdGroups && createdGroups.length > 0) || 
+                     (userRoles && userRoles.some(ur => ur.roles.role_name === 'PARENT'));
 
     return {
       success: true,

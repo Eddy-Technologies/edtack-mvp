@@ -47,7 +47,9 @@ export default defineEventHandler(async (event) => {
         *,
         child_info:user_infos!orders_user_info_id_fkey(
           id,
-          all_users!user_infos_user_id_fkey(first_name, last_name, email)
+          first_name,
+          last_name,
+          email
         )
       `)
       .eq('id', order_id)
@@ -61,14 +63,44 @@ export default defineEventHandler(async (event) => {
     }
 
     // Verify this parent has permission to approve this child's order
-    const { data: parentChildRelation, error: relationError } = await supabase
-      .from('parent_child')
-      .select('id')
-      .eq('parent_user_info_id', parentInfo.id)
-      .eq('child_user_info_id', order.user_info_id)
-      .single();
+    const { data: groupRelation, error: relationError } = await supabase
+      .from('group_members')
+      .select(`
+        group_id,
+        groups!inner(
+          created_by,
+          group_members!inner(
+            user_info_id,
+            status
+          )
+        )
+      `)
+      .eq('user_info_id', parentInfo.id)
+      .eq('status', 'active');
 
-    if (relationError || !parentChildRelation) {
+    if (relationError) {
+      console.error('Failed to fetch group relationships:', relationError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to verify relationship'
+      });
+    }
+
+    // Check if child is in any of the parent's groups
+    let hasPermission = false;
+    
+    groupRelation?.forEach(parentGroup => {
+      if (parentGroup.groups.created_by === parentInfo.id) {
+        const hasChild = parentGroup.groups.group_members.some(
+          member => member.user_info_id === order.user_info_id && member.status === 'active'
+        );
+        if (hasChild) {
+          hasPermission = true;
+        }
+      }
+    });
+
+    if (!hasPermission) {
       throw createError({
         statusCode: 403,
         statusMessage: 'You do not have permission to approve this order'
@@ -144,7 +176,7 @@ export default defineEventHandler(async (event) => {
           unit_amount: item.unit_price_cents,
           product_data: {
             name: item.product?.name || `Product ${item.product_id}`,
-            description: `Purchase approved for ${order.child_info?.all_users?.first_name}`
+            description: `Purchase approved for ${order.child_info?.first_name}`
           }
         },
         quantity: item.quantity
@@ -183,7 +215,7 @@ export default defineEventHandler(async (event) => {
         id: order.id,
         orderNumber: order.order_number,
         status: order.status_code,
-        childName: `${order.child_info?.all_users?.first_name} ${order.child_info?.all_users?.last_name}`,
+        childName: `${order.child_info?.first_name} ${order.child_info?.last_name}`,
         totalAmount: (order.total_amount_cents / 100).toFixed(2)
       }
     };

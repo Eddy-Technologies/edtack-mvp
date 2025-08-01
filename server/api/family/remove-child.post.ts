@@ -23,11 +23,11 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get parent's user_info_id from all_users view
+    // Get parent's user_info
     const { data: parentInfo, error: parentError } = await supabase
-      .from('all_users')
-      .select('user_info_id, email, first_name, last_name')
-      .eq('prefixed_auth_id', `auth.${user.id}`)
+      .from('user_infos')
+      .select('id, email, first_name, last_name')
+      .eq('user_id', user.id)
       .single();
 
     if (parentError || !parentInfo) {
@@ -37,52 +37,67 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check if user is a parent by looking for parent_child relationships
-    const { data: parentCheck } = await supabase
-      .from('parent_child')
-      .select('id')
-      .eq('parent_user_info_id', parentInfo.user_info_id)
-      .limit(1);
+    // Find the group where both parent and child are members
+    const { data: sharedGroups, error: groupError } = await supabase
+      .from('group_members')
+      .select(`
+        group_id,
+        groups(
+          id,
+          created_by,
+          group_members!inner(
+            user_info_id,
+            status
+          )
+        )
+      `)
+      .eq('user_info_id', parentInfo.id)
+      .eq('status', 'active');
 
-    if (!parentCheck || parentCheck.length === 0) {
+    if (groupError) {
+      console.error('Failed to fetch groups:', groupError);
       throw createError({
-        statusCode: 403,
-        statusMessage: 'Only parents can remove children'
+        statusCode: 500,
+        statusMessage: 'Failed to fetch group information'
       });
     }
 
-    // Verify the parent-child relationship exists
-    const { data: relationship, error: relationshipError } = await supabase
-      .from('parent_child')
-      .select('id')
-      .eq('parent_user_info_id', parentInfo.user_info_id)
-      .eq('child_user_info_id', childId)
-      .single();
+    // Find the group that contains the child and where the parent is the creator
+    let targetGroup = null;
+    for (const groupMember of sharedGroups || []) {
+      if (groupMember.groups.created_by === parentInfo.id) {
+        const hasChild = groupMember.groups.group_members.some(
+          member => member.user_info_id === childId && member.status === 'active'
+        );
+        if (hasChild) {
+          targetGroup = groupMember.groups;
+          break;
+        }
+      }
+    }
 
-    if (relationshipError || !relationship) {
+    if (!targetGroup) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Child is not linked to your account'
+        statusMessage: 'Child is not in your family group'
       });
     }
 
-    // Get child info for response from all_users view
+    // Get child info for response
     const { data: childInfo } = await supabase
-      .from('all_users')
-      .select('user_info_id, email, first_name, last_name')
-      .eq('user_info_id', childId)
+      .from('user_infos')
+      .select('id, email, first_name, last_name')
+      .eq('id', childId)
       .single();
 
-    // Start a transaction to handle all related data
-
-    // 1. Cancel all pending tasks for this child from this parent
+    // Cancel all pending tasks for this child from this parent
     const { error: tasksError } = await supabase
       .from('user_tasks')
       .update({
         status: 'cancelled',
         updated_at: new Date().toISOString()
       })
-      .eq('creator_user_info_id', parentInfo.user_info_id)
+      .eq('creator_user_info_id', parentInfo.id)
       .eq('assignee_user_info_id', childId)
       .in('status', ['pending', 'in_progress', 'completed']);
 
@@ -90,28 +105,26 @@ export default defineEventHandler(async (event) => {
       console.warn('Failed to cancel child tasks:', tasksError);
     }
 
-    // 2. Remove the parent-child relationship
+    // Remove the child from the group
     const { error: removeError } = await supabase
-      .from('parent_child')
+      .from('group_members')
       .delete()
-      .eq('parent_user_info_id', parentInfo.user_info_id)
-      .eq('child_user_info_id', childId);
+      .eq('group_id', targetGroup.id)
+      .eq('user_info_id', childId);
 
     if (removeError) {
-      console.error('Failed to remove parent-child relationship:', removeError);
+      console.error('Failed to remove child from group:', removeError);
       throw createError({
         statusCode: 500,
         statusMessage: 'Failed to remove child from your family'
       });
     }
 
-    // Note: We don't delete the child's user_credits record as they should keep their credits
-
     const childName = childInfo ? `${childInfo.first_name} ${childInfo.last_name}`.trim() : 'Child';
 
     return {
       success: true,
-      message: `${childName} has been removed from your family`,
+      message: `${childName} has been removed from your family group`,
       removedChild: {
         id: childId,
         name: childName,

@@ -27,37 +27,45 @@
           <div>
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Family Management</h1>
             <p class="text-gray-600">
-              {{ isParent ? 'Manage your children and family members' : 'View your family connections' }}
+              {{ isParent ? 'Create your family group and invite members by email' : 'View your family connections' }}
             </p>
           </div>
 
-          <!-- Add Child Button (Parents Only) -->
+          <!-- Invite Member Button (Parents Only) -->
           <Button
             v-if="isParent"
             variant="primary"
-            text="Add Child"
-            icon="i-lucide-user-plus"
-            @clicked="showAddChildModal = true"
+            text="Invite Family Member"
+            icon="i-lucide-mail-plus"
+            @clicked="showInviteModal = true"
           />
         </div>
 
         <!-- Family Stats -->
         <div class="bg-white rounded-lg border p-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class="text-center">
               <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mx-auto mb-3">
                 <UIcon name="i-lucide-users" class="text-blue-600" size="24" />
               </div>
-              <p class="text-2xl font-bold text-gray-900">{{ familyMembers.length }}</p>
-              <p class="text-sm text-gray-600">{{ isParent ? 'Children' : 'Family Members' }}</p>
+              <p class="text-2xl font-bold text-gray-900">{{ activeMembers.length }}</p>
+              <p class="text-sm text-gray-600">Active Members</p>
+            </div>
+
+            <div v-if="isParent" class="text-center">
+              <div class="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-full mx-auto mb-3">
+                <UIcon name="i-lucide-clock" class="text-yellow-600" size="24" />
+              </div>
+              <p class="text-2xl font-bold text-gray-900">{{ pendingInvitations.length }}</p>
+              <p class="text-sm text-gray-600">Pending Invitations</p>
             </div>
 
             <div v-if="isParent" class="text-center">
               <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mx-auto mb-3">
-                <UIcon name="i-lucide-check-circle" class="text-green-600" size="24" />
+                <UIcon name="i-lucide-coins" class="text-green-600" size="24" />
               </div>
-              <p class="text-2xl font-bold text-gray-900">{{ activeChildren }}</p>
-              <p class="text-sm text-gray-600">Active Children</p>
+              <p class="text-2xl font-bold text-gray-900">{{ totalCredits }}</p>
+              <p class="text-sm text-gray-600">Total Credits</p>
             </div>
 
             <div v-if="isParent" class="text-center">
@@ -70,38 +78,87 @@
           </div>
         </div>
 
-        <!-- Children List -->
+        <!-- Pending Invitations Section -->
+        <div v-if="isParent && pendingInvitations.length > 0" class="bg-white rounded-lg border">
+          <div class="px-6 py-4 border-b">
+            <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+              <UIcon name="i-lucide-clock" class="text-yellow-600 mr-2" size="20" />
+              Pending Invitations
+            </h2>
+          </div>
+          
+          <div class="divide-y divide-gray-200">
+            <div
+              v-for="invitation in pendingInvitations"
+              :key="invitation.id"
+              class="p-6 bg-yellow-50"
+            >
+              <div class="flex items-start justify-between">
+                <div class="flex items-start space-x-4">
+                  <div class="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-full flex-shrink-0">
+                    <UIcon name="i-lucide-mail" class="text-yellow-700" size="20" />
+                  </div>
+                  
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-lg font-semibold text-gray-900">{{ invitation.email }}</h3>
+                    <p class="text-gray-600 mb-2">Invitation sent</p>
+                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                      <div class="flex items-center space-x-1">
+                        <UIcon name="i-lucide-calendar" size="16" />
+                        <span>Sent {{ formatDate(invitation.invited_at) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-2 ml-4">
+                  <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+                    Pending
+                  </span>
+                  <Button
+                    variant="danger"
+                    text="Cancel"
+                    size="sm"
+                    @clicked="cancelInvitation(invitation)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Members List -->
         <div class="bg-white rounded-lg border">
           <div class="px-6 py-4 border-b">
             <h2 class="text-lg font-semibold text-gray-900">
-              {{ isParent ? 'Your Children' : 'Family Members' }}
+              {{ isParent ? 'Active Family Members' : 'Family Members' }}
             </h2>
           </div>
 
           <!-- Empty State -->
-          <div v-if="familyMembers.length === 0" class="text-center py-12">
+          <div v-if="activeMembers.length === 0" class="text-center py-12">
             <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
               <UIcon name="i-lucide-users" size="64" />
             </div>
             <h3 class="text-lg font-medium text-gray-900 mb-2">
-              {{ isParent ? 'No children added yet' : 'No family connections' }}
+              {{ isParent ? 'No active family members yet' : 'No family connections' }}
             </h3>
             <p class="text-gray-500 mb-6">
-              {{ isParent ? 'Add your first child to start creating tasks and managing credits.' : 'You haven\'t been connected to any family members yet.' }}
+              {{ isParent ? 'Invite family members by email. Once they accept, they\'ll appear here and you can share data and credits.' : 'You haven\'t been connected to any family members yet.' }}
             </p>
             <Button
               v-if="isParent"
               variant="primary"
-              text="Add Your First Child"
-              icon="i-lucide-user-plus"
-              @clicked="showAddChildModal = true"
+              text="Invite Your First Family Member"
+              icon="i-lucide-mail-plus"
+              @clicked="showInviteModal = true"
             />
           </div>
 
-          <!-- Family Members List -->
+          <!-- Active Members List -->
           <div v-else class="divide-y divide-gray-200">
             <div
-              v-for="member in familyMembers"
+              v-for="member in activeMembers"
               :key="member.id"
               class="p-6 hover:bg-gray-50 transition-colors"
             >
@@ -109,9 +166,9 @@
                 <!-- Member Info -->
                 <div class="flex items-start space-x-4">
                   <!-- Avatar -->
-                  <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full flex-shrink-0">
-                    <span class="text-blue-700 font-medium text-lg">
-                      {{ getInitials(member.userDisplayFullName) }}
+                  <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full flex-shrink-0">
+                    <span class="text-green-700 font-medium text-lg">
+                      {{ getInitials(member.userDisplayFullName || member.email) }}
                     </span>
                   </div>
 
@@ -119,12 +176,12 @@
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center space-x-3 mb-2">
                       <h3 class="text-lg font-semibold text-gray-900">
-                        {{ member.userDisplayFullName }}
+                        {{ member.userDisplayFullName || member.email }}
                       </h3>
                       <span :class="getRoleBadgeClass(member.user_role)" class="px-2 py-1 rounded-full text-xs font-medium">
-                        {{ member.user_role.charAt(0).toUpperCase() + member.user_role.slice(1) }}
+                        {{ member.user_role ? member.user_role.charAt(0).toUpperCase() + member.user_role.slice(1) : 'Member' }}
                       </span>
-                      <span v-if="member.isActive" class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                      <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
                         Active
                       </span>
                     </div>
@@ -135,17 +192,22 @@
                     <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
                       <div class="flex items-center space-x-1">
                         <UIcon name="i-lucide-calendar" size="16" />
-                        <span>Joined {{ formatDate(member.created_at) }}</span>
+                        <span>Joined {{ formatDate(member.joined_at || member.created_at) }}</span>
                       </div>
 
-                      <div v-if="member.user_role === 'child'" class="flex items-center space-x-1">
+                      <div v-if="member.credits !== undefined" class="flex items-center space-x-1">
                         <UIcon name="i-lucide-coins" size="16" />
-                        <span>{{ formatCredits(member.credits || 0) }} credits</span>
+                        <span>{{ formatCredits(member.credits) }} credits</span>
                       </div>
 
-                      <div v-if="member.user_role === 'child' && member.activeTasks" class="flex items-center space-x-1">
+                      <div v-if="member.activeTasks" class="flex items-center space-x-1">
                         <UIcon name="i-lucide-clipboard-list" size="16" />
                         <span>{{ member.activeTasks }} active tasks</span>
+                      </div>
+
+                      <div class="flex items-center space-x-1">
+                        <UIcon name="i-lucide-database" size="16" />
+                        <span>Data shared</span>
                       </div>
                     </div>
                   </div>
@@ -158,6 +220,12 @@
                     text="View Profile"
                     size="sm"
                     @clicked="viewProfile(member)"
+                  />
+                  <Button
+                    variant="secondary"
+                    text="Transfer Credits"
+                    size="sm"
+                    @clicked="transferCredits(member)"
                   />
                   <Button
                     variant="danger"
@@ -173,19 +241,27 @@
       </div>
     </div>
 
-    <!-- Add Child Modal -->
-    <AddChildModal
-      :is-open="showAddChildModal"
-      @close="showAddChildModal = false"
-      @child-added="onChildAdded"
+    <!-- Invite Member Modal -->
+    <InviteMemberModal
+      :is-open="showInviteModal"
+      @close="showInviteModal = false"
+      @member-invited="onMemberInvited"
     />
 
     <!-- Remove Confirmation Modal -->
-    <RemoveChildModal
+    <RemoveMemberModal
       :is-open="showRemoveModal"
-      :child="selectedMember"
+      :member="selectedMember"
       @close="showRemoveModal = false"
-      @child-removed="onChildRemoved"
+      @member-removed="onMemberRemoved"
+    />
+
+    <!-- Transfer Credits Modal -->
+    <TransferCreditsModal
+      :is-open="showTransferModal"
+      :member="selectedMember"
+      @close="showTransferModal = false"
+      @transfer-completed="onTransferCompleted"
     />
   </div>
 </template>
@@ -193,24 +269,31 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
-import AddChildModal from './family/AddChildModal.vue';
-import RemoveChildModal from './family/RemoveChildModal.vue';
+import InviteMemberModal from './family/InviteMemberModal.vue';
+import RemoveMemberModal from './family/RemoveMemberModal.vue';
+import TransferCreditsModal from './family/TransferCreditsModal.vue';
 
 // Reactive state
 const familyMembers = ref<any[]>([]);
+const pendingInvitations = ref<any[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 const isParent = ref(false);
 const totalTasks = ref(0);
 
 // Modal states
-const showAddChildModal = ref(false);
+const showInviteModal = ref(false);
 const showRemoveModal = ref(false);
+const showTransferModal = ref(false);
 const selectedMember = ref<any>(null);
 
 // Computed properties
-const activeChildren = computed(() => {
-  return familyMembers.value.filter((member) => member.isActive).length;
+const activeMembers = computed(() => {
+  return familyMembers.value.filter((member) => member.status === 'active');
+});
+
+const totalCredits = computed(() => {
+  return activeMembers.value.reduce((sum, member) => sum + (member.credits || 0), 0);
 });
 
 // Functions
@@ -222,7 +305,11 @@ const loadFamily = async () => {
     const response = await $fetch('/api/family/list');
 
     if (response.success) {
-      familyMembers.value = response.familyMembers || [];
+      // Separate active members from pending invitations
+      const allMembers = response.familyMembers || [];
+      familyMembers.value = allMembers.filter((member: any) => member.status === 'active');
+      pendingInvitations.value = allMembers.filter((member: any) => member.status === 'pending');
+      
       isParent.value = response.isParent || false;
       totalTasks.value = response.totalTasks || 0;
     } else {
@@ -232,6 +319,7 @@ const loadFamily = async () => {
     console.error('Failed to load family:', err);
     error.value = err.data?.message || 'Failed to load family members. Please try again.';
     familyMembers.value = [];
+    pendingInvitations.value = [];
   } finally {
     isLoading.value = false;
   }
@@ -242,18 +330,47 @@ const viewProfile = (member: any) => {
   console.log('View profile for:', member);
 };
 
+const transferCredits = (member: any) => {
+  selectedMember.value = member;
+  showTransferModal.value = true;
+};
+
 const removeMember = (member: any) => {
   selectedMember.value = member;
   showRemoveModal.value = true;
 };
 
-const onChildAdded = () => {
-  showAddChildModal.value = false;
+const cancelInvitation = async (invitation: any) => {
+  try {
+    const response = await $fetch('/api/family/cancel-invitation', {
+      method: 'POST',
+      body: { invitationId: invitation.id }
+    });
+
+    if (response.success) {
+      // Remove from pending invitations
+      pendingInvitations.value = pendingInvitations.value.filter(
+        (inv: any) => inv.id !== invitation.id
+      );
+    }
+  } catch (err: any) {
+    console.error('Failed to cancel invitation:', err);
+    alert('Failed to cancel invitation. Please try again.');
+  }
+};
+
+const onMemberInvited = () => {
+  showInviteModal.value = false;
   loadFamily();
 };
 
-const onChildRemoved = () => {
+const onMemberRemoved = () => {
   showRemoveModal.value = false;
+  loadFamily();
+};
+
+const onTransferCompleted = () => {
+  showTransferModal.value = false;
   loadFamily();
 };
 

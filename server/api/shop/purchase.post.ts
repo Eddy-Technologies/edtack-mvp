@@ -242,22 +242,41 @@ export default defineEventHandler(async (event) => {
     // Find all parents for notification (if credit purchase)
     let parentNotifications = null;
     if (use_credits) {
-      const { data: parents } = await supabase
-        .from('parent_child')
+      // Get parents from groups where user is a member
+      const { data: groupParents, error: parentError } = await supabase
+        .from('group_members')
         .select(`
-          parent_user_info_id,
-          parent_info:user_infos!parent_child_parent_user_info_id_fkey(
-            all_users!user_infos_user_id_fkey(email, first_name, last_name)
+          groups!inner(
+            created_by,
+            creator:user_infos!groups_created_by_fkey(
+              id,
+              email,
+              first_name,
+              last_name
+            )
           )
         `)
-        .eq('child_user_info_id', userInfo.id);
+        .eq('user_info_id', userInfo.id)
+        .eq('status', 'active');
 
-      parentNotifications = parents?.map((p) => ({
-        userInfoId: p.parent_user_info_id,
-        email: p.parent_info?.all_users?.email,
-        name: `${p.parent_info?.all_users?.first_name} ${p.parent_info?.all_users?.last_name}`
-      })) || [];
+      if (parentError) {
+        console.error('Failed to fetch parent notifications:', parentError);
+      }
 
+      // Extract unique parents (group creators)
+      const parentMap = new Map();
+      groupParents?.forEach((groupMember) => {
+        const parent = groupMember.groups.creator;
+        if (parent && parent.id !== userInfo.id) {
+          parentMap.set(parent.id, {
+            userInfoId: parent.id,
+            email: parent.email,
+            name: `${parent.first_name} ${parent.last_name}`.trim()
+          });
+        }
+      });
+
+      parentNotifications = Array.from(parentMap.values());
       console.log(`[Purchase] Notifying ${parentNotifications.length} parents about credit purchase approval needed for order ${order.order_number}`);
     }
 

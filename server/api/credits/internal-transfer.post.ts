@@ -39,18 +39,48 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Verify parent-child relationship
-    const { data: parentChildRelation, error: relationError } = await supabase
-      .from('parent_child')
-      .select('id')
-      .eq('parent_user_info_id', senderInfo.id)
-      .eq('child_user_info_id', to_user_info_id)
-      .single();
+    // Verify group relationship
+    const { data: groupRelation, error: relationError } = await supabase
+      .from('group_members')
+      .select(`
+        group_id,
+        groups!inner(
+          created_by,
+          group_members!inner(
+            user_info_id,
+            status
+          )
+        )
+      `)
+      .eq('user_info_id', senderInfo.id)
+      .eq('status', 'active');
 
-    if (relationError || !parentChildRelation) {
+    if (relationError) {
+      console.error('Failed to fetch group relationships:', relationError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to verify relationship'
+      });
+    }
+
+    // Check if recipient is in any of the sender's groups
+    let canTransfer = false;
+    
+    groupRelation?.forEach(senderGroup => {
+      if (senderGroup.groups.created_by === senderInfo.id) {
+        const hasRecipient = senderGroup.groups.group_members.some(
+          member => member.user_info_id === to_user_info_id && member.status === 'active'
+        );
+        if (hasRecipient) {
+          canTransfer = true;
+        }
+      }
+    });
+
+    if (!canTransfer) {
       throw createError({
         statusCode: 403,
-        statusMessage: 'You can only transfer credits to your children'
+        statusMessage: 'You can only transfer credits to members in your family group'
       });
     }
 

@@ -30,51 +30,83 @@ export default defineEventHandler(async (event) => {
     let familyMembers = [];
     const isParent = userInfo.user_roles.some((role) => role.roles.role_name === 'PARENT');
 
-    // Find all the parent_child relationships for this user and their children user_infos and credits and tasks
-    const { data: children, error: childrenError } = await supabase
-      .from('parent_child')
+    // Get user's groups (both active memberships and groups they created)
+    const { data: userGroups, error: groupsError } = await supabase
+      .from('group_members')
       .select(`
-        child_user_info_id, 
-        child:user_infos!child_user_info_id(id, first_name, last_name, is_active, all_users(email), user_credits(credit))
+        group_id,
+        status,
+        invited_at,
+        joined_at,
+        groups(
+          id,
+          name,
+          group_type,
+          created_by,
+          group_members(
+            id,
+            user_info_id,
+            status,
+            is_creator,
+            invited_at,
+            joined_at,
+            user_infos!group_members_user_info_id_fkey(
+              id,
+              first_name,
+              last_name,
+              email,
+              is_active,
+              user_credits(credit),
+              user_roles(role_id, roles(role_name))
+            )
+          )
+        )
       `)
-      .eq('parent_user_info_id', userInfo.id);
-    if (isParent) {
-      // Format family members
-      familyMembers = children?.map((item) => ({
-        id: item.child_user_info_id,
-        userDisplayFullName: `${item.child.first_name || ''} ${item.child.last_name || ''}`.trim(),
-        email: item.child.all_users.email,
-        user_role: 'STUDENT', // Children are always child role
-        isActive: item.child.is_active,
-        credits: item.child.user_credits,
-      })) || [];
-    } else {
-      // Child user - get their parent(s)
-      const { data: parents, error: parentsError } = await supabase
-        .from('parent_child')
-        .select(`
-          parent:user_infos!parent_user_info_id(id, first_name, last_name, created_at)
-        `)
-        .eq('child_user_info_id', userInfo.id);
+      .eq('user_info_id', userInfo.id)
+      .in('status', ['active', 'pending']);
 
-      if (parentsError) {
-        console.error('Failed to fetch parents:', parentsError);
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Failed to fetch family members'
-        });
-      }
-
-      // Format family members (parents)
-      familyMembers = parents?.map((item) => ({
-        id: item.parent.id,
-        userDisplayFullName: `${item.parent.first_name || ''} ${item.parent.last_name || ''}`.trim(),
-        user_role: 'PARENT', // Parents are always parent role
-        isActive: true,
-        credits: 0, // Parents don't have credits displayed
-        activeTasks: 0
-      })) || [];
+    if (groupsError) {
+      console.error('Failed to fetch groups:', groupsError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to fetch family members'
+      });
     }
+
+    // Extract family members from groups (both active and pending)
+    const membersMap = new Map();
+    
+    userGroups?.forEach(userGroup => {
+      // Only process family groups
+      if (userGroup.groups.group_type !== 'family') return;
+      
+      userGroup.groups.group_members.forEach(member => {
+        // Skip self
+        if (member.user_info_id === userInfo.id) return;
+        
+        // Skip if already added (user might be in multiple groups)
+        if (membersMap.has(member.user_info_id)) return;
+        
+        const userInfo = member.user_infos;
+        const isParentMember = userInfo.user_roles.some(role => role.roles.role_name === 'PARENT');
+        
+        membersMap.set(member.user_info_id, {
+          id: member.id, // Use group_member id for invitations
+          user_info_id: member.user_info_id,
+          userDisplayFullName: `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim(),
+          email: userInfo.email,
+          user_role: isParentMember ? 'parent' : 'student',
+          status: member.status, // 'active' or 'pending'
+          isActive: userInfo.is_active && member.status === 'active',
+          credits: userInfo.user_credits?.credit || 0,
+          invited_at: member.invited_at,
+          joined_at: member.joined_at,
+          created_at: member.joined_at || member.invited_at
+        });
+      });
+    });
+    
+    familyMembers = Array.from(membersMap.values());
 
     return {
       success: true,

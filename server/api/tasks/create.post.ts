@@ -47,18 +47,48 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Verify that the assignee belongs to this creator (parent-child relationship)
-    const { data: parentChildRelation, error: relationError } = await supabase
-      .from('parent_child')
-      .select('id')
-      .eq('parent_user_info_id', creatorInfo.id)
-      .eq('child_user_info_id', assignee_user_info_id)
-      .single();
+    // Verify that the assignee is in the same group as the creator
+    const { data: groupRelation, error: relationError } = await supabase
+      .from('group_members')
+      .select(`
+        group_id,
+        groups!inner(
+          created_by,
+          group_members!inner(
+            user_info_id,
+            status
+          )
+        )
+      `)
+      .eq('user_info_id', creatorInfo.id)
+      .eq('status', 'active');
 
-    if (relationError || !parentChildRelation) {
+    if (relationError) {
+      console.error('Failed to fetch group relationships:', relationError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to verify relationship'
+      });
+    }
+
+    // Check if assignee is in any of the creator's groups
+    let canAssignTask = false;
+    
+    groupRelation?.forEach(creatorGroup => {
+      if (creatorGroup.groups.created_by === creatorInfo.id) {
+        const hasAssignee = creatorGroup.groups.group_members.some(
+          member => member.user_info_id === assignee_user_info_id && member.status === 'active'
+        );
+        if (hasAssignee) {
+          canAssignTask = true;
+        }
+      }
+    });
+
+    if (!canAssignTask) {
       throw createError({
         statusCode: 403,
-        statusMessage: 'You can only create tasks for your children'
+        statusMessage: 'You can only create tasks for members in your family group'
       });
     }
 

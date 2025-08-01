@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
       .select(`
         id,
         created_at,
-        product:products(
+        products(
           id,
           name,
           description,
@@ -52,7 +52,6 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('user_info_id', userInfo.id)
-      .eq('product.is_active', true)
       .order('created_at', { ascending: false })
       .range(parseInt(offset as string), parseInt(offset as string) + parseInt(limit as string) - 1);
 
@@ -64,9 +63,11 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Format the response
-    const formattedItems = wishlistItems?.map((item) => {
-      const product = item.product;
+    // Filter out items with inactive products and format the response
+    const formattedItems = wishlistItems
+      ?.filter((item) => item.products && item.products.is_active)
+      ?.map((item) => {
+      const product = item.products;
       let finalPrice = product.price_cents;
       let originalPrice = null;
 
@@ -104,12 +105,12 @@ export default defineEventHandler(async (event) => {
       };
     }) || [];
 
-    // Get total count for pagination
+    // Get total count for pagination (we'll filter active products in app logic)
     const { count } = await supabase
       .from('wishlists')
-      .select('*', { count: 'exact', head: true })
+      .select('products!inner(is_active)', { count: 'exact', head: true })
       .eq('user_info_id', userInfo.id)
-      .eq('product.is_active', true);
+      .eq('products.is_active', true);
 
     return {
       success: true,

@@ -29,7 +29,6 @@
 
       <!-- Family Management -->
       <div class="mb-8">
-        <FamilyManagementSection v-if="isParent" />
         <ViewTransactions />
       </div>
     </div>
@@ -42,7 +41,6 @@ import Button from '../common/Button.vue';
 import CreditBalance from '~/components/credits/CreditBalance.vue';
 import TopUpSection from '~/components/credits/TopUpSection.vue';
 import TransferSection from '~/components/credits/TransferSection.vue';
-import FamilyManagementSection from '~/components/credits/FamilyManagementSection.vue';
 import ViewTransactions from '~/components/credits/ViewTransactions.vue';
 
 // Single fetch point for all credit data

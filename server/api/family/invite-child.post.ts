@@ -5,12 +5,12 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
 
-    const { name, email, message } = body;
+    const { email, message } = body;
 
-    if (!name || !email) {
+    if (!email) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Name and email are required'
+        statusMessage: 'Email is required'
       });
     }
 
@@ -44,47 +44,118 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check if user already exists
+    // Check if user already exists and get their info
     const { data: existingUser } = await supabase
-      .from('all_users')
-      .select('id, email')
+      .from('user_infos')
+      .select('id, email, first_name, last_name, user_role')
       .eq('email', email.toLowerCase())
       .single();
 
-    if (existingUser) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'A user with this email already exists. Use "Link Existing User" instead.'
-      });
+    // Get or create family group for the parent
+    let familyGroupId;
+    const { data: existingGroup } = await supabase
+      .from('groups')
+      .select('id')
+      .eq('created_by', parentInfo.id)
+      .eq('group_type', 'family')
+      .single();
+
+    if (existingGroup) {
+      familyGroupId = existingGroup.id;
+    } else {
+      // Create family group
+      const { data: newGroup, error: groupError } = await supabase
+        .from('groups')
+        .insert({
+          name: `${parentInfo.userDisplayFullName}'s Family`,
+          description: 'Family group for managing children and credits',
+          group_type: 'family',
+          created_by: parentInfo.id
+        })
+        .select('id')
+        .single();
+
+      if (groupError || !newGroup) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to create family group'
+        });
+      }
+
+      familyGroupId = newGroup.id;
+
+      // Add parent as active member of their own family group
+      await supabase
+        .from('group_members')
+        .insert({
+          group_id: familyGroupId,
+          user_info_id: parentInfo.id,
+          status: 'active',
+          is_creator: true,
+          invited_by: parentInfo.id
+        });
     }
 
-    // For now, we'll just return success since we don't have email functionality set up
-    // In a real implementation, you would:
-    // 1. Create an invitation record in the database
-    // 2. Send an email with a signup link that includes the invitation token
-    // 3. When the child signs up, automatically link them to the parent
+    if (existingUser) {
+      // Check if already a member of this family group
+      const { data: existingMembership } = await supabase
+        .from('group_members')
+        .select('id, status')
+        .eq('group_id', familyGroupId)
+        .eq('user_info_id', existingUser.id)
+        .single();
 
-    // TODO: Implement email invitation system
-    console.log('Family invitation would be sent:', {
-      parentName: parentInfo.userDisplayFullName,
-      parentEmail: parentInfo.email,
-      childName: name,
-      childEmail: email,
-      message: message
-    });
-
-    return {
-      success: true,
-      message: `Invitation sent to ${name} at ${email}`,
-      // Note: This is a placeholder response
-      // In production, you would create an invitation record and send actual email
-      invite: {
-        childName: name,
-        childEmail: email,
-        parentName: parentInfo.userDisplayFullName,
-        sentAt: new Date().toISOString()
+      if (existingMembership) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: existingMembership.status === 'pending' 
+            ? 'An invitation is already pending for this user.' 
+            : 'This user is already a member of your family group.'
+        });
       }
-    };
+
+      // Create invitation for existing user
+      const { data: invitation, error: inviteError } = await supabase
+        .from('group_members')
+        .insert({
+          group_id: familyGroupId,
+          user_info_id: existingUser.id,
+          status: 'pending',
+          invited_by: parentInfo.id,
+          invited_at: new Date().toISOString()
+        })
+        .select('id')
+        .single();
+
+      if (inviteError || !invitation) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to create invitation'
+        });
+      }
+
+      return {
+        success: true,
+        message: `Invitation sent to ${existingUser.first_name} ${existingUser.last_name} at ${email}`,
+        invite: {
+          id: invitation.id,
+          memberName: `${existingUser.first_name} ${existingUser.last_name}`,
+          memberEmail: email,
+          parentName: parentInfo.userDisplayFullName,
+          sentAt: new Date().toISOString(),
+          status: 'pending'
+        }
+      };
+    } else {
+      // For non-existing users, we'll create a placeholder invitation
+      // In a real implementation with email service, this would send an invitation email
+      // with a signup link that includes the family group ID
+      
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'User with this email does not exist. Please ask them to create an account first, then invite them.'
+      });
+    }
   } catch (error) {
     console.error('Failed to send invite:', error);
 

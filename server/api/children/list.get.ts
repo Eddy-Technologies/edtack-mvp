@@ -27,37 +27,72 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get children linked to this parent
-    const { data: children, error: childrenError } = await supabase
-      .from('parent_child')
+    // Get children from groups where user is a creator
+    const { data: groupMembers, error: groupError } = await supabase
+      .from('group_members')
       .select(`
-        child_user_info_id,
-        child:user_infos!parent_child_child_user_info_id_fkey(
+        groups!inner(
           id,
-          userDisplayFullName,
-          email
+          created_by,
+          group_members!inner(
+            user_info_id,
+            status,
+            user:user_infos(
+              id,
+              first_name,
+              last_name,
+              email,
+              user_roles(
+                role_id,
+                roles(role_name)
+              )
+            )
+          )
         )
       `)
-      .eq('parent_user_info_id', userInfo.id);
+      .eq('user_info_id', userInfo.id)
+      .eq('status', 'active');
 
-    if (childrenError) {
-      console.error('Failed to fetch children:', childrenError);
+    if (groupError) {
+      console.error('Failed to fetch group members:', groupError);
       throw createError({
         statusCode: 500,
         statusMessage: 'Failed to fetch children'
       });
     }
 
-    // Format the response
-    const formattedChildren = children?.map((item) => ({
-      id: item.child.id,
-      userDisplayFullName: item.child.userDisplayFullName,
-      email: item.child.email
-    })) || [];
+    // Extract children from groups where the current user is the creator
+    const children = [];
+    const childrenMap = new Map();
+
+    groupMembers?.forEach(groupMember => {
+      const group = groupMember.groups;
+      
+      // Only process groups created by this user
+      if (group.created_by === userInfo.id) {
+        group.group_members.forEach(member => {
+          // Skip self and inactive members
+          if (member.user_info_id === userInfo.id || member.status !== 'active') {
+            return;
+          }
+
+          // Check if this is a child (not a parent)
+          const isParent = member.user.user_roles.some(role => role.roles.role_name === 'PARENT');
+          
+          if (!isParent && !childrenMap.has(member.user_info_id)) {
+            childrenMap.set(member.user_info_id, {
+              id: member.user.id,
+              userDisplayFullName: `${member.user.first_name || ''} ${member.user.last_name || ''}`.trim(),
+              email: member.user.email
+            });
+          }
+        });
+      }
+    });
 
     return {
       success: true,
-      children: formattedChildren
+      children: Array.from(childrenMap.values())
     };
   } catch (error) {
     console.error('Failed to fetch children:', error);

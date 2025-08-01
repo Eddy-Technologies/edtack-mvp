@@ -39,51 +39,108 @@ export default defineEventHandler(async (event) => {
     }
 
     const { data: child } = await supabase
-      .from('all_users')
+      .from('user_infos')
       .select(`
-        user_info_id, email, first_name, last_name
+        id, email, first_name, last_name
       `)
       .eq('email', childEmail)
       .single();
 
-    // Then check if user_infos exists and is_active in JavaScript
-    if (!child?.user_info_id) {
+    if (!child?.id) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Child user not found'
       });
     }
 
-    // Check if relationship already exists
-    const { data: existingRelationship } = await supabase
-      .from('parent_child')
-      .select('id')
-      .eq('parent_user_info_id', parentUserInfo.id)
-      .eq('child_user_info_id', child.user_info_id)
+    // Get or create parent's family group
+    let groupId;
+    
+    // Check if parent already has a group they created
+    const { data: existingGroup } = await supabase
+      .from('groups')
+      .select('id, name')
+      .eq('created_by', parentUserInfo.id)
+      .eq('group_type', 'family')
       .single();
 
-    if (existingRelationship) {
-      throw createError({
-        statusCode: 409,
-        statusMessage: 'Child is already linked to your account'
-      });
+    if (existingGroup) {
+      groupId = existingGroup.id;
+    } else {
+      // Create a new family group
+      const { data: newGroup, error: groupError } = await supabase
+        .from('groups')
+        .insert({
+          name: `${parentUserInfo.first_name || 'Family'}'s Family`,
+          group_type: 'family',
+          created_by: parentUserInfo.id
+        })
+        .select()
+        .single();
+
+      if (groupError || !newGroup) {
+        console.error('Failed to create family group:', groupError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to create family group'
+        });
+      }
+
+      groupId = newGroup.id;
+
+      // Add parent as group member with creator status
+      const { error: parentMemberError } = await supabase
+        .from('group_members')
+        .insert({
+          group_id: groupId,
+          user_info_id: parentUserInfo.id,
+          status: 'active',
+          is_creator: true
+        });
+
+      if (parentMemberError) {
+        console.error('Failed to add parent to group:', parentMemberError);
+      }
     }
 
-    // Create parent-child relationship
-    const { error: insertError } = await supabase
-      .from('parent_child')
-      .insert({
-        parent_user_info_id: parentUserInfo.id,
-        child_user_info_id: child.user_info_id
-      })
-      .select('id')
+    // Check if child is already in the group
+    const { data: existingMember } = await supabase
+      .from('group_members')
+      .select('id, status')
+      .eq('group_id', groupId)
+      .eq('user_info_id', child.id)
       .single();
 
-    if (insertError) {
-      console.error('Failed to create parent-child relationship:', insertError);
+    if (existingMember) {
+      if (existingMember.status === 'active') {
+        throw createError({
+          statusCode: 409,
+          statusMessage: 'Child is already in your family group'
+        });
+      } else if (existingMember.status === 'pending') {
+        throw createError({
+          statusCode: 409,
+          statusMessage: 'An invitation is already pending for this child'
+        });
+      }
+    }
+
+    // Add child to the group with active status (for credit management purposes)
+    const { error: memberError } = await supabase
+      .from('group_members')
+      .insert({
+        group_id: groupId,
+        user_info_id: child.id,
+        status: 'active',
+        invited_by: parentUserInfo.id,
+        is_creator: false
+      });
+
+    if (memberError) {
+      console.error('Failed to add child to group:', memberError);
       throw createError({
         statusCode: 500,
-        statusMessage: 'Failed to create family relationship'
+        statusMessage: 'Failed to add child to family group'
       });
     }
 
@@ -93,20 +150,15 @@ export default defineEventHandler(async (event) => {
       limit: 1
     });
 
-    // TODO: Send email notifications to both parent and child
-    // This would typically involve:
-    // 1. Email to parent: "You have successfully added [child name] to your family"
-    // 2. Email to child: "You have been added to [parent name]'s family for credit management"
-
-    console.log(`Family relationship created: Parent ${user.email} added child ${childEmail}`);
+    console.log(`Family relationship created: Parent ${user.email} added child ${childEmail} to group`);
 
     return {
       email: childEmail,
-      id: child.user_info_id,
+      id: child.id,
       firstName: child.first_name,
       lastName: child.last_name,
       balance: childCustomer.data[0]?.balance,
-      active: true // TODO: Check if child is active in your business logic
+      active: true
     };
   } catch (error) {
     console.error('Failed to add child:', error);

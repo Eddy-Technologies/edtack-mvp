@@ -21,8 +21,6 @@ CREATE INDEX IF NOT EXISTS idx_credit_transactions_type ON credit_transactions(t
 CREATE INDEX IF NOT EXISTS idx_credit_transactions_stripe_payment_intent ON credit_transactions(stripe_payment_intent_id);
 CREATE INDEX IF NOT EXISTS idx_credit_transactions_created_at ON credit_transactions(created_at DESC);
 
--- Enable Row Level Security (RLS)
-ALTER TABLE credit_transactions ENABLE ROW LEVEL SECURITY;
 
 -- Credit transactions: Users can view their own transactions
 CREATE POLICY "Users can view own credit transactions" ON credit_transactions

@@ -30,7 +30,56 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get all pending approval orders for this parent's children
+    // Get child user IDs from groups where parent is the creator
+    const { data: groupMembers, error: groupError } = await supabase
+      .from('group_members')
+      .select(`
+        groups!inner(
+          id,
+          created_by,
+          group_members!inner(
+            user_info_id,
+            status
+          )
+        )
+      `)
+      .eq('user_info_id', parentInfo.id)
+      .eq('status', 'active');
+
+    if (groupError) {
+      console.error('Failed to fetch group members:', groupError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to fetch group information'
+      });
+    }
+
+    // Extract child user IDs from groups created by this parent
+    const childUserIds = [];
+    groupMembers?.forEach(groupMember => {
+      if (groupMember.groups.created_by === parentInfo.id) {
+        groupMember.groups.group_members.forEach(member => {
+          if (member.user_info_id !== parentInfo.id && member.status === 'active') {
+            childUserIds.push(member.user_info_id);
+          }
+        });
+      }
+    });
+
+    if (childUserIds.length === 0) {
+      return {
+        success: true,
+        orders: [],
+        pagination: {
+          total: 0,
+          limit: parseInt(limit as string),
+          offset: parseInt(offset as string),
+          hasNext: false
+        }
+      };
+    }
+
+    // Get all pending approval orders for this parent's group members
     const { data: pendingOrders, error: ordersError } = await supabase
       .from('orders')
       .select(`
@@ -42,7 +91,9 @@ export default defineEventHandler(async (event) => {
         notes,
         child_info:user_infos!orders_user_info_id_fkey(
           id,
-          all_users!user_infos_user_id_fkey(first_name, last_name, email)
+          first_name,
+          last_name,
+          email
         ),
         order_items(
           id,
@@ -58,12 +109,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('status_code', 'pending_parent_approval')
-      .in('user_info_id',
-        supabase
-          .from('parent_child')
-          .select('child_user_info_id')
-          .eq('parent_user_info_id', parentInfo.id)
-      )
+      .in('user_info_id', childUserIds)
       .order('created_at', { ascending: false })
       .range(parseInt(offset as string), parseInt(offset as string) + parseInt(limit as string) - 1);
 
@@ -86,10 +132,10 @@ export default defineEventHandler(async (event) => {
       notes: order.notes,
       child: {
         userInfoId: order.child_info?.id,
-        name: `${order.child_info?.all_users?.first_name} ${order.child_info?.all_users?.last_name}`,
-        firstName: order.child_info?.all_users?.first_name,
-        lastName: order.child_info?.all_users?.last_name,
-        email: order.child_info?.all_users?.email
+        name: `${order.child_info?.first_name} ${order.child_info?.last_name}`,
+        firstName: order.child_info?.first_name,
+        lastName: order.child_info?.last_name,
+        email: order.child_info?.email
       },
       items: order.order_items?.map((item) => ({
         id: item.id,
@@ -114,12 +160,7 @@ export default defineEventHandler(async (event) => {
       .from('orders')
       .select('*', { count: 'exact', head: true })
       .eq('status_code', 'pending_parent_approval')
-      .in('user_info_id',
-        supabase
-          .from('parent_child')
-          .select('child_user_info_id')
-          .eq('parent_user_info_id', parentInfo.id)
-      );
+      .in('user_info_id', childUserIds);
 
     return {
       success: true,

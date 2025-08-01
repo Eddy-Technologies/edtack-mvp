@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS products (
   image_url TEXT, -- Product image URL
   category TEXT,
   stock_count INTEGER NOT NULL DEFAULT 0, -- Available stock count
-  sku TEXT, -- Stock Keeping Unit - use product-specific unique identifier
+  sku TEXT UNIQUE, -- Stock Keeping Unit - use product-specific unique identifier
   -- Discount fields
   discount_percentage DECIMAL(5,2), -- Percentage discount (0.00 to 100.00)
   discount_amount_cents INTEGER, -- Fixed discount amount in cents
@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS products (
 CREATE INDEX IF NOT EXISTS idx_products_type ON products(product_type);
 CREATE INDEX IF NOT EXISTS idx_products_active ON products(is_active);
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
+CREATE INDEX IF NOT EXISTS idx_products_sku ON products(sku);
 
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON products TO service_role;

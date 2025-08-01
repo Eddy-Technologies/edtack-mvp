@@ -71,7 +71,8 @@ async function runMigrations() {
       'user_infos.sql', // references level_types
       'user_roles.sql', // references user_infos, roles
       'user_credits.sql', // references user_infos
-      'parent_child.sql', // references user_infos
+      'groups.sql', // references user_infos
+      'group_members.sql', // references groups, user_infos
 
       // Content tables
       'syllabus.sql', // references subjects
