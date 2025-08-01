@@ -30,7 +30,7 @@
               {{ isParent ? 'Manage your children and family members' : 'View your family connections' }}
             </p>
           </div>
-          
+
           <!-- Add Child Button (Parents Only) -->
           <Button
             v-if="isParent"
@@ -51,7 +51,7 @@
               <p class="text-2xl font-bold text-gray-900">{{ familyMembers.length }}</p>
               <p class="text-sm text-gray-600">{{ isParent ? 'Children' : 'Family Members' }}</p>
             </div>
-            
+
             <div v-if="isParent" class="text-center">
               <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mx-auto mb-3">
                 <UIcon name="i-lucide-check-circle" class="text-green-600" size="24" />
@@ -137,7 +137,7 @@
                         <UIcon name="i-lucide-calendar" size="16" />
                         <span>Joined {{ formatDate(member.created_at) }}</span>
                       </div>
-                      
+
                       <div v-if="member.user_role === 'child'" class="flex items-center space-x-1">
                         <UIcon name="i-lucide-coins" size="16" />
                         <span>{{ formatCredits(member.credits || 0) }} credits</span>
@@ -210,7 +210,7 @@ const selectedMember = ref<any>(null);
 
 // Computed properties
 const activeChildren = computed(() => {
-  return familyMembers.value.filter(member => member.isActive).length;
+  return familyMembers.value.filter((member) => member.isActive).length;
 });
 
 // Functions
@@ -261,7 +261,7 @@ const onChildRemoved = () => {
 const getInitials = (name: string) => {
   return name
     .split(' ')
-    .map(word => word.charAt(0))
+    .map((word) => word.charAt(0))
     .join('')
     .substring(0, 2)
     .toUpperCase();

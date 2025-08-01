@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     // Update task status to in_progress
     const { error: updateError } = await supabase
       .from('task_credit')
-      .update({ 
+      .update({
         status: 'in_progress',
         updated_at: new Date().toISOString()
       })
@@ -82,7 +82,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to start task:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

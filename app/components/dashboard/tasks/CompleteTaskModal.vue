@@ -6,8 +6,8 @@
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-gray-900">Complete Task</h2>
           <button
-            @click="$emit('close')"
             class="text-gray-400 hover:text-gray-600 transition-colors"
+            @click="$emit('close')"
           >
             <UIcon name="i-lucide-x" size="24" />
           </button>
@@ -25,7 +25,7 @@
         </div>
 
         <!-- Form -->
-        <form @submit.prevent="completeTask" class="space-y-4">
+        <form class="space-y-4" @submit.prevent="completeTask">
           <!-- Completion Notes -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -36,7 +36,7 @@
               rows="4"
               placeholder="Describe what you did to complete this task..."
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
+            />
             <p class="text-sm text-gray-500 mt-1">
               Tell your parent how you completed the task (optional)
             </p>
@@ -52,8 +52,8 @@
             <Button
               variant="secondary-gray"
               text="Cancel"
-              @clicked="$emit('close')"
               :disabled="isSubmitting"
+              @clicked="$emit('close')"
             />
             <Button
               type="submit"

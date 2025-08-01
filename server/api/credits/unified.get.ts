@@ -71,16 +71,16 @@ export default defineEventHandler(async (event) => {
 
     if (hasChildren) {
       // Get children's credit balances
-      const childUserInfoIds = parentWithChildren.parent_child.map(child => child.child_user_info_id);
-      
+      const childUserInfoIds = parentWithChildren.parent_child.map((child) => child.child_user_info_id);
+
       const { data: childrenCredits } = await supabase
         .from('user_credits')
         .select('user_info_id, credit, updated_at')
         .in('user_info_id', childUserInfoIds);
 
       const childrenData = await Promise.all(parentWithChildren.parent_child.map(async (child) => {
-        const childCredit = childrenCredits?.find(c => c.user_info_id === child.child_user_info_id);
-        
+        const childCredit = childrenCredits?.find((c) => c.user_info_id === child.child_user_info_id);
+
         // If child doesn't have credit record, create one
         if (!childCredit) {
           const { data: newChildCredit } = await supabase
@@ -137,7 +137,7 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error) {
     console.error('Failed to get unified credit data:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

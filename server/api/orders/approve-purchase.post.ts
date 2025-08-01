@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const stripe = getStripe();
     const body = await readBody(event);
-    
+
     const { order_id, approved } = body;
 
     if (!order_id || approved === undefined) {
@@ -138,7 +138,7 @@ export default defineEventHandler(async (event) => {
 
     const session = await stripe.checkout.sessions.create({
       customer: parentInfo.payment_customer_id || undefined,
-      line_items: orderItems?.map(item => ({
+      line_items: orderItems?.map((item) => ({
         price_data: {
           currency: 'sgd',
           unit_amount: item.unit_price_cents,
@@ -189,7 +189,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to approve/reject order:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

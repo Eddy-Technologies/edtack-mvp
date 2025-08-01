@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to get internal credit balance:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

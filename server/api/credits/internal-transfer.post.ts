@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { to_user_info_id, amount } = body;
 
     // Validate input
@@ -132,7 +132,7 @@ export default defineEventHandler(async (event) => {
 
     // Create transaction records
     const description = `Transfer ${(amountInCents / 100).toFixed(2)} SGD to child`;
-    
+
     // Sender transaction (outgoing)
     const { error: senderTransactionError } = await supabase
       .from('credit_transactions')
@@ -195,7 +195,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to transfer internal credits:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

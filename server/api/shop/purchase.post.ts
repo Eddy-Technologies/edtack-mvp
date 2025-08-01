@@ -106,12 +106,12 @@ export default defineEventHandler(async (event) => {
     // Handle payment flow based on use_credits parameter
     let orderStatus;
     let paymentMethod;
-    let paidAt = null;
+    const paidAt = null;
     let stripeCheckoutUrl = null;
 
     if (use_credits) {
       // FLOW 1: Credit Purchase → Parent Approval Required
-      
+
       // Get user's internal credit balance (including reserved credits)
       const { data: userCredits, error: creditsError } = await supabase
         .from('user_credits')
@@ -127,7 +127,7 @@ export default defineEventHandler(async (event) => {
       }
 
       const availableCredits = userCredits.credit - (userCredits.reserved_credit || 0);
-      
+
       if (availableCredits < totalCostCents) {
         throw createError({
           statusCode: 400,
@@ -153,15 +153,14 @@ export default defineEventHandler(async (event) => {
 
       orderStatus = statusCodes.pending_parent_approval || 'pending_parent_approval';
       paymentMethod = 'credits_pending_approval';
-      
     } else {
       // FLOW 2: Direct Credit Card Purchase
-      
+
       // Create Stripe checkout session
       const baseUrl = useRuntimeConfig().public.baseUrl;
-      
+
       const session = await stripe.checkout.sessions.create({
-        line_items: orderItems.map(item => ({
+        line_items: orderItems.map((item) => ({
           price_data: {
             currency: 'sgd',
             unit_amount: item.price_cents,
@@ -203,9 +202,9 @@ export default defineEventHandler(async (event) => {
         payment_method: paymentMethod,
         stripe_balance_transaction_id: stripeCheckoutUrl ? null : null, // Will be updated by webhook
         paid_at: paidAt,
-        notes: use_credits 
-          ? `Credit purchase pending parent approval - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`
-          : `Direct purchase - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''} - External fulfillment`
+        notes: use_credits ?
+          `Credit purchase pending parent approval - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}` :
+          `Direct purchase - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''} - External fulfillment`
       })
       .select()
       .single();
@@ -253,7 +252,7 @@ export default defineEventHandler(async (event) => {
         `)
         .eq('child_user_info_id', userInfo.id);
 
-      parentNotifications = parents?.map(p => ({
+      parentNotifications = parents?.map((p) => ({
         userInfoId: p.parent_user_info_id,
         email: p.parent_info?.all_users?.email,
         name: `${p.parent_info?.all_users?.first_name} ${p.parent_info?.all_users?.last_name}`
@@ -269,11 +268,11 @@ export default defineEventHandler(async (event) => {
       status: orderStatus,
       requiresParentApproval: use_credits,
       stripeCheckoutUrl: stripeCheckoutUrl,
-      message: use_credits 
-        ? `Order created! Waiting for parent approval to complete purchase.`
-        : stripeCheckoutUrl 
-          ? `Redirecting to payment...`
-          : `Successfully purchased ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`,
+      message: use_credits ?
+        `Order created! Waiting for parent approval to complete purchase.` :
+        stripeCheckoutUrl ?
+          `Redirecting to payment...` :
+          `Successfully purchased ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`,
       details: {
         orderNumber: order.order_number,
         items: orderItems,

@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { childEmail } = body;
 
     if (!childEmail) {
@@ -105,7 +105,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to link child:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

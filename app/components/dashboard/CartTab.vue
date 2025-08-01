@@ -44,19 +44,19 @@
         <div class="bg-white rounded-lg shadow-sm border">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Items in Your Cart</h2>
-            
+
             <div class="space-y-4">
-              <div 
-                v-for="item in cart" 
-                :key="item.id" 
+              <div
+                v-for="item in cart"
+                :key="item.id"
                 class="flex items-center space-x-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
               >
-                <img 
-                  :src="item.image" 
-                  :alt="item.name" 
+                <img
+                  :src="item.image"
+                  :alt="item.name"
                   class="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                 >
-                
+
                 <div class="flex-1 min-w-0">
                   <h3 class="text-lg font-medium text-gray-900 truncate">{{ item.name }}</h3>
                   <p class="text-sm text-gray-600 truncate">{{ item.description }}</p>
@@ -69,16 +69,16 @@
                 <div class="flex items-center space-x-3">
                   <!-- Quantity Controls -->
                   <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
-                    <Button 
-                      icon="i-lucide-minus" 
+                    <Button
+                      icon="i-lucide-minus"
                       class="p-2 hover:bg-gray-200 rounded"
-                      @clicked="updateQuantity(item, -1)" 
+                      @clicked="updateQuantity(item, -1)"
                     />
                     <span class="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">{{ item.quantity }}</span>
-                    <Button 
-                      icon="i-lucide-plus" 
+                    <Button
+                      icon="i-lucide-plus"
                       class="p-2 hover:bg-gray-200 rounded"
-                      @clicked="updateQuantity(item, 1)" 
+                      @clicked="updateQuantity(item, 1)"
                     />
                   </div>
 
@@ -105,7 +105,7 @@
         <div class="bg-white rounded-lg shadow-sm border">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
-            
+
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Items ({{ totalItems }})</span>
@@ -129,14 +129,14 @@
         <div class="bg-white rounded-lg shadow-sm border">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Method</h2>
-            
+
             <div class="space-y-3">
               <!-- Pay with Credits Option -->
               <label class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                <input 
-                  v-model="paymentMethod" 
-                  type="radio" 
-                  value="credits" 
+                <input
+                  v-model="paymentMethod"
+                  type="radio"
+                  value="credits"
                   class="mt-1"
                 >
                 <div class="flex-1">
@@ -158,10 +158,10 @@
 
               <!-- Pay with Card Option -->
               <label class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                <input 
-                  v-model="paymentMethod" 
-                  type="radio" 
-                  value="card" 
+                <input
+                  v-model="paymentMethod"
+                  type="radio"
+                  value="card"
                   class="mt-1"
                 >
                 <div class="flex-1">
@@ -188,7 +188,7 @@
                 icon="i-lucide-trash-2"
                 @clicked="clearCart"
               />
-              
+
               <Button
                 variant="primary"
                 :text="checkoutButtonText"
@@ -227,7 +227,7 @@
       <div v-if="showProcessingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 max-w-md mx-4">
           <div class="text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
             <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ processingMessage }}</h3>
             <p class="text-gray-600">{{ processingDetails }}</p>
           </div>
@@ -297,8 +297,8 @@ const checkoutButtonText = computed(() => {
 // Functions
 const updateQuantity = (item: any, change: number) => {
   const updatedCart = [...props.cart];
-  const existingItem = updatedCart.find(cartItem => cartItem.id === item.id);
-  
+  const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
+
   if (existingItem) {
     existingItem.quantity += change;
     if (existingItem.quantity <= 0) {
@@ -306,12 +306,12 @@ const updateQuantity = (item: any, change: number) => {
       updatedCart.splice(index, 1);
     }
   }
-  
+
   emit('update-cart', updatedCart);
 };
 
 const removeItem = (item: any) => {
-  const updatedCart = props.cart.filter(cartItem => cartItem.id !== item.id);
+  const updatedCart = props.cart.filter((cartItem) => cartItem.id !== item.id);
   emit('update-cart', updatedCart);
 };
 
@@ -350,7 +350,7 @@ const processCheckout = async () => {
       if (paymentMethod.value === 'credits') {
         // Credits flow - show success message
         alert(`${purchaseResponse.message}\n\nOrder: ${purchaseResponse.orderNumber}\nTotal: S$${purchaseResponse.details.totalCostSGD}`);
-        
+
         // Clear cart after successful request
         emit('clear-cart');
       } else {
@@ -367,14 +367,14 @@ const processCheckout = async () => {
   } catch (error: any) {
     console.error('Checkout failed:', error);
     showProcessingModal.value = false;
-    
+
     let errorMessage = 'Checkout failed. Please try again.';
     if (error.data?.message) {
       errorMessage = error.data.message;
     } else if (error.message) {
       errorMessage = error.message;
     }
-    
+
     alert(errorMessage);
   } finally {
     isProcessingCheckout.value = false;

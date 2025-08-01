@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { childId } = body;
 
     if (!childId) {
@@ -74,11 +74,11 @@ export default defineEventHandler(async (event) => {
       .single();
 
     // Start a transaction to handle all related data
-    
+
     // 1. Cancel all pending tasks for this child from this parent
     const { error: tasksError } = await supabase
       .from('task_credit')
-      .update({ 
+      .update({
         status: 'cancelled',
         updated_at: new Date().toISOString()
       })
@@ -108,7 +108,7 @@ export default defineEventHandler(async (event) => {
     // Note: We don't delete the child's user_credits record as they should keep their credits
 
     const childName = childInfo ? `${childInfo.first_name} ${childInfo.last_name}`.trim() : 'Child';
-    
+
     return {
       success: true,
       message: `${childName} has been removed from your family`,
@@ -120,7 +120,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to remove child:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

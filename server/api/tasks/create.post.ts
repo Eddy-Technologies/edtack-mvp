@@ -4,16 +4,16 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
-    const { 
-      child_user_info_id, 
-      name, 
-      subtitle, 
-      description, 
-      credit, 
+
+    const {
+      child_user_info_id,
+      name,
+      subtitle,
+      description,
+      credit,
       due_date,
       priority,
-      category 
+      category
     } = body;
 
     // Validate required fields
@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to create task:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

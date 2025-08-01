@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
           await handleCheckoutCompleted(privilegedSupabase, stripeEvent);
           break;
 
-        // Removed customer_cash_balance_transaction handling for internal credit system
+          // Removed customer_cash_balance_transaction handling for internal credit system
 
         default:
           // Don't store unhandled event types
@@ -200,7 +200,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
           amount_sgd_cents: session.amount_total,
         })
       });
-      
+
     if (creditTransactionError) {
       throw createError({
         statusCode: 500,
@@ -298,7 +298,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     }
 
     console.log(`[StripeWebhook] Parent approved purchase completed for order ${orderId}: ${session.amount_total} cents`);
-  } 
+  }
   // Check if this is a direct product purchase (not parent-approved)
   else if (session.metadata?.user_info_id && session.metadata?.operation_type === operationCodes.purchase) {
     // This is a direct purchase (use_credits = false)

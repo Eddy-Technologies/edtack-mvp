@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { task_id, approved, approval_notes } = body;
 
     if (!task_id || approved === undefined) {
@@ -131,9 +131,9 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      message: approved 
-        ? `Task approved! ${task.credit / 100} SGD credited to child.`
-        : 'Task rejected.',
+      message: approved ?
+        `Task approved! ${task.credit / 100} SGD credited to child.` :
+        'Task rejected.',
       task: {
         id: updatedTask.id,
         name: updatedTask.name,
@@ -146,7 +146,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to approve/reject task:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

@@ -6,15 +6,15 @@
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-gray-900">Create New Task</h2>
           <button
-            @click="$emit('close')"
             class="text-gray-400 hover:text-gray-600 transition-colors"
+            @click="$emit('close')"
           >
             <UIcon name="i-lucide-x" size="24" />
           </button>
         </div>
 
         <!-- Form -->
-        <form @submit.prevent="createTask" class="space-y-4">
+        <form class="space-y-4" @submit.prevent="createTask">
           <!-- Child Selection -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -69,7 +69,7 @@
               rows="3"
               placeholder="Detailed instructions..."
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
+            />
           </div>
 
           <!-- Credits -->
@@ -146,8 +146,8 @@
             <Button
               variant="secondary-gray"
               text="Cancel"
-              @clicked="$emit('close')"
               :disabled="isSubmitting"
+              @clicked="$emit('close')"
             />
             <Button
               type="submit"
@@ -240,7 +240,7 @@ const createTask = async () => {
         category: '',
         due_date: ''
       };
-      
+
       emit('task-created');
     } else {
       throw new Error(response.message || 'Failed to create task');

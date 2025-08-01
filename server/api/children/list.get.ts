@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Format the response
-    const formattedChildren = children?.map(item => ({
+    const formattedChildren = children?.map((item) => ({
       id: item.child.id,
       userDisplayFullName: item.child.userDisplayFullName,
       email: item.child.email
@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to fetch children:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

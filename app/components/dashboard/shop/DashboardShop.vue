@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-
       <!-- Search and Filters -->
       <div class="mb-6 space-y-4">
         <!-- Search Bar -->
@@ -207,7 +206,6 @@
         </div>
       </div>
 
-
       <!-- Pagination -->
       <div v-if="!showWishlist && filteredItems.length > itemsPerPage" class="flex justify-center mt-8">
         <nav class="flex items-center space-x-2">
@@ -399,7 +397,7 @@ const isInWishlist = (itemId: string) => {
 
 const toggleWishlist = async (item: any) => {
   const isCurrentlyInWishlist = isInWishlist(item.id);
-  
+
   try {
     if (isCurrentlyInWishlist) {
       // Remove from wishlist
@@ -489,7 +487,6 @@ const clearFilters = () => {
   currentPage.value = 1;
 };
 
-
 onMounted(() => {
   // Load products from database API
   loadProducts();
@@ -500,5 +497,4 @@ onMounted(() => {
   // Load user credits
   fetchCredits();
 });
-
 </script>

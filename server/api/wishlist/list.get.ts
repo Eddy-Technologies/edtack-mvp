@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const query = getQuery(event);
-    
+
     const { limit = 50, offset = 0 } = query;
 
     // Get authenticated user
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Format the response
-    const formattedItems = wishlistItems?.map(item => {
+    const formattedItems = wishlistItems?.map((item) => {
       const product = item.product;
       let finalPrice = product.price_cents;
       let originalPrice = null;
@@ -123,7 +123,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to fetch wishlist:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

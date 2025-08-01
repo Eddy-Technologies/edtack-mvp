@@ -33,7 +33,6 @@
                 @click="toggleWishlist"
               />
             </div>
-
           </div>
 
           <!-- Right Column - Product Info -->
@@ -69,7 +68,6 @@
                 <span v-if="product.originalPrice" class="text-2xl text-gray-500 line-through">S${{ (product.originalPrice).toFixed(2) }}</span>
               </div>
             </div>
-
 
             <!-- Quantity Selector -->
             <div class="space-y-2">
@@ -107,10 +105,8 @@
                 @clicked="buyNow"
               />
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -147,7 +143,6 @@ const emit = defineEmits<{
 const selectedImage = ref('');
 const quantity = ref(1);
 const isInWishlist = ref(false);
-
 
 // Watch for product changes to update selected image
 const updateSelectedImage = () => {

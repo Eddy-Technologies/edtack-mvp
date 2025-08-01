@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { product_id } = body;
 
     if (!product_id) {
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to remove from wishlist:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

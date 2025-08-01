@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { order_id, parent_emails, child_name, order_details } = body;
 
     if (!order_id || !parent_emails || !Array.isArray(parent_emails)) {
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     // - AWS SES
     // - Resend
     // - Postmark
-    
+
     // For now, return success with placeholder
     return {
       success: true,
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to send parent notification:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

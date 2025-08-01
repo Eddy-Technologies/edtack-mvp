@@ -6,8 +6,8 @@
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-gray-900">Add Child to Family</h2>
           <button
-            @click="$emit('close')"
             class="text-gray-400 hover:text-gray-600 transition-colors"
+            @click="$emit('close')"
           >
             <UIcon name="i-lucide-x" size="24" />
           </button>
@@ -31,7 +31,7 @@
 
         <!-- Link Existing User -->
         <div v-if="activeTab === 'existing'">
-          <form @submit.prevent="linkExistingUser" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="linkExistingUser">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">
                 Child's Email Address *
@@ -58,8 +58,8 @@
               <Button
                 variant="secondary-gray"
                 text="Cancel"
-                @clicked="$emit('close')"
                 :disabled="isSubmitting"
+                @clicked="$emit('close')"
               />
               <Button
                 type="submit"
@@ -74,7 +74,7 @@
 
         <!-- Send Invite -->
         <div v-else-if="activeTab === 'invite'">
-          <form @submit.prevent="sendInvite" class="space-y-4">
+          <form class="space-y-4" @submit.prevent="sendInvite">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">
                 Child's Name *
@@ -110,7 +110,7 @@
                 rows="3"
                 placeholder="Hi! I'd like to invite you to join our family account..."
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              ></textarea>
+              />
             </div>
 
             <!-- Error Message -->
@@ -123,8 +123,8 @@
               <Button
                 variant="secondary-gray"
                 text="Cancel"
-                @clicked="$emit('close')"
                 :disabled="isSubmitting"
+                @clicked="$emit('close')"
               />
               <Button
                 type="submit"
@@ -141,7 +141,7 @@
         <div class="mt-4 p-3 bg-blue-50 rounded-lg">
           <p class="text-sm text-blue-800">
             <UIcon name="i-lucide-info" size="16" class="inline mr-1" />
-            {{ activeTab === 'existing' 
+            {{ activeTab === 'existing'
               ? 'The child will be immediately linked to your account and can start receiving tasks.'
               : 'An invitation email will be sent. The child must accept the invitation to join your family.'
             }}

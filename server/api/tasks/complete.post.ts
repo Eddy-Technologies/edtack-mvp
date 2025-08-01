@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
-    
+
     const { task_id, completion_notes } = body;
 
     if (!task_id) {
@@ -94,7 +94,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to complete task:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

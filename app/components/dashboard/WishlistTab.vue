@@ -47,8 +47,8 @@
             variant="secondary-gray"
             text="Clear All"
             icon="i-lucide-trash-2"
-            @clicked="clearAllItems"
             :disabled="wishlistItems.length === 0"
+            @clicked="clearAllItems"
           />
         </div>
 
@@ -81,8 +81,8 @@
                 -{{ item.product.discountPercentage }}%
               </span>
               <!-- Stock Status -->
-              <span 
-                v-if="!item.product.inStock" 
+              <span
+                v-if="!item.product.inStock"
                 class="absolute bottom-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded-full"
               >
                 Out of Stock
@@ -144,9 +144,9 @@
               :disabled="pagination.offset === 0"
               @clicked="previousPage"
             />
-            
+
             <span class="px-3 py-2 text-sm text-gray-700">
-              {{ pagination.offset + 1 }}-{{ Math.min(pagination.offset + pagination.limit, pagination.total) }} 
+              {{ pagination.offset + 1 }}-{{ Math.min(pagination.offset + pagination.limit, pagination.total) }}
               of {{ pagination.total }}
             </span>
 
@@ -226,9 +226,9 @@ const removeFromWishlist = async (productId: string) => {
     if (response.success) {
       // Remove item from local state
       wishlistItems.value = wishlistItems.value.filter(
-        item => item.product.id !== productId
+        (item) => item.product.id !== productId
       );
-      
+
       // Show success message briefly
       console.log(response.message);
     } else {
@@ -268,7 +268,7 @@ const clearAllItems = async () => {
 
   try {
     // Remove all items one by one
-    const removePromises = wishlistItems.value.map(item => 
+    const removePromises = wishlistItems.value.map((item) =>
       $fetch('/api/wishlist/remove', {
         method: 'POST',
         body: { product_id: item.product.id }
@@ -276,7 +276,7 @@ const clearAllItems = async () => {
     );
 
     await Promise.all(removePromises);
-    
+
     // Clear local state
     wishlistItems.value = [];
     console.log('All items removed from wishlist');

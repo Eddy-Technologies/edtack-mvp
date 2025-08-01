@@ -30,7 +30,7 @@
               {{ isParent ? 'Manage and track tasks for your children' : 'Complete tasks to earn credits' }}
             </p>
           </div>
-          
+
           <!-- Create Task Button (Parents Only) -->
           <Button
             v-if="isParent"
@@ -156,12 +156,12 @@
                     <UIcon name="i-lucide-coins" size="16" />
                     <span class="font-medium text-green-600">{{ formatCredits(task.credit) }}</span>
                   </div>
-                  
+
                   <div v-if="task.category" class="flex items-center space-x-1">
                     <UIcon name="i-lucide-tag" size="16" />
                     <span>{{ task.category }}</span>
                   </div>
-                  
+
                   <div v-if="task.due_date" class="flex items-center space-x-1">
                     <UIcon name="i-lucide-calendar" size="16" />
                     <span :class="{ 'text-red-600': isOverdue(task.due_date) }">
@@ -185,7 +185,7 @@
                 <!-- Approval Notes -->
                 <div v-if="task.approval_notes" class="bg-gray-50 p-3 rounded-lg mb-3">
                   <p class="text-sm text-gray-800">
-                    <strong>{{ task.status === 'approved' ? 'Approval' : 'Rejection' }} Notes:</strong> 
+                    <strong>{{ task.status === 'approved' ? 'Approval' : 'Rejection' }} Notes:</strong>
                     {{ task.approval_notes }}
                   </p>
                 </div>
@@ -318,15 +318,15 @@ const filteredTasks = computed(() => {
   let filtered = [...tasks.value];
 
   if (selectedStatus.value) {
-    filtered = filtered.filter(task => task.status === selectedStatus.value);
+    filtered = filtered.filter((task) => task.status === selectedStatus.value);
   }
 
   if (selectedPriority.value) {
-    filtered = filtered.filter(task => task.priority === selectedPriority.value);
+    filtered = filtered.filter((task) => task.priority === selectedPriority.value);
   }
 
   if (selectedCategory.value) {
-    filtered = filtered.filter(task => task.category === selectedCategory.value);
+    filtered = filtered.filter((task) => task.category === selectedCategory.value);
   }
 
   return filtered;
@@ -334,7 +334,7 @@ const filteredTasks = computed(() => {
 
 const pendingCredits = computed(() => {
   return filteredTasks.value
-    .filter(task => task.status === 'completed')
+    .filter((task) => task.status === 'completed')
     .reduce((total, task) => total + task.credit, 0);
 });
 
@@ -375,7 +375,7 @@ const startTask = async (taskId: string) => {
 
     if (response.success) {
       // Update task status locally
-      const task = tasks.value.find(t => t.id === taskId);
+      const task = tasks.value.find((t) => t.id === taskId);
       if (task) {
         task.status = 'in_progress';
       }

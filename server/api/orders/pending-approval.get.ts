@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const query = getQuery(event);
-    
+
     const { limit = 50, offset = 0 } = query;
 
     // Get authenticated user (parent)
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('status_code', 'pending_parent_approval')
-      .in('user_info_id', 
+      .in('user_info_id',
         supabase
           .from('parent_child')
           .select('child_user_info_id')
@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Format the response
-    const formattedOrders = pendingOrders?.map(order => ({
+    const formattedOrders = pendingOrders?.map((order) => ({
       id: order.id,
       orderNumber: order.order_number,
       totalAmountCents: order.total_amount_cents,
@@ -91,7 +91,7 @@ export default defineEventHandler(async (event) => {
         lastName: order.child_info?.all_users?.last_name,
         email: order.child_info?.all_users?.email
       },
-      items: order.order_items?.map(item => ({
+      items: order.order_items?.map((item) => ({
         id: item.id,
         quantity: item.quantity,
         unitPriceCents: item.unit_price_cents,
@@ -114,7 +114,7 @@ export default defineEventHandler(async (event) => {
       .from('orders')
       .select('*', { count: 'exact', head: true })
       .eq('status_code', 'pending_parent_approval')
-      .in('user_info_id', 
+      .in('user_info_id',
         supabase
           .from('parent_child')
           .select('child_user_info_id')
@@ -133,7 +133,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error('Failed to list pending approval orders:', error);
-    
+
     if (error.statusCode) {
       throw error;
     }

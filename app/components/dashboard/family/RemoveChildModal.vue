@@ -6,8 +6,8 @@
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-gray-900">Remove Family Member</h2>
           <button
-            @click="$emit('close')"
             class="text-gray-400 hover:text-gray-600 transition-colors"
+            @click="$emit('close')"
           >
             <UIcon name="i-lucide-x" size="24" />
           </button>
@@ -70,8 +70,8 @@
           <Button
             variant="secondary-gray"
             text="Cancel"
-            @clicked="$emit('close')"
             :disabled="isSubmitting"
+            @clicked="$emit('close')"
           />
           <Button
             variant="danger"
@@ -142,7 +142,7 @@ const removeChild = async () => {
 const getInitials = (name: string) => {
   return name
     .split(' ')
-    .map(word => word.charAt(0))
+    .map((word) => word.charAt(0))
     .join('')
     .substring(0, 2)
     .toUpperCase();

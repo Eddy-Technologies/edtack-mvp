@@ -16,5 +16,5 @@ export const STRIPE_LOOKUP_KEYS = {
 // OPERATION_TYPE enum removed - now using database-driven codes table (category='operation_type')
 // Access operation types via codeService.getOperationTypeCodes() instead of hardcoded constants
 
-// ORDER_STATUS constants removed - now using database-driven codes table (category='order_status')  
+// ORDER_STATUS constants removed - now using database-driven codes table (category='order_status')
 // Access statuses via codeService.getOrderStatusCodes() instead of hardcoded constants

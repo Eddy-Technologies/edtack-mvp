@@ -6,17 +6,17 @@
     <OverviewTab v-if="currentTab === 'overview'" />
     <SubscriptionTab v-else-if="currentTab === 'subscription'" />
     <SettingsTab v-else-if="currentTab === 'settings'" />
-    <ShopTab 
-      v-else-if="currentTab === 'shop'" 
+    <ShopTab
+      v-else-if="currentTab === 'shop'"
       :cart="cart"
       @add-to-cart="updateCart"
     />
-    <WishlistTab 
+    <WishlistTab
       v-else-if="currentTab === 'wishlist'"
       @add-to-cart="addSingleItemToCart"
     />
-    <CartTab 
-      v-else-if="currentTab === 'cart'" 
+    <CartTab
+      v-else-if="currentTab === 'cart'"
       :cart="cart"
       @update-cart="updateCart"
       @clear-cart="clearCart"
@@ -88,8 +88,8 @@ const clearCart = () => {
 };
 
 const addSingleItemToCart = (product: any) => {
-  const existingItemIndex = cart.value.findIndex(item => item.id === product.id);
-  
+  const existingItemIndex = cart.value.findIndex((item) => item.id === product.id);
+
   if (existingItemIndex !== -1) {
     // If item exists, increase quantity
     const updatedCart = [...cart.value];
