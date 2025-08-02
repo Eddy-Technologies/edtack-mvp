@@ -50,8 +50,8 @@ export default defineEventHandler(async (event) => {
       // If student has pending invitations, return only those
       if (pendingMemberships && pendingMemberships.length > 0) {
         const pendingInvites = pendingMemberships
-          .filter(membership => membership.groups.group_type === 'family')
-          .map(membership => ({
+          .filter((membership) => membership.groups.group_type === 'family')
+          .map((membership) => ({
             id: membership.id,
             group_id: membership.group_id,
             group_name: membership.groups.group_name,

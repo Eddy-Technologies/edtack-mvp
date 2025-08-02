@@ -27,12 +27,12 @@
           <div>
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Family Management</h1>
             <p class="text-gray-600">
-              {{ 
-                isParent 
-                  ? 'Create your family group and invite members by email' 
+              {{
+                isParent
+                  ? 'Create your family group and invite members by email'
                   : (!isParent && pendingInvitations.length > 0)
                     ? 'You have pending family invitations to review'
-                    : 'View your family connections' 
+                    : 'View your family connections'
               }}
             </p>
           </div>
@@ -451,7 +451,7 @@ const declineInvitation = async (invitation: any) => {
     pendingInvitations.value = pendingInvitations.value.filter(
       (inv: any) => inv.id !== invitation.id
     );
-    
+
     // If no more pending invitations, reload to show family members
     if (pendingInvitations.value.length === 0) {
       await loadFamily();
