@@ -3,6 +3,7 @@ CREATE TABLE user_roles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_info_id uuid NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   role_id INT NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+  role_name TEXT NOT NULL,
   UNIQUE (user_info_id, role_id) -- A user_info can only have one of each role
 );
 

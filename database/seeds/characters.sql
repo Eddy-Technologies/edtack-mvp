@@ -1,0 +1,112 @@
+-- Characters Seed Data
+-- This seeds the characters table with the current character data
+
+INSERT INTO characters (
+  id,
+  name,
+  type,
+  description,
+  image_url,
+  voice_config,
+  animation_config,
+  personality_prompt,
+  is_active,
+  display_order,
+  created_at,
+  updated_at
+) VALUES 
+(
+  1,
+  'Eddy',
+  'General',
+  'A friendly lion character who loves to teach and learn with students',
+  'https://storage.supabase.co/v1/object/public/characters/eddy.png',
+  '{"voice": "default", "speed": 1.0, "pitch": 1.0}',
+  '{"idle": "eddy_idle.gif", "talking": "eddy_talking.gif", "thinking": "eddy_thinking.gif"}',
+  'Eddy is a lion character that talks and is highly intelligent, he educates with passion. He is friendly, encouraging, and always ready to help students learn.',
+  true,
+  1,
+  NOW(),
+  NOW()
+),
+(
+  2,
+  'Winne the Pooh',
+  'Biology',
+  'A cuddly bear who makes biology fun and accessible for everyone',
+  'https://storage.supabase.co/v1/object/public/characters/biology.png',
+  '{"voice": "friendly", "speed": 0.9, "pitch": 1.1}',
+  '{"idle": "pooh_idle.gif", "talking": "pooh_talking.gif", "thinking": "pooh_thinking.gif"}',
+  'Winne the Pooh is a gentle and wise bear who loves nature and biology. He explains complex biological concepts in simple, relatable ways.',
+  true,
+  2,
+  NOW(),
+  NOW()
+),
+(
+  3,
+  'Future',
+  'Coming soon..',
+  'An exciting new character coming soon to EdTack',
+  'https://storage.supabase.co/v1/object/public/characters/snorlax.png',
+  '{"voice": "mysterious", "speed": 1.0, "pitch": 0.9}',
+  '{"idle": "future_idle.gif", "talking": "future_talking.gif", "thinking": "future_thinking.gif"}',
+  'A mysterious character with amazing teaching abilities. Stay tuned for more information!',
+  false,
+  6,
+  NOW(),
+  NOW()
+),
+(
+  4,
+  'Mickey',
+  'History',
+  'An adventurous mouse who brings history to life through exciting stories',
+  'https://storage.supabase.co/v1/object/public/characters/history.png',
+  '{"voice": "enthusiastic", "speed": 1.1, "pitch": 1.2}',
+  '{"idle": "mickey_idle.gif", "talking": "mickey_talking.gif", "thinking": "mickey_thinking.gif"}',
+  'Mickey is an enthusiastic mouse who loves exploring historical events and making them come alive through engaging storytelling.',
+  true,
+  3,
+  NOW(),
+  NOW()
+),
+(
+  5,
+  'Maya',
+  'Chemistry',
+  'A brilliant scientist who makes chemistry experiments safe and fun',
+  'https://storage.supabase.co/v1/object/public/characters/chemistry.png',
+  '{"voice": "scientific", "speed": 1.0, "pitch": 1.0}',
+  '{"idle": "maya_idle.gif", "talking": "maya_talking.gif", "thinking": "maya_thinking.gif"}',
+  'Maya is a brilliant chemist who loves conducting safe experiments and explaining the wonders of chemistry in an engaging way.',
+  true,
+  4,
+  NOW(),
+  NOW()
+),
+(
+  6,
+  'Sherlock',
+  'Social Studies',
+  'A detective who investigates social phenomena and human behavior',
+  'https://storage.supabase.co/v1/object/public/characters/social.png',
+  '{"voice": "analytical", "speed": 0.95, "pitch": 0.9}',
+  '{"idle": "sherlock_idle.gif", "talking": "sherlock_talking.gif", "thinking": "sherlock_thinking.gif"}',
+  'Sherlock is a brilliant detective who uses his investigative skills to explore social studies, helping students understand society and human behavior.',
+  true,
+  5,
+  NOW(),
+  NOW()
+)
+ON CONFLICT (id) DO UPDATE SET
+  name = EXCLUDED.name,
+  type = EXCLUDED.type,
+  description = EXCLUDED.description,
+  image_url = EXCLUDED.image_url,
+  voice_config = EXCLUDED.voice_config,
+  animation_config = EXCLUDED.animation_config,
+  personality_prompt = EXCLUDED.personality_prompt,
+  is_active = EXCLUDED.is_active,
+  display_order = EXCLUDED.display_order,
+  updated_at = NOW();

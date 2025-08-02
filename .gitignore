@@ -26,3 +26,6 @@ logs
 .wrangler
 
 .claude
+
+supabase/migrations/
+supabase/seed.sql

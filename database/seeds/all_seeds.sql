@@ -77,12 +77,12 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 
 -- Task Status Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('pending', 'Pending', 'Task created but not started', 'task_status', 10, true, NOW(), NOW()),
+('task_pending', 'Pending', 'Task created but not started', 'task_status', 10, true, NOW(), NOW()),
 ('in_progress', 'In Progress', 'Task is being worked on', 'task_status', 20, true, NOW(), NOW()),
 ('completed', 'Completed', 'Task completed by child, awaiting approval', 'task_status', 30, true, NOW(), NOW()),
 ('approved', 'Approved', 'Task approved by parent, credits awarded', 'task_status', 40, true, NOW(), NOW()),
 ('rejected', 'Rejected', 'Task rejected by parent, no credits awarded', 'task_status', 50, true, NOW(), NOW()),
-('cancelled', 'Cancelled', 'Task cancelled before completion', 'task_status', 60, true, NOW(), NOW()),
+('task_cancelled', 'Cancelled', 'Task cancelled before completion', 'task_status', 60, true, NOW(), NOW()),
 ('expired', 'Expired', 'Task expired past due date', 'task_status', 70, true, NOW(), NOW());
 
 -- Task Priority Constants

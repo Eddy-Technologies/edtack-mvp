@@ -100,14 +100,14 @@ BEGIN
     RAISE LOG '[update_user_info_with_relations] Deleted existing roles for: %', p_user_info_id;
 
     -- Insert new role
-    SELECT id INTO v_role_id FROM public.roles WHERE role_name = p_role_name;
-    
+    SELECT id, role_name INTO v_role_id, v_role_name FROM public.roles WHERE role_name = p_role_name;
+
     IF v_role_id IS NULL THEN
       RAISE EXCEPTION '[update_user_info_with_relations] Invalid role name: %', p_role_name;
     END IF;
 
-    INSERT INTO public.user_roles (user_info_id, role_id)
-    VALUES (p_user_info_id, v_role_id);
+    INSERT INTO public.user_roles (user_info_id, role_id, role_name)
+    VALUES (p_user_info_id, v_role_id, v_role_name);
     
     RAISE LOG '[update_user_info_with_relations] Inserted role % (%)', p_role_name, v_role_id;
   END IF;
