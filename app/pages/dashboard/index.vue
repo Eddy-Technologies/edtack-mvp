@@ -71,12 +71,12 @@ let cartUpdateTimeout: NodeJS.Timeout | null = null;
 
 const updateCart = (updatedCart: any[]) => {
   cart.value = updatedCart;
-  
+
   // Debounce localStorage updates to prevent rapid successive writes
   if (cartUpdateTimeout) {
     clearTimeout(cartUpdateTimeout);
   }
-  
+
   cartUpdateTimeout = setTimeout(() => {
     // Persist cart to localStorage
     if (typeof window !== 'undefined') {
@@ -131,9 +131,9 @@ const loadCartFromStorage = () => {
           addedAt: item.addedAt || new Date().toISOString(),
           lastUpdated: item.lastUpdated || new Date().toISOString()
         }));
-        
+
         // Save the migrated cart back to localStorage
-        if (cart.value.some(item => !item.addedAt || !item.lastUpdated)) {
+        if (cart.value.some((item) => !item.addedAt || !item.lastUpdated)) {
           localStorage.setItem('shopping-cart', JSON.stringify(cart.value));
         }
       } catch (error) {

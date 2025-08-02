@@ -247,14 +247,12 @@ onMounted(async () => {
   }
 });
 
-
 const stats = computed(() => {
   return {
     totalChildren: familyMembers.value.length,
     activeToday: familyMembers.value.filter((member: any) => member.isActive).length
   };
 });
-
 
 // Helper functions
 const getInitials = (name: string) => {

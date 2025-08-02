@@ -163,7 +163,7 @@ const addToCart = () => {
   if (props.product && !isProcessing.value) {
     isProcessing.value = true;
     emit('add-to-cart', props.product, quantity.value);
-    
+
     // Reset processing flag after a short delay
     setTimeout(() => {
       isProcessing.value = false;
@@ -182,7 +182,7 @@ const buyNow = () => {
       window.location.hash = '#cart';
       window.location.href = '/dashboard?tab=cart';
     }, 100);
-    
+
     // Reset processing flag
     setTimeout(() => {
       isProcessing.value = false;
@@ -202,4 +202,3 @@ watchEffect(() => {
   updateSelectedImage();
 });
 </script>
-

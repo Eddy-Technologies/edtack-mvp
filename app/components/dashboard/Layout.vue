@@ -17,14 +17,11 @@
         </div>
       </div>
 
-
-
-
       <!-- Navigation -->
       <nav class="flex-1 px-6 py-6 space-y-2">
         <div class="space-y-1">
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Main</p>
-          
+
           <div v-for="item in navigationItems" :key="item.name">
             <!-- Simple navigation item -->
             <div
@@ -73,8 +70,8 @@
                   <UIcon :name="item.icon" class="w-5 h-5" />
                   <span>{{ item.name }}</span>
                 </div>
-                <UIcon 
-                  name="i-lucide-chevron-down" 
+                <UIcon
+                  name="i-lucide-chevron-down"
                   :class="[
                     'w-4 h-4 transition-transform duration-200',
                     openSubmenus.includes(item.name) ? 'rotate-180' : ''
@@ -126,7 +123,7 @@
         <!-- Settings Section -->
         <div class="pt-6 mt-6 border-t border-slate-200">
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Account</p>
-          
+
           <!-- Settings Items -->
           <div v-for="item in settingsItems" :key="item.name">
             <div
@@ -171,7 +168,7 @@
             </span>
           </div>
         </div>
-        
+
         <!-- Back to Chat Button -->
         <Button
           class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors shadow-sm"
@@ -271,7 +268,7 @@ const accountTypeBadgeClass = computed(() => {
 // Check if a parent item has any active children
 const hasActiveChild = (item: NavigationItem) => {
   if (!item.children) return false;
-  return item.children.some(child => isActiveRoute(child.route));
+  return item.children.some((child) => isActiveRoute(child.route));
 };
 
 const navigationItems: NavigationItem[] = [

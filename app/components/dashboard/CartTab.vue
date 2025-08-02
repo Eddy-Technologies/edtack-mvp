@@ -316,7 +316,7 @@ const updateQuantity = (item: any, change: number) => {
     existingItem.quantity += change;
     // Update timestamp when quantity changes
     existingItem.lastUpdated = new Date().toISOString();
-    
+
     if (existingItem.quantity <= 0) {
       const index = updatedCart.indexOf(existingItem);
       updatedCart.splice(index, 1);

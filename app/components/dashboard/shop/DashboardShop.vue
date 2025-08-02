@@ -448,8 +448,8 @@ const addToCart = (item: any) => {
     // Update the timestamp when quantity is increased
     existingItem.lastUpdated = new Date().toISOString();
   } else {
-    updatedCart.push({ 
-      ...item, 
+    updatedCart.push({
+      ...item,
       quantity: 1,
       addedAt: new Date().toISOString(),
       lastUpdated: new Date().toISOString()
@@ -493,8 +493,8 @@ const addToCartFromModal = (product: any, quantity: number) => {
     // Update the timestamp when quantity is increased
     existingItem.lastUpdated = new Date().toISOString();
   } else {
-    updatedCart.push({ 
-      ...product, 
+    updatedCart.push({
+      ...product,
       quantity,
       addedAt: new Date().toISOString(),
       lastUpdated: new Date().toISOString()
