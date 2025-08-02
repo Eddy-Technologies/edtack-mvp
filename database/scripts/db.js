@@ -112,27 +112,26 @@ function generateMigrations() {
 function checkForExistingData() {
   try {
     log('\n🔍 Checking for existing seed data...', 'magenta');
-    
+
     // Check if core tables have data
     const checkQueries = [
       'SELECT COUNT(*) FROM roles;',
       'SELECT COUNT(*) FROM level_types;',
       'SELECT COUNT(*) FROM codes;'
     ];
-    
+
     for (const query of checkQueries) {
       const result = execSync(`psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -t -c "${query}"`, {
         encoding: 'utf8'
       });
-      
+
       const count = parseInt(result.trim());
       if (count > 0) {
         throw new Error('Database already contains seed data. Use pnpm db:reset first to clear existing data before seeding.');
       }
     }
-    
+
     log('✅ Database is empty, ready for seeding', 'green');
-    
   } catch (error) {
     if (error.message.includes('already contains seed data')) {
       throw error;
@@ -209,10 +208,12 @@ function showHelp() {
   log('Commands:', 'yellow');
   log('  reset     Generate migrations and run supabase db reset', 'white');
   log('  seed      Generate seed.sql and run via psql', 'white');
+  log('  types     Generate TypeScript types from database schema', 'white');
 
   log('\nExamples:', 'yellow');
   log('  node database/scripts/db.js reset     # Reset database');
   log('  node database/scripts/db.js seed      # Seed database');
+  log('  node database/scripts/db.js types     # Generate TypeScript types');
 }
 
 async function runCommand(command) {
@@ -231,15 +232,15 @@ async function runCommand(command) {
           hadSeedFile = true;
           log('📁 Temporarily removed seed.sql to prevent auto-seeding', 'yellow');
         }
-        
+
         executeCommand('supabase db reset', 'Running supabase db reset');
-        
+
         // Restore seed.sql if it existed
         if (hadSeedFile) {
           fs.writeFileSync(seedPath, seedContent);
           log('📁 Restored seed.sql', 'yellow');
         }
-        
+
         log('\n🎉 Database reset completed!', 'green');
         log('💡 Run `pnpm db:seed` to add seed data', 'yellow');
         break;
@@ -251,6 +252,13 @@ async function runCommand(command) {
         executeCommand('psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f supabase/seed.sql', 'Running seed file via psql');
         log('\n🎉 Database seeding completed!', 'green');
         log('💡 Seed data has been inserted into the database', 'cyan');
+        break;
+
+      case 'types':
+        log('🔤 Generating TypeScript types...', 'bold');
+        executeCommand('supabase gen types typescript --local > types/supabase.ts', 'Generating TypeScript types from database schema');
+        log('\n🎉 TypeScript types generated!', 'green');
+        log('💡 Types file updated at: types/supabase.ts', 'cyan');
         break;
 
       case 'help':
