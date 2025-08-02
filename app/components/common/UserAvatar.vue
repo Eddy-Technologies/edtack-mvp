@@ -4,15 +4,15 @@
       'rounded-full cursor-pointer hover:bg-primary/90 flex items-center justify-center text-white font-semibold bg-primary',
       sizeClasses,
     ]"
-    :title="`Welcome, ${user.userDisplayFullName}`"
+    :title="`Welcome, ${user?.userDisplayFullName || 'User'}`"
     @click="$emit('click')"
   >
-    {{ user.userInitials }}
+    {{ user?.userInitials || '?' }}
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useMeStore } from '../../stores/me';
 
 interface Props {
@@ -27,7 +27,11 @@ defineEmits<{
   click: [];
 }>();
 
-const user = useMeStore();
+const user = ref<ReturnType<typeof useMeStore> | null>(null);
+
+onMounted(() => {
+  user.value = useMeStore();
+});
 
 // Size classes based on the size prop
 const sizeClasses = computed(() => {
