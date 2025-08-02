@@ -27,7 +27,13 @@
           <div>
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Family Management</h1>
             <p class="text-gray-600">
-              {{ isParent ? 'Create your family group and invite members by email' : 'View your family connections' }}
+              {{ 
+                isParent 
+                  ? 'Create your family group and invite members by email' 
+                  : (!isParent && pendingInvitations.length > 0)
+                    ? 'You have pending family invitations to review'
+                    : 'View your family connections' 
+              }}
             </p>
           </div>
 
@@ -42,7 +48,7 @@
         </div>
 
         <!-- Family Stats -->
-        <div class="bg-white rounded-lg border p-6">
+        <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-lg border p-6">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class="text-center">
               <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mx-auto mb-3">
@@ -78,7 +84,59 @@
           </div>
         </div>
 
-        <!-- Pending Invitations Section -->
+        <!-- Student Pending Invitations Section -->
+        <div v-if="!isParent && pendingInvitations.length > 0" class="bg-white rounded-lg border">
+          <div class="px-6 py-4 border-b">
+            <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+              <UIcon name="i-lucide-mail-plus" class="text-blue-600 mr-2" size="20" />
+              Your Family Invitations
+            </h2>
+          </div>
+
+          <div class="divide-y divide-gray-200">
+            <div
+              v-for="invitation in pendingInvitations"
+              :key="invitation.id"
+              class="p-6 bg-blue-50"
+            >
+              <div class="flex items-start justify-between">
+                <div class="flex items-start space-x-4">
+                  <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full flex-shrink-0">
+                    <UIcon name="i-lucide-users" class="text-blue-700" size="20" />
+                  </div>
+
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-lg font-semibold text-gray-900">{{ invitation.group_name || 'Family Group' }}</h3>
+                    <p class="text-gray-600 mb-2">You have been invited to join this family</p>
+                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                      <div class="flex items-center space-x-1">
+                        <UIcon name="i-lucide-calendar" size="16" />
+                        <span>Invited {{ formatDate(invitation.invited_at) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-2 ml-4">
+                  <Button
+                    variant="primary"
+                    text="Accept"
+                    size="sm"
+                    @clicked="acceptInvitation(invitation)"
+                  />
+                  <Button
+                    variant="secondary-gray"
+                    text="Decline"
+                    size="sm"
+                    @clicked="declineInvitation(invitation)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parent Pending Invitations Section -->
         <div v-if="isParent && pendingInvitations.length > 0" class="bg-white rounded-lg border">
           <div class="px-6 py-4 border-b">
             <h2 class="text-lg font-semibold text-gray-900 flex items-center">
@@ -128,7 +186,7 @@
         </div>
 
         <!-- Active Members List -->
-        <div class="bg-white rounded-lg border">
+        <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-lg border">
           <div class="px-6 py-4 border-b">
             <h2 class="text-lg font-semibold text-gray-900">
               {{ isParent ? 'Active Family Members' : 'Family Members' }}
@@ -305,13 +363,22 @@ const loadFamily = async () => {
     const response = await $fetch('/api/family/list');
 
     if (response.success) {
-      // Separate active members from pending invitations
-      const allMembers = response.familyMembers || [];
-      familyMembers.value = allMembers.filter((member: any) => member.status === 'active');
-      pendingInvitations.value = allMembers.filter((member: any) => member.status === 'pending');
+      // Check if student has pending invitations to display
+      if (response.hasPendingInvitations) {
+        // Student with pending invitations - show only those
+        familyMembers.value = [];
+        pendingInvitations.value = response.pendingInvitations || [];
+        isParent.value = false;
+        totalTasks.value = 0;
+      } else {
+        // Normal flow - separate active members from pending invitations
+        const allMembers = response.familyMembers || [];
+        familyMembers.value = allMembers.filter((member: any) => member.status === 'active');
+        pendingInvitations.value = allMembers.filter((member: any) => member.status === 'pending');
 
-      isParent.value = response.isParent || false;
-      totalTasks.value = response.totalTasks || 0;
+        isParent.value = response.isParent || false;
+        totalTasks.value = response.totalTasks || 0;
+      }
     } else {
       throw new Error('Failed to load family members');
     }
@@ -356,6 +423,39 @@ const cancelInvitation = async (invitation: any) => {
   } catch (err: any) {
     console.error('Failed to cancel invitation:', err);
     alert('Failed to cancel invitation. Please try again.');
+  }
+};
+
+const acceptInvitation = async (invitation: any) => {
+  try {
+    const response = await $fetch('/api/family/accept-invitation', {
+      method: 'POST',
+      body: { groupId: invitation.group_id }
+    });
+
+    if (response.success) {
+      // Reload family data to show updated membership
+      await loadFamily();
+    }
+  } catch (err: any) {
+    console.error('Failed to accept invitation:', err);
+    alert('Failed to accept invitation. Please try again.');
+  }
+};
+
+const declineInvitation = async (invitation: any) => {
+  // For now, we'll just remove it from the UI since there's no decline endpoint
+  // In a real implementation, you'd want to create a decline-invitation endpoint
+  if (confirm('Are you sure you want to decline this invitation?')) {
+    // Remove from pending invitations locally
+    pendingInvitations.value = pendingInvitations.value.filter(
+      (inv: any) => inv.id !== invitation.id
+    );
+    
+    // If no more pending invitations, reload to show family members
+    if (pendingInvitations.value.length === 0) {
+      await loadFamily();
+    }
   }
 };
 

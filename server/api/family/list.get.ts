@@ -30,38 +30,53 @@ export default defineEventHandler(async (event) => {
     let familyMembers = [];
     const isParent = userInfo.user_roles.some((role) => role.roles.role_name === 'PARENT');
 
+    // For non-parent users (students), first check if they have pending invitations
+    if (!isParent) {
+      const { data: pendingMemberships, error: pendingError } = await supabase
+        .from('group_members')
+        .select(`*, 
+          groups(*)`)
+        .eq('user_info_id', userInfo.id)
+        .eq('status', 'pending');
+
+      if (pendingError) {
+        console.error('Failed to fetch pending invitations:', pendingError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to fetch pending invitations'
+        });
+      }
+
+      // If student has pending invitations, return only those
+      if (pendingMemberships && pendingMemberships.length > 0) {
+        const pendingInvites = pendingMemberships
+          .filter(membership => membership.groups.group_type === 'family')
+          .map(membership => ({
+            id: membership.id,
+            group_id: membership.group_id,
+            group_name: membership.groups.group_name,
+            status: 'pending',
+            invited_at: membership.invited_at,
+            type: 'invitation'
+          }));
+
+        return {
+          success: true,
+          hasPendingInvitations: true,
+          pendingInvitations: pendingInvites,
+          familyMembers: [],
+          isParent: false
+        };
+      }
+    }
+
     // Get user's groups (both active memberships and groups they created)
     const { data: userGroups, error: groupsError } = await supabase
       .from('group_members')
-      .select(`
-        group_id,
-        status,
-        invited_at,
-        joined_at,
-        groups(
-          id,
-          name,
-          group_type,
-          created_by,
-          group_members(
-            id,
-            user_info_id,
-            status,
-            is_creator,
-            invited_at,
-            joined_at,
-            user_infos!group_members_user_info_id_fkey(
-              id,
-              first_name,
-              last_name,
-              email,
-              is_active,
-              user_credits(credit),
-              user_roles(role_id, roles(role_name))
-            )
-          )
-        )
-      `)
+      .select(`*, 
+        groups(*, 
+        members:group_members!group_id(*,
+          user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)), user_credits(*))))`)
       .eq('user_info_id', userInfo.id)
       .in('status', ['active', 'pending']);
 
@@ -80,25 +95,23 @@ export default defineEventHandler(async (event) => {
       // Only process family groups
       if (userGroup.groups.group_type !== 'family') return;
 
-      userGroup.groups.group_members.forEach((member) => {
+      userGroup.groups.members.forEach((member) => {
         // Skip self
         if (member.user_info_id === userInfo.id) return;
 
         // Skip if already added (user might be in multiple groups)
         if (membersMap.has(member.user_info_id)) return;
 
-        const userInfo = member.user_infos;
-        const isParentMember = userInfo.user_roles.some((role) => role.roles.role_name === 'PARENT');
+        const memberUserInfo = member.user_infos;
 
         membersMap.set(member.user_info_id, {
           id: member.id, // Use group_member id for invitations
           user_info_id: member.user_info_id,
-          userDisplayFullName: `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim(),
-          email: userInfo.email,
-          user_role: isParentMember ? 'parent' : 'student',
+          userDisplayFullName: `${memberUserInfo.first_name || ''} ${memberUserInfo.last_name || ''}`.trim(),
+          email: memberUserInfo.email,
+          user_role: memberUserInfo.user_roles[0]?.roles.role_name, // Currently, we don't fetch member's role info, so default to student
           status: member.status, // 'active' or 'pending'
-          isActive: userInfo.is_active && member.status === 'active',
-          credits: userInfo.user_credits?.credit || 0,
+          credits: memberUserInfo.user_credits?.credit || 0,
           invited_at: member.invited_at,
           joined_at: member.joined_at,
           created_at: member.joined_at || member.invited_at

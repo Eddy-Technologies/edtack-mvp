@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     // Get parent's user_info_id and verify they are a parent
     const { data: parentInfo, error: parentError } = await supabase
       .from('user_infos')
-      .select('id, user_role, userDisplayFullName, email')
+      .select('*, user_roles(role_id, roles(role_name))')
       .eq('user_id', user.id)
       .single();
 
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (parentInfo.user_role !== 'parent') {
+    if (parentInfo.user_roles[0].roles.role_name !== 'PARENT') {
       throw createError({
         statusCode: 403,
         statusMessage: 'Only parents can send invites'
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
     // Check if user already exists and get their info
     const { data: existingUser } = await supabase
       .from('user_infos')
-      .select('id, email, first_name, last_name, user_role')
+      .select('id, email, first_name, last_name')
       .eq('email', email.toLowerCase())
       .single();
 
@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
       const { data: newGroup, error: groupError } = await supabase
         .from('groups')
         .insert({
-          name: `${parentInfo.userDisplayFullName}'s Family`,
+          name: `${parentInfo.first_name}'s Family`,
           description: 'Family group for managing children and credits',
           group_type: 'family',
           created_by: parentInfo.id
@@ -141,7 +141,7 @@ export default defineEventHandler(async (event) => {
           id: invitation.id,
           memberName: `${existingUser.first_name} ${existingUser.last_name}`,
           memberEmail: email,
-          parentName: parentInfo.userDisplayFullName,
+          parentName: parentInfo.first_name,
           sentAt: new Date().toISOString(),
           status: 'pending'
         }
