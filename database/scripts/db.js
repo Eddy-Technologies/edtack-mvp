@@ -206,14 +206,16 @@ function showHelp() {
   log('  node database/scripts/db.js <command>\n');
 
   log('Commands:', 'yellow');
-  log('  reset     Generate migrations and run supabase db reset', 'white');
-  log('  seed      Generate seed.sql and run via psql', 'white');
-  log('  types     Generate TypeScript types from database schema', 'white');
+  log('  reset       Generate migrations and run supabase db reset', 'white');
+  log('  seed        Generate seed.sql and run via psql', 'white');
+  log('  init-admin  Initialize admin user via Supabase Auth Admin API', 'white');
+  log('  types       Generate TypeScript types from database schema', 'white');
 
   log('\nExamples:', 'yellow');
-  log('  node database/scripts/db.js reset     # Reset database');
-  log('  node database/scripts/db.js seed      # Seed database');
-  log('  node database/scripts/db.js types     # Generate TypeScript types');
+  log('  node database/scripts/db.js reset       # Reset database');
+  log('  node database/scripts/db.js seed        # Seed database');
+  log('  node database/scripts/db.js init-admin  # Initialize admin user');
+  log('  node database/scripts/db.js types       # Generate TypeScript types');
 }
 
 async function runCommand(command) {
@@ -252,6 +254,13 @@ async function runCommand(command) {
         executeCommand('psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f supabase/seed.sql', 'Running seed file via psql');
         log('\n🎉 Database seeding completed!', 'green');
         log('💡 Seed data has been inserted into the database', 'cyan');
+        break;
+
+      case 'init-admin':
+        log('👤 Initializing admin user...', 'bold');
+        executeCommand('node database/scripts/init-admin.js', 'Running admin user initialization script');
+        log('\n🎉 Admin user initialization completed!', 'green');
+        log('💡 Check the output above for login credentials', 'cyan');
         break;
 
       case 'types':
