@@ -227,7 +227,7 @@
                   placeholder="Add tags..."
                   class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                   @keydown.enter.prevent="addTag"
-                  @keydown.prevent="handleTagKeydown"
+                  @keydown="handleTagKeydown"
                 >
                 <div v-if="noteForm.tags.length > 0" class="flex flex-wrap gap-1 mt-2">
                   <span
