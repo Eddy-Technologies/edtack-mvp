@@ -6,9 +6,8 @@ interface ChatMessage {
   isUser: boolean;
 }
 
-const audioStore = useAudioStore();
-
 export function useSpeech() {
+  const audioStore = useAudioStore();
   const isSpeaking = ref(false);
   const isLoadingTTS = ref(false);
   let currentAudioUrl: string | null = null;

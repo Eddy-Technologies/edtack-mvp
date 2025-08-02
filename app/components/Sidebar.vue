@@ -115,8 +115,6 @@ import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 
-const audioStore = useAudioStore();
-
 const emit = defineEmits(['toggle-sidebar', 'change-character']);
 const props = defineProps({
   collapsed: Boolean,
@@ -182,6 +180,9 @@ const togglePlayback = () => {
 
 onMounted(() => {
   if (!waveformRef.value) return;
+
+  // Initialize audio store after mounting
+  const audioStore = useAudioStore();
 
   wavesurfer = WaveSurfer.create({
     container: waveformRef.value,

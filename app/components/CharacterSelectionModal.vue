@@ -33,12 +33,18 @@
 
       <!-- Modal Content -->
       <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
+          <span class="ml-3 text-gray-600">Loading characters...</span>
+        </div>
+
         <!-- Character Grid -->
-        <div class="mb-6">
+        <div v-else class="mb-6">
           <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
             <div
               v-for="(avatar, index) in allAvatars"
-              :key="index"
+              :key="avatar.id || index"
               class="group cursor-pointer w-24 sm:w-28"
               @click="selectCharacter(avatar)"
             >
@@ -105,11 +111,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import boyAvatar from '../../assets/boy.png';
-import girlAvatar from '../../assets/girl.png';
-import defaultAvatar from '../../assets/eddy.png';
-import { characters } from '~/types/characters.types.js';
+import { ref, watch, onMounted } from 'vue';
 
 const props = defineProps({
   isOpen: {
@@ -125,8 +127,33 @@ const props = defineProps({
 const emit = defineEmits(['close', 'select']);
 
 const selectedCharacter = ref(null);
+const allAvatars = ref([]);
+const loading = ref(false);
 
-const allAvatars = ref(characters);
+const { fetchCharacters } = useCharacters();
+
+// Load characters from API
+const loadCharacters = async () => {
+  loading.value = true;
+  try {
+    const characters = await fetchCharacters(false); // Only active characters
+    allAvatars.value = characters.map((char) => ({
+      id: char.id,
+      name: char.name,
+      type: char.type,
+      image: char.image_url || '/assets/eddy.png', // fallback image
+      description: char.description,
+      voice_config: char.voice_config,
+      animation_config: char.animation_config
+    }));
+  } catch (error) {
+    console.error('Failed to load characters:', error);
+    // Fallback to empty array or show error
+    allAvatars.value = [];
+  } finally {
+    loading.value = false;
+  }
+};
 
 const selectCharacter = (avatar) => {
   selectedCharacter.value = avatar;
@@ -143,11 +170,20 @@ const confirmSelection = () => {
   }
 };
 
+// Load characters on component mount
+onMounted(() => {
+  loadCharacters();
+});
+
 // Watch for modal open/close to initialize selected character
 watch(
   () => props.isOpen,
-  (newValue) => {
+  async (newValue) => {
     if (newValue) {
+      // Reload characters when modal opens to ensure fresh data
+      if (allAvatars.value.length === 0) {
+        await loadCharacters();
+      }
       selectedCharacter.value = props.currentCharacter || allAvatars.value[0];
     }
   }
