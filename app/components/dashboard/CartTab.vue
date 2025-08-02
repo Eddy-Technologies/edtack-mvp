@@ -47,7 +47,7 @@
 
             <div class="space-y-4">
               <div
-                v-for="item in cart"
+                v-for="item in sortedCart"
                 :key="item.id"
                 class="flex items-center space-x-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
               >
@@ -63,6 +63,10 @@
                   <div class="flex items-center space-x-2 mt-1">
                     <span class="text-lg font-semibold text-primary">S${{ (item.price).toFixed(2) }}</span>
                     <span class="text-sm text-gray-500">each</span>
+                  </div>
+                  <div v-if="item.addedAt" class="flex items-center space-x-1 mt-1">
+                    <UIcon name="i-lucide-calendar" class="text-gray-400" size="12" />
+                    <span class="text-xs text-gray-500">Added {{ formatDate(item.addedAt) }}</span>
                   </div>
                 </div>
 
@@ -264,6 +268,15 @@ const processingMessage = ref('');
 const processingDetails = ref('');
 
 // Computed properties
+const sortedCart = computed(() => {
+  return [...props.cart].sort((a, b) => {
+    // Sort by addedAt date, oldest first
+    const dateA = new Date(a.addedAt || '1970-01-01').getTime();
+    const dateB = new Date(b.addedAt || '1970-01-01').getTime();
+    return dateA - dateB;
+  });
+});
+
 const totalItems = computed(() => {
   return props.cart.reduce((sum, item) => sum + item.quantity, 0);
 });
@@ -301,6 +314,9 @@ const updateQuantity = (item: any, change: number) => {
 
   if (existingItem) {
     existingItem.quantity += change;
+    // Update timestamp when quantity changes
+    existingItem.lastUpdated = new Date().toISOString();
+    
     if (existingItem.quantity <= 0) {
       const index = updatedCart.indexOf(existingItem);
       updatedCart.splice(index, 1);
@@ -321,6 +337,18 @@ const clearCart = () => {
 
 const goToShop = () => {
   router.push('/dashboard?tab=shop');
+};
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - date.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 1) return 'today';
+  if (diffDays === 2) return 'yesterday';
+  if (diffDays <= 7) return `${diffDays - 1} days ago`;
+  return date.toLocaleDateString();
 };
 
 const processCheckout = async () => {

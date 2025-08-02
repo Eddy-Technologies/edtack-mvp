@@ -143,6 +143,7 @@ const emit = defineEmits<{
 const selectedImage = ref('');
 const quantity = ref(1);
 const isInWishlist = ref(false);
+const isProcessing = ref(false);
 
 // Watch for product changes to update selected image
 const updateSelectedImage = () => {
@@ -155,19 +156,37 @@ const updateSelectedImage = () => {
 const closeModal = () => {
   emit('close');
   quantity.value = 1;
+  isProcessing.value = false;
 };
 
 const addToCart = () => {
-  if (props.product) {
+  if (props.product && !isProcessing.value) {
+    isProcessing.value = true;
     emit('add-to-cart', props.product, quantity.value);
+    
+    // Reset processing flag after a short delay
+    setTimeout(() => {
+      isProcessing.value = false;
+    }, 1000);
   }
 };
 
 const buyNow = () => {
-  if (props.product) {
+  if (props.product && !isProcessing.value) {
+    isProcessing.value = true;
     emit('add-to-cart', props.product, quantity.value);
-    // In real app, this would navigate directly to checkout
+    // Close modal first, then navigate to cart
     closeModal();
+    // Small delay to ensure modal closes before navigation
+    setTimeout(() => {
+      window.location.hash = '#cart';
+      window.location.href = '/dashboard?tab=cart';
+    }, 100);
+    
+    // Reset processing flag
+    setTimeout(() => {
+      isProcessing.value = false;
+    }, 1000);
   }
 };
 
@@ -184,15 +203,3 @@ watchEffect(() => {
 });
 </script>
 
-<style scoped>
-/* Hide scrollbar for Chrome, Safari and Opera */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-</style>

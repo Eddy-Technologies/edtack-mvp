@@ -67,14 +67,24 @@ const currentTab = computed(() => {
 });
 
 // Cart management functions
+let cartUpdateTimeout: NodeJS.Timeout | null = null;
+
 const updateCart = (updatedCart: any[]) => {
   cart.value = updatedCart;
-  // Persist cart to localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('shopping-cart', JSON.stringify(updatedCart));
-    // Emit custom event to update navigation badge
-    window.dispatchEvent(new Event('cartUpdated'));
+  
+  // Debounce localStorage updates to prevent rapid successive writes
+  if (cartUpdateTimeout) {
+    clearTimeout(cartUpdateTimeout);
   }
+  
+  cartUpdateTimeout = setTimeout(() => {
+    // Persist cart to localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('shopping-cart', JSON.stringify(updatedCart));
+      // Emit custom event to update navigation badge
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+  }, 100); // 100ms debounce
 };
 
 const clearCart = () => {
@@ -91,15 +101,18 @@ const addSingleItemToCart = (product: any) => {
   const existingItemIndex = cart.value.findIndex((item) => item.id === product.id);
 
   if (existingItemIndex !== -1) {
-    // If item exists, increase quantity
+    // If item exists, increase quantity and update timestamp
     const updatedCart = [...cart.value];
     updatedCart[existingItemIndex].quantity += 1;
+    updatedCart[existingItemIndex].lastUpdated = new Date().toISOString();
     updateCart(updatedCart);
   } else {
-    // If item doesn't exist, add new item
+    // If item doesn't exist, add new item with timestamps
     const newItem = {
       ...product,
-      quantity: product.quantity || 1
+      quantity: product.quantity || 1,
+      addedAt: product.addedAt || new Date().toISOString(),
+      lastUpdated: product.lastUpdated || new Date().toISOString()
     };
     updateCart([...cart.value, newItem]);
   }
@@ -111,7 +124,18 @@ const loadCartFromStorage = () => {
     const savedCart = localStorage.getItem('shopping-cart');
     if (savedCart) {
       try {
-        cart.value = JSON.parse(savedCart);
+        const parsedCart = JSON.parse(savedCart);
+        // Migrate existing cart items to include timestamps if they don't have them
+        cart.value = parsedCart.map((item: any) => ({
+          ...item,
+          addedAt: item.addedAt || new Date().toISOString(),
+          lastUpdated: item.lastUpdated || new Date().toISOString()
+        }));
+        
+        // Save the migrated cart back to localStorage
+        if (cart.value.some(item => !item.addedAt || !item.lastUpdated)) {
+          localStorage.setItem('shopping-cart', JSON.stringify(cart.value));
+        }
       } catch (error) {
         console.error('Failed to load cart from localStorage:', error);
         cart.value = [];

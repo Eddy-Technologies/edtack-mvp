@@ -129,8 +129,6 @@
               </div>
             </div>
 
-            <!-- Success Message -->
-            <p v-if="addedToCartMessage === item.product.id" class="text-green-600 text-sm mt-2">Added to Cart!</p>
           </div>
         </div>
 
@@ -170,6 +168,7 @@ import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 
 const router = useRouter();
+const toast = useToast();
 
 // Props for cart management
 const emit = defineEmits<{
@@ -241,6 +240,11 @@ const removeFromWishlist = async (productId: string) => {
 };
 
 const addToCart = (product: any) => {
+  // Prevent rapid successive clicks
+  if (addedToCartMessage.value === product.id) {
+    return;
+  }
+
   // Format product for cart
   const cartItem = {
     id: product.id,
@@ -249,16 +253,26 @@ const addToCart = (product: any) => {
     price: product.price,
     image: product.image,
     category: product.category,
-    quantity: 1
+    quantity: 1,
+    addedAt: new Date().toISOString(),
+    lastUpdated: new Date().toISOString()
   };
 
   emit('add-to-cart', cartItem);
 
-  // Show success message
+  // Show success toast
+  toast.add({
+    title: 'Added to Cart!',
+    description: `${product.name} has been added to your cart`,
+    color: 'green',
+    icon: 'i-lucide-shopping-cart'
+  });
+
+  // Set temporary flag to prevent rapid clicks
   addedToCartMessage.value = product.id;
   setTimeout(() => {
     addedToCartMessage.value = null;
-  }, 2000);
+  }, 1000);
 };
 
 const clearAllItems = async () => {

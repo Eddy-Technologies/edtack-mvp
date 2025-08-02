@@ -189,7 +189,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="flex space-x-2">
+            <div class="flex space-x-2" @click.stop>
               <Button
                 variant="primary"
                 text="Add to Cart"
@@ -200,8 +200,7 @@
             </div>
           </div>
 
-          <!-- Messages -->
-          <p v-if="purchaseMessage === item.id" class="text-green-600 text-sm mt-2">Added to Cart!</p>
+          <!-- Error Messages -->
           <p v-if="insufficientFundsMessage === item.id" class="text-red-600 text-sm mt-2">Insufficient Funds!</p>
         </div>
       </div>
@@ -263,6 +262,7 @@ const emit = defineEmits<{
 }>();
 
 const router = useRouter();
+const toast = useToast();
 
 // Use unified credit management for balance updates
 const { formattedBalance, fetchCredits } = useCredit();
@@ -434,23 +434,43 @@ const goToCart = () => {
 
 // Functions
 const addToCart = (item: any) => {
+  // Prevent rapid successive clicks on the same item
+  if (purchaseMessage.value === item.id) {
+    return; // Don't add if we're already showing success message for this item
+  }
+
   // Simply add item to cart (no immediate purchase)
   const updatedCart = [...props.cart];
   const existingItem = updatedCart.find((cartItem) => cartItem.id === item.id);
 
   if (existingItem) {
     existingItem.quantity++;
+    // Update the timestamp when quantity is increased
+    existingItem.lastUpdated = new Date().toISOString();
   } else {
-    updatedCart.push({ ...item, quantity: 1 });
+    updatedCart.push({ 
+      ...item, 
+      quantity: 1,
+      addedAt: new Date().toISOString(),
+      lastUpdated: new Date().toISOString()
+    });
   }
 
   emit('add-to-cart', updatedCart);
 
-  // Show success message
+  // Show success toast
+  toast.add({
+    title: 'Added to Cart!',
+    description: `${item.name} has been added to your cart`,
+    color: 'green',
+    icon: 'i-lucide-shopping-cart'
+  });
+
+  // Set temporary flag to prevent rapid clicks
   purchaseMessage.value = item.id;
   setTimeout(() => {
     purchaseMessage.value = null;
-  }, 2000);
+  }, 1000); // Reduced from 2000ms since we're not showing inline message
 };
 
 const openProductModal = (item: any) => {
@@ -459,23 +479,44 @@ const openProductModal = (item: any) => {
 };
 
 const addToCartFromModal = (product: any, quantity: number) => {
+  // Prevent rapid successive clicks
+  if (purchaseMessage.value === product.id) {
+    return;
+  }
+
   // Add the specified quantity to cart
   const updatedCart = [...props.cart];
   const existingItem = updatedCart.find((cartItem) => cartItem.id === product.id);
 
   if (existingItem) {
     existingItem.quantity += quantity;
+    // Update the timestamp when quantity is increased
+    existingItem.lastUpdated = new Date().toISOString();
   } else {
-    updatedCart.push({ ...product, quantity });
+    updatedCart.push({ 
+      ...product, 
+      quantity,
+      addedAt: new Date().toISOString(),
+      lastUpdated: new Date().toISOString()
+    });
   }
 
-  // Show success message
+  emit('add-to-cart', updatedCart);
+
+  // Show success toast
+  toast.add({
+    title: 'Added to Cart!',
+    description: `${quantity}x ${product.name} added to your cart`,
+    color: 'green',
+    icon: 'i-lucide-shopping-cart'
+  });
+
+  // Set temporary flag to prevent rapid clicks
   purchaseMessage.value = product.id;
   setTimeout(() => {
     purchaseMessage.value = null;
-  }, 2000);
+  }, 1000);
 
-  emit('add-to-cart', updatedCart);
   showProductModal.value = false;
 };
 

@@ -1,182 +1,195 @@
 <template>
-  <div class="flex h-screen bg-gray-50">
-    <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-lg">
-      <!-- Logo -->
-      <div class="flex items-center px-6 py-4 border-b">
-        <NuxtLink to="/">
-          <AppIcon class="w-8 h-8 mr-3" />
-        </NuxtLink>
-        <span class="text-xl font-semibold text-gray-800">Dashboard</span>
-      </div>
-
-      <!-- User Account Section -->
-      <div class="px-6 py-4 border-b bg-gray-50">
+  <div class="flex h-screen bg-slate-50">
+    <!-- Modern Sidebar -->
+    <div class="w-72 bg-white border-r border-slate-200 flex flex-col">
+      <!-- Header -->
+      <div class="px-6 py-6 border-b border-slate-200">
         <div class="flex items-center space-x-3">
-          <div class="flex-shrink-0">
-            <UserAvatar />
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <p class="text-sm font-medium text-gray-900 truncate">
-                {{ userName }}
-              </p>
+          <NuxtLink to="/" class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">E</span>
             </div>
-            <p class="text-xs text-gray-500 truncate">
-              {{ userEmail }}
-            </p>
-            <UBadge
-              :label="accountType"
-              :color="accountType === 'parent' ? 'blue' : 'green'"
-              size="xs"
-              variant="solid"
-            />
-          </div>
+            <div>
+              <h1 class="text-lg font-semibold text-slate-900">EdTack</h1>
+              <p class="text-xs text-slate-500">Dashboard</p>
+            </div>
+          </NuxtLink>
         </div>
       </div>
 
-      <!-- Chat Button -->
-      <div class="px-6 py-4 border-b">
-        <Button
-          class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-700 transition-colors"
-          icon="i-lucide-message-circle"
-          @click="navigateToRoute({ name: 'Chat', route: '/chat' })"
-        >
-          Back to Chat
-        </Button>
-      </div>
 
-      <!-- Available Credits Section -->
-      <div class="px-6 py-4 border-b">
-        <div class="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-4 py-3">
-          <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full mr-3">
-            <UIcon name="i-lucide-coins" class="text-blue-600" size="18" />
-          </div>
-          <div class="flex-1">
-            <p class="text-xs text-gray-600 font-medium">Available Credits</p>
-            <p class="text-sm font-bold text-blue-700">{{ formattedBalance }}</p>
-          </div>
-        </div>
-      </div>
+
 
       <!-- Navigation -->
-      <nav class="mt-6">
-        <div v-for="item in navigationItems" :key="item.name" class="px-3">
-          <!-- Main navigation item -->
-          <div
-            v-if="!item.children"
-            :class="[
-              'flex items-center justify-between px-3 py-2 mb-1 text-sm font-medium rounded-lg cursor-pointer transition-colors',
-              isActiveRoute(item.route)
-                ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-700'
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-            ]"
-            @click="navigateToRoute(item)"
-          >
-            <div class="flex items-center">
-              <UIcon :name="item.icon" class="w-5 h-5 mr-3" />
-              {{ item.name }}
-            </div>
-            <!-- Cart Badge -->
-            <span
-              v-if="item.name === 'Cart' && cartItemCount > 0"
-              class="bg-primary text-white text-xs px-2 py-1 rounded-full min-w-[1.25rem] text-center"
-            >
-              {{ cartItemCount }}
-            </span>
-          </div>
-
-          <!-- Navigation item with children -->
-          <div v-else>
+      <nav class="flex-1 px-6 py-6 space-y-2">
+        <div class="space-y-1">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Main</p>
+          
+          <div v-for="item in navigationItems" :key="item.name">
+            <!-- Simple navigation item -->
             <div
+              v-if="!item.children"
               :class="[
-                'flex items-center justify-between px-3 py-2 mb-1 text-sm font-medium rounded-lg cursor-pointer transition-colors',
-                'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                'group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
+                isActiveRoute(item.route)
+                  ? 'bg-primary-50 text-primary-700 shadow-sm'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               ]"
-              @click="toggleSubmenu(item.name)"
+              @click="navigateToRoute(item)"
             >
-              <div class="flex items-center">
-                <UIcon :name="item.icon" class="w-5 h-5 mr-3" />
-                {{ item.name }}
+              <div class="flex items-center space-x-3">
+                <UIcon :name="item.icon" class="w-5 h-5" />
+                <span>{{ item.name }}</span>
               </div>
-              <div :class="['transition-transform', openSubmenus.includes(item.name) ? 'rotate-90' : '']">
-                <UIcon name="i-lucide-chevron-right" class="w-4 h-4" />
-              </div>
+              <!-- Badge for cart -->
+              <span
+                v-if="item.name === 'Cart' && cartItemCount > 0"
+                class="bg-primary text-white text-xs px-2 py-0.5 rounded-full font-medium"
+              >
+                {{ cartItemCount }}
+              </span>
+              <!-- Credits amount for Credits tab -->
+              <span
+                v-if="item.name === 'Credits'"
+                class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full"
+              >
+                {{ formattedBalance }}
+              </span>
             </div>
 
-            <!-- Submenu -->
-            <div v-if="openSubmenus.includes(item.name)" class="ml-8 space-y-1">
+            <!-- Expandable navigation item -->
+            <div v-else>
+              <!-- Parent item -->
               <div
-                v-for="child in item.children"
-                :key="child.name"
                 :class="[
-                  'flex items-center px-3 py-2 text-sm rounded-lg cursor-pointer transition-colors',
-                  isActiveRoute(child.route)
-                    ? 'bg-primary-50 text-primary-700'
-                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                  'group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
+                  hasActiveChild(item) || openSubmenus.includes(item.name)
+                    ? 'bg-slate-50 text-slate-900'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 ]"
-                @click="navigateToRoute(child)"
+                @click="toggleSubmenu(item.name)"
               >
-                <div class="w-2 h-2 bg-gray-300 rounded-full mr-3" />
-                {{ child.name }}
+                <div class="flex items-center space-x-3">
+                  <UIcon :name="item.icon" class="w-5 h-5" />
+                  <span>{{ item.name }}</span>
+                </div>
+                <UIcon 
+                  name="i-lucide-chevron-down" 
+                  :class="[
+                    'w-4 h-4 transition-transform duration-200',
+                    openSubmenus.includes(item.name) ? 'rotate-180' : ''
+                  ]"
+                />
               </div>
+
+              <!-- Submenu with smooth animation -->
+              <Transition
+                enter-active-class="transition-all duration-200 ease-out"
+                enter-from-class="opacity-0 max-h-0"
+                enter-to-class="opacity-100 max-h-96"
+                leave-active-class="transition-all duration-200 ease-in"
+                leave-from-class="opacity-100 max-h-96"
+                leave-to-class="opacity-0 max-h-0"
+              >
+                <div v-if="openSubmenus.includes(item.name)" class="overflow-hidden">
+                  <div class="ml-6 mt-1 space-y-1 border-l border-slate-200 pl-4">
+                    <div
+                      v-for="child in item.children"
+                      :key="child.name"
+                      :class="[
+                        'flex items-center justify-between px-3 py-2 text-sm rounded-lg cursor-pointer transition-all duration-200',
+                        isActiveRoute(child.route)
+                          ? 'bg-primary-50 text-primary-700 font-medium'
+                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                      ]"
+                      @click="navigateToRoute(child)"
+                    >
+                      <div class="flex items-center space-x-3">
+                        <div class="w-1.5 h-1.5 bg-slate-300 rounded-full" />
+                        <span>{{ child.name }}</span>
+                      </div>
+                      <!-- Badge for cart in submenu -->
+                      <span
+                        v-if="child.name === 'Cart' && cartItemCount > 0"
+                        class="bg-primary text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                      >
+                        {{ cartItemCount }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Transition>
             </div>
           </div>
         </div>
 
-        <!-- Horizontal Divider -->
-        <div class="px-3 mt-6">
-          <hr class="border-gray-200">
-        </div>
-
-        <!-- Settings and Logout Section -->
-        <div class="px-3 mt-4 pt-2">
+        <!-- Settings Section -->
+        <div class="pt-6 mt-6 border-t border-slate-200">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Account</p>
+          
           <!-- Settings Items -->
           <div v-for="item in settingsItems" :key="item.name">
             <div
               :class="[
-                'flex items-center justify-between px-3 py-2 mb-1 text-sm font-medium rounded-lg cursor-pointer transition-colors',
+                'group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
                 isActiveRoute(item.route)
-                  ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-700'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'bg-primary-50 text-primary-700 shadow-sm'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               ]"
               @click="navigateToRoute(item)"
             >
-              <div class="flex items-center">
-                <UIcon :name="item.icon" class="w-5 h-5 mr-3" />
-                {{ item.name }}
-              </div>
+              <UIcon :name="item.icon" class="w-5 h-5 mr-3" />
+              {{ item.name }}
             </div>
           </div>
 
           <!-- Logout Button -->
           <div
             :class="[
-              'flex items-center px-3 py-2 text-sm font-medium rounded-lg cursor-pointer transition-colors',
-              isLoggingOut ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'
+              'group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
+              isLoggingOut ? 'text-slate-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'
             ]"
             @click="logout"
           >
-            <!-- Loading Spinner -->
-            <div
-              v-if="isLoggingOut"
-              class="w-5 h-5 mr-3 animate-spin rounded-full border-2 border-current border-t-transparent"
-            />
-            <!-- Logout Icon -->
-            <div v-else class="flex items-center justify-center w-5 h-5 mr-3">
-              <UIcon name="i-lucide-log-out" class="w-5 h-5" />
-            </div>
-            {{ isLoggingOut ? 'Logging out...' : 'Logout' }}
+            <div v-if="isLoggingOut" class="w-5 h-5 mr-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+            <UIcon v-else name="i-lucide-log-out" class="w-5 h-5 mr-3" />
+            {{ isLoggingOut ? 'Signing out...' : 'Sign Out' }}
           </div>
         </div>
       </nav>
+
+      <!-- Bottom Actions -->
+      <div class="px-6 pb-6 space-y-4">
+        <!-- User Profile -->
+        <div class="flex items-center space-x-3 p-3 bg-slate-50 rounded-xl">
+          <UserAvatar />
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-slate-900 truncate">{{ userName }}</p>
+            <p class="text-xs text-slate-500 truncate">{{ userEmail }}</p>
+            <span class="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium rounded-full" :class="accountTypeBadgeClass">
+              {{ accountTypeLabel }}
+            </span>
+          </div>
+        </div>
+        
+        <!-- Back to Chat Button -->
+        <Button
+          class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors shadow-sm"
+          icon="i-lucide-message-circle"
+          @click="navigateToRoute({ name: 'Chat', route: '/chat' })"
+        >
+          Back to Chat
+        </Button>
+      </div>
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main class="flex-1 p-6 overflow-auto">
-        <slot />
+      <main class="flex-1 p-8 overflow-auto">
+        <div class="max-w-7xl mx-auto">
+          <slot />
+        </div>
       </main>
     </div>
   </div>
@@ -242,11 +255,30 @@ const accountType = computed(() => {
   return role === 'parent' ? 'parent' : role === 'student' ? 'student' : 'user';
 });
 
+const accountTypeLabel = computed(() => {
+  return accountType.value === 'parent' ? 'Parent' : accountType.value === 'student' ? 'Student' : 'User';
+});
+
+const accountTypeBadgeClass = computed(() => {
+  if (accountType.value === 'parent') {
+    return 'bg-primary-100 text-primary-700';
+  } else if (accountType.value === 'student') {
+    return 'bg-green-100 text-green-700';
+  }
+  return 'bg-slate-100 text-slate-700';
+});
+
+// Check if a parent item has any active children
+const hasActiveChild = (item: NavigationItem) => {
+  if (!item.children) return false;
+  return item.children.some(child => isActiveRoute(child.route));
+};
+
 const navigationItems: NavigationItem[] = [
   {
     name: 'Overview',
     route: '/dashboard?tab=overview',
-    icon: 'i-lucide-user'
+    icon: 'i-lucide-layout-dashboard'
   },
   {
     name: 'Family',
@@ -254,9 +286,35 @@ const navigationItems: NavigationItem[] = [
     icon: 'i-lucide-users'
   },
   {
-    name: 'Subscription',
-    route: '/dashboard?tab=subscription',
-    icon: 'i-lucide-credit-card'
+    name: 'Tasks',
+    route: '/dashboard?tab=tasks',
+    icon: 'i-lucide-clipboard-list'
+  },
+  {
+    name: 'Shop',
+    icon: 'i-lucide-shopping-bag',
+    children: [
+      {
+        name: 'Products',
+        route: '/dashboard?tab=shop',
+        icon: 'i-lucide-package'
+      },
+      {
+        name: 'Wishlist',
+        route: '/dashboard?tab=wishlist',
+        icon: 'i-lucide-heart'
+      },
+      {
+        name: 'Cart',
+        route: '/dashboard?tab=cart',
+        icon: 'i-lucide-shopping-cart'
+      },
+      {
+        name: 'Orders',
+        route: '/dashboard?tab=orders',
+        icon: 'i-lucide-package'
+      }
+    ]
   },
   {
     name: 'Credits',
@@ -264,29 +322,9 @@ const navigationItems: NavigationItem[] = [
     icon: 'i-lucide-coins'
   },
   {
-    name: 'Shop',
-    route: '/dashboard?tab=shop',
-    icon: 'i-lucide-shopping-bag'
-  },
-  {
-    name: 'Wishlist',
-    route: '/dashboard?tab=wishlist',
-    icon: 'i-lucide-heart'
-  },
-  {
-    name: 'Cart',
-    route: '/dashboard?tab=cart',
-    icon: 'i-lucide-shopping-cart'
-  },
-  {
-    name: 'Tasks',
-    route: '/dashboard?tab=tasks',
-    icon: 'i-lucide-clipboard-list'
-  },
-  {
-    name: 'Orders',
-    route: '/dashboard?tab=orders',
-    icon: 'i-lucide-package'
+    name: 'Subscription',
+    route: '/dashboard?tab=subscription',
+    icon: 'i-lucide-credit-card'
   }
 ];
 
@@ -304,7 +342,7 @@ const isActiveRoute = (itemRoute?: string) => {
   // Handle dashboard query-based routes
   if (itemRoute.startsWith('/dashboard?tab=')) {
     const tabParam = itemRoute.split('tab=')[1];
-    return route.query.tab === tabParam;
+    return route.query.tab === tabParam || (route.query.tab === undefined && tabParam === 'overview');
   }
 
   return false;
@@ -342,10 +380,11 @@ const logout = async () => {
 };
 
 onMounted(() => {
+  // Auto-expand sections with active children
   for (const item of navigationItems) {
     if (item.children) {
-      const hasActiveChild = item.children.some((child) => child.route === route.path);
-      if (hasActiveChild && !openSubmenus.value.includes(item.name)) {
+      const hasActive = item.children.some((child) => isActiveRoute(child.route));
+      if (hasActive && !openSubmenus.value.includes(item.name)) {
         openSubmenus.value.push(item.name);
       }
     }
@@ -355,7 +394,6 @@ onMounted(() => {
   updateCartCount();
   if (typeof window !== 'undefined') {
     window.addEventListener('storage', updateCartCount);
-    // Also listen for custom cart update events
     window.addEventListener('cartUpdated', updateCartCount);
   }
 
