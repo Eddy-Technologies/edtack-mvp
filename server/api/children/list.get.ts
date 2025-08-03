@@ -27,29 +27,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get children from groups where user is a creator
+    // Get children from groups where user is inside
     const { data: groupMembers, error: groupError } = await supabase
       .from('group_members')
-      .select(`
-        groups!inner(
-          id,
-          created_by,
-          group_members!inner(
-            user_info_id,
-            status,
-            user:user_infos(
-              id,
-              first_name,
-              last_name,
-              email,
-              user_roles(
-                role_id,
-                roles(role_name)
-              )
-            )
-          )
-        )
-      `)
+      .select('*, groups(*, group_members(*, user:user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)))))')
       .eq('user_info_id', userInfo.id)
       .eq('status', 'active');
 
@@ -62,32 +43,21 @@ export default defineEventHandler(async (event) => {
     }
 
     // Extract children from groups where the current user is the creator
-    const children = [];
-    const childrenMap = new Map();
+    const childrenMap = new Map<string, { id: string; name: string; email: string }>();
 
-    groupMembers?.forEach((groupMember) => {
-      const group = groupMember.groups;
-
-      // Only process groups created by this user
-      if (group.created_by === userInfo.id) {
-        group.group_members.forEach((member) => {
-          // Skip self and inactive members
-          if (member.user_info_id === userInfo.id || member.status !== 'active') {
-            return;
-          }
-
-          // Check if this is a child (not a parent)
-          const isParent = member.user.user_roles.some((role) => role.roles.role_name === 'PARENT');
-
-          if (!isParent && !childrenMap.has(member.user_info_id)) {
+    // TODO: create a map of all children to avoid duplicates
+    groupMembers.forEach((member) => {
+      member.groups.group_members.forEach((member) => {
+        if (member.user && member.user.user_roles.some((role) => role.roles?.role_name === 'STUDENT')) {
+          if (!childrenMap.has(member.user_info_id)) {
             childrenMap.set(member.user_info_id, {
-              id: member.user.id,
-              userDisplayFullName: `${member.user.first_name || ''} ${member.user.last_name || ''}`.trim(),
+              id: member.user_info_id,
+              name: `${member.user.first_name || ''} ${member.user.last_name || ''}`.trim() || member.user.email,
               email: member.user.email
             });
           }
-        });
-      }
+        }
+      });
     });
 
     return {

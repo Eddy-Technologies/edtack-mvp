@@ -21,7 +21,7 @@
                 to="/login"
                 class="font-medium text-primary-600 hover:text-primary-500"
               >
-                sign in to your existing account
+                Login
               </NuxtLink>
             </p>
           </div>

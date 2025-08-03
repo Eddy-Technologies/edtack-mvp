@@ -135,12 +135,11 @@ export default defineEventHandler(async (event) => {
         });
       }
 
+      const newReservedCredit = (userCredits.reserved_credit || 0) + totalCostCents;
       // Reserve credits for parent approval (don't deduct yet)
       const { error: reserveError } = await supabase
         .from('user_credits')
-        .update({
-          reserved_credit: supabase.raw(`reserved_credit + ${totalCostCents}`)
-        })
+        .update({ reserved_credit: newReservedCredit })
         .eq('user_info_id', userInfo.id);
 
       if (reserveError) {

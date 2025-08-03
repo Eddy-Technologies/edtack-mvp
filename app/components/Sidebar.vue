@@ -24,41 +24,35 @@
     <div class="flex-1 overflow-y-auto">
       <div class="px-3">
         <div class="border-t border-black">
-          <UTooltip text="New Chat" :disabled="true">
-            <ULink
-              class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-              @click="handleNewChat"
-            >
-              <Icon name="i-heroicons-plus" class="w-6 h-6" />
-              <span v-if="!isMini" class="truncate">New Chat</span>
-            </ULink>
-          </UTooltip>
+          <ULink
+            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleNewChat"
+          >
+            <Icon name="i-heroicons-plus" class="w-6 h-6" />
+            <span v-if="!isMini" class="truncate">New Chat</span>
+          </ULink>
         </div>
       </div>
       <div class="px-3">
         <div class="border-t border-black">
-          <UTooltip text="Chat History" :disabled="true">
-            <ULink
-              class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-              @click="handleShowChatHistory"
-            >
-              <Icon name="i-heroicons-clock" class="w-6 h-6" />
-              <span v-if="!isMini" class="truncate">Chat History</span>
-            </ULink>
-          </UTooltip>
+          <ULink
+            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleShowChatHistory"
+          >
+            <Icon name="i-heroicons-clock" class="w-6 h-6" />
+            <span v-if="!isMini" class="truncate">Chat History</span>
+          </ULink>
         </div>
       </div>
       <div class="px-3">
         <div class="border-t border-black">
-          <UTooltip text="Change Character" :disabled="true">
-            <ULink
-              class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-              @click="handleChangeCharacter"
-            >
-              <Icon name="i-heroicons-user-circle" class="w-6 h-6" />
-              <span v-if="!isMini" class="truncate">Change Character</span>
-            </ULink>
-          </UTooltip>
+          <ULink
+            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleChangeCharacter"
+          >
+            <Icon name="i-heroicons-user-circle" class="w-6 h-6" />
+            <span v-if="!isMini" class="truncate">Change Character</span>
+          </ULink>
         </div>
       </div>
     </div>
@@ -89,9 +83,29 @@
       </div>
 
       <!-- Normal container when not floating -->
-      <div v-else class="relative bg-gray-700 rounded-xl shadow-inner p-2 min-h-[260px] w-full">
+      <div
+        v-else
+        :class="[
+          'relative bg-gray-700 rounded-xl shadow-inner p-2 w-full transition-all duration-300',
+          isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-[260px]'
+        ]"
+      >
+        <!-- Collapsed Header -->
+        <div v-if="isAudioPlayerCollapsed" class="flex items-center justify-between p-2">
+          <span class="text-gray-300 text-sm font-medium">Audio Player</span>
+          <div class="flex gap-1">
+            <button
+              class="p-1.5 hover:bg-gray-600 rounded transition-colors"
+              @click="isAudioPlayerCollapsed = false"
+            >
+              <Icon name="i-heroicons-chevron-up" class="w-4 h-4 text-gray-300" />
+            </button>
+          </div>
+        </div>
+
         <!-- Avatar -->
         <div
+          v-else
           :class="[
             'relative overflow-hidden rounded-lg',
             isMini ? 'h-[120px]' : 'h-[180px]'
@@ -99,23 +113,35 @@
         >
           <Avatar :is-playing="isPlaying" />
 
-          <!-- Floating Avatar Toggle Button -->
-          <button
-            v-if="!isMini"
-            class="absolute top-2 right-2 p-2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-lg shadow-lg transition-all duration-200"
-            @click="toggleFloatingAvatar"
-          >
-            <Icon name="i-heroicons-arrows-pointing-out" class="w-4 h-4 text-gray-700" />
-          </button>
+          <!-- Control Buttons -->
+          <div class="absolute top-2 right-2 flex gap-1">
+            <!-- Minimize Button -->
+            <button
+              v-if="!isMini"
+              class="p-2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-lg shadow-lg transition-all duration-200"
+              @click="isAudioPlayerCollapsed = true"
+            >
+              <Icon name="i-heroicons-chevron-down" class="w-4 h-4 text-gray-700" />
+            </button>
+            <!-- Floating Avatar Toggle Button -->
+            <button
+              v-if="!isMini"
+              class="p-2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-lg shadow-lg transition-all duration-200"
+              @click="toggleFloatingAvatar"
+            >
+              <Icon name="i-heroicons-arrows-pointing-out" class="w-4 h-4 text-gray-700" />
+            </button>
+          </div>
         </div>
 
         <!-- Integrated Waveform -->
-        <div v-if="!isMini" class="mt-3 px-2">
+        <div v-if="!isMini && !isAudioPlayerCollapsed" class="mt-3 px-2">
           <div ref="waveformRef" class="w-full h-12 bg-gray-600 rounded" style="min-height: 48px;" />
         </div>
 
         <!-- Unified Controls -->
         <div
+          v-if="!isAudioPlayerCollapsed"
           :class="[
             'flex justify-center items-center px-2',
             isMini ? 'flex-col gap-2 mt-2' : 'flex-row gap-3 mt-4'
@@ -165,6 +191,9 @@ const props = defineProps({
   isMobile: Boolean,
   isAvatarFloating: Boolean,
 });
+
+// State for audio player collapsed state
+const isAudioPlayerCollapsed = ref(false);
 
 const router = useRouter();
 const toast = useToast();
@@ -231,7 +260,7 @@ let wavesurfer: WaveSurfer | null = null;
 
 const togglePlayback = () => {
   if (!wavesurfer) return;
-  
+
   if (isPlaying.value) {
     wavesurfer.pause();
     isPlaying.value = false;
@@ -247,10 +276,10 @@ const handlePlayAudio = async () => {
     togglePlayback();
     return;
   }
-  
+
   // Fallback to HTML Audio API
   const audioStore = useAudioStore();
-  
+
   try {
     if (isPlaying.value && currentAudio.value) {
       // Pause current audio
@@ -258,23 +287,22 @@ const handlePlayAudio = async () => {
       isPlaying.value = false;
       return;
     }
-    
+
     // Create new audio if none exists
     if (!currentAudio.value && audioStore.audioUrl) {
       currentAudio.value = new Audio(audioStore.audioUrl);
       currentAudio.value.volume = 1.0;
-      
+
       currentAudio.value.addEventListener('ended', () => {
         isPlaying.value = false;
       });
     }
-    
+
     // Play audio
     if (currentAudio.value) {
       await currentAudio.value.play();
       isPlaying.value = true;
     }
-    
   } catch (error) {
     console.error('Audio playback failed:', error);
   }

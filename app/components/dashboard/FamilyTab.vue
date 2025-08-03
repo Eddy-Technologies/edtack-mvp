@@ -125,7 +125,7 @@
                     @clicked="acceptInvitation(invitation)"
                   />
                   <Button
-                    variant="secondary-gray"
+                    variant="secondary"
                     text="Decline"
                     size="sm"
                     @clicked="declineInvitation(invitation)"
@@ -179,6 +179,30 @@
                     size="sm"
                     @clicked="cancelInvitation(invitation)"
                   />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Student Empty State (no family connections and no pending invitations) -->
+        <div v-if="!isParent && activeMembers.length === 0 && pendingInvitations.length === 0" class="bg-white rounded-lg border">
+          <div class="text-center py-16">
+            <div class="flex items-center justify-center w-20 h-20 mx-auto text-gray-300 mb-6">
+              <UIcon name="i-lucide-users-x" size="80" />
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">No Family Connections</h3>
+            <p class="text-gray-500 max-w-md mx-auto mb-6">
+              You haven't been connected to any family members yet. Ask a parent or family member to invite you to their family group to start sharing data and collaborating.
+            </p>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+              <div class="flex items-start space-x-3">
+                <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full flex-shrink-0">
+                  <UIcon name="i-lucide-info" class="text-blue-600" size="16" />
+                </div>
+                <div class="text-left">
+                  <p class="text-sm font-medium text-blue-900 mb-1">How to get connected:</p>
+                  <p class="text-sm text-blue-700">Ask a family member to invite you using your email address from their Family Management page.</p>
                 </div>
               </div>
             </div>
@@ -273,12 +297,6 @@
 
                 <!-- Actions -->
                 <div v-if="isParent" class="flex items-center space-x-2 ml-4">
-                  <Button
-                    variant="secondary-gray"
-                    text="View Profile"
-                    size="sm"
-                    @clicked="viewProfile(member)"
-                  />
                   <Button
                     variant="secondary"
                     text="Transfer Credits"

@@ -100,7 +100,10 @@
       <div
         v-if="showFloatingAvatar"
         ref="floatingAvatar"
-        class="fixed z-50 bg-gray-700 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ease-out"
+        :class="[
+          'fixed z-50 bg-gray-700 rounded-xl shadow-2xl overflow-hidden',
+          isDraggingAvatar ? 'cursor-grabbing' : 'transition-all duration-300 ease-out'
+        ]"
         :style="{
           left: floatingPosition.x + 'px',
           top: floatingPosition.y + 'px',
@@ -110,7 +113,10 @@
       >
         <!-- Header Panel -->
         <div
-          class="bg-gray-800 px-3 py-2 flex items-center justify-between cursor-move"
+          :class="[
+            'bg-gray-800 px-3 py-2 flex items-center justify-between',
+            isDraggingAvatar ? 'cursor-grabbing' : 'cursor-move'
+          ]"
           @mousedown="startDraggingAvatar"
         >
           <div class="flex items-center gap-2">

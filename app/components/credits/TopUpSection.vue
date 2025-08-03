@@ -7,7 +7,7 @@
       <h3 class="text-xl font-semibold text-gray-900">Top Up Credits</h3>
     </div>
 
-    <p class="text-gray-600 mb-6">Add credits to your account using your payment method</p>
+    <p class="text-gray-600 mb-6">Add credits to your account</p>
 
     <!-- Quick Amount Selection -->
     <div class="mb-6">
@@ -55,7 +55,7 @@
     <button
       :disabled="!selectedAmount || selectedAmount < 1 || isLoading"
       class="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-      @click="handleTopUp"
+      @click="showConfirmModal = true"
     >
       <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
       {{ isLoading ? 'Processing...' : `Top Up $${selectedAmount || 0}` }}
@@ -64,15 +64,58 @@
     <!-- Payment Methods Info -->
     <div class="mt-4 p-3 bg-gray-50 rounded-lg">
       <div class="flex items-center text-sm text-gray-600">
-        <UIcon name="i-lucide-circle-check" class="w-5 h-5 mr-2" />
-        Secure payment powered by Stripe
+        <UIcon name="i-lucide-shield-check" class="w-5 h-5 mr-2" />
+        Secure internal credit system
       </div>
     </div>
+
+    <!-- Confirmation Modal -->
+    <UModal v-model="showConfirmModal">
+      <div class="p-6">
+        <div class="flex items-center mb-4">
+          <div class="flex items-center justify-center w-12 h-12 bg-primary-100 rounded-full mr-3">
+            <UIcon name="i-lucide-circle-dollar-sign" :size="24" class="text-primary-600" />
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900">Confirm Top-Up</h3>
+        </div>
+
+        <p class="text-gray-600 mb-6">
+          You are about to pledge <span class="font-semibold text-gray-900">${{ selectedAmount }} SGD</span> to your account.
+        </p>
+
+        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Amount to add:</span>
+            <span class="font-semibold text-gray-900">${{ selectedAmount }} SGD</span>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+            :disabled="isLoading"
+            @click="showConfirmModal = false"
+          >
+            Cancel
+          </button>
+          <button
+            class="flex-1 bg-primary text-white py-2 px-4 rounded-lg font-medium hover:bg-primary-600 transition-colors flex items-center justify-center"
+            :disabled="isLoading"
+            @click="confirmTopUp"
+          >
+            <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+            {{ isLoading ? 'Processing...' : 'Confirm' }}
+          </button>
+        </div>
+      </div>
+    </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useCredit } from '~/composables/useCredit';
+import { useNuxtApp } from '#app';
 
 // Quick amount options
 const quickAmounts = [
@@ -86,28 +129,65 @@ const quickAmounts = [
 const selectedAmount = ref<number>(10);
 const customAmount = ref<number>();
 const isLoading = ref(false);
+const showConfirmModal = ref(false);
 
-const handleTopUp = async () => {
+// Get credit composable for refreshing balance
+const { refreshBalance } = useCredit();
+const { $toast } = useNuxtApp();
+
+const confirmTopUp = async () => {
   if (!selectedAmount.value || selectedAmount.value < 1) return;
 
   isLoading.value = true;
   try {
-    const checkoutResponse = await $fetch('/api/credits/top-up', {
+    const response = await $fetch('/api/credits/internal-topup', {
       method: 'POST',
       body: {
         amount: selectedAmount.value,
       },
     });
 
-    // Redirect to Stripe Checkout
-    if (checkoutResponse.url) {
-      window.location.href = checkoutResponse.url;
+    if (response.success) {
+      // Success - close modal and show success message
+      showConfirmModal.value = false;
+
+      // Show success toast
+      if ($toast) {
+        $toast.add({
+          title: 'Success',
+          description: response.message,
+          color: 'green',
+          timeout: 5000,
+        });
+      } else {
+        // Fallback if toast is not available
+        alert(response.message);
+      }
+
+      // Refresh the credit balance
+      await refreshBalance();
+
+      // Reset selected amount
+      selectedAmount.value = 10;
+      customAmount.value = undefined;
     } else {
-      throw new Error('No checkout URL received');
+      throw new Error('Top-up failed');
     }
   } catch (error) {
     console.error('Top-up failed:', error);
-    alert('Failed to create checkout session. Please try again.');
+
+    // Show error toast
+    if ($toast) {
+      $toast.add({
+        title: 'Error',
+        description: 'Failed to process top-up. Please try again.',
+        color: 'red',
+        timeout: 5000,
+      });
+    } else {
+      // Fallback if toast is not available
+      alert('Failed to process top-up. Please try again.');
+    }
   } finally {
     isLoading.value = false;
   }

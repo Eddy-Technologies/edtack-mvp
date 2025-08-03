@@ -2,14 +2,6 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
 import { getCodes, getOperationTypes } from '~~/server/services/codeService';
 
-// Generate order number function
-function generateOrderNumber(): string {
-  const now = new Date();
-  const yearMonth = now.getFullYear().toString() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-  const timestamp = now.getTime().toString().slice(-6); // Use last 6 digits of timestamp for uniqueness
-  return `ORD-${yearMonth}-${timestamp}`;
-}
-
 export default defineEventHandler(async (event) => {
   try {
     const stripe = getStripe();

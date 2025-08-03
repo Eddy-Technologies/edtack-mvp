@@ -66,10 +66,27 @@ export default defineEventHandler(async (event) => {
     // Start transaction
     if (approved) {
       // Award credits to child if approved
+      // First get current credit balance
+      const { data: currentCredits, error: fetchError } = await supabase
+        .from('user_credits')
+        .select('credit')
+        .eq('user_info_id', task.assignee_user_info_id)
+        .single();
+
+      if (fetchError) {
+        console.error('Failed to fetch current credits:', fetchError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to fetch current credit balance'
+        });
+      }
+
+      const newCreditAmount = (currentCredits.credit || 0) + task.credit;
+
       const { error: creditError } = await supabase
         .from('user_credits')
         .update({
-          credit: supabase.raw(`credit + ${task.credit}`)
+          credit: newCreditAmount
         })
         .eq('user_info_id', task.assignee_user_info_id);
 

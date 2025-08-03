@@ -162,40 +162,40 @@
                     <span>{{ task.category }}</span>
                   </div>
 
-                  <div v-if="task.due_date" class="flex items-center space-x-1">
+                  <div v-if="task.dueDate" class="flex items-center space-x-1">
                     <UIcon name="i-lucide-calendar" size="16" />
-                    <span :class="{ 'text-red-600': isOverdue(task.due_date) }">
-                      Due {{ formatDate(task.due_date) }}
+                    <span :class="{ 'text-red-600': isOverdue(task.dueDate) }">
+                      Due {{ formatDate(task.dueDate) }}
                     </span>
                   </div>
 
                   <div v-if="isParent" class="flex items-center space-x-1">
                     <UIcon name="i-lucide-user" size="16" />
-                    <span>{{ task.child?.userDisplayFullName || 'Unknown Child' }}</span>
+                    <span>{{ task.assigneeInfo?.firstName }} {{ task.assigneeInfo?.lastName || 'Unknown Child' }}</span>
                   </div>
                 </div>
 
                 <!-- Completion Notes -->
-                <div v-if="task.completion_notes" class="bg-blue-50 p-3 rounded-lg mb-3">
+                <div v-if="task.completionNotes" class="bg-blue-50 p-3 rounded-lg mb-3">
                   <p class="text-sm text-blue-800">
-                    <strong>Completion Notes:</strong> {{ task.completion_notes }}
+                    <strong>Completion Notes:</strong> {{ task.completionNotes }}
                   </p>
                 </div>
 
                 <!-- Approval Notes -->
-                <div v-if="task.approval_notes" class="bg-gray-50 p-3 rounded-lg mb-3">
+                <div v-if="task.approvalNotes" class="bg-gray-50 p-3 rounded-lg mb-3">
                   <p class="text-sm text-gray-800">
                     <strong>{{ task.status === 'approved' ? 'Approval' : 'Rejection' }} Notes:</strong>
-                    {{ task.approval_notes }}
+                    {{ task.approvalNotes }}
                   </p>
                 </div>
 
                 <!-- Timestamps -->
                 <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500">
-                  <span>Created {{ formatDate(task.created_at) }}</span>
-                  <span v-if="task.completed_at">Completed {{ formatDate(task.completed_at) }}</span>
-                  <span v-if="task.approved_at">
-                    {{ task.status === 'approved' ? 'Approved' : 'Reviewed' }} {{ formatDate(task.approved_at) }}
+                  <span>Created {{ formatDate(task.createdAt) }}</span>
+                  <span v-if="task.completedAt">Completed {{ formatDate(task.completedAt) }}</span>
+                  <span v-if="task.approvedAt">
+                    {{ task.status === 'approved' ? 'Approved' : 'Reviewed' }} {{ formatDate(task.approvedAt) }}
                   </span>
                 </div>
               </div>
@@ -462,11 +462,17 @@ const getPriorityBadgeClass = (priority: string) => {
 };
 
 const formatCredits = (cents: number) => {
-  return `${(cents / 100).toFixed(0)} credits`;
+  return `$${(cents / 100).toFixed(2)} SGD`;
 };
 
 const formatDate = (dateString: string) => {
+  if (!dateString) return 'N/A';
+
   const date = new Date(dateString);
+
+  // Check for invalid date
+  if (isNaN(date.getTime())) return 'N/A';
+
   const now = new Date();
   const diffTime = Math.abs(now.getTime() - date.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -486,18 +492,3 @@ onMounted(() => {
   loadTasks();
 });
 </script>
-
-<style scoped>
-.dashboard-tasks {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.tasks-container {
-  padding: 20px;
-  min-height: 100%;
-  width: 100%;
-  max-width: 6xl;
-  margin: 0 auto;
-}
-</style>

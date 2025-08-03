@@ -117,15 +117,36 @@ export default defineEventHandler(async (event) => {
 
     if (!approved) {
       // REJECTION: Release reserved credits and update order
+      // First get current reserved credit to calculate new value
+      const { data: currentCredits, error: fetchError } = await supabase
+        .from('user_credits')
+        .select('reserved_credit')
+        .eq('user_info_id', order.user_info_id)
+        .single();
+
+      if (fetchError) {
+        console.error('Failed to fetch current reserved credits:', fetchError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to release reserved credits'
+        });
+      }
+
+      const newReservedCredit = Math.max(0, (currentCredits.reserved_credit || 0) - order.total_amount_cents);
+
       const { error: releaseError } = await supabase
         .from('user_credits')
         .update({
-          reserved_credit: supabase.raw(`reserved_credit - ${order.total_amount_cents}`)
+          reserved_credit: newReservedCredit
         })
         .eq('user_info_id', order.user_info_id);
 
       if (releaseError) {
         console.error('Failed to release reserved credits:', releaseError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to release reserved credits'
+        });
       }
 
       // Update order status to rejected

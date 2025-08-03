@@ -20,16 +20,13 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">
               Assign to Child *
             </label>
-            <select
+            <USelect
               v-model="form.assignee_user_info_id"
+              :options="childrenOptions"
+              placeholder="Select a child"
+              :disabled="isSubmitting"
               required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Select a child</option>
-              <option v-for="child in children" :key="child.id" :value="child.id">
-                {{ child.userDisplayFullName }}
-              </option>
-            </select>
+            />
           </div>
 
           <!-- Task Name -->
@@ -144,17 +141,17 @@
           <!-- Actions -->
           <div class="flex space-x-3 pt-4">
             <Button
-              variant="secondary-gray"
-              text="Cancel"
-              :disabled="isSubmitting"
-              @clicked="$emit('close')"
-            />
-            <Button
               type="submit"
               variant="primary"
               text="Create Task"
               :loading="isSubmitting"
               :disabled="isSubmitting"
+            />
+            <Button
+              variant="secondary"
+              text="Cancel"
+              :disabled="isSubmitting"
+              @clicked="$emit('close')"
             />
           </div>
         </form>
@@ -193,6 +190,13 @@ const error = ref<string | null>(null);
 
 const today = computed(() => {
   return new Date().toISOString().split('T')[0];
+});
+
+const childrenOptions = computed(() => {
+  return children.value.map((child) => ({
+    value: child.id,
+    label: child.name
+  }));
 });
 
 // Load children when modal opens

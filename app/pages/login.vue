@@ -21,7 +21,7 @@
                 to="/register"
                 class="font-medium text-primary-600 hover:text-primary-500"
               >
-                create a new account
+                Register
               </NuxtLink>
             </p>
           </div>

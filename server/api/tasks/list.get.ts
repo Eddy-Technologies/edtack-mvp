@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
     // Build query - user can be either creator or assignee
     let tasksQuery = supabase
       .from('user_tasks')
-      .select('*')
+      .select('*, creator:user_infos!creator_user_info_id(*), assignee:user_infos!assignee_user_info_id(*)')
       .or(`creator_user_info_id.eq.${userInfo.id},assignee_user_info_id.eq.${userInfo.id}`)
       .order('created_at', { ascending: false })
       .range(parseInt(offset as string), parseInt(offset as string) + parseInt(limit as string) - 1);
@@ -93,14 +93,14 @@ export default defineEventHandler(async (event) => {
       createdAt: task.created_at,
       updatedAt: task.updated_at,
       creatorInfo: {
-        firstName: task.creator_info?.all_users?.first_name,
-        lastName: task.creator_info?.all_users?.last_name,
-        email: task.creator_info?.all_users?.email
+        firstName: task.creator?.first_name,
+        lastName: task.creator?.last_name,
+        email: task.creator?.email
       },
       assigneeInfo: {
-        firstName: task.assignee_info?.all_users?.first_name,
-        lastName: task.assignee_info?.all_users?.last_name,
-        email: task.assignee_info?.all_users?.email
+        firstName: task.assignee?.first_name,
+        lastName: task.assignee?.last_name,
+        email: task.assignee?.email
       },
       // Helper field to determine user's role in this task
       userRole: task.creator_user_info_id === userInfo.id ? 'creator' : 'assignee'

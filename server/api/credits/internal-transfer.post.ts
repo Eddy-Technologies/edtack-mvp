@@ -6,10 +6,10 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
 
-    const { to_user_info_id, amount } = body;
+    const { toUserInfoId, amountInCents } = body;
 
     // Validate input
-    if (!to_user_info_id || !amount || amount < 1) {
+    if (!toUserInfoId || !amountInCents || amountInCents < 1) {
       throw createError({
         statusCode: 400,
         statusMessage: 'to_user_info_id and amount (minimum 1 cent) are required'
@@ -42,17 +42,8 @@ export default defineEventHandler(async (event) => {
     // Verify group relationship
     const { data: groupRelation, error: relationError } = await supabase
       .from('group_members')
-      .select(`
-        group_id,
-        groups!inner(
-          created_by,
-          group_members!inner(
-            user_info_id,
-            status
-          )
-        )
-      `)
-      .eq('user_info_id', senderInfo.id)
+      .select('*')
+      .in('user_info_id', [toUserInfoId, senderInfo.id])
       .eq('status', 'active');
 
     if (relationError) {
@@ -66,16 +57,12 @@ export default defineEventHandler(async (event) => {
     // Check if recipient is in any of the sender's groups
     let canTransfer = false;
 
-    groupRelation?.forEach((senderGroup) => {
-      if (senderGroup.groups.created_by === senderInfo.id) {
-        const hasRecipient = senderGroup.groups.group_members.some(
-          (member) => member.user_info_id === to_user_info_id && member.status === 'active'
-        );
-        if (hasRecipient) {
-          canTransfer = true;
-        }
-      }
-    });
+    const senderGroupMap = groupRelation.map((member) => member.user_info_id === senderInfo.id ? member.group_id : null);
+    const receiverGroupMap = groupRelation.map((member) => member.user_info_id === toUserInfoId ? member.group_id : null);
+    // check if any group id matches
+    if (senderGroupMap.some((groupId) => receiverGroupMap.includes(groupId))) {
+      canTransfer = true;
+    }
 
     if (!canTransfer) {
       throw createError({
@@ -84,8 +71,6 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const amountInCents = parseInt(amount);
-
     // Check sender's balance
     const { data: senderCredits, error: senderCreditsError } = await supabase
       .from('user_credits')
@@ -93,17 +78,10 @@ export default defineEventHandler(async (event) => {
       .eq('user_info_id', senderInfo.id)
       .single();
 
-    if (senderCreditsError || !senderCredits) {
+    if (senderCreditsError || !senderCredits || senderCredits.credit < amountInCents) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Sender credit balance not found'
-      });
-    }
-
-    if (senderCredits.credit < amountInCents) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: `Insufficient balance. You have ${(senderCredits.credit / 100).toFixed(2)} SGD, but need ${(amountInCents / 100).toFixed(2)} SGD`
+        statusMessage: `Insufficient credits. You have ${(senderCredits?.credit || 0) / 100} SGD available.`
       });
     }
 
@@ -111,10 +89,11 @@ export default defineEventHandler(async (event) => {
     const operationCodes = await getCodes(supabase, 'operation_type');
 
     // Perform the transfer - deduct from sender
+    const newSenderCredit = senderCredits.credit - amountInCents;
     const { error: deductError } = await supabase
       .from('user_credits')
       .update({
-        credit: supabase.raw(`credit - ${amountInCents}`)
+        credit: newSenderCredit
       })
       .eq('user_info_id', senderInfo.id);
 
@@ -127,19 +106,31 @@ export default defineEventHandler(async (event) => {
     }
 
     // Add to recipient (create record if doesn't exist)
-    const { error: addError } = await supabase
+    // First get recipient's current balance
+    const { data: recipientCredits, error: recipientError } = await supabase
       .from('user_credits')
-      .update({
-        credit: supabase.raw(`credit + ${amountInCents}`)
-      })
-      .eq('user_info_id', to_user_info_id);
+      .select('credit')
+      .eq('user_info_id', toUserInfoId)
+      .single();
+
+    let addError = null;
+    if (!addError && recipientCredits) {
+      const newRecipientCredit = recipientCredits.credit + amountInCents;
+      const { error: updateError } = await supabase
+        .from('user_credits')
+        .update({
+          credit: newRecipientCredit
+        })
+        .eq('user_info_id', toUserInfoId);
+      addError = updateError;
+    }
 
     if (addError) {
       // Try to create the record if it doesn't exist
       const { error: insertError } = await supabase
         .from('user_credits')
         .insert({
-          user_info_id: to_user_info_id,
+          user_info_id: toUserInfoId,
           credit: amountInCents
         });
 
@@ -149,7 +140,7 @@ export default defineEventHandler(async (event) => {
         await supabase
           .from('user_credits')
           .update({
-            credit: supabase.raw(`credit + ${amountInCents}`)
+            credit: senderCredits.credit
           })
           .eq('user_info_id', senderInfo.id);
 
@@ -175,7 +166,7 @@ export default defineEventHandler(async (event) => {
         is_internal: true,
         metadata: JSON.stringify({
           transfer_type: 'parent_to_child',
-          recipient_user_info_id: to_user_info_id,
+          recipient_user_info_id: toUserInfoId,
           amount_cents: amountInCents
         })
       });
@@ -184,7 +175,7 @@ export default defineEventHandler(async (event) => {
     const { error: recipientTransactionError } = await supabase
       .from('credit_transactions')
       .insert({
-        user_info_id: to_user_info_id,
+        user_info_id: toUserInfoId,
         transaction_type: operationCodes.transfer_in || 'transfer_in',
         amount: amountInCents, // Positive for incoming
         currency: 'SGD',
@@ -212,7 +203,7 @@ export default defineEventHandler(async (event) => {
     const { data: updatedRecipientCredits } = await supabase
       .from('user_credits')
       .select('credit')
-      .eq('user_info_id', to_user_info_id)
+      .eq('user_info_id', toUserInfoId)
       .single();
 
     return {
