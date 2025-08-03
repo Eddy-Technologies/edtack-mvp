@@ -8,16 +8,12 @@
         class="flex-1 p-3 border rounded-lg text-sm"
         @keydown.enter="emitMessage"
       >
-      <Button
-        icon="i-heroicons-arrow-right-20-solid"
-        color="black"
-        size="l"
-        bold
-        rounded
-        hover
-        extra-classes="p-2 rounded-full hover:bg-gray-800"
+      <button
+        class="p-3 bg-primary hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
         @click="emitMessage"
-      />
+      >
+        <Icon name="i-heroicons-paper-airplane" class="w-5 h-5" />
+      </button>
     </div>
 
     <div class="mt-2 flex flex-wrap gap-2 text-sm">

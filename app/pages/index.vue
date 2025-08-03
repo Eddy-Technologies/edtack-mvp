@@ -1,79 +1,210 @@
 <template>
-  <div class="flex h-screen w-full overflow-hidden">
-    <!-- Draggable Sidebar -->
-    <div
-      ref="sidebar"
-      :class="[
-        'flex-shrink-0 bg-gray-150 border-r flex flex-col z-30',
-        isMobile ? 'fixed top-0 left-0 h-full shadow-lg' : '',
-        collapsed && !isDragging ? 'w-20' : '',
-      ]"
-      :style="{ width: sidebarWidth + 'px', maxWidth: '900px', minWidth: '80px' }"
+  <div class="relative">
+    <!-- Loading Screen -->
+    <Transition
+      name="fade"
+      @after-leave="showContentTransitions = true"
     >
-      <Sidebar
-        :collapsed="collapsed"
-        :sidebar-width="sidebarWidth"
-        :is-mobile="isMobile"
-        @toggle-sidebar="toggleSidebar"
-        @change-character="openCharacterModal"
-      />
-    </div>
+      <div
+        v-if="isLoading"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-white"
+      >
+        <div class="text-center">
+          <AppIcon name="i-heroicons-sparkles" class="w-16 h-16 text-gray-500 animate-pulse mb-4 justify-self-center" />
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-800 animate-pulse">
+            Welcome to <span class="text-primary">StudyWithEddy</span>
+          </h1>
+        </div>
+      </div>
+    </Transition>
 
-    <!-- Backdrop for mobile -->
+    <!-- Main Application -->
     <div
-      v-if="isMobile && !collapsed"
-      class="fixed inset-0 z-20 bg-black bg-opacity-40"
-      @click="toggleSidebar"
-    />
-
-    <!-- Drag Handle -->
-    <div
-      v-show="!collapsed && !isMobile"
-      class="w-1 cursor-ew-resize bg-gray-300 hover:bg-gray-400"
-      @mousedown="startDragging"
-    />
-
-    <!-- Main Content -->
-    <div class="flex flex-col flex-1 h-full relative">
-      <!-- Top Bar with User Avatar -->
-      <div class="flex justify-end items-center px-4 py-3 bg-white relative z-50">
-        <AuthenticationWidget
-          @login-success="handleLoginSuccess"
-          @register-success="handleRegisterSuccess"
-          @logout="handleLogout"
+      :class="[
+        'flex h-screen w-full overflow-hidden transition-opacity duration-300 ease-out',
+        showContentTransitions ? 'opacity-100' : 'opacity-0'
+      ]"
+    >
+      <!-- Fixed Width Sidebar -->
+      <div
+        ref="sidebar"
+        :class="[
+          'flex-shrink-0 border-r flex flex-col z-30',
+          isMobile ? 'fixed top-0 left-0 h-full shadow-lg' : '',
+          showContentTransitions ? 'sidebar-transition' : 'transform -translate-x-full',
+        ]"
+        :style="{ width: collapsed ? '80px' : '400px' }"
+      >
+        <Sidebar
+          :collapsed="collapsed"
+          :sidebar-width="collapsed ? 80 : 400"
+          :is-mobile="isMobile"
+          :is-avatar-floating="showFloatingAvatar"
+          @toggle-sidebar="toggleSidebar"
+          @change-character="openCharacterModal"
+          @toggle-floating-avatar="toggleFloatingAvatar"
         />
       </div>
 
-      <!-- Chat Content Below -->
-      <ChatContent class="flex-1 overflow-y-auto pb-10" />
+      <!-- Backdrop for mobile -->
+      <div
+        v-if="isMobile && !collapsed"
+        class="fixed inset-0 z-20 bg-black bg-opacity-40"
+        @click="toggleSidebar"
+      />
+
+      <!-- Main Content -->
+      <div class="flex flex-col flex-1 h-full relative">
+        <!-- Top Bar with User Avatar -->
+        <div
+          :class="[
+            'flex justify-end items-center px-4 py-3 bg-white relative z-50 transition-all duration-500 ease-out',
+            showContentTransitions ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-95'
+          ]"
+          :style="{ transitionDelay: showContentTransitions ? '0.2s' : '0s' }"
+        >
+          <AuthenticationWidget
+            @login-success="handleLoginSuccess"
+            @register-success="handleRegisterSuccess"
+            @logout="handleLogout"
+          />
+        </div>
+
+        <!-- Chat Content Below -->
+        <div class="flex-1 overflow-y-auto relative">
+          <ChatContent ref="chatContentRef" />
+
+          <!-- Chat Input (separate from ChatContent) -->
+          <div
+            :class="[
+              'absolute bottom-0 left-0 right-0 bg-white p-10 z-10 flex flex-col items-center gap-4 shadow-lg transition-transform duration-500 ease-out',
+              showContentTransitions ? 'transform translate-y-0' : 'transform translate-y-full'
+            ]"
+            :style="{ transitionDelay: showContentTransitions ? '0.4s' : '0s' }"
+          >
+            <ChatInput @send="handleChatSend" />
+          </div>
+        </div>
+      </div>
+
+      <CharacterSelectionModal
+        :is-open="characterModalVisible"
+        :current-character="currentCharacter"
+        @close="characterModalVisible = false"
+        @select="handleCharacterSelection"
+      />
     </div>
 
-    <CharacterSelectionModal
-      :is-open="characterModalVisible"
-      :current-character="currentCharacter"
-      @close="characterModalVisible = false"
-      @select="handleCharacterSelection"
-    />
+    <!-- Floating Avatar Container -->
+    <Transition name="float">
+      <div
+        v-if="showFloatingAvatar"
+        ref="floatingAvatar"
+        class="fixed z-50 bg-gray-700 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ease-out"
+        :style="{
+          left: floatingPosition.x + 'px',
+          top: floatingPosition.y + 'px',
+          width: '300px',
+          height: isFloatingCollapsed ? '48px' : '330px'
+        }"
+      >
+        <!-- Header Panel -->
+        <div
+          class="bg-gray-800 px-3 py-2 flex items-center justify-between cursor-move"
+          @mousedown="startDraggingAvatar"
+        >
+          <div class="flex items-center gap-2">
+            <Icon name="i-heroicons-musical-note" class="w-5 h-5 text-gray-300" />
+            <span class="text-sm font-medium text-gray-300">Audio Player</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <!-- Collapse/Expand Button -->
+            <button
+              class="p-1.5 hover:bg-gray-700 rounded transition-colors"
+              @click="toggleFloatingCollapse"
+            >
+              <Icon
+                :name="isFloatingCollapsed ? 'i-heroicons-chevron-down' : 'i-heroicons-chevron-up'"
+                class="w-4 h-4 text-gray-300"
+              />
+            </button>
+            <!-- Close Button -->
+            <button
+              class="p-1.5 hover:bg-gray-700 rounded transition-colors"
+              @click="closeFloatingAvatar"
+            >
+              <Icon name="i-heroicons-x-mark" class="w-4 h-4 text-gray-300" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Container Content (visible when not collapsed) -->
+        <div v-if="!isFloatingCollapsed" class="flex flex-col" style="height: calc(100% - 48px);">
+          <!-- Avatar -->
+          <div class="relative h-[200px] overflow-hidden rounded-lg bg-white mx-2 mt-2 flex-shrink-0">
+            <Avatar :is-playing="isPlaying" />
+          </div>
+
+          <!-- Unified Controls -->
+          <div class="flex justify-center items-center gap-3 mt-4 px-4 pb-4 flex-shrink-0">
+            <button
+              class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-200"
+              @click="handleFloatingCall"
+            >
+              <Icon name="i-heroicons-phone" class="w-5 h-5" />
+            </button>
+            <button
+              class="p-3 bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg transition-all duration-200"
+              @click="handleFloatingPlayAudio"
+            >
+              <Icon
+                :name="isPlaying ? 'i-heroicons-pause' : 'i-heroicons-play'"
+                class="w-5 h-5"
+              />
+            </button>
+            <button
+              class="p-3 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-full shadow-lg transition-all duration-200"
+              @click="handleFloatingMute"
+            >
+              <Icon name="i-heroicons-microphone" class="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import WaveSurfer from 'wavesurfer.js';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
+import ChatInput from '@/components/ChatInput.vue';
 import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
+import Avatar from '@/components/avatar/Avatar.vue';
+import { useToast } from '#imports';
+import { useAudioStore } from '~/stores/audio';
 
-const sidebarWidth = ref(600); // default width
 const collapsed = ref(false);
-const isDragging = ref(false);
 const isMobile = ref(false);
 const characterModalVisible = ref(false);
 const currentCharacter = ref(null);
+const isLoading = ref(true);
+const showContentTransitions = ref(false);
+const showFloatingAvatar = ref(false);
+const floatingPosition = ref({ x: 0, y: 0 });
+const isDraggingAvatar = ref(false);
+const isFloatingCollapsed = ref(false);
+const isPlaying = ref(false);
+const chatContentRef = ref<any>(null);
+const floatingAudio = ref<HTMLAudioElement | null>(null);
 
 const router = useRouter();
 const route = useRoute();
+const toast = useToast();
 
 const handleLoginSuccess = () => {
   // Handle any additional actions after successful login
@@ -102,37 +233,102 @@ const handleCharacterSelection = (character) => {
 
 const toggleSidebar = () => {
   collapsed.value = !collapsed.value;
-  sidebarWidth.value = collapsed.value ? 80 : 600;
 };
 
-const startDragging = (e: MouseEvent) => {
-  isDragging.value = true;
+const handleChatSend = (text: string) => {
+  if (chatContentRef.value && chatContentRef.value.handleSend) {
+    chatContentRef.value.handleSend(text);
+  }
+};
+
+const toggleFloatingAvatar = () => {
+  showFloatingAvatar.value = !showFloatingAvatar.value;
+};
+
+// Floating waveform removed - only sidebar has waveform now
+
+const closeFloatingAvatar = () => {
+  showFloatingAvatar.value = false;
+  isFloatingCollapsed.value = false;
+};
+
+const toggleFloatingCollapse = () => {
+  isFloatingCollapsed.value = !isFloatingCollapsed.value;
+};
+
+// Floating container button handlers
+const handleFloatingCall = () => {
+  toast.add({ title: 'Call', description: 'Calling...', icon: 'i-heroicons-phone-20-solid' });
+};
+
+const handleFloatingPlayAudio = async () => {
+  const audioStore = useAudioStore();
+
+  try {
+    if (isPlaying.value && floatingAudio.value) {
+      // Pause current audio
+      floatingAudio.value.pause();
+      isPlaying.value = false;
+      return;
+    }
+
+    // Create new audio if none exists
+    if (!floatingAudio.value && audioStore.audioUrl) {
+      floatingAudio.value = new Audio(audioStore.audioUrl);
+      floatingAudio.value.volume = 1.0;
+
+      floatingAudio.value.addEventListener('ended', () => {
+        isPlaying.value = false;
+      });
+    }
+
+    // Play audio
+    if (floatingAudio.value) {
+      await floatingAudio.value.play();
+      isPlaying.value = true;
+    }
+  } catch (error) {
+    console.error('Floating audio playback failed:', error);
+  }
+};
+
+const handleFloatingMute = () => {
+  toast.add({
+    title: 'Muted',
+    description: 'Microphone muted.',
+    icon: 'i-heroicons-microphone-slash-20-solid',
+  });
+};
+
+const startDraggingAvatar = (e: MouseEvent) => {
+  // Check if the click target is a button
+  const target = e.target as HTMLElement;
+  if (target.tagName === 'BUTTON' || target.closest('button')) {
+    return;
+  }
+
+  isDraggingAvatar.value = true;
+  const startX = e.clientX - floatingPosition.value.x;
+  const startY = e.clientY - floatingPosition.value.y;
+
+  const handleDrag = (e: MouseEvent) => {
+    if (isDraggingAvatar.value) {
+      floatingPosition.value = {
+        x: e.clientX - startX,
+        y: e.clientY - startY
+      };
+    }
+  };
+
+  const stopDragging = () => {
+    isDraggingAvatar.value = false;
+    document.removeEventListener('mousemove', handleDrag);
+    document.removeEventListener('mouseup', stopDragging);
+  };
+
   document.addEventListener('mousemove', handleDrag);
   document.addEventListener('mouseup', stopDragging);
 };
-
-const MIN_WIDTH = 80;
-const MAX_WIDTH = 900;
-
-const handleDrag = (e: MouseEvent) => {
-  if (isDragging.value) {
-    sidebarWidth.value = Math.min(Math.max(e.clientX, MIN_WIDTH), MAX_WIDTH);
-  }
-};
-
-const stopDragging = () => {
-  isDragging.value = false;
-  document.removeEventListener('mousemove', handleDrag);
-  document.removeEventListener('mouseup', stopDragging);
-};
-
-watch(isDragging, (val) => {
-  if (val) {
-    document.body.classList.add('no-select');
-  } else {
-    document.body.classList.remove('no-select');
-  }
-});
 
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768;
@@ -142,15 +338,71 @@ const handleResize = () => {
 onMounted(() => {
   handleResize();
   window.addEventListener('resize', handleResize);
+
+  // Set initial floating position (centered for 300px width, 330px height container)
+  floatingPosition.value = {
+    x: window.innerWidth / 2 - 150,
+    y: window.innerHeight / 2 - 165
+  };
+
+  // Simulate loading time
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
+  if (floatingAudio.value) {
+    floatingAudio.value.pause();
+    floatingAudio.value = null;
+  }
 });
 </script>
 
-<style>
-.no-select {
-  user-select: none !important;
+<style scoped>
+/* Loading screen fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Sidebar slide-in animation */
+.sidebar-transition {
+  animation: slideInLeft 0.5s ease-out forwards;
+}
+
+/* Authentication widget and chat input now use CSS transitions directly in the template */
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* fadeIn and slideUp keyframes removed - now using CSS transitions */
+
+/* Floating avatar transition */
+.float-enter-active,
+.float-leave-active {
+  transition: all 0.3s ease;
+}
+
+.float-enter-from {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.float-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
 }
 </style>

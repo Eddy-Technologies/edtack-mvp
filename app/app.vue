@@ -64,7 +64,7 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
   bodyAttrs: {
-    class: 'bg-gray-100',
+    class: '',
   },
   link: [
     {

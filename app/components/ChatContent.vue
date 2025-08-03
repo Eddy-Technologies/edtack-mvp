@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-full w-full bg-white overflow-hidden">
-    <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4">
+    <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4 pb-32">
       <div class="whitespace-pre-wrap flex-shrink min-w-0 text-center">Talk to Eddy...</div>
 
       <component
@@ -15,16 +15,10 @@
       <div ref="bottomAnchor" />
     </div>
   </div>
-
-  <!-- Sticky Controls & Chat Input -->
-  <div class="sticky bottom-0 bg-white p-10 z-10 flex flex-col items-center gap-4">
-    <ChatInput @send="handleSend" />
-  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onUnmounted } from 'vue';
-import ChatInput from './ChatInput.vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
@@ -276,4 +270,9 @@ function formatLessonPart(item: any, allItems: any[]): string {
 
   return output;
 }
+
+// Expose handleSend function to parent component
+defineExpose({
+  handleSend,
+});
 </script>
