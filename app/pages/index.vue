@@ -10,9 +10,9 @@
         class="fixed inset-0 z-50 flex items-center justify-center bg-white"
       >
         <div class="text-center">
-          <AppIcon name="i-heroicons-sparkles" class="w-16 h-16 text-gray-500 animate-pulse mb-4 justify-self-center" />
-          <h1 class="text-4xl md:text-6xl font-bold text-gray-800 animate-pulse">
-            Welcome to <span class="text-primary">StudyWithEddy</span>
+          <AppIcon name="i-heroicons-sparkles" class="w-16 h-16 text-gray-500 mb-4 justify-self-center" />
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-800">
+            <span>Welcome to</span> <span class="text-primary animate-pulse">StudyWithEddy</span>
           </h1>
         </div>
       </div>
