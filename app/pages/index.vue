@@ -27,6 +27,7 @@
     >
       <!-- Fixed Width Sidebar -->
       <div
+        v-if="shouldShowSidebar"
         ref="sidebar"
         :class="[
           'flex-shrink-0 border-r flex flex-col z-30',
@@ -41,14 +42,15 @@
           :is-mobile="isMobile"
           :is-avatar-floating="showFloatingAvatar"
           @toggle-sidebar="toggleSidebar"
-          @change-character="openCharacterModal"
+          @change-character="openCharacterSelection"
           @toggle-floating-avatar="toggleFloatingAvatar"
+          @new-chat="handleNewChat"
         />
       </div>
 
       <!-- Backdrop for mobile -->
       <div
-        v-if="isMobile && !collapsed"
+        v-if="shouldShowSidebar && isMobile && !collapsed"
         class="fixed inset-0 z-20 bg-black bg-opacity-40"
         @click="toggleSidebar"
       />
@@ -76,23 +78,58 @@
 
           <!-- Chat Input (separate from ChatContent) -->
           <div
+            v-if="shouldShowChatInput"
             :class="[
-              'absolute bottom-0 left-0 right-0 bg-white p-10 z-10 flex flex-col items-center gap-4 shadow-lg transition-transform duration-500 ease-out',
+              'z-10 flex flex-col items-center gap-4 shadow-lg transition-all duration-500 ease-out',
+              isChatCentered
+                ? 'fixed inset-0 bg-white/95 backdrop-blur-sm justify-center'
+                : 'absolute bottom-0 left-0 right-0 bg-white p-10',
               showContentTransitions ? 'transform translate-y-0' : 'transform translate-y-full'
             ]"
             :style="{ transitionDelay: showContentTransitions ? '0.4s' : '0s' }"
           >
-            <ChatInput @send="handleChatSend" />
+            <div class="w-full max-w-2xl px-4">
+              <ChatInput @send="handleChatSend" />
+
+              <!-- "Or choose a character" button - only shown when centered -->
+              <div v-if="isChatCentered" class="mt-4 text-center">
+                <Button
+                  variant="primary"
+                  @click="openCharacterSelection"
+                >
+                  Or Choose a Character
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <CharacterSelectionModal
-        :is-open="characterModalVisible"
-        :current-character="currentCharacter"
-        @close="characterModalVisible = false"
-        @select="handleCharacterSelection"
-      />
+      <!-- Character Selection Carousel -->
+      <div
+        v-if="isSelectingCharacter"
+        class="fixed inset-0 z-50 bg-white flex flex-col"
+      >
+        <!-- Header with close button -->
+        <div class="flex items-center justify-between p-6 border-b border-gray-200">
+          <h2 class="text-2xl font-bold text-gray-800">Choose Your Character</h2>
+          <button
+            class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+            @click="isSelectingCharacter = false"
+          >
+            <Icon name="i-heroicons-x-mark" class="w-6 h-6 text-gray-600" />
+          </button>
+        </div>
+
+        <!-- Carousel Container -->
+        <div class="flex-1 flex items-center justify-center">
+          <CharacterCarousel
+            v-model="currentCharacter"
+            :go-to-chat-on-click="false"
+            @select="handleCharacterSelection"
+          />
+        </div>
+      </div>
     </div>
 
     <!-- Floating Avatar Container -->
@@ -188,18 +225,21 @@ import WaveSurfer from 'wavesurfer.js';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
-import CharacterSelectionModal from '@/components/CharacterSelectionModal.vue';
+import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import Avatar from '@/components/avatar/Avatar.vue';
+import Button from '@/components/common/Button.vue';
 import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
+import { useMeStore } from '~/stores/me';
 
 const collapsed = ref(false);
 const isMobile = ref(false);
-const characterModalVisible = ref(false);
+const isSelectingCharacter = ref(false);
 const currentCharacter = ref(null);
 const isLoading = ref(true);
 const showContentTransitions = ref(false);
+const hasStartedChat = ref(false);
 const showFloatingAvatar = ref(false);
 const floatingPosition = ref({ x: 0, y: 0 });
 const isDraggingAvatar = ref(false);
@@ -211,6 +251,20 @@ const floatingAudio = ref<HTMLAudioElement | null>(null);
 const router = useRouter();
 const route = useRoute();
 const toast = useToast();
+const meStore = useMeStore();
+
+// Computed properties for UI state
+const shouldShowSidebar = computed(() => {
+  return !isSelectingCharacter.value && (hasStartedChat.value || meStore.isLoggedIn);
+});
+
+const isChatCentered = computed(() => {
+  return !hasStartedChat.value && showContentTransitions.value && !isSelectingCharacter.value;
+});
+
+const shouldShowChatInput = computed(() => {
+  return !isSelectingCharacter.value;
+});
 
 const handleLoginSuccess = () => {
   // Handle any additional actions after successful login
@@ -227,14 +281,29 @@ const handleLogout = () => {
   // AuthenticationWidget already handles the logout process
 };
 
-const openCharacterModal = () => {
-  characterModalVisible.value = true;
+const openCharacterSelection = () => {
+  isSelectingCharacter.value = true;
 };
 
 const handleCharacterSelection = (character) => {
   currentCharacter.value = character;
-  // Stay on the same page since chat is now at index
-  // The character change will be handled by the chat components
+  // Reset chat state to start new conversation
+  hasStartedChat.value = false;
+  // Clear chat content if chatContentRef exists and has clearChat method
+  if (chatContentRef.value && chatContentRef.value.clearChat) {
+    chatContentRef.value.clearChat();
+  }
+  // Exit character selection mode
+  isSelectingCharacter.value = false;
+};
+
+const handleNewChat = () => {
+  // Reset chat state to start new conversation
+  hasStartedChat.value = false;
+  // Clear chat content if chatContentRef exists and has clearChat method
+  if (chatContentRef.value && chatContentRef.value.clearChat) {
+    chatContentRef.value.clearChat();
+  }
 };
 
 const toggleSidebar = () => {
@@ -242,6 +311,7 @@ const toggleSidebar = () => {
 };
 
 const handleChatSend = (text: string) => {
+  hasStartedChat.value = true;
   if (chatContentRef.value && chatContentRef.value.handleSend) {
     chatContentRef.value.handleSend(text);
   }
@@ -350,6 +420,11 @@ onMounted(() => {
     x: window.innerWidth / 2 - 150,
     y: window.innerHeight / 2 - 165
   };
+
+  // Set sidebar collapsed if user is logged in but hasn't started chatting
+  if (meStore.isLoggedIn && !hasStartedChat.value) {
+    collapsed.value = true;
+  }
 
   // Simulate loading time
   setTimeout(() => {

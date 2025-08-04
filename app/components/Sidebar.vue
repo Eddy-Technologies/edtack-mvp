@@ -33,7 +33,7 @@
           </ULink>
         </div>
       </div>
-      <div class="px-3">
+      <div v-if="meStore.isLoggedIn" class="px-3">
         <div class="border-t border-black">
           <ULink
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
@@ -184,7 +184,7 @@ import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 import { useMeStore } from '~/stores/me';
 
-const emit = defineEmits(['toggle-sidebar', 'change-character', 'toggle-floating-avatar']);
+const emit = defineEmits(['toggle-sidebar', 'change-character', 'toggle-floating-avatar', 'new-chat']);
 const props = defineProps({
   collapsed: Boolean,
   sidebarWidth: Number,
@@ -197,6 +197,7 @@ const isAudioPlayerCollapsed = ref(false);
 
 const router = useRouter();
 const toast = useToast();
+const meStore = useMeStore();
 const routeTo = (path) => router.push(path);
 
 const isMini = computed(
@@ -217,25 +218,15 @@ const handleMute = () => {
 };
 
 const handleNewChat = () => {
+  emit('new-chat');
   toast.add({
     title: 'New Chat',
-    description: 'Created New Chat',
+    description: 'Starting new conversation',
     icon: 'i-heroicons-plus',
   });
 };
 
 const handleShowChatHistory = () => {
-  const user = useMeStore();
-  if (!user.isLoggedIn) {
-    toast.add({
-      title: 'Authentication Required',
-      description: 'Please login or register to view chat history',
-      icon: 'i-heroicons-lock-closed',
-      color: 'orange',
-    });
-    return;
-  }
-
   // Expand sidebar if it's collapsed
   if (props.collapsed) {
     emit('toggle-sidebar');

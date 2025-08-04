@@ -271,8 +271,17 @@ function formatLessonPart(item: any, allItems: any[]): string {
   return output;
 }
 
-// Expose handleSend function to parent component
+// Clear chat method to reset all chat state
+const clearChat = () => {
+  messageStream.value = [];
+  conversationSummary.value = 'Eddy is a lion character that talks and is highly intelligent, he educates with passion.';
+  currentPlaybackIndex.value = 0;
+  isPlayingAllowed.value = false;
+};
+
+// Expose methods to parent component
 defineExpose({
   handleSend,
+  clearChat,
 });
 </script>
