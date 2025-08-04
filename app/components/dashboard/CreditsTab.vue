@@ -60,7 +60,11 @@ import TransferSection from '~/components/credits/TransferSection.vue';
 import ViewTransactions from '~/components/credits/ViewTransactions.vue';
 
 // Single fetch point for all credit data
-const { fetchCredits, refreshCredits, isLoading, isParent } = useCredit();
+const { fetchCredits, refreshCredits, isLoading } = useCredit();
+
+// Use me store for user role
+const meStore = useMeStore();
+const { isParent } = storeToRefs(meStore);
 
 // Fetch credit data when Credits tab loads
 onMounted(async () => {

@@ -110,7 +110,28 @@ export default defineEventHandler(async (event) => {
     let stripeCheckoutUrl = null;
 
     if (use_credits) {
-      // FLOW 1: Credit Purchase → Parent Approval Required
+      // Check if user is a parent or child
+      const { data: groupCheck, error: groupError } = await supabase
+        .from('group_members')
+        .select(`
+          groups!inner(
+            created_by,
+            creator:user_infos!groups_created_by_fkey(
+              id,
+              email,
+              first_name,
+              last_name
+            )
+          )
+        `)
+        .eq('user_info_id', userInfo.id)
+        .eq('status', 'active');
+
+      // Determine if user is a parent (no parents found) or child (has parents)
+      const hasParents = groupCheck?.some((groupMember) =>
+        groupMember.groups.creator && groupMember.groups.creator.id !== userInfo.id
+      );
+      const isParent = !hasParents;
 
       // Get user's internal credit balance (including reserved credits)
       const { data: userCredits, error: creditsError } = await supabase
@@ -131,27 +152,36 @@ export default defineEventHandler(async (event) => {
       if (availableCredits < totalCostCents) {
         throw createError({
           statusCode: 400,
-          statusMessage: `Insufficient available credits. Required: $${(totalCostCents / 100).toFixed(2)} SGD, Available: $${(availableCredits / 100).toFixed(2)} SGD`
+          statusMessage: `Insufficient available credits. Required: ${totalCostCents} credits, Available: ${availableCredits} credits`
         });
       }
 
-      const newReservedCredit = (userCredits.reserved_credit || 0) + totalCostCents;
-      // Reserve credits for parent approval (don't deduct yet)
-      const { error: reserveError } = await supabase
-        .from('user_credits')
-        .update({ reserved_credit: newReservedCredit })
-        .eq('user_info_id', userInfo.id);
-
-      if (reserveError) {
-        console.error('Failed to reserve credits:', reserveError);
+      if (isParent) {
+        // Parents should not be able to use credits directly - they should pay with credit card
         throw createError({
-          statusCode: 500,
-          statusMessage: 'Failed to reserve credits for approval'
+          statusCode: 400,
+          statusMessage: 'Parents cannot purchase with credits. Please use credit card payment.'
         });
-      }
+      } else {
+        // FLOW 1: Child Credit Purchase → Parent Approval Required
+        const newReservedCredit = (userCredits.reserved_credit || 0) + totalCostCents;
+        // Reserve credits for parent approval (don't deduct yet)
+        const { error: reserveError } = await supabase
+          .from('user_credits')
+          .update({ reserved_credit: newReservedCredit })
+          .eq('user_info_id', userInfo.id);
 
-      orderStatus = statusCodes.pending_parent_approval || 'pending_parent_approval';
-      paymentMethod = 'credits_pending_approval';
+        if (reserveError) {
+          console.error('Failed to reserve credits:', reserveError);
+          throw createError({
+            statusCode: 500,
+            statusMessage: 'Failed to reserve credits for approval'
+          });
+        }
+
+        orderStatus = statusCodes.pending_parent_approval || 'pending_parent_approval';
+        paymentMethod = 'credits_pending_approval';
+      }
     } else {
       // FLOW 2: Direct Credit Card Purchase
 
@@ -238,9 +268,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Find all parents for notification (if credit purchase)
+    // Find all parents for notification (only for child credit purchases)
     let parentNotifications = null;
-    if (use_credits) {
+    if (use_credits && orderStatus === 'pending_parent_approval') {
       // Get parents from groups where user is a member
       const { data: groupParents, error: parentError } = await supabase
         .from('group_members')
@@ -284,10 +314,10 @@ export default defineEventHandler(async (event) => {
       orderId: order.id,
       orderNumber: order.order_number,
       status: orderStatus,
-      requiresParentApproval: use_credits,
+      requiresParentApproval: use_credits, // Only children can use credits, so this is always for parent approval
       stripeCheckoutUrl: stripeCheckoutUrl,
       message: use_credits ?
-        `Order created! Waiting for parent approval to complete purchase.` :
+        `Order created! Waiting for parent approval.` :
         stripeCheckoutUrl ?
           `Redirecting to payment...` :
           `Successfully purchased ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`,

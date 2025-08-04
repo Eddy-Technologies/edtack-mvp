@@ -10,7 +10,7 @@
               <span class="text-white font-bold text-sm">E</span>
             </div>
             <div>
-              <h1 class="text-lg font-semibold text-slate-900">EdTack</h1>
+              <h1 class="text-lg font-semibold text-slate-900">StudyWithEddy</h1>
               <p class="text-xs text-slate-500">Dashboard</p>
             </div>
           </NuxtLink>
@@ -279,13 +279,24 @@ const navigationItems: NavigationItem[] = [
   },
   {
     name: 'Family',
-    route: '/dashboard?tab=family',
-    icon: 'i-lucide-users'
-  },
-  {
-    name: 'Tasks',
-    route: '/dashboard?tab=tasks',
-    icon: 'i-lucide-clipboard-list'
+    icon: 'i-lucide-users',
+    children: [
+      {
+        name: 'Management',
+        route: '/dashboard?tab=family&subtab=management',
+        icon: 'i-lucide-users'
+      },
+      {
+        name: 'Order Requests',
+        route: '/dashboard?tab=family&subtab=order-requests',
+        icon: 'i-lucide-shopping-cart'
+      },
+      {
+        name: 'Tasks',
+        route: '/dashboard?tab=family&subtab=tasks',
+        icon: 'i-lucide-clipboard-list'
+      }
+    ]
   },
   {
     name: 'Shop',
@@ -338,8 +349,30 @@ const isActiveRoute = (itemRoute?: string) => {
 
   // Handle dashboard query-based routes
   if (itemRoute.startsWith('/dashboard?tab=')) {
-    const tabParam = itemRoute.split('tab=')[1];
-    return route.query.tab === tabParam || (route.query.tab === undefined && tabParam === 'overview');
+    const urlParams = new URLSearchParams(itemRoute.split('?')[1]);
+    const tabParam = urlParams.get('tab');
+    const subtabParam = urlParams.get('subtab');
+
+    // Check if tab matches
+    const currentTab = route.query.tab as string;
+    const currentSubtab = route.query.subtab as string;
+
+    if (tabParam && currentTab !== tabParam) {
+      return false;
+    }
+
+    // Handle overview default case
+    if (!currentTab && tabParam === 'overview') {
+      return true;
+    }
+
+    // If route has subtab, check subtab match
+    if (subtabParam) {
+      return currentTab === tabParam && currentSubtab === subtabParam;
+    }
+
+    // For routes without subtab, only match if current route also has no subtab
+    return currentTab === tabParam && !currentSubtab;
   }
 
   return false;

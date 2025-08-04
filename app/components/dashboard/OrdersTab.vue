@@ -58,27 +58,27 @@
         <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.id }}</h3>
-              <p class="text-sm text-gray-600">{{ order.date }}</p>
+              <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
+              <p class="text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
             </div>
             <span :class="['px-3 py-1 rounded-full text-sm font-medium', getOrderStatusClass(order.status)]">
-              {{ order.status }}
+              {{ formatStatus(order.status) }}
             </span>
           </div>
 
           <div class="flex items-center space-x-4 mb-4">
-            <img :src="order.items[0].image" :alt="order.items[0].name" class="w-16 h-16 object-cover rounded-lg">
+            <img :src="order.items[0]?.product?.imageUrl" :alt="order.items[0]?.product?.name" class="w-16 h-16 object-cover rounded-lg">
             <div class="flex-1">
-              <h4 class="font-medium text-gray-900">{{ order.items[0].name }}</h4>
-              <p class="text-sm text-gray-600">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : '' }}</p>
+              <h4 class="font-medium text-gray-900">{{ order.items[0]?.product?.name }}</h4>
+              <p class="text-sm text-gray-600">{{ order.itemCount }} item{{ order.itemCount > 1 ? 's' : '' }}</p>
             </div>
             <div class="text-right">
-              <p class="text-lg font-semibold text-primary">S${{ (order.total).toFixed(2) }}</p>
+              <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
             </div>
           </div>
 
           <!-- Tracking Progress -->
-          <div v-if="order.tracking" class="mb-4">
+          <div v-if="order.hasTracking" class="mb-4">
             <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
               <span>Order Progress</span>
               <span>{{ getTrackingText(order.status) }}</span>
@@ -130,9 +130,6 @@
         </div>
         <h3 class="text-lg font-medium text-gray-900 mb-2">No past orders</h3>
         <p class="text-gray-500 mb-4">You don't have any completed orders yet.</p>
-        <div class="text-sm text-gray-400 bg-gray-100 rounded-lg p-4 max-w-md mx-auto mb-4">
-          <p><strong>Note:</strong> Orders API not implemented yet. Past orders will appear here once you make purchases and the orders API endpoints are created.</p>
-        </div>
         <Button
           variant="primary"
           text="Start Shopping"
@@ -144,22 +141,22 @@
         <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.id }}</h3>
-              <p class="text-sm text-gray-600">{{ order.date }}</p>
+              <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
+              <p class="text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
             </div>
-            <span class="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-              {{ order.status }}
+            <span :class="['px-3 py-1 rounded-full text-sm font-medium', getOrderStatusClass(order.status)]">
+              {{ formatStatus(order.status) }}
             </span>
           </div>
 
           <div class="flex items-center space-x-4 mb-4">
-            <img :src="order.items[0].image" :alt="order.items[0].name" class="w-16 h-16 object-cover rounded-lg">
+            <img :src="order.items[0]?.product?.imageUrl" :alt="order.items[0]?.product?.name" class="w-16 h-16 object-cover rounded-lg">
             <div class="flex-1">
-              <h4 class="font-medium text-gray-900">{{ order.items[0].name }}</h4>
-              <p class="text-sm text-gray-600">{{ order.items.length }} item{{ order.items.length > 1 ? 's' : '' }}</p>
+              <h4 class="font-medium text-gray-900">{{ order.items[0]?.product?.name }}</h4>
+              <p class="text-sm text-gray-600">{{ order.itemCount }} item{{ order.itemCount > 1 ? 's' : '' }}</p>
             </div>
             <div class="text-right">
-              <p class="text-lg font-semibold text-primary">S${{ (order.total).toFixed(2) }}</p>
+              <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
             </div>
           </div>
 
@@ -196,13 +193,18 @@ const router = useRouter();
 // Order tab state
 const orderTab = ref('current');
 
-// Order status codes (should be fetched from API in production)
+// Order status codes (matches backend status codes)
 const orderStatusCodes = ref({
   pending: 'pending',
+  pending_parent_approval: 'pending_parent_approval',
   paid: 'paid',
   confirmed: 'confirmed',
+  processing: 'processing',
+  shipped: 'shipped',
+  delivered: 'delivered',
   cancelled: 'cancelled',
-  refunded: 'refunded'
+  refunded: 'refunded',
+  completed: 'completed'
 });
 
 // Orders data from database
@@ -217,15 +219,19 @@ const loadOrders = async () => {
     isLoadingOrders.value = true;
     ordersError.value = null;
 
-    // TODO: Implement API calls to fetch real orders
-    // const currentOrdersResponse = await $fetch('/api/orders/current');
-    // const pastOrdersResponse = await $fetch('/api/orders/past');
-    // currentOrders.value = currentOrdersResponse.orders || [];
-    // pastOrders.value = pastOrdersResponse.orders || [];
+    // Fetch current and past orders in parallel
+    const [currentOrdersResponse, pastOrdersResponse] = await Promise.all([
+      $fetch('/api/orders/current'),
+      $fetch('/api/orders/past')
+    ]);
 
-    console.log('[OrdersTab] Orders API not implemented yet - showing empty state');
-    currentOrders.value = [];
-    pastOrders.value = [];
+    currentOrders.value = currentOrdersResponse?.orders || [];
+    pastOrders.value = pastOrdersResponse?.orders || [];
+
+    console.log('[OrdersTab] Loaded orders:', {
+      current: currentOrders.value.length,
+      past: pastOrders.value.length
+    });
   } catch (error) {
     console.error('Failed to load orders:', error);
     ordersError.value = 'Failed to load orders. Please try again.';
@@ -240,11 +246,18 @@ const loadOrders = async () => {
 const getOrderStatusClass = (status: string) => {
   switch (status) {
     case orderStatusCodes.value.pending:
+    case orderStatusCodes.value.pending_parent_approval:
       return 'bg-yellow-100 text-yellow-800';
     case orderStatusCodes.value.paid:
-      return 'bg-green-100 text-green-800';
     case orderStatusCodes.value.confirmed:
+      return 'bg-green-100 text-green-800';
+    case orderStatusCodes.value.processing:
       return 'bg-blue-100 text-blue-800';
+    case orderStatusCodes.value.shipped:
+      return 'bg-purple-100 text-purple-800';
+    case orderStatusCodes.value.delivered:
+    case orderStatusCodes.value.completed:
+      return 'bg-green-100 text-green-800';
     case orderStatusCodes.value.cancelled:
       return 'bg-red-100 text-red-800';
     case orderStatusCodes.value.refunded:
@@ -254,14 +267,37 @@ const getOrderStatusClass = (status: string) => {
   }
 };
 
+const formatStatus = (status: string) => {
+  switch (status) {
+    case 'pending_parent_approval':
+      return 'Awaiting Approval';
+    case 'processing':
+      return 'Processing';
+    case 'shipped':
+      return 'Shipped';
+    case 'delivered':
+      return 'Delivered';
+    case 'completed':
+      return 'Completed';
+    default:
+      return status.charAt(0).toUpperCase() + status.slice(1);
+  }
+};
+
 const getTrackingProgress = (status: string) => {
   switch (status) {
     case orderStatusCodes.value.pending:
+    case orderStatusCodes.value.pending_parent_approval:
       return 'bg-yellow-400';
     case orderStatusCodes.value.paid:
-      return 'bg-green-400';
     case orderStatusCodes.value.confirmed:
+      return 'bg-green-400';
+    case orderStatusCodes.value.processing:
       return 'bg-blue-400';
+    case orderStatusCodes.value.shipped:
+      return 'bg-purple-400';
+    case orderStatusCodes.value.delivered:
+      return 'bg-green-500';
     default:
       return 'bg-gray-400';
   }
@@ -270,10 +306,17 @@ const getTrackingProgress = (status: string) => {
 const getTrackingWidth = (status: string) => {
   switch (status) {
     case orderStatusCodes.value.pending:
-      return '25%';
+    case orderStatusCodes.value.pending_parent_approval:
+      return '20%';
     case orderStatusCodes.value.paid:
-      return '50%';
+      return '40%';
     case orderStatusCodes.value.confirmed:
+      return '60%';
+    case orderStatusCodes.value.processing:
+      return '70%';
+    case orderStatusCodes.value.shipped:
+      return '90%';
+    case orderStatusCodes.value.delivered:
       return '100%';
     default:
       return '0%';
@@ -284,10 +327,18 @@ const getTrackingText = (status: string) => {
   switch (status) {
     case orderStatusCodes.value.pending:
       return 'Payment pending';
+    case orderStatusCodes.value.pending_parent_approval:
+      return 'Awaiting parent approval';
     case orderStatusCodes.value.paid:
       return 'Payment confirmed';
     case orderStatusCodes.value.confirmed:
-      return 'Sent to fulfillment';
+      return 'Order confirmed';
+    case orderStatusCodes.value.processing:
+      return 'Processing order';
+    case orderStatusCodes.value.shipped:
+      return 'Shipped';
+    case orderStatusCodes.value.delivered:
+      return 'Delivered';
     default:
       return 'Order placed';
   }

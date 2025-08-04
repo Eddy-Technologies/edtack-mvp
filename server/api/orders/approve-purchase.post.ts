@@ -230,7 +230,7 @@ export default defineEventHandler(async (event) => {
     return {
       success: true,
       approved: true,
-      checkoutUrl: session.url,
+      stripeCheckoutUrl: session.url,
       message: 'Order approved! Please complete payment to finalize the purchase.',
       order: {
         id: order.id,

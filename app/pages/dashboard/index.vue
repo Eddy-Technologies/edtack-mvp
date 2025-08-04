@@ -22,7 +22,6 @@
       @clear-cart="clearCart"
     />
     <FamilyTab v-else-if="currentTab === 'family'" />
-    <TaskTab v-else-if="currentTab === 'tasks'" />
     <OrdersTab v-else-if="currentTab === 'orders'" />
     <CreditsTab v-else-if="currentTab === 'credits'" />
     <div v-else class="text-center py-12">
@@ -45,7 +44,6 @@ import ShopTab from '~/components/dashboard/ShopTab.vue';
 import WishlistTab from '~/components/dashboard/WishlistTab.vue';
 import CartTab from '~/components/dashboard/CartTab.vue';
 import FamilyTab from '~/components/dashboard/FamilyTab.vue';
-import TaskTab from '~/components/dashboard/TaskTab.vue';
 import OrdersTab from '~/components/dashboard/OrdersTab.vue';
 import CreditsTab from '~/components/dashboard/CreditsTab.vue';
 import SettingsTab from '~/components/dashboard/SettingsTab.vue';
@@ -144,8 +142,10 @@ const loadCartFromStorage = () => {
   }
 };
 
-// Update page title based on current tab
+// Update page title based on current tab and subtab
 const pageTitle = computed(() => {
+  const currentSubtab = route.query.subtab as string;
+
   const tabTitles = {
     overview: 'Overview',
     subscription: 'Subscription',
@@ -154,10 +154,20 @@ const pageTitle = computed(() => {
     wishlist: 'Wishlist',
     cart: 'Cart',
     family: 'Family',
-    tasks: 'Tasks',
     orders: 'Orders',
     credits: 'Credits',
   };
+
+  // Handle family subtabs
+  if (currentTab.value === 'family' && currentSubtab) {
+    const subtabTitles = {
+      'management': 'Family Management',
+      'order-requests': 'Order Requests',
+      'tasks': 'Family Tasks'
+    };
+    return subtabTitles[currentSubtab as keyof typeof subtabTitles] || 'Family';
+  }
+
   return tabTitles[currentTab.value as keyof typeof tabTitles] || 'Dashboard';
 });
 

@@ -50,17 +50,17 @@
           <!-- Actions -->
           <div class="flex space-x-3 pt-4">
             <Button
-              variant="secondary-gray"
-              text="Cancel"
-              :disabled="isSubmitting"
-              @clicked="$emit('close')"
-            />
-            <Button
               type="submit"
-              variant="success"
+              variant="primary"
               text="Mark Complete"
               :loading="isSubmitting"
               :disabled="isSubmitting"
+            />
+            <Button
+              variant="secondary"
+              text="Cancel"
+              :disabled="isSubmitting"
+              @clicked="$emit('close')"
             />
           </div>
         </form>

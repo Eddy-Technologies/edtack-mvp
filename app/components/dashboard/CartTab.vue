@@ -96,7 +96,7 @@
                   <!-- Remove Button -->
                   <Button
                     icon="i-lucide-trash-2"
-                    class="p-2 text-red-500 hover:bg-red-50 rounded"
+                    variant="secondary"
                     @clicked="removeItem(item)"
                   />
                 </div>
@@ -135,8 +135,8 @@
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Method</h2>
 
             <div class="space-y-3">
-              <!-- Pay with Credits Option -->
-              <label class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+              <!-- Pay with Credits Option (Children only) -->
+              <label v-if="!isParent" class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -160,7 +160,7 @@
                 </div>
               </label>
 
-              <!-- Pay with Card Option -->
+              <!-- Pay with Card Option (Parents always, Children as alternative) -->
               <label class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                 <input
                   v-model="paymentMethod"
@@ -174,7 +174,7 @@
                     <span class="font-medium text-gray-900">Pay with Credit Card</span>
                   </div>
                   <p class="text-sm text-gray-600 mt-1">
-                    Pay directly with credit/debit card via Stripe
+                    {{ isParent ? 'Pay directly with your credit/debit card via Stripe' : 'Pay directly with credit/debit card (no parent approval needed)' }}
                   </p>
                 </div>
               </label>
@@ -187,7 +187,7 @@
           <div class="p-6">
             <div class="flex flex-col sm:flex-row gap-4">
               <Button
-                variant="secondary-gray"
+                variant="secondary"
                 text="Clear Cart"
                 icon="i-lucide-trash-2"
                 @clicked="clearCart"
@@ -197,7 +197,7 @@
                 variant="primary"
                 :text="checkoutButtonText"
                 :disabled="!canCheckout"
-                :is-loading="isProcessingCheckout"
+                :is-loading="isProcessingCheckout || isLoading"
                 icon="i-lucide-shopping-cart"
                 extra-classes="flex-1"
                 @clicked="processCheckout"
@@ -205,10 +205,10 @@
             </div>
 
             <!-- Payment Method Info -->
-            <div v-if="paymentMethod" class="mt-4 p-3 bg-gray-50 rounded-lg">
+            <div v-if="paymentMethod && !isLoading" class="mt-4 p-3 bg-gray-50 rounded-lg">
               <div v-if="paymentMethod === 'credits'" class="text-sm text-gray-700">
                 <UIcon name="i-lucide-info" class="inline mr-1" size="16" />
-                Your parent will be notified to approve and complete this purchase.
+                Your parent will be notified to approve and complete this purchase with their credit card.
               </div>
               <div v-else-if="paymentMethod === 'card'" class="text-sm text-gray-700">
                 <UIcon name="i-lucide-info" class="inline mr-1" size="16" />
@@ -220,7 +220,7 @@
             <div v-if="paymentMethod === 'credits' && !hasEnoughCredits" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
               <div class="text-sm text-red-700">
                 <UIcon name="i-lucide-alert-triangle" class="inline mr-1" size="16" />
-                Insufficient credits. You need S${{ (totalCents / 100 - balance / 100).toFixed(2) }} more credits.
+                Insufficient credits. You need {{ totalCents - balance }} more credits.
               </div>
             </div>
           </div>
@@ -242,7 +242,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 
@@ -258,9 +258,13 @@ const emit = defineEmits<{
 const router = useRouter();
 
 // Use credit composable
-const { formattedBalance, balance } = useCredit();
+const { formattedBalance, balance, fetchCredits, isLoading } = useCredit();
 
-// Reactive state
+// Use me store for user role
+const meStore = useMeStore();
+const { isParent } = storeToRefs(meStore);
+
+// Reactive state - default to credits for children, card for parents
 const paymentMethod = ref<'credits' | 'card'>('credits');
 const isProcessingCheckout = ref(false);
 const showProcessingModal = ref(false);
@@ -295,15 +299,19 @@ const hasEnoughCredits = computed(() => {
 
 const canCheckout = computed(() => {
   if (props.cart.length === 0) return false;
+  if (isLoading.value) return false; // Disable while loading credit data
   if (paymentMethod.value === 'credits' && !hasEnoughCredits.value) return false;
   return true;
 });
 
 const checkoutButtonText = computed(() => {
+  if (isLoading.value) {
+    return 'Loading...';
+  }
   if (paymentMethod.value === 'credits') {
-    return 'Request Parent Approval';
+    return 'Request Parent Approval'; // Only children can use credits
   } else {
-    return 'Proceed to Payment';
+    return isParent.value ? 'Purchase Now' : 'Proceed to Payment';
   }
 });
 
@@ -351,6 +359,18 @@ const formatDate = (dateString: string) => {
   return date.toLocaleDateString();
 };
 
+// Fetch credit data when cart loads
+onMounted(async () => {
+  await fetchCredits();
+
+  // Set payment method based on user type
+  if (isParent.value) {
+    paymentMethod.value = 'card'; // Parents can only pay with card
+  } else {
+    paymentMethod.value = 'credits'; // Children default to credits
+  }
+});
+
 const processCheckout = async () => {
   try {
     isProcessingCheckout.value = true;
@@ -376,8 +396,8 @@ const processCheckout = async () => {
       showProcessingModal.value = false;
 
       if (paymentMethod.value === 'credits') {
-        // Credits flow - show success message
-        alert(`${purchaseResponse.message}\n\nOrder: ${purchaseResponse.orderNumber}\nTotal: S$${purchaseResponse.details.totalCostSGD}`);
+        // Credits flow - show success message (only for children)
+        alert(`${purchaseResponse.message}\n\nOrder: ${purchaseResponse.orderNumber}\nTotal: ${purchaseResponse.details.totalCostCents} credits`);
 
         // Clear cart after successful request
         emit('clear-cart');

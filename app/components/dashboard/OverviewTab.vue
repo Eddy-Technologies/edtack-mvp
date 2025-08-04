@@ -20,6 +20,81 @@
         </div>
       </div>
 
+      <!-- Pending Order Requests -->
+      <div v-if="pendingOrders.length > 0" class="bg-white rounded-xl shadow-sm border">
+        <div class="p-6 border-b">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">Pending Order Requests</h3>
+            <NuxtLink to="/dashboard?tab=family&subtab=order-requests">
+              <Button variant="secondary" text="View More" size="sm" />
+            </NuxtLink>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            <div v-for="order in pendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <div class="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
+                  <UIcon name="i-lucide-shopping-cart" class="text-yellow-600" size="20" />
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Order #{{ order.orderNumber }}</h4>
+                  <div class="flex items-center space-x-2 mt-1">
+                    <span class="text-sm text-gray-600">{{ order.child.name }} • {{ order.itemCount }} items</span>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getOrderStatusBadgeClass(order.status)">
+                      {{ getStatusText(order.status) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-gray-900">S${{ order.totalAmountSGD }}</p>
+                <p class="text-xs text-gray-500">{{ formatDate(order.createdAt) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Tasks -->
+      <div v-if="pendingTasks.length > 0" class="bg-white rounded-xl shadow-sm border">
+        <div class="p-6 border-b">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">Pending Tasks</h3>
+            <NuxtLink to="/dashboard?tab=family&subtab=tasks">
+              <Button variant="secondary" text="View More" size="sm" />
+            </NuxtLink>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            <div v-for="task in pendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+                  <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="20" />
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
+                  <div class="flex items-center space-x-2 mt-1">
+                    <span class="text-sm text-gray-600">{{ task.assigneeInfo.firstName }} {{ task.assigneeInfo.lastName }}</span>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskPriorityBadgeClass(task.priority)">
+                      {{ task.priority }} priority
+                    </span>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
+                      {{ task.status }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-green-600">+{{ task.creditInDollars }} credits</p>
+                <p class="text-xs text-gray-500">{{ formatDate(task.createdAt) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Children Overview -->
       <div class="bg-white rounded-xl shadow-sm border">
         <div class="p-6 border-b">
@@ -125,12 +200,87 @@
         </div>
       </div>
 
+      <!-- My Pending Orders -->
+      <div v-if="myPendingOrders.length > 0" class="bg-white rounded-xl shadow-sm border">
+        <div class="p-6 border-b">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">My Pending Orders</h3>
+            <NuxtLink to="/dashboard?tab=family&subtab=order-requests">
+              <Button variant="secondary" text="View More" size="sm" />
+            </NuxtLink>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            <div v-for="order in myPendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <div class="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
+                  <UIcon name="i-lucide-shopping-cart" class="text-yellow-600" size="20" />
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Order #{{ order.orderNumber }}</h4>
+                  <div class="flex items-center space-x-2 mt-1">
+                    <span class="text-sm text-gray-600">{{ order.itemCount }} items</span>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getOrderStatusBadgeClass(order.status)">
+                      {{ getStatusText(order.status) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-gray-900">S${{ order.totalAmountSGD }}</p>
+                <p class="text-xs text-gray-500">{{ formatDate(order.createdAt) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Pending Tasks -->
+      <div v-if="myPendingTasks.length > 0" class="bg-white rounded-xl shadow-sm border">
+        <div class="p-6 border-b">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-gray-900">My Pending Tasks</h3>
+            <NuxtLink to="/dashboard?tab=family&subtab=tasks">
+              <Button variant="secondary" text="View More" size="sm" />
+            </NuxtLink>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="space-y-4">
+            <div v-for="task in myPendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center space-x-3">
+                <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+                  <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="20" />
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
+                  <div class="flex items-center space-x-2 mt-1">
+                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskPriorityBadgeClass(task.priority)">
+                      {{ task.priority }} priority
+                    </span>
+                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
+                      {{ task.status }}
+                    </span>
+                    <span class="text-sm text-gray-600">Due {{ formatDate(task.dueDate) }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-medium text-green-600">+{{ task.creditInDollars }} credits</p>
+                <p class="text-xs text-gray-500">{{ formatDate(task.createdAt) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Recent Tasks -->
       <div class="bg-white rounded-xl shadow-sm border">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">Recent Tasks</h3>
-            <NuxtLink to="/dashboard?tab=tasks">
+            <NuxtLink to="/dashboard?tab=family&subtab=tasks">
               <Button variant="secondary" text="View All" size="sm" />
             </NuxtLink>
           </div>
@@ -221,6 +371,14 @@ const activeTasks = ref(0);
 const completedTasks = ref(0);
 const recentTasks = ref<any[]>([]);
 
+// Pending orders and tasks for parent view
+const pendingOrders = ref<any[]>([]);
+const pendingTasks = ref<any[]>([]);
+
+// Pending orders and tasks for student view
+const myPendingOrders = ref<any[]>([]);
+const myPendingTasks = ref<any[]>([]);
+
 // Load family data for parents or personal data for students
 onMounted(async () => {
   try {
@@ -230,17 +388,105 @@ onMounted(async () => {
       if (response.success) {
         familyMembers.value = response.familyMembers?.filter((member: any) => member.status === 'active') || [];
       }
+
+      // Load pending order requests (only pending_parent_approval)
+      try {
+        const ordersResponse = await $fetch('/api/orders/pending-approval', {
+          query: {
+            status: 'pending_parent_approval',
+            limit: 5
+          }
+        });
+        if (ordersResponse.success) {
+          pendingOrders.value = ordersResponse.orders || [];
+        }
+      } catch (ordersError) {
+        console.error('Failed to load pending orders:', ordersError);
+      }
+
+      // Load pending tasks (assigned to children, with status pending)
+      try {
+        const tasksResponse = await $fetch('/api/tasks/list', {
+          query: {
+            status: 'pending',
+            limit: 5
+          }
+        });
+        if (tasksResponse.success) {
+          // Filter to only show tasks created by this parent (assigned to children)
+          pendingTasks.value = (tasksResponse.tasks || []).filter((task: any) => task.userRole === 'creator');
+        }
+      } catch (tasksError) {
+        console.error('Failed to load pending tasks:', tasksError);
+      }
     } else {
       // Load student's personal data
       // Load credits
       const creditsResponse = await $fetch('/api/credits/unified');
       userCredits.value = creditsResponse.balance || 0;
 
-      // Load tasks data from API (when available)
-      // For now, these will remain 0 until proper API endpoints are created
-      activeTasks.value = 0;
-      completedTasks.value = 0;
-      recentTasks.value = [];
+      // Load student's pending orders
+      try {
+        const ordersResponse = await $fetch('/api/orders/pending-approval', {
+          query: {
+            limit: 5
+          }
+        });
+        if (ordersResponse.success) {
+          myPendingOrders.value = ordersResponse.orders || [];
+        }
+      } catch (ordersError) {
+        console.error('Failed to load my pending orders:', ordersError);
+      }
+
+      // Load student's pending tasks
+      try {
+        const tasksResponse = await $fetch('/api/tasks/list', {
+          query: {
+            status: 'pending',
+            limit: 5
+          }
+        });
+        if (tasksResponse.success) {
+          // Filter to only show tasks assigned to this student
+          myPendingTasks.value = (tasksResponse.tasks || []).filter((task: any) => task.userRole === 'assignee');
+          activeTasks.value = myPendingTasks.value.length;
+        }
+      } catch (tasksError) {
+        console.error('Failed to load my pending tasks:', tasksError);
+      }
+
+      // Load completed tasks count
+      try {
+        const completedTasksResponse = await $fetch('/api/tasks/list', {
+          query: {
+            status: 'completed',
+            limit: 1
+          }
+        });
+        if (completedTasksResponse.success) {
+          completedTasks.value = completedTasksResponse.pagination?.totalCount || 0;
+        }
+      } catch (completedError) {
+        console.error('Failed to load completed tasks count:', completedError);
+      }
+
+      // Load recent tasks (recent completed tasks)
+      try {
+        const recentTasksResponse = await $fetch('/api/tasks/list', {
+          query: {
+            status: 'completed',
+            limit: 3,
+            sortBy: 'completedAt',
+            sortOrder: 'desc'
+          }
+        });
+        if (recentTasksResponse.success) {
+          recentTasks.value = (recentTasksResponse.tasks || []).filter((task: any) => task.userRole === 'assignee');
+        }
+      } catch (recentError) {
+        console.error('Failed to load recent tasks:', recentError);
+      }
     }
   } catch (error) {
     console.error('Failed to load overview data:', error);
@@ -272,5 +518,57 @@ const formatDate = (dateString: string) => {
     day: 'numeric',
     year: 'numeric'
   });
+};
+
+// Get status display text for orders
+const getStatusText = (status: string) => {
+  const statusMap = {
+    pending_parent_approval: 'Awaiting Approval',
+    paid: 'Paid',
+    confirmed: 'Confirmed',
+    processing: 'Processing',
+    shipped: 'Shipped',
+    delivered: 'Delivered',
+    cancelled: 'Cancelled',
+    rejected: 'Rejected'
+  };
+  return statusMap[status as keyof typeof statusMap] || status;
+};
+
+// Get badge classes for order status
+const getOrderStatusBadgeClass = (status: string) => {
+  const classMap = {
+    pending_parent_approval: 'bg-yellow-100 text-yellow-800',
+    paid: 'bg-blue-100 text-blue-800',
+    confirmed: 'bg-green-100 text-green-800',
+    processing: 'bg-purple-100 text-purple-800',
+    shipped: 'bg-indigo-100 text-indigo-800',
+    delivered: 'bg-green-100 text-green-800',
+    cancelled: 'bg-gray-100 text-gray-800',
+    rejected: 'bg-red-100 text-red-800'
+  };
+  return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
+};
+
+// Get badge classes for task priority
+const getTaskPriorityBadgeClass = (priority: string) => {
+  const classMap = {
+    high: 'bg-red-100 text-red-800',
+    medium: 'bg-yellow-100 text-yellow-800',
+    low: 'bg-green-100 text-green-800'
+  };
+  return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
+};
+
+// Get badge classes for task status
+const getTaskStatusBadgeClass = (status: string) => {
+  const classMap = {
+    pending: 'bg-yellow-100 text-yellow-800',
+    in_progress: 'bg-blue-100 text-blue-800',
+    completed: 'bg-green-100 text-green-800',
+    approved: 'bg-green-100 text-green-800',
+    cancelled: 'bg-gray-100 text-gray-800'
+  };
+  return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
 </script>

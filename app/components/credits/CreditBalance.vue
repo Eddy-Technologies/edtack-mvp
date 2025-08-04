@@ -36,7 +36,7 @@
         <div class="flex items-baseline space-x-2">
           <span class="text-5xl font-bold">{{ balance }}</span>
           <span class="text-2xl font-medium text-blue-100">
-            SGD
+            credits
           </span>
         </div>
       </div>
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 // Use unified credit management - consume shared state only
 const {
-  balanceInDollars: balance,
+  balance,
   currency,
   isLoading,
   error,

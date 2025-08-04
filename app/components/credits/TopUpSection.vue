@@ -25,6 +25,7 @@
           @click="selectedAmount = amount.value"
         >
           <div class="font-semibold">${{ amount.value }}</div>
+          <div class="text-sm text-gray-500">{{ amount.credits }} credits</div>
         </button>
       </div>
     </div>
@@ -58,7 +59,7 @@
       @click="showConfirmModal = true"
     >
       <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-      {{ isLoading ? 'Processing...' : `Top Up $${selectedAmount || 0}` }}
+      {{ isLoading ? 'Processing...' : `Top Up $${selectedAmount || 0} (${(selectedAmount || 0) * 100} credits)` }}
     </button>
 
     <!-- Payment Methods Info -->
@@ -83,10 +84,20 @@
           You are about to pledge <span class="font-semibold text-gray-900">${{ selectedAmount }} SGD</span> to your account.
         </p>
 
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+          <p class="text-sm text-blue-800">
+            <strong>Conversion:</strong> ${{ selectedAmount }} SGD = {{ selectedAmount * 100 }} credits
+          </p>
+        </div>
+
         <div class="bg-gray-50 rounded-lg p-4 mb-6">
-          <div class="flex justify-between items-center">
-            <span class="text-gray-600">Amount to add:</span>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">Dollar amount:</span>
             <span class="font-semibold text-gray-900">${{ selectedAmount }} SGD</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Credits to add:</span>
+            <span class="font-semibold text-gray-900">{{ selectedAmount * 100 }} credits</span>
           </div>
         </div>
 
@@ -119,10 +130,10 @@ import { useNuxtApp } from '#app';
 
 // Quick amount options
 const quickAmounts = [
-  { value: 5, credits: 50 },
-  { value: 10, credits: 100 },
-  { value: 25, credits: 250 },
-  { value: 50, credits: 500 },
+  { value: 5, credits: 500 },
+  { value: 10, credits: 1000 },
+  { value: 25, credits: 2500 },
+  { value: 50, credits: 5000 },
 ];
 
 // Reactive data

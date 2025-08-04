@@ -89,6 +89,9 @@ export const useMeStore = defineStore('me', {
     },
     userDisplayFullName: (state) => {
       return getDisplayFullName(state.first_name, state.last_name, state.email);
-    }
+    },
+    isParent: (state) => state.user_role === 'PARENT',
+    isStudent: (state) => state.user_role === 'STUDENT',
+    isTeacher: (state) => state.user_role === 'TEACHER',
   }
 });

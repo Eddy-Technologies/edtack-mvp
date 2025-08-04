@@ -44,13 +44,30 @@
         <!-- Filters and Stats -->
         <div class="bg-white rounded-lg border p-4">
           <div class="flex flex-wrap items-center justify-between gap-4">
+            <!-- Sort Dropdown -->
+            <div class="flex items-center space-x-2">
+              <label class="text-sm font-medium text-gray-700">Sort by:</label>
+              <select
+                v-model="sortBy"
+                class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+                @change="handleSortChange"
+              >
+                <option value="priority">Priority (High to Low)</option>
+                <option value="created_at">Newest First</option>
+                <option value="created_at_asc">Oldest First</option>
+                <option value="due_date">Due Date</option>
+                <option value="credit">Credits (High to Low)</option>
+                <option value="credit_asc">Credits (Low to High)</option>
+              </select>
+            </div>
+
             <!-- Filters -->
             <div class="flex flex-wrap gap-4 items-center">
               <!-- Status Filter -->
               <select
                 v-model="selectedStatus"
                 class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                @change="loadTasks"
+                @change="() => { currentPage = 1; loadTasks(1); }"
               >
                 <option value="">All Tasks</option>
                 <option value="pending">Pending</option>
@@ -64,7 +81,7 @@
               <select
                 v-model="selectedPriority"
                 class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                @change="loadTasks"
+                @change="() => { currentPage = 1; loadTasks(1); }"
               >
                 <option value="">All Priorities</option>
                 <option value="high">High Priority</option>
@@ -76,7 +93,7 @@
               <select
                 v-model="selectedCategory"
                 class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                @change="loadTasks"
+                @change="() => { currentPage = 1; loadTasks(1); }"
               >
                 <option value="">All Categories</option>
                 <option value="chores">Chores</option>
@@ -90,7 +107,7 @@
               <!-- Clear Filters -->
               <Button
                 v-if="hasActiveFilters"
-                variant="secondary-gray"
+                variant="secondary"
                 text="Clear Filters"
                 size="sm"
                 @clicked="clearFilters"
@@ -99,13 +116,23 @@
 
             <!-- Stats -->
             <div class="flex items-center space-x-4 text-sm text-gray-600">
-              <span>{{ filteredTasks.length }} tasks</span>
+              <span>{{ pagination?.totalCount || 0 }} total tasks</span>
               <span v-if="pendingCredits > 0" class="text-green-600 font-medium">
                 {{ pendingCredits }} credits pending
               </span>
             </div>
           </div>
         </div>
+
+        <!-- Pagination Top -->
+        <Pagination
+          v-if="!isLoading && pagination"
+          :pagination="pagination"
+          :is-loading="isLoading"
+          item-label="tasks"
+          @go-to-page="goToPage"
+          @change-limit="changeItemsPerPage"
+        />
 
         <!-- Empty State -->
         <div v-if="!isLoading && tasks.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
@@ -128,9 +155,9 @@
         </div>
 
         <!-- Tasks List -->
-        <div v-else-if="filteredTasks.length > 0" class="space-y-4">
+        <div v-else-if="tasks.length > 0" class="space-y-4">
           <div
-            v-for="task in filteredTasks"
+            v-for="task in tasks"
             :key="task.id"
             class="bg-white rounded-lg border hover:shadow-md transition-shadow p-6"
           >
@@ -213,7 +240,7 @@
                   />
                   <Button
                     v-else-if="task.status === 'in_progress'"
-                    variant="success"
+                    variant="primary"
                     text="Complete Task"
                     size="sm"
                     @clicked="completeTask(task)"
@@ -224,13 +251,13 @@
                 <template v-else>
                   <div v-if="task.status === 'completed'" class="flex space-x-2">
                     <Button
-                      variant="success"
+                      variant="primary"
                       text="Approve"
                       size="sm"
                       @clicked="approveTask(task)"
                     />
                     <Button
-                      variant="danger"
+                      variant="secondary"
                       text="Reject"
                       size="sm"
                       @clicked="rejectTask(task)"
@@ -240,20 +267,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- No Filtered Results -->
-        <div v-else-if="tasks.length > 0" class="text-center py-12 bg-gray-50 rounded-lg">
-          <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
-            <UIcon name="i-lucide-search" size="64" />
-          </div>
-          <h3 class="text-lg font-medium text-gray-900 mb-2">No tasks match your filters</h3>
-          <p class="text-gray-500 mb-4">Try adjusting your filter criteria</p>
-          <Button
-            variant="secondary-gray"
-            text="Clear Filters"
-            @clicked="clearFilters"
-          />
         </div>
       </div>
     </div>
@@ -286,16 +299,22 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import Button from '../common/Button.vue';
-import CreateTaskModal from './tasks/CreateTaskModal.vue';
-import CompleteTaskModal from './tasks/CompleteTaskModal.vue';
-import ApproveTaskModal from './tasks/ApproveTaskModal.vue';
+import Button from '~/components/common/Button.vue';
+import Pagination from '~/components/common/Pagination.vue';
+import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
+import CompleteTaskModal from '~/components/dashboard/tasks/CompleteTaskModal.vue';
+import ApproveTaskModal from '~/components/dashboard/tasks/ApproveTaskModal.vue';
+
+// Use me store for user role
+const meStore = useMeStore();
+const { isParent } = storeToRefs(meStore);
 
 // Reactive state
 const tasks = ref<any[]>([]);
+const pagination = ref<any>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
-const isParent = ref(false);
+// Removed local isParent - using store instead
 
 // Modal states
 const showCreateModal = ref(false);
@@ -309,52 +328,52 @@ const selectedStatus = ref('');
 const selectedPriority = ref('');
 const selectedCategory = ref('');
 
+// Pagination and sorting states
+const currentPage = ref(1);
+const itemsPerPage = ref(5);
+const sortBy = ref('priority');
+const sortOrder = ref('desc');
+
 // Computed properties
 const hasActiveFilters = computed(() => {
   return selectedStatus.value || selectedPriority.value || selectedCategory.value;
 });
 
-const filteredTasks = computed(() => {
-  let filtered = [...tasks.value];
-
-  if (selectedStatus.value) {
-    filtered = filtered.filter((task) => task.status === selectedStatus.value);
-  }
-
-  if (selectedPriority.value) {
-    filtered = filtered.filter((task) => task.priority === selectedPriority.value);
-  }
-
-  if (selectedCategory.value) {
-    filtered = filtered.filter((task) => task.category === selectedCategory.value);
-  }
-
-  return filtered;
-});
-
 const pendingCredits = computed(() => {
-  return filteredTasks.value
+  return tasks.value
     .filter((task) => task.status === 'completed')
     .reduce((total, task) => total + task.credit, 0);
 });
 
 // Functions
-const loadTasks = async () => {
+const loadTasks = async (page = 1) => {
   try {
     isLoading.value = true;
     error.value = null;
+
+    const offset = (page - 1) * itemsPerPage.value;
+    const actualSortBy = sortBy.value === 'created_at_asc' ?
+      'created_at' :
+      sortBy.value === 'credit_asc' ? 'credit' : sortBy.value;
+    const actualSortOrder = sortBy.value === 'created_at_asc' || sortBy.value === 'credit_asc' ? 'asc' : sortOrder.value;
 
     const response = await $fetch('/api/tasks/list', {
       query: {
         status: selectedStatus.value,
         priority: selectedPriority.value,
-        category: selectedCategory.value
+        category: selectedCategory.value,
+        limit: itemsPerPage.value,
+        offset,
+        sortBy: actualSortBy,
+        sortOrder: actualSortOrder
       }
     });
 
     if (response.success) {
       tasks.value = response.tasks || [];
-      isParent.value = response.isParent || false;
+      pagination.value = response.pagination;
+      // Removed isParent assignment - using store instead
+      currentPage.value = page;
     } else {
       throw new Error('Failed to load tasks');
     }
@@ -362,6 +381,7 @@ const loadTasks = async () => {
     console.error('Failed to load tasks:', err);
     error.value = err.data?.message || 'Failed to load tasks. Please try again.';
     tasks.value = [];
+    pagination.value = null;
   } finally {
     isLoading.value = false;
   }
@@ -422,7 +442,25 @@ const clearFilters = () => {
   selectedStatus.value = '';
   selectedPriority.value = '';
   selectedCategory.value = '';
-  loadTasks();
+  currentPage.value = 1;
+  loadTasks(1);
+};
+
+const goToPage = (page: number) => {
+  if (page >= 1 && pagination.value && page <= pagination.value.totalPages) {
+    loadTasks(page);
+  }
+};
+
+const changeItemsPerPage = (newLimit: number) => {
+  itemsPerPage.value = newLimit;
+  currentPage.value = 1;
+  loadTasks(1);
+};
+
+const handleSortChange = () => {
+  currentPage.value = 1;
+  loadTasks(1);
 };
 
 // Utility functions
@@ -461,8 +499,8 @@ const getPriorityBadgeClass = (priority: string) => {
   return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
 
-const formatCredits = (cents: number) => {
-  return `$${(cents / 100).toFixed(2)} SGD`;
+const formatCredits = (credits: number) => {
+  return `${credits} credits`;
 };
 
 const formatDate = (dateString: string) => {
@@ -489,6 +527,6 @@ const isOverdue = (dueDateString: string) => {
 
 // Load tasks on mount
 onMounted(() => {
-  loadTasks();
+  loadTasks(1);
 });
 </script>

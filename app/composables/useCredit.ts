@@ -30,17 +30,12 @@ const CACHE_DURATION = 5 * 60 * 1000;
 export const useCredit = () => {
   // Computed values
   const balance = computed(() => creditData.value?.user?.balance || 0);
-  const balanceInDollars = computed(() => balance.value / 100);
   const formattedBalance = computed(() => {
-    const currency = creditData.value?.user?.currency || 'SGD';
-    return `${balanceInDollars.value.toFixed(2)} ${currency}`;
+    return `${balance.value} credits`;
   });
   const currency = computed(() => creditData.value?.user?.currency || 'SGD');
 
-  // Family computed values
-  const isParent = computed(() => {
-    return creditData.value?.children && creditData.value.children.length > 0;
-  });
+  // Family computed values - removed isParent (use me store instead)
 
   const children = computed(() => {
     return creditData.value?.children?.map((child) => ({
@@ -50,8 +45,7 @@ export const useCredit = () => {
       lastName: child.lastName,
       balance: child.balance,
       currency: child.currency,
-      name: `${child.firstName} ${child.lastName}`,
-      balanceInDollars: child.balance / 100
+      name: `${child.firstName} ${child.lastName}`
     })) || [];
   });
 
@@ -105,7 +99,7 @@ export const useCredit = () => {
 
       // Note: totalFamilyBalance is now computed automatically from parent + children balances
 
-      console.log(`Balance updated optimistically: ${description || 'Unknown operation'}, new balance: ${(newBalance / 100).toFixed(2)} ${creditData.value.user.currency}`);
+      console.log(`Balance updated optimistically: ${description || 'Unknown operation'}, new balance: ${newBalance} credits`);
     }
   };
 
@@ -228,12 +222,10 @@ export const useCredit = () => {
 
     // Individual balance
     balance: readonly(balance),
-    balanceInDollars: readonly(balanceInDollars),
     formattedBalance: readonly(formattedBalance),
     currency: readonly(currency),
 
     // Family data
-    isParent: readonly(isParent),
     children: readonly(children),
     totalFamilyBalance: readonly(totalFamilyBalance),
 

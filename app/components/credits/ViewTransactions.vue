@@ -82,7 +82,7 @@
                   transaction.amount >= 0 ? 'text-green-600' : 'text-red-600'
                 ]"
               >
-                {{ transaction.amount >= 0 ? '+' : '' }}{{ formatAmount(transaction.amount) }} {{ transaction.currency }}
+                {{ transaction.amount >= 0 ? '+' : '' }}{{ transaction.amount }} credits
               </div>
             </div>
           </div>
@@ -162,9 +162,9 @@ const goToPage = (page: number) => {
   }
 };
 
-// Format amount from cents to dollars
+// Format amount - now just display credits as-is
 const formatAmount = (amountInCents: number) => {
-  return (amountInCents / 100).toFixed(2);
+  return amountInCents;
 };
 
 // Format date
