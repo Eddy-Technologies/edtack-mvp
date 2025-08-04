@@ -27,7 +27,7 @@
     >
       <!-- Fixed Width Sidebar -->
       <div
-        v-if="shouldShowSidebar"
+        v-if="!isSelectingCharacter"
         ref="sidebar"
         :class="[
           'flex-shrink-0 border-r flex flex-col z-30',
@@ -50,7 +50,7 @@
 
       <!-- Backdrop for mobile -->
       <div
-        v-if="shouldShowSidebar && isMobile && !collapsed"
+        v-if="!isSelectingCharacter && isMobile && !collapsed"
         class="fixed inset-0 z-20 bg-black bg-opacity-40"
         @click="toggleSidebar"
       />
@@ -254,10 +254,6 @@ const toast = useToast();
 const meStore = useMeStore();
 
 // Computed properties for UI state
-const shouldShowSidebar = computed(() => {
-  return !isSelectingCharacter.value && (hasStartedChat.value || meStore.isLoggedIn);
-});
-
 const isChatCentered = computed(() => {
   return !hasStartedChat.value && showContentTransitions.value && !isSelectingCharacter.value;
 });
