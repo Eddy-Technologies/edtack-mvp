@@ -124,7 +124,7 @@
             <!-- Action Buttons -->
             <div class="flex space-x-3">
               <!-- Parent Actions: Show approval buttons only for pending_parent_approval orders -->
-              <template v-if="isParent && order.status === 'pending_parent_approval'">
+              <template v-if="isParent && order.status === ORDER_STATUS.PENDING_PARENT_APPROVAL">
                 <Button
                   variant="primary"
                   text="Approve & Pay"

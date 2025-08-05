@@ -74,9 +74,9 @@
               @change="() => { currentPage = 1; loadTasks(1); }"
             >
               <option value="">All Priorities</option>
-              <option value="high">High Priority</option>
-              <option value="medium">Medium Priority</option>
-              <option value="low">Low Priority</option>
+              <option v-for="priority in taskPriorities" :key="priority.value" :value="priority.value">
+                {{ priority.label }}
+              </option>
             </select>
 
             <!-- Category Filter -->
@@ -86,12 +86,9 @@
               @change="() => { currentPage = 1; loadTasks(1); }"
             >
               <option value="">All Categories</option>
-              <option value="chores">Chores</option>
-              <option value="homework">Homework</option>
-              <option value="behavior">Behavior</option>
-              <option value="exercise">Exercise</option>
-              <option value="reading">Reading</option>
-              <option value="other">Other</option>
+              <option v-for="category in taskCategories" :key="category.value" :value="category.value">
+                {{ category.label }}
+              </option>
             </select>
 
             <!-- Clear Filters -->
@@ -294,9 +291,10 @@ import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
 import CompleteTaskModal from '~/components/dashboard/tasks/CompleteTaskModal.vue';
 import ApproveTaskModal from '~/components/dashboard/tasks/ApproveTaskModal.vue';
 
-// Use me store for user role
+// Use stores
 const meStore = useMeStore();
 const { isParent } = storeToRefs(meStore);
+const codesStore = useCodesStore();
 
 // Reactive state
 const tasks = ref<any[]>([]);
@@ -322,6 +320,10 @@ const currentPage = ref(1);
 const itemsPerPage = ref(5);
 const sortBy = ref('priority');
 const sortOrder = ref('desc');
+
+// Get options from codes store
+const taskPriorities = computed(() => codesStore.taskPriorities);
+const taskCategories = computed(() => codesStore.taskCategories);
 
 // Computed properties
 const hasActiveFilters = computed(() => {
@@ -481,9 +483,9 @@ const getStatusBadgeClass = (status: string) => {
 
 const getPriorityBadgeClass = (priority: string) => {
   const classMap = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-green-100 text-green-800'
+    HIGH: 'bg-red-100 text-red-800',
+    MEDIUM: 'bg-yellow-100 text-yellow-800',
+    LOW: 'bg-green-100 text-green-800'
   };
   return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };

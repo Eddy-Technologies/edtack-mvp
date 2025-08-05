@@ -95,7 +95,7 @@
               size="sm"
             />
             <Button
-              variant="secondary-gray"
+              variant="secondary"
               text="View Details"
               size="sm"
             />
@@ -167,12 +167,12 @@
               size="sm"
             />
             <Button
-              variant="secondary-gray"
+              variant="secondary"
               text="Reorder"
               size="sm"
             />
             <Button
-              variant="secondary-gray"
+              variant="secondary"
               text="View Details"
               size="sm"
             />

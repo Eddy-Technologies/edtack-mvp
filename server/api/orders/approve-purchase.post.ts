@@ -203,13 +203,13 @@ export default defineEventHandler(async (event) => {
         quantity: item.quantity
       })) || [],
       mode: 'payment',
-      success_url: `${baseUrl}/orders/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/orders/pending`,
+      success_url: `${baseUrl}/dashboard?tab=family&subtab=order-requests?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/dashboard?tab=family&subtab=order-requests`,
       metadata: {
         order_id: order.id,
         parent_user_info_id: parentInfo.id,
         child_user_info_id: order.user_info_id,
-        operation_type: 'parent_approved_purchase',
+        operation_type: ORDER_STATUS.PARENT_APPROVED,
         order_number: order.order_number
       }
     });

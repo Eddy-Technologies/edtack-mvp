@@ -95,9 +95,10 @@
               v-model="form.priority"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="low">Low Priority</option>
-              <option value="medium">Medium Priority</option>
-              <option value="high">High Priority</option>
+              <option value="">Select priority</option>
+              <option v-for="priority in taskPriorities" :key="priority.value" :value="priority.value">
+                {{ priority.label }}
+              </option>
             </select>
           </div>
 
@@ -111,12 +112,9 @@
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">No Category</option>
-              <option value="chores">Chores</option>
-              <option value="homework">Homework</option>
-              <option value="behavior">Behavior</option>
-              <option value="exercise">Exercise</option>
-              <option value="reading">Reading</option>
-              <option value="other">Other</option>
+              <option v-for="category in taskCategories" :key="category.value" :value="category.value">
+                {{ category.label }}
+              </option>
             </select>
           </div>
 
@@ -248,6 +246,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import Button from '../../common/Button.vue';
+import { RECURRENCE_FREQUENCY, TASK_PRIORITY } from '~~/shared/constants';
 
 const props = defineProps<{
   isOpen: boolean;
@@ -264,7 +263,7 @@ const form = ref({
   subtitle: '',
   description: '',
   creditAmount: 50,
-  priority: 'medium',
+  priority: TASK_PRIORITY.MEDIUM,
   category: '',
   due_date: '',
   auto_approve: false,
@@ -274,8 +273,9 @@ const form = ref({
   recurrence_end_date: ''
 });
 
+const codesStore = useCodesStore();
+
 const children = ref<any[]>([]);
-const recurrenceOptions = ref<any[]>([]);
 const isSubmitting = ref(false);
 const error = ref<string | null>(null);
 
@@ -290,17 +290,10 @@ const childrenOptions = computed(() => {
   }));
 });
 
-// Load recurrence frequency options
-const loadRecurrenceOptions = async () => {
-  try {
-    const response = await $fetch('/api/codes/recurrence-frequencies');
-    if (response.success) {
-      recurrenceOptions.value = response.frequencies || [];
-    }
-  } catch (err: any) {
-    console.error('Failed to load recurrence options:', err);
-  }
-};
+// Get options from codes store
+const taskPriorities = computed(() => codesStore.taskPriorities);
+const taskCategories = computed(() => codesStore.taskCategories);
+const recurrenceOptions = computed(() => codesStore.recurrenceFrequencies);
 
 // Load children when modal opens
 const loadChildren = async () => {
@@ -353,7 +346,7 @@ const createTask = async () => {
         subtitle: '',
         description: '',
         creditAmount: 50,
-        priority: 'medium',
+        priority: TASK_PRIORITY.MEDIUM,
         category: '',
         due_date: '',
         auto_approve: false,
@@ -377,9 +370,9 @@ const createTask = async () => {
 
 const getIntervalLabel = (frequency: string) => {
   switch (frequency) {
-    case 'daily': return 'day(s)';
-    case 'weekly': return 'week(s)';
-    case 'monthly': return 'month(s)';
+    case RECURRENCE_FREQUENCY.DAILY: return 'day(s)';
+    case RECURRENCE_FREQUENCY.WEEKLY: return 'week(s)';
+    case RECURRENCE_FREQUENCY.MONTHLY: return 'month(s)';
     default: return '';
   }
 };
@@ -388,15 +381,13 @@ const getIntervalLabel = (frequency: string) => {
 onMounted(() => {
   if (props.isOpen) {
     loadChildren();
-    loadRecurrenceOptions();
   }
 });
 
-// Watch for modal open to load children and options
+// Watch for modal open to load children
 watch(() => props.isOpen, (newValue) => {
   if (newValue) {
     loadChildren();
-    loadRecurrenceOptions();
     error.value = null;
   }
 });
