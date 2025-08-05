@@ -57,39 +57,40 @@ INSERT INTO subjects (name, subject_name, display_name, description, country_cod
 
 -- Order Status Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('pending', 'Payment Pending', 'Order created but payment not yet processed', 'order_status', 10, true, NOW(), NOW()),
-('paid', 'Payment Successful', 'Payment completed successfully', 'order_status', 20, true, NOW(), NOW()),
-('confirmed', 'Order Confirmed', 'Order confirmed and sent to external fulfillment', 'order_status', 30, true, NOW(), NOW()),
-('cancelled', 'Cancelled', 'Order has been cancelled', 'order_status', 40, true, NOW(), NOW()),
-('refunded', 'Refunded', 'Refund has been completed', 'order_status', 50, true, NOW(), NOW()),
+('PENDING', 'Payment Pending', 'Order created but payment not yet processed', 'order_status', 10, true, NOW(), NOW()),
+('PAID', 'Payment Successful', 'Payment completed successfully', 'order_status', 20, true, NOW(), NOW()),
+('CONFIRMED', 'Order Confirmed', 'Order confirmed and sent to external fulfillment', 'order_status', 30, true, NOW(), NOW()),
+('CANCELLED', 'Cancelled', 'Order has been cancelled', 'order_status', 40, true, NOW(), NOW()),
+('REFUNDED', 'Refunded', 'Refund has been completed', 'order_status', 50, true, NOW(), NOW()),
 -- Additional purchase flow statuses
-('pending_parent_approval', 'Pending Parent Approval', 'Order waiting for parent approval before payment', 'order_status', 15, true, NOW(), NOW()),
-('pending_payment', 'Pending Payment', 'Order created, redirecting to payment gateway', 'order_status', 18, true, NOW(), NOW()),
-('parent_approved', 'Parent Approved', 'Parent has approved the purchase, payment processing', 'order_status', 25, true, NOW(), NOW());
+('PENDING_PARENT_APPROVAL', 'Pending Parent Approval', 'Order waiting for parent approval before payment', 'order_status', 15, true, NOW(), NOW()),
+('PENDING_PAYMENT', 'Pending Payment', 'Order created, redirecting to payment gateway', 'order_status', 18, true, NOW(), NOW()),
+('PARENT_APPROVED', 'Parent Approved', 'Parent has approved the purchase, payment processing', 'order_status', 25, true, NOW(), NOW()),
+('REJECTED', 'Rejected', 'Order has been rejected', 'order_status', 22, true, NOW(), NOW());
 
 -- Operation Type Constants  
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('credit_topup', 'Credit Top-up', 'Customer credit balance top-up transaction', 'operation_type', 10, true, NOW(), NOW()),
-('transfer_out', 'Transfer Out', 'Credits transferred out to another account', 'operation_type', 20, true, NOW(), NOW()),
-('transfer_in', 'Transfer In', 'Credits received from another account', 'operation_type', 30, true, NOW(), NOW()),
-('balance_adjustment', 'Balance Adjustment', 'Manual balance adjustment by administrator', 'operation_type', 40, true, NOW(), NOW()),
-('purchase', 'Purchase', 'Product purchase using customer credit balance', 'operation_type', 50, true, NOW(), NOW());
+('CREDIT_TOPUP', 'Credit Top-up', 'Customer credit balance top-up transaction', 'operation_type', 10, true, NOW(), NOW()),
+('TRANSFER_OUT', 'Transfer Out', 'Credits transferred out to another account', 'operation_type', 20, true, NOW(), NOW()),
+('TRANSFER_IN', 'Transfer In', 'Credits received from another account', 'operation_type', 30, true, NOW(), NOW()),
+('BALANCE_ADJUSTMENT', 'Balance Adjustment', 'Manual balance adjustment by administrator', 'operation_type', 40, true, NOW(), NOW()),
+('PURCHASE', 'Purchase', 'Product purchase using customer credit balance', 'operation_type', 50, true, NOW(), NOW());
 
 -- Task Status Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('task_pending', 'Pending', 'Task created but not started', 'task_status', 10, true, NOW(), NOW()),
-('in_progress', 'In Progress', 'Task is being worked on', 'task_status', 20, true, NOW(), NOW()),
-('completed', 'Completed', 'Task completed by child, awaiting approval', 'task_status', 30, true, NOW(), NOW()),
-('approved', 'Approved', 'Task approved by parent, credits awarded', 'task_status', 40, true, NOW(), NOW()),
-('rejected', 'Rejected', 'Task rejected by parent, no credits awarded', 'task_status', 50, true, NOW(), NOW()),
-('task_cancelled', 'Cancelled', 'Task cancelled before completion', 'task_status', 60, true, NOW(), NOW()),
-('expired', 'Expired', 'Task expired past due date', 'task_status', 70, true, NOW(), NOW());
+('TASK_PENDING', 'Pending', 'Task created but not started', 'task_status', 10, true, NOW(), NOW()),
+('IN_PROGRESS', 'In Progress', 'Task is being worked on', 'task_status', 20, true, NOW(), NOW()),
+('COMPLETED', 'Completed', 'Task completed by child, awaiting approval', 'task_status', 30, true, NOW(), NOW()),
+('APPROVED', 'Approved', 'Task approved by parent, credits awarded', 'task_status', 40, true, NOW(), NOW()),
+('REJECTED', 'Rejected', 'Task rejected by parent, no credits awarded', 'task_status', 50, true, NOW(), NOW()),
+('TASK_CANCELLED', 'Cancelled', 'Task cancelled before completion', 'task_status', 60, true, NOW(), NOW()),
+('EXPIRED', 'Expired', 'Task expired past due date', 'task_status', 70, true, NOW(), NOW());
 
 -- Task Priority Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('low', 'Low Priority', 'Low priority task', 'task_priority', 10, true, NOW(), NOW()),
-('medium', 'Medium Priority', 'Medium priority task', 'task_priority', 20, true, NOW(), NOW()),
-('high', 'High Priority', 'High priority task', 'task_priority', 30, true, NOW(), NOW());
+('LOW', 'Low Priority', 'Low priority task', 'task_priority', 10, true, NOW(), NOW()),
+('MEDIUM', 'Medium Priority', 'Medium priority task', 'task_priority', 20, true, NOW(), NOW()),
+('HIGH', 'High Priority', 'High priority task', 'task_priority', 30, true, NOW(), NOW());
 
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING

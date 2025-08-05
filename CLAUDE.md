@@ -39,3 +39,6 @@ This is a Nuxt 3 application with:
 ### Frontend
 - Use icons instead of SVG unless absolutely needed
 - Use primary and secondary buttons and colors
+
+### Codes
+- constants and codes are in constant case
