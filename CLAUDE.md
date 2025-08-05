@@ -41,4 +41,4 @@ This is a Nuxt 3 application with:
 - Use primary and secondary buttons and colors
 
 ### Codes
-- constants and codes are in constant case
+- constants and codes and code catgory are in constant case
