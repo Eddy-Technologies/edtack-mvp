@@ -142,6 +142,35 @@ function checkForExistingData() {
   }
 }
 
+function substituteEnvironmentVariables(content) {
+  // Load environment variables
+  const envPath = path.resolve(__dirname, '../../.env');
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    const envVars = {};
+
+    envContent.split('\n').forEach((line) => {
+      const match = line.match(/^([^#=]+)=(.*)$/);
+      if (match) {
+        const key = match[1].trim();
+        const value = match[2].trim();
+        envVars[key] = value;
+      }
+    });
+
+    // Replace template variables in content
+    let processedContent = content;
+    Object.keys(envVars).forEach((key) => {
+      const placeholder = `\${${key}}`;
+      processedContent = processedContent.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), envVars[key]);
+    });
+
+    return processedContent;
+  }
+
+  return content;
+}
+
 function generateSeedFile() {
   try {
     log('\n🌱 Generating seed.sql...', 'magenta');
@@ -163,10 +192,14 @@ function generateSeedFile() {
     seedFiles.forEach((file) => {
       const seedFile = path.join(seedsDir, file);
       if (fs.existsSync(seedFile)) {
-        const content = fs.readFileSync(seedFile, 'utf8');
+        let content = fs.readFileSync(seedFile, 'utf8');
+
+        // Substitute environment variables in the content
+        content = substituteEnvironmentVariables(content);
+
         combinedSeed += `-- From: ${file}\n`;
         combinedSeed += content + '\n\n';
-        log(`   ✅ Added ${file}`, 'green');
+        log(`   ✅ Added ${file} (with environment variable substitution)`, 'green');
       } else {
         log(`   ⚠️  Skipping ${file} - not found`, 'yellow');
       }
@@ -254,7 +287,7 @@ async function runCommand(command) {
         generateSeedFile();
         executeCommand('psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f supabase/seed.sql', 'Running seed file via psql');
         log('\n🎉 Database seeding completed!', 'green');
-        log('💡 Seed data has been inserted into the database', 'cyan');
+        log('💡 Run `pnpm upload:characters` to upload character assets', 'yellow');
         break;
 
       case 'init-admin':

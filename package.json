@@ -15,7 +15,8 @@
     "db:reset": "node database/scripts/db.js reset",
     "db:seed": "node database/scripts/db.js seed",
     "db:init-admin": "node database/scripts/db.js init-admin",
-    "db:types": "node database/scripts/db.js types"
+    "db:types": "node database/scripts/db.js types",
+    "upload:characters": "node database/scripts/upload-assets.js"
   },
   "dependencies": {
     "@google/genai": "^0.8.0",
@@ -72,7 +73,8 @@
     "db:reset": "Generate migrations and run supabase db reset",
     "db:seed": "Generate seed.sql and run via psql",
     "db:init-admin": "Initialize admin user via Supabase Auth Admin API",
-    "db:types": "Generate TypeScript types from database schema"
+    "db:types": "Generate TypeScript types from database schema",
+    "upload:characters": "Upload character assets to Supabase Storage"
   },
   "pnpm": {
     "overrides": {
