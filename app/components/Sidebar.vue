@@ -88,6 +88,9 @@
         :class="[
           'relative bg-gray-700 rounded-xl shadow-inner p-2 w-full transition-all duration-300',
           isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-[260px]'
+          'relative p-2 w-full transition-all duration-300',
+          isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-300px]',
+          isMini ? '' : 'rounded-xl shadow-inner'
         ]"
       >
         <!-- Collapsed Header -->
@@ -111,7 +114,7 @@
             isMini ? 'h-[120px]' : 'h-[180px]'
           ]"
         >
-          <Avatar :is-playing="isPlaying" />
+          <Avatar :is-playing="isPlaying" :is-mini="isMini" />
 
           <!-- Control Buttons -->
           <div class="absolute top-2 right-2 flex gap-1">
@@ -134,11 +137,6 @@
           </div>
         </div>
 
-        <!-- Integrated Waveform -->
-        <div v-if="!isMini && !isAudioPlayerCollapsed" class="mt-3 px-2">
-          <div ref="waveformRef" class="w-full h-12 bg-gray-600 rounded" style="min-height: 48px;" />
-        </div>
-
         <!-- Unified Controls -->
         <div
           v-if="!isAudioPlayerCollapsed"
@@ -148,23 +146,23 @@
           ]"
         >
           <button
-            class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-200"
-            @click="handleCall"
+              class="w-12 h-12 flex items-center justify-center bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-200"
+              @click="handleCall"
           >
             <Icon name="i-heroicons-phone" class="w-5 h-5" />
           </button>
           <button
-            class="p-3 bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg transition-all duration-200"
-            @click="handlePlayAudio"
+              class="w-12 h-12 flex items-center justify-center bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg transition-all duration-200"
+              @click="handlePlayAudio"
           >
             <Icon
-              :name="isPlaying ? 'i-heroicons-pause' : 'i-heroicons-play'"
-              class="w-5 h-5"
+                :name="isPlaying ? 'i-heroicons-pause' : 'i-heroicons-play'"
+                class="w-5 h-5"
             />
           </button>
           <button
-            class="p-3 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-full shadow-lg transition-all duration-200"
-            @click="handleMute"
+              class="w-12 h-12 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-full shadow-lg transition-all duration-200"
+              @click="handleMute"
           >
             <Icon name="i-heroicons-microphone" class="w-5 h-5" />
           </button>

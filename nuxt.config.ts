@@ -24,8 +24,9 @@ export default defineNuxtConfig({
 
   ui: {
     colorMode: {
-      preference: 'light',
-      forcedValue: 'light',
+      preference: 'light', // Default preference
+      forced: true,        // 💡 Force only light mode
+      classSuffix: '',     // Don't append `-dark` or `-light` to class
     },
   },
 

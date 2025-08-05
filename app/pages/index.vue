@@ -60,7 +60,7 @@
         <!-- Top Bar with User Avatar -->
         <div
           :class="[
-            'flex justify-end items-center px-4 py-3 bg-white relative z-50 transition-all duration-500 ease-out',
+            'flex justify-end items-center px-4 py-3 bg-white relative z-50 transition-all duration-400 ease-out',
             showContentTransitions ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-95'
           ]"
           :style="{ transitionDelay: showContentTransitions ? '0.2s' : '0s' }"
@@ -221,7 +221,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import WaveSurfer from 'wavesurfer.js';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
@@ -233,7 +232,7 @@ import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 import { useMeStore } from '~/stores/me';
 
-const collapsed = ref(false);
+const collapsed = ref(true);
 const isMobile = ref(false);
 const isSelectingCharacter = ref(false);
 const currentCharacter = ref(null);
@@ -316,8 +315,6 @@ const handleChatSend = (text: string) => {
 const toggleFloatingAvatar = () => {
   showFloatingAvatar.value = !showFloatingAvatar.value;
 };
-
-// Floating waveform removed - only sidebar has waveform now
 
 const closeFloatingAvatar = () => {
   showFloatingAvatar.value = false;

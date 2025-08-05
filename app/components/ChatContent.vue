@@ -1,5 +1,10 @@
 <template>
   <div class="flex flex-col h-full w-full bg-white overflow-hidden">
+    <!-- Token Count Display -->
+    <div class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300">
+      Token Usage: <span class="font-bold">{{ tokenCount }}</span>
+    </div>
+
     <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4 pb-32">
       <div class="whitespace-pre-wrap flex-shrink min-w-0 text-center">Talk to Eddy...</div>
 
@@ -18,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onUnmounted } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
@@ -37,6 +42,11 @@ const MAX_CONTEXT_MESSAGES = 6;
 
 const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
+const tokenCount = ref(0);
+
+if (process.client) {
+  tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
+}
 
 const { speakLastAssistantMessage, onSpeechEnd } = useSpeech();
 const { getLessonBundle } = useLesson();
@@ -51,6 +61,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.text,
           isFirst: blockIndex === 0,
+          isUser: block.isUser
         },
       });
     }
@@ -118,12 +129,12 @@ const handleSend = async (text: string) => {
 
     // Prepare recent context
     const recentMessages = messageStream.value
-      .filter((m) => m.type === 'text')
-      .slice(-MAX_CONTEXT_MESSAGES)
-      .map((m) => ({
-        role: m.isUser ? 'user' : 'assistant',
-        content: m.text,
-      }));
+        .filter((m) => m.type === 'text')
+        .slice(-MAX_CONTEXT_MESSAGES)
+        .map((m) => ({
+          role: m.isUser ? 'user' : 'assistant',
+          content: m.text,
+        }));
 
     const messagesForApi = [
       {
@@ -134,30 +145,28 @@ const handleSend = async (text: string) => {
     ];
 
     try {
-      const { message, updatedSummary } = await useChat('/api/chat', {
+      const { response } = await useChat('/api/chat', {
         messages: messagesForApi,
-        currentSummary: conversationSummary.value,
       });
+
+      // Extract assistant's reply text
+      const assistantReply = response?.candidates?.[0]?.content?.parts?.[0]?.text || '[No response text]';
 
       // Replace placeholder with real assistant message
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
         type: 'text',
-        text: message,
+        text: assistantReply,
         isUser: false,
         playable: true,
       };
 
-      if (updatedSummary) conversationSummary.value = updatedSummary;
-
-      await speakLastAssistantMessage(messageStream.value);
-
-      await new Promise<void>((resolve) => {
-        onSpeechEnd(() => {
-          isPlayingAllowed.value = true;
-          resolve();
-        });
-      });
+      // Update token usage in localStorage
+      const tokenUsage = response?.usageMetadata?.totalTokenCount || 0;
+      const currentTokenCount = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
+      const newTokenCount = currentTokenCount + tokenUsage;
+      localStorage.setItem('tokenUsage', (newTokenCount.toString()));
+      tokenCount.value = newTokenCount;
     } catch (err) {
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
