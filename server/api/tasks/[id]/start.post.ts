@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { TASK_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -51,7 +52,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check if task can be started
-    if (task.status !== 'pending') {
+    if (task.status !== TASK_STATUS.PENDING) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Task cannot be started from current status'
@@ -62,7 +63,7 @@ export default defineEventHandler(async (event) => {
     const { error: updateError } = await supabase
       .from('user_tasks')
       .update({
-        status: 'in_progress',
+        status: TASK_STATUS.IN_PROGRESS,
         updated_at: new Date().toISOString()
       })
       .eq('id', taskId);

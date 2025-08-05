@@ -1,4 +1,6 @@
 import { getSupabaseClient } from '#imports';
+import { getUserInfo } from '~~/server/utils/auth';
+import { TASK_PRIORITY } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -16,28 +18,8 @@ export default defineEventHandler(async (event) => {
       sortOrder = 'desc'
     } = query;
 
-    // Get authenticated user
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
-
-    // Get user's user_info_id
-    const { data: userInfo, error: userError } = await supabase
-      .from('user_infos')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (userError || !userInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User info not found'
-      });
-    }
+    // Get authenticated user info
+    const userInfo = await getUserInfo(event);
 
     // Build query - user can be either creator or assignee
     let tasksQuery = supabase
@@ -101,7 +83,7 @@ export default defineEventHandler(async (event) => {
     // Apply priority sorting and pagination if needed (JavaScript sorting)
     let sortedTasks = tasks || [];
     if (sortBy === 'priority') {
-      const priorityOrder = { high: 1, medium: 2, low: 3 };
+      const priorityOrder = { [TASK_PRIORITY.HIGH]: 1, [TASK_PRIORITY.MEDIUM]: 2, [TASK_PRIORITY.LOW]: 3 };
       sortedTasks = [...sortedTasks].sort((a, b) => {
         const aPriority = priorityOrder[a.priority as keyof typeof priorityOrder] || 4;
         const bPriority = priorityOrder[b.priority as keyof typeof priorityOrder] || 4;

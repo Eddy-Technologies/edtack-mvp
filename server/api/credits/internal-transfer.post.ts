@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '#imports';
 import { getCodes } from '~~/server/services/codeService';
+import { getUserInfo } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -16,28 +17,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get authenticated user (sender)
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
-
-    // Get sender's user_info_id
-    const { data: senderInfo, error: senderError } = await supabase
-      .from('user_infos')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (senderError || !senderInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Sender user info not found'
-      });
-    }
+    // Get authenticated user info (sender)
+    const senderInfo = await getUserInfo(event);
 
     // Verify group relationship
     const { data: groupRelation, error: relationError } = await supabase

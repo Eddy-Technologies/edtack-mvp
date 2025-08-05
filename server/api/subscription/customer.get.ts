@@ -2,19 +2,13 @@ import type Stripe from 'stripe';
 import { getSupabaseClient } from '#imports';
 import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
 import { STRIPE_CUSTOMER } from '~~/shared/constants';
+import { requireAuth } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const stripe = getStripe();
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
+    const user = await requireAuth(event);
 
     // Find customer by email
     const customer: Stripe.Customer = await stripe.customers.search({

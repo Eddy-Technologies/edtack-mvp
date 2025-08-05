@@ -1,30 +1,12 @@
 import { getSupabaseClient } from '#imports';
+import { getUserInfo } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
 
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
-
-    // Get user info
-    const { data: userInfo, error: userError } = await supabase
-      .from('user_infos')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (userError || !userInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User info not found'
-      });
-    }
+    // Get authenticated user info
+    const userInfo = await getUserInfo(event);
 
     // Get user's internal credit balance
     const { data: creditData, error: creditError } = await supabase

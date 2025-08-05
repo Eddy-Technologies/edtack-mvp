@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { requireAdmin } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -6,27 +7,7 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
 
     // Check if user is admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Authentication required'
-      });
-    }
-
-    // Get user role
-    const { data: userInfo } = await supabase
-      .from('user_infos')
-      .select('user_roles(role_name)')
-      .eq('user_id', user.id)
-      .single();
-
-    if (!userInfo?.user_roles?.[0]?.role_name || userInfo.user_roles[0].role_name !== 'ADMIN') {
-      throw createError({
-        statusCode: 403,
-        statusMessage: 'Admin access required'
-      });
-    }
+    await requireAdmin(event);
 
     // Get all products (including inactive ones for admin)
     const includeInactive = query.includeInactive !== 'false';

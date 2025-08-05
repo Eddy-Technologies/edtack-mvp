@@ -3,7 +3,6 @@ import { getSupabaseClient } from '#imports';
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
-    console.log('getting codes');
 
     // Fetch all active codes
     const { data: codes, error } = await supabase

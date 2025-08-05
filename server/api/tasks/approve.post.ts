@@ -1,6 +1,6 @@
 import { getSupabaseClient } from '#imports';
 import { getCodes } from '~~/server/services/codeService';
-import { TASK_STATUS, OPERATION_TYPE } from '~~/shared/constants';
+import { TASK_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {

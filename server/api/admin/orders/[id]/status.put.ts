@@ -1,4 +1,6 @@
 import { getSupabaseClient } from '#imports';
+import { requireAdmin } from '~~/server/utils/auth';
+import { ORDER_STATUS, ORDER_FULFILLMENT } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -14,30 +16,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check if user is admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Authentication required'
-      });
-    }
-
-    // Get user role
-    const { data: userInfo } = await supabase
-      .from('user_infos')
-      .select('user_roles(role_name)')
-      .eq('user_id', user.id)
-      .single();
-
-    if (!userInfo?.user_roles?.[0]?.role_name || userInfo.user_roles[0].role_name !== 'ADMIN') {
-      throw createError({
-        statusCode: 403,
-        statusMessage: 'Admin access required'
-      });
-    }
+    await requireAdmin(event);
 
     // Validate status
-    const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'];
+    const validStatuses = [ORDER_STATUS.PENDING, ORDER_FULFILLMENT.PROCESSING, ORDER_FULFILLMENT.SHIPPED, ORDER_FULFILLMENT.DELIVERED, ORDER_STATUS.CANCELLED, ORDER_STATUS.REFUNDED];
     if (!body.status || !validStatuses.includes(body.status)) {
       throw createError({
         statusCode: 400,

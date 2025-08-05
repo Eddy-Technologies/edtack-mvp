@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { TASK_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -94,12 +95,12 @@ export default defineEventHandler(async (event) => {
     const { error: tasksError } = await supabase
       .from('user_tasks')
       .update({
-        status: 'cancelled',
+        status: TASK_STATUS.CANCELLED,
         updated_at: new Date().toISOString()
       })
       .eq('creator_user_info_id', parentInfo.id)
       .eq('assignee_user_info_id', childId)
-      .in('status', ['pending', 'in_progress', 'completed']);
+      .in('status', [TASK_STATUS.PENDING, TASK_STATUS.IN_PROGRESS, TASK_STATUS.COMPLETED]);
 
     if (tasksError) {
       console.warn('Failed to cancel child tasks:', tasksError);

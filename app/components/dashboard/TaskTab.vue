@@ -70,11 +70,11 @@
                 @change="() => { currentPage = 1; loadTasks(1); }"
               >
                 <option value="">All Tasks</option>
-                <option value="pending">Pending</option>
-                <option value="in_progress">In Progress</option>
-                <option value="completed">Completed</option>
-                <option value="approved">Approved</option>
-                <option value="rejected">Rejected</option>
+                <option :value="TASK_STATUS.PENDING">Pending</option>
+                <option :value="TASK_STATUS.IN_PROGRESS">In Progress</option>
+                <option :value="TASK_STATUS.COMPLETED">Completed</option>
+                <option :value="TASK_STATUS.APPROVED">Approved</option>
+                <option :value="TASK_STATUS.REJECTED">Rejected</option>
               </select>
 
               <!-- Priority Filter -->
@@ -84,9 +84,9 @@
                 @change="() => { currentPage = 1; loadTasks(1); }"
               >
                 <option value="">All Priorities</option>
-                <option value="high">High Priority</option>
-                <option value="medium">Medium Priority</option>
-                <option value="low">Low Priority</option>
+                <option :value="TASK_PRIORITY.HIGH">High Priority</option>
+                <option :value="TASK_PRIORITY.MEDIUM">Medium Priority</option>
+                <option :value="TASK_PRIORITY.LOW">Low Priority</option>
               </select>
 
               <!-- Category Filter -->
@@ -212,7 +212,7 @@
                 <!-- Approval Notes -->
                 <div v-if="task.approvalNotes" class="bg-gray-50 p-3 rounded-lg mb-3">
                   <p class="text-sm text-gray-800">
-                    <strong>{{ task.status === 'approved' ? 'Approval' : 'Rejection' }} Notes:</strong>
+                    <strong>{{ task.status === TASK_STATUS.APPROVED ? 'Approval' : 'Rejection' }} Notes:</strong>
                     {{ task.approvalNotes }}
                   </p>
                 </div>
@@ -222,7 +222,7 @@
                   <span>Created {{ formatDate(task.createdAt) }}</span>
                   <span v-if="task.completedAt">Completed {{ formatDate(task.completedAt) }}</span>
                   <span v-if="task.approvedAt">
-                    {{ task.status === 'approved' ? 'Approved' : 'Reviewed' }} {{ formatDate(task.approvedAt) }}
+                    {{ task.status === TASK_STATUS.APPROVED ? 'Approved' : 'Reviewed' }} {{ formatDate(task.approvedAt) }}
                   </span>
                 </div>
               </div>
@@ -232,14 +232,14 @@
                 <!-- Child Actions -->
                 <template v-if="!isParent">
                   <Button
-                    v-if="task.status === 'pending'"
+                    v-if="task.status === TASK_STATUS.PENDING"
                     variant="primary"
                     text="Start Task"
                     size="sm"
                     @clicked="startTask(task.id)"
                   />
                   <Button
-                    v-else-if="task.status === 'in_progress'"
+                    v-else-if="task.status === TASK_STATUS.IN_PROGRESS"
                     variant="primary"
                     text="Complete Task"
                     size="sm"
@@ -249,7 +249,7 @@
 
                 <!-- Parent Actions -->
                 <template v-else>
-                  <div v-if="task.status === 'completed'" class="flex space-x-2">
+                  <div v-if="task.status === TASK_STATUS.COMPLETED" class="flex space-x-2">
                     <Button
                       variant="primary"
                       text="Approve"
@@ -304,6 +304,7 @@ import Pagination from '~/components/common/Pagination.vue';
 import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
 import CompleteTaskModal from '~/components/dashboard/tasks/CompleteTaskModal.vue';
 import ApproveTaskModal from '~/components/dashboard/tasks/ApproveTaskModal.vue';
+import { TASK_STATUS, TASK_PRIORITY } from '~~/shared/constants';
 
 // Use me store for user role
 const meStore = useMeStore();
@@ -341,7 +342,7 @@ const hasActiveFilters = computed(() => {
 
 const pendingCredits = computed(() => {
   return tasks.value
-    .filter((task) => task.status === 'completed')
+    .filter((task) => task.status === TASK_STATUS.COMPLETED)
     .reduce((total, task) => total + task.credit, 0);
 });
 
@@ -397,7 +398,7 @@ const startTask = async (taskId: string) => {
       // Update task status locally
       const task = tasks.value.find((t) => t.id === taskId);
       if (task) {
-        task.status = 'in_progress';
+        task.status = TASK_STATUS.IN_PROGRESS;
       }
     }
   } catch (err: any) {
@@ -466,35 +467,35 @@ const handleSortChange = () => {
 // Utility functions
 const getStatusText = (status: string) => {
   const statusMap = {
-    pending: 'Pending',
-    in_progress: 'In Progress',
-    completed: 'Completed',
-    approved: 'Approved',
-    rejected: 'Rejected',
-    cancelled: 'Cancelled',
-    expired: 'Expired'
+    [TASK_STATUS.PENDING]: 'Pending',
+    [TASK_STATUS.IN_PROGRESS]: 'In Progress',
+    [TASK_STATUS.COMPLETED]: 'Completed',
+    [TASK_STATUS.APPROVED]: 'Approved',
+    [TASK_STATUS.REJECTED]: 'Rejected',
+    [TASK_STATUS.CANCELLED]: 'Cancelled',
+    [TASK_STATUS.EXPIRED]: 'Expired'
   };
   return statusMap[status as keyof typeof statusMap] || status;
 };
 
 const getStatusBadgeClass = (status: string) => {
   const classMap = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    in_progress: 'bg-blue-100 text-blue-800',
-    completed: 'bg-purple-100 text-purple-800',
-    approved: 'bg-green-100 text-green-800',
-    rejected: 'bg-red-100 text-red-800',
-    cancelled: 'bg-gray-100 text-gray-800',
-    expired: 'bg-red-100 text-red-800'
+    [TASK_STATUS.PENDING]: 'bg-yellow-100 text-yellow-800',
+    [TASK_STATUS.IN_PROGRESS]: 'bg-blue-100 text-blue-800',
+    [TASK_STATUS.COMPLETED]: 'bg-purple-100 text-purple-800',
+    [TASK_STATUS.APPROVED]: 'bg-green-100 text-green-800',
+    [TASK_STATUS.REJECTED]: 'bg-red-100 text-red-800',
+    [TASK_STATUS.CANCELLED]: 'bg-gray-100 text-gray-800',
+    [TASK_STATUS.EXPIRED]: 'bg-red-100 text-red-800'
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
 
 const getPriorityBadgeClass = (priority: string) => {
   const classMap = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-green-100 text-green-800'
+    [TASK_PRIORITY.HIGH]: 'bg-red-100 text-red-800',
+    [TASK_PRIORITY.MEDIUM]: 'bg-yellow-100 text-yellow-800',
+    [TASK_PRIORITY.LOW]: 'bg-green-100 text-green-800'
   };
   return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };

@@ -177,6 +177,8 @@
 </template>
 
 <script setup lang="ts">
+import { ORDER_STATUS, ORDER_FULFILLMENT } from '~/shared/constants';
+
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -197,17 +199,17 @@ const closeModal = () => {
 const getStatusBadgeClass = (status) => {
   const baseClass = 'px-2 py-1 text-xs font-medium rounded-full';
   switch (status) {
-    case 'pending':
+    case ORDER_STATUS.PENDING:
       return `${baseClass} bg-orange-100 text-orange-700`;
-    case 'processing':
+    case ORDER_FULFILLMENT.PROCESSING:
       return `${baseClass} bg-blue-100 text-blue-700`;
-    case 'shipped':
+    case ORDER_FULFILLMENT.SHIPPED:
       return `${baseClass} bg-green-100 text-green-700`;
-    case 'delivered':
+    case ORDER_FULFILLMENT.DELIVERED:
       return `${baseClass} bg-green-100 text-green-800`;
-    case 'cancelled':
+    case ORDER_STATUS.CANCELLED:
       return `${baseClass} bg-red-100 text-red-700`;
-    case 'refunded':
+    case ORDER_STATUS.REFUNDED:
       return `${baseClass} bg-gray-100 text-gray-700`;
     default:
       return `${baseClass} bg-gray-100 text-gray-700`;

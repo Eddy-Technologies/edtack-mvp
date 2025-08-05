@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '#imports';
-import { RECURRENCE_FREQUENCY } from '~~/shared/constants';
+import { RECURRENCE_FREQUENCY, TASK_STATUS, TASK_PRIORITY } from '~~/shared/constants';
+import { getUserInfo } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -30,28 +31,8 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get authenticated user (parent)
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
-
     // Get creator's user_info_id
-    const { data: creatorInfo, error: creatorError } = await supabase
-      .from('user_infos')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (creatorError || !creatorInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Creator user info not found'
-      });
-    }
+    const creatorInfo = await getUserInfo(event);
 
     // Verify that the assignee is in the same group as the creator
     const { data: groupRelation, error: relationError } = await supabase
@@ -124,9 +105,9 @@ export default defineEventHandler(async (event) => {
         subtitle: subtitle || null,
         description: description || null,
         credit: parseInt(credit),
-        status: 'pending',
+        status: TASK_STATUS.PENDING,
         due_date: due_date ? new Date(due_date).toISOString() : null,
-        priority: priority || 'medium',
+        priority: priority || TASK_PRIORITY.MEDIUM,
         category: category || null,
         auto_approve: auto_approve || false,
         is_recurring: is_recurring || false,

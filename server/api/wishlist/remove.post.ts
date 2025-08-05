@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { requireAuth } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -15,13 +16,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Get authenticated user
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
+    const user = await requireAuth(event);
 
     // Get user's user_info_id
     const { data: userInfo, error: userError } = await supabase

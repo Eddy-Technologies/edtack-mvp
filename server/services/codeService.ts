@@ -1,5 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { ORDER_STATUS, OPERATION_TYPE, TASK_STATUS, TASK_PRIORITY } from '~~/shared/constants';
+import { CODE_CATEGORIES } from '~~/app/stores/codes';
 
 export interface Code {
   id: string;
@@ -101,22 +102,22 @@ export const getCodes = (supabase: SupabaseClient, category: string) =>
   codeService.getCodesMap(supabase, category);
 
 export const getOperationTypes = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, 'OPERATION_TYPE');
+  codeService.getCodesMap(supabase, CODE_CATEGORIES.OPERATION_TYPE);
 
 export const getOrderStatuses = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, 'ORDER_STATUS');
+  codeService.getCodesMap(supabase, CODE_CATEGORIES.ORDER_STATUS);
 
 export const getTaskStatuses = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, 'TASK_STATUS');
+  codeService.getCodesMap(supabase, CODE_CATEGORIES.TASK_STATUS);
 
 export const getTaskPriorities = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, 'TASK_PRIORITY');
+  codeService.getCodesMap(supabase, CODE_CATEGORIES.TASK_PRIORITY);
 
 export const getRecurrenceFrequencies = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, 'RECURRENCE_FREQUENCY');
+  codeService.getCodesMap(supabase, CODE_CATEGORIES.RECURRENCE_FREQUENCY);
 
 export const getOrderFulfillmentStatuses = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, 'ORDER_FULFILLMENT');
+  codeService.getCodesMap(supabase, CODE_CATEGORIES.ORDER_FULFILLMENT);
 
 // Type-safe validation functions
 export const isValidOrderStatus = (status: string): status is ORDER_STATUS =>

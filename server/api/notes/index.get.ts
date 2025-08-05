@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { requireAuth } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -6,13 +7,7 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
 
     // Get authenticated user
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Authentication required'
-      });
-    }
+    const user = await requireAuth(event);
 
     // Extract query parameters
     const searchTerm = query.search as string;

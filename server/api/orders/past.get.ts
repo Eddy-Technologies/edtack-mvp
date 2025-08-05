@@ -1,4 +1,6 @@
 import { getSupabaseClient } from '#imports';
+import { getUserInfo } from '~~/server/utils/auth';
+import { ORDER_STATUS, ORDER_FULFILLMENT } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -7,31 +9,11 @@ export default defineEventHandler(async (event) => {
 
     const { limit = 50, offset = 0 } = query;
 
-    // Get authenticated user
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
-
-    // Get user's user_info_id
-    const { data: userInfo, error: userError } = await supabase
-      .from('user_infos')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (userError || !userInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User info not found'
-      });
-    }
+    // Get authenticated user info
+    const userInfo = await getUserInfo(event);
 
     // Past orders are those in final states (completed, cancelled, refunded, delivered)
-    const pastStatuses = ['delivered', 'cancelled', 'refunded', 'completed'];
+    const pastStatuses = [ORDER_FULFILLMENT.DELIVERED, ORDER_STATUS.CANCELLED, ORDER_STATUS.REFUNDED];
 
     // Get past orders for this user
     const { data: pastOrders, error: ordersError } = await supabase

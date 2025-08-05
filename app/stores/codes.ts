@@ -119,7 +119,6 @@ export const useCodesStore = defineStore('codes', {
       this.error = null;
 
       try {
-        console.log('fetching codes');
         const response = await $fetch('/api/codes/codes');
 
         if (!response.success || !response.codes) {
@@ -140,7 +139,6 @@ export const useCodesStore = defineStore('codes', {
 
     // Helper to group and sort codes
     groupAndSortCodes(codes: Code[]): Record<string, Code[]> {
-      console.log('group' + codes);
       const grouped = codes.reduce((acc: Record<string, Code[]>, code: Code) => {
         if (!acc[code.category]) {
           acc[code.category] = [];

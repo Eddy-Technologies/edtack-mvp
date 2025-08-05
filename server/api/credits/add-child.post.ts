@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { requireAuth } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   const stripe = await getStripe();
@@ -16,13 +17,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Get authenticated user (parent)
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
+    const user = await requireAuth(event);
 
     // Get parent's user_info_id
     const { data: parentUserInfo } = await supabase

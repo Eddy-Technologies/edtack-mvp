@@ -1,17 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Invalid or expired token'
-      });
-    }
+    const user = await requireAuth(event);
 
     // Get query parameters for pagination
     const query = getQuery(event);

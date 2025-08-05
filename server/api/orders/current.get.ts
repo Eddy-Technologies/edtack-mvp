@@ -1,4 +1,6 @@
 import { getSupabaseClient } from '#imports';
+import { getUserInfo } from '~~/server/utils/auth';
+import { ORDER_STATUS, ORDER_FULFILLMENT } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -7,31 +9,11 @@ export default defineEventHandler(async (event) => {
 
     const { limit = 50, offset = 0 } = query;
 
-    // Get authenticated user
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'User not authenticated'
-      });
-    }
-
-    // Get user's user_info_id
-    const { data: userInfo, error: userError } = await supabase
-      .from('user_infos')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (userError || !userInfo) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User info not found'
-      });
-    }
+    // Get authenticated user info
+    const userInfo = await getUserInfo(event);
 
     // Current orders are those not in final states (completed, cancelled, refunded, delivered)
-    const currentStatuses = ['pending', 'pending_parent_approval', 'paid', 'confirmed', 'processing', 'shipped'];
+    const currentStatuses = [ORDER_STATUS.PENDING, ORDER_STATUS.PENDING_PARENT_APPROVAL, ORDER_STATUS.PAID, ORDER_STATUS.CONFIRMED, ORDER_FULFILLMENT.PROCESSING, ORDER_FULFILLMENT.SHIPPED];
 
     // Get current orders for this user
     const { data: currentOrders, error: ordersError } = await supabase
