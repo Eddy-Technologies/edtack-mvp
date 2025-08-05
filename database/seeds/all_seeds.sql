@@ -92,6 +92,12 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('MEDIUM', 'Medium Priority', 'Medium priority task', 'task_priority', 20, true, NOW(), NOW()),
 ('HIGH', 'High Priority', 'High priority task', 'task_priority', 30, true, NOW(), NOW());
 
+-- Recurrence Frequency Constants
+INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('DAILY', 'Daily', 'Task repeats every day', 'recurrence_frequency', 10, true, NOW(), NOW()),
+('WEEKLY', 'Weekly', 'Task repeats every week', 'recurrence_frequency', 20, true, NOW(), NOW()),
+('MONTHLY', 'Monthly', 'Task repeats every month', 'recurrence_frequency', 30, true, NOW(), NOW());
+
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
 -- =============================================================================

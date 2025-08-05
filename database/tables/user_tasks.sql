@@ -7,15 +7,21 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   subtitle TEXT,
   description TEXT,
   credit INTEGER NOT NULL DEFAULT 0, -- Credit reward in cents
-  status TEXT NOT NULL DEFAULT 'pending', 
-  -- Status options: pending, in_progress, completed, approved, rejected, cancelled, expired
+  status TEXT NOT NULL, 
   due_date TIMESTAMPTZ,
-  priority TEXT DEFAULT 'medium', -- low, medium, high
+  priority TEXT,
   category TEXT, -- chores, homework, behavior, etc.
   completion_notes TEXT, -- Notes from assignee when completing task
   approval_notes TEXT, -- Notes from creator when approving/rejecting
   completed_at TIMESTAMPTZ, -- When assignee marked as completed
   approved_at TIMESTAMPTZ, -- When creator approved/rejected
+  auto_approve BOOLEAN DEFAULT FALSE, -- If true, task is auto-approved on completion
+  -- Recurring task fields
+  is_recurring BOOLEAN DEFAULT FALSE,
+  recurrence_frequency TEXT, -- daily, weekly, monthly
+  recurrence_interval INTEGER DEFAULT 1, -- every X days/weeks/months
+  recurrence_end_date TIMESTAMPTZ,
+  parent_task_id UUID REFERENCES user_tasks(id) ON DELETE CASCADE, -- Links recurring instances to parent
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -27,7 +33,3 @@ CREATE INDEX IF NOT EXISTS idx_user_tasks_assignee ON user_tasks(assignee_user_i
 -- Add constraint to ensure creator and assignee are different
 ALTER TABLE user_tasks ADD CONSTRAINT chk_different_users 
   CHECK (creator_user_info_id != assignee_user_info_id);
-
--- Add constraint for valid status values
-ALTER TABLE user_tasks ADD CONSTRAINT chk_valid_status 
-  CHECK (status IN ('pending', 'in_progress', 'completed', 'approved', 'rejected', 'cancelled', 'expired'));

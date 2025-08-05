@@ -37,8 +37,15 @@ export enum TASK_PRIORITY {
   HIGH = 'HIGH'
 }
 
+export enum RECURRENCE_FREQUENCY {
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY'
+}
+
 // Export all enum types for convenience
 export type OrderStatus = keyof typeof ORDER_STATUS;
 export type OperationType = keyof typeof OPERATION_TYPE;
 export type TaskStatus = keyof typeof TASK_STATUS;
 export type TaskPriority = keyof typeof TASK_PRIORITY;
+export type RecurrenceFrequency = keyof typeof RECURRENCE_FREQUENCY;

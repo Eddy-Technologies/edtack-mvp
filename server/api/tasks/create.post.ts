@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '#imports';
+import { RECURRENCE_FREQUENCY } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -13,7 +14,12 @@ export default defineEventHandler(async (event) => {
       credit,
       due_date,
       priority,
-      category
+      category,
+      auto_approve,
+      is_recurring,
+      recurrence_frequency,
+      recurrence_interval,
+      recurrence_end_date
     } = body;
 
     // Validate required fields
@@ -92,6 +98,22 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Validate recurring task fields
+    if (is_recurring) {
+      if (!recurrence_frequency || !Object.values(RECURRENCE_FREQUENCY).includes(recurrence_frequency)) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Valid recurrence_frequency is required for recurring tasks (${Object.values(RECURRENCE_FREQUENCY).join(', ')})`
+        });
+      }
+      if (recurrence_interval && (recurrence_interval < 1 || recurrence_interval > 365)) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'recurrence_interval must be between 1 and 365'
+        });
+      }
+    }
+
     // Create the task
     const { data: task, error: taskError } = await supabase
       .from('user_tasks')
@@ -105,7 +127,12 @@ export default defineEventHandler(async (event) => {
         status: 'pending',
         due_date: due_date ? new Date(due_date).toISOString() : null,
         priority: priority || 'medium',
-        category: category || null
+        category: category || null,
+        auto_approve: auto_approve || false,
+        is_recurring: is_recurring || false,
+        recurrence_frequency: is_recurring ? recurrence_frequency : null,
+        recurrence_interval: is_recurring ? (recurrence_interval || 1) : null,
+        recurrence_end_date: is_recurring && recurrence_end_date ? new Date(recurrence_end_date).toISOString() : null
       })
       .select(`
         id,

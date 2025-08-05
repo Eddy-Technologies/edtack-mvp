@@ -112,6 +112,9 @@ export const getTaskStatuses = (supabase: SupabaseClient) =>
 export const getTaskPriorities = (supabase: SupabaseClient) =>
   codeService.getCodesMap(supabase, 'task_priority');
 
+export const getRecurrenceFrequencies = (supabase: SupabaseClient) =>
+  codeService.getCodesMap(supabase, 'recurrence_frequency');
+
 // Type-safe validation functions
 export const isValidOrderStatus = (status: string): status is ORDER_STATUS =>
   Object.values(ORDER_STATUS).includes(status as ORDER_STATUS);

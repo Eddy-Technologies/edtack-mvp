@@ -133,6 +133,91 @@
             >
           </div>
 
+          <!-- Auto-Approve Option -->
+          <div class="flex items-center space-x-2">
+            <input
+              id="auto_approve"
+              v-model="form.auto_approve"
+              type="checkbox"
+              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            >
+            <label for="auto_approve" class="text-sm font-medium text-gray-700">
+              Auto-approve when completed
+            </label>
+          </div>
+          <p class="text-sm text-gray-500 -mt-2">
+            Child will receive credits immediately without requiring your approval
+          </p>
+
+          <!-- Recurring Task Options -->
+          <div class="border-t pt-4">
+            <div class="flex items-center space-x-2 mb-3">
+              <input
+                id="is_recurring"
+                v-model="form.is_recurring"
+                type="checkbox"
+                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              >
+              <label for="is_recurring" class="text-sm font-medium text-gray-700">
+                Make this a recurring task
+              </label>
+            </div>
+
+            <div v-if="form.is_recurring" class="space-y-4 pl-6 border-l-2 border-blue-100">
+              <!-- Frequency -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Repeat Frequency *
+                </label>
+                <select
+                  v-model="form.recurrence_frequency"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select frequency</option>
+                  <option v-for="frequency in recurrenceOptions" :key="frequency.value" :value="frequency.value">
+                    {{ frequency.label }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Interval -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Repeat Every
+                </label>
+                <div class="flex items-center space-x-2">
+                  <input
+                    v-model.number="form.recurrence_interval"
+                    type="number"
+                    min="1"
+                    max="365"
+                    class="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                  <span class="text-sm text-gray-600">
+                    {{ getIntervalLabel(form.recurrence_frequency) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- End Date -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  End Date (Optional)
+                </label>
+                <input
+                  v-model="form.recurrence_end_date"
+                  type="date"
+                  :min="today"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                <p class="text-sm text-gray-500 mt-1">
+                  Leave empty to repeat indefinitely
+                </p>
+              </div>
+            </div>
+          </div>
+
           <!-- Error Message -->
           <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-3">
             <p class="text-red-600 text-sm">{{ error }}</p>
@@ -181,10 +266,16 @@ const form = ref({
   creditAmount: 50,
   priority: 'medium',
   category: '',
-  due_date: ''
+  due_date: '',
+  auto_approve: false,
+  is_recurring: false,
+  recurrence_frequency: '',
+  recurrence_interval: 1,
+  recurrence_end_date: ''
 });
 
 const children = ref<any[]>([]);
+const recurrenceOptions = ref<any[]>([]);
 const isSubmitting = ref(false);
 const error = ref<string | null>(null);
 
@@ -198,6 +289,18 @@ const childrenOptions = computed(() => {
     label: child.name
   }));
 });
+
+// Load recurrence frequency options
+const loadRecurrenceOptions = async () => {
+  try {
+    const response = await $fetch('/api/codes/recurrence-frequencies');
+    if (response.success) {
+      recurrenceOptions.value = response.frequencies || [];
+    }
+  } catch (err: any) {
+    console.error('Failed to load recurrence options:', err);
+  }
+};
 
 // Load children when modal opens
 const loadChildren = async () => {
@@ -217,6 +320,12 @@ const createTask = async () => {
     isSubmitting.value = true;
     error.value = null;
 
+    // Validate recurring task fields
+    if (form.value.is_recurring && !form.value.recurrence_frequency) {
+      error.value = 'Please select a frequency for recurring tasks';
+      return;
+    }
+
     const response = await $fetch('/api/tasks/create', {
       method: 'POST',
       body: {
@@ -227,7 +336,12 @@ const createTask = async () => {
         credit: form.value.creditAmount * 100, // Convert to cents
         priority: form.value.priority,
         category: form.value.category || null,
-        due_date: form.value.due_date || null
+        due_date: form.value.due_date || null,
+        auto_approve: form.value.auto_approve,
+        is_recurring: form.value.is_recurring,
+        recurrence_frequency: form.value.is_recurring ? form.value.recurrence_frequency : null,
+        recurrence_interval: form.value.is_recurring ? form.value.recurrence_interval : null,
+        recurrence_end_date: form.value.is_recurring && form.value.recurrence_end_date ? form.value.recurrence_end_date : null
       }
     });
 
@@ -241,7 +355,12 @@ const createTask = async () => {
         creditAmount: 50,
         priority: 'medium',
         category: '',
-        due_date: ''
+        due_date: '',
+        auto_approve: false,
+        is_recurring: false,
+        recurrence_frequency: '',
+        recurrence_interval: 1,
+        recurrence_end_date: ''
       };
 
       emit('task-created');
@@ -256,17 +375,28 @@ const createTask = async () => {
   }
 };
 
+const getIntervalLabel = (frequency: string) => {
+  switch (frequency) {
+    case 'daily': return 'day(s)';
+    case 'weekly': return 'week(s)';
+    case 'monthly': return 'month(s)';
+    default: return '';
+  }
+};
+
 // Load children when modal opens
 onMounted(() => {
   if (props.isOpen) {
     loadChildren();
+    loadRecurrenceOptions();
   }
 });
 
-// Watch for modal open to load children
+// Watch for modal open to load children and options
 watch(() => props.isOpen, (newValue) => {
   if (newValue) {
     loadChildren();
+    loadRecurrenceOptions();
     error.value = null;
   }
 });

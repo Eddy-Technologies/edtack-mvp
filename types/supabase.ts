@@ -1017,6 +1017,7 @@ export type Database = {
           approval_notes: string | null;
           approved_at: string | null;
           assignee_user_info_id: string;
+          auto_approve: boolean | null;
           category: string | null;
           completed_at: string | null;
           completion_notes: string | null;
@@ -1026,8 +1027,13 @@ export type Database = {
           description: string | null;
           due_date: string | null;
           id: string;
+          is_recurring: boolean | null;
           name: string;
+          parent_task_id: string | null;
           priority: string | null;
+          recurrence_end_date: string | null;
+          recurrence_frequency: string | null;
+          recurrence_interval: number | null;
           status: string;
           subtitle: string | null;
           updated_at: string | null;
@@ -1036,6 +1042,7 @@ export type Database = {
           approval_notes?: string | null;
           approved_at?: string | null;
           assignee_user_info_id: string;
+          auto_approve?: boolean | null;
           category?: string | null;
           completed_at?: string | null;
           completion_notes?: string | null;
@@ -1045,9 +1052,14 @@ export type Database = {
           description?: string | null;
           due_date?: string | null;
           id?: string;
+          is_recurring?: boolean | null;
           name: string;
+          parent_task_id?: string | null;
           priority?: string | null;
-          status?: string;
+          recurrence_end_date?: string | null;
+          recurrence_frequency?: string | null;
+          recurrence_interval?: number | null;
+          status: string;
           subtitle?: string | null;
           updated_at?: string | null;
         };
@@ -1055,6 +1067,7 @@ export type Database = {
           approval_notes?: string | null;
           approved_at?: string | null;
           assignee_user_info_id?: string;
+          auto_approve?: boolean | null;
           category?: string | null;
           completed_at?: string | null;
           completion_notes?: string | null;
@@ -1064,8 +1077,13 @@ export type Database = {
           description?: string | null;
           due_date?: string | null;
           id?: string;
+          is_recurring?: boolean | null;
           name?: string;
+          parent_task_id?: string | null;
           priority?: string | null;
+          recurrence_end_date?: string | null;
+          recurrence_frequency?: string | null;
+          recurrence_interval?: number | null;
           status?: string;
           subtitle?: string | null;
           updated_at?: string | null;
@@ -1083,6 +1101,13 @@ export type Database = {
             columns: ['creator_user_info_id'];
             isOneToOne: false;
             referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'user_tasks_parent_task_id_fkey';
+            columns: ['parent_task_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_tasks';
             referencedColumns: ['id'];
           },
         ];
