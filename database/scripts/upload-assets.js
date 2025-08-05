@@ -16,8 +16,8 @@ function loadEnv() {
 
   const envContent = fs.readFileSync(envPath, 'utf8');
   const envVars = {};
-  
-  envContent.split('\n').forEach(line => {
+
+  envContent.split('\n').forEach((line) => {
     const match = line.match(/^([^#=]+)=(.*)$/);
     if (match) {
       envVars[match[1].trim()] = match[2].trim();
@@ -58,14 +58,14 @@ async function uploadCharacters() {
 
   // Ensure bucket exists
   const { data: buckets } = await supabase.storage.listBuckets();
-  if (!buckets?.some(bucket => bucket.name === 'characters')) {
+  if (!buckets?.some((bucket) => bucket.name === 'characters')) {
     console.log('Creating characters bucket...');
     const { error } = await supabase.storage.createBucket('characters', { public: true });
     if (error) throw error;
   }
 
   // Upload all files in characters directory
-  const files = fs.readdirSync(charactersDir).filter(file => 
+  const files = fs.readdirSync(charactersDir).filter((file) =>
     /\.(png|jpg|jpeg|gif|svg|webp)$/i.test(file)
   );
 
@@ -74,7 +74,7 @@ async function uploadCharacters() {
   for (const fileName of files) {
     const filePath = path.join(charactersDir, fileName);
     const fileBuffer = fs.readFileSync(filePath);
-    
+
     const { error } = await supabase.storage
       .from('characters')
       .upload(fileName, fileBuffer, {
@@ -93,7 +93,7 @@ async function uploadCharacters() {
 }
 
 // Run the upload
-uploadCharacters().catch(error => {
+uploadCharacters().catch((error) => {
   console.error('Upload failed:', error.message);
   process.exit(1);
 });
