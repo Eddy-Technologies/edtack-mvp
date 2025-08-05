@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { validateEmail } from '~~/utils';
+import { validateEmail } from '~~/shared/utils';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 

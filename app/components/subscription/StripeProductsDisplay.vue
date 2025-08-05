@@ -126,7 +126,7 @@
 import { ref, computed, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import type { GetProductResponse } from '~/composables/useStripe';
-import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
+import { STRIPE_LOOKUP_KEYS } from '~~/shared/constants';
 
 // State
 const products = ref<GetProductResponse[]>();

@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '#imports';
 import { getCodes } from '~~/server/services/codeService';
+import { TASK_STATUS, OPERATION_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -54,14 +55,14 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check if task can be approved/rejected
-    if (task.status !== 'completed') {
+    if (task.status !== TASK_STATUS.COMPLETED) {
       throw createError({
         statusCode: 400,
         statusMessage: `Task cannot be approved/rejected. Current status: ${task.status}`
       });
     }
 
-    const newStatus = approved ? 'approved' : 'rejected';
+    const newStatus = approved ? TASK_STATUS.APPROVED : TASK_STATUS.REJECTED;
 
     // Start transaction
     if (approved) {
@@ -106,7 +107,7 @@ export default defineEventHandler(async (event) => {
         .from('credit_transactions')
         .insert({
           user_info_id: task.assignee_user_info_id,
-          transaction_type: operationCodes.task_reward || 'task_reward',
+          transaction_type: 'TASK_REWARD',
           amount: task.credit,
           currency: 'SGD',
           description: `Task completed: ${task.name}`,

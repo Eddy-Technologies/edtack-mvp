@@ -1,6 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
 import { getCodes, getOperationTypes } from '~~/server/services/codeService';
+import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -148,7 +149,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
   const operationCodes = await getOperationTypes(supabase);
 
   // Check if this is a credit purchase (based on metadata or line items)
-  if (session.metadata?.operation_type === operationCodes.credit_topup || session.mode === 'payment') {
+  if (session.metadata?.operation_type === OPERATION_TYPE.CREDIT_TOPUP || session.mode === 'payment') {
     // Add credits to user's internal balance
     const { error: creditUpdateError } = await supabase
       .from('user_credits')
@@ -180,7 +181,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       .from('credit_transactions')
       .insert({
         user_info_id: userInfo.id,
-        transaction_type: operationCodes.credit_topup,
+        transaction_type: OPERATION_TYPE.CREDIT_TOPUP,
         currency: session.currency?.toUpperCase(),
         amount: session.amount_total,
         description: `Credit purchase via Stripe`,
@@ -215,7 +216,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     const { error: updateOrderError } = await supabase
       .from('orders')
       .update({
-        status_code: statusCodes.paid || 'paid',
+        status_code: ORDER_STATUS.PAID,
         payment_method: 'parent_approved_stripe',
         stripe_balance_transaction_id: session.payment_intent,
         paid_at: new Date().toISOString(),
@@ -234,7 +235,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     const { error: updateItemsError } = await supabase
       .from('order_items')
       .update({
-        status_code: statusCodes.paid || 'paid'
+        status_code: ORDER_STATUS.PAID
       })
       .eq('order_id', orderId);
 
@@ -269,7 +270,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
         .from('credit_transactions')
         .insert({
           user_info_id: childUserInfoId,
-          transaction_type: operationCodes.purchase || 'purchase',
+          transaction_type: OPERATION_TYPE.PURCHASE,
           amount: -order.total_amount_cents, // Negative for deduction
           currency: 'SGD',
           description: `Purchase: ${order.order_number} (Parent approved)`,
@@ -291,28 +292,79 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
 
     console.log(`[StripeWebhook] Parent approved purchase completed for order ${orderId}: ${session.amount_total} cents`);
   // Check if this is a direct product purchase (not parent-approved)
-  } else if (session.metadata?.user_info_id && session.metadata?.operation_type === operationCodes.purchase) {
+  } else if (session.metadata?.user_info_id && session.metadata?.operation_type === OPERATION_TYPE.PURCHASE) {
+    console.log(`[StripeWebhook] Processing direct purchase for user ${userInfo.id}, amount: ${session.amount_total} cents`);
+
     // This is a direct purchase (use_credits = false)
-    // Find the pending order by user and amount
-    const { data: pendingOrder } = await supabase
-      .from('orders')
-      .select('id, order_number')
-      .eq('user_info_id', userInfo.id)
-      .eq('status_code', 'pending_payment')
-      .eq('total_amount_cents', session.amount_total)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
+    // Find the pending order by user and amount with multiple fallback strategies
+    let pendingOrder = null;
+
+    // Strategy 1: Match by user_info_id and amount from metadata
+    if (session.metadata?.user_info_id) {
+      const { data: order1 } = await supabase
+        .from('orders')
+        .select('id, order_number, status_code')
+        .eq('user_info_id', session.metadata.user_info_id)
+        .eq('status_code', ORDER_STATUS.PENDING_PAYMENT)
+        .eq('total_amount_cents', session.amount_total)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (order1) {
+        pendingOrder = order1;
+        console.log(`[StripeWebhook] Found order using metadata user_info_id: ${order1.order_number}`);
+      }
+    }
+
+    // Strategy 2: Match by customer and amount (fallback)
+    if (!pendingOrder) {
+      const { data: order2 } = await supabase
+        .from('orders')
+        .select('id, order_number, status_code')
+        .eq('user_info_id', userInfo.id)
+        .eq('status_code', ORDER_STATUS.PENDING_PAYMENT)
+        .eq('total_amount_cents', session.amount_total)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (order2) {
+        pendingOrder = order2;
+        console.log(`[StripeWebhook] Found order using customer matching: ${order2.order_number}`);
+      }
+    }
+
+    // Strategy 3: Find most recent pending order for this user (last resort)
+    if (!pendingOrder) {
+      const { data: order3 } = await supabase
+        .from('orders')
+        .select('id, order_number, status_code, total_amount_cents')
+        .eq('user_info_id', userInfo.id)
+        .eq('status_code', ORDER_STATUS.PENDING_PAYMENT)
+        .order('created_at', { ascending: false })
+        .limit(5); // Get up to 5 recent orders to find a match
+
+      if (order3 && order3.length > 0) {
+        // Try to find exact amount match within recent orders
+        const exactMatch = order3.find((order) => order.total_amount_cents === session.amount_total);
+        if (exactMatch) {
+          pendingOrder = exactMatch;
+          console.log(`[StripeWebhook] Found order using recent orders exact match: ${exactMatch.order_number}`);
+        } else {
+          // If no exact match, log the discrepancy but don't use an order
+          console.warn(`[StripeWebhook] No exact amount match found. Session amount: ${session.amount_total}, Recent orders:`,
+            order3.map((o) => ({ number: o.order_number, amount: o.total_amount_cents })));
+        }
+      }
+    }
 
     if (pendingOrder) {
-      // Get status codes
-      const statusCodes = await getCodes(supabase, 'order_status');
-
       // Update order to paid
       const { error: updateError } = await supabase
         .from('orders')
         .update({
-          status_code: statusCodes.paid || 'paid',
+          status_code: ORDER_STATUS.PAID,
           stripe_balance_transaction_id: session.payment_intent,
           paid_at: new Date().toISOString(),
           notes: supabase.raw(`notes || ' - Direct payment completed via Stripe'`)
@@ -321,13 +373,17 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
 
       if (updateError) {
         console.error('Failed to update direct purchase order:', updateError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: `Failed to update order ${pendingOrder.order_number}`
+        });
       }
 
       // Update order items
       const { error: updateItemsError } = await supabase
         .from('order_items')
         .update({
-          status_code: statusCodes.paid || 'paid'
+          status_code: ORDER_STATUS.PAID
         })
         .eq('order_id', pendingOrder.id);
 
@@ -336,6 +392,9 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       }
 
       console.log(`[StripeWebhook] Direct purchase completed for order ${pendingOrder.order_number}: ${session.amount_total} cents`);
+    } else {
+      console.error(`[StripeWebhook] No matching pending order found for session ${session.id}, user ${userInfo.id}, amount ${session.amount_total}`);
+      // Don't throw error here as payment is still successful, just log the issue
     }
   }
 }

@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { validatePassword } from '~~/utils';
+import { validatePassword } from '~~/shared/utils';
 import { useToast } from '#imports';
 import { useAuth } from '~/composables/useAuth';
 

@@ -32,14 +32,14 @@
               @change="onStatusChange"
             >
               <option value="all">All Orders</option>
-              <option value="pending_parent_approval">Awaiting Approval</option>
-              <option value="paid">Paid</option>
-              <option value="confirmed">Confirmed</option>
+              <option :value="ORDER_STATUS.PENDING_PARENT_APPROVAL">Awaiting Approval</option>
+              <option :value="ORDER_STATUS.PAID">Paid</option>
+              <option :value="ORDER_STATUS.CONFIRMED">Confirmed</option>
               <option value="processing">Processing</option>
               <option value="shipped">Shipped</option>
               <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="rejected">Rejected</option>
+              <option :value="ORDER_STATUS.CANCELLED">Cancelled</option>
+              <option :value="ORDER_STATUS.REJECTED">Rejected</option>
             </select>
           </div>
         </div>
@@ -224,6 +224,7 @@ import { storeToRefs } from 'pinia';
 import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import { useMeStore } from '~/stores/me';
+import { ORDER_STATUS } from '~~/shared/constants/codes';
 
 // Reactive state
 const pendingOrders = ref<any[]>([]);
@@ -350,28 +351,28 @@ const viewOrderDetails = (order: any) => {
 // Helper functions for status display
 const getStatusText = (status: string) => {
   const statusMap = {
-    pending_parent_approval: 'Awaiting Approval',
-    paid: 'Paid',
-    confirmed: 'Confirmed',
+    [ORDER_STATUS.PENDING_PARENT_APPROVAL]: 'Awaiting Approval',
+    [ORDER_STATUS.PAID]: 'Paid',
+    [ORDER_STATUS.CONFIRMED]: 'Confirmed',
     processing: 'Processing',
     shipped: 'Shipped',
     delivered: 'Delivered',
-    cancelled: 'Cancelled',
-    rejected: 'Rejected'
+    [ORDER_STATUS.CANCELLED]: 'Cancelled',
+    [ORDER_STATUS.REJECTED]: 'Rejected'
   };
   return statusMap[status as keyof typeof statusMap] || status;
 };
 
 const getStatusBadgeClass = (status: string) => {
   const classMap = {
-    pending_parent_approval: 'bg-yellow-100 text-yellow-800',
-    paid: 'bg-blue-100 text-blue-800',
-    confirmed: 'bg-green-100 text-green-800',
+    [ORDER_STATUS.PENDING_PARENT_APPROVAL]: 'bg-yellow-100 text-yellow-800',
+    [ORDER_STATUS.PAID]: 'bg-blue-100 text-blue-800',
+    [ORDER_STATUS.CONFIRMED]: 'bg-green-100 text-green-800',
     processing: 'bg-purple-100 text-purple-800',
     shipped: 'bg-indigo-100 text-indigo-800',
     delivered: 'bg-green-100 text-green-800',
-    cancelled: 'bg-gray-100 text-gray-800',
-    rejected: 'bg-red-100 text-red-800'
+    [ORDER_STATUS.CANCELLED]: 'bg-gray-100 text-gray-800',
+    [ORDER_STATUS.REJECTED]: 'bg-red-100 text-red-800'
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };

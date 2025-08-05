@@ -1,7 +1,7 @@
 import type Stripe from 'stripe';
 import { getSupabaseClient } from '#imports';
 import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
-import { STRIPE_CUSTOMER } from '~~/utils/constants';
+import { STRIPE_CUSTOMER } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {

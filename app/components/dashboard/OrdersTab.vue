@@ -187,23 +187,24 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
+import { ORDER_STATUS } from '~~/shared/constants';
 
 const router = useRouter();
 
 // Order tab state
 const orderTab = ref('current');
 
-// Order status codes (matches backend status codes)
+// Order status codes using enum values
 const orderStatusCodes = ref({
-  pending: 'pending',
-  pending_parent_approval: 'pending_parent_approval',
-  paid: 'paid',
-  confirmed: 'confirmed',
+  pending: ORDER_STATUS.PENDING,
+  pending_parent_approval: ORDER_STATUS.PENDING_PARENT_APPROVAL,
+  paid: ORDER_STATUS.PAID,
+  confirmed: ORDER_STATUS.CONFIRMED,
   processing: 'processing',
   shipped: 'shipped',
   delivered: 'delivered',
-  cancelled: 'cancelled',
-  refunded: 'refunded',
+  cancelled: ORDER_STATUS.CANCELLED,
+  refunded: ORDER_STATUS.REFUNDED,
   completed: 'completed'
 });
 
@@ -269,7 +270,7 @@ const getOrderStatusClass = (status: string) => {
 
 const formatStatus = (status: string) => {
   switch (status) {
-    case 'pending_parent_approval':
+    case ORDER_STATUS.PENDING_PARENT_APPROVAL:
       return 'Awaiting Approval';
     case 'processing':
       return 'Processing';

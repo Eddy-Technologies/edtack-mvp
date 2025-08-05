@@ -177,7 +177,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { validateEmail, validatePassword } from '~~/utils';
+import { validateEmail, validatePassword } from '~~/shared/utils';
 import { USER_ROLE, STUDENT_LEVEL } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';

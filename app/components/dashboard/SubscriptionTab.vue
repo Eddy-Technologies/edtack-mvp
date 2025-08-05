@@ -184,7 +184,7 @@ import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import { useStripe } from '#imports';
-import { STRIPE_CUSTOMER } from '~~/utils/constants';
+import { STRIPE_CUSTOMER } from '~~/shared/constants';
 
 const { openCustomerPortal } = useStripe();
 

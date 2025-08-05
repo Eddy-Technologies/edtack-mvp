@@ -1,6 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
-import { getCodes } from '~~/server/services/codeService';
+import { ORDER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -108,7 +108,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Check if order can be approved/rejected
-    if (order.status_code !== 'pending_parent_approval') {
+    if (order.status_code !== ORDER_STATUS.PENDING_PARENT_APPROVAL) {
       throw createError({
         statusCode: 400,
         statusMessage: `Order cannot be approved/rejected. Current status: ${order.status_code}`
@@ -153,7 +153,7 @@ export default defineEventHandler(async (event) => {
       const { error: updateError } = await supabase
         .from('orders')
         .update({
-          status_code: 'rejected',
+          status_code: ORDER_STATUS.REJECTED,
           notes: `${order.notes} - Rejected by parent`
         })
         .eq('id', order_id);
@@ -172,7 +172,7 @@ export default defineEventHandler(async (event) => {
         order: {
           id: order.id,
           orderNumber: order.order_number,
-          status: 'rejected'
+          status: ORDER_STATUS.REJECTED
         }
       };
     }

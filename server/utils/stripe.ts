@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
+import { STRIPE_LOOKUP_KEYS } from '~~/shared/constants';
 
 let stripeInstance: Stripe | null = null;
 interface StripeCustomerData {

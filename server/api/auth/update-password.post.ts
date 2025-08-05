@@ -1,6 +1,6 @@
 import { serverSupabaseUser } from '#supabase/server';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { validatePassword } from '~~/utils/validation';
+import { validatePassword } from '~~/shared/utils';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);

@@ -1,6 +1,6 @@
 import type Stripe from 'stripe';
 import { getStripe } from '../../utils/stripe';
-import { STRIPE_LOOKUP_KEYS } from '~~/utils/constants';
+import { STRIPE_LOOKUP_KEYS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {

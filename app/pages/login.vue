@@ -113,7 +113,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { validateEmail } from '~~/utils';
+import { validateEmail } from '~~/shared/utils';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';

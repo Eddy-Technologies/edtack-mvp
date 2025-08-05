@@ -1,7 +1,7 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { SignUpReq } from '~~/app/composables/useAuth';
 import { USER_ROLE } from '~~/app/constants/User';
-import { validateEmail, validatePassword } from '~~/utils/validation';
+import { validateEmail, validatePassword } from '~~/shared/utils/validation';
 import { createStripeCustomer } from '~~/server/utils/stripe';
 
 export default defineEventHandler(async (event) => {

@@ -1,6 +1,7 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '#imports';
 import { getCodes } from '~~/server/services/codeService';
+import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
 
 // Generate order number function
 function generateOrderNumber(): string {
@@ -51,7 +52,7 @@ export default defineEventHandler(async (event) => {
     // Get user info
     const { data: userInfo, error: userError } = await supabase
       .from('user_infos')
-      .select('id, payment_customer_id')
+      .select('id, payment_customer_id, email')
       .eq('user_id', user.id)
       .single();
 
@@ -179,7 +180,7 @@ export default defineEventHandler(async (event) => {
           });
         }
 
-        orderStatus = statusCodes.pending_parent_approval || 'pending_parent_approval';
+        orderStatus = ORDER_STATUS.PENDING_PARENT_APPROVAL;
         paymentMethod = 'credits_pending_approval';
       }
     } else {
@@ -203,17 +204,18 @@ export default defineEventHandler(async (event) => {
           quantity: item.quantity
         })),
         mode: 'payment',
+        customer_email: userInfo.email || user.email,
         success_url: `${baseUrl}/shop/order-success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/shop?cancelled=true`,
+        cancel_url: `${baseUrl}/dashboard?tab=cart&cancelled=true`,
         metadata: {
           user_info_id: userInfo.id,
-          operation_type: operationCodes.purchase,
+          operation_type: OPERATION_TYPE.PURCHASE,
           total_items: orderItems.length.toString(),
           total_quantity: items.reduce((sum, item) => sum + item.quantity, 0).toString()
         }
       });
 
-      orderStatus = statusCodes.pending_payment || 'pending_payment';
+      orderStatus = ORDER_STATUS.PENDING_PAYMENT;
       paymentMethod = 'stripe_checkout';
       stripeCheckoutUrl = session.url;
     }
