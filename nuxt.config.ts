@@ -25,8 +25,8 @@ export default defineNuxtConfig({
   ui: {
     colorMode: {
       preference: 'light', // Default preference
-      forced: true,        // 💡 Force only light mode
-      classSuffix: '',     // Don't append `-dark` or `-light` to class
+      forced: true, // 💡 Force only light mode
+      classSuffix: '', // Don't append `-dark` or `-light` to class
     },
   },
 
@@ -68,6 +68,7 @@ export default defineNuxtConfig({
       stripePricingTableId: process.env.NUXT_PUBLIC_STRIPE_PRICING_TABLE_ID,
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
       stripeCustomerPortalUrl: process.env.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL,
+      chatWsUrl: process.env.NUXT_PUBLIC_CHAT_WS_URL || 'ws://localhost:8000',
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,

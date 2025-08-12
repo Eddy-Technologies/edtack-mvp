@@ -1,4 +1,4 @@
-import {GoogleGenerativeAI} from '@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -23,7 +23,7 @@ export async function useBufferedGenAi(messages: Message[]): Promise<any> {
   });
 
   try {
-    return await model.generateContent({contents});
+    return await model.generateContent({ contents });
   } catch (error: any) {
     console.error('Error in useBufferedGenAi:', error?.message || error);
     return '[Error generating response]';

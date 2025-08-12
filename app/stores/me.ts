@@ -17,6 +17,7 @@ export const useMeStore = defineStore('me', {
     last_name: '',
     user_role: '',
     level_type: undefined,
+    country_code: undefined,
     onboarding_completed: false,
     payment_customer_id: undefined,
     is_active: false,
