@@ -37,13 +37,18 @@
       />
 
       <!-- Loading indicator when waiting for WebSocket response -->
-      <div v-if="isWaitingForResponse" class="flex items-center gap-2 p-4 bg-gray-50 rounded-lg animate-pulse">
+      <div v-if="wsChat?.isWaitingForResponse || isWaitingForResponse" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+        <!-- Animated dots -->
         <div class="flex space-x-1">
           <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0ms" />
           <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 150ms" />
           <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 300ms" />
         </div>
-        <span class="text-gray-600 text-sm">Eddy is thinking...</span>
+
+        <!-- Backend status message -->
+        <span class="text-gray-600 text-sm">
+          {{ wsChat?.responsePhase || 'Processing...' }}
+        </span>
       </div>
 
       <div ref="bottomAnchor" />
@@ -57,7 +62,6 @@ import { useRoute } from 'vue-router';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
-// import { useChat } from '~/composables/useChat'; // DISABLED: Google API removed
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useSpeech } from '~/composables/useSpeech';
 import { useLesson } from '~/composables/useLesson';
@@ -78,12 +82,11 @@ const tokenCount = ref(0);
 
 // WebSocket integration
 const route = useRoute();
-const useWebSocket = ref(true); // WebSocket-only mode (Google API disabled)
+const useWebSocket = ref(true); // WebSocket-only mode
 const threadId = ref<string>('');
 const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
-let responseTimeout: NodeJS.Timeout | null = null;
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -140,15 +143,18 @@ onMounted(() => {
     return;
   }
 
-  // Use userId as the primary identifier, with avatarId as context
-  const storageKey = `chat-thread-${userId}-${avatarId || 'default'}`;
+  // Get subject for thread ID
+  const subject = AVATAR_SUBJECTS[avatarId?.toLowerCase()] || 'general';
+
+  // Use userId as the primary identifier, with avatarId and subject as context
+  const storageKey = `chat-thread-${userId}-${avatarId || 'default'}-${subject}`;
   const storedThread = localStorage.getItem(storageKey);
 
   if (storedThread) {
     threadId.value = storedThread;
     isFirstMessage.value = false;
   } else {
-    threadId.value = `${userId}-${avatarId || 'default'}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    threadId.value = `${userId}-${avatarId || 'default'}-${subject}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     localStorage.setItem(storageKey, threadId.value);
     isFirstMessage.value = true;
   }
@@ -188,8 +194,26 @@ onUnmounted(() => {
 
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
-  if (message.type === 'response' || message.type === 'message') {
-    // Update the last assistant message in the stream
+  if (message.type === 'partial') {
+    // Handle partial responses - update the last assistant message
+    const lastIdx = messageStream.value.length - 1;
+    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
+      messageStream.value[lastIdx] = {
+        type: 'text',
+        text: message.content || '[Partial response...]',
+        isUser: false,
+        playable: false, // Don't allow playback until complete
+      };
+    }
+
+    nextTick(() => {
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    });
+    return;
+  }
+
+  if (message.type === 'complete' || message.type === 'response' || message.type === 'message') {
+    // Final response - update the last assistant message
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -209,34 +233,60 @@ const handleWebSocketMessage = (message: any) => {
     }
 
     isPlayingAllowed.value = true;
-    isWaitingForResponse.value = false; // Stop loading state
-
-    // Clear timeout since we got a response
-    if (responseTimeout) {
-      clearTimeout(responseTimeout);
-      responseTimeout = null;
-    }
+    isWaitingForResponse.value = false;
 
     nextTick(() => {
       bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
     });
-  } else if (message.type === 'error') {
-    const lastIdx = messageStream.value.length - 1;
-    messageStream.value[lastIdx] = {
-      type: 'text',
-      text: `[Error: ${message.error || 'Connection error'}]`,
-      isUser: false,
-      playable: false,
-    };
-    isPlayingAllowed.value = true;
-    isWaitingForResponse.value = false; // Stop loading state
-
-    // Clear timeout on error
-    if (responseTimeout) {
-      clearTimeout(responseTimeout);
-      responseTimeout = null;
-    }
+    return;
   }
+
+  if (message.type === 'timeout') {
+    const lastIdx = messageStream.value.length - 1;
+    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
+      messageStream.value[lastIdx] = {
+        type: 'text',
+        text: `[Timeout: ${message.error || 'Request took too long. Please try again.'}]`,
+        isUser: false,
+        playable: false,
+      };
+    }
+    isPlayingAllowed.value = true;
+    isWaitingForResponse.value = false;
+    return;
+  }
+
+  if (message.type === 'cancelled') {
+    const lastIdx = messageStream.value.length - 1;
+    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
+      messageStream.value[lastIdx] = {
+        type: 'text',
+        text: '[Request was cancelled]',
+        isUser: false,
+        playable: false,
+      };
+    }
+    isPlayingAllowed.value = true;
+    isWaitingForResponse.value = false;
+    return;
+  }
+
+  if (message.type === 'error') {
+    const lastIdx = messageStream.value.length - 1;
+    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
+      messageStream.value[lastIdx] = {
+        type: 'text',
+        text: `[Error: ${message.error || 'Connection error'}]`,
+        isUser: false,
+        playable: false,
+      };
+    }
+    isPlayingAllowed.value = true;
+    isWaitingForResponse.value = false;
+    return;
+  }
+
+  // Handle other message types (heartbeat, status are handled by useWebSocketChat)
 };
 
 // Flatten the entire messageStream into an ordered array of playback units
@@ -315,7 +365,7 @@ const handleSend = async (text: string) => {
       playable: false,
     });
 
-    // Use WebSocket only - no fallback to Google API
+    // Use WebSocket only
     if (useWebSocket.value && wsChat.value && wsChat.value.isConnected) {
       // Create user_info for the WebSocket message
       const avatarId = route.params.avatarId as string;
@@ -338,22 +388,6 @@ const handleSend = async (text: string) => {
       if (success) {
         // Start loading state when message is sent successfully
         isWaitingForResponse.value = true;
-
-        // Set timeout to prevent stuck loading state (30 seconds)
-        responseTimeout = setTimeout(() => {
-          if (isWaitingForResponse.value) {
-            isWaitingForResponse.value = false;
-            const lastIdx = messageStream.value.length - 1;
-            if (lastIdx >= 0 && !messageStream.value[lastIdx].text) {
-              messageStream.value[lastIdx] = {
-                type: 'text',
-                text: '[Response timeout - please try again]',
-                isUser: false,
-                playable: false,
-              };
-            }
-          }
-        }, 30000);
       } else {
         // Handle WebSocket send failure
         const lastIdx = messageStream.value.length - 1;
@@ -380,63 +414,6 @@ const handleSend = async (text: string) => {
     }
   }
 };
-
-// HTTP chat handler (fallback) - DISABLED: Using WebSocket only
-/*
-const handleHttpChat = async (text: string) => {
-  // Prepare recent context
-  const recentMessages = messageStream.value
-    .filter((m) => m.type === 'text')
-    .slice(-MAX_CONTEXT_MESSAGES)
-    .map((m) => ({
-      role: m.isUser ? 'user' : 'assistant',
-      content: m.text,
-    }));
-
-  const messagesForApi = [
-    {
-      role: 'system',
-      content: `You are a helpful assistant. Remember this context summary:\n${conversationSummary.value}`,
-    },
-    ...recentMessages,
-  ];
-
-  try {
-    const { response } = await useChat('/api/chat', {
-      messages: messagesForApi,
-    });
-
-    // Extract assistant's reply text
-    const assistantReply = response?.candidates?.[0]?.content?.parts?.[0]?.text || '[No response text]';
-
-    // Replace placeholder with real assistant message
-    const lastIdx = messageStream.value.length - 1;
-    messageStream.value[lastIdx] = {
-      type: 'text',
-      text: assistantReply,
-      isUser: false,
-      playable: true,
-    };
-
-    // Update token usage in localStorage
-    const tokenUsage = response?.usageMetadata?.totalTokenCount || 0;
-    const currentTokenCount = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
-    const newTokenCount = currentTokenCount + tokenUsage;
-    localStorage.setItem('tokenUsage', (newTokenCount.toString()));
-    tokenCount.value = newTokenCount;
-  } catch (err) {
-    const lastIdx = messageStream.value.length - 1;
-    messageStream.value[lastIdx] = {
-      type: 'text',
-      text: '[Error getting response]',
-      isUser: false,
-      playable: false,
-    };
-    isPlayingAllowed.value = true;
-    console.error('Chat API error:', err);
-  }
-};
-*/
 
 const constructLesson = (text: string) => {
   isPlayingAllowed.value = false;
@@ -555,11 +532,13 @@ const clearChat = () => {
       return;
     }
 
-    const storageKey = `chat-thread-${userId}-${avatarId || 'default'}`;
+    // Get subject for thread ID
+    const subject = AVATAR_SUBJECTS[avatarId?.toLowerCase()] || 'general';
+    const storageKey = `chat-thread-${userId}-${avatarId || 'default'}-${subject}`;
     localStorage.removeItem(storageKey);
 
     // Generate new thread ID
-    threadId.value = `${userId}-${avatarId || 'default'}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    threadId.value = `${userId}-${avatarId || 'default'}-${subject}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     localStorage.setItem(storageKey, threadId.value);
     isFirstMessage.value = true;
 

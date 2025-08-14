@@ -6,7 +6,7 @@ EdTack is an AI-powered educational technology platform that enables family-base
 
 - **Supabase Authentication**: Clean auth system with OAuth providers
 - **Family Task Management**: Parent-child task assignment with credit rewards
-- **AI-Powered Tutoring**: Google Gemini integration for personalized education
+- **AI-Powered Tutoring**: WebSocket-based AI integration for personalized education
 - **Credit Reward System**: Task-based credit earning (1 credit = 1 cent SGD)
 - **Educational Content**: Singapore curriculum-aligned questions and performance tracking
 - **E-commerce Integration**: Stripe-powered shop with credit-based purchasing
@@ -16,7 +16,7 @@ EdTack is an AI-powered educational technology platform that enables family-base
 - **Framework**: Nuxt 3 with TypeScript
 - **Database**: Supabase (PostgreSQL) with Row Level Security
 - **Payments**: Stripe with product purchasing and credit management
-- **AI**: Google Gemini 2.0 Flash for educational content
+- **AI**: WebSocket-based AI service for educational content
 - **Authentication**: Supabase Auth with OAuth providers
 - **Deployment**: NuxtHub (Cloudflare)
 
@@ -32,13 +32,10 @@ server/
 │   ├── children/       # Child user management
 │   ├── orders/         # Order processing and approval
 │   ├── shop/           # Product management and purchasing
-│   ├── chat.post.ts    # AI tutoring chat
-│   ├── questions.post.ts # Educational content generation
 │   └── webhooks/       # Stripe webhook processing
 ├── utils/
 │   ├── authConfig.ts   # Auth configuration
-│   ├── stripe.ts       # Stripe integration
-│   └── useGenAi.ts     # Google AI integration
+│   └── stripe.ts       # Stripe integration
 database/
 ├── tables/             # Database schema files (semantic naming)
 ├── seeds/              # Seed data for development
@@ -58,7 +55,7 @@ types/
 - Supabase account and project
 - Supabase CLI for local development
 - Stripe account (test mode for development)
-- Google AI Studio API key
+- WebSocket AI server (anthropic-rag backend)
 
 ### Installation
 
@@ -90,8 +87,8 @@ STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
-# Google AI
-GOOGLE_AI_STUDIO_API_KEY=your_google_ai_api_key
+# WebSocket AI Service
+NUXT_PUBLIC_CHAT_WS_URL=ws://localhost:8000/api/v1/ws
 
 # JWT
 JWT_SECRET=your_jwt_secret_key

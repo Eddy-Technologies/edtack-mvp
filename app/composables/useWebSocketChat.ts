@@ -1,7 +1,7 @@
 import { ref, onUnmounted } from 'vue';
 
 interface WebSocketMessage {
-  type: 'start' | 'continue' | 'user_response';
+  type: 'start' | 'continue' | 'user_response' | 'cancel';
   payload?: string;
   user_info?: {
     subject?: string;
@@ -11,9 +11,12 @@ interface WebSocketMessage {
 }
 
 interface WebSocketResponse {
-  type: string;
+  type: 'response' | 'message' | 'error' | 'heartbeat' | 'partial' | 'complete' | 'timeout' | 'cancelled' | 'status';
   content?: string;
   error?: string;
+  phase?: string; // For status updates
+  is_complete?: boolean; // For partial responses
+  timestamp?: number; // For heartbeat
   [key: string]: any;
 }
 
@@ -24,6 +27,8 @@ export function useWebSocketChat(threadId: string) {
   const isConnecting = ref(false);
   const messages = ref<WebSocketResponse[]>([]);
   const error = ref<string | null>(null);
+  const isWaitingForResponse = ref(false);
+  const responsePhase = ref<string>('');
 
   const wsUrl = `${config.public.chatWsUrl}/api/v1/ws/chat/${threadId}`;
 
@@ -32,19 +37,23 @@ export function useWebSocketChat(threadId: string) {
   const maxReconnectAttempts = 5;
   const reconnectDelay = 1000;
 
+  const clearReconnectTimer = () => {
+    if (reconnectTimeout) {
+      clearTimeout(reconnectTimeout);
+      reconnectTimeout = null;
+    }
+  };
+
   const connect = () => {
     if (isConnecting.value || isConnected.value) return;
 
     isConnecting.value = true;
     error.value = null;
-    
-    console.log(`Attempting to connect to WebSocket: ${wsUrl}`); // Debug log
 
     try {
       ws.value = new WebSocket(wsUrl);
 
       ws.value.onopen = () => {
-        console.log(`✅ WebSocket connected successfully to thread: ${threadId}`);
         isConnected.value = true;
         isConnecting.value = false;
         reconnectAttempts = 0;
@@ -53,8 +62,27 @@ export function useWebSocketChat(threadId: string) {
       ws.value.onmessage = (event) => {
         try {
           const data: WebSocketResponse = JSON.parse(event.data);
+
+          // Handle different message types
+          if (data.type === 'heartbeat') {
+            return; // Don't add heartbeat to messages
+          }
+
+          if (data.type === 'status') {
+            responsePhase.value = data.phase || 'Processing...';
+            return;
+          }
+
+          // Handle completion types - these end the response
+          if (['complete', 'response', 'message', 'timeout', 'cancelled', 'error'].includes(data.type)) {
+            isWaitingForResponse.value = false;
+            responsePhase.value = '';
+          }
+
+          // Add all messages to the array
           messages.value.push(data);
 
+          // Set error state if present
           if (data.error) {
             error.value = data.error;
           }
@@ -63,21 +91,17 @@ export function useWebSocketChat(threadId: string) {
         }
       };
 
-      ws.value.onerror = (event) => {
-        console.error('❌ WebSocket error:', event);
-        console.error('WebSocket URL:', wsUrl);
+      ws.value.onerror = () => {
         error.value = 'Connection error occurred';
       };
 
-      ws.value.onclose = (event) => {
-        console.log(`WebSocket disconnected - Code: ${event.code}, Reason: ${event.reason}`);
+      ws.value.onclose = () => {
         isConnected.value = false;
         isConnecting.value = false;
 
         if (reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++;
           const delay = reconnectDelay * Math.pow(2, reconnectAttempts - 1);
-          console.log(`Reconnecting in ${delay}ms... (attempt ${reconnectAttempts}/${maxReconnectAttempts})`);
 
           reconnectTimeout = setTimeout(() => {
             connect();
@@ -86,18 +110,14 @@ export function useWebSocketChat(threadId: string) {
           error.value = 'Failed to establish connection after multiple attempts';
         }
       };
-    } catch (e) {
-      console.error('Failed to create WebSocket:', e);
+    } catch {
       error.value = 'Failed to create connection';
       isConnecting.value = false;
     }
   };
 
   const disconnect = () => {
-    if (reconnectTimeout) {
-      clearTimeout(reconnectTimeout);
-      reconnectTimeout = null;
-    }
+    clearReconnectTimer();
 
     if (ws.value) {
       ws.value.close();
@@ -118,32 +138,50 @@ export function useWebSocketChat(threadId: string) {
     try {
       ws.value.send(JSON.stringify(message));
       return true;
-    } catch (e) {
-      console.error('Failed to send message:', e);
+    } catch {
       error.value = 'Failed to send message';
       return false;
     }
   };
 
   const startChat = (initialMessage: string, userInfo?: WebSocketMessage['user_info']) => {
-    return sendMessage({
+    const success = sendMessage({
       type: 'start',
       payload: initialMessage,
       user_info: userInfo,
     });
+    if (success) {
+      isWaitingForResponse.value = true;
+    }
+    return success;
   };
 
   const continueChat = () => {
-    return sendMessage({
+    const success = sendMessage({
       type: 'continue',
     });
+    if (success) {
+      isWaitingForResponse.value = true;
+    }
+    return success;
   };
 
   const sendUserResponse = (response: string, userInfo?: WebSocketMessage['user_info']) => {
-    return sendMessage({
+    const success = sendMessage({
       type: 'user_response',
       payload: response,
       user_info: userInfo,
+    });
+    if (success) {
+      isWaitingForResponse.value = true;
+    }
+    return success;
+  };
+
+  const cancelRequest = () => {
+    responsePhase.value = '';
+    return sendMessage({
+      type: 'cancel',
     });
   };
 
@@ -161,10 +199,13 @@ export function useWebSocketChat(threadId: string) {
     startChat,
     continueChat,
     sendUserResponse,
+    cancelRequest,
     clearMessages,
     messages,
     isConnected,
     isConnecting,
+    isWaitingForResponse,
     error,
+    responsePhase,
   };
 }
