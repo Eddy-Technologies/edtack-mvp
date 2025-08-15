@@ -193,29 +193,35 @@ onUnmounted(() => {
 // Helper functions to handle different content types
 const parseMessageContent = (message: any) => {
   console.log('Parsing WebSocket message:', message); // Debug log for new format
-  if (message.generation_intent_type && message.message) {
-    switch (message.generation_intent_type) {
-      case GenerationIntentType.STANDARD_RESPONSE:
-        return {
-          type: 'text',
-          text: message.message,
-          isUser: false,
-          playable: true,
-        };
+  
+  // If message.message exists, display it unconditionally
+  if (message.message) {
+    // Check generation_intent_type if available
+    if (message.generation_intent_type) {
+      switch (message.generation_intent_type) {
+        case GenerationIntentType.LESSON:
+          return parseLessonContent(message.message);
 
-      case GenerationIntentType.LESSON:
-        return parseLessonContent(message.message);
+        case GenerationIntentType.QUIZ:
+          return parseQuizContent(message.message);
 
-      case GenerationIntentType.QUIZ:
-        return parseQuizContent(message.message);
-
-      default:
-        return {
-          type: 'text',
-          text: message.message,
-          isUser: false,
-          playable: true,
-        };
+        case GenerationIntentType.STANDARD_RESPONSE:
+        default:
+          return {
+            type: 'text',
+            text: message.message,
+            isUser: false,
+            playable: true,
+          };
+      }
+    } else {
+      // No generation_intent_type, just display the message
+      return {
+        type: 'text',
+        text: message.message,
+        isUser: false,
+        playable: true,
+      };
     }
   }
 
