@@ -1,5 +1,11 @@
 import { ref, onUnmounted } from 'vue';
 
+export enum GenerationIntentType {
+  STANDARD_RESPONSE = 'standard_response',
+  LESSON = 'lesson',
+  QUIZ = 'quiz'
+}
+
 interface WebSocketMessage {
   type: 'start' | 'continue' | 'user_response' | 'cancel';
   payload?: string;
@@ -11,12 +17,13 @@ interface WebSocketMessage {
 }
 
 interface WebSocketResponse {
-  type: 'response' | 'message' | 'error' | 'heartbeat' | 'partial' | 'complete' | 'timeout' | 'cancelled' | 'status';
-  content?: string;
+  status: string;
+  message?: string; // New field for structured responses
+  generation_intent_type?: 'standard_response' | 'lesson' | 'quiz'; // New field for response types
   error?: string;
-  phase?: string; // For status updates
   is_complete?: boolean; // For partial responses
   timestamp?: number; // For heartbeat
+  data?: any; // For additional data
   [key: string]: any;
 }
 
@@ -25,7 +32,7 @@ export function useWebSocketChat(threadId: string) {
   const ws = ref<WebSocket | null>(null);
   const isConnected = ref(false);
   const isConnecting = ref(false);
-  const messages = ref<WebSocketResponse[]>([]);
+  const response = ref<WebSocketResponse[]>([]);
   const error = ref<string | null>(null);
   const isWaitingForResponse = ref(false);
   const responsePhase = ref<string>('');
@@ -64,23 +71,23 @@ export function useWebSocketChat(threadId: string) {
           const data: WebSocketResponse = JSON.parse(event.data);
 
           // Handle different message types
-          if (data.type === 'heartbeat') {
+          if (data.status === 'heartbeat') {
             return; // Don't add heartbeat to messages
           }
 
-          if (data.type === 'status') {
+          if (data.status === 'status_update') {
             responsePhase.value = data.phase || 'Processing...';
             return;
           }
 
           // Handle completion types - these end the response
-          if (['complete', 'response', 'message', 'timeout', 'cancelled', 'error'].includes(data.type)) {
+          if (['complete', 'response', 'user_message', 'timeout', 'cancelled', 'error'].includes(data.status)) {
             isWaitingForResponse.value = false;
             responsePhase.value = '';
           }
 
           // Add all messages to the array
-          messages.value.push(data);
+          response.value.push(data);
 
           // Set error state if present
           if (data.error) {
@@ -186,7 +193,7 @@ export function useWebSocketChat(threadId: string) {
   };
 
   const clearMessages = () => {
-    messages.value = [];
+    response.value = [];
   };
 
   onUnmounted(() => {
@@ -201,7 +208,7 @@ export function useWebSocketChat(threadId: string) {
     sendUserResponse,
     cancelRequest,
     clearMessages,
-    messages,
+    response,
     isConnected,
     isConnecting,
     isWaitingForResponse,

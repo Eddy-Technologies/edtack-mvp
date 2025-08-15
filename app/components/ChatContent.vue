@@ -47,7 +47,7 @@
 
         <!-- Backend status message -->
         <span class="text-gray-600 text-sm">
-          {{ wsChat?.responsePhase || 'Processing...' }}
+          {{ wsChat?.response[wsChat.response.length - 1]?.status || 'Processing...' }}
         </span>
       </div>
 
@@ -62,8 +62,7 @@ import { useRoute } from 'vue-router';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
-import { useWebSocketChat } from '~/composables/useWebSocketChat';
-import { useSpeech } from '~/composables/useSpeech';
+import { useWebSocketChat, GenerationIntentType } from '~/composables/useWebSocketChat';
 import { useLesson } from '~/composables/useLesson';
 import { useMeStore } from '~/stores/me';
 
@@ -92,7 +91,6 @@ if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
 }
 
-const { speakLastAssistantMessage, onSpeechEnd } = useSpeech();
 const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
 
@@ -164,11 +162,11 @@ onMounted(() => {
   if (useWebSocket.value && threadId.value) {
     console.log('🚀 Initializing WebSocket chat with thread ID:', threadId.value);
     wsChat.value = useWebSocketChat(threadId.value);
-    wsChat.value.connect();
+    wsChat.value?.connect();
 
     // Watch for incoming WebSocket messages
     if (wsChat.value) {
-      watch(() => wsChat.value!.messages, (newMessages) => {
+      watch(() => wsChat.value!.response, (newMessages) => {
         if (newMessages.length > 0) {
           const lastMessage = newMessages[newMessages.length - 1];
           handleWebSocketMessage(lastMessage);
@@ -180,7 +178,7 @@ onMounted(() => {
     watch(() => meStore.isLoggedIn, (isLoggedIn) => {
       if (isLoggedIn && !wsChat.value) {
         console.log('User logged in, initializing chat...');
-        initializeChat();
+        // TODO: reinitialize WebSocket if needed
       }
     });
   };
@@ -192,36 +190,84 @@ onUnmounted(() => {
   }
 });
 
-// Handle incoming WebSocket messages
-const handleWebSocketMessage = (message: any) => {
-  if (message.type === 'partial') {
-    // Handle partial responses - update the last assistant message
-    const lastIdx = messageStream.value.length - 1;
-    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
-      messageStream.value[lastIdx] = {
-        type: 'text',
-        text: message.content || '[Partial response...]',
-        isUser: false,
-        playable: false, // Don't allow playback until complete
-      };
-    }
+// Helper functions to handle different content types
+const parseMessageContent = (message: any) => {
+  console.log('Parsing WebSocket message:', message); // Debug log for new format
+  if (message.generation_intent_type && message.message) {
+    switch (message.generation_intent_type) {
+      case GenerationIntentType.STANDARD_RESPONSE:
+        return {
+          type: 'text',
+          text: message.message,
+          isUser: false,
+          playable: true,
+        };
 
-    nextTick(() => {
-      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-    });
-    return;
+      case GenerationIntentType.LESSON:
+        return parseLessonContent(message.message);
+
+      case GenerationIntentType.QUIZ:
+        return parseQuizContent(message.message);
+
+      default:
+        return {
+          type: 'text',
+          text: message.message,
+          isUser: false,
+          playable: true,
+        };
+    }
   }
 
-  if (message.type === 'complete' || message.type === 'response' || message.type === 'message') {
-    // Final response - update the last assistant message
+  // Fallback to existing content/text format for backward compatibility
+  return {
+    type: 'text',
+    text: message.content || message.text || '[No response]',
+    isUser: false,
+    playable: true,
+  };
+};
+
+const parseLessonContent = (messageText: string) => {
+  // For now, treat lesson content as rich text
+  // TODO: Implement proper lesson parsing if messageText contains structured data
+  return {
+    type: 'text',
+    text: `📚 Lesson: ${messageText}`,
+    isUser: false,
+    playable: true,
+  };
+};
+
+const parseQuizContent = (messageText: string) => {
+  // For now, treat quiz content as rich text
+  // TODO: Implement proper quiz parsing if messageText contains structured data
+  return {
+    type: 'text',
+    text: `📝 Quiz: ${messageText}`,
+    isUser: false,
+    playable: true,
+  };
+};
+
+// Handle incoming WebSocket messages
+const handleWebSocketMessage = (message: any) => {
+  // Display any message with message.message field unconditionally
+  if (message.message) {
+    // Add placeholder for assistant if not exists
+    if (messageStream.value.length === 0 || messageStream.value[messageStream.value.length - 1].isUser) {
+      messageStream.value.push({
+        type: 'text',
+        text: '',
+        isUser: false,
+        playable: false,
+      });
+    }
+
+    // Update the last assistant message
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
-      messageStream.value[lastIdx] = {
-        type: 'text',
-        text: message.content || message.text || '[No response]',
-        isUser: false,
-        playable: true,
-      };
+      messageStream.value[lastIdx] = parseMessageContent(message);
     }
 
     // Update token count if provided
@@ -241,7 +287,27 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  if (message.type === 'timeout') {
+  if (message.status === 'partial') {
+    // Handle partial responses - update the last assistant message
+    const lastIdx = messageStream.value.length - 1;
+    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
+      // For partial responses, use the message or content field directly
+      const partialContent = message.message || message.content || '[Partial response...]';
+      messageStream.value[lastIdx] = {
+        type: 'text',
+        text: partialContent,
+        isUser: false,
+        playable: false, // Don't allow playback until complete
+      };
+    }
+
+    nextTick(() => {
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    });
+    return;
+  }
+
+  if (message.status === 'timeout') {
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -256,7 +322,7 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  if (message.type === 'cancelled') {
+  if (message.status === 'cancelled') {
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -271,7 +337,7 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  if (message.type === 'error') {
+  if (message.status === 'error') {
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -286,7 +352,7 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  // Handle other message types (heartbeat, status are handled by useWebSocketChat)
+  // Handle other message status types (heartbeat, status_update are handled by useWebSocketChat)
 };
 
 // Flatten the entire messageStream into an ordered array of playback units
@@ -546,8 +612,8 @@ const clearChat = () => {
     if (wsChat.value) {
       wsChat.value.disconnect();
       wsChat.value = useWebSocketChat(threadId.value);
-      wsChat.value.connect();
-      wsChat.value.clearMessages();
+      wsChat.value?.connect();
+      wsChat.value?.clearMessages();
     }
   }
 };
