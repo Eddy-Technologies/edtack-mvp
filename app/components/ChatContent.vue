@@ -193,7 +193,7 @@ onUnmounted(() => {
 // Helper functions to handle different content types
 const parseMessageContent = (message: any) => {
   console.log('Parsing WebSocket message:', message); // Debug log for new format
-  
+
   // If message.message exists, display it unconditionally
   if (message.message) {
     // Check generation_intent_type if available
