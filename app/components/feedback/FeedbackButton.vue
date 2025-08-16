@@ -12,7 +12,7 @@
 import Button from '~/components/common/Button.vue';
 
 function handleClick() {
-  navigateTo('/feedback');
+  navigateTo('/about?tab=feedback');
 }
 </script>
 

@@ -33,7 +33,7 @@
         </button>
         <button
           class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          @click="routeTo('/feedback')"
+          @click="routeTo('/about?tab=feedback')"
         >
           Feedback
         </button>
