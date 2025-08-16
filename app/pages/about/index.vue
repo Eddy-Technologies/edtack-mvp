@@ -182,7 +182,7 @@
                   @click="toggleFaq(index)"
                 >
                   <span class="font-medium text-gray-800">{{ faq.question }}</span>
-                  <UIcon 
+                  <UIcon
                     name="i-lucide-chevron-down"
                     class="w-5 h-5 text-gray-500 transition-transform duration-200"
                     :class="openFaqs.includes(index) ? 'rotate-180' : ''"

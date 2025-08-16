@@ -9,12 +9,18 @@
             :class="{
               'bg-green-500': wsChat.isConnected,
               'bg-yellow-500': wsChat.isConnecting,
-              'bg-red-500': !wsChat.isConnected && !wsChat.isConnecting && wsChat.error,
-              'bg-gray-400': !wsChat.isConnected && !wsChat.isConnecting && !wsChat.error,
+              'bg-blue-500': isNewChatPendingConnection,
+              'bg-red-500': !wsChat.isConnected && !wsChat.isConnecting && wsChat.error && !isNewChatPendingConnection,
+              'bg-gray-400': !wsChat.isConnected && !wsChat.isConnecting && !wsChat.error && !isNewChatPendingConnection,
             }"
           />
           <span class="text-xs">
-            {{ wsChat.isConnected ? 'Connected' : wsChat.isConnecting ? 'Connecting...' : 'Disconnected' }}
+            {{
+              wsChat.isConnected ? 'Connected' :
+              wsChat.isConnecting ? 'Connecting...' :
+              isNewChatPendingConnection ? 'Ready to connect' :
+              'Disconnected'
+            }}
           </span>
         </span>
       </div>
@@ -87,6 +93,7 @@ const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
+const isNewChatPendingConnection = ref(false); // Track if this is a new chat waiting for first message
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -150,10 +157,12 @@ const initializeChat = async () => {
     // Generate new thread ID (clean format without character)
     threadId.value = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     isFirstMessage.value = true;
+    isNewChatPendingConnection.value = true; // Mark as pending connection
   } else {
     // Use existing thread ID from route
     threadId.value = routeThreadId;
     isFirstMessage.value = false;
+    isNewChatPendingConnection.value = false;
   }
 
   console.log('Using thread ID:', threadId.value);
@@ -164,7 +173,13 @@ const initializeChat = async () => {
   if (useWebSocket.value && threadId.value) {
     console.log('🚀 Initializing WebSocket chat with thread ID:', threadId.value);
     wsChat.value = useWebSocketChat(threadId.value);
-    wsChat.value?.connect();
+
+    // Only connect immediately if this is NOT a new chat
+    if (!isNewChatPendingConnection.value) {
+      wsChat.value?.connect();
+    } else {
+      console.log('💤 Deferring WebSocket connection for new chat until first message');
+    }
 
     // Watch for incoming WebSocket messages
     if (wsChat.value) {
@@ -176,16 +191,18 @@ const initializeChat = async () => {
       }, { deep: true });
     }
 
-    // Check for pending message after WebSocket connects
-    if (wsChat.value.isConnected) {
-      checkAndSendPendingMessage();
-    } else {
-      // Wait for connection then check
-      watch(() => wsChat.value?.isConnected, (connected) => {
-        if (connected) {
-          checkAndSendPendingMessage();
-        }
-      }, { immediate: true });
+    // Check for pending message after WebSocket connects (only for existing chats)
+    if (!isNewChatPendingConnection.value) {
+      if (wsChat.value.isConnected) {
+        checkAndSendPendingMessage();
+      } else {
+        // Wait for connection then check
+        watch(() => wsChat.value?.isConnected, (connected) => {
+          if (connected) {
+            checkAndSendPendingMessage();
+          }
+        }, { immediate: true });
+      }
     }
   }
 };
@@ -486,6 +503,38 @@ const handleSend = async (text: string) => {
       isUser: false,
       playable: false,
     });
+
+    // Handle deferred WebSocket connection for new chats
+    if (useWebSocket.value && wsChat.value && isNewChatPendingConnection.value) {
+      console.log('🔌 Connecting WebSocket for first message in new chat');
+      wsChat.value.connect();
+      isNewChatPendingConnection.value = false;
+
+      // Wait for connection before sending
+      const waitForConnection = new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error('Connection timeout')), 5000);
+
+        if (wsChat.value?.isConnected) {
+          clearTimeout(timeout);
+          resolve();
+        } else {
+          const unwatch = watch(() => wsChat.value?.isConnected, (connected) => {
+            if (connected) {
+              clearTimeout(timeout);
+              unwatch();
+              resolve();
+            }
+          });
+        }
+      });
+
+      try {
+        await waitForConnection;
+      } catch (error) {
+        console.error('Failed to connect WebSocket:', error);
+        // Fall through to error handling below
+      }
+    }
 
     // Use WebSocket only
     if (useWebSocket.value && wsChat.value && wsChat.value.isConnected) {
