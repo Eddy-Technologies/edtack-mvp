@@ -1,14 +1,14 @@
 <template>
   <div class="w-full max-h-[260px] flex items-center justify-center">
     <img
-      v-if="!imageError && currentCharacter?.image_url?.includes('.gif')"
+      v-if="!imageError && isImageUrl(getAvatarSource())"
       :src="getAvatarSource()"
       :alt="currentCharacter?.name || 'Avatar'"
       :class="['w-full max-h-[260px] object-contain transform transition-transform duration-300']"
       @error="handleImageError"
     >
     <video
-      v-else-if="!videoError && !imageError"
+      v-else-if="!videoError && !imageError && isVideoUrl(getAvatarSource())"
       ref="videoRef"
       :src="getAvatarSource()"
       :class="['w-full max-h-[260px] object-contain transform transition-transform duration-300']"
@@ -61,7 +61,19 @@ const handleVideoError = () => {
   console.warn('Failed to load character video:', getAvatarSource());
 };
 
-// Get avatar source based on playing state and animation config
+// Helper function to determine if a URL is an image
+const isImageUrl = (url: string): boolean => {
+  const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.bmp', '.svg'];
+  return imageExtensions.some((ext) => url.toLowerCase().includes(ext));
+};
+
+// Helper function to determine if a URL is a video
+const isVideoUrl = (url: string): boolean => {
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+  return videoExtensions.some((ext) => url.toLowerCase().includes(ext));
+};
+
+// Get avatar source based on character and media type
 const getAvatarSource = () => {
   if (!currentCharacter.value) {
     // Fallback to default Eddy video if no character selected
@@ -70,9 +82,7 @@ const getAvatarSource = () => {
 
   const character = currentCharacter.value;
 
-  // Animation logic removed - using fallback system
-
-  // Fallback to image_url or static assets
+  // First priority: use character's image_url if available
   if (character.image_url) {
     return character.image_url;
   }
