@@ -168,7 +168,7 @@ const loadCharacters = async () => {
     if (allAvatars.value.length > 0) {
       // If initialCharacterSlug is provided, find its index and center on it
       if (props.initialCharacterSlug) {
-        const characterIndex = allAvatars.value.findIndex(char => char.slug === props.initialCharacterSlug);
+        const characterIndex = allAvatars.value.findIndex((char) => char.slug === props.initialCharacterSlug);
         if (characterIndex !== -1) {
           currentIndex.value = characterIndex;
         } else {

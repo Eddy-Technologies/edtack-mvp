@@ -147,7 +147,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- Floating Avatar Container -->
