@@ -80,38 +80,14 @@
         class="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 transition-all duration-200 hover:scale-110"
         @click="previousCard"
       >
-        <svg
-          class="w-6 h-6 text-gray-800"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+        <UIcon name="i-lucide-chevron-left" class="w-6 h-6 text-gray-800" />
       </button>
 
       <button
         class="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 transition-all duration-200 hover:scale-110"
         @click="nextCard"
       >
-        <svg
-          class="w-6 h-6 text-gray-800"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+        <UIcon name="i-lucide-chevron-right" class="w-6 h-6 text-gray-800" />
       </button>
     </template>
   </div>

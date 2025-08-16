@@ -90,19 +90,7 @@
                   <div
                     class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-3"
                   >
-                    <svg
-                      class="w-6 h-6 text-primary-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      />
-                    </svg>
+                    <UIcon name="i-lucide-lightbulb" class="w-6 h-6 text-primary-600" />
                   </div>
                   <h4 class="text-lg font-semibold text-gray-800 mb-3">What is Eddy?</h4>
                 </div>
@@ -121,19 +109,7 @@
                   <div
                     class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3"
                   >
-                    <svg
-                      class="w-6 h-6 text-green-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                      />
-                    </svg>
+                    <UIcon name="i-lucide-sparkles" class="w-6 h-6 text-green-600" />
                   </div>
                   <h4 class="text-lg font-semibold text-gray-800 mb-3">Key Features</h4>
                 </div>
@@ -154,19 +130,7 @@
                   <div
                     class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3"
                   >
-                    <svg
-                      class="w-6 h-6 text-purple-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                      />
-                    </svg>
+                    <UIcon name="i-lucide-book-open" class="w-6 h-6 text-purple-600" />
                   </div>
                   <h4 class="text-lg font-semibold text-gray-800 mb-3">Subjects Covered</h4>
                 </div>
@@ -190,19 +154,7 @@
                   <div
                     class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto mb-3"
                   >
-                    <svg
-                      class="w-6 h-6 text-yellow-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
+                    <UIcon name="i-lucide-users" class="w-6 h-6 text-yellow-600" />
                   </div>
                   <h4 class="text-lg font-semibold text-gray-800 mb-3">AI Characters</h4>
                 </div>
@@ -230,20 +182,11 @@
                   @click="toggleFaq(index)"
                 >
                   <span class="font-medium text-gray-800">{{ faq.question }}</span>
-                  <svg
+                  <UIcon 
+                    name="i-lucide-chevron-down"
                     class="w-5 h-5 text-gray-500 transition-transform duration-200"
                     :class="openFaqs.includes(index) ? 'rotate-180' : ''"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  />
                 </button>
                 <div
                   v-if="openFaqs.includes(index)"

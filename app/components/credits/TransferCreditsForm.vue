@@ -3,19 +3,7 @@
     <!-- Header -->
     <div class="flex items-center mb-4">
       <div class="bg-purple-100 rounded-full p-2 mr-3">
-        <svg
-          class="w-6 h-6 text-purple-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-          />
-        </svg>
+        <UIcon name="i-lucide-arrow-left-right" class="w-6 h-6 text-purple-600" />
       </div>
       <h3 class="text-xl font-semibold text-gray-900">Transfer Credits</h3>
     </div>
@@ -25,19 +13,7 @@
     <!-- Error State -->
     <div v-if="error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
       <div class="flex items-center">
-        <svg
-          class="w-5 h-5 text-red-400 mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+        <UIcon name="i-lucide-alert-circle" class="w-5 h-5 text-red-400 mr-2" />
         <p class="text-red-600 text-sm">{{ error }}</p>
       </div>
     </div>
