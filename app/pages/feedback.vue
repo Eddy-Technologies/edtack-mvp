@@ -96,12 +96,6 @@ function openPlatformFeedback() {
 }
 
 function goBack() {
-  const referrer = document.referrer;
-
-  if (referrer && !referrer.includes('/feedback')) {
-    window.history.back();
-  } else {
-    navigateTo('/');
-  }
+  window.history.back();
 }
 </script>

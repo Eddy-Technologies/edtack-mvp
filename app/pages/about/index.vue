@@ -6,7 +6,7 @@
       <div class="px-6 py-6 border-b border-slate-200">
         <div class="flex items-center space-x-3">
           <NuxtLink to="/" class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-br from-secondary to-secondary-700 rounded-lg flex items-center justify-center">
               <span class="text-white font-bold text-sm">E</span>
             </div>
             <div>
@@ -27,7 +27,7 @@
               :class="[
                 'group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
                 activeTab === tab.id
-                  ? 'bg-primary-50 text-primary-700 shadow-sm'
+                  ? 'bg-secondary-50 text-secondary-700 shadow-sm'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               ]"
               @click="activeTab = tab.id"
@@ -56,7 +56,7 @@
       <div class="px-6 pb-6 space-y-4">
         <!-- Back to Chat Button -->
         <Button
-          class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors shadow-sm"
+          class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-secondary rounded-xl hover:bg-secondary-700 transition-colors shadow-sm"
           icon="i-lucide-home"
           @click="router.push('/')"
         >
@@ -88,9 +88,9 @@
               >
                 <div class="text-center mb-4">
                   <div
-                    class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-3"
+                    class="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center mx-auto mb-3"
                   >
-                    <UIcon name="i-lucide-lightbulb" class="w-6 h-6 text-primary-600" />
+                    <UIcon name="i-lucide-lightbulb" class="w-6 h-6 text-secondary-600" />
                   </div>
                   <h4 class="text-lg font-semibold text-gray-800 mb-3">What is Eddy?</h4>
                 </div>
@@ -207,7 +207,7 @@
           <div v-if="activeTab === 'team'" class="bg-white rounded-lg shadow-sm p-8 space-y-6">
             <h3 class="text-2xl font-bold text-gray-800 mb-6">Our Team</h3>
 
-            <div class="bg-primary-50 rounded-lg p-8 mb-8">
+            <div class="bg-secondary-50 rounded-lg p-8 mb-8">
               <h4 class="text-xl font-semibold text-gray-800 mb-4">The Founders</h4>
               <p class="text-gray-700 leading-relaxed mb-4">
                 We are a team of like-minded individuals that believe in using artificial
