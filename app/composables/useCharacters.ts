@@ -31,6 +31,24 @@ const error = ref<string | null>(null);
 const pendingMessage = ref<string | null>(null);
 
 export const useCharacters = () => {
+  const supabase = useSupabaseClient();
+
+  // Helper function to get public URL for character images
+  const getCharacterImageUrl = (imageUrl: string | undefined): string => {
+    console.log('getCharacterImageUrl', imageUrl);
+    if (!imageUrl) {
+      return '/assets/eddy.png'; // fallback image
+    }
+
+    // Use Supabase storage getPublicUrl with characters bucket
+    const { data } = supabase.storage
+      .from('characters')
+      .getPublicUrl(imageUrl);
+    console.log('getCharacterImageUrl', data);
+
+    return data.publicUrl;
+  };
+
   // API Methods
   const fetchCharacters = async (includeInactive: boolean = false): Promise<Character[]> => {
     loading.value = true;
@@ -41,14 +59,20 @@ export const useCharacters = () => {
       const response = await $fetch<CharactersResponse>(`/api/characters${query}`);
 
       if (response.success) {
-        characters.value = response.data;
+        // Transform characters to include public URLs for images
+        const charactersWithImages = response.data.map((char) => ({
+          ...char,
+          image_url: getCharacterImageUrl(char.image_url)
+        }));
+
+        characters.value = charactersWithImages;
 
         // Set default character if none selected
-        if (!selectedCharacter.value && response.data.length > 0) {
+        if (!selectedCharacter.value && charactersWithImages.length > 0) {
           selectedCharacter.value = getDefaultCharacter();
         }
 
-        return response.data;
+        return charactersWithImages;
       } else {
         throw new Error('Failed to fetch characters');
       }
@@ -66,15 +90,21 @@ export const useCharacters = () => {
       const response = await $fetch<CharacterResponse>(`/api/characters/slug/${slug}`);
 
       if (response.success) {
+        // Transform character to include public URL for image
+        const characterWithImage = {
+          ...response.data,
+          image_url: getCharacterImageUrl(response.data.image_url)
+        };
+
         // Add to local cache if not already there
-        const existingIndex = characters.value.findIndex((c) => c.id === response.data.id);
+        const existingIndex = characters.value.findIndex((c) => c.id === characterWithImage.id);
         if (existingIndex >= 0) {
-          characters.value[existingIndex] = response.data;
+          characters.value[existingIndex] = characterWithImage;
         } else {
-          characters.value.push(response.data);
+          characters.value.push(characterWithImage);
         }
 
-        return response.data;
+        return characterWithImage;
       } else {
         throw new Error('Failed to fetch character');
       }

@@ -38,7 +38,7 @@
             <div
               class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[320px] flex flex-col"
               :class="{
-                'ring-4 ring-blue-500 ring-opacity-75': avatar.slug === props.initialCharacterSlug
+                'ring-4 ring-primary-500 ring-opacity-75': avatar.slug === props.initialCharacterSlug
               }"
             >
               <!-- Blurred background with gradient to primary -->
@@ -74,7 +74,7 @@
                   <h5 class="text-white text-base font-semibold drop-shadow-lg">{{ avatar.name }}</h5>
                   <span
                     v-if="avatar.slug === props.initialCharacterSlug"
-                    class="px-2 py-1 bg-blue-500 text-white text-xs font-semibold rounded-full shadow-lg"
+                    class="px-2 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full shadow-lg"
                   >
                     Current
                   </span>
@@ -159,7 +159,7 @@ const loadCharacters = async () => {
       name: char.name,
       slug: char.slug,
       subject: char.subject,
-      image: char.image_url || '/assets/eddy.png', // fallback image
+      image: char.image_url, // Now comes with public URL from composable
       description: char.description,
       personality_prompt: char.personality_prompt
     }));
