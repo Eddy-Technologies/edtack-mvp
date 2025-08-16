@@ -41,7 +41,7 @@
         </h3>
         <div class="space-y-4">
           <p class="text-gray-600">You have two options to create your account:</p>
-          
+
           <div class="grid md:grid-cols-2 gap-4">
             <div class="bg-gray-50 rounded-lg p-4">
               <h4 class="font-medium text-gray-800 mb-2 flex items-center">
@@ -55,7 +55,7 @@
                 <li>• Complete profile setup</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h4 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-chrome" class="w-4 h-4 mr-2 text-red-600" />
@@ -80,7 +80,7 @@
         </h3>
         <div class="space-y-4">
           <p class="text-gray-600">Select whether you're signing up as a parent or student:</p>
-          
+
           <div class="grid md:grid-cols-2 gap-4">
             <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
               <h4 class="font-medium text-gray-800 mb-2 flex items-center">
@@ -95,7 +95,7 @@
                 <li>• Monitor learning progress</li>
               </ul>
             </div>
-            
+
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h4 class="font-medium text-gray-800 mb-2 flex items-center">
                 <span class="text-lg mr-2">🎓</span>
@@ -121,7 +121,7 @@
         </h3>
         <div class="space-y-4">
           <p class="text-gray-600">Fill in the required information to personalize your experience:</p>
-          
+
           <div class="bg-gray-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-3">Required Information:</h4>
             <ul class="space-y-2 text-sm text-gray-600">
@@ -133,7 +133,7 @@
                 <UIcon name="i-lucide-check-square" class="w-4 h-4 mr-2 text-gray-500" />
                 Accept Terms and Conditions
               </li>
-              <li class="flex items-center" v-if="true">
+              <li v-if="true" class="flex items-center">
                 <UIcon name="i-lucide-graduation-cap" class="w-4 h-4 mr-2 text-gray-500" />
                 Student Level (for student accounts only)
               </li>
@@ -150,7 +150,7 @@
         </h3>
         <div class="space-y-4">
           <p class="text-gray-600">Once your profile is complete, you'll be redirected to the chat interface where you can:</p>
-          
+
           <div class="grid md:grid-cols-2 gap-4">
             <div class="space-y-3">
               <h4 class="font-medium text-gray-800">For Students:</h4>
@@ -161,7 +161,7 @@
                 <li>• Earn credits for learning</li>
               </ul>
             </div>
-            
+
             <div class="space-y-3">
               <h4 class="font-medium text-gray-800">For Parents:</h4>
               <ul class="text-sm text-gray-600 space-y-1">
