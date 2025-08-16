@@ -13,7 +13,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">Your parent dashboard provides a central hub for managing your family's educational activities.</p>
-        
+
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-blue-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Overview Tab</h4>
@@ -25,7 +25,7 @@
               <li>• Family learning statistics</li>
             </ul>
           </div>
-          
+
           <div class="bg-green-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Quick Actions</h4>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -87,7 +87,7 @@
                 <li>• Independent order requests</li>
               </ul>
             </div>
-            
+
             <div class="bg-pink-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2">Family Features</h5>
               <ul class="text-sm text-gray-600 space-y-1">
@@ -115,7 +115,7 @@
             Important: Credit Pledge System
           </h4>
           <p class="text-sm text-yellow-700">
-            This is a credit system which parents can pledge to distribute to their children. 
+            This is a credit system which parents can pledge to distribute to their children.
             StudyWithEddy will not store money or request money transfers. Orders are sent to parents for completion.
           </p>
         </div>
@@ -128,13 +128,13 @@
               <h5 class="font-medium text-gray-800 mb-1">Pledge Credits</h5>
               <p class="text-xs text-gray-600">Set aside virtual credits for your children</p>
             </div>
-            
+
             <div class="bg-green-50 rounded-lg p-4 text-center">
               <div class="text-2xl mb-2">🎯</div>
               <h5 class="font-medium text-gray-800 mb-1">Children Earn</h5>
               <p class="text-xs text-gray-600">Kids earn credits through learning activities</p>
             </div>
-            
+
             <div class="bg-purple-50 rounded-lg p-4 text-center">
               <div class="text-2xl mb-2">🛍️</div>
               <h5 class="font-medium text-gray-800 mb-1">You Approve</h5>
@@ -156,7 +156,7 @@
                 <li>4. Confirm the pledge amount</li>
               </ol>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2">Transfer to Children</h5>
               <p class="text-sm text-gray-600 mb-3">Distribute credits from your balance to your children's accounts.</p>
@@ -180,7 +180,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">When your children make purchases using their credits, you'll receive order requests to approve.</p>
-        
+
         <div class="bg-orange-50 rounded-lg p-4">
           <h4 class="font-medium text-gray-800 mb-3">Order Request Workflow</h4>
           <div class="space-y-3">
@@ -227,7 +227,7 @@
               <li>• Complete payment through external vendor</li>
             </ul>
           </div>
-          
+
           <div class="bg-red-50 rounded-lg p-4">
             <h5 class="font-medium text-red-800 mb-2">Declining Orders</h5>
             <ul class="text-sm text-red-700 space-y-1">
@@ -287,7 +287,7 @@
               <li>• Creative projects</li>
             </ul>
           </div>
-          
+
           <div class="bg-gray-50 rounded-lg p-4">
             <h5 class="font-medium text-gray-800 mb-2">Priority Levels</h5>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -296,7 +296,7 @@
               <li>• <span class="text-green-600">Low</span> - Optional tasks</li>
             </ul>
           </div>
-          
+
           <div class="bg-gray-50 rounded-lg p-4">
             <h5 class="font-medium text-gray-800 mb-2">Credit Rewards</h5>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -318,7 +318,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">Track your children's learning activities and progress through various dashboard features.</p>
-        
+
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-teal-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Activity Overview</h4>
@@ -330,7 +330,7 @@
               <li>• Task completion status</li>
             </ul>
           </div>
-          
+
           <div class="bg-blue-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Detailed Reports</h4>
             <ul class="text-sm text-gray-600 space-y-1">

@@ -13,20 +13,20 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">StudyWithEddy's family system allows parents to manage multiple children's learning activities from one central account.</p>
-        
+
         <div class="grid md:grid-cols-3 gap-4">
           <div class="bg-blue-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">👨‍👩‍👧‍👦</div>
             <h4 class="font-medium text-gray-800 mb-1">Multi-Child Support</h4>
             <p class="text-xs text-gray-600">Manage multiple children from one parent account</p>
           </div>
-          
+
           <div class="bg-green-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">📊</div>
             <h4 class="font-medium text-gray-800 mb-1">Unified Dashboard</h4>
             <p class="text-xs text-gray-600">View all family activities in one place</p>
           </div>
-          
+
           <div class="bg-purple-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">💳</div>
             <h4 class="font-medium text-gray-800 mb-1">Shared Subscription</h4>
@@ -93,7 +93,7 @@
                 <li>• Shared family credit pool</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2">Individual Tracking</h5>
               <ul class="text-sm text-gray-600 space-y-1">
@@ -165,7 +165,7 @@
                 <p class="text-xs text-yellow-700">💡 Best for older children who can manage their own accounts</p>
               </div>
             </div>
-            
+
             <div class="bg-blue-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-user-cog" class="w-4 h-4 mr-2 text-blue-600" />
@@ -195,7 +195,7 @@
                 <h6 class="font-medium text-gray-800 text-sm mb-1">Individual Profiles</h6>
                 <p class="text-xs text-gray-600">Each child has their own learning profile and progress tracking</p>
               </div>
-              
+
               <div class="text-center">
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <UIcon name="i-lucide-coins" class="w-6 h-6 text-green-600" />
@@ -203,7 +203,7 @@
                 <h6 class="font-medium text-gray-800 text-sm mb-1">Separate Credits</h6>
                 <p class="text-xs text-gray-600">Individual credit balances and earning tracking</p>
               </div>
-              
+
               <div class="text-center">
                 <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <UIcon name="i-lucide-clipboard-list" class="w-6 h-6 text-orange-600" />
@@ -211,7 +211,7 @@
                 <h6 class="font-medium text-gray-800 text-sm mb-1">Custom Tasks</h6>
                 <p class="text-xs text-gray-600">Assign different tasks to different children</p>
               </div>
-              
+
               <div class="text-center">
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <UIcon name="i-lucide-settings" class="w-6 h-6 text-purple-600" />
@@ -246,7 +246,7 @@
                   <li>• Completed tasks this week</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h5 class="font-medium text-gray-800 mb-2">Quick Actions</h5>
                 <ul class="text-sm text-gray-600 space-y-1">
@@ -284,7 +284,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-shopping-cart" class="w-4 h-4 mr-2 text-gray-600" />
@@ -305,7 +305,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-clipboard-list" class="w-4 h-4 mr-2 text-gray-600" />
@@ -353,7 +353,7 @@
                 <p class="text-xs text-indigo-700">Example: "Sarah, complete math homework for 15 credits"</p>
               </div>
             </div>
-            
+
             <div class="bg-purple-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2">Family-Wide Tasks</h5>
               <ul class="text-sm text-gray-600 space-y-1">
@@ -385,7 +385,7 @@
                 <li>• Water plants</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-book" class="w-4 h-4 mr-2 text-gray-600" />
@@ -399,7 +399,7 @@
                 <li>• Write in journal</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-heart" class="w-4 h-4 mr-2 text-gray-600" />
@@ -458,7 +458,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">Manage purchase requests from all children in one centralized location.</p>
-        
+
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-orange-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Order Dashboard Features</h4>
@@ -470,7 +470,7 @@
               <li>• Set spending limits per child</li>
             </ul>
           </div>
-          
+
           <div class="bg-blue-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Decision Making Tools</h4>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -493,7 +493,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">Track your family's collective learning progress and individual achievements.</p>
-        
+
         <div class="grid md:grid-cols-3 gap-4">
           <div class="bg-pink-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Learning Metrics</h4>
@@ -505,7 +505,7 @@
               <li>• Improvement areas identification</li>
             </ul>
           </div>
-          
+
           <div class="bg-green-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Activity Tracking</h4>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -516,7 +516,7 @@
               <li>• Family learning goals progress</li>
             </ul>
           </div>
-          
+
           <div class="bg-blue-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Credit Analytics</h4>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -559,7 +559,7 @@
             </li>
           </ul>
         </div>
-        
+
         <div>
           <h4 class="font-medium text-gray-800 mb-3">Maintaining Engagement</h4>
           <ul class="text-sm text-gray-600 space-y-2">

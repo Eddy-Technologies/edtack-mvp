@@ -18,7 +18,7 @@
             Credits Explained
           </h4>
           <p class="text-sm text-blue-700 mb-3">
-            Credits are virtual points that students earn through learning activities. Think of them as "learning currency" 
+            Credits are virtual points that students earn through learning activities. Think of them as "learning currency"
             that can be exchanged for real rewards with parental approval.
           </p>
           <div class="bg-blue-100 rounded p-3">
@@ -34,13 +34,13 @@
             <h4 class="font-medium text-gray-800 mb-1">Learn & Earn</h4>
             <p class="text-xs text-gray-600">Students complete educational activities to earn credits</p>
           </div>
-          
+
           <div class="bg-purple-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">💰</div>
             <h4 class="font-medium text-gray-800 mb-1">Virtual Currency</h4>
             <p class="text-xs text-gray-600">Credits represent value without being real money</p>
           </div>
-          
+
           <div class="bg-orange-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🎁</div>
             <h4 class="font-medium text-gray-800 mb-1">Real Rewards</h4>
@@ -76,7 +76,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="bg-blue-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-3 flex items-center">
               <UIcon name="i-lucide-clipboard-check" class="w-4 h-4 mr-2 text-blue-600" />
@@ -105,17 +105,17 @@
                 <div class="text-lg font-bold text-green-600">+5 credits</div>
                 <div class="text-xs text-gray-600">Basic math quiz (5 questions)</div>
               </div>
-              
+
               <div class="text-center">
                 <div class="text-lg font-bold text-green-600">+10 credits</div>
                 <div class="text-xs text-gray-600">Science vocabulary test (10 questions)</div>
               </div>
-              
+
               <div class="text-center">
                 <div class="text-lg font-bold text-green-600">+15 credits</div>
                 <div class="text-xs text-gray-600">Reading comprehension quiz</div>
               </div>
-              
+
               <div class="text-center">
                 <div class="text-lg font-bold text-green-600">+25 credits</div>
                 <div class="text-xs text-gray-600">Complete household task</div>
@@ -139,7 +139,7 @@
             Important: Credit Pledge System
           </h4>
           <p class="text-sm text-yellow-700 mb-2">
-            StudyWithEddy operates on a "credit pledge" system where parents commit virtual credits to their family account. 
+            StudyWithEddy operates on a "credit pledge" system where parents commit virtual credits to their family account.
             This is NOT a payment to StudyWithEddy - it's a promise to fulfill purchases that children request using their earned credits.
           </p>
           <ul class="text-xs text-yellow-600 space-y-1">
@@ -162,7 +162,7 @@
                 <li>• Monitor credit spending patterns</li>
               </ul>
             </div>
-            
+
             <div class="bg-pink-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2">Purchase Approval</h5>
               <ul class="text-sm text-gray-600 space-y-1">
@@ -271,7 +271,7 @@
               <li>• Be patient during the approval process</li>
             </ul>
           </div>
-          
+
           <div class="bg-blue-50 rounded-lg p-4">
             <h5 class="font-medium text-blue-800 mb-2">For Parents</h5>
             <ul class="text-sm text-blue-700 space-y-1">
@@ -294,7 +294,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">Both students and parents can track credit activities through the dashboard.</p>
-        
+
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-teal-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Student View</h4>
@@ -306,7 +306,7 @@
               <li>• Credit spending history</li>
             </ul>
           </div>
-          
+
           <div class="bg-blue-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-2">Parent View</h4>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -350,7 +350,7 @@
               </li>
             </ul>
           </div>
-          
+
           <div class="bg-green-50 rounded-lg p-4">
             <h4 class="font-medium text-gray-800 mb-3">For Students</h4>
             <ul class="text-sm text-gray-600 space-y-2">
@@ -381,12 +381,12 @@
               <h5 class="font-medium text-gray-800 text-sm mb-1">What happens if parents decline an order?</h5>
               <p class="text-xs text-gray-600">Credits are returned to the student's account, and they can use them for different purchases or save for later.</p>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-3">
               <h5 class="font-medium text-gray-800 text-sm mb-1">Can credits be transferred between children?</h5>
               <p class="text-xs text-gray-600">No, each child maintains their own credit balance. Parents can transfer from their account to any child, but not between siblings directly.</p>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-3">
               <h5 class="font-medium text-gray-800 text-sm mb-1">Do credits expire?</h5>
               <p class="text-xs text-gray-600">Credits don't expire as long as the family maintains an active account. However, they are reset if the family leaves the platform.</p>
@@ -412,13 +412,13 @@
             <li>• Parents maintain complete control over all real financial transactions</li>
           </ul>
         </div>
-        
+
         <div class="grid md:grid-cols-2 gap-3">
           <div class="bg-orange-100 rounded p-3">
             <h5 class="font-medium text-orange-800 mb-1">Contact Support</h5>
             <p class="text-xs text-orange-700">Questions about credits? Email us at eddytech.ai@gmail.com</p>
           </div>
-          
+
           <div class="bg-yellow-100 rounded p-3">
             <h5 class="font-medium text-yellow-800 mb-1">Privacy Protection</h5>
             <p class="text-xs text-yellow-700">All credit activities are private to your family account only</p>

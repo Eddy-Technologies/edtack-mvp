@@ -36,7 +36,7 @@
               {{ tab.name }}
             </div>
           </div>
-          
+
           <!-- User Guides Expandable Section -->
           <div>
             <!-- Parent User Guides Item -->
@@ -200,7 +200,7 @@ onMounted(() => {
   if (tabParam && ['about', 'faq', 'feedback', 'subscription', 'team'].includes(tabParam)) {
     activeTab.value = tabParam;
   }
-  
+
   // Handle guide parameter
   const guideParam = route.query.guide as string;
   if (guideParam && ['getting-started', 'for-parents', 'for-students', 'credits-rewards', 'family-features'].includes(guideParam)) {

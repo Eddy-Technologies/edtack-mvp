@@ -13,32 +13,32 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">StudyWithEddy features multiple AI characters, each with unique personalities to match your learning style.</p>
-        
+
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="bg-blue-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🧙‍♂️</div>
             <h4 class="font-medium text-gray-800 mb-1">Eddy (Default)</h4>
             <p class="text-xs text-gray-600">Friendly and encouraging, great for all subjects</p>
           </div>
-          
+
           <div class="bg-green-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🌟</div>
             <h4 class="font-medium text-gray-800 mb-1">Alex the Explorer</h4>
             <p class="text-xs text-gray-600">Adventurous spirit, loves science and discovery</p>
           </div>
-          
+
           <div class="bg-purple-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">📚</div>
             <h4 class="font-medium text-gray-800 mb-1">Luna the Scholar</h4>
             <p class="text-xs text-gray-600">Patient and thorough, perfect for deep learning</p>
           </div>
-          
+
           <div class="bg-orange-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🔬</div>
             <h4 class="font-medium text-gray-800 mb-1">Sam the Scientist</h4>
             <p class="text-xs text-gray-600">Curious and analytical, loves experiments</p>
           </div>
-          
+
           <div class="bg-pink-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🎨</div>
             <h4 class="font-medium text-gray-800 mb-1">Creative Characters</h4>
@@ -87,7 +87,7 @@
                 <li>• "Tell me about ancient Egypt"</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2">Learning Activities</h5>
               <ul class="text-sm text-gray-600 space-y-1">
@@ -135,7 +135,7 @@
             What Are Credits?
           </h4>
           <p class="text-sm text-green-700">
-            Credits are virtual rewards you earn by completing learning activities. You can use them to "purchase" items from the shop, 
+            Credits are virtual rewards you earn by completing learning activities. You can use them to "purchase" items from the shop,
             which your parents will then review and potentially buy for you in real life!
           </p>
         </div>
@@ -155,7 +155,7 @@
                 <li>• Earn credits based on performance</li>
               </ul>
             </div>
-            
+
             <div class="bg-purple-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-clipboard-check" class="w-4 h-4 mr-2 text-purple-600" />
@@ -243,7 +243,7 @@
                 <li>• Submit order request</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-heart" class="w-4 h-4 mr-2 text-gray-600" />
@@ -256,7 +256,7 @@
                 <li>• Track favorite items</li>
               </ul>
             </div>
-            
+
             <div class="bg-gray-50 rounded-lg p-4">
               <h5 class="font-medium text-gray-800 mb-2 flex items-center">
                 <UIcon name="i-lucide-package" class="w-4 h-4 mr-2 text-gray-600" />
@@ -320,7 +320,7 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">Your parents may assign you tasks that you can complete to earn extra credits.</p>
-        
+
         <div>
           <h4 class="font-medium text-gray-800 mb-3">Finding Your Tasks</h4>
           <div class="bg-indigo-50 rounded-lg p-4">
@@ -352,7 +352,7 @@
               <li>• Learning goals</li>
             </ul>
           </div>
-          
+
           <div class="bg-gray-50 rounded-lg p-4">
             <h5 class="font-medium text-gray-800 mb-2">Completion Steps</h5>
             <ul class="text-sm text-gray-600 space-y-1">
@@ -375,50 +375,50 @@
       </h3>
       <div class="space-y-4">
         <p class="text-gray-600">StudyWithEddy covers all major school subjects and adapts to your grade level.</p>
-        
+
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-blue-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🔢</div>
             <h4 class="font-medium text-gray-800 mb-1">Mathematics</h4>
             <p class="text-xs text-gray-600">Arithmetic, algebra, geometry, and more</p>
           </div>
-          
+
           <div class="bg-green-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🔬</div>
             <h4 class="font-medium text-gray-800 mb-1">Science</h4>
             <p class="text-xs text-gray-600">Biology, chemistry, physics, earth science</p>
           </div>
-          
+
           <div class="bg-red-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">📚</div>
             <h4 class="font-medium text-gray-800 mb-1">English</h4>
             <p class="text-xs text-gray-600">Reading, writing, grammar, literature</p>
           </div>
-          
+
           <div class="bg-yellow-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🏛️</div>
             <h4 class="font-medium text-gray-800 mb-1">History</h4>
             <p class="text-xs text-gray-600">World history, local history, timelines</p>
           </div>
-          
+
           <div class="bg-purple-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🎨</div>
             <h4 class="font-medium text-gray-800 mb-1">Art</h4>
             <p class="text-xs text-gray-600">Drawing, painting, art history, creativity</p>
           </div>
-          
+
           <div class="bg-pink-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">🎵</div>
             <h4 class="font-medium text-gray-800 mb-1">Music</h4>
             <p class="text-xs text-gray-600">Theory, instruments, composers, rhythm</p>
           </div>
-          
+
           <div class="bg-orange-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">⚽</div>
             <h4 class="font-medium text-gray-800 mb-1">Physical Education</h4>
             <p class="text-xs text-gray-600">Sports, fitness, health, teamwork</p>
           </div>
-          
+
           <div class="bg-gray-50 rounded-lg p-4 text-center">
             <div class="text-2xl mb-2">💻</div>
             <h4 class="font-medium text-gray-800 mb-1">Technology</h4>
