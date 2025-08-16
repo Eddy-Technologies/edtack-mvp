@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 flex items-center justify-center relative overflow-hidden py-12 min-h-[280px]">
+  <div class="flex-1 flex items-center justify-center relative overflow-hidden py-6 min-h-[220px]">
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center items-center py-12">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
@@ -36,7 +36,10 @@
         >
           <div class="cursor-pointer" @click="selectAvatar(avatar, index)">
             <div
-              class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[500px] flex flex-col"
+              class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[320px] flex flex-col"
+              :class="{
+                'ring-4 ring-blue-500 ring-opacity-75': avatar.slug === props.initialCharacterSlug
+              }"
             >
               <!-- Blurred background with gradient to primary -->
               <div
@@ -67,7 +70,15 @@
 
               <!-- Text area - bottom 30% -->
               <div class="relative z-10 p-4 flex flex-col justify-center items-center text-center" style="height: 20%">
-                <h5 class="text-white text-base font-semibold mb-1 drop-shadow-lg">{{ avatar.name }}</h5>
+                <div class="flex items-center gap-2 mb-1">
+                  <h5 class="text-white text-base font-semibold drop-shadow-lg">{{ avatar.name }}</h5>
+                  <span
+                    v-if="avatar.slug === props.initialCharacterSlug"
+                    class="px-2 py-1 bg-blue-500 text-white text-xs font-semibold rounded-full shadow-lg"
+                  >
+                    Current
+                  </span>
+                </div>
                 <p class="text-white/90 text-sm drop-shadow-md">{{ avatar.subject }}</p>
               </div>
             </div>
@@ -107,6 +118,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  initialCharacterSlug: {
+    type: String,
+    default: null,
+  },
 });
 
 const emit = defineEmits(['update:modelValue', 'select']);
@@ -114,7 +129,7 @@ const emit = defineEmits(['update:modelValue', 'select']);
 const router = useRouter();
 
 const currentIndex = ref(2); // Start from center (index 2 out of 8 cards)
-const cardWidth = ref(400);
+const cardWidth = ref(280);
 const isTransitioning = ref(false);
 
 // Backend data fetching
@@ -149,9 +164,19 @@ const loadCharacters = async () => {
       personality_prompt: char.personality_prompt
     }));
 
-    // Reset current index if we have characters
+    // Set initial character index if we have characters
     if (allAvatars.value.length > 0) {
-      currentIndex.value = Math.min(currentIndex.value, allAvatars.value.length - 1);
+      // If initialCharacterSlug is provided, find its index and center on it
+      if (props.initialCharacterSlug) {
+        const characterIndex = allAvatars.value.findIndex(char => char.slug === props.initialCharacterSlug);
+        if (characterIndex !== -1) {
+          currentIndex.value = characterIndex;
+        } else {
+          currentIndex.value = Math.min(currentIndex.value, allAvatars.value.length - 1);
+        }
+      } else {
+        currentIndex.value = Math.min(currentIndex.value, allAvatars.value.length - 1);
+      }
     }
   } catch (error) {
     console.error('Failed to load characters:', error);

@@ -57,6 +57,47 @@
         <div class="flex-1 overflow-y-auto relative">
           <ChatContent ref="chatContentRef" />
 
+          <!-- Character Selection Overlay - only when selecting character -->
+          <div
+            v-if="isSelectingCharacter"
+            class="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm flex items-center justify-center"
+          >
+            <div class="w-full max-w-4xl px-4">
+              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
+                      <div class="flex items-center gap-2 mt-1">
+                        <p class="text-sm text-gray-600">
+                          <span v-if="selectedCharacter">
+                            Currently: <span class="font-medium text-gray-800">{{ selectedCharacter.name }}</span>
+                            <span class="text-gray-500">({{ selectedCharacter.subject }})</span>
+                          </span>
+                          <span v-else>Select a character to start chatting</span>
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                      @click="isSelectingCharacter = false"
+                    >
+                      <Icon name="i-heroicons-x-mark" class="w-6 h-6 text-gray-600" />
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <CharacterCarousel
+                    v-model="currentCharacter"
+                    :initial-character-slug="charSlug"
+                    :go-to-chat-on-click="true"
+                    @select="handleCharacterSelection"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Chat Input (separate from ChatContent) -->
           <div
             v-if="shouldShowChatInput"
@@ -68,48 +109,45 @@
             ]"
             :style="{ transitionDelay: showContentTransitions ? '0.4s' : '0s' }"
           >
-            <div class="w-full max-w-2xl px-4">
-              <ChatInput @send="handleChatSend" />
+            <div class="w-full max-w-4xl px-4">
+              <!-- Character Carousel Card - only shown when centered (new chat) -->
+              <div v-if="isChatCentered" class="mb-6">
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div class="px-6 py-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
+                        <div class="flex items-center gap-2 mt-1">
+                          <p class="text-sm text-gray-600">
+                            <span v-if="selectedCharacter">
+                              Currently: <span class="font-medium text-gray-800">{{ selectedCharacter.name }}</span>
+                              <span class="text-gray-500">({{ selectedCharacter.subject }})</span>
+                            </span>
+                            <span v-else>Select a character to start chatting</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <CharacterCarousel
+                      v-model="currentCharacter"
+                      :initial-character-slug="charSlug"
+                      :go-to-chat-on-click="true"
+                      @select="handleCharacterSelection"
+                    />
+                  </div>
+                </div>
+              </div>
 
-              <!-- "Or choose a character" button - only shown when centered -->
-              <div v-if="isChatCentered" class="mt-4 text-center">
-                <Button
-                  variant="primary"
-                  @click="openCharacterSelection"
-                >
-                  Or Choose a Character
-                </Button>
+              <div class="w-full max-w-2xl mx-auto">
+                <ChatInput @send="handleChatSend" />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Character Selection Carousel -->
-      <div
-        v-if="isSelectingCharacter"
-        class="fixed inset-0 z-50 bg-white flex flex-col"
-      >
-        <!-- Header with close button -->
-        <div class="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 class="text-2xl font-bold text-gray-800">Choose Your Character</h2>
-          <button
-            class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-            @click="isSelectingCharacter = false"
-          >
-            <Icon name="i-heroicons-x-mark" class="w-6 h-6 text-gray-600" />
-          </button>
-        </div>
-
-        <!-- Carousel Container -->
-        <div class="flex-1 flex items-center justify-center">
-          <CharacterCarousel
-            v-model="currentCharacter"
-            :go-to-chat-on-click="false"
-            @select="handleCharacterSelection"
-          />
-        </div>
-      </div>
     </div>
 
     <!-- Floating Avatar Container -->
@@ -240,7 +278,7 @@ const isNewChat = computed(() => threadId.value === 'new');
 
 // Computed properties for UI state
 const isChatCentered = computed(() => {
-  return !hasStartedChat.value && showContentTransitions.value && !isSelectingCharacter.value && isNewChat.value;
+  return !hasStartedChat.value && showContentTransitions.value && isNewChat.value;
 });
 
 const shouldShowChatInput = computed(() => {
@@ -306,7 +344,7 @@ const handleCharacterSelection = async (character) => {
     chatContentRef.value.clearChat();
   }
 
-  // Exit character selection mode
+  // Close character selection mode
   isSelectingCharacter.value = false;
 };
 
