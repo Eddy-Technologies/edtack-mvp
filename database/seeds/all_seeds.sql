@@ -116,6 +116,22 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('READING', 'Reading', 'Reading and learning tasks', 'TASK_CATEGORY', 50, true, NOW(), NOW()),
 ('OTHER', 'Other', 'Other miscellaneous tasks', 'TASK_CATEGORY', 60, true, NOW(), NOW());
 
+-- Subject Constants
+INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('GENERAL', 'General', 'General educational content', 'SUBJECT', 10, true, NOW(), NOW()),
+('PURE_BIOLOGY', 'Pure Biology', 'Pure Biology curriculum', 'SUBJECT', 20, true, NOW(), NOW()),
+('CHEMISTRY', 'Chemistry', 'Chemistry curriculum', 'SUBJECT', 30, true, NOW(), NOW()),
+('PHYSICS', 'Physics', 'Physics curriculum', 'SUBJECT', 40, true, NOW(), NOW()),
+('COMBINED_SCIENCE', 'Combined Science', 'Combined Science curriculum', 'SUBJECT', 50, true, NOW(), NOW()),
+('MATHEMATICS', 'Mathematics', 'Mathematics curriculum', 'SUBJECT', 60, true, NOW(), NOW()),
+('ADDITIONAL_MATHEMATICS', 'Additional Mathematics', 'Additional Mathematics curriculum', 'SUBJECT', 70, true, NOW(), NOW()),
+('ELEMENTARY_MATHEMATICS', 'Elementary Mathematics', 'Elementary Mathematics curriculum', 'SUBJECT', 80, true, NOW(), NOW()),
+('ENGLISH', 'English', 'English language curriculum', 'SUBJECT', 90, true, NOW(), NOW()),
+('LITERATURE', 'Literature', 'Literature curriculum', 'SUBJECT', 100, true, NOW(), NOW()),
+('SOCIAL_STUDIES', 'Social Studies', 'Social Studies curriculum', 'SUBJECT', 110, true, NOW(), NOW()),
+('HISTORY', 'History', 'History curriculum', 'SUBJECT', 120, true, NOW(), NOW()),
+('GEOGRAPHY', 'Geography', 'Geography curriculum', 'SUBJECT', 130, true, NOW(), NOW());
+
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
 -- =============================================================================

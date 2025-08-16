@@ -36,7 +36,6 @@ export type Database = {
     Tables: {
       characters: {
         Row: {
-          animation_config: Json | null;
           created_at: string | null;
           description: string | null;
           display_order: number | null;
@@ -45,12 +44,11 @@ export type Database = {
           is_active: boolean | null;
           name: string;
           personality_prompt: string | null;
-          type: string;
+          subject: string;
+          slug: string;
           updated_at: string | null;
-          voice_config: Json | null;
         };
         Insert: {
-          animation_config?: Json | null;
           created_at?: string | null;
           description?: string | null;
           display_order?: number | null;
@@ -59,12 +57,11 @@ export type Database = {
           is_active?: boolean | null;
           name: string;
           personality_prompt?: string | null;
-          type: string;
+          subject: string;
+          slug: string;
           updated_at?: string | null;
-          voice_config?: Json | null;
         };
         Update: {
-          animation_config?: Json | null;
           created_at?: string | null;
           description?: string | null;
           display_order?: number | null;
@@ -73,9 +70,9 @@ export type Database = {
           is_active?: boolean | null;
           name?: string;
           personality_prompt?: string | null;
-          type?: string;
+          subject?: string;
+          slug?: string;
           updated_at?: string | null;
-          voice_config?: Json | null;
         };
         Relationships: [];
       };

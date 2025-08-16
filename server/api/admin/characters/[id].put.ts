@@ -47,11 +47,10 @@ export default defineEventHandler(async (event) => {
     };
 
     if (body.name !== undefined) updateData.name = body.name;
-    if (body.type !== undefined) updateData.type = body.type;
+    if (body.subject !== undefined) updateData.subject = body.subject;
+    if (body.slug !== undefined) updateData.slug = body.slug;
     if (body.description !== undefined) updateData.description = body.description;
     if (body.image_url !== undefined) updateData.image_url = body.image_url;
-    if (body.voice_config !== undefined) updateData.voice_config = body.voice_config;
-    if (body.animation_config !== undefined) updateData.animation_config = body.animation_config;
     if (body.personality_prompt !== undefined) updateData.personality_prompt = body.personality_prompt;
     if (body.is_active !== undefined) updateData.is_active = body.is_active;
     if (body.display_order !== undefined) updateData.display_order = body.display_order;

@@ -31,11 +31,10 @@ export default defineEventHandler(async (event) => {
     // Prepare character data
     const characterData = {
       name: body.name,
-      type: body.type,
+      subject: body.subject,
+      slug: body.slug,
       description: body.description || null,
       image_url: body.image_url || null,
-      voice_config: body.voice_config || {},
-      animation_config: body.animation_config || {},
       personality_prompt: body.personality_prompt || null,
       is_active: body.is_active !== false,
       display_order: body.display_order || 0

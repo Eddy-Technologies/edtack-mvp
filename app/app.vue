@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- Global App Loading Screen -->
+    <AppLoadingScreen
+      :show="showAppLoading"
+      @after-leave="onLoadingComplete"
+    />
+
     <NuxtRouteAnnouncer />
     <NuxtLoadingIndicator />
     <noscript><iframe
@@ -9,7 +15,9 @@
       style="display: none; visibility: hidden"
       ></iframe
       ></noscript>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
     <UNotifications />
 
     <!-- Feedback Components -->
@@ -42,6 +50,10 @@ import { ref, onMounted } from 'vue';
 // Import feedback components
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
+import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
+
+const { $isExternalNavigation } = useNuxtApp();
+const showAppLoading = ref($isExternalNavigation);
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
@@ -82,6 +94,13 @@ function giveConsent(agreed: boolean) {
 }
 
 onMounted(async () => {
+  // Handle app loading for external navigation
+  if (showAppLoading.value) {
+    setTimeout(() => {
+      showAppLoading.value = false;
+    }, 2000);
+  }
+
   // // Get me
   // if (!me) {
   //   const { data: session } = await supabase.auth.getSession();
@@ -98,6 +117,11 @@ onMounted(async () => {
     // If no consent is stored, the consent form will be shown
   }
 });
+
+const onLoadingComplete = () => {
+  // Any cleanup after loading animation completes
+  console.log('App loading animation completed');
+};
 
 // Reactive state for feedback modal visibility
 const showFeedbackModal = ref(false);

@@ -40,14 +40,26 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
-                Character Type *
+                Subject *
               </label>
               <input
-                v-model="form.type"
+                v-model="form.subject"
                 type="text"
                 required
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                placeholder="e.g., General, History, Biology"
+                placeholder="e.g., GENERAL, HISTORY, PURE_BIOLOGY"
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Slug *
+              </label>
+              <input
+                v-model="form.slug"
+                type="text"
+                required
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                placeholder="e.g., eddy, pooh, maya"
               >
             </div>
           </div>
@@ -102,96 +114,6 @@
               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               placeholder="Describe the character's personality, teaching style, and behavior..."
             />
-          </div>
-
-          <!-- Voice Configuration -->
-          <div class="border-t pt-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Voice Configuration</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Voice Type
-                </label>
-                <select
-                  v-model="voiceConfig.voice"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                >
-                  <option value="default">Default</option>
-                  <option value="friendly">Friendly</option>
-                  <option value="enthusiastic">Enthusiastic</option>
-                  <option value="calm">Calm</option>
-                  <option value="professional">Professional</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Speed
-                </label>
-                <input
-                  v-model.number="voiceConfig.speed"
-                  type="number"
-                  step="0.1"
-                  min="0.5"
-                  max="2.0"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="1.0"
-                >
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Pitch
-                </label>
-                <input
-                  v-model.number="voiceConfig.pitch"
-                  type="number"
-                  step="0.1"
-                  min="0.5"
-                  max="2.0"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="1.0"
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Animation Configuration -->
-          <div class="border-t pt-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Animation Configuration</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Idle Animation
-                </label>
-                <input
-                  v-model="animationConfig.idle"
-                  type="text"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="idle.gif"
-                >
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Talking Animation
-                </label>
-                <input
-                  v-model="animationConfig.talking"
-                  type="text"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="talking.gif"
-                >
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Thinking Animation
-                </label>
-                <input
-                  v-model="animationConfig.thinking"
-                  type="text"
-                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="thinking.gif"
-                >
-              </div>
-            </div>
           </div>
 
           <!-- Status -->
@@ -257,21 +179,8 @@ const form = ref({
   display_order: 0
 });
 
-// Separate reactive objects for voice and animation config
-const voiceConfig = ref({
-  voice: 'default',
-  speed: 1.0,
-  pitch: 1.0
-});
-
-const animationConfig = ref({
-  idle: '',
-  talking: '',
-  thinking: ''
-});
-
 const isFormValid = computed(() => {
-  return form.value.name && form.value.type;
+  return form.value.name && form.value.subject && form.value.slug;
 });
 
 // Watch for character changes to populate form
@@ -279,51 +188,25 @@ watch(() => props.character, (newCharacter) => {
   if (newCharacter) {
     form.value = {
       name: newCharacter.name || '',
-      type: newCharacter.type || '',
+      subject: newCharacter.subject || '',
+      slug: newCharacter.slug || '',
       description: newCharacter.description || '',
       image_url: newCharacter.image_url || '',
       personality_prompt: newCharacter.personality_prompt || '',
       is_active: newCharacter.is_active !== false,
       display_order: newCharacter.display_order || 0
     };
-
-    // Parse voice config
-    const parsedVoiceConfig = newCharacter.voice_config || {};
-    voiceConfig.value = {
-      voice: parsedVoiceConfig.voice || 'default',
-      speed: parsedVoiceConfig.speed || 1.0,
-      pitch: parsedVoiceConfig.pitch || 1.0
-    };
-
-    // Parse animation config
-    const parsedAnimationConfig = newCharacter.animation_config || {};
-    animationConfig.value = {
-      idle: parsedAnimationConfig.idle || '',
-      talking: parsedAnimationConfig.talking || '',
-      thinking: parsedAnimationConfig.thinking || ''
-    };
   } else {
     // Reset form for new character
     form.value = {
       name: '',
-      type: '',
+      subject: '',
+      slug: '',
       description: '',
       image_url: '',
       personality_prompt: '',
       is_active: true,
       display_order: 0
-    };
-
-    voiceConfig.value = {
-      voice: 'default',
-      speed: 1.0,
-      pitch: 1.0
-    };
-
-    animationConfig.value = {
-      idle: '',
-      talking: '',
-      thinking: ''
     };
   }
 }, { immediate: true });
@@ -336,9 +219,7 @@ const handleSubmit = () => {
   if (!isFormValid.value) return;
 
   const characterData = {
-    ...form.value,
-    voice_config: { ...voiceConfig.value },
-    animation_config: { ...animationConfig.value }
+    ...form.value
   };
 
   emit('save', characterData);

@@ -18,9 +18,9 @@
           </span>
         </span>
       </div>
-      <div>
+      <!-- <div>
         Token Usage: <span class="font-bold">{{ tokenCount }}</span>
-      </div>
+      </div> -->
       <div class="w-20" />
     </div>
 
@@ -58,21 +58,20 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
 import { useWebSocketChat, GenerationIntentType } from '~/composables/useWebSocketChat';
 import { useLesson } from '~/composables/useLesson';
 import { useMeStore } from '~/stores/me';
+import { useCharacters } from '~/composables/useCharacters';
 
 const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
-const conversationSummary = ref(
-  'Eddy is a lion character that talks and is highly intelligent, he educates with passion.'
-);
+// Use computed conversation summary instead of static ref
 const MAX_CONTEXT_MESSAGES = 6;
 
 const isPlayingAllowed = ref(false);
@@ -81,11 +80,13 @@ const tokenCount = ref(0);
 
 // WebSocket integration
 const route = useRoute();
+const router = useRouter();
 const useWebSocket = ref(true); // WebSocket-only mode
 const threadId = ref<string>('');
 const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
+const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -93,40 +94,34 @@ if (import.meta.client) {
 
 const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
+const { selectedCharacter, initializeStore, selectCharacterBySlug, getPendingMessage, clearPendingMessage } = useCharacters();
 
-// Avatar to subject mapping
-const AVATAR_SUBJECTS: Record<string, string> = {
-  1: 'general', // Eddy
-  2: 'biology', // Winne the Pooh
-  3: 'general', // Future
-  4: 'history', // Mickey
-  5: 'chemistry', // Maya
-  6: 'social_studies', // Sherlock
-  eddy: 'general',
-  biology: 'biology',
-  chemistry: 'chemistry',
-  history: 'history',
-  social: 'social_studies',
-  sherlock: 'social_studies',
-  mickey: 'history',
-  maya: 'chemistry',
-  pooh: 'biology',
-  winne: 'biology',
-};
+// Dynamic conversation summary based on selected character
+const conversationSummaryComputed = computed(() => {
+  const character = selectedCharacter.value;
+  if (character?.personality_prompt) {
+    return character.personality_prompt;
+  }
+  return 'Eddy is a lion character that talks and is highly intelligent, he educates with passion.';
+});
 
-// Initialize WebSocket connection
-onMounted(() => {
-  console.log('chat content mounted');
-  // Wait for user data to be available
+// Initialize chat with new routing structure
+const initializeChat = async () => {
+  console.log('Initializing chat...');
 
-  console.log('chat content mounted and initilaised chat');
-  const avatarId = route.params.avatarId as string;
+  const charSlug = route.params.charSlug as string;
+  const routeThreadId = route.params.threadId as string;
   const userId = meStore.user_info_id || meStore.id;
 
-  console.log('Avatar ID from route:', avatarId); // Debug log
-  console.log('User ID from store:', userId); // Debug log
-  console.log('Store initialized:', meStore.isInitialized); // Debug log
-  console.log('Store logged in:', meStore.isLoggedIn); // Debug log
+  // If we already have this thread initialized and connected, skip re-initialization
+  if (currentThreadId.value === threadId.value && wsChat.value?.isConnected && threadId.value) {
+    console.log('Chat already initialized for this thread:', threadId.value);
+    return;
+  }
+
+  console.log('Character Slug from route:', charSlug);
+  console.log('Thread ID from route:', routeThreadId);
+  console.log('User ID from store:', userId);
 
   if (!meStore.isInitialized) {
     console.log('Store not initialized yet, retrying...');
@@ -136,28 +131,35 @@ onMounted(() => {
 
   if (!userId) {
     console.warn('No user ID available - user may not be logged in');
-    // Still retry in case login happens after component mount
     setTimeout(initializeChat, 2000);
     return;
   }
 
-  // Get subject for thread ID
-  const subject = AVATAR_SUBJECTS[avatarId?.toLowerCase()] || 'general';
-
-  // Use userId as the primary identifier, with avatarId and subject as context
-  const storageKey = `chat-thread-${userId}-${avatarId || 'default'}-${subject}`;
-  const storedThread = localStorage.getItem(storageKey);
-
-  if (storedThread) {
-    threadId.value = storedThread;
-    isFirstMessage.value = false;
-  } else {
-    threadId.value = `${userId}-${avatarId || 'default'}-${subject}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem(storageKey, threadId.value);
-    isFirstMessage.value = true;
+  // Ensure character store is initialized
+  if (!selectedCharacter.value) {
+    await initializeStore();
   }
 
-  console.log('Generated thread ID:', threadId.value); // Debug log
+  // Set character based on route if needed
+  if (charSlug && (!selectedCharacter.value || selectedCharacter.value.slug !== charSlug)) {
+    await selectCharacterBySlug(charSlug);
+  }
+
+  // Handle thread ID based on route
+  if (routeThreadId === 'new') {
+    // Generate new thread ID (clean format without character)
+    threadId.value = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    isFirstMessage.value = true;
+  } else {
+    // Use existing thread ID from route
+    threadId.value = routeThreadId;
+    isFirstMessage.value = false;
+  }
+
+  console.log('Using thread ID:', threadId.value);
+
+  // Track the current thread ID to prevent unnecessary re-initialization
+  currentThreadId.value = threadId.value;
 
   if (useWebSocket.value && threadId.value) {
     console.log('🚀 Initializing WebSocket chat with thread ID:', threadId.value);
@@ -174,14 +176,48 @@ onMounted(() => {
       }, { deep: true });
     }
 
-    // Also watch for changes in user login state
-    watch(() => meStore.isLoggedIn, (isLoggedIn) => {
-      if (isLoggedIn && !wsChat.value) {
-        console.log('User logged in, initializing chat...');
-        // TODO: reinitialize WebSocket if needed
-      }
-    });
-  };
+    // Check for pending message after WebSocket connects
+    if (wsChat.value.isConnected) {
+      checkAndSendPendingMessage();
+    } else {
+      // Wait for connection then check
+      watch(() => wsChat.value?.isConnected, (connected) => {
+        if (connected) {
+          checkAndSendPendingMessage();
+        }
+      }, { immediate: true });
+    }
+  }
+};
+
+onMounted(() => {
+  initializeChat();
+
+  // Watch for changes in user login state
+  watch(() => meStore.isLoggedIn, (isLoggedIn) => {
+    if (isLoggedIn && !wsChat.value) {
+      console.log('User logged in, initializing chat...');
+      initializeChat();
+    }
+  });
+
+  // Watch for route changes to handle navigation between different chats
+  watch(() => route.params.threadId, (newThreadId, oldThreadId) => {
+    // Skip if this is the initial mount
+    if (!oldThreadId) return;
+
+    // Skip if we're going from 'new' to a threadId (this is our URL update)
+    if (oldThreadId === 'new' && newThreadId !== 'new') {
+      console.log('URL updated from new to threadId, skipping re-init');
+      return;
+    }
+
+    // Only reinitialize for actual navigation between different chats
+    if (oldThreadId !== 'new' && newThreadId !== oldThreadId) {
+      console.log('Navigating to different chat thread, reinitializing');
+      initializeChat();
+    }
+  });
 });
 
 onUnmounted(() => {
@@ -189,6 +225,20 @@ onUnmounted(() => {
     wsChat.value.disconnect();
   }
 });
+
+// Check for and send any pending message (from redirect flow)
+const checkAndSendPendingMessage = () => {
+  const pendingMessage = getPendingMessage();
+  if (pendingMessage && route.params.threadId !== 'new') {
+    console.log('Found pending message, sending:', pendingMessage);
+    clearPendingMessage();
+
+    // Send the pending message
+    nextTick(() => {
+      handleSend(pendingMessage);
+    });
+  }
+};
 
 // Helper functions to handle different content types
 const parseMessageContent = (message: any) => {
@@ -439,20 +489,55 @@ const handleSend = async (text: string) => {
 
     // Use WebSocket only
     if (useWebSocket.value && wsChat.value && wsChat.value.isConnected) {
-      // Create user_info for the WebSocket message
-      const avatarId = route.params.avatarId as string;
+      // Create user_info with character context
+      const character = selectedCharacter.value;
+
+      // Convert subject code to lowercase for backend
+      const subjectForBackend = character?.subject?.toLowerCase() || 'general';
+
       const userInfo = {
-        subject: AVATAR_SUBJECTS[avatarId?.toLowerCase()] || 'general',
+        subject: subjectForBackend,
         level: meStore.level_type || 'PRIMARY_1',
         country: meStore.country_code || 'SG',
+        character_slug: character?.slug,
+        personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
       };
 
-      console.log('Sending WebSocket message with user_info:', userInfo); // Debug log
+      // Enhanced logging
+      console.log('🎭 Character Context:', {
+        name: character?.name,
+        slug: character?.slug,
+        subject: character?.subject,
+        subject_for_backend: subjectForBackend
+      });
+
+      console.log('📤 Sending WebSocket message:', {
+        message: text.substring(0, 50) + '...',
+        isFirstMessage: isFirstMessage.value,
+        userInfo
+      });
 
       let success = false;
       if (isFirstMessage.value) {
         success = wsChat.value.startChat(text, userInfo);
         isFirstMessage.value = false;
+
+        // Update URL from /chat/character/new to /chat/character/threadId without component re-render
+        if (route.params.threadId === 'new' && character) {
+          const newUrl = `/chat/${character.slug}/${threadId.value}`;
+
+          // Update URL without triggering Vue Router navigation to prevent flicker
+          window.history.replaceState(
+            { ...window.history.state, current: newUrl },
+            '',
+            newUrl
+          );
+
+          // Manually update route params to keep Vue Router in sync
+          (route.params as any).threadId = threadId.value;
+
+          console.log('Updated URL to:', newUrl);
+        }
       } else {
         success = wsChat.value.sendUserResponse(text, userInfo);
       }
@@ -589,30 +674,28 @@ function formatLessonPart(item: any, allItems: any[]): string {
 // Clear chat method to reset all chat state
 const clearChat = () => {
   messageStream.value = [];
-  conversationSummary.value = 'Eddy is a lion character that talks and is highly intelligent, he educates with passion.';
   currentPlaybackIndex.value = 0;
   isPlayingAllowed.value = false;
   isWaitingForResponse.value = false;
 
-  // Reset thread ID and clear from localStorage
+  // Reset thread ID and navigate to new chat
   if (import.meta.client) {
-    const avatarId = route.params.avatarId as string;
     const userId = meStore.user_info_id || meStore.id;
+    const character = selectedCharacter.value;
 
     if (!userId) {
       console.warn('No user ID available for clearChat');
       return;
     }
 
-    // Get subject for thread ID
-    const subject = AVATAR_SUBJECTS[avatarId?.toLowerCase()] || 'general';
-    const storageKey = `chat-thread-${userId}-${avatarId || 'default'}-${subject}`;
-    localStorage.removeItem(storageKey);
-
-    // Generate new thread ID
-    threadId.value = `${userId}-${avatarId || 'default'}-${subject}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem(storageKey, threadId.value);
+    // Generate new thread ID (clean format)
+    threadId.value = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     isFirstMessage.value = true;
+
+    // Navigate to new chat URL
+    if (character) {
+      router.push(`/chat/${character.slug}/new`);
+    }
 
     // Reconnect WebSocket with new thread ID
     if (wsChat.value) {

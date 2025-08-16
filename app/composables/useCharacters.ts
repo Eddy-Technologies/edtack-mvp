@@ -1,13 +1,10 @@
-import type { Ref } from 'vue';
-
 export interface Character {
   id: number;
   name: string;
-  type: string;
+  slug: string;
+  subject: string;
   description?: string;
   image_url?: string;
-  voice_config?: Record<string, any>;
-  animation_config?: Record<string, any>;
   personality_prompt?: string;
   is_active: boolean;
   display_order: number;
@@ -26,12 +23,16 @@ export interface CharacterResponse {
   data: Character;
 }
 
-export const useCharacters = () => {
-  const characters: Ref<Character[]> = ref([]);
-  const loading = ref(false);
-  const error = ref<string | null>(null);
+// Global state using Vue's reactivity
+const selectedCharacter = ref<Character | null>(null);
+const characters = ref<Character[]>([]);
+const loading = ref(false);
+const error = ref<string | null>(null);
+const pendingMessage = ref<string | null>(null);
 
-  const fetchCharacters = async (includeInactive: boolean = false) => {
+export const useCharacters = () => {
+  // API Methods
+  const fetchCharacters = async (includeInactive: boolean = false): Promise<Character[]> => {
     loading.value = true;
     error.value = null;
 
@@ -41,6 +42,12 @@ export const useCharacters = () => {
 
       if (response.success) {
         characters.value = response.data;
+
+        // Set default character if none selected
+        if (!selectedCharacter.value && response.data.length > 0) {
+          selectedCharacter.value = getDefaultCharacter();
+        }
+
         return response.data;
       } else {
         throw new Error('Failed to fetch characters');
@@ -54,47 +61,153 @@ export const useCharacters = () => {
     }
   };
 
-  const fetchCharacter = async (id: number) => {
-    loading.value = true;
-    error.value = null;
-
+  const fetchCharacterBySlug = async (slug: string): Promise<Character | null> => {
     try {
-      const response = await $fetch<CharacterResponse>(`/api/characters/${id}`);
+      const response = await $fetch<CharacterResponse>(`/api/characters/slug/${slug}`);
 
       if (response.success) {
+        // Add to local cache if not already there
+        const existingIndex = characters.value.findIndex((c) => c.id === response.data.id);
+        if (existingIndex >= 0) {
+          characters.value[existingIndex] = response.data;
+        } else {
+          characters.value.push(response.data);
+        }
+
         return response.data;
       } else {
         throw new Error('Failed to fetch character');
       }
     } catch (err: any) {
-      error.value = err.message || 'Failed to fetch character';
-      console.error('Error fetching character:', err);
+      console.error('Error fetching character by slug:', err);
       return null;
-    } finally {
-      loading.value = false;
     }
   };
 
-  const getCharacterById = (id: number) => {
-    return computed(() => characters.value.find((char) => char.id === id));
+  // Internal helper methods (not exported)
+  const getCharacterById = (id: number): Character | undefined => {
+    return characters.value.find((char) => char.id === id);
   };
 
-  const activeCharacters = computed(() =>
-    characters.value.filter((char) => char.is_active)
-  );
+  const getCharacterBySlug = (slug: string): Character | undefined => {
+    return characters.value.find((char) => char.slug === slug);
+  };
 
-  const refreshCharacters = () => {
-    return fetchCharacters();
+  const getDefaultCharacter = (): Character | undefined => {
+    // Return Eddy as the default character (slug: 'eddy') or first character
+    return characters.value.find((char) => char.slug === 'eddy') || characters.value[0];
+  };
+
+  // State Management Methods
+  const selectCharacterById = async (id: number) => {
+    const character = getCharacterById(id);
+    if (character) {
+      selectedCharacter.value = character;
+      persistSelectedCharacter();
+    } else {
+      console.warn(`Character with id ${id} not found`);
+    }
+  };
+
+  const selectCharacterBySlug = async (slug: string) => {
+    let character = getCharacterBySlug(slug);
+
+    if (!character) {
+      // Try to fetch from API if not in local cache
+      try {
+        character = await fetchCharacterBySlug(slug);
+      } catch (err) {
+        console.error('Error fetching character by slug:', err);
+      }
+    }
+
+    if (character) {
+      selectedCharacter.value = character;
+      persistSelectedCharacter();
+    } else {
+      console.warn(`Character with slug "${slug}" not found`);
+    }
+  };
+
+  // Persistence Methods
+  const persistSelectedCharacter = () => {
+    if (import.meta.client && selectedCharacter.value) {
+      localStorage.setItem('selectedCharacter', JSON.stringify({
+        id: selectedCharacter.value.id,
+        slug: selectedCharacter.value.slug
+      }));
+    }
+  };
+
+  const loadPersistedCharacter = () => {
+    if (import.meta.client) {
+      const stored = localStorage.getItem('selectedCharacter');
+      if (stored) {
+        try {
+          const { slug } = JSON.parse(stored);
+          const character = getCharacterBySlug(slug);
+          if (character) {
+            selectedCharacter.value = character;
+          }
+        } catch (err) {
+          console.error('Error loading persisted character:', err);
+          localStorage.removeItem('selectedCharacter');
+        }
+      }
+    }
+  };
+
+  const initializeStore = async () => {
+    await fetchCharacters();
+    loadPersistedCharacter();
+
+    // Ensure we have a selected character
+    if (!selectedCharacter.value) {
+      selectedCharacter.value = getDefaultCharacter();
+      persistSelectedCharacter();
+    }
+  };
+
+  // Message Preservation Methods
+  const setPendingMessage = (message: string) => {
+    pendingMessage.value = message;
+    if (import.meta.client) {
+      sessionStorage.setItem('pendingMessage', message);
+    }
+  };
+
+  const getPendingMessage = (): string | null => {
+    if (pendingMessage.value) {
+      return pendingMessage.value;
+    }
+    if (import.meta.client) {
+      return sessionStorage.getItem('pendingMessage');
+    }
+    return null;
+  };
+
+  const clearPendingMessage = () => {
+    pendingMessage.value = null;
+    if (import.meta.client) {
+      sessionStorage.removeItem('pendingMessage');
+    }
   };
 
   return {
-    characters: readonly(characters),
-    loading: readonly(loading),
-    error: readonly(error),
+    // State (only what's actually used)
+    selectedCharacter: readonly(selectedCharacter),
+
+    // API Methods (only what's actually used)
     fetchCharacters,
-    fetchCharacter,
-    getCharacterById,
-    activeCharacters,
-    refreshCharacters
+
+    // State Management (only what's actually used)
+    selectCharacterById,
+    selectCharacterBySlug,
+    initializeStore,
+
+    // Message Management (only what's actually used)
+    setPendingMessage,
+    getPendingMessage,
+    clearPendingMessage
   };
 };

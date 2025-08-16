@@ -388,7 +388,7 @@ const scrollToCharacters = () => {
 
 const goToChat = (avatar) => {
   selectedAvatar.value = avatar;
-  router.push(`/chat/${avatar.id}`);
+  router.push(`/chat/${avatar.slug}/new`);
 };
 
 // Tabs functionality

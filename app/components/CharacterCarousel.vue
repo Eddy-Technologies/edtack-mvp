@@ -68,7 +68,7 @@
               <!-- Text area - bottom 30% -->
               <div class="relative z-10 p-4 flex flex-col justify-center items-center text-center" style="height: 20%">
                 <h5 class="text-white text-base font-semibold mb-1 drop-shadow-lg">{{ avatar.name }}</h5>
-                <p class="text-white/90 text-sm drop-shadow-md">{{ avatar.type }}</p>
+                <p class="text-white/90 text-sm drop-shadow-md">{{ avatar.subject }}</p>
               </div>
             </div>
           </div>
@@ -166,11 +166,11 @@ const loadCharacters = async () => {
     allAvatars.value = characters.map((char) => ({
       id: char.id,
       name: char.name,
-      type: char.type,
+      slug: char.slug,
+      subject: char.subject,
       image: char.image_url || '/assets/eddy.png', // fallback image
       description: char.description,
-      voice_config: char.voice_config,
-      animation_config: char.animation_config
+      personality_prompt: char.personality_prompt
     }));
 
     // Reset current index if we have characters
@@ -194,9 +194,9 @@ const selectAvatar = (avatar, index) => {
   emit('update:modelValue', avatar);
   console.log('Selected avatar:', avatar);
 
-  // Navigate to chat if prop is set
-  if (props.goToChatOnClick && avatar.id) {
-    router.push(`/chat/${avatar.id}`);
+  // Navigate to chat using character slug
+  if (props.goToChatOnClick && avatar.slug) {
+    router.push(`/chat/${avatar.slug}/new`);
   }
 };
 
