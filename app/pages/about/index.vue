@@ -57,10 +57,10 @@
         <!-- Back to Chat Button -->
         <Button
           class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-secondary rounded-xl hover:bg-secondary-700 transition-colors shadow-sm"
-          icon="i-lucide-home"
+          icon="i-lucide-message-circle"
           @click="router.push('/')"
         >
-          Back to Home
+          Back to Chat
         </Button>
       </div>
     </div>

@@ -173,7 +173,7 @@
         <Button
           class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors shadow-sm"
           icon="i-lucide-message-circle"
-          @click="navigateToRoute({ name: 'Chat', route: '/chat' })"
+          @click="router.push('/')"
         >
           Back to Chat
         </Button>
