@@ -44,7 +44,7 @@
           </ULink>
         </div>
       </div>
-      <div class="px-3">
+      <div v-if="!props.hideChangeCharacter" class="px-3">
         <div class="border-t border-black">
           <ULink
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
@@ -188,6 +188,10 @@ const props = defineProps({
   sidebarWidth: Number,
   isMobile: Boolean,
   isAvatarFloating: Boolean,
+  hideChangeCharacter: {
+    type: Boolean,
+    default: false
+  },
 });
 
 // State for audio player collapsed state
