@@ -741,7 +741,7 @@ const clearChat = () => {
 
     // Navigate to new chat URL
     if (character) {
-      router.push(`/chat/${character.slug}/new`);
+      router.replace(`/chat/${character.slug}/new`);
     }
 
     // Reconnect WebSocket with new thread ID

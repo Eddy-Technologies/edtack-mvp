@@ -247,6 +247,11 @@ import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import Avatar from '@/components/avatar/Avatar.vue';
 import Button from '@/components/common/Button.vue';
 import { useToast } from '#imports';
+
+// Prevent component remounting when URL changes
+definePageMeta({
+  key: 'chat-page'
+});
 import { useAudioStore } from '~/stores/audio';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
@@ -335,7 +340,7 @@ const handleCharacterSelection = async (character) => {
   await selectCharacterById(character.id);
 
   // Navigate to new chat with selected character
-  await router.push(`/chat/${character.slug}/new`);
+  await router.replace(`/chat/${character.slug}/new`);
 
   // Reset chat state to start new conversation
   hasStartedChat.value = false;
@@ -352,7 +357,7 @@ const handleCharacterSelection = async (character) => {
 const handleNewChat = () => {
   // Navigate to new chat with current character
   if (selectedCharacter.value) {
-    router.push(`/chat/${selectedCharacter.value.slug}/new`);
+    router.replace(`/chat/${selectedCharacter.value.slug}/new`);
   }
 
   // Reset chat state

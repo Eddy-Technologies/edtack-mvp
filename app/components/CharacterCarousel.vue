@@ -198,7 +198,7 @@ const selectAvatar = (avatar, index) => {
 
   // Navigate to chat using character slug
   if (props.goToChatOnClick && avatar.slug) {
-    router.push(`/chat/${avatar.slug}/new`);
+    router.replace(`/chat/${avatar.slug}/new`);
   }
 };
 
