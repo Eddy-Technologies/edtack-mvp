@@ -76,10 +76,10 @@
                     v-if="avatar.slug === props.initialCharacterSlug"
                     class="px-2 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full shadow-lg"
                   >
-                    Current
+                    Selected
                   </span>
                 </div>
-                <p class="text-white/90 text-sm drop-shadow-md">{{ avatar.subject }}</p>
+                <p class="text-white/90 text-sm drop-shadow-md">{{ constantCaseToTitleCase(avatar.subject) }}</p>
               </div>
             </div>
           </div>
@@ -108,6 +108,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from '#vue-router';
 import { useCharacters } from '~/composables/useCharacters';
+import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 const props = defineProps({
   modelValue: {

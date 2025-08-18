@@ -73,7 +73,7 @@
                         <p class="text-sm text-gray-600">
                           <span v-if="selectedCharacter">
                             Currently: <span class="font-medium text-gray-800">{{ selectedCharacter.name }}</span>
-                            <span class="text-gray-500">({{ selectedCharacter.subject }})</span>
+                            <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
                           </span>
                           <span v-else>Select a character to start chatting</span>
                         </p>
@@ -122,7 +122,7 @@
                           <p class="text-sm text-gray-600">
                             <span v-if="selectedCharacter">
                               Currently: <span class="font-medium text-gray-800">{{ selectedCharacter.name }}</span>
-                              <span class="text-gray-500">({{ selectedCharacter.subject }})</span>
+                              <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
                             </span>
                             <span v-else>Select a character to start chatting</span>
                           </p>
@@ -250,6 +250,7 @@ import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
+import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 const collapsed = ref(true);
 const isMobile = ref(false);
