@@ -247,15 +247,15 @@ import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import Avatar from '@/components/avatar/Avatar.vue';
 import Button from '@/components/common/Button.vue';
 import { useToast } from '#imports';
+import { useAudioStore } from '~/stores/audio';
+import { useMeStore } from '~/stores/me';
+import { useCharacters } from '~/composables/useCharacters';
+import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 // Prevent component remounting when URL changes
 definePageMeta({
   key: 'chat-page'
 });
-import { useAudioStore } from '~/stores/audio';
-import { useMeStore } from '~/stores/me';
-import { useCharacters } from '~/composables/useCharacters';
-import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 const collapsed = ref(true);
 const isMobile = ref(false);
