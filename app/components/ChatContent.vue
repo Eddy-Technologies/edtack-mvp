@@ -255,76 +255,11 @@ const checkAndSendPendingMessage = () => {
   }
 };
 
-// Helper functions to handle different content types
-const parseMessageContent = (message: any) => {
-  console.log('Parsing WebSocket message:', message); // Debug log for new format
-
-  // If message.message exists, display it unconditionally
-  if (message.message) {
-    // Check generation_intent_type if available
-    if (message.generation_intent_type) {
-      switch (message.generation_intent_type) {
-        case GenerationIntentType.LESSON:
-          return parseLessonContent(message.message);
-
-        case GenerationIntentType.QUIZ:
-          return parseQuizContent(message.message);
-
-        case GenerationIntentType.STANDARD_RESPONSE:
-        default:
-          return {
-            type: 'text',
-            text: message.message,
-            isUser: false,
-            playable: true,
-          };
-      }
-    } else {
-      // No generation_intent_type, just display the message
-      return {
-        type: 'text',
-        text: message.message,
-        isUser: false,
-        playable: true,
-      };
-    }
-  }
-
-  // Fallback to existing content/text format for backward compatibility
-  return {
-    type: 'text',
-    text: message.content || message.text || '[No response]',
-    isUser: false,
-    playable: true,
-  };
-};
-
-const parseLessonContent = (messageText: string) => {
-  // For now, treat lesson content as rich text
-  // TODO: Implement proper lesson parsing if messageText contains structured data
-  return {
-    type: 'text',
-    text: `📚 Lesson: ${messageText}`,
-    isUser: false,
-    playable: true,
-  };
-};
-
-const parseQuizContent = (messageText: string) => {
-  // For now, treat quiz content as rich text
-  // TODO: Implement proper quiz parsing if messageText contains structured data
-  return {
-    type: 'text',
-    text: `📝 Quiz: ${messageText}`,
-    isUser: false,
-    playable: true,
-  };
-};
-
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
   // Display any message with message.message field unconditionally
-  if (message.message) {
+  if (message.status === 'user_message') {
+    console.log('Received user_message message:', message);
     // Add placeholder for assistant if not exists
     if (messageStream.value.length === 0 || messageStream.value[messageStream.value.length - 1].isUser) {
       messageStream.value.push({
@@ -333,12 +268,8 @@ const handleWebSocketMessage = (message: any) => {
         isUser: false,
         playable: false,
       });
-    }
-
-    // Update the last assistant message
-    const lastIdx = messageStream.value.length - 1;
-    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
-      messageStream.value[lastIdx] = parseMessageContent(message);
+    } else {
+      messageStream.value.push(message);
     }
 
     // Update token count if provided
@@ -351,26 +282,6 @@ const handleWebSocketMessage = (message: any) => {
 
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
-
-    nextTick(() => {
-      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-    });
-    return;
-  }
-
-  if (message.status === 'partial') {
-    // Handle partial responses - update the last assistant message
-    const lastIdx = messageStream.value.length - 1;
-    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
-      // For partial responses, use the message or content field directly
-      const partialContent = message.message || message.content || '[Partial response...]';
-      messageStream.value[lastIdx] = {
-        type: 'text',
-        text: partialContent,
-        isUser: false,
-        playable: false, // Don't allow playback until complete
-      };
-    }
 
     nextTick(() => {
       bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -428,9 +339,10 @@ const handleWebSocketMessage = (message: any) => {
 
 // Flatten the entire messageStream into an ordered array of playback units
 const flattenedPlaybackUnits = computed(() => {
+  console.log('Flattening message stream into playback units:', messageStream.value);
   const units: any[] = [];
   messageStream.value.forEach((block, blockIndex) => {
-    if (block.type === 'text' && block.text) {
+    if (block.text) {
       units.push({
         component: TextBubble,
         props: {
@@ -440,7 +352,7 @@ const flattenedPlaybackUnits = computed(() => {
         },
       });
     }
-    if (block.type === 'slides' && Array.isArray(block.slides)) {
+    if (Array.isArray(block.slides)) {
       block.slides.forEach((slide) => {
         units.push({
           component: SlideBubble,
@@ -452,7 +364,7 @@ const flattenedPlaybackUnits = computed(() => {
         });
       });
     }
-    if (block.type === 'questions' && Array.isArray(block.questions)) {
+    if (Array.isArray(block.questions)) {
       block.questions.forEach((question) => {
         units.push({
           component: QuestionBubble,
