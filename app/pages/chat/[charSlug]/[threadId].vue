@@ -54,8 +54,8 @@
           />
         </div>
 
-        <!-- Chat Content Below -->
-        <div class="flex-1 overflow-y-auto relative">
+        <!-- Chat Content Area - takes remaining space -->
+        <div class="flex-1 overflow-hidden relative">
           <ChatContent ref="chatContentRef" />
 
           <!-- Character Selection Overlay - only when selecting character -->
@@ -98,52 +98,52 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Chat Input (separate from ChatContent) -->
-          <div
-            v-if="shouldShowChatInput"
-            :class="[
-              'z-10 flex flex-col items-center gap-4 shadow-lg transition-all duration-500 ease-out',
-              isChatCentered
-                ? 'fixed inset-0 bg-white/95 backdrop-blur-sm justify-center'
-                : 'absolute bottom-0 left-0 right-0 bg-white p-10'
-            ]"
-            :style="{ transitionDelay: showContentTransitions ? '0.4s' : '0s' }"
-          >
-            <div class="w-full max-w-4xl px-4">
-              <!-- Character Carousel Card - only shown when centered (new chat) -->
-              <div v-if="isChatCentered" class="mb-6">
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                  <div class="px-6 py-4 border-b border-gray-100">
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
-                        <div class="flex items-center gap-2 mt-1">
-                          <p class="text-sm text-gray-600">
-                            <span v-if="selectedCharacter">
-                              Currently: <span class="font-medium text-gray-800">{{ selectedCharacter.name }}</span>
-                              <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
-                            </span>
-                            <span v-else>Select a character to start chatting</span>
-                          </p>
-                        </div>
+        <!-- Chat Input - positioned as footer below content -->
+        <div
+          v-if="shouldShowChatInput"
+          :class="[
+            'flex flex-col items-center gap-4 shadow-lg transition-all duration-500 ease-out flex-shrink-0',
+            isChatCentered
+              ? 'fixed inset-0 bg-white/95 backdrop-blur-sm justify-center z-40'
+              : 'bg-white border-t p-6'
+          ]"
+          :style="{ transitionDelay: showContentTransitions ? '0.4s' : '0s' }"
+        >
+          <div class="w-full max-w-4xl px-4">
+            <!-- Character Carousel Card - only shown when centered (new chat) -->
+            <div v-if="isChatCentered" class="mb-6">
+              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
+                      <div class="flex items-center gap-2 mt-1">
+                        <p class="text-sm text-gray-600">
+                          <span v-if="selectedCharacter">
+                            Currently: <span class="font-medium text-gray-800">{{ selectedCharacter.name }}</span>
+                            <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
+                          </span>
+                          <span v-else>Select a character to start chatting</span>
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div class="p-4">
-                    <CharacterCarousel
-                      v-model="currentCharacter"
-                      :initial-character-slug="charSlug"
-                      :go-to-chat-on-click="true"
-                      @select="handleCharacterSelection"
-                    />
-                  </div>
+                </div>
+                <div class="p-4">
+                  <CharacterCarousel
+                    v-model="currentCharacter"
+                    :initial-character-slug="charSlug"
+                    :go-to-chat-on-click="true"
+                    @select="handleCharacterSelection"
+                  />
                 </div>
               </div>
+            </div>
 
-              <div class="w-full max-w-2xl mx-auto">
-                <ChatInput @send="handleChatSend" />
-              </div>
+            <div class="w-full max-w-2xl mx-auto">
+              <ChatInput @send="handleChatSend" />
             </div>
           </div>
         </div>

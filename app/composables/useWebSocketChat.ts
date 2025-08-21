@@ -81,7 +81,7 @@ export function useWebSocketChat(threadId: string) {
           }
 
           // Handle completion types - these end the response
-          if (['complete', 'response', 'user_message', 'timeout', 'cancelled', 'error'].includes(data.status)) {
+          if (['completed', 'timeout', 'cancelled', 'error', 'validation_error'].includes(data.status)) {
             isWaitingForResponse.value = false;
             responsePhase.value = '';
           }
