@@ -66,8 +66,8 @@ import { useRoute, useRouter } from 'vue-router';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
-import { useWebSocketChat, GenerationIntentType } from '~/composables/useWebSocketChat';
-import { useLesson } from '~/composables/useLesson';
+import { useWebSocketChat } from '~/composables/useWebSocketChat';
+// import { useLesson } from '~/composables/useLesson';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
 
@@ -97,7 +97,7 @@ if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
 }
 
-const { getLessonBundle } = useLesson();
+// const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
 const { selectedCharacter, initializeStore, selectCharacterBySlug, getPendingMessage, clearPendingMessage } = useCharacters();
 
@@ -260,17 +260,8 @@ const handleWebSocketMessage = (message: any) => {
   // Display any message with message.message field unconditionally
   if (message.status === 'user_message') {
     console.log('Received user_message message:', message);
-    // Add placeholder for assistant if not exists
-    if (messageStream.value.length === 0 || messageStream.value[messageStream.value.length - 1].isUser) {
-      messageStream.value.push({
-        type: 'text',
-        text: '',
-        isUser: false,
-        playable: false,
-      });
-    } else {
-      messageStream.value.push(message);
-    }
+
+    messageStream.value.push(message);
 
     // Update token count if provided
     if (message.tokenCount) {
@@ -289,42 +280,12 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  if (message.status === 'timeout') {
+  if (message.status === 'timeout' || message.status === 'cancelled' || message.status === 'error') {
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
         type: 'text',
-        text: `[Timeout: ${message.error || 'Request took too long. Please try again.'}]`,
-        isUser: false,
-        playable: false,
-      };
-    }
-    isPlayingAllowed.value = true;
-    isWaitingForResponse.value = false;
-    return;
-  }
-
-  if (message.status === 'cancelled') {
-    const lastIdx = messageStream.value.length - 1;
-    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
-      messageStream.value[lastIdx] = {
-        type: 'text',
-        text: '[Request was cancelled]',
-        isUser: false,
-        playable: false,
-      };
-    }
-    isPlayingAllowed.value = true;
-    isWaitingForResponse.value = false;
-    return;
-  }
-
-  if (message.status === 'error') {
-    const lastIdx = messageStream.value.length - 1;
-    if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
-      messageStream.value[lastIdx] = {
-        type: 'text',
-        text: `[Error: ${message.error || 'Connection error'}]`,
+        text: `[Timeout: ${message.error || 'Request error. Please try again.'}]`,
         isUser: false,
         playable: false,
       };
@@ -375,6 +336,18 @@ const flattenedPlaybackUnits = computed(() => {
         });
       });
     }
+    if (Array.isArray(block.options)) {
+      block.options.forEach((option) => {
+        units.push({
+          component: TextBubble,
+          props: {
+            text: `Chapters: ${option.source_chapter}`,
+            isUser: false,
+            playable: false, // options are not playable
+          },
+        });
+      });
+    }
   });
   return units;
 });
@@ -391,244 +364,218 @@ function handleFinish() {
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
 
-  if (text.includes('lesson')) {
-    constructLesson(text);
-  } else {
-    isPlayingAllowed.value = false;
-    await nextTick();
-    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  isPlayingAllowed.value = false;
+  await nextTick();
+  bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
 
-    // Add user message
-    messageStream.value.push({
-      type: 'text',
-      text,
-      isUser: true,
-      playable: false,
-    });
+  // Add user message
+  messageStream.value.push({
+    type: 'text',
+    text,
+    isUser: true,
+    playable: false,
+  });
 
-    // Add placeholder for assistant
-    messageStream.value.push({
-      type: 'text',
-      text: '',
-      isUser: false,
-      playable: false,
-    });
+  // Handle deferred WebSocket connection for new chats
+  if (useWebSocket.value && wsChat.value && isNewChatPendingConnection.value) {
+    console.log('🔌 Connecting WebSocket for first message in new chat');
+    wsChat.value.connect();
+    isNewChatPendingConnection.value = false;
 
-    // Handle deferred WebSocket connection for new chats
-    if (useWebSocket.value && wsChat.value && isNewChatPendingConnection.value) {
-      console.log('🔌 Connecting WebSocket for first message in new chat');
-      wsChat.value.connect();
-      isNewChatPendingConnection.value = false;
+    // Wait for connection before sending
+    const waitForConnection = new Promise<void>((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('Connection timeout')), 5000);
 
-      // Wait for connection before sending
-      const waitForConnection = new Promise<void>((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('Connection timeout')), 5000);
-
-        if (wsChat.value?.isConnected) {
-          clearTimeout(timeout);
-          resolve();
-        } else {
-          const unwatch = watch(() => wsChat.value?.isConnected, (connected) => {
-            if (connected) {
-              clearTimeout(timeout);
-              unwatch();
-              resolve();
-            }
-          });
-        }
-      });
-
-      try {
-        await waitForConnection;
-      } catch (error) {
-        console.error('Failed to connect WebSocket:', error);
-        // Fall through to error handling below
+      if (wsChat.value?.isConnected) {
+        clearTimeout(timeout);
+        resolve();
+      } else {
+        const unwatch = watch(() => wsChat.value?.isConnected, (connected) => {
+          if (connected) {
+            clearTimeout(timeout);
+            unwatch();
+            resolve();
+          }
+        });
       }
+    });
+
+    try {
+      await waitForConnection;
+    } catch (error) {
+      console.error('Failed to connect WebSocket:', error);
+      // Fall through to error handling below
     }
+  }
 
-    // Use WebSocket only
-    if (useWebSocket.value && wsChat.value && wsChat.value.isConnected) {
-      // Create user_info with character context
-      const character = selectedCharacter.value;
+  // Use WebSocket only
+  if (useWebSocket.value && wsChat.value && wsChat.value.isConnected) {
+    // Create user_info with character context
+    const character = selectedCharacter.value;
 
-      // Convert subject code to lowercase for backend
-      const subjectForBackend = character?.subject?.toLowerCase() || 'general';
+    // Convert subject code to lowercase for backend
+    const subjectForBackend = character?.subject?.toLowerCase() || 'general';
 
-      const userInfo = {
-        subject: subjectForBackend,
-        level: meStore.level_type || 'PRIMARY_1',
-        country: meStore.country_code || 'SG',
-        character_slug: character?.slug,
-        personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
-      };
+    const userInfo = {
+      subject: subjectForBackend,
+      level: meStore.level_type || 'PRIMARY_1',
+      country: meStore.country_code || 'SG',
+      character_slug: character?.slug,
+      personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
+    };
 
-      // Enhanced logging
-      console.log('🎭 Character Context:', {
-        name: character?.name,
-        slug: character?.slug,
-        subject: character?.subject,
-        subject_for_backend: subjectForBackend
-      });
+    let success = false;
+    if (isFirstMessage.value) {
+      success = wsChat.value.startChat(text, userInfo);
+      isFirstMessage.value = false;
 
-      console.log('📤 Sending WebSocket message:', {
-        message: text.substring(0, 50) + '...',
-        isFirstMessage: isFirstMessage.value,
-        userInfo
-      });
+      // Update URL from /chat/character/new to /chat/character/threadId without component re-render
+      if (route.params.threadId === 'new' && character) {
+        const newUrl = `/chat/${character.slug}/${threadId.value}`;
 
-      let success = false;
-      if (isFirstMessage.value) {
-        success = wsChat.value.startChat(text, userInfo);
-        isFirstMessage.value = false;
+        // Update URL without triggering Vue Router navigation to prevent flicker
+        window.history.replaceState(
+          { ...window.history.state, current: newUrl },
+          '',
+          newUrl
+        );
 
-        // Update URL from /chat/character/new to /chat/character/threadId without component re-render
-        if (route.params.threadId === 'new' && character) {
-          const newUrl = `/chat/${character.slug}/${threadId.value}`;
+        // Manually update route params to keep Vue Router in sync
+        (route.params as any).threadId = threadId.value;
 
-          // Update URL without triggering Vue Router navigation to prevent flicker
-          window.history.replaceState(
-            { ...window.history.state, current: newUrl },
-            '',
-            newUrl
-          );
-
-          // Manually update route params to keep Vue Router in sync
-          (route.params as any).threadId = threadId.value;
-
-          console.log('Updated URL to:', newUrl);
-        }
-      } else {
-        success = wsChat.value.sendUserResponse(text, userInfo);
-      }
-
-      if (success) {
-        // Start loading state when message is sent successfully
-        isWaitingForResponse.value = true;
-      } else {
-        // Handle WebSocket send failure
-        const lastIdx = messageStream.value.length - 1;
-        messageStream.value[lastIdx] = {
-          type: 'text',
-          text: '[Failed to send message - WebSocket connection error]',
-          isUser: false,
-          playable: false,
-        };
-        isPlayingAllowed.value = true;
-        isWaitingForResponse.value = false;
+        console.log('Updated URL to:', newUrl);
       }
     } else {
-      // No WebSocket connection available
+      success = wsChat.value.sendUserResponse(text, userInfo);
+    }
+
+    if (success) {
+      // Start loading state when message is sent successfully
+      isWaitingForResponse.value = true;
+    } else {
+      // Handle WebSocket send failure
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
         type: 'text',
-        text: '[WebSocket not connected - please wait for connection]',
+        text: '[Failed to send message - WebSocket connection error]',
         isUser: false,
         playable: false,
       };
       isPlayingAllowed.value = true;
       isWaitingForResponse.value = false;
     }
-  }
-};
-
-const constructLesson = (text: string) => {
-  isPlayingAllowed.value = false;
-
-  const lesson = getLessonBundle(text);
-  if (!lesson) {
-    messageStream.value.push({
+  } else {
+    // No WebSocket connection available
+    const lastIdx = messageStream.value.length - 1;
+    messageStream.value[lastIdx] = {
       type: 'text',
-      text: `Sorry, I couldn't find a lesson related to that topic.`,
+      text: '[WebSocket not connected - please wait for connection]',
       isUser: false,
       playable: false,
-    });
-    return;
-  }
-
-  const stream: any[] = [];
-
-  stream.push({
-    type: 'text',
-    text: `📘 ${lesson.parent.title}\n\n${cleanContent(lesson.parent.content)}`,
-    isUser: false,
-    playable: true,
-  });
-
-  if (lesson.slides?.length) {
-    stream.push({
-      type: 'slides',
-      slides: lesson.slides,
-    });
-  }
-
-  if (lesson.questions?.length) {
-    stream.push({
-      type: 'questions',
-      questions: lesson.questions.map((q: any) => formatLessonPart(q, lesson.questions)),
-    });
-  }
-
-  messageStream.value = [...messageStream.value, ...stream];
-
-  nextTick(() => {
+    };
     isPlayingAllowed.value = true;
-  });
+    isWaitingForResponse.value = false;
+  }
 };
 
-function cleanContent(raw: string): string {
-  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image: $1]');
-}
+// const constructLesson = (text: string) => {
+//   isPlayingAllowed.value = false;
 
-function formatLessonPart(item: any, allItems: any[]): string {
-  let output = '';
-  const label = item.part_label || item.title || '';
+//   const lesson = getLessonBundle(text);
+//   if (!lesson) {
+//     messageStream.value.push({
+//       type: 'text',
+//       text: `Sorry, I couldn't find a lesson related to that topic.`,
+//       isUser: false,
+//       playable: false,
+//     });
+//     return;
+//   }
 
-  output += `${label}\n\n${cleanContent(item.content)}\n`;
+//   const stream: any[] = [];
 
-  if (item.type === 'question') {
-    const qType = item.question_type;
+//   stream.push({
+//     type: 'text',
+//     text: `📘 ${lesson.parent.title}\n\n${cleanContent(lesson.parent.content)}`,
+//     isUser: false,
+//     playable: true,
+//   });
 
-    if (qType === 'mcq' && item.options?.length) {
-      output += '\n**Options:**\n';
-      item.options.forEach((opt: any, index: number) => {
-        if (opt.option_text) {
-          output += `- ${String.fromCharCode(65 + index)}. ${opt.option_text}\n`;
-        } else if (opt.imageUrl) {
-          output += `- ${String.fromCharCode(65 + index)}. [Image Option: ${opt.imageUrl}]\n`;
-        }
-      });
-    }
+//   if (lesson.slides?.length) {
+//     stream.push({
+//       type: 'slides',
+//       slides: lesson.slides,
+//     });
+//   }
 
-    if (qType === 'boolean') {
-      output += `\n*(This is a True/False question)*`;
-    }
+//   if (lesson.questions?.length) {
+//     stream.push({
+//       type: 'questions',
+//       questions: lesson.questions.map((q: any) => formatLessonPart(q, lesson.questions)),
+//     });
+//   }
 
-    if (qType === 'open') {
-      const ans = item.answer?.[0]?.answer_text || '(Student provides open-ended answer)';
-      output += `\n**Expected Answer (open-ended):**\n${ans}`;
-    }
+//   messageStream.value = [...messageStream.value, ...stream];
 
-    if (qType === 'fill') {
-      const answers = item.answer || [];
-      output += `\nExpected Answers (fill in the blanks):\n`;
-      answers.forEach((ans: any, idx: number) => {
-        output += `- Blank ${idx + 1}: ${ans.answer_text || '(No answer provided)'}\n`;
-      });
-    }
+//   nextTick(() => {
+//     isPlayingAllowed.value = true;
+//   });
+// };
 
-    if (qType === 'draw') {
-      const ans = item.answer?.[0]?.answer_draw_file;
-      if (ans) output += `\n**Expected Drawing: [Drawing Image](${ans})\n`;
-      else output += `\n*(Draw response expected)*`;
-    }
-  }
+// function cleanContent(raw: string): string {
+//   return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image: $1]');
+// }
 
-  if (item.explanation) {
-    output += `\n**Explanation:**\n${cleanContent(item.explanation)}`;
-  }
+// function formatLessonPart(item: any, allItems: any[]): string {
+//   let output = '';
+//   const label = item.part_label || item.title || '';
 
-  return output;
-}
+//   output += `${label}\n\n${cleanContent(item.content)}\n`;
+
+//   if (item.type === 'question') {
+//     const qType = item.question_type;
+
+//     if (qType === 'mcq' && item.options?.length) {
+//       output += '\n**Options:**\n';
+//       item.options.forEach((opt: any, index: number) => {
+//         if (opt.option_text) {
+//           output += `- ${String.fromCharCode(65 + index)}. ${opt.option_text}\n`;
+//         } else if (opt.imageUrl) {
+//           output += `- ${String.fromCharCode(65 + index)}. [Image Option: ${opt.imageUrl}]\n`;
+//         }
+//       });
+//     }
+
+//     if (qType === 'boolean') {
+//       output += `\n*(This is a True/False question)*`;
+//     }
+
+//     if (qType === 'open') {
+//       const ans = item.answer?.[0]?.answer_text || '(Student provides open-ended answer)';
+//       output += `\n**Expected Answer (open-ended):**\n${ans}`;
+//     }
+
+//     if (qType === 'fill') {
+//       const answers = item.answer || [];
+//       output += `\nExpected Answers (fill in the blanks):\n`;
+//       answers.forEach((ans: any, idx: number) => {
+//         output += `- Blank ${idx + 1}: ${ans.answer_text || '(No answer provided)'}\n`;
+//       });
+//     }
+
+//     if (qType === 'draw') {
+//       const ans = item.answer?.[0]?.answer_draw_file;
+//       if (ans) output += `\n**Expected Drawing: [Drawing Image](${ans})\n`;
+//       else output += `\n*(Draw response expected)*`;
+//     }
+//   }
+
+//   if (item.explanation) {
+//     output += `\n**Explanation:**\n${cleanContent(item.explanation)}`;
+//   }
+
+//   return output;
+// }
 
 // Clear chat method to reset all chat state
 const clearChat = () => {
@@ -666,31 +613,9 @@ const clearChat = () => {
   }
 };
 
-// Handle continue generation
-const handleContinue = async () => {
-  if (useWebSocket.value && wsChat.value && wsChat.value.isConnected.value) {
-    // Add placeholder for assistant continuation
-    messageStream.value.push({
-      type: 'text',
-      text: '',
-      isUser: false,
-      playable: false,
-    });
-
-    const success = wsChat.value.continueChat();
-
-    if (!success) {
-      // Remove placeholder if failed
-      messageStream.value.pop();
-      console.error('Failed to send continue command');
-    }
-  }
-};
-
 // Expose methods to parent component
 defineExpose({
   handleSend,
   clearChat,
-  handleContinue,
 });
 </script>
