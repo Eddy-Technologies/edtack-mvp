@@ -304,6 +304,16 @@ const flattenedPlaybackUnits = computed(() => {
   console.log('Flattening message stream into playback units:', messageStream.value);
   const units: any[] = [];
   messageStream.value.forEach((block, blockIndex) => {
+    if (block.text) {
+      units.push({
+        component: TextBubble,
+        props: {
+          text: block.text,
+          isFirst: blockIndex === 0,
+          isUser: block.isUser
+        },
+      });
+    }
     if (block.message) {
       units.push({
         component: TextBubble,
