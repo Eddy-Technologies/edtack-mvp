@@ -70,6 +70,7 @@ import { useWebSocketChat } from '~/composables/useWebSocketChat';
 // import { useLesson } from '~/composables/useLesson';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
+import mockQuizData from '~/mockQuizData';
 
 const messageStream = ref<any[]>([]);
 
@@ -303,11 +304,11 @@ const flattenedPlaybackUnits = computed(() => {
   console.log('Flattening message stream into playback units:', messageStream.value);
   const units: any[] = [];
   messageStream.value.forEach((block, blockIndex) => {
-    if (block.text) {
+    if (block.message) {
       units.push({
         component: TextBubble,
         props: {
-          text: block.text,
+          text: block.message,
           isFirst: blockIndex === 0,
           isUser: block.isUser
         },
@@ -321,29 +322,6 @@ const flattenedPlaybackUnits = computed(() => {
             slide,
             isUser: false,
             startPlayback: false, // controlled globally by parent
-          },
-        });
-      });
-    }
-    if (Array.isArray(block.questions)) {
-      block.questions.forEach((question) => {
-        units.push({
-          component: QuestionBubble,
-          props: {
-            text: question,
-            isFirst: false,
-          },
-        });
-      });
-    }
-    if (Array.isArray(block.options)) {
-      block.options.forEach((option) => {
-        units.push({
-          component: TextBubble,
-          props: {
-            text: `Chapters: ${option.source_chapter}`,
-            isUser: false,
-            playable: false, // options are not playable
           },
         });
       });
@@ -363,6 +341,17 @@ function handleFinish() {
 // Handle user sending a message or lesson request
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
+
+  // Development: Inject mock quiz data when "mock_data" is typed
+  if (text.trim() === 'mock_data') {
+    console.log('Injecting mock quiz data...');
+    messageStream.value.push(mockQuizData);
+    isPlayingAllowed.value = true;
+    nextTick(() => {
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    });
+    return;
+  }
 
   isPlayingAllowed.value = false;
   await nextTick();

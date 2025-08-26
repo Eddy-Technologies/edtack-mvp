@@ -1,13 +1,27 @@
 <template>
   <div class="min-w-0 text-left">
-    <h2 class="text-lg font-semibold mb-2 whitespace-pre-wrap">{{ displayedTitle }}</h2>
-    <div v-if="isTyping" class="whitespace-pre-wrap">{{ displayedText }}</div>
-    <div v-else v-html="processedHtml" />
+    <!-- Render QuizQuestion if this is a question type slide -->
+    <QuizQuestion
+      v-if="slide.type === 'question'"
+      :question="slide"
+      :start-playback="startPlayback"
+      @finish="emit('finish')"
+      @answer-submitted="handleAnswerSubmitted"
+    />
+
+    <!-- Regular slide content -->
+    <div v-else>
+      <h2 class="text-lg font-semibold mb-2 whitespace-pre-wrap">{{ displayedTitle }}</h2>
+      <div v-if="isTyping" class="whitespace-pre-wrap">{{ displayedText }}</div>
+      <div v-else v-html="processedHtml" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, onBeforeUnmount } from 'vue';
+import QuizQuestion from './QuizQuestion.vue';
+import type { UserAnswer } from '~/types/quiz.types';
 
 const props = defineProps<{
   slide: any;
@@ -15,7 +29,11 @@ const props = defineProps<{
   startPlayback: boolean;
 }>();
 
-const emit = defineEmits(['finish']);
+const emit = defineEmits(['finish', 'answer-submitted']);
+
+function handleAnswerSubmitted(answer: UserAnswer) {
+  emit('answer-submitted', answer);
+}
 
 const displayedTitle = ref('');
 const displayedText = ref('');

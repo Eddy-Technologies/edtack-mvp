@@ -23,6 +23,7 @@
         v-bind="entry.props"
         :start-playback="globalPlaybackIndex === localPlaybackStart + idx"
         @finish="handleFinish(idx)"
+        @answer-submitted="handleAnswerSubmitted"
       />
     </div>
   </div>
@@ -33,6 +34,8 @@ import { ref, computed, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';
+import { useQuiz } from '~/composables/useQuiz';
+import type { UserAnswer } from '~/types/quiz.types';
 
 const props = defineProps<{
   block: any;
@@ -84,11 +87,17 @@ const unifiedBlocks = computed(() => {
 
 const emit = defineEmits(['finish']);
 
+const { submitAnswer } = useQuiz();
+
 // When a child finishes, emit the global finish event to parent with the global playback index
 function handleFinish(localIdx: number) {
   const globalIdx = props.localPlaybackStart + localIdx;
   if (globalIdx === props.globalPlaybackIndex) {
     emit('finish');
   }
+}
+
+function handleAnswerSubmitted(answer: UserAnswer) {
+  submitAnswer(answer);
 }
 </script>
