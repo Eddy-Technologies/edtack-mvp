@@ -9,12 +9,12 @@ const mockMessageStream = [
   {
     status: 'user_message',
     timestamp: 1756212689.443799,
-    message: "I've prepared the quiz for chapter: Chapter 6: Transport in Humans. Ready to start learning!"
+    message: 'I\'ve prepared the quiz for chapter: Chapter 6: Transport in Humans. Ready to start learning!'
   },
   {
     status: 'user_message',
     timestamp: 1756212721.252019,
-    message: "Great! I've prepared a comprehensive lesson for you on your chosen topic. It contains 5 sections/slides. You can now review the materials or ask me to start teaching.",
+    message: 'Great! I\'ve prepared a comprehensive lesson for you on your chosen topic. It contains 5 sections/slides. You can now review the materials or ask me to start teaching.',
     slides: [
       {
         id: '550e8400-e29b-41d4-a716-446655440001',
@@ -235,12 +235,12 @@ const mockMessageStream = [
   {
     status: 'user_message',
     timestamp: 1756212816.02612,
-    message: "Let me break this down for you in a clear, educational way! \n\nAntibodies are specialized proteins produced by the immune system's B lymphocytes (white blood cells) that play a crucial defensive role. When bacteria or pathogens enter the body, antibodies have two key mechanisms of action:\n\n1. Agglutination: Antibodies cause bacteria to clump together, which makes it easier for other immune cells like phagocytes to identify and destroy these clustered bacteria. This clumping prevents bacteria from spreading and makes them more vulnerable to immune system attacks.\n\n2. Toxin Neutralization: Antibodies can bind directly to toxins produced by pathogens, effectively blocking their harmful effects. By attaching to these toxins, antibodies prevent them from interacting with and damaging the body's cells.\n\nThese processes are part of the body's adaptive immune response, which is specific and targeted. Each type of antibody is uniquely designed to recognize and combat a particular pathogen, providing a sophisticated defense mechanism that helps protect us from infections.\n\nWould you like to explore more about how the immune system works? I'm excited to help you understand these fascinating biological processes! 🦁📘"
+    message: 'Let me break this down for you in a clear, educational way! \n\nAntibodies are specialized proteins produced by the immune system\'s B lymphocytes (white blood cells) that play a crucial defensive role. When bacteria or pathogens enter the body, antibodies have two key mechanisms of action:\n\n1. Agglutination: Antibodies cause bacteria to clump together, which makes it easier for other immune cells like phagocytes to identify and destroy these clustered bacteria. This clumping prevents bacteria from spreading and makes them more vulnerable to immune system attacks.\n\n2. Toxin Neutralization: Antibodies can bind directly to toxins produced by pathogens, effectively blocking their harmful effects. By attaching to these toxins, antibodies prevent them from interacting with and damaging the body\'s cells.\n\nThese processes are part of the body\'s adaptive immune response, which is specific and targeted. Each type of antibody is uniquely designed to recognize and combat a particular pathogen, providing a sophisticated defense mechanism that helps protect us from infections.\n\nWould you like to explore more about how the immune system works? I\'m excited to help you understand these fascinating biological processes! 🦁📘'
   },
   {
     status: 'user_message',
     timestamp: 1756212816.0327659,
-    message: "Great! I've prepared a comprehensive lesson for you on your chosen topic. It contains 5 sections/slides. You can now review the materials or ask me to start teaching.",
+    message: 'Great! I\'ve prepared a comprehensive lesson for you on your chosen topic. It contains 5 sections/slides. You can now review the materials or ask me to start teaching.',
     slides: [
       {
         id: '550e8400-e29b-41d4-a716-446655440001',
