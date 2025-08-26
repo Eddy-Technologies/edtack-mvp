@@ -182,12 +182,12 @@ const initializeChat = async () => {
 
     // Watch for incoming WebSocket messages
     if (wsChat.value) {
-      watch(() => wsChat.value!.response, (newMessages) => {
-        if (newMessages.length > 0) {
-          const lastMessage = newMessages[newMessages.length - 1];
+      watch(() => wsChat.value!.response.length, (newLength, oldLength) => {
+        if (newLength > (oldLength || 0)) {
+          const lastMessage = wsChat.value!.response[newLength - 1];
           handleWebSocketMessage(lastMessage);
         }
-      }, { deep: true });
+      });
     }
 
     // Check for pending message after WebSocket connects (only for existing chats)
@@ -310,7 +310,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.text,
           isFirst: blockIndex === 0,
-          isUser: block.isUser
+          isUser: !!block.isUser
         },
       });
     }
@@ -320,7 +320,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.message,
           isFirst: blockIndex === 0,
-          isUser: block.isUser
+          isUser: !!block.isUser
         },
       });
     }
