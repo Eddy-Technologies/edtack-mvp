@@ -363,6 +363,18 @@ const handleSend = async (text: string) => {
     return;
   }
 
+  // Development: Inject mock playback data when "mock_playback" is typed
+  if (text.trim() === 'mock_playback') {
+    console.log('Injecting mock playback data...');
+    const { default: mockPlaybackData } = await import('~/mockPlaybackData');
+    messageStream.value = mockPlaybackData;
+    isPlayingAllowed.value = true;
+    nextTick(() => {
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    });
+    return;
+  }
+
   isPlayingAllowed.value = false;
   await nextTick();
   bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
