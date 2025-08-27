@@ -105,7 +105,7 @@ const getAvatarSource = computed(() => {
   // Static fallback based on character slug (for non-playing state)
   const staticMap: Record<string, string> = {
     eddy: '/eddy-talk.mp4', // no static version, use video
-    pooh: '/pooh-talk.mp4', // no static version, use video  
+    pooh: '/pooh-talk.mp4', // no static version, use video
     future: '/snorlax.png', // has static version
     maya: '/maya-talk.mp4', // no static version, use video
     sherlock: '/sherlock-talk.mp4', // no static version, use video

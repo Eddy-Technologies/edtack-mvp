@@ -227,7 +227,7 @@ export const useCharacters = () => {
   // Avatar Playback Methods
   const startAvatarPlayback = (duration?: number) => {
     isAvatarPlaying.value = true;
-    
+
     // Auto-stop after duration if provided (default 3 seconds)
     if (duration !== undefined && duration > 0) {
       setTimeout(() => {
