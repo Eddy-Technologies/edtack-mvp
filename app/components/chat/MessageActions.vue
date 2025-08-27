@@ -27,23 +27,23 @@
       <Icon name="i-heroicons-hand-thumb-down" class="w-4 h-4" />
     </button>
 
-    <!-- Retry/Regenerate Button -->
-    <button
+    <!-- TODO: Retry/Regenerate Button -->
+    <!-- <button
       class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
       title="Regenerate response"
       @click="handleRetry"
     >
       <Icon name="i-heroicons-arrow-path" class="w-4 h-4" />
-    </button>
+    </button> -->
 
-    <!-- Read/TTS Button -->
-    <button
+    <!-- TODO: Read/TTS Button -->
+    <!-- <button
       class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
       title="Read message aloud"
       @click="handleRead"
     >
       <Icon name="i-heroicons-speaker-wave" class="w-4 h-4" />
-    </button>
+    </button> -->
   </div>
 </template>
 
