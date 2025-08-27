@@ -113,7 +113,7 @@
               ? 'fixed top-0 bottom-0 bg-white/95 backdrop-blur-sm justify-center z-30'
               : 'bg-white border-t p-6'
           ]"
-          :style="{ 
+          :style="{
             left: isChatCentered ? (collapsed ? '80px' : '400px') : 'auto',
             right: isChatCentered ? '0' : 'auto'
           }"
