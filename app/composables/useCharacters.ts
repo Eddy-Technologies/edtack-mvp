@@ -35,7 +35,7 @@ export const useCharacters = () => {
 
   // Helper function to get public URL for character images
   const getCharacterImageUrl = (imageUrl: string | undefined): string => {
-    console.log('getCharacterImageUrl', imageUrl);
+    // console.log('getCharacterImageUrl', imageUrl);
     if (!imageUrl) {
       return '/assets/eddy.png'; // fallback image
     }
@@ -44,7 +44,7 @@ export const useCharacters = () => {
     const { data } = supabase.storage
       .from('characters')
       .getPublicUrl(imageUrl);
-    console.log('getCharacterImageUrl', data);
+    // console.log('getCharacterImageUrl', data);
 
     return data.publicUrl;
   };

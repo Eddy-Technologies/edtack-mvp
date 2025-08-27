@@ -56,7 +56,11 @@
 
         <!-- Chat Content Area - takes remaining space -->
         <div class="flex-1 overflow-hidden relative">
-          <ChatContent ref="chatContentRef" />
+          <ChatContent
+            ref="chatContentRef"
+            :thread-id="threadId"
+            :character="selectedCharacter"
+          />
 
           <!-- Character Selection Overlay - only when selecting character -->
           <div
@@ -374,13 +378,25 @@ const toggleSidebar = () => {
 };
 
 const handleChatSend = (text: string) => {
+  console.log(text, isNewChat.value, selectedCharacter.value);
   hasStartedChat.value = true;
 
-  // If this is a new chat, store the message and let ChatContent handle redirect
-  if (isNewChat.value && selectedCharacter.value) {
+  // If new chat, generate thread ID and update URL
+  if (threadId.value === 'new') {
+    const userId = meStore.user_info_id || meStore.id;
+    const newThreadId = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+    console.log('New chat detected, storing pending message and redirecting:', newThreadId);
+
+    // Store pending message
     setPendingMessage(text);
+
+    // Replace URL - this will trigger re-render with new threadId
+    router.replace(`/chat/${charSlug.value}/${newThreadId}`);
+    return; // Don't send yet, let re-render handle it
   }
 
+  // Existing chat - send directly
   if (chatContentRef.value && chatContentRef.value.handleSend) {
     chatContentRef.value.handleSend(text);
   }

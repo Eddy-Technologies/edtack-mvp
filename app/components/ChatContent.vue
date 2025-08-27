@@ -9,16 +9,14 @@
             :class="{
               'bg-green-500': wsChat.isConnected,
               'bg-yellow-500': wsChat.isConnecting,
-              'bg-blue-500': isNewChatPendingConnection,
-              'bg-red-500': !wsChat.isConnected && !wsChat.isConnecting && wsChat.error && !isNewChatPendingConnection,
-              'bg-gray-400': !wsChat.isConnected && !wsChat.isConnecting && !wsChat.error && !isNewChatPendingConnection,
+              'bg-red-500': !wsChat.isConnected && !wsChat.isConnecting && wsChat.error,
+              'bg-gray-400': !wsChat.isConnected && !wsChat.isConnecting && !wsChat.error,
             }"
           />
           <span class="text-xs">
             {{
               wsChat.isConnected ? 'Connected' :
               wsChat.isConnecting ? 'Connecting...' :
-              isNewChatPendingConnection ? 'Ready to connect' :
               'Disconnected'
             }}
           </span>
@@ -41,19 +39,11 @@
       />
 
       <!-- Loading indicator when waiting for WebSocket response -->
-      <div v-if="wsChat?.isWaitingForResponse || isWaitingForResponse" class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-        <!-- Animated dots -->
-        <div class="flex space-x-1">
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0ms" />
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 150ms" />
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 300ms" />
-        </div>
-
-        <!-- Backend status message -->
-        <span class="text-gray-600 text-sm">
-          {{ wsChat?.response[wsChat.response.length - 1]?.status || 'Processing...' }}
-        </span>
-      </div>
+      <LoadingIndicator
+        v-if="wsChat?.isWaitingForResponse || isWaitingForResponse"
+        :character="character"
+        :is-loading="true"
+      />
 
       <div ref="bottomAnchor" />
     </div>
@@ -62,15 +52,22 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
-import QuestionBubble from '@/components/playback/QuestionBubble.vue';
+import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
-// import { useLesson } from '~/composables/useLesson';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
 import mockQuizData from '~/mockQuizData';
+
+// Props interface - simplified
+interface ChatContentProps {
+  threadId: string;
+  character: any;
+}
+
+// Component props
+const props = defineProps<ChatContentProps>();
 
 const messageStream = ref<any[]>([]);
 
@@ -84,15 +81,12 @@ const currentPlaybackIndex = ref(0);
 const tokenCount = ref(0);
 
 // WebSocket integration
-const route = useRoute();
-const router = useRouter();
 const useWebSocket = ref(true); // WebSocket-only mode
-const threadId = ref<string>('');
 const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
-const isNewChatPendingConnection = ref(false); // Track if this is a new chat waiting for first message
+const messageQueue = ref<string[]>([]); // Queue for messages waiting to be sent
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -100,34 +94,36 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
-const { selectedCharacter, initializeStore, selectCharacterBySlug, getPendingMessage, clearPendingMessage } = useCharacters();
+const { getPendingMessage, clearPendingMessage } = useCharacters();
 
-// Dynamic conversation summary based on selected character
+// Dynamic conversation summary based on character prop
 const conversationSummaryComputed = computed(() => {
-  const character = selectedCharacter.value;
-  if (character?.personality_prompt) {
-    return character.personality_prompt;
+  if (props.character?.personality_prompt) {
+    return props.character.personality_prompt;
   }
   return 'Eddy is a lion character that talks and is highly intelligent, he educates with passion.';
 });
 
-// Initialize chat with new routing structure
+// Initialize chat - simplified approach
 const initializeChat = async () => {
-  console.log('Initializing chat...');
+  console.log('Initializing chat with props:', {
+    threadId: props.threadId,
+    character: props.character?.name
+  });
 
-  const charSlug = route.params.charSlug as string;
-  const routeThreadId = route.params.threadId as string;
-  const userId = meStore.user_info_id || meStore.id;
-
-  // If we already have this thread initialized and connected, skip re-initialization
-  if (currentThreadId.value === threadId.value && wsChat.value?.isConnected && threadId.value) {
-    console.log('Chat already initialized for this thread:', threadId.value);
+  // Skip if 'new' thread ID (invalid)
+  if (!props.threadId || props.threadId === 'new') {
+    console.log('Skipping initialization - invalid thread ID');
     return;
   }
 
-  console.log('Character Slug from route:', charSlug);
-  console.log('Thread ID from route:', routeThreadId);
-  console.log('User ID from store:', userId);
+  const userId = meStore.user_info_id || meStore.id;
+
+  // If we already have this thread initialized and connected, skip re-initialization
+  if (currentThreadId.value === props.threadId && wsChat.value?.isConnected) {
+    console.log('Chat already initialized for this thread:', props.threadId);
+    return;
+  }
 
   if (!meStore.isInitialized) {
     console.log('Store not initialized yet, retrying...');
@@ -141,99 +137,68 @@ const initializeChat = async () => {
     return;
   }
 
-  // Ensure character store is initialized
-  if (!selectedCharacter.value) {
-    await initializeStore();
+  if (!props.character) {
+    console.warn('No character provided as prop');
+    return;
   }
 
-  // Set character based on route if needed
-  if (charSlug && (!selectedCharacter.value || selectedCharacter.value.slug !== charSlug)) {
-    await selectCharacterBySlug(charSlug);
-  }
+  // Always treat as new chat since we have no history
+  isFirstMessage.value = true;
 
-  // Handle thread ID based on route
-  if (routeThreadId === 'new') {
-    // Generate new thread ID (clean format without character)
-    threadId.value = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    isFirstMessage.value = true;
-    isNewChatPendingConnection.value = true; // Mark as pending connection
-  } else {
-    // Use existing thread ID from route
-    threadId.value = routeThreadId;
-    isFirstMessage.value = false;
-    isNewChatPendingConnection.value = false;
-  }
-
-  console.log('Using thread ID:', threadId.value);
+  console.log('Using thread ID:', props.threadId);
 
   // Track the current thread ID to prevent unnecessary re-initialization
-  currentThreadId.value = threadId.value;
+  currentThreadId.value = props.threadId;
 
-  if (useWebSocket.value && threadId.value) {
-    console.log('🚀 Initializing WebSocket chat with thread ID:', threadId.value);
-    wsChat.value = useWebSocketChat(threadId.value);
+  if (useWebSocket.value && props.threadId) {
+    console.log('🚀 Initializing WebSocket chat with thread ID:', props.threadId);
+    wsChat.value = useWebSocketChat(props.threadId);
 
-    // Only connect immediately if this is NOT a new chat
-    if (!isNewChatPendingConnection.value) {
-      wsChat.value?.connect();
-    } else {
-      console.log('💤 Deferring WebSocket connection for new chat until first message');
-    }
+    // Always connect immediately
+    wsChat.value?.connect();
+    console.log('🔌 Connected WebSocket');
 
-    // Watch for incoming WebSocket messages
-    if (wsChat.value) {
-      watch(() => wsChat.value!.response, (newMessages) => {
-        if (newMessages.length > 0) {
-          const lastMessage = newMessages[newMessages.length - 1];
-          handleWebSocketMessage(lastMessage);
-        }
-      }, { deep: true });
-    }
+    // Check for pending message and send it
+    const pendingMessage = getPendingMessage();
+    if (pendingMessage) {
+      console.log('Found pending message, sending:', pendingMessage);
+      clearPendingMessage();
 
-    // Check for pending message after WebSocket connects (only for existing chats)
-    if (!isNewChatPendingConnection.value) {
-      if (wsChat.value.isConnected) {
-        checkAndSendPendingMessage();
-      } else {
-        // Wait for connection then check
-        watch(() => wsChat.value?.isConnected, (connected) => {
-          if (connected) {
-            checkAndSendPendingMessage();
-          }
-        }, { immediate: true });
-      }
+      // Wait for connection then send
+      nextTick(() => {
+        handleSend(pendingMessage);
+      });
     }
   }
 };
 
 onMounted(() => {
-  initializeChat();
+  // Single watcher for WebSocket responses
+  watch(() => wsChat.value?.response, (newMessages) => {
+    if (newMessages?.length > 0) {
+      const lastMessage = newMessages[newMessages.length - 1];
+      handleWebSocketMessage(lastMessage);
+    }
+  }, { deep: true });
 
-  // Watch for changes in user login state
-  watch(() => meStore.isLoggedIn, (isLoggedIn) => {
-    if (isLoggedIn && !wsChat.value) {
-      console.log('User logged in, initializing chat...');
-      initializeChat();
+  // Single watcher for connection state - process queue when connected
+  watch(() => wsChat.value?.isConnected, (connected) => {
+    if (connected) {
+      processMessageQueue();
     }
   });
 
-  // Watch for route changes to handle navigation between different chats
-  watch(() => route.params.threadId, (newThreadId, oldThreadId) => {
-    // Skip if this is the initial mount
-    if (!oldThreadId) return;
-
-    // Skip if we're going from 'new' to a threadId (this is our URL update)
-    if (oldThreadId === 'new' && newThreadId !== 'new') {
-      console.log('URL updated from new to threadId, skipping re-init');
-      return;
-    }
-
-    // Only reinitialize for actual navigation between different chats
-    if (oldThreadId !== 'new' && newThreadId !== oldThreadId) {
-      console.log('Navigating to different chat thread, reinitializing');
+  // Initialize when all prerequisites are met
+  watch(() => ({
+    loggedIn: meStore.isLoggedIn,
+    initialized: meStore.isInitialized,
+    threadId: props.threadId,
+    character: props.character
+  }), (state) => {
+    if (state.loggedIn && state.initialized && state.threadId && state.character) {
       initializeChat();
     }
-  });
+  }, { immediate: true });
 });
 
 onUnmounted(() => {
@@ -242,16 +207,50 @@ onUnmounted(() => {
   }
 });
 
-// Check for and send any pending message (from redirect flow)
-const checkAndSendPendingMessage = () => {
-  const pendingMessage = getPendingMessage();
-  if (pendingMessage && route.params.threadId !== 'new') {
-    console.log('Found pending message, sending:', pendingMessage);
-    clearPendingMessage();
+// Send message directly to WebSocket
+const sendMessage = (text: string) => {
+  if (!wsChat.value?.isConnected || !text.trim()) {
+    console.warn('Cannot send message: WebSocket not connected or empty text');
+    return false;
+  }
 
-    // Send the pending message
-    nextTick(() => {
-      handleSend(pendingMessage);
+  const character = props.character;
+  const subjectForBackend = character?.subject?.toLowerCase() || 'general';
+
+  const userInfo = {
+    subject: subjectForBackend,
+    level: meStore.level_type || 'PRIMARY_1',
+    country: meStore.country_code || 'SG',
+    character_slug: character?.slug,
+    personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
+  };
+
+  let success = false;
+  if (isFirstMessage.value) {
+    success = wsChat.value.startChat(text, userInfo);
+    isFirstMessage.value = false;
+  } else {
+    success = wsChat.value.sendUserResponse(text, userInfo);
+  }
+
+  if (success) {
+    isWaitingForResponse.value = true;
+  }
+
+  return success;
+};
+
+// Process queued messages when WebSocket connects
+const processMessageQueue = () => {
+  if (wsChat.value?.isConnected && messageQueue.value.length > 0) {
+    console.log('Processing queued messages:', messageQueue.value.length);
+    const messages = [...messageQueue.value];
+    messageQueue.value = [];
+
+    messages.forEach((message) => {
+      nextTick(() => {
+        sendMessage(message);
+      });
     });
   }
 };
@@ -379,7 +378,7 @@ const handleSend = async (text: string) => {
   await nextTick();
   bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
 
-  // Add user message
+  // Add user message to UI immediately
   messageStream.value.push({
     type: 'text',
     text,
@@ -387,88 +386,15 @@ const handleSend = async (text: string) => {
     playable: false,
   });
 
-  // Handle deferred WebSocket connection for new chats
-  if (useWebSocket.value && wsChat.value && isNewChatPendingConnection.value) {
-    console.log('🔌 Connecting WebSocket for first message in new chat');
-    wsChat.value.connect();
-    isNewChatPendingConnection.value = false;
-
-    // Wait for connection before sending
-    const waitForConnection = new Promise<void>((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Connection timeout')), 5000);
-
-      if (wsChat.value?.isConnected) {
-        clearTimeout(timeout);
-        resolve();
-      } else {
-        const unwatch = watch(() => wsChat.value?.isConnected, (connected) => {
-          if (connected) {
-            clearTimeout(timeout);
-            unwatch();
-            resolve();
-          }
-        });
-      }
-    });
-
-    try {
-      await waitForConnection;
-    } catch (error) {
-      console.error('Failed to connect WebSocket:', error);
-      // Fall through to error handling below
-    }
-  }
-
-  // Use WebSocket only
-  if (useWebSocket.value && wsChat.value && wsChat.value.isConnected) {
-    // Create user_info with character context
-    const character = selectedCharacter.value;
-
-    // Convert subject code to lowercase for backend
-    const subjectForBackend = character?.subject?.toLowerCase() || 'general';
-
-    const userInfo = {
-      subject: subjectForBackend,
-      level: meStore.level_type || 'PRIMARY_1',
-      country: meStore.country_code || 'SG',
-      character_slug: character?.slug,
-      personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
-    };
-
-    let success = false;
-    if (isFirstMessage.value) {
-      success = wsChat.value.startChat(text, userInfo);
-      isFirstMessage.value = false;
-
-      // Update URL from /chat/character/new to /chat/character/threadId without component re-render
-      if (route.params.threadId === 'new' && character) {
-        const newUrl = `/chat/${character.slug}/${threadId.value}`;
-
-        // Update URL without triggering Vue Router navigation to prevent flicker
-        window.history.replaceState(
-          { ...window.history.state, current: newUrl },
-          '',
-          newUrl
-        );
-
-        // Manually update route params to keep Vue Router in sync
-        (route.params as any).threadId = threadId.value;
-
-        console.log('Updated URL to:', newUrl);
-      }
-    } else {
-      success = wsChat.value.sendUserResponse(text, userInfo);
-    }
-
-    if (success) {
-      // Start loading state when message is sent successfully
-      isWaitingForResponse.value = true;
-    } else {
-      // Handle WebSocket send failure
+  // Since we connect immediately in initializeChat, just try to send
+  if (wsChat.value?.isConnected) {
+    const success = sendMessage(text);
+    if (!success) {
+      // Handle send failure
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
         type: 'text',
-        text: '[Failed to send message - WebSocket connection error]',
+        text: '[Failed to send message - WebSocket error]',
         isUser: false,
         playable: false,
       };
@@ -476,117 +402,11 @@ const handleSend = async (text: string) => {
       isWaitingForResponse.value = false;
     }
   } else {
-    // No WebSocket connection available
-    const lastIdx = messageStream.value.length - 1;
-    messageStream.value[lastIdx] = {
-      type: 'text',
-      text: '[WebSocket not connected - please wait for connection]',
-      isUser: false,
-      playable: false,
-    };
-    isPlayingAllowed.value = true;
-    isWaitingForResponse.value = false;
+    // Queue the message for later sending (fallback)
+    console.log('WebSocket not connected, queuing message:', text);
+    messageQueue.value.push(text);
   }
 };
-
-// const constructLesson = (text: string) => {
-//   isPlayingAllowed.value = false;
-
-//   const lesson = getLessonBundle(text);
-//   if (!lesson) {
-//     messageStream.value.push({
-//       type: 'text',
-//       text: `Sorry, I couldn't find a lesson related to that topic.`,
-//       isUser: false,
-//       playable: false,
-//     });
-//     return;
-//   }
-
-//   const stream: any[] = [];
-
-//   stream.push({
-//     type: 'text',
-//     text: `📘 ${lesson.parent.title}\n\n${cleanContent(lesson.parent.content)}`,
-//     isUser: false,
-//     playable: true,
-//   });
-
-//   if (lesson.slides?.length) {
-//     stream.push({
-//       type: 'slides',
-//       slides: lesson.slides,
-//     });
-//   }
-
-//   if (lesson.questions?.length) {
-//     stream.push({
-//       type: 'questions',
-//       questions: lesson.questions.map((q: any) => formatLessonPart(q, lesson.questions)),
-//     });
-//   }
-
-//   messageStream.value = [...messageStream.value, ...stream];
-
-//   nextTick(() => {
-//     isPlayingAllowed.value = true;
-//   });
-// };
-
-// function cleanContent(raw: string): string {
-//   return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image: $1]');
-// }
-
-// function formatLessonPart(item: any, allItems: any[]): string {
-//   let output = '';
-//   const label = item.part_label || item.title || '';
-
-//   output += `${label}\n\n${cleanContent(item.content)}\n`;
-
-//   if (item.type === 'question') {
-//     const qType = item.question_type;
-
-//     if (qType === 'mcq' && item.options?.length) {
-//       output += '\n**Options:**\n';
-//       item.options.forEach((opt: any, index: number) => {
-//         if (opt.option_text) {
-//           output += `- ${String.fromCharCode(65 + index)}. ${opt.option_text}\n`;
-//         } else if (opt.imageUrl) {
-//           output += `- ${String.fromCharCode(65 + index)}. [Image Option: ${opt.imageUrl}]\n`;
-//         }
-//       });
-//     }
-
-//     if (qType === 'boolean') {
-//       output += `\n*(This is a True/False question)*`;
-//     }
-
-//     if (qType === 'open') {
-//       const ans = item.answer?.[0]?.answer_text || '(Student provides open-ended answer)';
-//       output += `\n**Expected Answer (open-ended):**\n${ans}`;
-//     }
-
-//     if (qType === 'fill') {
-//       const answers = item.answer || [];
-//       output += `\nExpected Answers (fill in the blanks):\n`;
-//       answers.forEach((ans: any, idx: number) => {
-//         output += `- Blank ${idx + 1}: ${ans.answer_text || '(No answer provided)'}\n`;
-//       });
-//     }
-
-//     if (qType === 'draw') {
-//       const ans = item.answer?.[0]?.answer_draw_file;
-//       if (ans) output += `\n**Expected Drawing: [Drawing Image](${ans})\n`;
-//       else output += `\n*(Draw response expected)*`;
-//     }
-//   }
-
-//   if (item.explanation) {
-//     output += `\n**Explanation:**\n${cleanContent(item.explanation)}`;
-//   }
-
-//   return output;
-// }
 
 // Clear chat method to reset all chat state
 const clearChat = () => {
@@ -594,34 +414,17 @@ const clearChat = () => {
   currentPlaybackIndex.value = 0;
   isPlayingAllowed.value = false;
   isWaitingForResponse.value = false;
+  messageQueue.value = [];
 
-  // Reset thread ID and navigate to new chat
-  if (import.meta.client) {
-    const userId = meStore.user_info_id || meStore.id;
-    const character = selectedCharacter.value;
-
-    if (!userId) {
-      console.warn('No user ID available for clearChat');
-      return;
-    }
-
-    // Generate new thread ID (clean format)
-    threadId.value = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    isFirstMessage.value = true;
-
-    // Navigate to new chat URL
-    if (character) {
-      router.replace(`/chat/${character.slug}/new`);
-    }
-
-    // Reconnect WebSocket with new thread ID
-    if (wsChat.value) {
-      wsChat.value.disconnect();
-      wsChat.value = useWebSocketChat(threadId.value);
-      wsChat.value?.connect();
-      wsChat.value?.clearMessages();
-    }
+  // Disconnect current WebSocket
+  if (wsChat.value) {
+    wsChat.value.disconnect();
+    wsChat.value = null;
   }
+
+  // Reset flags
+  isFirstMessage.value = true;
+  currentThreadId.value = '';
 };
 
 // Expose methods to parent component

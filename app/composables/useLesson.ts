@@ -1,4 +1,5 @@
 // ~/composables/useLesson.ts
+// TODO: deprecated
 import lessonData from '../../assets/lessons_output.schema.json';
 
 export function useLesson() {
