@@ -81,6 +81,7 @@ function generateMigrations() {
       'credit_transactions.sql',
       'characters.sql',
       'notes.sql',
+      'token_history.sql',
       'stripe_webhook_events.sql',
       'functions.sql'
     ];
