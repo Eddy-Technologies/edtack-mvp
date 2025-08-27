@@ -149,7 +149,7 @@
               </div>
             </div>
 
-            <div class="w-full max-w-2xl mx-auto">
+            <div class="w-full max-w-4xl mx-auto">
               <ChatInput @send="handleChatSend" />
             </div>
           </div>
