@@ -87,9 +87,7 @@
         v-else
         :class="[
           'relative bg-gray-700 rounded-xl shadow-inner p-2 w-full transition-all duration-300',
-          isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-[260px]',
-          'relative p-2 w-full transition-all duration-300',
-          isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-300px]',
+          isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-[200px]',
           isMini ? '' : 'rounded-xl shadow-inner'
         ]"
       >
@@ -135,37 +133,6 @@
               <Icon name="i-heroicons-arrows-pointing-out" class="w-4 h-4 text-gray-700" />
             </button>
           </div>
-        </div>
-
-        <!-- Unified Controls -->
-        <div
-          v-if="!isAudioPlayerCollapsed"
-          :class="[
-            'flex justify-center items-center px-2',
-            isMini ? 'flex-col gap-2 mt-2' : 'flex-row gap-3 mt-4'
-          ]"
-        >
-          <button
-            class="w-12 h-12 flex items-center justify-center bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-200"
-            @click="handleCall"
-          >
-            <Icon name="i-heroicons-phone" class="w-5 h-5" />
-          </button>
-          <button
-            class="w-12 h-12 flex items-center justify-center bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg transition-all duration-200"
-            @click="handlePlayAudio"
-          >
-            <Icon
-              :name="isPlaying ? 'i-heroicons-pause' : 'i-heroicons-play'"
-              class="w-5 h-5"
-            />
-          </button>
-          <button
-            class="w-12 h-12 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-full shadow-lg transition-all duration-200"
-            @click="handleMute"
-          >
-            <Icon name="i-heroicons-microphone" class="w-5 h-5" />
-          </button>
         </div>
       </div>
     </div>

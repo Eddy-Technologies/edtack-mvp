@@ -1,17 +1,17 @@
 <template>
-  <div class="w-full max-h-[260px] flex items-center justify-center">
+  <div class="w-full h-full flex items-center justify-center">
     <img
       v-if="!imageError && isImageUrl(getAvatarSource())"
       :src="getAvatarSource()"
       :alt="currentCharacter?.name || 'Avatar'"
-      :class="['w-full max-h-[260px] object-contain transform transition-transform duration-300']"
+      :class="['w-full h-full object-cover transform transition-transform duration-300']"
       @error="handleImageError"
     >
     <video
       v-else-if="!videoError && !imageError && isVideoUrl(getAvatarSource())"
       ref="videoRef"
       :src="getAvatarSource()"
-      :class="['w-full max-h-[260px] object-contain transform transition-transform duration-300']"
+      :class="['w-full h-full object-cover transform transition-transform duration-300']"
       loop
       playsinline
       @error="handleVideoError"
@@ -19,7 +19,7 @@
     <!-- Fallback to character name when image/video fails to load -->
     <div
       v-else
-      class="w-full max-h-[260px] flex items-center justify-center bg-gray-100 rounded-lg p-8"
+      class="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg p-8"
     >
       <div class="text-center">
         <div class="text-4xl font-bold text-gray-600 mb-2">

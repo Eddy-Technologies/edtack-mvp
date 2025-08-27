@@ -11,7 +11,7 @@
     <div
       :class="[
         'whitespace-pre-wrap transition-all duration-300 ease-out',
-        isUser ? 'bg-green-100 p-2 rounded-xl max-w-[80%]' : 'max-w-[80%]'
+        isUser ? 'bg-green-100 p-2 rounded-xl max-w-[80%]' : 'text-justify'
       ]"
     >
       {{ text }}

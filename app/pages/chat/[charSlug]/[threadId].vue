@@ -170,7 +170,7 @@
           left: floatingPosition.x + 'px',
           top: floatingPosition.y + 'px',
           width: '300px',
-          height: isFloatingCollapsed ? '48px' : '330px'
+          height: isFloatingCollapsed ? '48px' : '250px'
         }"
       >
         <!-- Header Panel -->
@@ -209,33 +209,8 @@
         <!-- Container Content (visible when not collapsed) -->
         <div v-if="!isFloatingCollapsed" class="flex flex-col" style="height: calc(100% - 48px);">
           <!-- Avatar -->
-          <div class="relative h-[200px] overflow-hidden rounded-lg bg-white mx-2 mt-2 flex-shrink-0">
+          <div class="relative flex-1 overflow-hidden rounded-lg bg-white mx-2 mt-2 mb-2">
             <Avatar :is-playing="isPlaying" />
-          </div>
-
-          <!-- Unified Controls -->
-          <div class="flex justify-center items-center gap-3 mt-4 px-4 pb-4 flex-shrink-0">
-            <button
-              class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg transition-all duration-200"
-              @click="handleFloatingCall"
-            >
-              <Icon name="i-heroicons-phone" class="w-5 h-5" />
-            </button>
-            <button
-              class="p-3 bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg transition-all duration-200"
-              @click="handleFloatingPlayAudio"
-            >
-              <Icon
-                :name="isPlaying ? 'i-heroicons-pause' : 'i-heroicons-play'"
-                class="w-5 h-5"
-              />
-            </button>
-            <button
-              class="p-3 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-full shadow-lg transition-all duration-200"
-              @click="handleFloatingMute"
-            >
-              <Icon name="i-heroicons-microphone" class="w-5 h-5" />
-            </button>
           </div>
         </div>
       </div>

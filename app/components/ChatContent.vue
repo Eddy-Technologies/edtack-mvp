@@ -28,7 +28,7 @@
       <div class="w-20" />
     </div>
 
-    <div ref="scrollArea" class="flex-1 overflow-y-auto p-6 space-y-4">
+    <div ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-48 space-y-8">
       <component
         :is="unit.component"
         v-for="(unit, index) in flattenedPlaybackUnits"
