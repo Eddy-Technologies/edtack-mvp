@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full w-full bg-white overflow-hidden">
+  <div class="flex flex-col h-full bg-white overflow-hidden">
     <!-- Token Count Display and Connection Status -->
     <div class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300 flex justify-between items-center px-4">
       <div class="flex items-center gap-2">

@@ -108,12 +108,15 @@
         <div
           v-if="shouldShowChatInput"
           :class="[
-            'flex flex-col items-center gap-4 shadow-lg transition-all duration-500 ease-out flex-shrink-0',
+            'flex flex-col items-center gap-4 shadow-lg flex-shrink-0',
             isChatCentered
-              ? 'fixed inset-0 bg-white/95 backdrop-blur-sm justify-center z-40'
+              ? 'fixed top-0 bottom-0 bg-white/95 backdrop-blur-sm justify-center z-30'
               : 'bg-white border-t p-6'
           ]"
-          :style="{ transitionDelay: showContentTransitions ? '0.4s' : '0s' }"
+          :style="{ 
+            left: isChatCentered ? (collapsed ? '80px' : '400px') : 'auto',
+            right: isChatCentered ? '0' : 'auto'
+          }"
         >
           <div class="w-full max-w-4xl px-4">
             <!-- Character Carousel Card - only shown when centered (new chat) -->
