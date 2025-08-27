@@ -210,7 +210,7 @@
         <div v-if="!isFloatingCollapsed" class="flex flex-col" style="height: calc(100% - 48px);">
           <!-- Avatar -->
           <div class="relative flex-1 overflow-hidden rounded-lg bg-white mx-2 mt-2 mb-2">
-            <Avatar :is-playing="isPlaying" />
+            <Avatar :is-playing="isAvatarPlaying" />
           </div>
         </div>
       </div>
@@ -249,7 +249,6 @@ const showFloatingAvatar = ref(false);
 const floatingPosition = ref({ x: 0, y: 0 });
 const isDraggingAvatar = ref(false);
 const isFloatingCollapsed = ref(false);
-const isPlaying = ref(false);
 const chatContentRef = ref<any>(null);
 const floatingAudio = ref<HTMLAudioElement | null>(null);
 
@@ -257,7 +256,7 @@ const router = useRouter();
 const route = useRoute();
 const toast = useToast();
 const meStore = useMeStore();
-const { selectedCharacter, initializeStore, selectCharacterBySlug, selectCharacterById, setPendingMessage } = useCharacters();
+const { selectedCharacter, initializeStore, selectCharacterBySlug, selectCharacterById, setPendingMessage, isAvatarPlaying } = useCharacters();
 
 // Get route parameters
 const charSlug = computed(() => route.params.charSlug as string);

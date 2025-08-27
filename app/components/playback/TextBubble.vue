@@ -8,7 +8,7 @@
     <div v-if="isUser" class="w-8 h-8 flex-shrink-0">
       <UserAvatar />
     </div>
-    
+
     <!-- For user messages: direct text bubble -->
     <div
       v-if="isUser"

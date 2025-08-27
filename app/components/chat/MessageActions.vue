@@ -49,12 +49,14 @@
 
 <script setup lang="ts">
 import { useToast } from '#imports';
+import { useCharacters } from '~/composables/useCharacters';
 
 const props = defineProps<{
   messageText: string;
 }>();
 
 const toast = useToast();
+const { startAvatarPlayback } = useCharacters();
 
 const handleCopy = async () => {
   try {
@@ -103,6 +105,10 @@ const handleRetry = () => {
 };
 
 const handleRead = () => {
+  // Start avatar animation for 3 seconds (3000ms)
+  // TODO: when implement tts then remove timeout
+  startAvatarPlayback(3000);
+
   toast.add({
     title: 'Reading',
     description: 'Reading message aloud...',

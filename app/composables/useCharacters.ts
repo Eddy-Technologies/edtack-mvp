@@ -29,6 +29,7 @@ const characters = ref<Character[]>([]);
 const loading = ref(false);
 const error = ref<string | null>(null);
 const pendingMessage = ref<string | null>(null);
+const isAvatarPlaying = ref(false);
 
 export const useCharacters = () => {
   const supabase = useSupabaseClient();
@@ -223,9 +224,26 @@ export const useCharacters = () => {
     }
   };
 
+  // Avatar Playback Methods
+  const startAvatarPlayback = (duration?: number) => {
+    isAvatarPlaying.value = true;
+    
+    // Auto-stop after duration if provided (default 3 seconds)
+    if (duration !== undefined && duration > 0) {
+      setTimeout(() => {
+        stopAvatarPlayback();
+      }, duration);
+    }
+  };
+
+  const stopAvatarPlayback = () => {
+    isAvatarPlaying.value = false;
+  };
+
   return {
     // State (only what's actually used)
     selectedCharacter: readonly(selectedCharacter),
+    isAvatarPlaying: readonly(isAvatarPlaying),
 
     // API Methods (only what's actually used)
     fetchCharacters,
@@ -238,6 +256,10 @@ export const useCharacters = () => {
     // Message Management (only what's actually used)
     setPendingMessage,
     getPendingMessage,
-    clearPendingMessage
+    clearPendingMessage,
+
+    // Avatar Playback Management
+    startAvatarPlayback,
+    stopAvatarPlayback
   };
 };

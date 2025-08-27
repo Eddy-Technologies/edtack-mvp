@@ -112,7 +112,7 @@
             isMini ? 'h-[120px]' : 'h-[180px]'
           ]"
         >
-          <Avatar :is-playing="isPlaying" :is-mini="isMini" />
+          <Avatar :is-playing="isAvatarPlaying" :is-mini="isMini" />
 
           <!-- Control Buttons -->
           <div class="absolute top-2 right-2 flex gap-1">
@@ -147,6 +147,7 @@ import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
+import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
 
 const emit = defineEmits(['toggle-sidebar', 'change-character', 'toggle-floating-avatar', 'new-chat']);
@@ -167,6 +168,7 @@ const isAudioPlayerCollapsed = ref(false);
 const router = useRouter();
 const toast = useToast();
 const meStore = useMeStore();
+const { isAvatarPlaying } = useCharacters();
 const routeTo = (path) => router.push(path);
 
 const isMini = computed(
