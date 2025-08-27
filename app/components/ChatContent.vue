@@ -180,6 +180,16 @@ const initializeChat = async () => {
       console.log('💤 Deferring WebSocket connection for new chat until first message');
     }
 
+    // Watch for incoming WebSocket messages
+    if (wsChat.value) {
+      watch(() => wsChat.value!.response, (newMessages) => {
+        if (newMessages.length > 0) {
+          const lastMessage = newMessages[newMessages.length - 1];
+          handleWebSocketMessage(lastMessage);
+        }
+      }, { deep: true });
+    }
+
     // Check for pending message after WebSocket connects (only for existing chats)
     if (!isNewChatPendingConnection.value) {
       if (wsChat.value.isConnected) {
@@ -224,16 +234,6 @@ onMounted(() => {
       initializeChat();
     }
   });
-
-  // Watch for incoming WebSocket messages
-  if (wsChat.value) {
-    watch(() => wsChat.value!.response, (newMessages) => {
-      if (newMessages.length > 0) {
-        const lastMessage = newMessages[newMessages.length - 1];
-        handleWebSocketMessage(lastMessage);
-      }
-    }, { deep: true });
-  }
 });
 
 onUnmounted(() => {
