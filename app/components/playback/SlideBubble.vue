@@ -14,12 +14,16 @@
       <h2 class="text-lg font-semibold mb-2 whitespace-pre-wrap">{{ displayedTitle }}</h2>
       <div v-if="isTyping" class="whitespace-pre-wrap">{{ displayedText }}</div>
       <div v-else v-html="processedHtml" />
+
+      <!-- Message Actions for regular slides -->
+      <MessageActions v-if="!isTyping && slide.type !== 'question'" :message-text="slideText" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onBeforeUnmount } from 'vue';
+import { ref, watch, onBeforeUnmount, computed } from 'vue';
+import MessageActions from '../chat/MessageActions.vue';
 import QuizQuestion from './QuizQuestion.vue';
 import type { UserAnswer } from '~/types/quiz.types';
 
@@ -30,6 +34,13 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['finish', 'answer-submitted']);
+
+// Computed property to get combined slide text for MessageActions
+const slideText = computed(() => {
+  const title = props.slide.part_label || props.slide.title || '';
+  const content = stripImages(props.slide.content || '');
+  return `${title}\n\n${content}`.trim();
+});
 
 function handleAnswerSubmitted(answer: UserAnswer) {
   emit('answer-submitted', answer);

@@ -4,14 +4,14 @@
       v-if="!imageError && isImageUrl(getAvatarSource())"
       :src="getAvatarSource()"
       :alt="currentCharacter?.name || 'Avatar'"
-      :class="['w-full h-full object-cover transform transition-transform duration-300']"
+      :class="['w-full h-full object-contain transform transition-transform duration-300']"
       @error="handleImageError"
     >
     <video
       v-else-if="!videoError && !imageError && isVideoUrl(getAvatarSource())"
       ref="videoRef"
       :src="getAvatarSource()"
-      :class="['w-full h-full object-cover transform transition-transform duration-300']"
+      :class="['w-full h-full object-contain transform transition-transform duration-300']"
       loop
       playsinline
       @error="handleVideoError"
