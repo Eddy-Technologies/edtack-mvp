@@ -6,11 +6,7 @@
     ]"
   >
     <div v-if="isUser" class="w-8 h-8 flex-shrink-0">
-      <img
-        src="https://avatar.iran.liara.run/public"
-        alt="User"
-        class="w-full h-full rounded-full object-cover"
-      >
+      <UserAvatar />
     </div>
     <div
       :class="[
@@ -24,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import UserAvatar from '../common/UserAvatar.vue';
+
 const props = defineProps<{
   text: string;
   isFirst: boolean;
