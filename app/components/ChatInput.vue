@@ -30,14 +30,14 @@
       >
         {{ item.pillDisplay }}
       </button>
-      <button
+      <!-- <button
         v-for="suggestion in suggestions"
         :key="suggestion"
         class="bg-gray-100 px-3 py-1 rounded hover:bg-gray-200"
         @click="sendSuggestion(suggestion)"
       >
         {{ suggestion }}
-      </button>
+      </button> -->
     </div>
   </div>
 </template>
