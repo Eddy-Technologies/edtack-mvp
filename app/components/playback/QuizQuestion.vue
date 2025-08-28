@@ -151,6 +151,9 @@
           </span>
         </div>
       </div>
+
+      <!-- Message Actions -->
+      <MessageActions :message-text="questionText" />
     </div>
   </div>
 </template>
@@ -159,6 +162,7 @@
 import { ref, computed, onMounted } from 'vue';
 import type { QuizQuestion } from '~/types/quiz.types';
 import Button from '~/components/common/Button.vue';
+import MessageActions from '~/components/chat/MessageActions.vue';
 
 const props = defineProps<{
   question: QuizQuestion;
@@ -177,6 +181,13 @@ const isCorrect = ref<boolean | undefined>(undefined);
 
 const processedContentHtml = computed(() => convertImages(props.question.content || ''));
 const processedExplanationHtml = computed(() => convertImages(props.question.explanation || ''));
+
+// Computed property for MessageActions - combines title and content
+const questionText = computed(() => {
+  const title = displayedTitle.value;
+  const content = stripImages(props.question.content || '');
+  return `${title}\n\n${content}`.trim();
+});
 
 const hasAnswer = computed(() => {
   switch (props.question.question_type) {
@@ -197,6 +208,10 @@ const hasAnswer = computed(() => {
       return false;
   }
 });
+
+function stripImages(raw: string) {
+  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image]');
+}
 
 function convertImages(raw: string) {
   return raw.replace(

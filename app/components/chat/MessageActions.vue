@@ -27,6 +27,17 @@
       <Icon name="i-heroicons-hand-thumb-down" class="w-4 h-4" />
     </button>
 
+    <!-- Feedback Modal -->
+    <MessageFeedbackModal
+      v-if="showFeedbackModal"
+      :is-like="feedbackType === 'like'"
+      :message-text="messageText"
+      :message-id="messageId"
+      :thread-id="threadId"
+      @close="closeFeedbackModal"
+      @submitted="handleFeedbackSubmitted"
+    />
+
     <!-- TODO: Retry/Regenerate Button -->
     <!-- <button
       class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
@@ -48,15 +59,25 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import MessageFeedbackModal from './MessageFeedbackModal.vue';
 import { useToast } from '#imports';
 import { useCharacters } from '~/composables/useCharacters';
 
-const props = defineProps<{
+interface Props {
   messageText: string;
-}>();
+  messageId?: string;
+  threadId?: string;
+}
+
+const props = defineProps<Props>();
 
 const toast = useToast();
 const { startAvatarPlayback } = useCharacters();
+
+// Modal state management
+const showFeedbackModal = ref(false);
+const feedbackType = ref<'like' | 'dislike' | null>(null);
 
 const handleCopy = async () => {
   try {
@@ -78,21 +99,23 @@ const handleCopy = async () => {
 };
 
 const handleLike = () => {
-  toast.add({
-    title: 'Liked',
-    description: 'Message liked',
-    icon: 'i-heroicons-hand-thumb-up',
-    timeout: 2000
-  });
+  feedbackType.value = 'like';
+  showFeedbackModal.value = true;
 };
 
 const handleDislike = () => {
-  toast.add({
-    title: 'Disliked',
-    description: 'Message disliked',
-    icon: 'i-heroicons-hand-thumb-down',
-    timeout: 2000
-  });
+  feedbackType.value = 'dislike';
+  showFeedbackModal.value = true;
+};
+
+const closeFeedbackModal = () => {
+  showFeedbackModal.value = false;
+  feedbackType.value = null;
+};
+
+const handleFeedbackSubmitted = (feedbackData: any) => {
+  console.log('Feedback submitted:', feedbackData);
+  // Feedback will be handled by the modal component
 };
 
 const handleRetry = () => {
