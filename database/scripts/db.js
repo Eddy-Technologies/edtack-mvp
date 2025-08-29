@@ -17,6 +17,15 @@ import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
+// Load environment variables
+try {
+  const { config } = await import('dotenv');
+  config({ path: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.env') });
+} catch (error) {
+  // Fallback if dotenv is not available
+  console.log('dotenv not available, using manual env loading');
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -37,13 +46,21 @@ function log(message, color = 'reset') {
   console.log(`${colors[color]}${message}${colors.reset}`);
 }
 
+function getSupabaseWorkDir() {
+  const workDir = process.env.SUPABASE_WORK_DIR || path.resolve(__dirname, '../..');
+  console.log(`SUPABASE_WORK_DIR: ${process.env.SUPABASE_WORK_DIR}`);
+  console.log(`Using work dir: ${workDir}`);
+  return workDir;
+}
+
 function generateMigrations() {
   try {
     log('\n🔧 Generating migrations...', 'magenta');
 
     const projectRoot = path.resolve(__dirname, '../..');
+    const supabaseWorkDir = getSupabaseWorkDir();
     const tablesDir = path.join(projectRoot, 'database/tables');
-    const migrationsDir = path.join(projectRoot, 'supabase/migrations');
+    const migrationsDir = path.join(supabaseWorkDir, 'supabase/migrations');
 
     // Ensure migrations directory exists
     if (!fs.existsSync(migrationsDir)) {
@@ -177,8 +194,9 @@ function generateSeedFile() {
     log('\n🌱 Generating seed.sql...', 'magenta');
 
     const projectRoot = path.resolve(__dirname, '../..');
+    const supabaseWorkDir = getSupabaseWorkDir();
     const seedsDir = path.join(projectRoot, 'database/seeds');
-    const supabaseSeedFile = path.join(projectRoot, 'supabase/seed.sql');
+    const supabaseSeedFile = path.join(supabaseWorkDir, 'supabase/seed.sql');
 
     // Seed files to combine (in order)
     const seedFiles = [
@@ -219,10 +237,12 @@ function executeCommand(command, description) {
   try {
     log(`\n🔧 ${description}...`, 'magenta');
 
+    // Use the Supabase directory where your instance is running
+    const supabaseWorkDir = getSupabaseWorkDir();
     const output = execSync(command, {
       encoding: 'utf8',
       stdio: 'inherit',
-      cwd: path.resolve(__dirname, '../..')
+      cwd: supabaseWorkDir
     });
 
     log(`✅ ${description} completed`, 'green');
@@ -260,7 +280,8 @@ async function runCommand(command) {
         log('🔄 Starting database reset...', 'bold');
         generateMigrations();
         // Remove seed.sql temporarily to prevent auto-seeding during reset
-        const seedPath = path.resolve(__dirname, '../../supabase/seed.sql');
+        const supabaseWorkDir = getSupabaseWorkDir();
+        const seedPath = path.join(supabaseWorkDir, 'supabase/seed.sql');
         let hadSeedFile = false;
         let seedContent = '';
         if (fs.existsSync(seedPath)) {
@@ -270,7 +291,19 @@ async function runCommand(command) {
           log('📁 Temporarily removed seed.sql to prevent auto-seeding', 'yellow');
         }
 
-        executeCommand('supabase db reset', 'Running supabase db reset');
+        // Run supabase db reset from project root
+        try {
+          log('\n🔧 Running supabase db reset...', 'magenta');
+          execSync('supabase db reset', {
+            encoding: 'utf8',
+            stdio: 'inherit',
+            cwd: supabaseWorkDir
+          });
+          log('✅ Running supabase db reset completed', 'green');
+        } catch (error) {
+          log(`❌ Running supabase db reset failed: ${error.message}`, 'red');
+          throw error;
+        }
 
         // Restore seed.sql if it existed
         if (hadSeedFile) {
@@ -286,7 +319,7 @@ async function runCommand(command) {
         log('🌱 Starting database seeding...', 'bold');
         checkForExistingData();
         generateSeedFile();
-        executeCommand('psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f supabase/seed.sql', 'Running seed file via psql');
+        executeCommand(`psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f "${path.join(getSupabaseWorkDir(), 'supabase/seed.sql')}"`, 'Running seed file via psql');
         log('\n🎉 Database seeding completed!', 'green');
         log('💡 Run `pnpm upload:characters` to upload character assets', 'yellow');
         break;

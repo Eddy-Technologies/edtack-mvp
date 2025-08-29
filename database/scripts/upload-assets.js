@@ -4,28 +4,13 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createClient } from '@supabase/supabase-js';
+import { config } from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-function loadEnv() {
-  const envPath = path.resolve(__dirname, '../../.env');
-  if (!fs.existsSync(envPath)) {
-    throw new Error('.env file not found');
-  }
-
-  const envContent = fs.readFileSync(envPath, 'utf8');
-  const envVars = {};
-
-  envContent.split('\n').forEach((line) => {
-    const match = line.match(/^([^#=]+)=(.*)$/);
-    if (match) {
-      envVars[match[1].trim()] = match[2].trim();
-    }
-  });
-
-  return envVars;
-}
+// Load environment variables
+config({ path: path.resolve(__dirname, '../../.env') });
 
 function getContentType(filePath) {
   const ext = path.extname(filePath).toLowerCase();
@@ -41,9 +26,8 @@ function getContentType(filePath) {
 }
 
 async function uploadCharacters() {
-  const env = loadEnv();
-  const supabaseUrl = env.SUPABASE_URL || env.VITE_SUPABASE_URL;
-  const supabaseKey = env.SUPABASE_SERVICE_KEY || env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = process.env.NUXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
     throw new Error('Missing Supabase credentials');
