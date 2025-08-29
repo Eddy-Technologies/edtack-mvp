@@ -6,7 +6,7 @@
       <div
         v-for="(faq, index) in faqs"
         :key="index"
-        class="border border-gray-200 rounded-lg"
+        class="border-2 border-gray-200 rounded-lg"
       >
         <button
           class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200"
@@ -37,44 +37,54 @@ const openFaqs = ref<number[]>([]);
 
 const faqs = ref([
   {
-    question: 'What is Eddy and how does it work?',
+    question: 'What is StudyWithEddy and how does it work?',
     answer:
-      'Eddy is an AI-powered educational platform featuring customized Large Language Models designed specifically for education. Our AI tutors provide personalized learning experiences, adapt to your child\'s learning pace, and offer curriculum-aligned content across multiple subjects.',
+      'StudyWithEddy is an AI-powered chat platform specifically designed for Singapore students. Our platform uses advanced Large Language Models from providers like OpenAI and Anthropic, fine-tuned with Singapore\'s curriculum data. Students learn through interactive conversations with AI tutors that adapt to their learning pace and provide personalized educational experiences.',
   },
   {
-    question: 'What subjects does Eddy cover?',
+    question: 'Which Singapore curriculum levels and subjects are supported?',
     answer:
-      'Eddy covers Mathematics, Science, English, History, Art, Music, Physical Education, and Technology. Our content is aligned with primary school curricula and adapts to different grade levels.',
+      'We support the full range of Singapore education levels following MOE syllabus including Primary, Secondary (O-Level), and Pre-University (A-Level). Our subjects include Mathematics, Additional Mathematics, Biology, Chemistry, Physics, English, Literature, History, Geography, and Social Studies - all aligned with the latest MOE curriculum guidelines.',
   },
   {
-    question: 'How do the AI characters work?',
+    question: 'How do I get started with StudyWithEddy?',
     answer:
-      'Choose from multiple AI tutors including Alex the Explorer, Luna the Scholar, Sam the Scientist, and more. Each character has a unique personality and teaching style to match your child\'s preferences and learning style.',
+      'Simply sign up for an account, choose your education level and subjects, then select an AI character that matches your learning style. You can start with a free trial to explore our interactive lessons, quizzes, and chat-based learning before choosing a subscription plan.',
   },
   {
-    question: 'Is Eddy safe for children?',
+    question: 'How do the AI tutors personalize learning for Singapore students?',
     answer:
-      'Yes! Eddy is built with child safety as a priority. Our AI includes bias filters, content safety measures, and is designed specifically for young learners. We also provide comprehensive parental controls.',
+      'Our AI tutors analyze your responses, learning patterns, and progress to adapt content difficulty and teaching methods. They use Singapore-specific examples, incorporate local context, and follow MOE curriculum progression to ensure relevant and effective learning experiences tailored to each student.',
   },
   {
-    question: 'How does the credit system work?',
+    question: 'What makes the lessons and quizzes effective for exam preparation?',
     answer:
-      'Students earn credits by completing quizzes and challenges. Credits can be used in our shop system for educational materials and rewards, encouraging continued learning and engagement.',
+      'Our platform provides curriculum-aware lessons with automated marking that gives instant feedback. We use up-to-date syllabus content, past exam papers, and practice questions that mirror PSLE, O-Level, and A-Level formats. The difficulty adjusts based on your proficiency to optimize learning outcomes.',
   },
   {
-    question: 'Can parents track their child\'s progress?',
+    question: 'How do AI characters keep students motivated and engaged?',
     answer:
-      'Absolutely! Our parent dashboard provides detailed progress tracking, study hours, completion rates, and comprehensive analytics to help you monitor your child\'s learning journey.',
+      'Each AI character has a unique personality and teaching style. We use text-to-speech technology, interactive conversations, gamified learning experiences, and a credit-reward system to maintain student engagement. Characters remember your progress and celebrate achievements to keep you motivated.',
   },
   {
-    question: 'What devices can I use Eddy on?',
+    question: 'How can parents monitor their child\'s learning progress?',
     answer:
-      'Eddy is a web-based platform that works on any device with an internet connection. Our responsive design ensures a great experience on computers, tablets, and smartphones.',
+      'Parents have access to comprehensive dashboards showing detailed progress tracking, study hours, quiz scores, topic mastery, and learning analytics. You can set learning goals, receive progress reports, and even reward your child through our platform to encourage continued learning.',
   },
   {
-    question: 'Do you offer family accounts?',
+    question: 'How does the credit and reward system work?',
     answer:
-      'Yes! We support multi-child family accounts with individual tracking for each child, separate subscriptions per child, and comprehensive family management features.',
+      'Students earn credits by completing lessons, quizzes, and learning challenges. Credits can be used in our reward system for educational materials, achievements, and motivational rewards. Parents can also add bonus credits to encourage consistent learning habits.',
+  },
+  {
+    question: 'Is StudyWithEddy safe and appropriate for children?',
+    answer:
+      'Absolutely! Child safety is our top priority. Our AI includes content safety filters, bias prevention measures, and age-appropriate responses. We have strict data protection policies, comprehensive parental controls, and all content is designed specifically for young learners in Singapore.',
+  },
+  {
+    question: 'How often is the curriculum content updated?',
+    answer:
+      'We continuously update our content to align with the latest MOE syllabus changes, new exam formats, and educational best practices. Our team regularly reviews and incorporates feedback from students, parents, and educators to ensure our platform remains current and effective.',
   },
 ]);
 

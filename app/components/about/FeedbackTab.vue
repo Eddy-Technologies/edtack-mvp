@@ -16,7 +16,7 @@
       <!-- First row: Parent and Student surveys -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Parent Survey Card -->
-        <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8">
+        <div class="bg-white rounded-xl border-2 border-gray-200 p-8">
           <div class="text-center">
             <h4 class="text-2xl font-bold text-gray-800 mb-4">Parent Survey</h4>
             <p class="pb-4">This survey will take approximately 8-10 minutes to complete. Your responses are valuable and will help us understand parent perspectives on student learning and education.</p>
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Student Survey Card -->
-        <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8">
+        <div class="bg-white  rounded-xl border-2 border-gray-200 p-8">
           <div class="text-center">
             <h4 class="text-2xl font-bold text-gray-800 mb-4">Student Survey</h4>
             <p class="pb-4">
@@ -48,7 +48,7 @@
 
       <!-- Second row: Platform Feedback -->
       <div class="flex justify-center">
-        <div class="bg-white shadow-lg rounded-xl border border-gray-200 p-8 w-full max-w-md">
+        <div class="bg-white rounded-xl border-2 border-gray-200 p-8 w-full max-w-md">
           <div class="text-center">
             <h4 class="text-2xl font-bold text-gray-800 mb-4">Platform Feedback Form</h4>
             <p class="pb-4">Please provide us with any technical feedback or improvements for our platform.</p>
