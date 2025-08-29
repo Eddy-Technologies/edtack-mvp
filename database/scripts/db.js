@@ -21,7 +21,7 @@ import { fileURLToPath } from 'url';
 try {
   const { config } = await import('dotenv');
   config({ path: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.env') });
-} catch (error) {
+} catch {
   // Fallback if dotenv is not available
   console.log('dotenv not available, using manual env loading');
 }
