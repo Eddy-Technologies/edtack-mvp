@@ -1,6 +1,6 @@
 CREATE TABLE chat_threads (
-                              id BIGSERIAL PRIMARY KEY,
-                              user_id BIGINT NOT NULL, -- who owns this thread
+                              id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                              user_id BIGINT, -- who owns this thread
                               title TEXT,
                               created_at TIMESTAMP DEFAULT NOW(),
                               updated_at TIMESTAMP DEFAULT NOW()

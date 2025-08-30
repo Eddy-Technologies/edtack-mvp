@@ -4,11 +4,24 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const body = await readBody<{ title?: string }>(event);
+    // Check if thread exists
+    const { data: existingThread, error: selectError } = await supabase
+      .from('chat_threads')
+      .select('*')
+      .eq('id', body.id)
+      .single();
+
+    if (existingThread) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Thread already exists',
+      });
+    }
 
     const { data, error } = await supabase
       .from('chat_threads')
       .insert({
-        user_id: 1,
+        user_id: body?.user_id ?? null,
         title: body?.title ?? null,
       })
       .select('*')

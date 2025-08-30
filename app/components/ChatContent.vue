@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col h-full bg-white overflow-hidden">
     <!-- Token Count Display and Connection Status -->
-    <div class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300 flex justify-between items-center px-4">
+    <div
+      class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300 flex justify-between items-center px-4"
+    >
       <div class="flex items-center gap-2">
         <span v-if="useWebSocket && wsChat" class="flex items-center gap-1">
           <span
@@ -15,9 +17,11 @@
           />
           <span class="text-xs">
             {{
-              wsChat.isConnected ? 'Connected' :
-              wsChat.isConnecting ? 'Connecting...' :
-              'Disconnected'
+              wsChat.isConnected
+                ? 'Connected'
+                : wsChat.isConnecting
+                  ? 'Connecting...'
+                  : 'Disconnected'
             }}
           </span>
         </span>
@@ -57,6 +61,7 @@ import SlideBubble from '@/components/playback/SlideBubble.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
+import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
 import mockQuizData from '~/mockQuizData';
 
@@ -64,12 +69,13 @@ import mockQuizData from '~/mockQuizData';
 interface ChatContentProps {
   threadId: string;
   character: any;
+  messages: any;
 }
 
 // Component props
 const props = defineProps<ChatContentProps>();
 
-const messageStream = ref<any[]>([]);
+const messageStream = ref<any[]>(props.messages);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
@@ -94,6 +100,7 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
+const chatStore = useChatStore();
 const { getPendingMessage, clearPendingMessage } = useCharacters();
 
 // Dynamic conversation summary based on character prop
@@ -108,7 +115,7 @@ const conversationSummaryComputed = computed(() => {
 const initializeChat = async () => {
   console.log('Initializing chat with props:', {
     threadId: props.threadId,
-    character: props.character?.name
+    character: props.character?.name,
   });
 
   // Skip if 'new' thread ID (invalid)
@@ -174,31 +181,42 @@ const initializeChat = async () => {
 
 onMounted(() => {
   // Single watcher for WebSocket responses
-  watch(() => wsChat.value?.response, (newMessages) => {
-    if (newMessages?.length > 0) {
-      const lastMessage = newMessages[newMessages.length - 1];
-      handleWebSocketMessage(lastMessage);
-    }
-  }, { deep: true });
+  watch(
+    () => wsChat.value?.response,
+    (newMessages) => {
+      if (newMessages?.length > 0) {
+        const lastMessage = newMessages[newMessages.length - 1];
+        handleWebSocketMessage(lastMessage);
+      }
+    },
+    { deep: true }
+  );
 
   // Single watcher for connection state - process queue when connected
-  watch(() => wsChat.value?.isConnected, (connected) => {
-    if (connected) {
-      processMessageQueue();
+  watch(
+    () => wsChat.value?.isConnected,
+    (connected) => {
+      if (connected) {
+        processMessageQueue();
+      }
     }
-  });
+  );
 
   // Initialize when all prerequisites are met
-  watch(() => ({
-    loggedIn: meStore.isLoggedIn,
-    initialized: meStore.isInitialized,
-    threadId: props.threadId,
-    character: props.character
-  }), (state) => {
-    if (state.loggedIn && state.initialized && state.threadId && state.character) {
-      initializeChat();
-    }
-  }, { immediate: true });
+  watch(
+    () => ({
+      loggedIn: meStore.isLoggedIn,
+      initialized: meStore.isInitialized,
+      threadId: props.threadId,
+      character: props.character,
+    }),
+    (state) => {
+      if (state.loggedIn && state.initialized && state.threadId && state.character) {
+        initializeChat();
+      }
+    },
+    { immediate: true }
+  );
 });
 
 onUnmounted(() => {
@@ -208,7 +226,7 @@ onUnmounted(() => {
 });
 
 // Send message directly to WebSocket
-const sendMessage = (text: string) => {
+const sendMessage = async (text: string) => {
   if (!wsChat.value?.isConnected || !text.trim()) {
     console.warn('Cannot send message: WebSocket not connected or empty text');
     return false;
@@ -225,12 +243,29 @@ const sendMessage = (text: string) => {
     personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
   };
 
-  let success = false;
+  let success: boolean;
   if (isFirstMessage.value) {
     success = wsChat.value.startChat(text, userInfo);
     isFirstMessage.value = false;
   } else {
     success = wsChat.value.sendUserResponse(text, userInfo);
+  }
+
+  const response = await fetch('/api/chat/message', {
+    // New API endpoint
+    method: 'POST', // Explicitly POST
+    headers: {
+      'Content-Type': 'application/json', // Set content type
+    },
+    body: JSON.stringify({
+      thread_id: chatStore.thread_id,
+      content: text || '',
+      user_id: meStore.user_info_id || null,
+    }),
+  });
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(`Fetch failed: ${response.status} - ${errorData.message || 'Unknown error'}`);
   }
 
   if (success) {
@@ -280,7 +315,11 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  if (message.status === 'timeout' || message.status === 'cancelled' || message.status === 'error') {
+  if (
+    message.status === 'timeout' ||
+    message.status === 'cancelled' ||
+    message.status === 'error'
+  ) {
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -309,7 +348,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.text,
           isFirst: blockIndex === 0,
-          isUser: block.isUser
+          isUser: block.isUser,
         },
       });
     }
@@ -319,7 +358,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.message,
           isFirst: blockIndex === 0,
-          isUser: block.isUser
+          isUser: block.isUser,
         },
       });
     }

@@ -8,7 +8,7 @@
         alt="eddy"
         class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
         @click="routeTo('/')"
-      >
+      />
       <button
         class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
         @click="emit('toggle-sidebar')"
@@ -33,7 +33,8 @@
           </ULink>
         </div>
       </div>
-      <div v-if="meStore.isLoggedIn" class="px-3">
+      <!--    TODO  <div v-if="meStore.isLoggedIn" class="px-3">-->
+      <div class="px-3">
         <div class="border-t border-black">
           <ULink
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
@@ -42,6 +43,23 @@
             <Icon name="i-heroicons-clock" class="w-6 h-6" />
             <span v-if="!isMini" class="truncate">Chat History</span>
           </ULink>
+
+          <!-- List chat threads -->
+          <div v-if="chatThreads.length">
+            <ULink
+              v-for="thread in chatThreads"
+              :key="thread.id"
+              class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+              @click="openThread(thread.id)"
+            >
+              <Icon name="i-heroicons-chat-bubble-oval-left" class="w-5 h-5 text-gray-600" />
+              <span class="truncate">{{ thread.title || 'Untitled Chat' }}</span>
+            </ULink>
+          </div>
+
+          <div v-else-if="!isLoadingThreads" class="px-4 py-2 text-gray-400 text-sm text-center">
+            No previous chats
+          </div>
         </div>
       </div>
       <div v-if="!props.hideChangeCharacter" class="px-3">
@@ -72,7 +90,10 @@
     <!-- Avatar & Audio Player Container -->
     <div v-else class="p-4">
       <!-- Show placeholder when floating and sidebar is expanded -->
-      <div v-if="isAvatarFloating" class="relative bg-gray-700 rounded-xl shadow-inner p-4 min-h-[120px] w-full flex flex-col items-center justify-center">
+      <div
+        v-if="isAvatarFloating"
+        class="relative bg-gray-700 rounded-xl shadow-inner p-4 min-h-[120px] w-full flex flex-col items-center justify-center"
+      >
         <p class="text-gray-400 text-sm text-center mb-4">Avatar is floating</p>
         <button
           class="w-full px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg text-sm transition-colors"
@@ -88,7 +109,7 @@
         :class="[
           'relative bg-gray-700 rounded-xl shadow-inner p-2 w-full transition-all duration-300',
           isAudioPlayerCollapsed ? 'min-h-[60px]' : 'min-h-[200px]',
-          isMini ? '' : 'rounded-xl shadow-inner'
+          isMini ? '' : 'rounded-xl shadow-inner',
         ]"
       >
         <!-- Collapsed Header -->
@@ -107,10 +128,7 @@
         <!-- Avatar -->
         <div
           v-else
-          :class="[
-            'relative overflow-hidden rounded-lg',
-            isMini ? 'h-[120px]' : 'h-[180px]'
-          ]"
+          :class="['relative overflow-hidden rounded-lg', isMini ? 'h-[120px]' : 'h-[180px]']"
         >
           <Avatar :is-playing="isAvatarPlaying" :is-mini="isMini" />
 
@@ -141,7 +159,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { ref, onMounted, onBeforeUnmount, computed, watch, nextTick } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
 import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
@@ -150,7 +168,12 @@ import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
 
-const emit = defineEmits(['toggle-sidebar', 'change-character', 'toggle-floating-avatar', 'new-chat']);
+const emit = defineEmits([
+  'toggle-sidebar',
+  'change-character',
+  'toggle-floating-avatar',
+  'new-chat',
+]);
 const props = defineProps({
   collapsed: Boolean,
   sidebarWidth: Number,
@@ -158,16 +181,19 @@ const props = defineProps({
   isAvatarFloating: Boolean,
   hideChangeCharacter: {
     type: Boolean,
-    default: false
+    default: false,
   },
 });
 
 // State for audio player collapsed state
 const isAudioPlayerCollapsed = ref(false);
+const chatThreads = ref<any[]>([]);
+const isLoadingThreads = ref(false);
 
 const router = useRouter();
 const toast = useToast();
 const meStore = useMeStore();
+
 const { isAvatarPlaying } = useCharacters();
 const routeTo = (path) => router.push(path);
 
@@ -175,17 +201,28 @@ const isMini = computed(
   () => props.collapsed || props.isMobile || (props.sidebarWidth ?? 999) < 150
 );
 
-// Button handlers
-const handleCall = () => {
-  toast.add({ title: 'Call', description: 'Calling...', icon: 'i-heroicons-phone-20-solid' });
+const fetchChatThreads = async () => {
+  isLoadingThreads.value = true;
+  try {
+    const user_id = meStore.user_info_id ? meStore.user_info_id : 1;
+    const response = await fetch(`/api/chat/threads/${user_id}`);
+    if (!response.ok) {
+      throw new Error(`Thread not found or API error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    chatThreads.value = result.data || [];
+  } catch (err) {
+    console.error('Failed to fetch chat threads:', err);
+    chatThreads.value = [];
+  } finally {
+    isLoadingThreads.value = false;
+  }
 };
 
-const handleMute = () => {
-  toast.add({
-    title: 'Muted',
-    description: 'Microphone muted.',
-    icon: 'i-heroicons-microphone-slash-20-solid',
-  });
+const openThread = (threadId: string) => {
+  // TODO: Hardcoded Eddy for now
+  router.push(`/chat/eddy/${threadId}`);
 };
 
 const handleNewChat = () => {
@@ -277,6 +314,8 @@ const toggleFloatingAvatar = () => {
 
 onMounted(() => {
   // Initialize audio store after mounting
+  // Fetch on mount
+  fetchChatThreads();
   const audioStore = useAudioStore();
 
   // Use nextTick to ensure DOM is ready

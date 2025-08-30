@@ -59,8 +59,10 @@
         <!-- Chat Content Area - takes remaining space -->
         <div class="flex-1 overflow-hidden relative">
           <ChatContent
+            v-if="!isLoading"
             ref="chatContentRef"
             :thread-id="threadId"
+            :messages="messages"
             :character="selectedCharacter"
           />
 
@@ -70,15 +72,11 @@
             class="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm flex items-center justify-center"
           >
             <div class="w-full max-w-4xl px-4">
-              <div
-                class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
-              >
+              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100">
                   <div class="flex items-center justify-between">
                     <div>
-                      <h3 class="text-lg font-semibold text-gray-800">
-                        Choose Your Character
-                      </h3>
+                      <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
                       <div class="flex items-center gap-2 mt-1">
                         <p class="text-sm text-gray-600">
                           <span v-if="selectedCharacter">
@@ -87,16 +85,10 @@
                               selectedCharacter.name
                             }}</span>
                             <span class="text-gray-500"
-                              >({{
-                                constantCaseToTitleCase(
-                                  selectedCharacter.subject,
-                                )
-                              }})</span
+                              >({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span
                             >
                           </span>
-                          <span v-else
-                            >Select a character to start chatting</span
-                          >
+                          <span v-else>Select a character to start chatting</span>
                         </p>
                       </div>
                     </div>
@@ -104,10 +96,7 @@
                       class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
                       @click="isSelectingCharacter = false"
                     >
-                      <Icon
-                        name="i-heroicons-x-mark"
-                        class="w-6 h-6 text-gray-600"
-                      />
+                      <Icon name="i-heroicons-x-mark" class="w-6 h-6 text-gray-600" />
                     </button>
                   </div>
                 </div>
@@ -141,15 +130,11 @@
           <div class="w-full max-w-4xl px-4">
             <!-- Character Carousel Card - only shown when centered (new chat) -->
             <div v-if="isChatCentered" class="mb-6">
-              <div
-                class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
-              >
+              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100">
                   <div class="flex items-center justify-between">
                     <div>
-                      <h3 class="text-lg font-semibold text-gray-800">
-                        Choose Your Character
-                      </h3>
+                      <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
                       <div class="flex items-center gap-2 mt-1">
                         <p class="text-sm text-gray-600">
                           <span v-if="selectedCharacter">
@@ -158,16 +143,10 @@
                               selectedCharacter.name
                             }}</span>
                             <span class="text-gray-500"
-                              >({{
-                                constantCaseToTitleCase(
-                                  selectedCharacter.subject,
-                                )
-                              }})</span
+                              >({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span
                             >
                           </span>
-                          <span v-else
-                            >Select a character to start chatting</span
-                          >
+                          <span v-else>Select a character to start chatting</span>
                         </p>
                       </div>
                     </div>
@@ -199,9 +178,7 @@
         ref="floatingAvatar"
         :class="[
           'fixed z-50 bg-gray-700 rounded-xl shadow-2xl overflow-hidden',
-          isDraggingAvatar
-            ? 'cursor-grabbing'
-            : 'transition-all duration-300 ease-out',
+          isDraggingAvatar ? 'cursor-grabbing' : 'transition-all duration-300 ease-out',
         ]"
         :style="{
           left: floatingPosition.x + 'px',
@@ -219,10 +196,7 @@
           @mousedown="startDraggingAvatar"
         >
           <div class="flex items-center gap-2">
-            <Icon
-              name="i-heroicons-musical-note"
-              class="w-5 h-5 text-gray-300"
-            />
+            <Icon name="i-heroicons-musical-note" class="w-5 h-5 text-gray-300" />
             <span class="text-sm font-medium text-gray-300">Audio Player</span>
           </div>
           <div class="flex items-center gap-1">
@@ -232,11 +206,7 @@
               @click="toggleFloatingCollapse"
             >
               <Icon
-                :name="
-                  isFloatingCollapsed
-                    ? 'i-heroicons-chevron-down'
-                    : 'i-heroicons-chevron-up'
-                "
+                :name="isFloatingCollapsed ? 'i-heroicons-chevron-down' : 'i-heroicons-chevron-up'"
                 class="w-4 h-4 text-gray-300"
               />
             </button>
@@ -251,15 +221,9 @@
         </div>
 
         <!-- Container Content (visible when not collapsed) -->
-        <div
-          v-if="!isFloatingCollapsed"
-          class="flex flex-col"
-          style="height: calc(100% - 48px)"
-        >
+        <div v-if="!isFloatingCollapsed" class="flex flex-col" style="height: calc(100% - 48px)">
           <!-- Avatar -->
-          <div
-            class="relative flex-1 overflow-hidden rounded-lg bg-white mx-2 mt-2 mb-2"
-          >
+          <div class="relative flex-1 overflow-hidden rounded-lg bg-white mx-2 mt-2 mb-2">
             <Avatar :is-playing="isAvatarPlaying" />
           </div>
         </div>
@@ -269,26 +233,27 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch, computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import Sidebar from "@/components/Sidebar.vue";
-import ChatContent from "@/components/ChatContent.vue";
-import ChatInput from "@/components/ChatInput.vue";
-import CharacterCarousel from "@/components/CharacterCarousel.vue";
-import AuthenticationWidget from "@/components/AuthenticationWidget.vue";
-import Avatar from "@/components/avatar/Avatar.vue";
-import Button from "@/components/common/Button.vue";
-import { useToast } from "#imports";
-import { useAudioStore } from "~/stores/audio";
-import { useMeStore } from "~/stores/me";
-import { useCharacters } from "~/composables/useCharacters";
-import { constantCaseToTitleCase } from "~/utils/stringUtils";
+import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import Sidebar from '@/components/Sidebar.vue';
+import ChatContent from '@/components/ChatContent.vue';
+import ChatInput from '@/components/ChatInput.vue';
+import CharacterCarousel from '@/components/CharacterCarousel.vue';
+import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
+import Avatar from '@/components/avatar/Avatar.vue';
+import Button from '@/components/common/Button.vue';
+import { useToast } from '#imports';
+import { useMeStore } from '~/stores/me';
+import { useChatStore } from '~/stores/chat';
+import { useCharacters } from '~/composables/useCharacters';
+import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 // Prevent component remounting when URL changes
 definePageMeta({
-  key: "chat-page",
+  key: 'chat-page',
 });
 
+const isLoading = ref(true);
 const collapsed = ref(true);
 const isMobile = ref(false);
 const isSelectingCharacter = ref(false);
@@ -301,11 +266,14 @@ const isDraggingAvatar = ref(false);
 const isFloatingCollapsed = ref(false);
 const chatContentRef = ref<any>(null);
 const floatingAudio = ref<HTMLAudioElement | null>(null);
+const messages = ref([]);
 
 const router = useRouter();
 const route = useRoute();
 const toast = useToast();
 const meStore = useMeStore();
+const chatStore = useChatStore();
+
 const {
   selectedCharacter,
   initializeStore,
@@ -318,13 +286,11 @@ const {
 // Get route parameters
 const charSlug = computed(() => route.params.charSlug as string);
 const threadId = computed(() => route.params.threadId as string);
-const isNewChat = computed(() => threadId.value === "new");
+const isNewChat = computed(() => threadId.value === 'new');
 
 // Computed properties for UI state
 const isChatCentered = computed(() => {
-  return (
-    !hasStartedChat.value && showContentTransitions.value && isNewChat.value
-  );
+  return !hasStartedChat.value && showContentTransitions.value && isNewChat.value;
 });
 
 const shouldShowChatInput = computed(() => {
@@ -333,6 +299,42 @@ const shouldShowChatInput = computed(() => {
 
 // Initialize character based on route
 onMounted(async () => {
+  if (!isNewChat.value && threadId.value) {
+    chatStore.setThreadId(threadId.value);
+    try {
+      const response = await fetch(`/api/chat/${threadId.value}`);
+      if (!response.ok) {
+        // Thread does not exist or error
+        throw new Error(`Thread not found or API error: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      const processMessages = (data) => {
+        return data.map((message) => ({
+          ...message,
+          isUser: true,
+        }));
+      };
+
+      messages.value = processMessages(result.messageData);
+
+      isLoading.value = false;
+    } catch (err) {
+      toast.add({
+        title: 'Thread not found',
+        description: 'The chat thread does not exist. Starting a new chat.',
+        icon: 'i-heroicons-exclamation-triangle-20-solid',
+      });
+
+      // Navigate to a new chat
+      if (selectedCharacter.value) {
+        await router.replace(`/chat/${selectedCharacter.value.slug}/new`);
+      }
+    }
+  } else {
+    isLoading.value = false;
+  }
   // Initialize character store
   await initializeStore();
 
@@ -342,7 +344,7 @@ onMounted(async () => {
   }
 
   handleResize();
-  window.addEventListener("resize", handleResize);
+  window.addEventListener('resize', handleResize);
 
   // Set initial floating position
   floatingPosition.value = {
@@ -414,42 +416,38 @@ const toggleSidebar = () => {
 };
 
 const handleChatSend = async (text: string) => {
-  console.log(text, isNewChat.value, selectedCharacter.value);
   hasStartedChat.value = true;
 
   // If new chat, generate thread ID and update URL
-  if (threadId.value === "new") {
+  if (threadId.value === 'new') {
     const userId = meStore.user_info_id || meStore.id;
-    const newThreadId = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
-    console.log(
-      "New chat detected, storing pending message and redirecting:",
-      newThreadId,
-    );
-
-    // Store pending message
     setPendingMessage(text);
 
-    // Replace URL - this will trigger re-render with new threadId
-    await router.replace(`/chat/${charSlug.value}/${newThreadId}`);
     try {
-      const response = await fetch("/api/chat/thread", {
+      const response = await fetch('/api/chat/thread', {
         // New API endpoint
-        method: "POST", // Explicitly POST
+        method: 'POST', // Explicitly POST
         headers: {
-          "Content-Type": "application/json", // Set content type
+          'Content-Type': 'application/json', // Set content type
         },
-        body: JSON.stringify({ title: text || null }),
+        body: JSON.stringify({
+          title: text || null,
+          user_id: userId || null,
+        }),
       });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          `Fetch failed: ${response.status} - ${errorData.message || "Unknown error"}`,
+          `Fetch failed: ${response.status} - ${errorData.message || 'Unknown error'}`
         );
+      } else {
+        const resJson = await response.json();
+        const newThreadUuid = resJson.data.id;
+        await router.replace(`/chat/${charSlug.value}/${newThreadUuid}`);
+        chatStore.setThreadId(newThreadUuid);
       }
-      return; // Don't send yet, let re-render handle it
     } catch (err) {
-      console.error("TTS Error:", err);
+      console.error('Thread creation error', err);
     }
   }
 
@@ -472,54 +470,9 @@ const toggleFloatingCollapse = () => {
   isFloatingCollapsed.value = !isFloatingCollapsed.value;
 };
 
-// Floating container button handlers
-const handleFloatingCall = () => {
-  toast.add({
-    title: "Call",
-    description: "Calling...",
-    icon: "i-heroicons-phone-20-solid",
-  });
-};
-
-const handleFloatingPlayAudio = async () => {
-  const audioStore = useAudioStore();
-
-  try {
-    if (isPlaying.value && floatingAudio.value) {
-      floatingAudio.value.pause();
-      isPlaying.value = false;
-      return;
-    }
-
-    if (!floatingAudio.value && audioStore.audioUrl) {
-      floatingAudio.value = new Audio(audioStore.audioUrl);
-      floatingAudio.value.volume = 1.0;
-
-      floatingAudio.value.addEventListener("ended", () => {
-        isPlaying.value = false;
-      });
-    }
-
-    if (floatingAudio.value) {
-      await floatingAudio.value.play();
-      isPlaying.value = true;
-    }
-  } catch (error) {
-    console.error("Floating audio playback failed:", error);
-  }
-};
-
-const handleFloatingMute = () => {
-  toast.add({
-    title: "Muted",
-    description: "Microphone muted.",
-    icon: "i-heroicons-microphone-slash-20-solid",
-  });
-};
-
 const startDraggingAvatar = (e: MouseEvent) => {
   const target = e.target as HTMLElement;
-  if (target.tagName === "BUTTON" || target.closest("button")) {
+  if (target.tagName === 'BUTTON' || target.closest('button')) {
     return;
   }
 
@@ -538,12 +491,12 @@ const startDraggingAvatar = (e: MouseEvent) => {
 
   const stopDragging = () => {
     isDraggingAvatar.value = false;
-    document.removeEventListener("mousemove", handleDrag);
-    document.removeEventListener("mouseup", stopDragging);
+    document.removeEventListener('mousemove', handleDrag);
+    document.removeEventListener('mouseup', stopDragging);
   };
 
-  document.addEventListener("mousemove", handleDrag);
-  document.addEventListener("mouseup", stopDragging);
+  document.addEventListener('mousemove', handleDrag);
+  document.addEventListener('mouseup', stopDragging);
 };
 
 const handleResize = () => {
@@ -552,39 +505,10 @@ const handleResize = () => {
 };
 
 onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize);
+  window.removeEventListener('resize', handleResize);
   if (floatingAudio.value) {
     floatingAudio.value.pause();
     floatingAudio.value = null;
   }
 });
 </script>
-
-<style scoped>
-/* Loading screen fade transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Floating avatar transition */
-.float-enter-active,
-.float-leave-active {
-  transition: all 0.3s ease;
-}
-
-.float-enter-from {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.float-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
-}
-</style>
