@@ -100,7 +100,10 @@ function generateMigrations() {
       'notes.sql',
       'token_history.sql',
       'stripe_webhook_events.sql',
-      'functions.sql'
+      'functions.sql',
+      'chat_thread.sql',
+      'chat_message.sql',
+      'chat_feedback.sql'
     ];
 
     // Generate timestamped migration files
