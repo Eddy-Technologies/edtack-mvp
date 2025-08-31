@@ -29,43 +29,31 @@
             />
           </div>
 
-          <!-- Task Name -->
+          <!-- Subject Selection -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Task Name *
+              Subject *
             </label>
-            <input
-              v-model="form.name"
-              type="text"
+            <USelect
+              v-model="form.subject"
+              :options="subjectOptions"
+              placeholder="Select a subject"
+              :disabled="isSubmitting"
               required
-              placeholder="e.g., Clean your room"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+            />
           </div>
 
-          <!-- Subtitle -->
+          <!-- Lesson Generation Type Selection -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Subtitle
+              Task Type *
             </label>
-            <input
-              v-model="form.subtitle"
-              type="text"
-              placeholder="Brief description"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-
-          <!-- Description -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              v-model="form.description"
-              rows="3"
-              placeholder="Detailed instructions..."
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <USelect
+              v-model="form.lessonGenerationType"
+              :options="lessonGenerationTypeOptions"
+              placeholder="Select generation type"
+              :disabled="isSubmitting"
+              required
             />
           </div>
 
@@ -98,22 +86,6 @@
               <option value="">Select priority</option>
               <option v-for="priority in taskPriorities" :key="priority.value" :value="priority.value">
                 {{ priority.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Category -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Category
-            </label>
-            <select
-              v-model="form.category"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">No Category</option>
-              <option v-for="category in taskCategories" :key="category.value" :value="category.value">
-                {{ category.label }}
               </option>
             </select>
           </div>
@@ -259,12 +231,10 @@ const emit = defineEmits<{
 // Form state
 const form = ref({
   assignee_user_info_id: '',
-  name: '',
-  subtitle: '',
-  description: '',
+  subject: '',
+  lessonGenerationType: '',
   creditAmount: 50,
   priority: TASK_PRIORITY.MEDIUM,
-  category: '',
   due_date: '',
   auto_approve: false,
   is_recurring: false,
@@ -292,8 +262,19 @@ const childrenOptions = computed(() => {
 
 // Get options from codes store
 const taskPriorities = computed(() => codesStore.taskPriorities);
-const taskCategories = computed(() => codesStore.taskCategories);
 const recurrenceOptions = computed(() => codesStore.recurrenceFrequencies);
+const subjectOptions = computed(() => codesStore.subjects);
+const lessonGenerationTypeOptions = computed(() => codesStore.lessonGenerationTypes);
+
+// Generate task name from subject and lesson generation type
+const generatedTaskName = computed(() => {
+  if (!form.value.subject || !form.value.lessonGenerationType) return '';
+
+  const subjectLabel = subjectOptions.value.find((s) => s.value === form.value.subject)?.label || form.value.subject;
+  const typeLabel = lessonGenerationTypeOptions.value.find((t) => t.value === form.value.lessonGenerationType)?.label || form.value.lessonGenerationType;
+
+  return `${subjectLabel} ${typeLabel}`;
+});
 
 // Load children when modal opens
 const loadChildren = async () => {
@@ -313,6 +294,12 @@ const createTask = async () => {
     isSubmitting.value = true;
     error.value = null;
 
+    // Validate required fields
+    if (!form.value.subject || !form.value.lessonGenerationType) {
+      error.value = 'Please select both subject and generation type';
+      return;
+    }
+
     // Validate recurring task fields
     if (form.value.is_recurring && !form.value.recurrence_frequency) {
       error.value = 'Please select a frequency for recurring tasks';
@@ -323,12 +310,11 @@ const createTask = async () => {
       method: 'POST',
       body: {
         assignee_user_info_id: form.value.assignee_user_info_id,
-        name: form.value.name,
-        subtitle: form.value.subtitle || null,
-        description: form.value.description || null,
-        credit: form.value.creditAmount * 100, // Convert to cents
+        subject: form.value.subject,
+        lessonGenerationType: form.value.lessonGenerationType,
+        name: generatedTaskName.value,
+        credit: form.value.creditAmount,
         priority: form.value.priority,
-        category: form.value.category || null,
         due_date: form.value.due_date || null,
         auto_approve: form.value.auto_approve,
         is_recurring: form.value.is_recurring,
@@ -342,12 +328,10 @@ const createTask = async () => {
       // Reset form
       form.value = {
         assignee_user_info_id: '',
-        name: '',
-        subtitle: '',
-        description: '',
+        subject: '',
+        lessonGenerationType: '',
         creditAmount: 50,
         priority: TASK_PRIORITY.MEDIUM,
-        category: '',
         due_date: '',
         auto_approve: false,
         is_recurring: false,

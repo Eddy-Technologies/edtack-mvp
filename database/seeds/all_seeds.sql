@@ -131,6 +131,11 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('HISTORY', 'History', 'History curriculum', 'SUBJECT', 110, true, NOW(), NOW()),
 ('GEOGRAPHY', 'Geography', 'Geography curriculum', 'SUBJECT', 120, true, NOW(), NOW());
 
+-- Lesson Generation Type Constants
+INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('QUIZ', 'Quiz', 'Generate quiz questions and assessments', 'LESSON_GENERATION_TYPE', 10, true, NOW(), NOW()),
+('LESSON', 'Lesson', 'Generate lesson content and materials', 'LESSON_GENERATION_TYPE', 20, true, NOW(), NOW());
+
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
 -- =============================================================================

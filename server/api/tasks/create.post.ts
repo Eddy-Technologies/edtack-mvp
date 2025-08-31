@@ -9,13 +9,12 @@ export default defineEventHandler(async (event) => {
 
     const {
       assignee_user_info_id,
+      subject,
+      lessonGenerationType,
       name,
-      subtitle,
-      description,
       credit,
       due_date,
       priority,
-      category,
       auto_approve,
       is_recurring,
       recurrence_frequency,
@@ -24,10 +23,10 @@ export default defineEventHandler(async (event) => {
     } = body;
 
     // Validate required fields
-    if (!assignee_user_info_id || !name || credit === undefined) {
+    if (!assignee_user_info_id || !subject || !lessonGenerationType || !name || credit === undefined) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'assignee_user_info_id, name, and credit are required'
+        statusMessage: 'assignee_user_info_id, subject, lessonGenerationType, name, and credit are required'
       });
     }
 
@@ -102,13 +101,12 @@ export default defineEventHandler(async (event) => {
         creator_user_info_id: creatorInfo.id,
         assignee_user_info_id,
         name,
-        subtitle: subtitle || null,
-        description: description || null,
+        subject,
+        lesson_generation_type: lessonGenerationType,
         credit: parseInt(credit),
         status: TASK_STATUS.PENDING,
         due_date: due_date ? new Date(due_date).toISOString() : null,
         priority: priority || TASK_PRIORITY.MEDIUM,
-        category: category || null,
         auto_approve: auto_approve || false,
         is_recurring: is_recurring || false,
         recurrence_frequency: is_recurring ? recurrence_frequency : null,
@@ -118,13 +116,12 @@ export default defineEventHandler(async (event) => {
       .select(`
         id,
         name,
-        subtitle,
-        description,
+        subject,
+        lesson_generation_type,
         credit,
         status,
         due_date,
         priority,
-        category,
         created_at,
         updated_at
       `)

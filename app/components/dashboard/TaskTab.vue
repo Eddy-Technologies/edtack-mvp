@@ -89,21 +89,6 @@
                 <option :value="TASK_PRIORITY.LOW">Low Priority</option>
               </select>
 
-              <!-- Category Filter -->
-              <select
-                v-model="selectedCategory"
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-                @change="() => { currentPage = 1; loadTasks(1); }"
-              >
-                <option value="">All Categories</option>
-                <option value="chores">Chores</option>
-                <option value="homework">Homework</option>
-                <option value="behavior">Behavior</option>
-                <option value="exercise">Exercise</option>
-                <option value="reading">Reading</option>
-                <option value="other">Other</option>
-              </select>
-
               <!-- Clear Filters -->
               <Button
                 v-if="hasActiveFilters"
@@ -174,19 +159,11 @@
                   </span>
                 </div>
 
-                <p v-if="task.subtitle" class="text-gray-600 mb-2">{{ task.subtitle }}</p>
-                <p v-if="task.description" class="text-gray-700 mb-3">{{ task.description }}</p>
-
                 <!-- Task Details -->
                 <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
                   <div class="flex items-center space-x-1">
                     <UIcon name="i-lucide-coins" size="16" />
                     <span class="font-medium text-green-600">{{ formatCredits(task.credit) }}</span>
-                  </div>
-
-                  <div v-if="task.category" class="flex items-center space-x-1">
-                    <UIcon name="i-lucide-tag" size="16" />
-                    <span>{{ task.category }}</span>
                   </div>
 
                   <div v-if="task.dueDate" class="flex items-center space-x-1">

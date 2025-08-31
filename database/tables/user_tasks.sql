@@ -4,13 +4,15 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   creator_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   assignee_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
-  subtitle TEXT,
-  description TEXT,
+  subject TEXT,
+  lesson_generation_type TEXT,
+  subtitle TEXT, -- TODO: can remove if not needed
+  description TEXT, -- TODO: can remove if not needed
   credit INTEGER NOT NULL DEFAULT 0, -- Credit reward in cents
   status TEXT NOT NULL, 
   due_date TIMESTAMPTZ,
   priority TEXT,
-  category TEXT, -- chores, homework, behavior, etc.
+  category TEXT, -- TODO: can remove if not needed
   completion_notes TEXT, -- Notes from assignee when completing task
   approval_notes TEXT, -- Notes from creator when approving/rejecting
   completed_at TIMESTAMPTZ, -- When assignee marked as completed
