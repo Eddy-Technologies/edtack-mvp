@@ -82,9 +82,7 @@
                             <span class="font-medium text-gray-800">{{
                               selectedCharacter.name
                             }}</span>
-                            <span class="text-gray-500"
-                              >({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span
-                            >
+                            <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
                           </span>
                           <span v-else>Select a character to start chatting</span>
                         </p>
@@ -140,9 +138,7 @@
                             <span class="font-medium text-gray-800">{{
                               selectedCharacter.name
                             }}</span>
-                            <span class="text-gray-500"
-                              >({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span
-                            >
+                            <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
                           </span>
                           <span v-else>Select a character to start chatting</span>
                         </p>
@@ -231,7 +227,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch, computed } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch, computed, nextTick } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
@@ -430,7 +426,6 @@ const handleChatSend = async (text: string) => {
         },
         body: JSON.stringify({
           title: text || null,
-          user_id: userId || null,
         }),
       });
       if (!response.ok) {

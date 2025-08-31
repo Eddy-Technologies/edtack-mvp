@@ -1,9 +1,9 @@
 CREATE TABLE chat_messages (
                                id BIGSERIAL PRIMARY KEY,
                                thread_id UUID NOT NULL REFERENCES chat_threads(id) ON DELETE CASCADE,
-                               sender BIGINT,
+                               sender UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
                                type VARCHAR(20) NOT NULL,
-                               text TEXT NOT NULL,
+                               content TEXT NOT NULL,
                                created_at TIMESTAMP DEFAULT NOW()
 );
 

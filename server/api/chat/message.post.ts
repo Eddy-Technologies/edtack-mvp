@@ -1,9 +1,11 @@
+import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '#imports';
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
-    const body = await readBody<{ thread_id: number; content: string; user_id: number }>(event);
+    const userInfo = await getUserInfo(event);
+    const body = await readBody<{ thread_id: string; content: string; type?: string }>(event);
 
     if (!body.thread_id || !body.content) {
       throw createError({ statusCode: 400, statusMessage: 'thread_id and content are required' });
@@ -13,8 +15,9 @@ export default defineEventHandler(async (event) => {
       .from('chat_messages')
       .insert({
         thread_id: body.thread_id,
-        sender: body.user_id,
+        sender: userInfo.id,
         content: body.content,
+        type: body.type || 'text',
       })
       .select('*')
       .single();

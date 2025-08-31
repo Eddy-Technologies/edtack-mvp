@@ -101,7 +101,6 @@ if (import.meta.client) {
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
 const chatStore = useChatStore();
-const { getPendingMessage, clearPendingMessage } = useCharacters();
 
 // Dynamic conversation summary based on character prop
 const conversationSummaryComputed = computed(() => {
@@ -164,18 +163,6 @@ const initializeChat = async () => {
     // Always connect immediately
     wsChat.value?.connect();
     console.log('🔌 Connected WebSocket');
-
-    // Check for pending message and send it
-    const pendingMessage = getPendingMessage();
-    if (pendingMessage) {
-      console.log('Found pending message, sending:', pendingMessage);
-      clearPendingMessage();
-
-      // Wait for connection then send
-      nextTick(() => {
-        handleSend(pendingMessage);
-      });
-    }
   }
 };
 
@@ -217,12 +204,6 @@ onMounted(() => {
     },
     { immediate: true }
   );
-});
-
-onUnmounted(() => {
-  if (wsChat.value) {
-    wsChat.value.disconnect();
-  }
 });
 
 // Send message directly to WebSocket
@@ -470,5 +451,11 @@ const clearChat = () => {
 defineExpose({
   handleSend,
   clearChat,
+});
+
+onUnmounted(() => {
+  if (wsChat.value) {
+    wsChat.value.disconnect();
+  }
 });
 </script>

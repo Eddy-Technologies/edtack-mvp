@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     const { data, error } = await supabase
       .from('chat_threads')
       .select('*')
-      .eq('user_id', id)
+      .eq('user_infos_id', id)
       .order('updated_at', { ascending: false });
 
     if (error) {
