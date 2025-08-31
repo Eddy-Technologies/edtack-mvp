@@ -62,17 +62,6 @@
           </div>
         </div>
       </div>
-      <div v-if="!props.hideChangeCharacter" class="px-3">
-        <div class="border-t border-black">
-          <ULink
-            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-            @click="handleChangeCharacter"
-          >
-            <Icon name="i-heroicons-user-circle" class="w-6 h-6" />
-            <span v-if="!isMini" class="truncate">Change Character</span>
-          </ULink>
-        </div>
-      </div>
     </div>
 
     <!-- Simple cross icon for collapsed sidebar when audio player is floating -->
@@ -170,7 +159,6 @@ import { useMeStore } from '~/stores/me';
 
 const emit = defineEmits([
   'toggle-sidebar',
-  'change-character',
   'toggle-floating-avatar',
   'new-chat',
 ]);
@@ -247,9 +235,6 @@ const handleShowChatHistory = () => {
   });
 };
 
-const handleChangeCharacter = () => {
-  emit('change-character');
-};
 
 // 🎵 WaveSurfer Audio Player
 const waveformRef = ref<HTMLElement | null>(null);

@@ -22,9 +22,7 @@
           :sidebar-width="collapsed ? 80 : 400"
           :is-mobile="isMobile"
           :is-avatar-floating="showFloatingAvatar"
-          :hide-change-character="isSelectingCharacter || isChatCentered"
           @toggle-sidebar="toggleSidebar"
-          @change-character="openCharacterSelection"
           @toggle-floating-avatar="toggleFloatingAvatar"
           @new-chat="handleNewChat"
         />
