@@ -293,6 +293,7 @@ const shouldShowChatInput = computed(() => {
 
 // Initialize character based on route
 onMounted(async () => {
+  console.log('Mounted chat page with charSlug:', charSlug.value, 'and threadId:', threadId.value);
   if (!isNewChat.value && threadId.value) {
     chatStore.setThreadId(threadId.value);
     try {
@@ -353,6 +354,52 @@ onMounted(async () => {
 
   // Content transitions can start immediately since global loading is handled in app.vue
   showContentTransitions.value = true;
+});
+
+// Watch for threadId changes to handle URL updates
+watch(threadId, async (newThreadId, oldThreadId) => {
+  if (newThreadId !== oldThreadId) {
+    console.log('ThreadId changed from', oldThreadId, 'to', newThreadId);
+
+    // If switching to existing thread, load messages
+    if (newThreadId && newThreadId !== 'new') {
+      chatStore.setThreadId(newThreadId);
+      isLoading.value = true;
+
+      try {
+        const response = await fetch(`/api/chat/${threadId.value}`);
+        if (!response.ok) {
+        // Thread does not exist or error
+          throw new Error(`Thread not found or API error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        const processMessages = (data) => {
+          return data.map((message) => ({
+            ...message,
+            text: message.content,
+            isUser: true,
+          }));
+        };
+
+        messages.value = processMessages(result.messageData);
+      } catch (err) {
+        console.error('Error loading thread:', err);
+      }
+
+      isLoading.value = false;
+    } else if (newThreadId === 'new') {
+      // Reset for new chat
+      messages.value = [];
+      hasStartedChat.value = false;
+
+      // Clear chat content if available
+      if (chatContentRef.value && chatContentRef.value.clearChat) {
+        chatContentRef.value.clearChat();
+      }
+    }
+  }
 });
 
 const handleLoginSuccess = () => {
