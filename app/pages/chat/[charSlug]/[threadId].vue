@@ -62,7 +62,6 @@
             :messages="messages"
             :character="selectedCharacter"
           />
-
         </div>
 
         <!-- Chat Input - positioned as footer below content -->
