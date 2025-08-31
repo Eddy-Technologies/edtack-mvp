@@ -9,7 +9,6 @@
     >
       <!-- Fixed Width Sidebar -->
       <div
-        v-if="!isSelectingCharacter"
         ref="sidebar"
         :class="[
           'flex-shrink-0 border-r flex flex-col z-30',
@@ -30,7 +29,7 @@
 
       <!-- Backdrop for mobile -->
       <div
-        v-if="!isSelectingCharacter && isMobile && !collapsed"
+        v-if="isMobile && !collapsed"
         class="fixed inset-0 z-20 bg-black bg-opacity-40"
         @click="toggleSidebar"
       />
@@ -63,50 +62,6 @@
             :messages="messages"
             :character="selectedCharacter"
           />
-
-          <!-- Character Selection Overlay - only when selecting character -->
-          <div
-            v-if="isSelectingCharacter"
-            class="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm flex items-center justify-center"
-          >
-            <div class="w-full max-w-4xl px-4">
-              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
-                      <div class="flex items-center gap-2 mt-1">
-                        <p class="text-sm text-gray-600">
-                          <span v-if="selectedCharacter">
-                            Currently:
-                            <span class="font-medium text-gray-800">{{
-                              selectedCharacter.name
-                            }}</span>
-                            <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
-                          </span>
-                          <span v-else>Select a character to start chatting</span>
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      class="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
-                      @click="isSelectingCharacter = false"
-                    >
-                      <Icon name="i-heroicons-x-mark" class="w-6 h-6 text-gray-600" />
-                    </button>
-                  </div>
-                </div>
-                <div class="p-4">
-                  <CharacterCarousel
-                    v-model="currentCharacter"
-                    :initial-character-slug="charSlug"
-                    :go-to-chat-on-click="true"
-                    @select="handleCharacterSelection"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- Chat Input - positioned as footer below content -->
@@ -250,7 +205,6 @@ definePageMeta({
 const isLoading = ref(true);
 const collapsed = ref(true);
 const isMobile = ref(false);
-const isSelectingCharacter = ref(false);
 const currentCharacter = ref(null);
 const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
@@ -288,7 +242,7 @@ const isChatCentered = computed(() => {
 });
 
 const shouldShowChatInput = computed(() => {
-  return !isSelectingCharacter.value;
+  return true;
 });
 
 // Initialize character based on route
@@ -414,10 +368,6 @@ const handleLogout = () => {
   // Handle any additional actions after logout
 };
 
-const openCharacterSelection = () => {
-  isSelectingCharacter.value = true;
-};
-
 const handleCharacterSelection = async (character) => {
   // Update character store
   await selectCharacterById(character.id);
@@ -432,9 +382,6 @@ const handleCharacterSelection = async (character) => {
   if (chatContentRef.value && chatContentRef.value.clearChat) {
     chatContentRef.value.clearChat();
   }
-
-  // Close character selection mode
-  isSelectingCharacter.value = false;
 };
 
 const handleNewChat = () => {
