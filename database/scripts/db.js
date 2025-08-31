@@ -101,8 +101,8 @@ function generateMigrations() {
       'token_history.sql',
       'stripe_webhook_events.sql',
       'functions.sql',
-      'chat_thread.sql',
-      'chat_message.sql',
+      'chat_threads.sql',
+      'chat_messages.sql',
       'chat_feedback.sql'
     ];
 
