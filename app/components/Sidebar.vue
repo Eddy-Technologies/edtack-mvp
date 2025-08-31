@@ -8,7 +8,7 @@
         alt="eddy"
         class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
         @click="routeTo('/')"
-      />
+      >
       <button
         class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
         @click="emit('toggle-sidebar')"
@@ -33,7 +33,7 @@
           </ULink>
         </div>
       </div>
-      <!--    TODO  <div v-if="meStore.isLoggedIn" class="px-3">-->
+      <!--    TODO  <div v-if="meStore.isLoggedIn" class="px-3"> -->
       <div class="px-3">
         <div class="border-t border-black">
           <ULink
@@ -234,7 +234,6 @@ const handleShowChatHistory = () => {
     icon: 'i-heroicons-clock',
   });
 };
-
 
 // 🎵 WaveSurfer Audio Player
 const waveformRef = ref<HTMLElement | null>(null);
