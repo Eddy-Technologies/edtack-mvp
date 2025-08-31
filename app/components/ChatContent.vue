@@ -93,6 +93,7 @@ const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
 const messageQueue = ref<string[]>([]); // Queue for messages waiting to be sent
+const { getPendingMessage, clearPendingMessage } = useCharacters();
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -163,6 +164,18 @@ const initializeChat = async () => {
     // Always connect immediately
     wsChat.value?.connect();
     console.log('🔌 Connected WebSocket');
+
+    // Check for pending message and send it
+    const pendingMessage = getPendingMessage();
+    if (pendingMessage) {
+      console.log('Found pending message, sending:', pendingMessage);
+      clearPendingMessage();
+
+      // Wait for connection then send
+      nextTick(() => {
+        handleSend(pendingMessage);
+      });
+    }
   }
 };
 
