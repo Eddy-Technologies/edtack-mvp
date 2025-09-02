@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { ORDER_STATUS, OPERATION_TYPE, TASK_STATUS, TASK_PRIORITY } from '~~/shared/constants';
+import { ORDER_STATUS, OPERATION_TYPE, TASK_STATUS } from '~~/shared/constants';
 import { CODE_CATEGORIES } from '~~/app/stores/codes';
 
 export interface Code {
@@ -110,9 +110,6 @@ export const getOrderStatuses = (supabase: SupabaseClient) =>
 export const getTaskStatuses = (supabase: SupabaseClient) =>
   codeService.getCodesMap(supabase, CODE_CATEGORIES.TASK_STATUS);
 
-export const getTaskPriorities = (supabase: SupabaseClient) =>
-  codeService.getCodesMap(supabase, CODE_CATEGORIES.TASK_PRIORITY);
-
 export const getRecurrenceFrequencies = (supabase: SupabaseClient) =>
   codeService.getCodesMap(supabase, CODE_CATEGORIES.RECURRENCE_FREQUENCY);
 
@@ -128,6 +125,3 @@ export const isValidOperationType = (type: string): type is OPERATION_TYPE =>
 
 export const isValidTaskStatus = (status: string): status is TASK_STATUS =>
   Object.values(TASK_STATUS).includes(status as TASK_STATUS);
-
-export const isValidTaskPriority = (priority: string): priority is TASK_PRIORITY =>
-  Object.values(TASK_PRIORITY).includes(priority as TASK_PRIORITY);

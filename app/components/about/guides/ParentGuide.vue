@@ -270,7 +270,7 @@
               </li>
               <li class="flex items-start">
                 <span class="w-6 h-6 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5">5</span>
-                <div>Set priority level and due date (optional)</div>
+                <div>Set due date (optional)</div>
               </li>
             </ol>
           </div>
@@ -289,11 +289,12 @@
           </div>
 
           <div class="bg-gray-50 rounded-lg p-4">
-            <h5 class="font-medium text-gray-800 mb-2">Priority Levels</h5>
+            <h5 class="font-medium text-gray-800 mb-2">Task Scheduling</h5>
             <ul class="text-sm text-gray-600 space-y-1">
-              <li>• <span class="text-red-600">High</span> - Urgent tasks</li>
-              <li>• <span class="text-yellow-600">Medium</span> - Regular tasks</li>
-              <li>• <span class="text-green-600">Low</span> - Optional tasks</li>
+              <li>• <span class="text-blue-600">One-off</span> - Task occurs once</li>
+              <li>• <span class="text-green-600">Daily</span> - Repeats every day</li>
+              <li>• <span class="text-purple-600">Weekly</span> - Repeats every Sunday</li>
+              <li>• <span class="text-orange-600">Monthly</span> - Repeats on 1st of month</li>
             </ul>
           </div>
 

@@ -24,13 +24,13 @@ interface CodesState {
 // Code categories enum for type safety
 export const CODE_CATEGORIES = {
   TASK_STATUS: 'TASK_STATUS',
-  TASK_PRIORITY: 'TASK_PRIORITY',
   TASK_CATEGORY: 'TASK_CATEGORY',
   RECURRENCE_FREQUENCY: 'RECURRENCE_FREQUENCY',
   ORDER_STATUS: 'ORDER_STATUS',
   ORDER_FULFILLMENT: 'ORDER_FULFILLMENT',
   OPERATION_TYPE: 'OPERATION_TYPE',
-  SUBJECT: 'SUBJECT'
+  SUBJECT: 'SUBJECT',
+  LESSON_GENERATION_TYPE: 'LESSON_GENERATION_TYPE'
 } as const;
 
 export type CodeCategory = typeof CODE_CATEGORIES[keyof typeof CODE_CATEGORIES];
@@ -61,10 +61,6 @@ export const useCodesStore = defineStore('codes', {
       return this.getCodesByCategory(CODE_CATEGORIES.TASK_STATUS);
     },
 
-    taskPriorities(): CodeOption[] {
-      return this.getCodesByCategory(CODE_CATEGORIES.TASK_PRIORITY);
-    },
-
     taskCategories(): CodeOption[] {
       return this.getCodesByCategory(CODE_CATEGORIES.TASK_CATEGORY);
     },
@@ -83,6 +79,14 @@ export const useCodesStore = defineStore('codes', {
 
     operationTypes(): CodeOption[] {
       return this.getCodesByCategory(CODE_CATEGORIES.OPERATION_TYPE);
+    },
+
+    subjects(): CodeOption[] {
+      return this.getCodesByCategory(CODE_CATEGORIES.SUBJECT);
+    },
+
+    lessonGenerationTypes(): CodeOption[] {
+      return this.getCodesByCategory(CODE_CATEGORIES.LESSON_GENERATION_TYPE);
     },
 
     // Get a specific code's label

@@ -95,12 +95,12 @@ export default defineEventHandler(async (event) => {
     const { error: tasksError } = await supabase
       .from('user_tasks')
       .update({
-        status: TASK_STATUS.CANCELLED,
+        status: TASK_STATUS.CLOSED,
         updated_at: new Date().toISOString()
       })
       .eq('creator_user_info_id', parentInfo.id)
       .eq('assignee_user_info_id', childId)
-      .in('status', [TASK_STATUS.PENDING, TASK_STATUS.IN_PROGRESS, TASK_STATUS.COMPLETED]);
+      .eq('status', TASK_STATUS.OPEN); // Only check active tasks in new architecture
 
     if (tasksError) {
       console.warn('Failed to cancel child tasks:', tasksError);

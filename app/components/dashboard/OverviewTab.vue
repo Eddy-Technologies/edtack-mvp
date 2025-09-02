@@ -77,9 +77,6 @@
                   <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
                   <div class="flex items-center space-x-2 mt-1">
                     <span class="text-sm text-gray-600">{{ task.assigneeInfo.firstName }} {{ task.assigneeInfo.lastName }}</span>
-                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskPriorityBadgeClass(task.priority)">
-                      {{ task.priority }} priority
-                    </span>
                     <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                       {{ task.status }}
                     </span>
@@ -256,9 +253,6 @@
                 <div>
                   <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
                   <div class="flex items-center space-x-2 mt-1">
-                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskPriorityBadgeClass(task.priority)">
-                      {{ task.priority }} priority
-                    </span>
                     <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                       {{ task.status }}
                     </span>
@@ -406,15 +400,15 @@ onMounted(async () => {
 
       // Load pending tasks (assigned to children, with status pending)
       try {
-        const tasksResponse = await $fetch('/api/tasks/list', {
+        const tasksResponse = await $fetch('/api/tasks/user-tasks', {
           query: {
-            status: 'pending',
+            status: 'OPEN',
             limit: 5
           }
         });
         if (tasksResponse.success) {
-          // Filter to only show tasks created by this parent (assigned to children)
-          pendingTasks.value = (tasksResponse.tasks || []).filter((task: any) => task.userRole === 'creator');
+          // All user tasks from this endpoint are created by the parent
+          pendingTasks.value = tasksResponse.tasks || [];
         }
       } catch (tasksError) {
         console.error('Failed to load pending tasks:', tasksError);
@@ -441,15 +435,15 @@ onMounted(async () => {
 
       // Load student's pending tasks
       try {
-        const tasksResponse = await $fetch('/api/tasks/list', {
+        const tasksResponse = await $fetch('/api/tasks/threads', {
           query: {
-            status: 'pending',
+            status: 'OPEN',
             limit: 5
           }
         });
         if (tasksResponse.success) {
-          // Filter to only show tasks assigned to this student
-          myPendingTasks.value = (tasksResponse.tasks || []).filter((task: any) => task.userRole === 'assignee');
+          // All task threads from this endpoint are assigned to this student
+          myPendingTasks.value = tasksResponse.threads || [];
           activeTasks.value = myPendingTasks.value.length;
         }
       } catch (tasksError) {
@@ -458,9 +452,9 @@ onMounted(async () => {
 
       // Load completed tasks count
       try {
-        const completedTasksResponse = await $fetch('/api/tasks/list', {
+        const completedTasksResponse = await $fetch('/api/tasks/threads', {
           query: {
-            status: 'completed',
+            status: 'COMPLETED',
             limit: 1
           }
         });
@@ -473,16 +467,17 @@ onMounted(async () => {
 
       // Load recent tasks (recent completed tasks)
       try {
-        const recentTasksResponse = await $fetch('/api/tasks/list', {
+        const recentTasksResponse = await $fetch('/api/tasks/threads', {
           query: {
-            status: 'completed',
+            status: 'COMPLETED',
             limit: 3,
-            sortBy: 'completedAt',
+            sortBy: 'created_at',
             sortOrder: 'desc'
           }
         });
         if (recentTasksResponse.success) {
-          recentTasks.value = (recentTasksResponse.tasks || []).filter((task: any) => task.userRole === 'assignee');
+          // All task threads from this endpoint are assigned to this student
+          recentTasks.value = recentTasksResponse.threads || [];
         }
       } catch (recentError) {
         console.error('Failed to load recent tasks:', recentError);
@@ -548,16 +543,6 @@ const getOrderStatusBadgeClass = (status: string) => {
     rejected: 'bg-red-100 text-red-800'
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
-};
-
-// Get badge classes for task priority
-const getTaskPriorityBadgeClass = (priority: string) => {
-  const classMap = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-green-100 text-green-800'
-  };
-  return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
 
 // Get badge classes for task status

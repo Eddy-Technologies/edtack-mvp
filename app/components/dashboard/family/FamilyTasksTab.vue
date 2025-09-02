@@ -42,60 +42,32 @@
               class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
               @change="handleSortChange"
             >
-              <option value="priority">Priority (High to Low)</option>
               <option value="created_at">Newest First</option>
               <option value="created_at_asc">Oldest First</option>
               <option value="due_date">Due Date</option>
-              <option value="credit">Credits (High to Low)</option>
-              <option value="credit_asc">Credits (Low to High)</option>
+              <option value="credit_asc">Credits (High to Low)</option>
+              <option value="credit">Credits (Low to High)</option>
             </select>
           </div>
 
-          <!-- Filters -->
-          <div class="flex flex-wrap gap-4 items-center">
-            <!-- Status Filter -->
+          <!-- Status Filter -->
+          <div class="flex items-center gap-4">
             <select
               v-model="selectedStatus"
               class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
               @change="() => { currentPage = 1; loadTasks(1); }"
             >
               <option value="">All Tasks</option>
-              <option value="pending">Pending</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="approved">Approved</option>
-              <option value="rejected">Rejected</option>
+              <option value="OPEN">Open</option>
+              <option value="COMPLETED">Completed</option>
+              <option value="EXPIRED">Expired</option>
             </select>
 
-            <!-- Priority Filter -->
-            <select
-              v-model="selectedPriority"
-              class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-              @change="() => { currentPage = 1; loadTasks(1); }"
-            >
-              <option value="">All Priorities</option>
-              <option v-for="priority in taskPriorities" :key="priority.value" :value="priority.value">
-                {{ priority.label }}
-              </option>
-            </select>
-
-            <!-- Category Filter -->
-            <select
-              v-model="selectedCategory"
-              class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-              @change="() => { currentPage = 1; loadTasks(1); }"
-            >
-              <option value="">All Categories</option>
-              <option v-for="category in taskCategories" :key="category.value" :value="category.value">
-                {{ category.label }}
-              </option>
-            </select>
-
-            <!-- Clear Filters -->
+            <!-- Clear Filter -->
             <Button
-              v-if="hasActiveFilters"
+              v-if="selectedStatus"
               variant="secondary"
-              text="Clear Filters"
+              text="Clear Filter"
               size="sm"
               @clicked="clearFilters"
             />
@@ -143,117 +115,14 @@
 
       <!-- Tasks List -->
       <div v-else-if="tasks.length > 0" class="space-y-4">
-        <div
+        <TaskInfoCard
           v-for="task in tasks"
           :key="task.id"
-          class="bg-white rounded-lg border hover:shadow-md transition-shadow p-6"
-        >
-          <div class="flex items-start justify-between">
-            <!-- Task Info -->
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center space-x-3 mb-2">
-                <h3 class="text-lg font-semibold text-gray-900">{{ task.name }}</h3>
-                <span :class="getStatusBadgeClass(task.status)" class="px-2 py-1 rounded-full text-xs font-medium">
-                  {{ getStatusText(task.status) }}
-                </span>
-                <span :class="getPriorityBadgeClass(task.priority)" class="px-2 py-1 rounded-full text-xs font-medium">
-                  {{ task.priority.toUpperCase() }}
-                </span>
-              </div>
-
-              <p v-if="task.subtitle" class="text-gray-600 mb-2">{{ task.subtitle }}</p>
-              <p v-if="task.description" class="text-gray-700 mb-3">{{ task.description }}</p>
-
-              <!-- Task Details -->
-              <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
-                <div class="flex items-center space-x-1">
-                  <UIcon name="i-lucide-coins" size="16" />
-                  <span class="font-medium text-green-600">{{ formatCredits(task.credit) }}</span>
-                </div>
-
-                <div v-if="task.category" class="flex items-center space-x-1">
-                  <UIcon name="i-lucide-tag" size="16" />
-                  <span>{{ task.category }}</span>
-                </div>
-
-                <div v-if="task.dueDate" class="flex items-center space-x-1">
-                  <UIcon name="i-lucide-calendar" size="16" />
-                  <span :class="{ 'text-red-600': isOverdue(task.dueDate) }">
-                    Due {{ formatDate(task.dueDate) }}
-                  </span>
-                </div>
-
-                <div v-if="isParent" class="flex items-center space-x-1">
-                  <UIcon name="i-lucide-user" size="16" />
-                  <span>{{ task.assigneeInfo?.firstName }} {{ task.assigneeInfo?.lastName || 'Unknown Child' }}</span>
-                </div>
-              </div>
-
-              <!-- Completion Notes -->
-              <div v-if="task.completionNotes" class="bg-blue-50 p-3 rounded-lg mb-3">
-                <p class="text-sm text-blue-800">
-                  <strong>Completion Notes:</strong> {{ task.completionNotes }}
-                </p>
-              </div>
-
-              <!-- Approval Notes -->
-              <div v-if="task.approvalNotes" class="bg-gray-50 p-3 rounded-lg mb-3">
-                <p class="text-sm text-gray-800">
-                  <strong>{{ task.status === 'approved' ? 'Approval' : 'Rejection' }} Notes:</strong>
-                  {{ task.approvalNotes }}
-                </p>
-              </div>
-
-              <!-- Timestamps -->
-              <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500">
-                <span>Created {{ formatDate(task.createdAt) }}</span>
-                <span v-if="task.completedAt">Completed {{ formatDate(task.completedAt) }}</span>
-                <span v-if="task.approvedAt">
-                  {{ task.status === 'approved' ? 'Approved' : 'Reviewed' }} {{ formatDate(task.approvedAt) }}
-                </span>
-              </div>
-            </div>
-
-            <!-- Actions -->
-            <div class="flex flex-col space-y-2 ml-4">
-              <!-- Child Actions -->
-              <template v-if="!isParent">
-                <Button
-                  v-if="task.status === 'pending'"
-                  variant="primary"
-                  text="Start Task"
-                  size="sm"
-                  @clicked="startTask(task.id)"
-                />
-                <Button
-                  v-else-if="task.status === 'in_progress'"
-                  variant="primary"
-                  text="Complete Task"
-                  size="sm"
-                  @clicked="completeTask(task)"
-                />
-              </template>
-
-              <!-- Parent Actions -->
-              <template v-else>
-                <div v-if="task.status === 'completed'" class="flex space-x-2">
-                  <Button
-                    variant="primary"
-                    text="Approve"
-                    size="sm"
-                    @clicked="approveTask(task)"
-                  />
-                  <Button
-                    variant="secondary"
-                    text="Reject"
-                    size="sm"
-                    @clicked="rejectTask(task)"
-                  />
-                </div>
-              </template>
-            </div>
-          </div>
-        </div>
+          :task="task"
+          :is-parent="isParent"
+          :show-assignee-info="isParent"
+          @close-task="closeTask"
+        />
       </div>
     </div>
   </div>
@@ -264,23 +133,6 @@
     @close="showCreateModal = false"
     @task-created="onTaskCreated"
   />
-
-  <!-- Complete Task Modal -->
-  <CompleteTaskModal
-    :is-open="showCompleteModal"
-    :task="selectedTask"
-    @close="showCompleteModal = false"
-    @task-completed="onTaskCompleted"
-  />
-
-  <!-- Approve/Reject Task Modal -->
-  <ApproveTaskModal
-    :is-open="showApproveModal"
-    :task="selectedTask"
-    :action="approveAction"
-    @close="showApproveModal = false"
-    @task-reviewed="onTaskReviewed"
-  />
 </template>
 
 <script setup lang="ts">
@@ -288,8 +140,7 @@ import { ref, computed, onMounted } from 'vue';
 import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
-import CompleteTaskModal from '~/components/dashboard/tasks/CompleteTaskModal.vue';
-import ApproveTaskModal from '~/components/dashboard/tasks/ApproveTaskModal.vue';
+import TaskInfoCard from '~/components/dashboard/tasks/TaskInfoCard.vue';
 
 // Use stores
 const meStore = useMeStore();
@@ -305,34 +156,21 @@ const error = ref<string | null>(null);
 
 // Modal states
 const showCreateModal = ref(false);
-const showCompleteModal = ref(false);
-const showApproveModal = ref(false);
-const selectedTask = ref<any>(null);
-const approveAction = ref<'approve' | 'reject'>('approve');
 
-// Filter states
+// Filter state
 const selectedStatus = ref('');
-const selectedPriority = ref('');
-const selectedCategory = ref('');
 
 // Pagination and sorting states
 const currentPage = ref(1);
 const itemsPerPage = ref(5);
-const sortBy = ref('priority');
+const sortBy = ref('created_at');
 const sortOrder = ref('desc');
 
-// Get options from codes store
-const taskPriorities = computed(() => codesStore.taskPriorities);
-const taskCategories = computed(() => codesStore.taskCategories);
-
-// Computed properties
-const hasActiveFilters = computed(() => {
-  return selectedStatus.value || selectedPriority.value || selectedCategory.value;
-});
-
 const pendingCredits = computed(() => {
+  // For task threads, completed means credits have been awarded
+  // For user tasks, this doesn't apply (they're templates)
   return tasks.value
-    .filter((task) => task.status === 'completed')
+    .filter((task) => task.isThread && task.status === 'COMPLETED')
     .reduce((total, task) => total + task.credit, 0);
 });
 
@@ -348,11 +186,11 @@ const loadTasks = async (page = 1) => {
       sortBy.value === 'credit_asc' ? 'credit' : sortBy.value;
     const actualSortOrder = sortBy.value === 'created_at_asc' || sortBy.value === 'credit_asc' ? 'asc' : sortOrder.value;
 
-    const response = await $fetch('/api/tasks/list', {
+    // Use appropriate endpoint based on user role
+    const endpoint = isParent.value ? '/api/tasks/user-tasks' : '/api/tasks/threads';
+    const response = await $fetch(endpoint, {
       query: {
         status: selectedStatus.value,
-        priority: selectedPriority.value,
-        category: selectedCategory.value,
         limit: itemsPerPage.value,
         offset,
         sortBy: actualSortBy,
@@ -361,9 +199,9 @@ const loadTasks = async (page = 1) => {
     });
 
     if (response.success) {
-      tasks.value = response.tasks || [];
+      // Extract tasks from the appropriate response field
+      tasks.value = isParent.value ? (response.tasks || []) : (response.threads || []);
       pagination.value = response.pagination;
-      // Removed isParent assignment - using store instead
       currentPage.value = page;
     } else {
       throw new Error('Failed to load tasks');
@@ -378,40 +216,27 @@ const loadTasks = async (page = 1) => {
   }
 };
 
-const startTask = async (taskId: string) => {
+const closeTask = async (task: any) => {
+  if (!confirm(`Are you sure you want to close the task "${task.name}"? This will stop generating new instances.`)) {
+    return;
+  }
+
   try {
-    const response = await $fetch(`/api/tasks/${taskId}/start`, {
+    const response = await $fetch(`/api/tasks/${task.id}/close`, {
       method: 'POST'
     });
 
     if (response.success) {
       // Update task status locally
-      const task = tasks.value.find((t) => t.id === taskId);
-      if (task) {
-        task.status = 'in_progress';
+      const taskToUpdate = tasks.value.find((t) => t.id === task.id);
+      if (taskToUpdate) {
+        taskToUpdate.status = 'CLOSED';
       }
     }
   } catch (err: any) {
-    console.error('Failed to start task:', err);
-    alert(err.data?.message || 'Failed to start task');
+    console.error('Failed to close task:', err);
+    alert(err.data?.message || 'Failed to close task');
   }
-};
-
-const completeTask = (task: any) => {
-  selectedTask.value = task;
-  showCompleteModal.value = true;
-};
-
-const approveTask = (task: any) => {
-  selectedTask.value = task;
-  approveAction.value = 'approve';
-  showApproveModal.value = true;
-};
-
-const rejectTask = (task: any) => {
-  selectedTask.value = task;
-  approveAction.value = 'reject';
-  showApproveModal.value = true;
 };
 
 const onTaskCreated = () => {
@@ -419,20 +244,8 @@ const onTaskCreated = () => {
   loadTasks();
 };
 
-const onTaskCompleted = () => {
-  showCompleteModal.value = false;
-  loadTasks();
-};
-
-const onTaskReviewed = () => {
-  showApproveModal.value = false;
-  loadTasks();
-};
-
 const clearFilters = () => {
   selectedStatus.value = '';
-  selectedPriority.value = '';
-  selectedCategory.value = '';
   currentPage.value = 1;
   loadTasks(1);
 };
@@ -452,68 +265,6 @@ const changeItemsPerPage = (newLimit: number) => {
 const handleSortChange = () => {
   currentPage.value = 1;
   loadTasks(1);
-};
-
-// Utility functions
-const getStatusText = (status: string) => {
-  const statusMap = {
-    pending: 'Pending',
-    in_progress: 'In Progress',
-    completed: 'Completed',
-    approved: 'Approved',
-    rejected: 'Rejected',
-    cancelled: 'Cancelled',
-    expired: 'Expired'
-  };
-  return statusMap[status as keyof typeof statusMap] || status;
-};
-
-const getStatusBadgeClass = (status: string) => {
-  const classMap = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    in_progress: 'bg-blue-100 text-blue-800',
-    completed: 'bg-purple-100 text-purple-800',
-    approved: 'bg-green-100 text-green-800',
-    rejected: 'bg-red-100 text-red-800',
-    cancelled: 'bg-gray-100 text-gray-800',
-    expired: 'bg-red-100 text-red-800'
-  };
-  return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
-};
-
-const getPriorityBadgeClass = (priority: string) => {
-  const classMap = {
-    HIGH: 'bg-red-100 text-red-800',
-    MEDIUM: 'bg-yellow-100 text-yellow-800',
-    LOW: 'bg-green-100 text-green-800'
-  };
-  return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
-};
-
-const formatCredits = (credits: number) => {
-  return `${credits} credits`;
-};
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return 'N/A';
-
-  const date = new Date(dateString);
-
-  // Check for invalid date
-  if (isNaN(date.getTime())) return 'N/A';
-
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 1) return 'today';
-  if (diffDays === 2) return 'yesterday';
-  if (diffDays <= 7) return `${diffDays - 1} days ago`;
-  return date.toLocaleDateString();
-};
-
-const isOverdue = (dueDateString: string) => {
-  return new Date(dueDateString) < new Date();
 };
 
 // Load tasks on mount

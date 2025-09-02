@@ -79,6 +79,9 @@
           }"
         >
           <div class="w-full max-w-4xl px-4">
+            <!-- Task Notification Row - only shown when centered (new chat) -->
+            <TaskNotificationRow v-if="isChatCentered && meStore.isLoggedIn" />
+
             <!-- Character Carousel Card - only shown when centered (new chat) -->
             <div v-if="isChatCentered" class="mb-6">
               <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
@@ -190,7 +193,7 @@ import ChatInput from '@/components/ChatInput.vue';
 import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import Avatar from '@/components/avatar/Avatar.vue';
-import Button from '@/components/common/Button.vue';
+import TaskNotificationRow from '@/components/chat/TaskNotificationRow.vue';
 import { useToast } from '#imports';
 import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';

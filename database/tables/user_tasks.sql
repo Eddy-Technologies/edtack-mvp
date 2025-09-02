@@ -4,24 +4,14 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   creator_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   assignee_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
-  subtitle TEXT,
-  description TEXT,
+  subject TEXT NOT NULL,
+  lesson_generation_type TEXT NOT NULL,
   credit INTEGER NOT NULL DEFAULT 0, -- Credit reward in cents
-  status TEXT NOT NULL, 
+  questions_per_quiz INTEGER DEFAULT 10, -- Number of questions per quiz (for quiz tasks)
+  required_score INTEGER DEFAULT 70, -- Required score percentage (0-100) to earn credit
+  recurrence_frequency TEXT, -- ONE_OFF, DAILY, WEEKLY, MONTHLY - controls task scheduling
   due_date TIMESTAMPTZ,
-  priority TEXT,
-  category TEXT, -- chores, homework, behavior, etc.
-  completion_notes TEXT, -- Notes from assignee when completing task
-  approval_notes TEXT, -- Notes from creator when approving/rejecting
-  completed_at TIMESTAMPTZ, -- When assignee marked as completed
-  approved_at TIMESTAMPTZ, -- When creator approved/rejected
-  auto_approve BOOLEAN DEFAULT FALSE, -- If true, task is auto-approved on completion
-  -- Recurring task fields
-  is_recurring BOOLEAN DEFAULT FALSE,
-  recurrence_frequency TEXT, -- daily, weekly, monthly
-  recurrence_interval INTEGER DEFAULT 1, -- every X days/weeks/months
-  recurrence_end_date TIMESTAMPTZ,
-  parent_task_id UUID REFERENCES user_tasks(id) ON DELETE CASCADE, -- Links recurring instances to parent
+  status TEXT NOT NULL, 
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );

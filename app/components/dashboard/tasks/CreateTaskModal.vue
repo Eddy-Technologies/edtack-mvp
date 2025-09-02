@@ -1,6 +1,6 @@
 <template>
   <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-lg shadow-xl max-w-xl w-full max-h-[90vh] overflow-y-auto">
       <div class="p-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-6">
@@ -21,7 +21,7 @@
               Assign to Child *
             </label>
             <USelect
-              v-model="form.assignee_user_info_id"
+              v-model="form.assigneeUserInfoId"
               :options="childrenOptions"
               placeholder="Select a child"
               :disabled="isSubmitting"
@@ -29,44 +29,34 @@
             />
           </div>
 
-          <!-- Task Name -->
+          <!-- Subject Selection -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Task Name *
+              Subject *
             </label>
-            <input
-              v-model="form.name"
-              type="text"
+            <USelect
+              v-model="form.subject"
+              :options="subjectOptions"
+              placeholder="Select a subject"
+              :disabled="isSubmitting"
               required
-              placeholder="e.g., Clean your room"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-
-          <!-- Subtitle -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Subtitle
-            </label>
-            <input
-              v-model="form.subtitle"
-              type="text"
-              placeholder="Brief description"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-          </div>
-
-          <!-- Description -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              v-model="form.description"
-              rows="3"
-              placeholder="Detailed instructions..."
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+          </div>
+
+          <!-- Lesson Generation Type Selection -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Task Type *
+            </label>
+            <USelect
+              v-model="form.lessonGenerationType"
+              :options="lessonGenerationTypeOptions"
+              placeholder="Select generation type"
+              :disabled="true"
+              class="bg-gray-300 cursor-not-allowed"
+              required
+            />
+            <p class="text-sm text-gray-500 mt-1">Currently, only quizzes are allowed be assigned as tasks to earn credits.</p>
           </div>
 
           <!-- Credits -->
@@ -75,7 +65,7 @@
               Credit Reward *
             </label>
             <input
-              v-model.number="form.creditAmount"
+              v-model.number="form.credit"
               type="number"
               min="1"
               max="1000"
@@ -83,136 +73,78 @@
               placeholder="50"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-            <p class="text-sm text-gray-500 mt-1">Credits to award when task is completed</p>
+            <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive when task is completed</p>
           </div>
 
-          <!-- Priority -->
+          <!-- Number of Questions per Quiz -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Priority
-            </label>
-            <select
-              v-model="form.priority"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Select priority</option>
-              <option v-for="priority in taskPriorities" :key="priority.value" :value="priority.value">
-                {{ priority.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Category -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Category
-            </label>
-            <select
-              v-model="form.category"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">No Category</option>
-              <option v-for="category in taskCategories" :key="category.value" :value="category.value">
-                {{ category.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Due Date -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Due Date
+              Number of Questions per Quiz *
             </label>
             <input
-              v-model="form.due_date"
-              type="date"
-              :min="today"
+              v-model.number="form.questionsPerQuiz"
+              type="number"
+              min="1"
+              max="50"
+              required
+              placeholder="10"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
+            <p class="text-sm text-gray-500 mt-1">Number of questions to include in each quiz</p>
           </div>
 
-          <!-- Auto-Approve Option -->
-          <div class="flex items-center space-x-2">
-            <input
-              id="auto_approve"
-              v-model="form.auto_approve"
-              type="checkbox"
-              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            >
-            <label for="auto_approve" class="text-sm font-medium text-gray-700">
-              Auto-approve when completed
+          <!-- Required Score for Credit -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Required Score for Credit *
             </label>
+            <input
+              v-model.number="form.requiredScore"
+              type="number"
+              min="0"
+              max="100"
+              required
+              placeholder="70"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <p class="text-sm text-gray-500 mt-1">Minimum score percentage (0-100) required to earn credit</p>
           </div>
-          <p class="text-sm text-gray-500 -mt-2">
-            Child will receive credits immediately without requiring your approval
-          </p>
 
           <!-- Recurring Task Options -->
           <div class="border-t pt-4">
-            <div class="flex items-center space-x-2 mb-3">
-              <input
-                id="is_recurring"
-                v-model="form.is_recurring"
-                type="checkbox"
-                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              >
-              <label for="is_recurring" class="text-sm font-medium text-gray-700">
-                Make this a recurring task
+            <div class="mb-3">
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Schedule
               </label>
+              <div class="text-xs text-gray-500 mb-3 space-y-1">
+                <p><strong>One-off:</strong> Task is assigned only once</p>
+                <p><strong>Daily:</strong> A new task will be assigned every day</p>
+                <p><strong>Weekly:</strong> A new task will be assigned every Sunday</p>
+                <p><strong>Monthly:</strong> A new task will be assigned on the 1st day of each month</p>
+              </div>
+              <select
+                v-model="form.recurrenceFrequency"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select schedule</option>
+                <option v-for="frequency in recurrenceOptions" :key="frequency.value" :value="frequency.value">
+                  {{ frequency.label }}
+                </option>
+              </select>
             </div>
+            <!-- Due Date -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Due Date
+                <p class="text-xs text-gray-500 mb-3">Set a date of which this task will stop repeating. Leave blank if you want it to run forever.</p>
 
-            <div v-if="form.is_recurring" class="space-y-4 pl-6 border-l-2 border-blue-100">
-              <!-- Frequency -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Repeat Frequency *
-                </label>
-                <select
-                  v-model="form.recurrence_frequency"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="">Select frequency</option>
-                  <option v-for="frequency in recurrenceOptions" :key="frequency.value" :value="frequency.value">
-                    {{ frequency.label }}
-                  </option>
-                </select>
-              </div>
-
-              <!-- Interval -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Repeat Every
-                </label>
-                <div class="flex items-center space-x-2">
-                  <input
-                    v-model.number="form.recurrence_interval"
-                    type="number"
-                    min="1"
-                    max="365"
-                    class="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                  <span class="text-sm text-gray-600">
-                    {{ getIntervalLabel(form.recurrence_frequency) }}
-                  </span>
-                </div>
-              </div>
-
-              <!-- End Date -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  End Date (Optional)
-                </label>
-                <input
-                  v-model="form.recurrence_end_date"
-                  type="date"
-                  :min="today"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                <p class="text-sm text-gray-500 mt-1">
-                  Leave empty to repeat indefinitely
-                </p>
-              </div>
+              </label>
+              <input
+                v-model="form.dueDate"
+                type="date"
+                :min="today"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
             </div>
           </div>
 
@@ -246,7 +178,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import Button from '../../common/Button.vue';
-import { RECURRENCE_FREQUENCY, TASK_PRIORITY } from '~~/shared/constants';
+import { LESSON_GENERATION_TYPE, RECURRENCE_FREQUENCY } from '~~/shared/constants';
+import type { CreateTaskReq } from '~~/server/api/tasks/create.post';
 
 const props = defineProps<{
   isOpen: boolean;
@@ -257,24 +190,21 @@ const emit = defineEmits<{
 }>();
 
 // Form state
-const form = ref({
-  assignee_user_info_id: '',
-  name: '',
-  subtitle: '',
-  description: '',
-  creditAmount: 50,
-  priority: TASK_PRIORITY.MEDIUM,
-  category: '',
-  due_date: '',
-  auto_approve: false,
-  is_recurring: false,
-  recurrence_frequency: '',
-  recurrence_interval: 1,
-  recurrence_end_date: ''
-});
+const getInitialForm = () => {
+  return {
+    assigneeUserInfoId: '',
+    subject: '',
+    lessonGenerationType: LESSON_GENERATION_TYPE.QUIZ, // Default to QUIZ
+    credit: 50,
+    questionsPerQuiz: 10,
+    requiredScore: 80,
+    dueDate: '',
+    recurrenceFrequency: RECURRENCE_FREQUENCY.ONE_OFF,
+  };
+};
 
+const form = ref<CreateTaskReq>(getInitialForm());
 const codesStore = useCodesStore();
-
 const children = ref<any[]>([]);
 const isSubmitting = ref(false);
 const error = ref<string | null>(null);
@@ -291,9 +221,14 @@ const childrenOptions = computed(() => {
 });
 
 // Get options from codes store
-const taskPriorities = computed(() => codesStore.taskPriorities);
-const taskCategories = computed(() => codesStore.taskCategories);
 const recurrenceOptions = computed(() => codesStore.recurrenceFrequencies);
+const subjectOptions = computed(() => codesStore.subjects);
+const lessonGenerationTypeOptions = computed(() => codesStore.lessonGenerationTypes);
+
+// Check if task is recurring (not one-off)
+const isRecurringTask = computed(() => {
+  return form.value.recurrenceFrequency && form.value.recurrenceFrequency !== 'ONE_OFF';
+});
 
 // Load children when modal opens
 const loadChildren = async () => {
@@ -313,48 +248,37 @@ const createTask = async () => {
     isSubmitting.value = true;
     error.value = null;
 
+    // Validate required fields
+    if (!form.value.subject || !form.value.lessonGenerationType) {
+      error.value = 'Please select both subject and generation type';
+      return;
+    }
+
+    // Validate quiz fields
+    if (!form.value.questionsPerQuiz || form.value.questionsPerQuiz < 1 || form.value.questionsPerQuiz > 50) {
+      error.value = 'Number of questions must be between 1 and 50';
+      return;
+    }
+
+    if (form.value.requiredScore < 0 || form.value.requiredScore > 100) {
+      error.value = 'Required score must be between 0 and 100';
+      return;
+    }
+
     // Validate recurring task fields
-    if (form.value.is_recurring && !form.value.recurrence_frequency) {
-      error.value = 'Please select a frequency for recurring tasks';
+    if (isRecurringTask.value && !form.value.recurrenceFrequency) {
+      error.value = 'Please select a valid schedule';
       return;
     }
 
     const response = await $fetch('/api/tasks/create', {
       method: 'POST',
-      body: {
-        assignee_user_info_id: form.value.assignee_user_info_id,
-        name: form.value.name,
-        subtitle: form.value.subtitle || null,
-        description: form.value.description || null,
-        credit: form.value.creditAmount * 100, // Convert to cents
-        priority: form.value.priority,
-        category: form.value.category || null,
-        due_date: form.value.due_date || null,
-        auto_approve: form.value.auto_approve,
-        is_recurring: form.value.is_recurring,
-        recurrence_frequency: form.value.is_recurring ? form.value.recurrence_frequency : null,
-        recurrence_interval: form.value.is_recurring ? form.value.recurrence_interval : null,
-        recurrence_end_date: form.value.is_recurring && form.value.recurrence_end_date ? form.value.recurrence_end_date : null
-      }
+      body: form.value as CreateTaskReq
     });
 
     if (response.success) {
       // Reset form
-      form.value = {
-        assignee_user_info_id: '',
-        name: '',
-        subtitle: '',
-        description: '',
-        creditAmount: 50,
-        priority: TASK_PRIORITY.MEDIUM,
-        category: '',
-        due_date: '',
-        auto_approve: false,
-        is_recurring: false,
-        recurrence_frequency: '',
-        recurrence_interval: 1,
-        recurrence_end_date: ''
-      };
+      form.value = getInitialForm();
 
       emit('task-created');
     } else {
@@ -365,15 +289,6 @@ const createTask = async () => {
     error.value = err.data?.message || 'Failed to create task. Please try again.';
   } finally {
     isSubmitting.value = false;
-  }
-};
-
-const getIntervalLabel = (frequency: string) => {
-  switch (frequency) {
-    case RECURRENCE_FREQUENCY.DAILY: return 'day(s)';
-    case RECURRENCE_FREQUENCY.WEEKLY: return 'week(s)';
-    case RECURRENCE_FREQUENCY.MONTHLY: return 'month(s)';
-    default: return '';
   }
 };
 
