@@ -138,8 +138,9 @@ export default defineEventHandler(async (event) => {
       const { data: newChatThread, error: chatThreadError } = await supabase
         .from('threads')
         .insert({
+          subject: subject,
           user_infos_id: assigneeUserInfoId,
-          title: `${name} - ${initialDueDate.toDateString()}`
+          title: name
         })
         .select('id')
         .single();
@@ -153,19 +154,8 @@ export default defineEventHandler(async (event) => {
 
       // Prepare initial prompt for content generation
       const initPrompt = {
-        subject: subject,
-        lesson_generation_type: lessonGenerationType,
-        questions_per_quiz: questionsPerQuiz || 10,
-        required_score: requiredScore || 70,
-        credit_reward: credit,
-        task_name: name,
-        due_date: initialDueDate.toISOString(),
-        timestamp: new Date().toISOString()
+        prompt: `Create a quiz for the topic: ${subject}. Include ${questionsPerQuiz} questions with a required score of ${requiredScore}.`
       };
-
-      // Generate content using the same logic as recurring tasks
-      const generatedContent = await generateTaskContent(initPrompt);
-      // Call API see if can get content in the first place
 
       // Create the initial task thread record
       const { data: newTaskThread, error: taskThreadError } = await supabase
@@ -175,7 +165,6 @@ export default defineEventHandler(async (event) => {
           thread_id: chatThread.id,
           due_date: initialDueDate.toISOString(),
           init_prompt: initPrompt,
-          generated_content: generatedContent,
           status: TASK_THREAD_STATUS.OPEN
         })
         .select('id')
@@ -187,10 +176,6 @@ export default defineEventHandler(async (event) => {
       }
 
       taskThread = newTaskThread;
-
-      // Create initial chat messages for the conversation
-      await createChatMessages(supabase, chatThread.id, initPrompt, generatedContent);
-
       console.log(`Successfully created initial task thread ${taskThread.id} for new task "${name}"`);
     } catch (threadError) {
       console.error('Failed to create initial task thread:', threadError);
@@ -203,7 +188,6 @@ export default defineEventHandler(async (event) => {
       success: true,
       task: {
         ...task,
-        creditInDollars: (task.credit / 100).toFixed(2)
       },
       // Include thread info if created successfully
       ...(taskThread && { taskThread: { id: taskThread.id } }),
@@ -279,80 +263,4 @@ function calculateInitialDueDate(providedDueDate: string | null, recurrenceFrequ
   const defaultDue = new Date(now);
   defaultDue.setHours(23, 59, 59, 999);
   return defaultDue;
-}
-
-/**
- * Placeholder function for content generation API call
- * This matches the implementation in recurring-tasks.ts for consistency
- * In production, this would call the actual AI/content generation service
- */
-async function generateTaskContent(initPrompt: any): Promise<any> {
-  // Simulate content generation with placeholder data
-  const placeholderContent = {
-    quiz_id: `quiz_${Date.now()}`,
-    questions: Array.from({ length: initPrompt.questions_per_quiz }, (_, i) => ({
-      id: `q_${i + 1}`,
-      question: `Sample question ${i + 1} for ${initPrompt.subject}`,
-      type: 'multiple_choice',
-      options: ['Option A', 'Option B', 'Option C', 'Option D'],
-      correct_answer: 'Option A',
-      explanation: `This is the explanation for question ${i + 1}`
-    })),
-    metadata: {
-      subject: initPrompt.subject,
-      difficulty: 'grade_appropriate',
-      estimated_duration: '15 minutes',
-      generated_at: new Date().toISOString()
-    }
-  };
-
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 100));
-
-  console.log('Generated placeholder content for new task:', initPrompt.task_name);
-  return placeholderContent;
-}
-
-/**
- * Creates initial chat messages for the task thread conversation
- * Creates two messages: one for the initial prompt, one for the generated content
- * This matches the implementation in recurring-tasks.ts for consistency
- */
-async function createChatMessages(
-  supabase: any,
-  chatThreadId: string,
-  initPrompt: any,
-  generatedContent: any
-) {
-  try {
-    // Create initial prompt message
-    const { error: promptMessageError } = await supabase
-      .from('thread_messages')
-      .insert({
-        thread_id: chatThreadId,
-        sender: null, // System message
-        type: 'system_prompt',
-        content: JSON.stringify(initPrompt)
-      });
-
-    if (promptMessageError) {
-      console.error('Failed to create prompt message:', promptMessageError);
-    }
-
-    // Create generated content message
-    const { error: contentMessageError } = await supabase
-      .from('thread_messages')
-      .insert({
-        thread_id: chatThreadId,
-        sender: null, // System message
-        type: 'generated_content',
-        content: JSON.stringify(generatedContent)
-      });
-
-    if (contentMessageError) {
-      console.error('Failed to create content message:', contentMessageError);
-    }
-  } catch (error) {
-    console.error('Error creating chat messages:', error);
-  }
 }

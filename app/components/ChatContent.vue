@@ -123,7 +123,7 @@ interface ChatContentProps {
 // Component props
 const props = defineProps<ChatContentProps>();
 
-const messageStream = ref<any[]>(props.messages);
+const messageStream = ref<any[]>(props.messages || []);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
@@ -256,6 +256,21 @@ onMounted(() => {
         processMessageQueue();
       }
     }
+  );
+
+  // Watcher for props.messages changes - update messageStream when messages are loaded from API
+  watch(
+    () => props.messages,
+    (newMessages) => {
+      if (newMessages && newMessages.length > 0) {
+        console.log('Props messages changed, updating messageStream:', newMessages);
+        messageStream.value = [...newMessages];
+        nextTick(() => {
+          bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    },
+    { deep: true, immediate: true }
   );
 
   // Watch for new slides being added to messageStream
@@ -655,5 +670,6 @@ onUnmounted(() => {
   if (wsChat.value) {
     wsChat.value.disconnect();
   }
+  clearChat();
 });
 </script>

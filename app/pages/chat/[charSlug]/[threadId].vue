@@ -223,7 +223,6 @@ const task = ref<any>(null); // Store task data for task threads
 
 const router = useRouter();
 const route = useRoute();
-const toast = useToast();
 const meStore = useMeStore();
 const chatStore = useChatStore();
 
@@ -293,7 +292,9 @@ watch(threadId, async (newThreadId, oldThreadId) => {
         if (messageData) {
           messages.value = messageData.map((message) => ({
             ...message,
-            isUser: true,
+            text: message.content, // Map content field to text field expected by ChatContent
+            isUser: !!message.sender, // If sender exists, it's a user message, otherwise it's from the system/character
+            type: message.type || 'text',
           }));
         }
 
