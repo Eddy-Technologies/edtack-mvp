@@ -77,9 +77,6 @@
                   <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
                   <div class="flex items-center space-x-2 mt-1">
                     <span class="text-sm text-gray-600">{{ task.assigneeInfo.firstName }} {{ task.assigneeInfo.lastName }}</span>
-                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskPriorityBadgeClass(task.priority)">
-                      {{ task.priority }} priority
-                    </span>
                     <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                       {{ task.status }}
                     </span>
@@ -256,9 +253,6 @@
                 <div>
                   <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
                   <div class="flex items-center space-x-2 mt-1">
-                    <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskPriorityBadgeClass(task.priority)">
-                      {{ task.priority }} priority
-                    </span>
                     <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                       {{ task.status }}
                     </span>
@@ -548,16 +542,6 @@ const getOrderStatusBadgeClass = (status: string) => {
     rejected: 'bg-red-100 text-red-800'
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
-};
-
-// Get badge classes for task priority
-const getTaskPriorityBadgeClass = (priority: string) => {
-  const classMap = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-green-100 text-green-800'
-  };
-  return classMap[priority as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
 
 // Get badge classes for task status

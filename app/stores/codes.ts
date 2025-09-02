@@ -24,7 +24,6 @@ interface CodesState {
 // Code categories enum for type safety
 export const CODE_CATEGORIES = {
   TASK_STATUS: 'TASK_STATUS',
-  TASK_PRIORITY: 'TASK_PRIORITY',
   TASK_CATEGORY: 'TASK_CATEGORY',
   RECURRENCE_FREQUENCY: 'RECURRENCE_FREQUENCY',
   ORDER_STATUS: 'ORDER_STATUS',
@@ -60,10 +59,6 @@ export const useCodesStore = defineStore('codes', {
     // Specific category getters using the generic function
     taskStatuses(): CodeOption[] {
       return this.getCodesByCategory(CODE_CATEGORIES.TASK_STATUS);
-    },
-
-    taskPriorities(): CodeOption[] {
-      return this.getCodesByCategory(CODE_CATEGORIES.TASK_PRIORITY);
     },
 
     taskCategories(): CodeOption[] {

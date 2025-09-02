@@ -76,24 +76,21 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('BALANCE_ADJUSTMENT', 'Balance Adjustment', 'Manual balance adjustment by administrator', 'OPERATION_TYPE', 40, true, NOW(), NOW()),
 ('PURCHASE', 'Purchase', 'Product purchase using customer credit balance', 'OPERATION_TYPE', 50, true, NOW(), NOW());
 
--- Task Status Constants
+-- Task Status Constants (for user_tasks - master task definitions)
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('TASK_PENDING', 'Pending', 'Task created but not started', 'TASK_STATUS', 10, true, NOW(), NOW()),
-('IN_PROGRESS', 'In Progress', 'Task is being worked on', 'TASK_STATUS', 20, true, NOW(), NOW()),
-('COMPLETED', 'Completed', 'Task completed by child, awaiting approval', 'TASK_STATUS', 30, true, NOW(), NOW()),
-('APPROVED', 'Approved', 'Task approved by parent, credits awarded', 'TASK_STATUS', 40, true, NOW(), NOW()),
-('REJECTED', 'Rejected', 'Task rejected by parent, no credits awarded', 'TASK_STATUS', 50, true, NOW(), NOW()),
-('TASK_CANCELLED', 'Cancelled', 'Task cancelled before completion', 'TASK_STATUS', 60, true, NOW(), NOW()),
-('EXPIRED', 'Expired', 'Task expired past due date', 'TASK_STATUS', 70, true, NOW(), NOW());
+('OPEN', 'Open', 'Task is active and can generate new threads', 'TASK_STATUS', 10, true, NOW(), NOW()),
+('CLOSED', 'Closed', 'Task has been manually stopped/disabled', 'TASK_STATUS', 20, true, NOW(), NOW()),
+('EXPIRED', 'Expired', 'Task has reached its end date or been automatically expired', 'TASK_STATUS', 30, true, NOW(), NOW());
 
--- Task Priority Constants
+-- Task Thread Status Constants (for task_threads - individual task instances)
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('LOW', 'Low Priority', 'Low priority task', 'TASK_PRIORITY', 10, true, NOW(), NOW()),
-('MEDIUM', 'Medium Priority', 'Medium priority task', 'TASK_PRIORITY', 20, true, NOW(), NOW()),
-('HIGH', 'High Priority', 'High priority task', 'TASK_PRIORITY', 30, true, NOW(), NOW());
+('OPEN', 'Open', 'Thread is active, awaiting completion', 'TASK_THREAD_STATUS', 10, true, NOW(), NOW()),
+('COMPLETED', 'Completed', 'Thread has been completed by student', 'TASK_THREAD_STATUS', 20, true, NOW(), NOW()),
+('EXPIRED', 'Expired', 'Thread passed due date without completion', 'TASK_THREAD_STATUS', 30, true, NOW(), NOW());
 
 -- Recurrence Frequency Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('ONE_OFF', 'One-off', 'Task occurs once only', 'RECURRENCE_FREQUENCY', 5, true, NOW(), NOW()),
 ('DAILY', 'Daily', 'Task repeats every day', 'RECURRENCE_FREQUENCY', 10, true, NOW(), NOW()),
 ('WEEKLY', 'Weekly', 'Task repeats every week', 'RECURRENCE_FREQUENCY', 20, true, NOW(), NOW()),
 ('MONTHLY', 'Monthly', 'Task repeats every month', 'RECURRENCE_FREQUENCY', 30, true, NOW(), NOW());

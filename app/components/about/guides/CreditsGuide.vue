@@ -91,7 +91,7 @@
                 <li>• Physical activities and exercise goals</li>
               </ul>
               <div class="bg-blue-100 rounded p-2">
-                <p class="text-xs text-blue-700">💡 Tip: Higher priority tasks usually offer more credits!</p>
+                <p class="text-xs text-blue-700">💡 Tip: Complete tasks on time to earn all your credits!</p>
               </div>
             </div>
           </div>
