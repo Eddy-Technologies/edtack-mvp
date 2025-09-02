@@ -6,8 +6,8 @@
  * ARCHITECTURE OVERVIEW:
  * - user_tasks: Master task definitions (templates)
  * - task_threads: Individual task instances that users actually work on
- * - chat_threads: Generated conversations for each task thread
- * - chat_messages: Individual prompts and responses in conversations
+ * - threads: Generated conversations for each task thread
+ * - thread_messages: Individual prompts and responses in conversations
  *
  * WORKFLOW:
  * 1. When a task is created, an initial task_thread is generated immediately
@@ -242,9 +242,9 @@ async function createTaskThread(
   try {
     // Step 1: Create chat thread for this task thread
     const { data: chatThread, error: chatThreadError } = await supabase
-      .from('chat_threads')
+      .from('threads')
       .insert({
-        user_id: task.assignee_user_info_id,
+        user_infos_id: task.assignee_user_info_id,
         title: `${task.name} - ${dueDate.toDateString()}`
       })
       .select('id')
@@ -275,7 +275,7 @@ async function createTaskThread(
       .from('task_threads')
       .insert({
         user_task_id: task.id,
-        chat_thread_id: chatThread.id,
+        thread_id: chatThread.id,
         due_date: dueDate.toISOString(),
         init_prompt: initPrompt,
         generated_content: generatedContent,
@@ -312,12 +312,12 @@ async function createChatMessages(
   try {
     // Create initial prompt message
     const { error: promptMessageError } = await supabase
-      .from('chat_messages')
+      .from('thread_messages')
       .insert({
         thread_id: chatThreadId,
         sender: null, // System message
         type: 'system_prompt',
-        text: JSON.stringify(initPrompt)
+        content: JSON.stringify(initPrompt)
       });
 
     if (promptMessageError) {
@@ -326,12 +326,12 @@ async function createChatMessages(
 
     // Create generated content message
     const { error: contentMessageError } = await supabase
-      .from('chat_messages')
+      .from('thread_messages')
       .insert({
         thread_id: chatThreadId,
         sender: null, // System message
         type: 'generated_content',
-        text: JSON.stringify(generatedContent)
+        content: JSON.stringify(generatedContent)
       });
 
     if (contentMessageError) {

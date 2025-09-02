@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
     const id = getRouterParam(event, 'userId');
 
     const { data, error } = await supabase
-      .from('chat_threads')
-      .select('*')
+      .from('threads')
+      .select('*, thread_messages(*), task_threads(*)')
       .eq('user_infos_id', id)
       .order('updated_at', { ascending: false });
 

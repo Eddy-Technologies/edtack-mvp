@@ -136,7 +136,7 @@ export default defineEventHandler(async (event) => {
 
       // Create chat thread for this task thread
       const { data: newChatThread, error: chatThreadError } = await supabase
-        .from('chat_threads')
+        .from('threads')
         .insert({
           user_infos_id: assigneeUserInfoId,
           title: `${name} - ${initialDueDate.toDateString()}`
@@ -172,7 +172,7 @@ export default defineEventHandler(async (event) => {
         .from('task_threads')
         .insert({
           user_task_id: task.id,
-          chat_thread_id: chatThread.id,
+          thread_id: chatThread.id,
           due_date: initialDueDate.toISOString(),
           init_prompt: initPrompt,
           generated_content: generatedContent,
@@ -327,7 +327,7 @@ async function createChatMessages(
   try {
     // Create initial prompt message
     const { error: promptMessageError } = await supabase
-      .from('chat_messages')
+      .from('thread_messages')
       .insert({
         thread_id: chatThreadId,
         sender: null, // System message
@@ -341,7 +341,7 @@ async function createChatMessages(
 
     // Create generated content message
     const { error: contentMessageError } = await supabase
-      .from('chat_messages')
+      .from('thread_messages')
       .insert({
         thread_id: chatThreadId,
         sender: null, // System message

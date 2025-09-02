@@ -1,4 +1,4 @@
-CREATE TABLE chat_threads (
+CREATE TABLE threads (
                               id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                               user_infos_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE, -- who owns this thread
                               title TEXT,
@@ -7,4 +7,4 @@ CREATE TABLE chat_threads (
                               updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE INDEX idx_chat_threads_user_infos_id ON chat_threads(user_infos_id);
+CREATE INDEX idx_threads_user_infos_id ON threads(user_infos_id);

@@ -76,104 +76,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      chat_feedback: {
-        Row: {
-          created_at: string | null;
-          feedback_type: string;
-          id: number;
-          message_id: number;
-          user_id: number;
-        };
-        Insert: {
-          created_at?: string | null;
-          feedback_type: string;
-          id?: number;
-          message_id: number;
-          user_id: number;
-        };
-        Update: {
-          created_at?: string | null;
-          feedback_type?: string;
-          id?: number;
-          message_id?: number;
-          user_id?: number;
-        };
-        Relationships: [];
-      };
-      chat_messages: {
-        Row: {
-          content: string;
-          created_at: string | null;
-          id: number;
-          sender: string;
-          thread_id: string;
-          type: string;
-        };
-        Insert: {
-          content: string;
-          created_at?: string | null;
-          id?: number;
-          sender: string;
-          thread_id: string;
-          type: string;
-        };
-        Update: {
-          content?: string;
-          created_at?: string | null;
-          id?: number;
-          sender?: string;
-          thread_id?: string;
-          type?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'chat_messages_sender_fkey';
-            columns: ['sender'];
-            isOneToOne: false;
-            referencedRelation: 'user_infos';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'chat_messages_thread_id_fkey';
-            columns: ['thread_id'];
-            isOneToOne: false;
-            referencedRelation: 'chat_threads';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      chat_threads: {
-        Row: {
-          created_at: string | null;
-          id: string;
-          title: string | null;
-          updated_at: string | null;
-          user_infos_id: string;
-        };
-        Insert: {
-          created_at?: string | null;
-          id?: string;
-          title?: string | null;
-          updated_at?: string | null;
-          user_infos_id: string;
-        };
-        Update: {
-          created_at?: string | null;
-          id?: string;
-          title?: string | null;
-          updated_at?: string | null;
-          user_infos_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'chat_threads_user_infos_id_fkey';
-            columns: ['user_infos_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_infos';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       codes: {
         Row: {
           category: string;
@@ -277,146 +179,6 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'user_infos';
             referencedColumns: ['id'];
-          },
-        ];
-      };
-      document_chunks: {
-        Row: {
-          chunk_content: string;
-          chunk_end_pos: number | null;
-          chunk_index: number;
-          chunk_start_pos: number | null;
-          chunk_type: string | null;
-          created_at: string | null;
-          embedding: string | null;
-          id: number;
-          parent_document_id: number | null;
-        };
-        Insert: {
-          chunk_content: string;
-          chunk_end_pos?: number | null;
-          chunk_index: number;
-          chunk_start_pos?: number | null;
-          chunk_type?: string | null;
-          created_at?: string | null;
-          embedding?: string | null;
-          id?: number;
-          parent_document_id?: number | null;
-        };
-        Update: {
-          chunk_content?: string;
-          chunk_end_pos?: number | null;
-          chunk_index?: number;
-          chunk_start_pos?: number | null;
-          chunk_type?: string | null;
-          created_at?: string | null;
-          embedding?: string | null;
-          id?: number;
-          parent_document_id?: number | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'document_chunks_parent_document_id_fkey';
-            columns: ['parent_document_id'];
-            isOneToOne: false;
-            referencedRelation: 'education_documents';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      education_documents: {
-        Row: {
-          cache_key: string | null;
-          chapter: string | null;
-          charts: Json | null;
-          content: string;
-          content_hash: string | null;
-          content_type: string | null;
-          created_at: string | null;
-          custom_metadata: Json | null;
-          difficulty: string | null;
-          docling_metadata: Json | null;
-          docling_type: string | null;
-          embedding: string | null;
-          equations: Json | null;
-          figures: Json | null;
-          id: number;
-          images: Json | null;
-          language: string | null;
-          level: string;
-          page_number: number | null;
-          source_file: string;
-          subject_id: string | null;
-          syllabus_id: string | null;
-          tables: Json | null;
-          updated_at: string | null;
-        };
-        Insert: {
-          cache_key?: string | null;
-          chapter?: string | null;
-          charts?: Json | null;
-          content: string;
-          content_hash?: string | null;
-          content_type?: string | null;
-          created_at?: string | null;
-          custom_metadata?: Json | null;
-          difficulty?: string | null;
-          docling_metadata?: Json | null;
-          docling_type?: string | null;
-          embedding?: string | null;
-          equations?: Json | null;
-          figures?: Json | null;
-          id?: number;
-          images?: Json | null;
-          language?: string | null;
-          level: string;
-          page_number?: number | null;
-          source_file: string;
-          subject_id?: string | null;
-          syllabus_id?: string | null;
-          tables?: Json | null;
-          updated_at?: string | null;
-        };
-        Update: {
-          cache_key?: string | null;
-          chapter?: string | null;
-          charts?: Json | null;
-          content?: string;
-          content_hash?: string | null;
-          content_type?: string | null;
-          created_at?: string | null;
-          custom_metadata?: Json | null;
-          difficulty?: string | null;
-          docling_metadata?: Json | null;
-          docling_type?: string | null;
-          embedding?: string | null;
-          equations?: Json | null;
-          figures?: Json | null;
-          id?: number;
-          images?: Json | null;
-          language?: string | null;
-          level?: string;
-          page_number?: number | null;
-          source_file?: string;
-          subject_id?: string | null;
-          syllabus_id?: string | null;
-          tables?: Json | null;
-          updated_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'education_documents_subject_id_fkey';
-            columns: ['subject_id'];
-            isOneToOne: false;
-            referencedRelation: 'subjects';
-            referencedColumns: ['name'];
-          },
-          {
-            foreignKeyName: 'education_documents_syllabus_id_fkey';
-            columns: ['syllabus_id'];
-            isOneToOne: false;
-            referencedRelation: 'syllabus';
-            referencedColumns: ['name'];
           },
         ];
       };
@@ -530,6 +292,45 @@ export type Database = {
           level_type?: string;
         };
         Relationships: [];
+      };
+      message_feedback: {
+        Row: {
+          created_at: string | null;
+          feedback_type: string;
+          id: number;
+          message_id: number;
+          user_infos_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          feedback_type: string;
+          id?: number;
+          message_id: number;
+          user_infos_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          feedback_type?: string;
+          id?: number;
+          message_id?: number;
+          user_infos_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'message_feedback_message_id_fkey';
+            columns: ['message_id'];
+            isOneToOne: false;
+            referencedRelation: 'thread_messages';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'message_feedback_user_infos_id_fkey';
+            columns: ['user_infos_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       notes: {
         Row: {
@@ -972,40 +773,28 @@ export type Database = {
       };
       syllabus: {
         Row: {
-          created_at: string | null;
           description: string | null;
           display_name: string;
-          embedding: string | null;
-          file_hash: string | null;
           level: number;
           name: string;
           parent_id: string | null;
           subject_id: string;
-          syllabus_metadata: Json | null;
         };
         Insert: {
-          created_at?: string | null;
           description?: string | null;
           display_name: string;
-          embedding?: string | null;
-          file_hash?: string | null;
           level: number;
           name: string;
           parent_id?: string | null;
           subject_id: string;
-          syllabus_metadata?: Json | null;
         };
         Update: {
-          created_at?: string | null;
           description?: string | null;
           display_name?: string;
-          embedding?: string | null;
-          file_hash?: string | null;
           level?: number;
           name?: string;
           parent_id?: string | null;
           subject_id?: string;
-          syllabus_metadata?: Json | null;
         };
         Relationships: [
           {
@@ -1026,41 +815,41 @@ export type Database = {
       };
       task_threads: {
         Row: {
-          chat_thread_id: string;
           created_at: string | null;
           due_date: string;
           generated_content: Json | null;
           id: string;
           init_prompt: Json | null;
           status: string;
+          thread_id: string;
           user_task_id: string;
         };
         Insert: {
-          chat_thread_id: string;
           created_at?: string | null;
           due_date: string;
           generated_content?: Json | null;
           id?: string;
           init_prompt?: Json | null;
           status?: string;
+          thread_id: string;
           user_task_id: string;
         };
         Update: {
-          chat_thread_id?: string;
           created_at?: string | null;
           due_date?: string;
           generated_content?: Json | null;
           id?: string;
           init_prompt?: Json | null;
           status?: string;
+          thread_id?: string;
           user_task_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'task_threads_chat_thread_id_fkey';
-            columns: ['chat_thread_id'];
+            foreignKeyName: 'task_threads_thread_id_fkey';
+            columns: ['thread_id'];
             isOneToOne: true;
-            referencedRelation: 'chat_threads';
+            referencedRelation: 'threads';
             referencedColumns: ['id'];
           },
           {
@@ -1068,6 +857,83 @@ export type Database = {
             columns: ['user_task_id'];
             isOneToOne: false;
             referencedRelation: 'user_tasks';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      thread_messages: {
+        Row: {
+          content: string;
+          created_at: string | null;
+          id: number;
+          sender: string | null;
+          thread_id: string;
+          type: string;
+        };
+        Insert: {
+          content: string;
+          created_at?: string | null;
+          id?: number;
+          sender?: string | null;
+          thread_id: string;
+          type: string;
+        };
+        Update: {
+          content?: string;
+          created_at?: string | null;
+          id?: number;
+          sender?: string | null;
+          thread_id?: string;
+          type?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'thread_messages_sender_fkey';
+            columns: ['sender'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'thread_messages_thread_id_fkey';
+            columns: ['thread_id'];
+            isOneToOne: false;
+            referencedRelation: 'threads';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      threads: {
+        Row: {
+          created_at: string | null;
+          id: string;
+          subject: string | null;
+          title: string | null;
+          updated_at: string | null;
+          user_infos_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: string;
+          subject?: string | null;
+          title?: string | null;
+          updated_at?: string | null;
+          user_infos_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: string;
+          subject?: string | null;
+          title?: string | null;
+          updated_at?: string | null;
+          user_infos_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'threads_user_infos_id_fkey';
+            columns: ['user_infos_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
             referencedColumns: ['id'];
           },
         ];
@@ -1473,62 +1339,6 @@ export type Database = {
       [_ in never]: never
     };
     Functions: {
-      binary_quantize: {
-        Args: { '': string } | { '': unknown };
-        Returns: unknown;
-      };
-      halfvec_avg: {
-        Args: { '': number[] };
-        Returns: unknown;
-      };
-      halfvec_out: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      halfvec_send: {
-        Args: { '': unknown };
-        Returns: string;
-      };
-      halfvec_typmod_in: {
-        Args: { '': unknown[] };
-        Returns: number;
-      };
-      hnsw_bit_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      hnsw_halfvec_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      hnsw_sparsevec_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      hnswhandler: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      ivfflat_bit_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      ivfflat_halfvec_support: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      ivfflathandler: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      l2_norm: {
-        Args: { '': unknown } | { '': unknown };
-        Returns: number;
-      };
-      l2_normalize: {
-        Args: { '': string } | { '': unknown } | { '': unknown };
-        Returns: unknown;
-      };
       search_notes: {
         Args: {
           p_archived?: boolean;
@@ -1549,18 +1359,6 @@ export type Database = {
           updated_at: string;
         }[];
       };
-      sparsevec_out: {
-        Args: { '': unknown };
-        Returns: unknown;
-      };
-      sparsevec_send: {
-        Args: { '': unknown };
-        Returns: string;
-      };
-      sparsevec_typmod_in: {
-        Args: { '': unknown[] };
-        Returns: number;
-      };
       update_user_info_with_relations: {
         Args: {
           p_email: string;
@@ -1575,30 +1373,6 @@ export type Database = {
           p_user_info_id: string;
         };
         Returns: Json;
-      };
-      vector_avg: {
-        Args: { '': number[] };
-        Returns: string;
-      };
-      vector_dims: {
-        Args: { '': string } | { '': unknown };
-        Returns: number;
-      };
-      vector_norm: {
-        Args: { '': string };
-        Returns: number;
-      };
-      vector_out: {
-        Args: { '': string };
-        Returns: unknown;
-      };
-      vector_send: {
-        Args: { '': string };
-        Returns: string;
-      };
-      vector_typmod_in: {
-        Args: { '': unknown[] };
-        Returns: number;
       };
     };
     Enums: {

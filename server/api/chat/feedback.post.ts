@@ -18,14 +18,14 @@ export default defineEventHandler(async (event) => {
     }
 
     const { data, error } = await supabase
-      .from('chat_feedback')
+      .from('message_feedback')
       .upsert(
         {
           message_id: body.message_id,
-          user_id: user.id,
+          user_infos_id: user.id,
           feedback_type: body.feedback_type,
         },
-        { onConflict: 'message_id,user_id' }
+        { onConflict: 'message_id,user_infos_id' }
       )
       .select('*')
       .single();

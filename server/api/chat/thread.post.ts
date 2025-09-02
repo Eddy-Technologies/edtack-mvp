@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody<{ title?: string; subject?: string }>(event);
 
     const { data, error } = await supabase
-      .from('chat_threads')
+      .from('threads')
       .insert({
         user_infos_id: userInfo.id,
         title: body?.title ?? null,

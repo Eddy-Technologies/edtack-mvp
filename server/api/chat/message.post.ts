@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const { data, error } = await supabase
-      .from('chat_messages')
+      .from('thread_messages')
       .insert({
         thread_id: body.thread_id,
         sender: userInfo.id,

@@ -53,6 +53,14 @@
             >
               <Icon name="i-heroicons-chat-bubble-oval-left" class="w-5 h-5 text-gray-600" />
               <div class="flex flex-row items-center space-x-2 truncate">
+                <UBadge
+                  v-if="thread.hasTask"
+                  :color="thread.taskStatus === 'OPEN' ? 'primary' :
+                    thread.taskStatus === 'COMPLETED' ? 'green' : 'gray'"
+                  size="xs"
+                >
+                  Task
+                </UBadge>
                 <div v-if="thread.subject" class="text-xs text-gray-500 truncate">
                   {{ constantCaseToTitleCase(thread.subject) }}
                 </div>

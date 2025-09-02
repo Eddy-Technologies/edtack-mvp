@@ -12,7 +12,7 @@
 CREATE TABLE IF NOT EXISTS task_threads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_task_id UUID NOT NULL REFERENCES user_tasks(id) ON DELETE CASCADE,
-  chat_thread_id UUID UNIQUE NOT NULL REFERENCES chat_threads(id) ON DELETE CASCADE,
+  thread_id UUID UNIQUE NOT NULL REFERENCES threads(id) ON DELETE CASCADE,
   due_date TIMESTAMPTZ NOT NULL,
   init_prompt JSONB,   -- Example: {"subject": "math", "difficulty": "grade_5", "questions": 10}
   generated_content JSONB,   -- TODO: currently not in use, will be generated from the thread on init
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS task_threads (
 
 -- Performance indexes for common query patterns
 CREATE INDEX IF NOT EXISTS idx_task_threads_user_task ON task_threads(user_task_id);
-CREATE INDEX IF NOT EXISTS idx_task_threads_chat_thread ON task_threads(chat_thread_id);
+CREATE INDEX IF NOT EXISTS idx_task_threads_thread ON task_threads(thread_id);
 CREATE INDEX IF NOT EXISTS idx_task_threads_status ON task_threads(status);
 
 -- Composite index for recurring task cron job queries

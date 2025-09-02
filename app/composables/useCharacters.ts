@@ -241,8 +241,7 @@ export const useCharacters = () => {
   };
 
   const getCharacterBySubject = async (subject: string) => {
-    const allCharacters = await fetchCharacters();
-    return allCharacters.find((char) => char.subject === subject);
+    return characters.value.find((char) => char.subject === subject);
   };
 
   return {
