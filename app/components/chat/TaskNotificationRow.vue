@@ -155,7 +155,7 @@ const navigateToTask = (task: Task) => {
     const character = subjectToCharacterMap.value[task.subject.toUpperCase()] || subjectToCharacterMap.value['GENERAL'];
     const characterSlug = character?.slug || 'eddy';
 
-    router.push(`/chat/${characterSlug}/${threadId}`);
+    router.replace(`/chat/${characterSlug}/${threadId}`);
   }
 };
 

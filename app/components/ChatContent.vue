@@ -72,17 +72,22 @@
 
     <!-- Stream Mode (Original) -->
     <div v-if="viewMode === 'stream'" ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-24 space-y-8">
-      <component
-        :is="unit.component"
+      <div
         v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
-        v-bind="unit.props"
-        :start-playback="currentPlaybackIndex === index"
-        @finish="handleFinish"
-        @open-split-view="handleOpenSplitView"
-        @slide-changed="handleSlideChanged"
-        @option-selected="handleOptionSelected"
-      />
+        :ref="(el) => setMessageRef(el, `stream-message-${index}`)"
+        :data-message-id="`stream-message-${index}`"
+      >
+        <component
+          :is="unit.component"
+          v-bind="unit.props"
+          :start-playback="currentPlaybackIndex === index"
+          @finish="handleFinish"
+          @open-split-view="(slides) => handleOpenSplitView(slides, index)"
+          @slide-changed="handleSlideChanged"
+          @option-selected="handleOptionSelected"
+        />
+      </div>
 
       <!-- Loading indicator when waiting for WebSocket response -->
       <LoadingIndicator
@@ -99,7 +104,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
-import SlideBubble from '@/components/playback/SlideBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
 import SplitScreenContainer from '@/components/chat/SplitScreenContainer.vue';
@@ -134,6 +138,9 @@ const tokenCount = ref(0);
 const viewMode = ref<'stream' | 'split'>('stream');
 const currentSlideIndex = ref(0);
 const selectedSlides = ref<any[]>([]);
+
+// Message refs for scrolling
+const messageRefs = ref<Record<string, HTMLElement>>({});
 
 // WebSocket integration
 const useWebSocket = ref(true); // WebSocket-only mode
@@ -228,25 +235,7 @@ const initializeChat = async () => {
   }
 };
 
-// Keyboard shortcuts
-const handleKeyDown = (e: KeyboardEvent) => {
-  // Toggle view mode with Ctrl+Shift+V (or Cmd+Shift+V on Mac)
-  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V' && hasSlides.value) {
-    e.preventDefault();
-    toggleViewMode();
-  }
-
-  // Close split view with Escape key
-  if (e.key === 'Escape' && viewMode.value === 'split') {
-    e.preventDefault();
-    handleCloseSplitView();
-  }
-};
-
 onMounted(() => {
-  // Add keyboard listener
-  document.addEventListener('keydown', handleKeyDown);
-
   // Single watcher for WebSocket responses
   watch(
     () => wsChat.value?.response,
@@ -269,6 +258,32 @@ onMounted(() => {
     }
   );
 
+  // Watch for new slides being added to messageStream
+  watch(
+    () => messageStream.value,
+    (newMessages, oldMessages) => {
+      // Check if new messages were added
+      if (newMessages?.length > (oldMessages?.length || 0)) {
+        // Check the latest message for slides
+        const latestMessage = newMessages[newMessages.length - 1];
+        if (latestMessage?.slides && Array.isArray(latestMessage.slides) && latestMessage.slides.length > 0) {
+          console.log('Auto-opening split view for new slides:', latestMessage.slides);
+          // Auto-open split view with the new slides
+          selectedSlides.value = latestMessage.slides;
+          viewMode.value = 'split';
+
+          // Scroll to the message with slides (will be implemented)
+          nextTick(() => {
+            // For now, find the message index and scroll to it
+            const messageIndex = newMessages.length - 1;
+            scrollToMessage(messageIndex);
+          });
+        }
+      }
+    },
+    { deep: true }
+  );
+
   // Initialize when all prerequisites are met
   watch(
     () => ({
@@ -287,7 +302,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeyDown);
   if (wsChat.value) {
     wsChat.value.disconnect();
   }
@@ -377,9 +391,13 @@ const handleWebSocketMessage = (message: any) => {
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
 
-    nextTick(() => {
-      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-    });
+    // The watcher will automatically handle slides and scrolling
+    // For messages without slides, scroll to bottom
+    if (!message.slides || !Array.isArray(message.slides) || message.slides.length === 0) {
+      nextTick(() => {
+        bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
     return;
   }
 
@@ -404,30 +422,6 @@ const handleWebSocketMessage = (message: any) => {
 
   // Handle other message status types (heartbeat, status_update are handled by useWebSocketChat)
 };
-
-// Check if current messages contain slides
-const hasSlides = computed(() => {
-  console.log('Checking for slides in messageStream:', messageStream.value);
-  const result = messageStream.value.some((block) => {
-    console.log('Block:', block, 'Has slides:', Array.isArray(block.slides));
-    return Array.isArray(block.slides) && block.slides.length > 0;
-  });
-  console.log('hasSlides result:', result);
-  return result;
-});
-
-// Extract all slides for split view
-const allSlides = computed(() => {
-  const slides: any[] = [];
-  messageStream.value.forEach((block) => {
-    if (Array.isArray(block.slides)) {
-      console.log('Found slides in block:', block.slides);
-      slides.push(...block.slides);
-    }
-  });
-  console.log('All slides extracted:', slides);
-  return slides;
-});
 
 // Flatten the entire messageStream into an ordered array of playback units
 const flattenedPlaybackUnits = computed(() => {
@@ -521,12 +515,8 @@ const handleSend = async (text: string) => {
 
     isPlayingAllowed.value = true;
 
-    // Force computed properties to re-evaluate
-    nextTick(() => {
-      console.log('After nextTick - hasSlides:', hasSlides.value);
-      console.log('After nextTick - allSlides:', allSlides.value);
-      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-    });
+    // The watcher will automatically detect slides and open split view
+    // No need to manually trigger split view here
     return;
   }
 
@@ -573,12 +563,18 @@ const handleOptionSelected = (data: any) => {
   console.log('Option selected:', data);
 };
 
-const handleOpenSplitView = (slides: any[]) => {
+const handleOpenSplitView = (slides: any[], messageIndex?: number) => {
   // Store the selected slides and switch to split view
   selectedSlides.value = slides;
   viewMode.value = 'split';
   nextTick(() => {
-    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    if (typeof messageIndex === 'number') {
+      // Scroll to the specific message that contains the slides
+      scrollToMessage(messageIndex);
+    } else {
+      // Fallback to bottom scroll if no index provided
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    }
   });
 };
 
@@ -591,16 +587,36 @@ const handleCloseSplitView = () => {
   });
 };
 
-// Load view mode preference - default to stream
-if (import.meta.client) {
-  const savedViewMode = localStorage.getItem('chatViewMode');
-  if (savedViewMode === 'split' || savedViewMode === 'stream') {
-    viewMode.value = savedViewMode;
+// Helper function to set message refs
+const setMessageRef = (el: HTMLElement | null, messageId: string) => {
+  if (el) {
+    messageRefs.value[messageId] = el;
   } else {
-    // Default to stream view
-    viewMode.value = 'stream';
+    // Use Reflect.deleteProperty to avoid ESLint error
+    Reflect.deleteProperty(messageRefs.value, messageId);
   }
-}
+};
+
+// Helper function to scroll to a specific message
+const scrollToMessage = (messageIndex: number) => {
+  const messageId = `split-message-${messageIndex}`;
+  const streamMessageId = `stream-message-${messageIndex}`;
+
+  // Try to find the message element in either view
+  const element = messageRefs.value[messageId] || messageRefs.value[streamMessageId];
+
+  if (element) {
+    console.log('Scrolling to message at index:', messageIndex);
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  } else {
+    console.warn('Message element not found for index:', messageIndex);
+    // Fallback to bottom scroll
+    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 // Clear chat method to reset all chat state
 const clearChat = () => {
@@ -610,6 +626,8 @@ const clearChat = () => {
   isPlayingAllowed.value = false;
   isWaitingForResponse.value = false;
   messageQueue.value = [];
+  selectedSlides.value = [];
+  messageRefs.value = {};
   // Reset to stream view (default)
   viewMode.value = 'stream';
   if (import.meta.client) {

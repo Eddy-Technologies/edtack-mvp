@@ -1026,7 +1026,7 @@ export type Database = {
       };
       task_threads: {
         Row: {
-          chat_thread_id: string | null;
+          chat_thread_id: string;
           created_at: string | null;
           due_date: string;
           generated_content: Json | null;
@@ -1036,7 +1036,7 @@ export type Database = {
           user_task_id: string;
         };
         Insert: {
-          chat_thread_id?: string | null;
+          chat_thread_id: string;
           created_at?: string | null;
           due_date: string;
           generated_content?: Json | null;
@@ -1046,7 +1046,7 @@ export type Database = {
           user_task_id: string;
         };
         Update: {
-          chat_thread_id?: string | null;
+          chat_thread_id?: string;
           created_at?: string | null;
           due_date?: string;
           generated_content?: Json | null;
@@ -1059,7 +1059,7 @@ export type Database = {
           {
             foreignKeyName: 'task_threads_chat_thread_id_fkey';
             columns: ['chat_thread_id'];
-            isOneToOne: false;
+            isOneToOne: true;
             referencedRelation: 'chat_threads';
             referencedColumns: ['id'];
           },

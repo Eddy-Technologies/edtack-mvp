@@ -38,7 +38,6 @@
         <div class="border-t border-black">
           <ULink
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-            @click="handleShowChatHistory"
           >
             <Icon name="i-heroicons-clock" class="w-6 h-6" />
             <span v-if="!isMini" class="truncate">Chat History</span>
@@ -215,24 +214,6 @@ const openThread = (threadId: string) => {
 
 const handleNewChat = () => {
   emit('new-chat');
-  toast.add({
-    title: 'New Chat',
-    description: 'Starting new conversation',
-    icon: 'i-heroicons-plus',
-  });
-};
-
-const handleShowChatHistory = () => {
-  // Expand sidebar if it's collapsed
-  if (props.collapsed) {
-    emit('toggle-sidebar');
-  }
-
-  toast.add({
-    title: 'Chat History',
-    description: 'Chat history shown.',
-    icon: 'i-heroicons-clock',
-  });
 };
 
 // 🎵 WaveSurfer Audio Player
@@ -240,56 +221,6 @@ const waveformRef = ref<HTMLElement | null>(null);
 const isPlaying = ref(false);
 const currentAudio = ref<HTMLAudioElement | null>(null);
 let wavesurfer: WaveSurfer | null = null;
-
-const togglePlayback = () => {
-  if (!wavesurfer) return;
-
-  if (isPlaying.value) {
-    wavesurfer.pause();
-    isPlaying.value = false;
-  } else {
-    wavesurfer.play();
-    isPlaying.value = true;
-  }
-};
-
-const handlePlayAudio = async () => {
-  if (wavesurfer) {
-    // Use WaveSurfer if available
-    togglePlayback();
-    return;
-  }
-
-  // Fallback to HTML Audio API
-  const audioStore = useAudioStore();
-
-  try {
-    if (isPlaying.value && currentAudio.value) {
-      // Pause current audio
-      currentAudio.value.pause();
-      isPlaying.value = false;
-      return;
-    }
-
-    // Create new audio if none exists
-    if (!currentAudio.value && audioStore.audioUrl) {
-      currentAudio.value = new Audio(audioStore.audioUrl);
-      currentAudio.value.volume = 1.0;
-
-      currentAudio.value.addEventListener('ended', () => {
-        isPlaying.value = false;
-      });
-    }
-
-    // Play audio
-    if (currentAudio.value) {
-      await currentAudio.value.play();
-      isPlaying.value = true;
-    }
-  } catch (error) {
-    console.error('Audio playback failed:', error);
-  }
-};
 
 const toggleFloatingAvatar = () => {
   // Emit event to parent to handle floating avatar

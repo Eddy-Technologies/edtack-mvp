@@ -199,6 +199,7 @@ import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
+import type { GetChatThreadRes } from '~~/server/api/chat/[threadId].get';
 
 // Prevent component remounting when URL changes
 definePageMeta({
@@ -217,7 +218,8 @@ const isDraggingAvatar = ref(false);
 const isFloatingCollapsed = ref(false);
 const chatContentRef = ref<any>(null);
 const floatingAudio = ref<HTMLAudioElement | null>(null);
-const messages = ref([]);
+const messages = ref<any[]>([]);
+const task = ref<any>(null); // Store task data for task threads
 
 const router = useRouter();
 const route = useRoute();
@@ -250,43 +252,6 @@ const shouldShowChatInput = computed(() => {
 
 // Initialize character based on route
 onMounted(async () => {
-  console.log('Mounted chat page with charSlug:', charSlug.value, 'and threadId:', threadId.value);
-  if (!isNewChat.value && threadId.value) {
-    chatStore.setThreadId(threadId.value);
-    try {
-      const response = await fetch(`/api/chat/${threadId.value}`);
-      if (!response.ok) {
-        // Thread does not exist or error
-        throw new Error(`Thread not found or API error: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      const processMessages = (data) => {
-        return data.map((message) => ({
-          ...message,
-          isUser: true,
-        }));
-      };
-
-      messages.value = processMessages(result.messageData);
-
-      isLoading.value = false;
-    } catch (err) {
-      toast.add({
-        title: 'Thread not found',
-        description: 'The chat thread does not exist. Starting a new chat.',
-        icon: 'i-heroicons-exclamation-triangle-20-solid',
-      });
-
-      // Navigate to a new chat
-      if (selectedCharacter.value) {
-        await router.replace(`/chat/${selectedCharacter.value.slug}/new`);
-      }
-    }
-  } else {
-    isLoading.value = false;
-  }
   // Initialize character store
   await initializeStore();
 
@@ -324,23 +289,32 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       isLoading.value = true;
 
       try {
-        const response = await fetch(`/api/chat/${threadId.value}`);
-        if (!response.ok) {
+        const { messageData, task: taskRes, success }: GetChatThreadRes = await $fetch(`/api/chat/${threadId.value}`);
+        if (!success) {
         // Thread does not exist or error
-          throw new Error(`Thread not found or API error: ${response.status}`);
+          throw new Error(`Thread not found`);
         }
 
-        const result = await response.json();
-
-        const processMessages = (data) => {
-          return data.map((message) => ({
+        if (messageData) {
+          messages.value = messageData.map((message) => ({
             ...message,
-            text: message.content,
             isUser: true,
           }));
-        };
+        }
 
-        messages.value = processMessages(result.messageData);
+        // Check if this is a task thread that needs initialization
+        if (taskRes && !messageData) {
+          console.log('init prompt', taskRes.init_prompt);
+          setPendingMessage(JSON.stringify(taskRes.init_prompt));
+        }
+
+        // Store task data if this is a task thread
+        if (taskRes) {
+          task.value = taskRes; // First task thread record
+          console.log('Task thread detected in watcher:', task.value);
+        } else {
+          task.value = null; // Clear task data for regular chat threads
+        }
       } catch (err) {
         console.error('Error loading thread:', err);
       }
@@ -350,6 +324,7 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       // Reset for new chat
       messages.value = [];
       hasStartedChat.value = false;
+      task.value = null; // Clear task data for new chats
 
       // Clear chat content if available
       if (chatContentRef.value && chatContentRef.value.clearChat) {
