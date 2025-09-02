@@ -26,13 +26,52 @@
           </span>
         </span>
       </div>
-      <!-- <div>
-        Token Usage: <span class="font-bold">{{ tokenCount }}</span>
-      </div> -->
-      <div class="w-20" />
+
+      <div class="flex-1" />
     </div>
 
-    <div ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-24 space-y-8">
+    <!-- Split Screen Mode -->
+    <SplitScreenContainer
+      v-if="viewMode === 'split' && selectedSlides.length > 0"
+      :slides="selectedSlides"
+      :initial-slide-index="0"
+      :show-thumbnails="true"
+      @slide-changed="handleSlideChanged"
+      @option-selected="handleOptionSelected"
+      @close-split-view="handleCloseSplitView"
+    >
+      <template #conversation>
+        <div class="py-6 px-8 space-y-8">
+          <div
+            v-for="(unit, index) in flattenedPlaybackUnits"
+            :key="index"
+            :data-message-id="`split-message-${index}`"
+          >
+            <component
+              :is="unit.component"
+              v-bind="unit.props"
+              :start-playback="currentPlaybackIndex === index"
+              @finish="handleFinish"
+              @open-split-view="(slides) => handleOpenSplitView(slides, index)"
+              @slide-changed="handleSlideChanged"
+              @option-selected="handleOptionSelected"
+            />
+          </div>
+
+          <!-- Loading indicator when waiting for WebSocket response -->
+          <LoadingIndicator
+            v-if="wsChat?.isWaitingForResponse || isWaitingForResponse"
+            :character="character"
+            :is-loading="true"
+          />
+
+          <div ref="bottomAnchor" />
+        </div>
+      </template>
+    </SplitScreenContainer>
+
+    <!-- Stream Mode (Original) -->
+    <div v-if="viewMode === 'stream'" ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-24 space-y-8">
       <component
         :is="unit.component"
         v-for="(unit, index) in flattenedPlaybackUnits"
@@ -40,6 +79,9 @@
         v-bind="unit.props"
         :start-playback="currentPlaybackIndex === index"
         @finish="handleFinish"
+        @open-split-view="handleOpenSplitView"
+        @slide-changed="handleSlideChanged"
+        @option-selected="handleOptionSelected"
       />
 
       <!-- Loading indicator when waiting for WebSocket response -->
@@ -58,7 +100,9 @@
 import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
+import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
+import SplitScreenContainer from '@/components/chat/SplitScreenContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';
@@ -85,6 +129,11 @@ const MAX_CONTEXT_MESSAGES = 6;
 const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
 const tokenCount = ref(0);
+
+// Split view state
+const viewMode = ref<'stream' | 'split'>('stream');
+const currentSlideIndex = ref(0);
+const selectedSlides = ref<any[]>([]);
 
 // WebSocket integration
 const useWebSocket = ref(true); // WebSocket-only mode
@@ -179,7 +228,25 @@ const initializeChat = async () => {
   }
 };
 
+// Keyboard shortcuts
+const handleKeyDown = (e: KeyboardEvent) => {
+  // Toggle view mode with Ctrl+Shift+V (or Cmd+Shift+V on Mac)
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V' && hasSlides.value) {
+    e.preventDefault();
+    toggleViewMode();
+  }
+
+  // Close split view with Escape key
+  if (e.key === 'Escape' && viewMode.value === 'split') {
+    e.preventDefault();
+    handleCloseSplitView();
+  }
+};
+
 onMounted(() => {
+  // Add keyboard listener
+  document.addEventListener('keydown', handleKeyDown);
+
   // Single watcher for WebSocket responses
   watch(
     () => wsChat.value?.response,
@@ -220,6 +287,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown);
   if (wsChat.value) {
     wsChat.value.disconnect();
   }
@@ -337,11 +405,36 @@ const handleWebSocketMessage = (message: any) => {
   // Handle other message status types (heartbeat, status_update are handled by useWebSocketChat)
 };
 
+// Check if current messages contain slides
+const hasSlides = computed(() => {
+  console.log('Checking for slides in messageStream:', messageStream.value);
+  const result = messageStream.value.some((block) => {
+    console.log('Block:', block, 'Has slides:', Array.isArray(block.slides));
+    return Array.isArray(block.slides) && block.slides.length > 0;
+  });
+  console.log('hasSlides result:', result);
+  return result;
+});
+
+// Extract all slides for split view
+const allSlides = computed(() => {
+  const slides: any[] = [];
+  messageStream.value.forEach((block) => {
+    if (Array.isArray(block.slides)) {
+      console.log('Found slides in block:', block.slides);
+      slides.push(...block.slides);
+    }
+  });
+  console.log('All slides extracted:', slides);
+  return slides;
+});
+
 // Flatten the entire messageStream into an ordered array of playback units
 const flattenedPlaybackUnits = computed(() => {
   console.log('Flattening message stream into playback units:', messageStream.value);
   const units: any[] = [];
   messageStream.value.forEach((block, blockIndex) => {
+    // Add text messages
     if (block.text) {
       units.push({
         component: TextBubble,
@@ -352,7 +445,9 @@ const flattenedPlaybackUnits = computed(() => {
         },
       });
     }
-    if (block.message) {
+
+    // Add message text (but only if no slides, to avoid duplication)
+    if (block.message && !Array.isArray(block.slides)) {
       units.push({
         component: TextBubble,
         props: {
@@ -362,16 +457,30 @@ const flattenedPlaybackUnits = computed(() => {
         },
       });
     }
-    if (Array.isArray(block.slides)) {
-      block.slides.forEach((slide) => {
+
+    // Add slides as a single placeholder card in stream view
+    if (Array.isArray(block.slides) && block.slides.length > 0) {
+      // First add the message if it exists
+      if (block.message) {
         units.push({
-          component: SlideBubble,
+          component: TextBubble,
           props: {
-            slide,
-            isUser: false,
-            startPlayback: false, // controlled globally by parent
+            text: block.message,
+            isFirst: blockIndex === 0,
+            isUser: block.isUser,
           },
         });
+      }
+
+      // Then add the slides placeholder card
+      units.push({
+        component: SlidesPlaceholderCard,
+        props: {
+          slides: block.slides,
+          slidesTitle: `${block.slides.length} Learning Slides`,
+          showThumbnails: true,
+          startPlayback: false,
+        },
       });
     }
   });
@@ -405,9 +514,17 @@ const handleSend = async (text: string) => {
   if (text.trim() === 'mock_playback') {
     console.log('Injecting mock playback data...');
     const { default: mockPlaybackData } = await import('~/mockPlaybackData');
+    console.log('Mock playback data loaded:', mockPlaybackData);
     messageStream.value = mockPlaybackData;
+
+    console.log('MessageStream after setting:', messageStream.value);
+
     isPlayingAllowed.value = true;
+
+    // Force computed properties to re-evaluate
     nextTick(() => {
+      console.log('After nextTick - hasSlides:', hasSlides.value);
+      console.log('After nextTick - allSlides:', allSlides.value);
       bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
     });
     return;
@@ -447,13 +564,57 @@ const handleSend = async (text: string) => {
   }
 };
 
+const handleSlideChanged = (index: number) => {
+  currentSlideIndex.value = index;
+};
+
+const handleOptionSelected = (data: any) => {
+  // Handle option selection from split screen or placeholder card
+  console.log('Option selected:', data);
+};
+
+const handleOpenSplitView = (slides: any[]) => {
+  // Store the selected slides and switch to split view
+  selectedSlides.value = slides;
+  viewMode.value = 'split';
+  nextTick(() => {
+    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  });
+};
+
+const handleCloseSplitView = () => {
+  // Close split view and return to stream view
+  viewMode.value = 'stream';
+  selectedSlides.value = [];
+  nextTick(() => {
+    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  });
+};
+
+// Load view mode preference - default to stream
+if (import.meta.client) {
+  const savedViewMode = localStorage.getItem('chatViewMode');
+  if (savedViewMode === 'split' || savedViewMode === 'stream') {
+    viewMode.value = savedViewMode;
+  } else {
+    // Default to stream view
+    viewMode.value = 'stream';
+  }
+}
+
 // Clear chat method to reset all chat state
 const clearChat = () => {
   messageStream.value = [];
   currentPlaybackIndex.value = 0;
+  currentSlideIndex.value = 0;
   isPlayingAllowed.value = false;
   isWaitingForResponse.value = false;
   messageQueue.value = [];
+  // Reset to stream view (default)
+  viewMode.value = 'stream';
+  if (import.meta.client) {
+    localStorage.removeItem('chatViewMode');
+  }
 
   // Disconnect current WebSocket
   if (wsChat.value) {

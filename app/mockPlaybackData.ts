@@ -24,7 +24,7 @@ const mockMessageStream = [
         part_label: 'Q1',
         type: 'question',
         question_type: 'mcq',
-        title: 'White Blood Cell Function',
+        title: 'White Blood Cell Function Slide 1',
         content: 'Which white blood cell type is primarily responsible for producing antibodies?',
         speech_to_text_content: 'Which white blood cell type produces antibodies?',
         answer: [
@@ -250,7 +250,7 @@ const mockMessageStream = [
         part_label: 'Q1',
         type: 'question',
         question_type: 'mcq',
-        title: 'White Blood Cell Function',
+        title: 'White Blood Cell Function slide 2',
         content: 'Which white blood cell type is primarily responsible for producing antibodies?',
         speech_to_text_content: 'Which white blood cell type produces antibodies?',
         answer: [
