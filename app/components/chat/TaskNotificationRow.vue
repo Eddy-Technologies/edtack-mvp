@@ -10,14 +10,14 @@
                 key="default"
                 class="text-lg font-semibold text-gray-800 transition-all duration-300"
               >
-                Mission controls
+                Task control
               </h3>
               <h3
                 v-else
                 key="hovered"
                 class="text-lg font-semibold text-primary-600 transition-all duration-300"
               >
-                Mission: {{ hoveredTask.name }} • {{ hoveredTask.credit }} credits 💎
+                Task: {{ hoveredTask.name }} • {{ hoveredTask.credit }} credits 💎
               </h3>
             </Transition>
           </div>
