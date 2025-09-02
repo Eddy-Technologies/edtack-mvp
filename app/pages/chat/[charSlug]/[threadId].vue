@@ -398,6 +398,7 @@ const handleChatSend = async (text: string) => {
         },
         body: JSON.stringify({
           title: text || null,
+          subject: selectedCharacter.value?.subject || null,
         }),
       });
       if (!response.ok) {

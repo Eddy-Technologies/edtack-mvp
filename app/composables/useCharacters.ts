@@ -240,6 +240,11 @@ export const useCharacters = () => {
     isAvatarPlaying.value = false;
   };
 
+  const getCharacterBySubject = async (subject: string) => {
+    const allCharacters = await fetchCharacters();
+    return allCharacters.find((char) => char.subject === subject);
+  };
+
   return {
     // State (only what's actually used)
     selectedCharacter: readonly(selectedCharacter),
@@ -251,6 +256,7 @@ export const useCharacters = () => {
     // State Management (only what's actually used)
     selectCharacterById,
     selectCharacterBySlug,
+    getCharacterBySubject,
     initializeStore,
 
     // Message Management (only what's actually used)

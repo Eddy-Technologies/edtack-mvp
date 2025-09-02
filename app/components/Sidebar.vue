@@ -49,10 +49,15 @@
               v-for="thread in chatThreads"
               :key="thread.id"
               class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-              @click="openThread(thread.id)"
+              @click="openThread(thread.id, thread.subject)"
             >
               <Icon name="i-heroicons-chat-bubble-oval-left" class="w-5 h-5 text-gray-600" />
-              <span class="truncate">{{ thread.title || 'Untitled Chat' }}</span>
+              <div class="flex flex-row items-center space-x-2 truncate">
+                <div v-if="thread.subject" class="text-xs text-gray-500 truncate">
+                  {{ constantCaseToTitleCase(thread.subject) }}
+                </div>
+                <div class="truncate">{{ thread.title || 'Untitled Chat' }}</div>
+              </div>
             </ULink>
           </div>
 
@@ -149,12 +154,12 @@
 import { useRouter } from 'vue-router';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
-import Button from '~/components/common/Button.vue';
 import Avatar from '~/components/avatar/Avatar.vue';
 import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
+import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 const emit = defineEmits([
   'toggle-sidebar',
@@ -181,7 +186,7 @@ const router = useRouter();
 const toast = useToast();
 const meStore = useMeStore();
 
-const { isAvatarPlaying } = useCharacters();
+const { isAvatarPlaying, getCharacterBySubject } = useCharacters();
 const routeTo = (path) => router.push(path);
 
 const isMini = computed(
@@ -207,9 +212,9 @@ const fetchChatThreads = async () => {
   }
 };
 
-const openThread = (threadId: string) => {
-  // TODO: Hardcoded Eddy for now
-  router.push(`/chat/eddy/${threadId}`);
+const openThread = async (threadId: string, subject: string) => {
+  const character = await getCharacterBySubject(subject);
+  router.push(`/chat/${character?.slug || 'eddy'}/${threadId}`);
 };
 
 const handleNewChat = () => {
