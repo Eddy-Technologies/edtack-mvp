@@ -93,12 +93,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    
     // Generate task name from subject and lesson generation type
     const subjectLabel = await codeService.getCode(supabase, CODE_CATEGORIES.SUBJECT, subject);
     const typeLabel = await codeService.getCode(supabase, CODE_CATEGORIES.LESSON_GENERATION_TYPE, lessonGenerationType);
     const name = `${subjectLabel?.name} ${typeLabel?.name}`;
-
 
     // Create the task
     const { data: task, error: taskError } = await supabase

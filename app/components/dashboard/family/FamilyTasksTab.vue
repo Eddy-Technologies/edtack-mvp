@@ -133,7 +133,6 @@
     @close="showCreateModal = false"
     @task-created="onTaskCreated"
   />
-
 </template>
 
 <script setup lang="ts">
@@ -166,7 +165,6 @@ const currentPage = ref(1);
 const itemsPerPage = ref(5);
 const sortBy = ref('created_at');
 const sortOrder = ref('desc');
-
 
 const pendingCredits = computed(() => {
   // For task threads, completed means credits have been awarded
@@ -266,7 +264,6 @@ const handleSortChange = () => {
   currentPage.value = 1;
   loadTasks(1);
 };
-
 
 // Load tasks on mount
 onMounted(() => {
