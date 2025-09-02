@@ -400,15 +400,15 @@ onMounted(async () => {
 
       // Load pending tasks (assigned to children, with status pending)
       try {
-        const tasksResponse = await $fetch('/api/tasks/list', {
+        const tasksResponse = await $fetch('/api/tasks/user-tasks', {
           query: {
-            status: 'pending',
+            status: 'OPEN',
             limit: 5
           }
         });
         if (tasksResponse.success) {
-          // Filter to only show tasks created by this parent (assigned to children)
-          pendingTasks.value = (tasksResponse.tasks || []).filter((task: any) => task.userRole === 'creator');
+          // All user tasks from this endpoint are created by the parent
+          pendingTasks.value = tasksResponse.tasks || [];
         }
       } catch (tasksError) {
         console.error('Failed to load pending tasks:', tasksError);
@@ -435,15 +435,15 @@ onMounted(async () => {
 
       // Load student's pending tasks
       try {
-        const tasksResponse = await $fetch('/api/tasks/list', {
+        const tasksResponse = await $fetch('/api/tasks/threads', {
           query: {
-            status: 'pending',
+            status: 'OPEN',
             limit: 5
           }
         });
         if (tasksResponse.success) {
-          // Filter to only show tasks assigned to this student
-          myPendingTasks.value = (tasksResponse.tasks || []).filter((task: any) => task.userRole === 'assignee');
+          // All task threads from this endpoint are assigned to this student
+          myPendingTasks.value = tasksResponse.threads || [];
           activeTasks.value = myPendingTasks.value.length;
         }
       } catch (tasksError) {
@@ -452,9 +452,9 @@ onMounted(async () => {
 
       // Load completed tasks count
       try {
-        const completedTasksResponse = await $fetch('/api/tasks/list', {
+        const completedTasksResponse = await $fetch('/api/tasks/threads', {
           query: {
-            status: 'completed',
+            status: 'COMPLETED',
             limit: 1
           }
         });
@@ -467,16 +467,17 @@ onMounted(async () => {
 
       // Load recent tasks (recent completed tasks)
       try {
-        const recentTasksResponse = await $fetch('/api/tasks/list', {
+        const recentTasksResponse = await $fetch('/api/tasks/threads', {
           query: {
-            status: 'completed',
+            status: 'COMPLETED',
             limit: 3,
-            sortBy: 'completedAt',
+            sortBy: 'created_at',
             sortOrder: 'desc'
           }
         });
         if (recentTasksResponse.success) {
-          recentTasks.value = (recentTasksResponse.tasks || []).filter((task: any) => task.userRole === 'assignee');
+          // All task threads from this endpoint are assigned to this student
+          recentTasks.value = recentTasksResponse.threads || [];
         }
       } catch (recentError) {
         console.error('Failed to load recent tasks:', recentError);

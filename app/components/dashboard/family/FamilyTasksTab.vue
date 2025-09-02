@@ -186,7 +186,9 @@ const loadTasks = async (page = 1) => {
       sortBy.value === 'credit_asc' ? 'credit' : sortBy.value;
     const actualSortOrder = sortBy.value === 'created_at_asc' || sortBy.value === 'credit_asc' ? 'asc' : sortOrder.value;
 
-    const response = await $fetch('/api/tasks/list', {
+    // Use appropriate endpoint based on user role
+    const endpoint = isParent.value ? '/api/tasks/user-tasks' : '/api/tasks/threads';
+    const response = await $fetch(endpoint, {
       query: {
         status: selectedStatus.value,
         limit: itemsPerPage.value,
@@ -197,9 +199,9 @@ const loadTasks = async (page = 1) => {
     });
 
     if (response.success) {
-      tasks.value = response.tasks || [];
+      // Extract tasks from the appropriate response field
+      tasks.value = isParent.value ? (response.tasks || []) : (response.threads || []);
       pagination.value = response.pagination;
-      // Removed isParent assignment - using store instead
       currentPage.value = page;
     } else {
       throw new Error('Failed to load tasks');
