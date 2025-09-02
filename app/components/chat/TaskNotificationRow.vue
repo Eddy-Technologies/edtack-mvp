@@ -3,48 +3,68 @@
     <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
       <div class="px-6 py-4 border-b border-gray-100">
         <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-800">Pending Tasks</h3>
-            <p class="text-sm text-gray-600">Complete these tasks to earn credits</p>
-          </div>
-          <div class="flex items-center bg-blue-50 px-3 py-1 rounded-full">
-            <UIcon name="i-lucide-bell" class="w-4 h-4 text-blue-600 mr-1" />
-            <span class="text-sm font-medium text-blue-600">{{ openTasks.length }} pending</span>
+          <div class="flex items-center">
+            <Transition name="fade" mode="out-in">
+              <h3
+                v-if="!hoveredTask"
+                key="default"
+                class="text-lg font-semibold text-gray-800 transition-all duration-300"
+              >
+                Mission controls
+              </h3>
+              <h3
+                v-else
+                key="hovered"
+                class="text-lg font-semibold text-primary-600 transition-all duration-300"
+              >
+                Mission: {{ hoveredTask.name }} • {{ hoveredTask.credit }} credits 💎
+              </h3>
+            </Transition>
           </div>
         </div>
       </div>
 
       <div class="p-4">
-        <div class="flex items-center gap-4 overflow-x-auto pb-2">
+        <div class="flex justify-center items-center gap-4 overflow-x-auto pb-2">
           <div
             v-for="task in openTasks"
             :key="task.id"
-            class="relative flex-shrink-0 cursor-pointer group"
-            @click="navigateToTask(task)"
+            class="flex-shrink-0"
           >
-            <!-- Character Avatar -->
-            <div class="relative">
-              <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 group-hover:ring-blue-300 transition-all duration-200 group-hover:scale-110">
+            <!-- Mini Carousel Card -->
+            <div
+              class="relative w-20 h-24 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+              @click="navigateToTask(task)"
+              @mouseenter="hoveredTask = task"
+              @mouseleave="hoveredTask = null"
+            >
+              <!-- Blurred background -->
+              <div
+                class="absolute inset-0"
+                :style="{
+                  backgroundImage: `url(${getCharacterImage(task.subject)})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  filter: 'blur(15px)',
+                  transform: 'scale(1.2)'
+                }"
+              />
+
+              <!-- Gradient overlay -->
+              <div class="absolute inset-0 bg-gradient-to-br from-gray via-transparent to-gray-600" />
+
+              <!-- Character image -->
+              <div class="relative z-10 w-full h-full overflow-hidden">
                 <img
                   :src="getCharacterImage(task.subject)"
                   :alt="getCharacterName(task.subject)"
                   class="w-full h-full object-cover"
+                  :style="{
+                    objectPosition: 'top',
+                    transform: 'scale(1.1) translateY(10%)'
+                  }"
                 >
-              </div>
-
-              <!-- Notification Bubble -->
-              <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                <span class="text-xs font-bold text-white">!</span>
-              </div>
-            </div>
-
-            <!-- Hover Tooltip -->
-            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-              <div class="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap shadow-lg">
-                <div class="font-medium">{{ task.name }}</div>
-                <div class="text-gray-300 mt-1">{{ task.credit }} credits</div>
-                <!-- Arrow -->
-                <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900" />
               </div>
             </div>
           </div>
@@ -75,6 +95,7 @@ interface Task {
 const openTasks = ref<Task[]>([]);
 const isLoading = ref(true);
 const charactersLoaded = ref(false);
+const hoveredTask = ref<Task | null>(null);
 
 // Use the characters composable
 const { fetchCharacters } = useCharacters();
@@ -194,5 +215,20 @@ onMounted(async () => {
 
 .overflow-x-auto::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Fade transition for header text */
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>
