@@ -214,7 +214,7 @@ const fetchChatThreads = async () => {
 
 const openThread = async (threadId: string, subject: string) => {
   const character = await getCharacterBySubject(subject);
-  router.push(`/chat/${character?.slug || 'eddy'}/${threadId}`);
+  router.replace(`/chat/${character?.slug || 'eddy'}/${threadId}`);
 };
 
 const handleNewChat = () => {

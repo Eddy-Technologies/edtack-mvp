@@ -255,11 +255,6 @@ onMounted(async () => {
   // Initialize character store
   await initializeStore();
 
-  // Set character based on route slug
-  if (charSlug.value && charSlug.value !== selectedCharacter.value?.slug) {
-    await selectCharacterBySlug(charSlug.value);
-  }
-
   handleResize();
   window.addEventListener('resize', handleResize);
 
@@ -317,6 +312,11 @@ watch(threadId, async (newThreadId, oldThreadId) => {
         }
       } catch (err) {
         console.error('Error loading thread:', err);
+      }
+
+      // Set character based on route slug
+      if (charSlug.value && charSlug.value !== selectedCharacter.value?.slug) {
+        await selectCharacterBySlug(charSlug.value);
       }
 
       isLoading.value = false;
