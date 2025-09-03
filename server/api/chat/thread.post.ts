@@ -1,7 +1,12 @@
 import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '#imports';
-import { codeService } from '~~/server/services/codeService';
-import { CODE_CATEGORIES } from '~/stores/codes';
+import type { Database } from '~~/types/supabase';
+
+interface PostThreadRes {
+  success: boolean;
+  data?: Database['public']['Tables']['threads']['Row'];
+  error?: string;
+}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -26,7 +31,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return { success: true, data };
+    return { success: true, data } as PostThreadRes;
   } catch (err: any) {
     console.error('Create thread API error:', err);
     if (err.statusCode) throw err;

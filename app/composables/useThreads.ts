@@ -1,30 +1,10 @@
 import { ref, computed, readonly } from 'vue';
 import { useMeStore } from '~/stores/me';
-import type { GetChatThreadRes } from '~~/server/api/chat/[threadId].get';
+import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
+import type { Database } from '~~/types/supabase';
 
-interface Thread {
-  id: string;
-  title: string;
-  subject: string;
-  user_infos_id: string;
-  created_at: string;
-  updated_at: string;
-  task_threads?: any;
-}
-
-interface Message {
-  id?: string;
-  thread_id?: string;
-  content?: string;
-  sender?: string;
-  type?: string;
-  created_at?: string;
-  text?: string;
-  isUser?: boolean;
-  message?: string;
-  slides?: any[];
-  [key: string]: any;
-}
+type Thread = Database['public']['Tables']['threads']['Row'];
+type Message = Database['public']['Tables']['thread_messages']['Row'];
 
 // Global state
 const threads = ref<Thread[]>([]);
@@ -58,7 +38,7 @@ export function useThreads() {
     error.value = null;
 
     try {
-      const response = await $fetch(`/api/chat/threads/${currentUserId}`);
+      const response = await $fetch(`/api/chat/user/${currentUserId}`, { method: 'GET' });
       if (!response?.success) {
         throw new Error('Failed to fetch threads');
       }
@@ -85,33 +65,18 @@ export function useThreads() {
     error.value = null;
 
     try {
-      const { messageData, task, success }: GetChatThreadRes = await $fetch(`/api/chat/${threadId}`);
+      const { threadData, messageData, task, success } = await $fetch(`/api/chat/thread/${threadId}`, { method: 'GET' });
 
       if (!success) {
         throw new Error('Thread not found');
       }
 
-      // Find thread in our cached threads
-      const thread = threads.value.find((t) => t.id === threadId);
-      currentThread.value = thread || null;
-
-      // Process messages with consistent field mapping
-      const processedMessages = messageData?.map((message) => ({
-        ...message,
-        text: message.content,
-        isUser: !!message.sender,
-        type: message.type || 'text',
-      })) || [];
-
-      messages.value = processedMessages;
-
-      return { thread: currentThread.value, messages: processedMessages, task };
+      messages.value = messageData || [];
+      currentThread.value = threadData;
+      return { thread: threadData, messages: messageData, task };
     } catch (err) {
       console.error('Error loading thread:', err);
-      error.value = 'Failed to load chat thread';
-      currentThread.value = null;
-      messages.value = [];
-      return { thread: null, messages: [], task: null };
+      reset();
     } finally {
       isLoadingThread.value = false;
     }
@@ -120,7 +85,7 @@ export function useThreads() {
   // Create new thread
   const createThread = async (data: { title: string; subject?: string }) => {
     try {
-      const response = await fetch('/api/chat/thread', {
+      const response = await $fetch('/api/chat/thread', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,13 +93,11 @@ export function useThreads() {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(`Failed to create thread: ${response.status} - ${errorData.message || 'Unknown error'}`);
+      if (!response.success || !response.data) {
+        throw new Error(`Failed to create thread`);
       }
 
-      const result = await response.json();
-      const newThread = result.data;
+      const newThread = response.data;
 
       // Add to local threads list
       threads.value.unshift(newThread);
@@ -150,29 +113,24 @@ export function useThreads() {
   };
 
   // Add message to current thread (handles all message types)
-  const addMessage = (messageData: Partial<Message> | any) => {
+  const addMessage = async (content: string, type: string, isUser: boolean) => {
     if (!currentThread.value) return;
 
-    // Handle both regular messages and WebSocket messages
-    const message: Message = {
-      id: messageData.id || Date.now().toString(),
-      thread_id: currentThread.value.id,
-      content: messageData.content || messageData.message || messageData.text || '',
-      created_at: messageData.created_at || new Date().toISOString(),
-      type: messageData.type || 'text',
-      sender: messageData.sender,
-      text: messageData.content || messageData.message || messageData.text || '',
-      isUser: messageData.isUser !== undefined ?
-        messageData.isUser :
-        messageData.status === 'user_message' ?
-          false :
-            !!messageData.sender,
-      message: messageData.message,
-      slides: messageData.slides,
-      ...messageData,
-    };
+    const response = await $fetch('/api/chat/message', {
+      method: 'POST',
+      body: JSON.stringify({
+        thread_id: currentThread.value.id,
+        content,
+        type,
+        isUser
+      }),
+    });
 
-    messages.value.push(message);
+    if (!response.success || !response.data) {
+      throw new Error('Failed to send message');
+    }
+
+    messages.value.push(response.data);
   };
 
   // Clear current thread

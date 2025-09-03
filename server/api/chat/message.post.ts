@@ -1,23 +1,29 @@
 import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '#imports';
+import type { Database } from '~~/types/supabase';
+
+interface PostMessageRes {
+  success: boolean;
+  data?: Database['public']['Tables']['thread_messages']['Row'];
+}
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const userInfo = await getUserInfo(event);
-    const body = await readBody<{ thread_id: string; content: string; type?: string }>(event);
+    const { thread_id, content, isUser, type } = await readBody<{ thread_id: string; content: string; isUser: boolean; type?: string }>(event);
 
-    if (!body.thread_id || !body.content) {
+    if (!thread_id || !content) {
       throw createError({ statusCode: 400, statusMessage: 'thread_id and content are required' });
     }
 
     const { data, error } = await supabase
       .from('thread_messages')
       .insert({
-        thread_id: body.thread_id,
-        sender: userInfo.id,
-        content: body.content,
-        type: body.type || 'text',
+        thread_id,
+        sender: isUser ? userInfo.id : null,
+        content,
+        type: type ? type : isUser ? 'text' : 'json'
       })
       .select('*')
       .single();
@@ -29,7 +35,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return { success: true, data };
+    return { success: true, data } as PostMessageRes;
   } catch (err: any) {
     console.error('Send message API error:', err);
     if (err.statusCode) throw err;

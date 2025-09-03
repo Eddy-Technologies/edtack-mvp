@@ -151,7 +151,7 @@ import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
-import type { GetChatThreadRes } from '~~/server/api/chat/[threadId].get';
+import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
 
 // Prevent component remounting when URL changes
 definePageMeta({
@@ -232,8 +232,9 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       isLoading.value = true;
 
       try {
-        const { thread, messages: threadMessages, task: taskRes } = await fetchThread(newThreadId);
-
+        const response = await fetchThread(newThreadId);
+        if (!response) return;
+        const { messages: threadMessages, task: taskRes } = response;
         // Check if this is a task thread that needs initialization
         if (taskRes && !threadMessages?.length) {
           console.log('init prompt', taskRes.init_prompt);

@@ -118,14 +118,13 @@ import mockQuizData from '~/mockQuizData';
 interface ChatContentProps {
   threadId: string;
   character: any;
-  messages: any;
 }
 
 // Component props
 const props = defineProps<ChatContentProps>();
 
 // Use global thread state instead of local state
-const { messages: globalMessages, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
+const { messages, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
@@ -210,6 +209,16 @@ const initializeChat = async () => {
   // Always treat as new chat since we have no history
   isFirstMessage.value = true;
 
+  // Insert messages to messageStream
+  messageStream.value = messages.value.map((msg) => {
+    if (!msg.sender) {
+      return JSON.parse(msg.content);
+    }
+    return { text: msg.content, isUser: true };
+  });
+  console.log('Inserting messages to messageStream:', messageStream.value);
+  messageStream.value = messageStream.value || [];
+
   console.log('Using thread ID:', props.threadId);
 
   // Track the current thread ID to prevent unnecessary re-initialization
@@ -242,7 +251,7 @@ onMounted(() => {
   watch(
     () => wsChat.value?.response,
     (newMessages) => {
-      if (newMessages?.length > 0) {
+      if (newMessages && newMessages?.length > 0) {
         const lastMessage = newMessages[newMessages.length - 1];
         handleWebSocketMessage(lastMessage);
       }
@@ -258,44 +267,6 @@ onMounted(() => {
         processMessageQueue();
       }
     }
-  );
-
-  // Watch for global messages changes instead of props
-  watch(
-    () => globalMessages.value,
-    (newMessages) => {
-      if (newMessages && newMessages.length > 0) {
-        console.log('Global messages changed, updating messageStream:', newMessages);
-        messageStream.value = [...newMessages];
-        nextTick(() => {
-          bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-        });
-      } else {
-        // Fallback to props if global messages is empty (for initial load)
-        if (props.messages && props.messages.length > 0) {
-          messageStream.value = [...props.messages];
-          nextTick(() => {
-            bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-          });
-        }
-      }
-    },
-    { deep: true, immediate: true }
-  );
-
-  // Also watch props.messages for backwards compatibility
-  watch(
-    () => props.messages,
-    (newMessages) => {
-      // Only update if global messages is empty (initial load case)
-      if (newMessages && newMessages.length > 0 && globalMessages.value.length === 0) {
-        messageStream.value = [...newMessages];
-        nextTick(() => {
-          bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-        });
-      }
-    },
-    { deep: true, immediate: true }
   );
 
   // Watch for new slides being added to messageStream
@@ -373,23 +344,6 @@ const sendMessage = async (text: string) => {
     success = wsChat.value.sendUserResponse(text, userInfo);
   }
 
-  const response = await fetch('/api/chat/message', {
-    // New API endpoint
-    method: 'POST', // Explicitly POST
-    headers: {
-      'Content-Type': 'application/json', // Set content type
-    },
-    body: JSON.stringify({
-      thread_id: chatStore.thread_id,
-      content: text || '',
-      user_id: meStore.user_info_id || null,
-    }),
-  });
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(`Fetch failed: ${response.status} - ${errorData.message || 'Unknown error'}`);
-  }
-
   if (success) {
     isWaitingForResponse.value = true;
   }
@@ -419,16 +373,8 @@ const handleWebSocketMessage = (message: any) => {
     console.log('Received user_message message:', message);
 
     // Add to global state and local stream
-    addMessage(message);
+    addMessage(message, 'json', false);
     messageStream.value.push(message);
-
-    // Update token count if provided
-    if (message.tokenCount) {
-      const currentTokenCount = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
-      const newTokenCount = currentTokenCount + message.tokenCount;
-      localStorage.setItem('tokenUsage', newTokenCount.toString());
-      tokenCount.value = newTokenCount;
-    }
 
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
@@ -538,7 +484,7 @@ const handleSend = async (text: string) => {
   // Development: Inject mock quiz data when "mock_data" is typed
   if (text.trim() === 'mock_data') {
     console.log('Injecting mock quiz data...');
-    messageStream.value.push(mockQuizData);
+    addMessage(JSON.stringify(mockQuizData), 'json', false);
     isPlayingAllowed.value = true;
     nextTick(() => {
       bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -569,14 +515,11 @@ const handleSend = async (text: string) => {
   // Add user message to UI immediately and global state
   const userMessage = {
     type: 'text',
-    text,
     isUser: true,
-    playable: false,
     content: text,
-    sender: 'user',
   };
 
-  addMessage(userMessage);
+  addMessage(userMessage.content, userMessage.type, userMessage.isUser);
   messageStream.value.push(userMessage);
 
   // Since we connect immediately in initializeChat, just try to send
