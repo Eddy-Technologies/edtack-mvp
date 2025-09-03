@@ -28,7 +28,6 @@ const selectedCharacter = ref<Character | null>(null);
 const characters = ref<Character[]>([]);
 const loading = ref(false);
 const error = ref<string | null>(null);
-const pendingMessage = ref<string | null>(null);
 const isAvatarPlaying = ref(false);
 
 export const useCharacters = () => {
@@ -188,31 +187,6 @@ export const useCharacters = () => {
     }
   };
 
-  // Message Preservation Methods
-  const setPendingMessage = (message: string) => {
-    pendingMessage.value = message;
-    if (import.meta.client) {
-      sessionStorage.setItem('pendingMessage', message);
-    }
-  };
-
-  const getPendingMessage = (): string | null => {
-    if (pendingMessage.value) {
-      return pendingMessage.value;
-    }
-    if (import.meta.client) {
-      return sessionStorage.getItem('pendingMessage');
-    }
-    return null;
-  };
-
-  const clearPendingMessage = () => {
-    pendingMessage.value = null;
-    if (import.meta.client) {
-      sessionStorage.removeItem('pendingMessage');
-    }
-  };
-
   // Avatar Playback Methods
   const startAvatarPlayback = (duration?: number) => {
     isAvatarPlaying.value = true;
@@ -245,11 +219,6 @@ export const useCharacters = () => {
     selectCharacterBySlug,
     getCharacterBySubject,
     initializeStore,
-
-    // Message Management (only what's actually used)
-    setPendingMessage,
-    getPendingMessage,
-    clearPendingMessage,
 
     // Avatar Playback Management
     startAvatarPlayback,

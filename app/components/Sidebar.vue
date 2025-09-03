@@ -38,13 +38,14 @@
         <div class="border-t border-black">
           <ULink
             class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+            @click="handleChatHistory"
           >
             <Icon name="i-heroicons-clock" class="w-6 h-6" />
             <span v-if="!isMini" class="truncate">Chat History</span>
           </ULink>
 
           <!-- List chat threads -->
-          <div v-if="chatThreads.length">
+          <div v-if="chatThreads.length && !collapsed">
             <ULink
               v-for="thread in chatThreads"
               :key="thread.id"
@@ -68,7 +69,7 @@
             </ULink>
           </div>
 
-          <div v-else-if="!isLoadingThreads" class="px-4 py-2 text-gray-400 text-sm text-center">
+          <div v-else-if="!isLoadingThreads && !collapsed" class="px-4 py-2 text-gray-400 text-sm text-center">
             No previous chats
           </div>
         </div>
@@ -166,6 +167,7 @@ import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
+import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import { TASK_THREAD_STATUS } from '~~/shared/constants';
 
@@ -187,11 +189,10 @@ const props = defineProps({
 
 // State for audio player collapsed state
 const isAudioPlayerCollapsed = ref(false);
-const chatThreads = ref<any[]>([]);
-const isLoadingThreads = ref(false);
 
 const router = useRouter();
 const meStore = useMeStore();
+const { threads: chatThreads, isLoadingThreads, fetchThreads } = useThreads();
 
 const { isAvatarPlaying, getCharacterBySubject } = useCharacters();
 const routeTo = (path) => router.push(path);
@@ -200,24 +201,6 @@ const isMini = computed(
   () => props.collapsed || props.isMobile || (props.sidebarWidth ?? 999) < 150
 );
 
-const fetchChatThreads = async () => {
-  isLoadingThreads.value = true;
-  try {
-    const user_id = meStore.user_info_id;
-    const response = await $fetch(`/api/chat/threads/${user_id}`);
-    if (!response?.success) {
-      throw new Error(`Thread not found or API error`);
-    }
-
-    chatThreads.value = response.data || [];
-  } catch (err) {
-    console.error('Failed to fetch chat threads:', err);
-    chatThreads.value = [];
-  } finally {
-    isLoadingThreads.value = false;
-  }
-};
-
 const openThread = async (threadId: string, subject: string) => {
   const character = await getCharacterBySubject(subject);
   router.replace(`/chat/${character?.slug || 'eddy'}/${threadId}`);
@@ -225,6 +208,13 @@ const openThread = async (threadId: string, subject: string) => {
 
 const handleNewChat = () => {
   emit('new-chat');
+};
+
+const handleChatHistory = () => {
+  if (props.collapsed) {
+    // Expand the sidebar
+    emit('toggle-sidebar');
+  }
 };
 
 // 🎵 WaveSurfer Audio Player
@@ -240,8 +230,10 @@ const toggleFloatingAvatar = () => {
 
 onMounted(() => {
   // Initialize audio store after mounting
-  // Fetch on mount
-  fetchChatThreads();
+  // Fetch threads on mount
+  if (meStore.isLoggedIn) {
+    fetchThreads();
+  }
   const audioStore = useAudioStore();
 
   // Use nextTick to ensure DOM is ready

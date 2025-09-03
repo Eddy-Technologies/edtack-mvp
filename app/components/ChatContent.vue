@@ -111,6 +111,7 @@ import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
+import { useThreads } from '~/composables/useThreads';
 import mockQuizData from '~/mockQuizData';
 
 // Props interface - simplified
@@ -123,7 +124,9 @@ interface ChatContentProps {
 // Component props
 const props = defineProps<ChatContentProps>();
 
-const messageStream = ref<any[]>(props.messages || []);
+// Use global thread state instead of local state
+const { messages: globalMessages, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
+const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
@@ -149,7 +152,6 @@ const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
 const messageQueue = ref<string[]>([]); // Queue for messages waiting to be sent
-const { getPendingMessage, clearPendingMessage } = useCharacters();
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -258,12 +260,35 @@ onMounted(() => {
     }
   );
 
-  // Watcher for props.messages changes - update messageStream when messages are loaded from API
+  // Watch for global messages changes instead of props
+  watch(
+    () => globalMessages.value,
+    (newMessages) => {
+      if (newMessages && newMessages.length > 0) {
+        console.log('Global messages changed, updating messageStream:', newMessages);
+        messageStream.value = [...newMessages];
+        nextTick(() => {
+          bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } else {
+        // Fallback to props if global messages is empty (for initial load)
+        if (props.messages && props.messages.length > 0) {
+          messageStream.value = [...props.messages];
+          nextTick(() => {
+            bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+          });
+        }
+      }
+    },
+    { deep: true, immediate: true }
+  );
+
+  // Also watch props.messages for backwards compatibility
   watch(
     () => props.messages,
     (newMessages) => {
-      if (newMessages && newMessages.length > 0) {
-        console.log('Props messages changed, updating messageStream:', newMessages);
+      // Only update if global messages is empty (initial load case)
+      if (newMessages && newMessages.length > 0 && globalMessages.value.length === 0) {
         messageStream.value = [...newMessages];
         nextTick(() => {
           bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -393,6 +418,8 @@ const handleWebSocketMessage = (message: any) => {
   if (message.status === 'user_message') {
     console.log('Received user_message message:', message);
 
+    // Add to global state and local stream
+    addMessage(message);
     messageStream.value.push(message);
 
     // Update token count if provided
@@ -539,13 +566,18 @@ const handleSend = async (text: string) => {
   await nextTick();
   bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
 
-  // Add user message to UI immediately
-  messageStream.value.push({
+  // Add user message to UI immediately and global state
+  const userMessage = {
     type: 'text',
     text,
     isUser: true,
     playable: false,
-  });
+    content: text,
+    sender: 'user',
+  };
+
+  addMessage(userMessage);
+  messageStream.value.push(userMessage);
 
   // Since we connect immediately in initializeChat, just try to send
   if (wsChat.value?.isConnected) {

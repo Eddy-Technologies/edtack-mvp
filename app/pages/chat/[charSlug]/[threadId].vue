@@ -59,7 +59,7 @@
             v-if="!isLoading"
             ref="chatContentRef"
             :thread-id="threadId"
-            :messages="messages"
+            :messages="[]"
             :character="selectedCharacter"
           />
         </div>
@@ -197,6 +197,7 @@ import TaskNotificationRow from '@/components/chat/TaskNotificationRow.vue';
 import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
+import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import type { GetChatThreadRes } from '~~/server/api/chat/[threadId].get';
 
@@ -217,19 +218,18 @@ const isDraggingAvatar = ref(false);
 const isFloatingCollapsed = ref(false);
 const chatContentRef = ref<any>(null);
 const floatingAudio = ref<HTMLAudioElement | null>(null);
-const messages = ref<any[]>([]);
 const task = ref<any>(null); // Store task data for task threads
 
 const router = useRouter();
 const route = useRoute();
 const meStore = useMeStore();
 const chatStore = useChatStore();
+const { fetchThread, createThread, clearCurrentThread, setPendingMessage } = useThreads();
 
 const {
   selectedCharacter,
   initializeStore,
   selectCharacterBySlug,
-  setPendingMessage,
   isAvatarPlaying,
 } = useCharacters();
 
@@ -281,33 +281,20 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       isLoading.value = true;
 
       try {
-        const { messageData, task: taskRes, success }: GetChatThreadRes = await $fetch(`/api/chat/${threadId.value}`);
-        if (!success) {
-        // Thread does not exist or error
-          throw new Error(`Thread not found`);
-        }
-
-        if (messageData) {
-          messages.value = messageData.map((message) => ({
-            ...message,
-            text: message.content, // Map content field to text field expected by ChatContent
-            isUser: !!message.sender, // If sender exists, it's a user message, otherwise it's from the system/character
-            type: message.type || 'text',
-          }));
-        }
+        const { thread, messages: threadMessages, task: taskRes } = await fetchThread(newThreadId);
 
         // Check if this is a task thread that needs initialization
-        if (taskRes && !messageData) {
+        if (taskRes && !threadMessages?.length) {
           console.log('init prompt', taskRes.init_prompt);
           setPendingMessage(JSON.stringify(taskRes.init_prompt));
         }
 
         // Store task data if this is a task thread
         if (taskRes) {
-          task.value = taskRes; // First task thread record
+          task.value = taskRes;
           console.log('Task thread detected in watcher:', task.value);
         } else {
-          task.value = null; // Clear task data for regular chat threads
+          task.value = null;
         }
       } catch (err) {
         console.error('Error loading thread:', err);
@@ -321,9 +308,9 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       isLoading.value = false;
     } else if (newThreadId === 'new') {
       // Reset for new chat
-      messages.value = [];
+      clearCurrentThread();
       hasStartedChat.value = false;
-      task.value = null; // Clear task data for new chats
+      task.value = null;
 
       // Clear chat content if available
       if (chatContentRef.value && chatContentRef.value.clearChat) {
@@ -389,28 +376,14 @@ const handleChatSend = async (text: string) => {
     setPendingMessage(text);
 
     try {
-      const response = await fetch('/api/chat/thread', {
-        // New API endpoint
-        method: 'POST', // Explicitly POST
-        headers: {
-          'Content-Type': 'application/json', // Set content type
-        },
-        body: JSON.stringify({
-          title: text || null,
-          subject: selectedCharacter.value?.subject || null,
-        }),
+      const newThread = await createThread({
+        title: text || 'New Chat',
+        subject: selectedCharacter.value?.subject || null,
       });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          `Fetch failed: ${response.status} - ${errorData.message || 'Unknown error'}`
-        );
-      } else {
-        const resJson = await response.json();
-        const newThreadUuid = resJson.data.id;
-        await router.replace(`/chat/${charSlug.value}/${newThreadUuid}`);
-        chatStore.setThreadId(newThreadUuid);
-      }
+
+      const newThreadUuid = newThread.id;
+      await router.replace(`/chat/${charSlug.value}/${newThreadUuid}`);
+      chatStore.setThreadId(newThreadUuid);
     } catch (err) {
       console.error('Thread creation error', err);
     }
