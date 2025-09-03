@@ -109,8 +109,6 @@ import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
 import SplitScreenContainer from '@/components/chat/SplitScreenContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
-import { useChatStore } from '~/stores/chat';
-import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import mockQuizData from '~/mockQuizData';
 
@@ -158,7 +156,6 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
-const chatStore = useChatStore();
 
 // Dynamic conversation summary based on character prop
 const conversationSummaryComputed = computed(() => {
@@ -210,11 +207,11 @@ const initializeChat = async () => {
   isFirstMessage.value = true;
 
   // Insert messages to messageStream
-  messageStream.value = messages.value.map((msg) => {
-    if (!msg.sender) {
-      return { ...JSON.parse(msg.content), isUser: false };
+  messageStream.value = messages.value.map(({ content, id, sender }) => {
+    if (!sender) {
+      return { ...JSON.parse(content), isUser: false, id };
     }
-    return { text: msg.content, isUser: true };
+    return { text: content, isUser: true, id };
   });
   console.log('Inserting messages to messageStream:', messageStream.value);
   messageStream.value = messageStream.value || [];
@@ -373,8 +370,9 @@ const handleWebSocketMessage = (message: any) => {
     console.log('Received user_message message:', message);
 
     // Add to global state and local stream
-    addMessage(message, 'json', false);
-    messageStream.value.push(message);
+    const newUuid = crypto.randomUUID();
+    addMessage(message, 'json', false, newUuid);
+    messageStream.value.push({ ...message, id: newUuid });
 
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
@@ -424,6 +422,7 @@ const flattenedPlaybackUnits = computed(() => {
           text: block.text,
           isFirst: blockIndex === 0,
           isUser: block.isUser,
+          messageId: block.id?.toString(),
         },
       });
     }
@@ -436,6 +435,7 @@ const flattenedPlaybackUnits = computed(() => {
           text: block.message,
           isFirst: blockIndex === 0,
           isUser: block.isUser,
+          messageId: block.id?.toString(),
         },
       });
     }
@@ -450,6 +450,7 @@ const flattenedPlaybackUnits = computed(() => {
             text: block.message,
             isFirst: blockIndex === 0,
             isUser: block.isUser,
+            messageId: block.id?.toString(),
           },
         });
       }
@@ -462,6 +463,7 @@ const flattenedPlaybackUnits = computed(() => {
           slidesTitle: `${block.slides.length} Learning Slides`,
           showThumbnails: true,
           startPlayback: false,
+          messageId: block.id?.toString(),
         },
       });
     }
@@ -517,10 +519,11 @@ const handleSend = async (text: string) => {
     type: 'text',
     isUser: true,
     content: text,
+    id: crypto.randomUUID()
   };
 
-  addMessage(userMessage.content, userMessage.type, userMessage.isUser);
-  messageStream.value.push({ type: 'text', text: userMessage.content, isUser: true });
+  addMessage(userMessage.content, userMessage.type, userMessage.isUser, userMessage.id);
+  messageStream.value.push({ type: 'text', text: userMessage.content, isUser: true, id: userMessage.id });
 
   // Since we connect immediately in initializeChat, just try to send
   if (wsChat.value?.isConnected) {

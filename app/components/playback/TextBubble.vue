@@ -25,7 +25,10 @@
       <div class="whitespace-pre-wrap transition-all duration-300 ease-out text-justify">
         {{ text }}
       </div>
-      <MessageActions :message-text="text" />
+      <MessageActions
+        :message-text="text"
+        :message-id="messageId"
+      />
     </div>
   </div>
 </template>
@@ -39,6 +42,7 @@ const props = defineProps<{
   isFirst: boolean;
   startPlayback: boolean;
   isUser: boolean;
+  messageId?: string;
 }>();
 
 const emit = defineEmits(['finish']);

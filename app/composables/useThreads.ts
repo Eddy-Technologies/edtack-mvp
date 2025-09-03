@@ -1,5 +1,6 @@
 import { ref, computed, readonly } from 'vue';
 import { useMeStore } from '~/stores/me';
+import type { PostMessageReq } from '~~/server/api/chat/message.post';
 import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
 import type { Database } from '~~/types/supabase';
 
@@ -113,17 +114,19 @@ export function useThreads() {
   };
 
   // Add message to current thread (handles all message types)
-  const addMessage = async (content: string, type: string, isUser: boolean) => {
+  const addMessage = async (content: string, type: string, isUser: boolean, newUuid?: string) => {
     if (!currentThread.value) return;
+    const body: PostMessageReq = {
+      thread_id: currentThread.value.id,
+      content,
+      type,
+      isUser,
+      uuid: newUuid
+    };
 
     const response = await $fetch('/api/chat/message', {
       method: 'POST',
-      body: JSON.stringify({
-        thread_id: currentThread.value.id,
-        content,
-        type,
-        isUser
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!response.success || !response.data) {

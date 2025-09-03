@@ -16,7 +16,11 @@
       <div v-else v-html="processedHtml" />
 
       <!-- Message Actions for regular slides -->
-      <MessageActions v-if="!isTyping && slide.type !== 'question'" :message-text="slideText" />
+      <MessageActions
+        v-if="!isTyping && slide.type !== 'question'"
+        :message-text="slideText"
+        :message-id="messageId"
+      />
     </div>
   </div>
 </template>
@@ -31,6 +35,8 @@ const props = defineProps<{
   slide: any;
   isUser: boolean;
   startPlayback: boolean;
+  messageId?: string;
+  threadId?: string;
 }>();
 
 const emit = defineEmits(['finish', 'answer-submitted']);

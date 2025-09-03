@@ -7,12 +7,20 @@ interface PostMessageRes {
   data?: Database['public']['Tables']['thread_messages']['Row'];
 }
 
+export interface PostMessageReq {
+  thread_id: string;
+  content: string;
+  isUser: boolean;
+  type?: string;
+  uuid?: string;
+}
+
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const userInfo = await getUserInfo(event);
-    const { thread_id, content, isUser, type } = await readBody<{ thread_id: string; content: string; isUser: boolean; type?: string }>(event);
-
+    const { thread_id, content, isUser, type, uuid } = await readBody<PostMessageReq>(event);
+    console.log('Post message body:', { thread_id, content, isUser, type, uuid });
     if (!thread_id || !content) {
       throw createError({ statusCode: 400, statusMessage: 'thread_id and content are required' });
     }
@@ -20,6 +28,7 @@ export default defineEventHandler(async (event) => {
     const { data, error } = await supabase
       .from('thread_messages')
       .insert({
+        id: uuid,
         thread_id,
         sender: isUser ? userInfo.id : null,
         content,

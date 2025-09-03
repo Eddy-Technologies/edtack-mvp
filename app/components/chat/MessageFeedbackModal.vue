@@ -67,7 +67,6 @@ interface Props {
   isLike: boolean;
   messageText: string;
   messageId?: string;
-  threadId?: string;
 }
 
 const props = defineProps<Props>();
@@ -106,28 +105,35 @@ const handleSubmit = async (event: Event) => {
   event.preventDefault();
   isSubmitting.value = true;
 
-  // Prepare data structure for future API
-  const feedbackData = {
-    like: props.isLike,
-    feedback: formData.value.feedback || null,
-    category: formData.value.category || null,
-    messageUuid: props.messageId || generateMessageId(),
-    threadId: props.threadId,
-    messageText: props.messageText,
-    timestamp: new Date().toISOString(),
-  };
+  // Validate we have a message ID
+  if (!props.messageId) {
+    toast.add({
+      title: 'Error',
+      description: 'Cannot submit feedback: Message ID not found',
+      icon: 'i-heroicons-exclamation-triangle',
+      timeout: 3000
+    });
+    isSubmitting.value = false;
+    return;
+  }
 
   try {
-    // Mock API call - replace with actual endpoint when ready
-    const response = await fetch('/api/message-feedback', {
+    // Use real API endpoint
+    const response = await fetch('/api/chat/feedback', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(feedbackData),
+      body: JSON.stringify({
+        message_id: props.messageId,
+        feedback_type: props.isLike ? 'like' : 'dislike',
+        category: formData.value.category || null,
+        feedback_text: formData.value.feedback || null,
+      }),
     });
 
     if (response.ok) {
+      const result = await response.json();
       toast.add({
         title: 'Feedback Submitted',
         description: 'Thank you for your feedback!',
@@ -135,10 +141,11 @@ const handleSubmit = async (event: Event) => {
         timeout: 3000
       });
 
-      emit('submitted', feedbackData);
+      emit('submitted', result);
       emit('close');
     } else {
-      throw new Error('Failed to submit feedback');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.statusMessage || 'Failed to submit feedback');
     }
   } catch (error) {
     console.error('Feedback submission error:', error);
@@ -151,10 +158,5 @@ const handleSubmit = async (event: Event) => {
   } finally {
     isSubmitting.value = false;
   }
-};
-
-// Generate a unique message ID for tracking (temporary until proper IDs are implemented)
-const generateMessageId = (): string => {
-  return `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 </script>

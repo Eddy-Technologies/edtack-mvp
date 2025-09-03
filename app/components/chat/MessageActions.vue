@@ -33,7 +33,6 @@
       :is-like="feedbackType === 'like'"
       :message-text="messageText"
       :message-id="messageId"
-      :thread-id="threadId"
       @close="closeFeedbackModal"
       @submitted="handleFeedbackSubmitted"
     />
@@ -67,7 +66,6 @@ import { useCharacters } from '~/composables/useCharacters';
 interface Props {
   messageText: string;
   messageId?: string;
-  threadId?: string;
 }
 
 const props = defineProps<Props>();

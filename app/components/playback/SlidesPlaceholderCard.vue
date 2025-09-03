@@ -27,7 +27,10 @@
     </button>
 
     <!-- Message Actions (for copying, etc.) -->
-    <MessageActions :message-text="slidesPreviewText" />
+    <MessageActions
+      :message-text="slidesPreviewText"
+      :message-id="messageId"
+    />
   </div>
 </template>
 
@@ -48,6 +51,7 @@ const props = defineProps<{
   slides: SlideData[];
   slidesTitle?: string;
   startPlayback?: boolean;
+  messageId?: string;
 }>();
 
 const emit = defineEmits(['finish', 'open-split-view']);

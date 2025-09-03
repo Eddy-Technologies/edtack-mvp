@@ -295,24 +295,30 @@ export type Database = {
       };
       message_feedback: {
         Row: {
+          category: string | null;
           created_at: string | null;
+          feedback_text: string | null;
           feedback_type: string;
           id: number;
-          message_id: number;
+          message_id: string;
           user_infos_id: string;
         };
         Insert: {
+          category?: string | null;
           created_at?: string | null;
+          feedback_text?: string | null;
           feedback_type: string;
           id?: number;
-          message_id: number;
+          message_id: string;
           user_infos_id: string;
         };
         Update: {
+          category?: string | null;
           created_at?: string | null;
+          feedback_text?: string | null;
           feedback_type?: string;
           id?: number;
-          message_id?: number;
+          message_id?: string;
           user_infos_id?: string;
         };
         Relationships: [
@@ -865,7 +871,7 @@ export type Database = {
         Row: {
           content: string;
           created_at: string | null;
-          id: number;
+          id: string;
           sender: string | null;
           thread_id: string;
           type: string;
@@ -873,7 +879,7 @@ export type Database = {
         Insert: {
           content: string;
           created_at?: string | null;
-          id?: number;
+          id?: string;
           sender?: string | null;
           thread_id: string;
           type: string;
@@ -881,7 +887,7 @@ export type Database = {
         Update: {
           content?: string;
           created_at?: string | null;
-          id?: number;
+          id?: string;
           sender?: string | null;
           thread_id?: string;
           type?: string;

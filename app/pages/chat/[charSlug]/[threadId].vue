@@ -139,15 +139,12 @@ import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
 import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
-import Avatar from '@/components/avatar/Avatar.vue';
 import TaskNotificationRow from '@/components/chat/TaskNotificationRow.vue';
 import FloatingAudioPlayer from '@/components/audio/FloatingAudioPlayer.vue';
 import { useMeStore } from '~/stores/me';
-import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
-import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
 
 // Prevent component remounting when URL changes
 definePageMeta({
@@ -170,7 +167,6 @@ const task = ref<any>(null); // Store task data for task threads
 const router = useRouter();
 const route = useRoute();
 const meStore = useMeStore();
-const chatStore = useChatStore();
 const { fetchThread, createThread, clearCurrentThread, setPendingMessage } = useThreads();
 
 const {
@@ -224,7 +220,6 @@ watch(threadId, async (newThreadId, oldThreadId) => {
 
     // If switching to existing thread, load messages
     if (newThreadId && newThreadId !== 'new') {
-      chatStore.setThreadId(newThreadId);
       isLoading.value = true;
 
       try {
@@ -319,7 +314,6 @@ const handleChatSend = async (text: string) => {
 
       const newThreadUuid = newThread.id;
       await router.replace(`/chat/${charSlug.value}/${newThreadUuid}`);
-      chatStore.setThreadId(newThreadUuid);
     } catch (err) {
       console.error('Thread creation error', err);
     }
