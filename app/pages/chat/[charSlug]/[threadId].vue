@@ -46,11 +46,7 @@
           ]"
           :style="{ transitionDelay: showContentTransitions ? '0.2s' : '0s' }"
         >
-          <AuthenticationWidget
-            @login-success="handleLoginSuccess"
-            @register-success="handleRegisterSuccess"
-            @logout="handleLogout"
-          />
+          <AuthenticationWidget />
         </div>
 
         <!-- Chat Content Area - takes remaining space -->

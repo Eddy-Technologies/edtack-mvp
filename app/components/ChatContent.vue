@@ -212,7 +212,7 @@ const initializeChat = async () => {
   // Insert messages to messageStream
   messageStream.value = messages.value.map((msg) => {
     if (!msg.sender) {
-      return JSON.parse(msg.content);
+      return { ...JSON.parse(msg.content), isUser: false };
     }
     return { text: msg.content, isUser: true };
   });
@@ -520,7 +520,7 @@ const handleSend = async (text: string) => {
   };
 
   addMessage(userMessage.content, userMessage.type, userMessage.isUser);
-  messageStream.value.push(userMessage);
+  messageStream.value.push({ type: 'text', text: userMessage.content, isUser: true });
 
   // Since we connect immediately in initializeChat, just try to send
   if (wsChat.value?.isConnected) {

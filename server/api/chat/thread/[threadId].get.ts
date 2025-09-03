@@ -27,7 +27,18 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return { success: true, threadData, messageData: threadData.thread_messages.length > 0 ? threadData.thread_messages : null, task: threadData.task_threads } as GetChatThreadRes;
+    if (threadData?.thread_messages) {
+      threadData.thread_messages.sort((a, b) =>
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      );
+    }
+
+    return {
+      success: true,
+      threadData,
+      messageData: threadData?.thread_messages?.length > 0 ? threadData.thread_messages : null,
+      task: threadData?.task_threads?.[0] || null
+    } as GetChatThreadRes;
   } catch (err: any) {
     console.error('Fetch messages API error:', err);
     if (err.statusCode) throw err;
