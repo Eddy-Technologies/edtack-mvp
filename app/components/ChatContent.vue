@@ -334,8 +334,8 @@ const sendMessage = async (text: string) => {
 
   const userInfo = {
     subject: subjectForBackend,
-    level: meStore.level_type || 'PRIMARY_1',
-    country: meStore.country_code || 'SG',
+    level: meStore.level_type,
+    country: meStore.country_code,
     character_slug: character?.slug,
     personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
   };

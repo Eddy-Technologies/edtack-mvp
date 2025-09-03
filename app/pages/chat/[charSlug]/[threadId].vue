@@ -194,7 +194,6 @@ import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import Avatar from '@/components/avatar/Avatar.vue';
 import TaskNotificationRow from '@/components/chat/TaskNotificationRow.vue';
-import { useToast } from '#imports';
 import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
@@ -332,7 +331,7 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       }
     }
   }
-});
+}, { immediate: true });
 
 const handleLoginSuccess = () => {
   // Handle any additional actions after successful login

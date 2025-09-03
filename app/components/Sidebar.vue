@@ -54,9 +54,8 @@
               <Icon name="i-heroicons-chat-bubble-oval-left" class="w-5 h-5 text-gray-600" />
               <div class="flex flex-row items-center space-x-2 truncate">
                 <UBadge
-                  v-if="thread.hasTask"
-                  :color="thread.taskStatus === 'OPEN' ? 'primary' :
-                    thread.taskStatus === 'COMPLETED' ? 'green' : 'gray'"
+                  v-if="thread.task_threads"
+                  :color="thread.task_threads.status === TASK_THREAD_STATUS.OPEN ? 'primary' : 'gray'"
                   size="xs"
                 >
                   Task
@@ -168,6 +167,7 @@ import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
+import { TASK_THREAD_STATUS } from '~~/shared/constants';
 
 const emit = defineEmits([
   'toggle-sidebar',
@@ -191,7 +191,6 @@ const chatThreads = ref<any[]>([]);
 const isLoadingThreads = ref(false);
 
 const router = useRouter();
-const toast = useToast();
 const meStore = useMeStore();
 
 const { isAvatarPlaying, getCharacterBySubject } = useCharacters();
@@ -204,14 +203,13 @@ const isMini = computed(
 const fetchChatThreads = async () => {
   isLoadingThreads.value = true;
   try {
-    const user_id = meStore.user_info_id ? meStore.user_info_id : 1;
-    const response = await fetch(`/api/chat/threads/${user_id}`);
-    if (!response.ok) {
-      throw new Error(`Thread not found or API error: ${response.status}`);
+    const user_id = meStore.user_info_id;
+    const response = await $fetch(`/api/chat/threads/${user_id}`);
+    if (!response?.success) {
+      throw new Error(`Thread not found or API error`);
     }
 
-    const result = await response.json();
-    chatThreads.value = result.data || [];
+    chatThreads.value = response.data || [];
   } catch (err) {
     console.error('Failed to fetch chat threads:', err);
     chatThreads.value = [];
