@@ -13,7 +13,7 @@
           </div>
           <div>
             <h3 class="font-semibold text-gray-800 text-base">
-              {{ slides.length }} Learning {{ slides.length === 1 ? 'Slide' : 'Slides' }}
+              {{ slides.length }} {{ slides.length === 1 ? 'Slide' : 'Slides' }}
             </h3>
           </div>
         </div>
