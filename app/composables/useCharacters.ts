@@ -129,17 +129,6 @@ export const useCharacters = () => {
     return characters.value.find((char) => char.slug === 'eddy') || characters.value[0];
   };
 
-  // State Management Methods
-  const selectCharacterById = async (id: number) => {
-    const character = getCharacterById(id);
-    if (character) {
-      selectedCharacter.value = character;
-      persistSelectedCharacter();
-    } else {
-      console.warn(`Character with id ${id} not found`);
-    }
-  };
-
   const selectCharacterBySlug = async (slug: string) => {
     let character = getCharacterBySlug(slug);
 
@@ -253,7 +242,6 @@ export const useCharacters = () => {
     fetchCharacters,
 
     // State Management (only what's actually used)
-    selectCharacterById,
     selectCharacterBySlug,
     getCharacterBySubject,
     initializeStore,

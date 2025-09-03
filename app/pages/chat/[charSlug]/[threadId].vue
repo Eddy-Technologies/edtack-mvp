@@ -230,7 +230,6 @@ const {
   selectedCharacter,
   initializeStore,
   selectCharacterBySlug,
-  selectCharacterById,
   setPendingMessage,
   isAvatarPlaying,
 } = useCharacters();
@@ -349,7 +348,7 @@ const handleLogout = () => {
 
 const handleCharacterSelection = async (character) => {
   // Update character store
-  await selectCharacterById(character.id);
+  await selectCharacterBySlug(character.slug);
 
   // Navigate to new chat with selected character
   await router.replace(`/chat/${character.slug}/new`);
