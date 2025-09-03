@@ -123,64 +123,15 @@
       </div>
     </div>
 
-    <!-- Floating Avatar Container -->
-    <Transition name="float">
-      <div
-        v-if="showFloatingAvatar"
-        ref="floatingAvatar"
-        :class="[
-          'fixed z-50 bg-gray-700 rounded-xl shadow-2xl overflow-hidden',
-          isDraggingAvatar ? 'cursor-grabbing' : 'transition-all duration-300 ease-out',
-        ]"
-        :style="{
-          left: floatingPosition.x + 'px',
-          top: floatingPosition.y + 'px',
-          width: '300px',
-          height: isFloatingCollapsed ? '48px' : '250px',
-        }"
-      >
-        <!-- Header Panel -->
-        <div
-          :class="[
-            'bg-gray-800 px-3 py-2 flex items-center justify-between',
-            isDraggingAvatar ? 'cursor-grabbing' : 'cursor-move',
-          ]"
-          @mousedown="startDraggingAvatar"
-        >
-          <div class="flex items-center gap-2">
-            <Icon name="i-heroicons-musical-note" class="w-5 h-5 text-gray-300" />
-            <span class="text-sm font-medium text-gray-300">Audio Player</span>
-          </div>
-          <div class="flex items-center gap-1">
-            <!-- Collapse/Expand Button -->
-            <button
-              class="p-1.5 hover:bg-gray-700 rounded transition-colors"
-              @click="toggleFloatingCollapse"
-            >
-              <Icon
-                :name="isFloatingCollapsed ? 'i-heroicons-chevron-down' : 'i-heroicons-chevron-up'"
-                class="w-4 h-4 text-gray-300"
-              />
-            </button>
-            <!-- Close Button -->
-            <button
-              class="p-1.5 hover:bg-gray-700 rounded transition-colors"
-              @click="closeFloatingAvatar"
-            >
-              <Icon name="i-heroicons-x-mark" class="w-4 h-4 text-gray-300" />
-            </button>
-          </div>
-        </div>
-
-        <!-- Container Content (visible when not collapsed) -->
-        <div v-if="!isFloatingCollapsed" class="flex flex-col" style="height: calc(100% - 48px)">
-          <!-- Avatar -->
-          <div class="relative flex-1 overflow-hidden rounded-lg bg-white mx-2 mt-2 mb-2">
-            <Avatar :is-playing="isAvatarPlaying" />
-          </div>
-        </div>
-      </div>
-    </Transition>
+    <!-- Floating Audio Player -->
+    <FloatingAudioPlayer
+      :show="showFloatingAvatar"
+      :initial-position="floatingPosition"
+      :is-playing="isAvatarPlaying"
+      @close="closeFloatingAvatar"
+      @position-change="handlePositionChange"
+      @collapse-toggle="handleCollapseToggle"
+    />
   </div>
 </template>
 
@@ -194,6 +145,7 @@ import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
 import Avatar from '@/components/avatar/Avatar.vue';
 import TaskNotificationRow from '@/components/chat/TaskNotificationRow.vue';
+import FloatingAudioPlayer from '@/components/audio/FloatingAudioPlayer.vue';
 import { useMeStore } from '~/stores/me';
 import { useChatStore } from '~/stores/chat';
 import { useCharacters } from '~/composables/useCharacters';
@@ -214,7 +166,6 @@ const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
 const showFloatingAvatar = ref(false);
 const floatingPosition = ref({ x: 0, y: 0 });
-const isDraggingAvatar = ref(false);
 const isFloatingCollapsed = ref(false);
 const chatContentRef = ref<any>(null);
 const floatingAudio = ref<HTMLAudioElement | null>(null);
@@ -320,18 +271,6 @@ watch(threadId, async (newThreadId, oldThreadId) => {
   }
 }, { immediate: true });
 
-const handleLoginSuccess = () => {
-  // Handle any additional actions after successful login
-};
-
-const handleRegisterSuccess = () => {
-  // Handle any additional actions after successful registration
-};
-
-const handleLogout = () => {
-  // Handle any additional actions after logout
-};
-
 const handleCharacterSelection = async (character) => {
   // Update character store
   await selectCharacterBySlug(character.slug);
@@ -404,37 +343,12 @@ const closeFloatingAvatar = () => {
   isFloatingCollapsed.value = false;
 };
 
-const toggleFloatingCollapse = () => {
-  isFloatingCollapsed.value = !isFloatingCollapsed.value;
+const handlePositionChange = (position: { x: number; y: number }) => {
+  floatingPosition.value = position;
 };
 
-const startDraggingAvatar = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  if (target.tagName === 'BUTTON' || target.closest('button')) {
-    return;
-  }
-
-  isDraggingAvatar.value = true;
-  const startX = e.clientX - floatingPosition.value.x;
-  const startY = e.clientY - floatingPosition.value.y;
-
-  const handleDrag = (e: MouseEvent) => {
-    if (isDraggingAvatar.value) {
-      floatingPosition.value = {
-        x: e.clientX - startX,
-        y: e.clientY - startY,
-      };
-    }
-  };
-
-  const stopDragging = () => {
-    isDraggingAvatar.value = false;
-    document.removeEventListener('mousemove', handleDrag);
-    document.removeEventListener('mouseup', stopDragging);
-  };
-
-  document.addEventListener('mousemove', handleDrag);
-  document.addEventListener('mouseup', stopDragging);
+const handleCollapseToggle = (collapsed: boolean) => {
+  isFloatingCollapsed.value = collapsed;
 };
 
 const handleResize = () => {

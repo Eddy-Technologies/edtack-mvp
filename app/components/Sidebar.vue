@@ -76,20 +76,8 @@
       </div>
     </div>
 
-    <!-- Simple cross icon for collapsed sidebar when audio player is floating -->
-    <div v-if="isAvatarFloating && isMini" class="p-4 flex justify-center">
-      <UTooltip text="Close audio player">
-        <button
-          class="p-3 bg-gray-600 hover:bg-gray-500 text-white rounded-full transition-colors"
-          @click="toggleFloatingAvatar"
-        >
-          <Icon name="i-heroicons-x-mark" class="w-6 h-6" />
-        </button>
-      </UTooltip>
-    </div>
-
     <!-- Avatar & Audio Player Container -->
-    <div v-else class="p-4">
+    <div v-if="!isMini" class="p-4">
       <!-- Show placeholder when floating and sidebar is expanded -->
       <div
         v-if="isAvatarFloating"
