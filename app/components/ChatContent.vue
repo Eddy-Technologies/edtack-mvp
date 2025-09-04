@@ -229,7 +229,6 @@ const initializeChat = async () => {
       }`,
       isUser: true,
       id: props.task.id,
-      isTaskInitPrompt: true
     };
 
     // Add init_prompt as the first message
@@ -237,8 +236,9 @@ const initializeChat = async () => {
 
     // If task has generated_content, add it as the second message
     if (props.task.generated_content) {
+      console.log('test', typeof props.task.generated_content, props.task.generated_content);
       const generatedContentMessage = {
-        content: props.task.generated_content,
+        ...props.task.generated_content,
         isUser: false,
         id: `generated-content-${props.task.id}`,
         isTaskGenerated: true
@@ -492,7 +492,7 @@ const handleWebSocketMessage = (message: any) => {
     isWaitingForResponse.value = false;
 
     // If this is a response to task generation, update the task's generated_content
-    if (props.task && message.slides.length > 0) {
+    if (props.task && !props.task.generated_content && message.slides.length > 0) {
       updateTaskGeneratedContent(message);
 
       // Mark the message as task-generated for proper ordering

@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const userInfo = await getUserInfo(event);
     const { thread_id, content, isUser, type, uuid } = await readBody<PostMessageReq>(event);
-    console.log('Post message body:', { thread_id, content, isUser, type, uuid });
     if (!thread_id || !content) {
       throw createError({ statusCode: 400, statusMessage: 'thread_id and content are required' });
     }
