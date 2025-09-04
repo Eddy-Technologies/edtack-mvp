@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 // This file handles the OAuth callback from an external authentication provider
 export default defineEventHandler(async (event) => {

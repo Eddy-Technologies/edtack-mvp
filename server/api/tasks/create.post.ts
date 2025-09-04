@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { RECURRENCE_FREQUENCY, TASK_STATUS, TASK_THREAD_STATUS } from '~~/shared/constants';
 import { getUserInfo } from '~~/server/utils/auth';
 import { codeService, getCodes } from '~~/server/services/codeService';

@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 interface UpdateTaskContentReq {
   generated_content: any;

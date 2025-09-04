@@ -1,5 +1,5 @@
 import { getStripe } from '~~/server/utils/stripe';
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { ORDER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {

@@ -1,5 +1,5 @@
 import { getUserInfo } from '../../utils/auth';
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { Database } from '~~/types/supabase';
 
 interface PostThreadRes {

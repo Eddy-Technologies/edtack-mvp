@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 export default defineEventHandler(async (event) => {
   try {

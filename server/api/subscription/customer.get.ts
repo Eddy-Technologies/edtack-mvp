@@ -1,5 +1,5 @@
 import type Stripe from 'stripe';
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
 import { STRIPE_CUSTOMER } from '~~/shared/constants';
 import { requireAuth } from '~~/server/utils/auth';

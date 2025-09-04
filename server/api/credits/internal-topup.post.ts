@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getCodes } from '~~/server/services/codeService';
 import { getUserInfo } from '~~/server/utils/auth';
 

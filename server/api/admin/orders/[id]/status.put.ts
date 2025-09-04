@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { requireAdmin } from '~~/server/utils/auth';
 import { ORDER_STATUS, ORDER_FULFILLMENT } from '~~/shared/constants';
 

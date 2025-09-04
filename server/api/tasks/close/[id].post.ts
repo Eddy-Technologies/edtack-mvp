@@ -1,4 +1,4 @@
-import { getSupabaseClient } from '#imports';
+import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { TASK_STATUS } from '~~/shared/constants';
 import { getUserInfo } from '~~/server/utils/auth';
 
