@@ -4,6 +4,9 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const id = getRouterParam(event, 'threadId');
+    if (!id) {
+      throw createError({ statusCode: 400, statusMessage: 'Thread ID is required' });
+    }
 
     // Fetch thread data
     const { data: threadData, error: threadError } = await supabase
@@ -21,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
     if (threadData?.thread_messages) {
       threadData.thread_messages.sort((a, b) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        new Date(a.created_at!).getTime() - new Date(b.created_at!).getTime()
       );
     }
 
