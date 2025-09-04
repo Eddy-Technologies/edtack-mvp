@@ -68,12 +68,12 @@
 
         <!-- Current Slide Display -->
         <div v-if="currentSlide" class="bg-white rounded-lg p-4 shadow-sm">
-          <h2 v-if="currentSlide.title" class="text-xl font-semibold mb-3">
+          <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
             {{ currentSlide.title }}
           </h2>
           <div
             v-if="currentSlide.content"
-            class="prose prose-sm max-w-none"
+            class="text-lg max-w-none"
             v-html="processedSlideContent"
           />
 
@@ -83,11 +83,50 @@
               <div
                 v-for="(option, index) in currentSlide.options"
                 :key="option.id"
-                class="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+                :class="[
+                  'p-3 border rounded-lg cursor-pointer transition-all',
+                  selectedOptions[currentSlide.id]?.id === option.id
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:bg-gray-50'
+                ]"
                 @click="selectOption(option)"
               >
                 <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
                 {{ option.option_text }}
+              </div>
+            </div>
+
+            <!-- Check Answer Button for Questions -->
+            <div class="mt-4 flex justify-center">
+              <button
+                v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
+                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                @click="checkAnswer(currentSlide)"
+              >
+                Check Answer
+              </button>
+            </div>
+
+            <!-- Answer Feedback -->
+            <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+              <div
+                :class="[
+                  'p-3 rounded-lg',
+                  answeredQuestions[currentSlide.id]?.isCorrect
+                    ? 'bg-green-50 border border-green-200'
+                    : 'bg-red-50 border border-red-200'
+                ]"
+              >
+                <p
+                  :class="[
+                    'text-sm font-semibold',
+                    answeredQuestions[currentSlide.id]?.isCorrect
+                      ? 'text-green-800'
+                      : 'text-red-800'
+                  ]"
+                >
+                  {{ answeredQuestions[currentSlide.id]?.feedback }}
+                </p>
               </div>
             </div>
           </div>
@@ -119,6 +158,16 @@
               <div class="text-gray-600 truncate">{{ slide.title }}</div>
             </div>
           </div>
+        </div>
+
+        <!-- Task Submit Button -->
+        <div v-if="task" class="mt-6 flex justify-center">
+          <button
+            class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+            @click="submitTask"
+          >
+            Submit Task
+          </button>
         </div>
       </div>
     </div>
@@ -155,6 +204,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { useToast } from '#imports';
+
+const toast = useToast();
 
 interface SlideData {
   id: string;
@@ -162,11 +214,13 @@ interface SlideData {
   title: string;
   content: string;
   type: string;
+  question_type?: string;
   options?: Array<{
     id: string;
     option_text: string;
     imageUrl?: string;
   }>;
+  answer: any[];
   explanation?: string;
 }
 
@@ -174,6 +228,7 @@ const props = defineProps<{
   slides: SlideData[];
   initialSlideIndex?: number;
   showThumbnails?: boolean;
+  task?: any; // Task data to determine if this is a task
 }>();
 
 const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view']);
@@ -186,6 +241,10 @@ const mobileActiveTab = ref<'slides' | 'chat'>('chat');
 // Slide navigation
 const currentSlideIndex = ref(props.initialSlideIndex || 0);
 const showExplanation = ref(false);
+
+// Question and answer state
+const selectedOptions = ref<Record<string, any>>({});
+const answeredQuestions = ref<Record<string, { isCorrect: boolean; feedback: string }>>({});
 
 // Refs
 const rightPanel = ref<HTMLElement>();
@@ -229,11 +288,52 @@ function jumpToSlide(index: number) {
 }
 
 function selectOption(option: any) {
-  showExplanation.value = true;
-  emit('option-selected', {
-    slideId: currentSlide.value.id,
-    selectedOption: option,
-    slide: currentSlide.value
+  // Store selected option for this slide
+  selectedOptions.value[currentSlide.value.id] = option;
+
+  // Clear any previous answer for this slide
+  if (answeredQuestions.value[currentSlide.value.id]) {
+    answeredQuestions.value[currentSlide.value.id] = undefined as any;
+  }
+}
+
+// Check answer for questions
+function checkAnswer(slide: SlideData) {
+  const selectedOption = selectedOptions.value[slide.id];
+  if (!selectedOption) return;
+
+  if (slide.options && slide.answer && slide.answer.length > 0) {
+    // Check if selected option matches the correct answer
+    // TODO: currently only can check mcq and using index to check which is not very safe. should use ID matching instead
+    const correctAnswerIndex = slide.answer[0];
+    const correctOption = slide.options[correctAnswerIndex];
+    const isCorrect = !!(correctOption && selectedOption.id === correctOption.id);
+
+    answeredQuestions.value[slide.id] = {
+      isCorrect,
+      feedback: isCorrect ? '✅ Correct!' : '❌ Incorrect. Try again!'
+    };
+
+    // Show explanation if available
+    if (slide.explanation) {
+      showExplanation.value = true;
+    }
+  } else {
+    // For other question types or questions without provided answers, show placeholder
+    toast.add({
+      title: 'Answer Checked',
+      description: 'This question type will be supported soon!',
+      color: 'blue'
+    });
+  }
+}
+
+// Submit task
+function submitTask() {
+  toast.add({
+    title: 'Task Submitted',
+    description: 'Your task submission is being processed. API integration coming soon!',
+    color: 'green'
   });
 }
 
@@ -271,22 +371,6 @@ function checkMobile() {
   isMobile.value = window.innerWidth < 768;
 }
 
-onMounted(() => {
-  checkMobile();
-  window.addEventListener('resize', checkMobile);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile);
-  document.removeEventListener('mousemove', handleResize);
-  document.removeEventListener('mouseup', stopResize);
-});
-
-// Watch mobile tab changes
-watch(mobileActiveTab, (newTab) => {
-  // Could emit events to parent to handle mobile tab switching
-});
-
 // Keyboard navigation
 function handleKeyPress(e: KeyboardEvent) {
   if (e.key === 'ArrowLeft') previousSlide();
@@ -295,10 +379,20 @@ function handleKeyPress(e: KeyboardEvent) {
 }
 
 onMounted(() => {
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
   document.addEventListener('keydown', handleKeyPress);
 });
 
 onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile);
+  document.removeEventListener('mousemove', handleResize);
+  document.removeEventListener('mouseup', stopResize);
   document.removeEventListener('keydown', handleKeyPress);
+});
+
+// Watch mobile tab changes
+watch(mobileActiveTab, (newTab) => {
+  // Could emit events to parent to handle mobile tab switching
 });
 </script>

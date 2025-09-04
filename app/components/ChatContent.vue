@@ -31,13 +31,13 @@
     </div>
 
     <!-- Split Screen Mode -->
-    <SplitScreenContainer
+    <SlideContainer
       v-if="viewMode === 'split' && selectedSlides.length > 0"
       :slides="selectedSlides"
       :initial-slide-index="0"
       :show-thumbnails="true"
+      :task="task"
       @slide-changed="handleSlideChanged"
-      @option-selected="handleOptionSelected"
       @close-split-view="handleCloseSplitView"
     >
       <template #conversation>
@@ -54,7 +54,6 @@
               @finish="handleFinish"
               @open-split-view="(slides) => handleOpenSplitView(slides, index)"
               @slide-changed="handleSlideChanged"
-              @option-selected="handleOptionSelected"
             />
           </div>
 
@@ -68,7 +67,7 @@
           <div ref="bottomAnchor" />
         </div>
       </template>
-    </SplitScreenContainer>
+    </SlideContainer>
 
     <!-- Stream Mode (Original) -->
     <div v-if="viewMode === 'stream'" ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-24 space-y-8">
@@ -85,7 +84,6 @@
           @finish="handleFinish"
           @open-split-view="(slides) => handleOpenSplitView(slides, index)"
           @slide-changed="handleSlideChanged"
-          @option-selected="handleOptionSelected"
         />
       </div>
 
@@ -106,18 +104,17 @@ import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
-import SplitScreenContainer from '@/components/chat/SplitScreenContainer.vue';
+import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 import mockQuizData from '~/mockQuizData';
-import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
 
 // Props interface - simplified
 interface ChatContentProps {
   threadId: string;
   character: any;
-  threadData: GetChatThreadRes;
+  threadData: any;
   task: any; // TODO: define proper task interface
 }
 
@@ -671,11 +668,6 @@ const handleSend = async (text: string) => {
 
 const handleSlideChanged = (index: number) => {
   currentSlideIndex.value = index;
-};
-
-const handleOptionSelected = (data: any) => {
-  // Handle option selection from split screen or placeholder card
-  console.log('Option selected:', data);
 };
 
 const handleOpenSplitView = (slides: any[], messageIndex?: number) => {

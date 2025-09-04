@@ -72,6 +72,7 @@ export function useThreads() {
       }
 
       currentThread.value = threadData;
+      messages.value = threadData?.thread_messages || [];
       return { thread: threadData, messages: threadData?.thread_messages || [], task: threadData?.task_threads || null };
     } catch (err) {
       console.error('Error loading thread:', err);
