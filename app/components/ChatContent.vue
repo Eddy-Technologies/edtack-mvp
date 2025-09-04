@@ -45,14 +45,15 @@
           <div
             v-for="(unit, index) in flattenedPlaybackUnits"
             :key="index"
-            :data-message-id="`split-message-${index}`"
+            :ref="(el) => setMessageRef(el, unit.props.messageId)"
+            :data-message-id="unit.props.messageId"
           >
             <component
               :is="unit.component"
               v-bind="unit.props"
               :start-playback="currentPlaybackIndex === index"
               @finish="handleFinish"
-              @open-split-view="(slides) => handleOpenSplitView(slides, index)"
+              @open-split-view="(slides) => handleOpenSplitView(slides, unit.props.messageId)"
               @slide-changed="handleSlideChanged"
             />
           </div>
@@ -74,15 +75,15 @@
       <div
         v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
-        :ref="(el) => setMessageRef(el, `stream-message-${index}`)"
-        :data-message-id="`stream-message-${index}`"
+        :ref="(el) => setMessageRef(el, unit.props.messageId)"
+        :data-message-id="unit.props.messageId"
       >
         <component
           :is="unit.component"
           v-bind="unit.props"
           :start-playback="currentPlaybackIndex === index"
           @finish="handleFinish"
-          @open-split-view="(slides) => handleOpenSplitView(slides, index)"
+          @open-split-view="(slides) => handleOpenSplitView(slides, unit.props.messageId)"
           @slide-changed="handleSlideChanged"
         />
       </div>
@@ -108,6 +109,7 @@ import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
+import { useTask } from '~/composables/useTask';
 import mockQuizData from '~/mockQuizData';
 
 // Props interface - simplified
@@ -124,6 +126,8 @@ const props = defineProps<ChatContentProps>();
 // Use global thread state instead of local state
 const { messages, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
+
+const { updateTaskGeneratedContent } = useTask();
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 
@@ -156,14 +160,6 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
-
-// Dynamic conversation summary based on character prop
-const conversationSummaryComputed = computed(() => {
-  if (props.character?.personality_prompt) {
-    return props.character.personality_prompt;
-  }
-  return 'Eddy is a lion character that talks and is highly intelligent, he educates with passion.';
-});
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
@@ -214,41 +210,6 @@ const initializeChat = async () => {
     return { text: content, isUser: true, id };
   });
 
-  console.log('task', props.task);
-  // For task threads, ensure init_prompt is the first message
-  if (props.task?.init_prompt) {
-    const initPromptMessage = {
-      type: 'text',
-      text: `Task: ${
-        typeof props.task.init_prompt === 'object' && props.task.init_prompt !== null && 'prompt' in props.task.init_prompt ?
-            (props.task.init_prompt as any).prompt :
-            JSON.stringify(props.task.init_prompt)
-      }`,
-      isUser: true,
-      id: props.task.id,
-    };
-
-    // Add init_prompt as the first message
-    messageStream.value = [initPromptMessage, ...messageStream.value];
-
-    // If task has generated_content, add it as the second message
-    if (props.task.generated_content) {
-      console.log('test', typeof props.task.generated_content, props.task.generated_content);
-      const generatedContentMessage = {
-        ...props.task.generated_content,
-        isUser: false,
-        id: `generated-content-${props.task.id}`,
-        isTaskGenerated: true
-      };
-      // Insert generated content after init prompt but before other messages
-      const otherMessages = messageStream.value.slice(1); // Remove the init prompt we just added
-      messageStream.value = [initPromptMessage, generatedContentMessage, ...otherMessages];
-    }
-  }
-
-  console.log('Inserting messages to messageStream:', messageStream.value);
-  messageStream.value = messageStream.value || [];
-
   console.log('Using thread ID:', props.threadId);
 
   // Track the current thread ID to prevent unnecessary re-initialization
@@ -268,18 +229,10 @@ const initializeChat = async () => {
       // Check for task generation or pending message
       const pendingMessage = getPendingMessage();
 
-      if (props.task && props.task.init_prompt && !props.task.generated_content) {
+      if (props.task) {
         // This is a task that needs initial generation
         console.log('Starting task generation for task:', props.task);
-        clearPendingMessage(); // Clear any pending message since we're doing task generation
-
-        nextTick(() => {
-          startTaskGeneration();
-        });
-      } else if (props.task && props.task.init_prompt && props.task.generated_content) {
-        // This is a task that already has generated content - no WebSocket needed
-        console.log('Task already has generated content, displaying stored data');
-        // The messageStream already includes both init_prompt and generated_content from above
+        initTask();
       } else if (pendingMessage) {
         // Regular pending message
         console.log('Found pending message, sending:', pendingMessage);
@@ -363,12 +316,6 @@ onMounted(() => {
   );
 });
 
-onUnmounted(() => {
-  if (wsChat.value) {
-    wsChat.value.disconnect();
-  }
-});
-
 // Send message directly to WebSocket
 const sendMessage = async (text: string) => {
   if (!wsChat.value?.isConnected || !text.trim()) {
@@ -384,7 +331,7 @@ const sendMessage = async (text: string) => {
     level: meStore.level_type,
     country: meStore.country_code,
     character_slug: character?.slug,
-    personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
+    personality_prompt: character?.personality_prompt
   };
 
   let success: boolean;
@@ -402,6 +349,43 @@ const sendMessage = async (text: string) => {
   return success;
 };
 
+const initTask = () => { // For task threads, ensure init_prompt is the first message
+  if (props.task?.init_prompt) {
+    const initPromptMessage = {
+      type: 'text',
+      text: `Task: ${
+        typeof props.task.init_prompt === 'object' && props.task.init_prompt !== null && 'prompt' in props.task.init_prompt ?
+            (props.task.init_prompt as any).prompt :
+            JSON.stringify(props.task.init_prompt)
+      }`,
+      isUser: true,
+      id: props.task.id,
+    };
+
+    // Add init_prompt as the first message
+    messageStream.value = [initPromptMessage, ...messageStream.value];
+
+    // If task has generated_content, add it as the second message
+    if (props.task.generated_content) {
+      const generatedContentMessage = {
+        ...props.task.generated_content,
+        isUser: false,
+        id: `generated-content-${props.task.id}`,
+        isTaskGenerated: true
+      };
+      // Insert generated content after init prompt but before other messages
+      const otherMessages = messageStream.value.slice(1); // Remove the init prompt we just added
+      messageStream.value = [initPromptMessage, generatedContentMessage, ...otherMessages];
+    }
+  }
+
+  clearPendingMessage();
+
+  nextTick(() => {
+    startTaskGeneration();
+  });
+};
+
 // Start task generation via WebSocket
 const startTaskGeneration = async () => {
   console.log('Starting task generation via WebSocket for task:', props.task);
@@ -417,7 +401,7 @@ const startTaskGeneration = async () => {
     level: meStore.level_type,
     country: meStore.country_code,
     character_slug: character?.slug,
-    personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
+    personality_prompt: character?.personality_prompt
   };
 
   const prompt = (props.task.init_prompt as any).prompt;
@@ -429,34 +413,6 @@ const startTaskGeneration = async () => {
   }
 
   return success;
-};
-
-// Update task generated content in database
-const updateTaskGeneratedContent = async (generatedMessage: any) => {
-  if (!props.task?.id) {
-    console.warn('Cannot update task content: No task ID available');
-    return;
-  }
-
-  try {
-    console.log('Updating task generated content for task:', props.task.id);
-
-    const response = await $fetch(`/api/tasks/update-generation/${props.task.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        generated_content: generatedMessage,
-      }),
-    });
-
-    if (response.success) {
-      console.log('Successfully updated task generated content');
-    }
-  } catch (error) {
-    console.error('Failed to update task generated content:', error);
-  }
 };
 
 // Process queued messages when WebSocket connects
@@ -490,7 +446,7 @@ const handleWebSocketMessage = (message: any) => {
 
     // If this is a response to task generation, update the task's generated_content
     if (props.task && !props.task.generated_content && message.slides.length > 0) {
-      updateTaskGeneratedContent(message);
+      updateTaskGeneratedContent(props.task.id, message);
 
       // Mark the message as task-generated for proper ordering
       messageStream.value[messageStream.value.length - 1].isTaskGenerated = true;
@@ -506,11 +462,7 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  if (
-    message.status === 'timeout' ||
-    message.status === 'cancelled' ||
-    message.status === 'error'
-  ) {
+  if (['timeout', 'cancelled', 'error'].includes(message.status)) {
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -524,8 +476,6 @@ const handleWebSocketMessage = (message: any) => {
     isWaitingForResponse.value = false;
     return;
   }
-
-  // Handle other message status types (heartbeat, status_update are handled by useWebSocketChat)
 };
 
 // Flatten the entire messageStream into an ordered array of playback units
@@ -670,14 +620,14 @@ const handleSlideChanged = (index: number) => {
   currentSlideIndex.value = index;
 };
 
-const handleOpenSplitView = (slides: any[], messageIndex?: number) => {
+const handleOpenSplitView = (slides: any[], messageId?: string) => {
   // Store the selected slides and switch to split view
   selectedSlides.value = slides;
   viewMode.value = 'split';
   nextTick(() => {
-    if (typeof messageIndex === 'number') {
+    if (typeof messageId === 'string') {
       // Scroll to the specific message that contains the slides
-      scrollToMessage(messageIndex);
+      scrollToMessage(messageId);
     } else {
       // Fallback to bottom scroll if no index provided
       bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -705,21 +655,17 @@ const setMessageRef = (el: HTMLElement | null, messageId: string) => {
 };
 
 // Helper function to scroll to a specific message
-const scrollToMessage = (messageIndex: number) => {
-  const messageId = `split-message-${messageIndex}`;
-  const streamMessageId = `stream-message-${messageIndex}`;
-
-  // Try to find the message element in either view
-  const element = messageRefs.value[messageId] || messageRefs.value[streamMessageId];
+const scrollToMessage = (messageId: string) => {
+  const element = messageRefs.value[messageId];
 
   if (element) {
-    console.log('Scrolling to message at index:', messageIndex);
+    console.log('Scrolling to message at index:', messageId);
     element.scrollIntoView({
       behavior: 'smooth',
       block: 'center'
     });
   } else {
-    console.warn('Message element not found for index:', messageIndex);
+    console.warn('Message element not found for index:', messageId);
     // Fallback to bottom scroll
     bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
   }
