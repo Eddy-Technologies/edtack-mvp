@@ -2,11 +2,6 @@ import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { Database } from '~~/types/supabase';
 
-interface PostMessageRes {
-  success: boolean;
-  data?: Database['public']['Tables']['thread_messages']['Row'];
-}
-
 export interface PostMessageReq {
   thread_id: string;
   content: string;
@@ -43,7 +38,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return { success: true, data } as PostMessageRes;
+    return { success: true, data };
   } catch (err: any) {
     console.error('Send message API error:', err);
     if (err.statusCode) throw err;

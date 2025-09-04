@@ -2,12 +2,6 @@ import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { Database } from '~~/types/supabase';
 
-interface PostThreadRes {
-  success: boolean;
-  data?: Database['public']['Tables']['threads']['Row'];
-  error?: string;
-}
-
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
@@ -31,7 +25,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    return { success: true, data } as PostThreadRes;
+    return { success: true, data };
   } catch (err: any) {
     console.error('Create thread API error:', err);
     if (err.statusCode) throw err;
