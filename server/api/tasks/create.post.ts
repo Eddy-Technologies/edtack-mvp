@@ -153,8 +153,9 @@ export default defineEventHandler(async (event) => {
       chatThread = newChatThread;
 
       // Prepare initial prompt for content generation
+      // TODO: might need the chapters also
       const initPrompt = {
-        prompt: `Create a quiz for the topic: ${subject}. Include ${questionsPerQuiz} questions with a required score of ${requiredScore}.`
+        prompt: `Create a quiz for the topic: ${subject}. Include ${questionsPerQuiz} questions.`
       };
 
       // Create the initial task thread record

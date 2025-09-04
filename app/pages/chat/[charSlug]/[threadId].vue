@@ -57,6 +57,8 @@
             :thread-id="threadId"
             :messages="[]"
             :character="selectedCharacter"
+            :thread-data="threadData"
+            :task="task"
           />
         </div>
 
@@ -163,6 +165,7 @@ const isFloatingCollapsed = ref(false);
 const chatContentRef = ref<any>(null);
 const floatingAudio = ref<HTMLAudioElement | null>(null);
 const task = ref<any>(null); // Store task data for task threads
+const threadData = ref<any>(null); // Store thread data
 
 const router = useRouter();
 const route = useRoute();
@@ -225,20 +228,11 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       try {
         const response = await fetchThread(newThreadId);
         if (!response) return;
-        const { messages: threadMessages, task: taskRes } = response;
-        // Check if this is a task thread that needs initialization
-        if (taskRes && !threadMessages?.length) {
-          console.log('init prompt', taskRes.init_prompt);
-          setPendingMessage(JSON.stringify(taskRes.init_prompt));
-        }
-
-        // Store task data if this is a task thread
-        if (taskRes) {
-          task.value = taskRes;
-          console.log('Task thread detected in watcher:', task.value);
-        } else {
-          task.value = null;
-        }
+        const { thread, task: taskRes } = response;
+        // Store thread data for use in ChatContent
+        threadData.value = thread || null;
+        // Store task data for use in ChatContent
+        task.value = taskRes || null;
       } catch (err) {
         console.error('Error loading thread:', err);
       }

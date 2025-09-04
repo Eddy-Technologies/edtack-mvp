@@ -111,11 +111,14 @@ import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 import mockQuizData from '~/mockQuizData';
+import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
 
 // Props interface - simplified
 interface ChatContentProps {
   threadId: string;
   character: any;
+  threadData: GetChatThreadRes;
+  task: any; // TODO: define proper task interface
 }
 
 // Component props
@@ -213,6 +216,39 @@ const initializeChat = async () => {
     }
     return { text: content, isUser: true, id };
   });
+
+  console.log('task', props.task);
+  // For task threads, ensure init_prompt is the first message
+  if (props.task?.init_prompt) {
+    const initPromptMessage = {
+      type: 'text',
+      text: `Task: ${
+        typeof props.task.init_prompt === 'object' && props.task.init_prompt !== null && 'prompt' in props.task.init_prompt ?
+            (props.task.init_prompt as any).prompt :
+            JSON.stringify(props.task.init_prompt)
+      }`,
+      isUser: true,
+      id: props.task.id,
+      isTaskInitPrompt: true
+    };
+
+    // Add init_prompt as the first message
+    messageStream.value = [initPromptMessage, ...messageStream.value];
+
+    // If task has generated_content, add it as the second message
+    if (props.task.generated_content) {
+      const generatedContentMessage = {
+        content: props.task.generated_content,
+        isUser: false,
+        id: `generated-content-${props.task.id}`,
+        isTaskGenerated: true
+      };
+      // Insert generated content after init prompt but before other messages
+      const otherMessages = messageStream.value.slice(1); // Remove the init prompt we just added
+      messageStream.value = [initPromptMessage, generatedContentMessage, ...otherMessages];
+    }
+  }
+
   console.log('Inserting messages to messageStream:', messageStream.value);
   messageStream.value = messageStream.value || [];
 
@@ -225,20 +261,41 @@ const initializeChat = async () => {
     console.log('🚀 Initializing WebSocket chat with thread ID:', props.threadId);
     wsChat.value = useWebSocketChat(props.threadId);
 
-    // Always connect immediately
+    // Connect and wait for connection
     wsChat.value?.connect();
-    console.log('🔌 Connected WebSocket');
 
-    // Check for pending message and send it
-    const pendingMessage = getPendingMessage();
-    if (pendingMessage) {
-      console.log('Found pending message, sending:', pendingMessage);
-      clearPendingMessage();
+    try {
+      await wsChat.value?.waitForConnection();
+      console.log('🔌 WebSocket connected successfully');
 
-      // Wait for connection then send
-      nextTick(() => {
-        handleSend(pendingMessage);
-      });
+      // Check for task generation or pending message
+      const pendingMessage = getPendingMessage();
+
+      if (props.task && props.task.init_prompt && !props.task.generated_content) {
+        // This is a task that needs initial generation
+        console.log('Starting task generation for task:', props.task);
+        clearPendingMessage(); // Clear any pending message since we're doing task generation
+
+        nextTick(() => {
+          startTaskGeneration();
+        });
+      } else if (props.task && props.task.init_prompt && props.task.generated_content) {
+        // This is a task that already has generated content - no WebSocket needed
+        console.log('Task already has generated content, displaying stored data');
+        // The messageStream already includes both init_prompt and generated_content from above
+      } else if (pendingMessage) {
+        // Regular pending message
+        console.log('Found pending message, sending:', pendingMessage);
+        clearPendingMessage();
+
+        // Send immediately since we're already connected
+        nextTick(() => {
+          handleSend(pendingMessage);
+        });
+      }
+    } catch (error) {
+      console.error('Failed to connect WebSocket:', error);
+      // Handle connection failure gracefully
     }
   }
 };
@@ -348,6 +405,63 @@ const sendMessage = async (text: string) => {
   return success;
 };
 
+// Start task generation via WebSocket
+const startTaskGeneration = async () => {
+  console.log('Starting task generation via WebSocket for task:', props.task);
+  if (!wsChat.value?.isConnected || !props.task?.init_prompt) {
+    console.warn('Cannot start task generation: WebSocket not connected or no task data');
+    return false;
+  }
+  const character = props.character;
+  const subjectForBackend = character?.subject?.toLowerCase() || 'general';
+
+  const userInfo = {
+    subject: subjectForBackend,
+    level: meStore.level_type,
+    country: meStore.country_code,
+    character_slug: character?.slug,
+    personality_prompt: character?.personality_prompt || conversationSummaryComputed.value,
+  };
+
+  const prompt = (props.task.init_prompt as any).prompt;
+  const success = wsChat.value.startTaskGeneration(prompt, userInfo);
+
+  if (success) {
+    isFirstMessage.value = false;
+    isWaitingForResponse.value = true;
+  }
+
+  return success;
+};
+
+// Update task generated content in database
+const updateTaskGeneratedContent = async (generatedMessage: any) => {
+  if (!props.task?.id) {
+    console.warn('Cannot update task content: No task ID available');
+    return;
+  }
+
+  try {
+    console.log('Updating task generated content for task:', props.task.id);
+
+    const response = await $fetch(`/api/tasks/update-generation/${props.task.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        generated_content: generatedMessage,
+      }),
+    });
+
+    if (response.success) {
+      console.log('Successfully updated task generated content');
+    }
+  } catch (error) {
+    console.error('Failed to update task generated content:', error);
+  }
+};
+
 // Process queued messages when WebSocket connects
 const processMessageQueue = () => {
   if (wsChat.value?.isConnected && messageQueue.value.length > 0) {
@@ -376,6 +490,14 @@ const handleWebSocketMessage = (message: any) => {
 
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
+
+    // If this is a response to task generation, update the task's generated_content
+    if (props.task && message.slides.length > 0) {
+      updateTaskGeneratedContent(message);
+
+      // Mark the message as task-generated for proper ordering
+      messageStream.value[messageStream.value.length - 1].isTaskGenerated = true;
+    }
 
     // The watcher will automatically handle slides and scrolling
     // For messages without slides, scroll to bottom

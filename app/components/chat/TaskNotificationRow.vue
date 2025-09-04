@@ -84,7 +84,6 @@ const router = useRouter();
 interface Task {
   id: string;
   taskThreadId?: string;
-  chatThreadId?: string;
   name: string;
   subject: string;
   credit: number;
@@ -116,28 +115,16 @@ const subjectToCharacterMap = computed(() => {
     }
   });
 
-  // Ensure GENERAL fallback exists
-  if (!map['GENERAL']) {
-    const generalChar = dbCharacters.value.find((c) => c.slug === 'eddy') || dbCharacters.value[0];
-    if (generalChar) {
-      map['GENERAL'] = {
-        name: generalChar.name,
-        image: generalChar.image_url || '/assets/eddy.png',
-        slug: generalChar.slug
-      };
-    }
-  }
-
   return map;
 });
 
 const getCharacterImage = (subject: string): string => {
-  const character = subjectToCharacterMap.value[subject.toUpperCase()] || subjectToCharacterMap.value['GENERAL'];
+  const character = subjectToCharacterMap.value[subject.toUpperCase()];
   return character?.image || '/assets/eddy.png';
 };
 
 const getCharacterName = (subject: string): string => {
-  const character = subjectToCharacterMap.value[subject.toUpperCase()] || subjectToCharacterMap.value['GENERAL'];
+  const character = subjectToCharacterMap.value[subject.toUpperCase()];
   return character?.name || 'Eddy';
 };
 
@@ -170,14 +157,11 @@ const loadOpenTasks = async () => {
 const navigateToTask = (task: Task) => {
   // Navigate to the chat thread with the appropriate character
   // Use chatThreadId if available, otherwise fallback to taskThreadId or id
-  const threadId = task.chatThreadId || task.taskThreadId || task.id;
-  if (threadId) {
-    // Get character slug based on subject
-    const character = subjectToCharacterMap.value[task.subject.toUpperCase()] || subjectToCharacterMap.value['GENERAL'];
-    const characterSlug = character?.slug || 'eddy';
+  // Get character slug based on subject
+  const character = subjectToCharacterMap.value[task.subject.toUpperCase()];
+  const characterSlug = character?.slug;
 
-    router.replace(`/chat/${characterSlug}/${threadId}`);
-  }
+  router.replace(`/chat/${characterSlug}/${task.taskThreadId}`);
 };
 
 onMounted(async () => {

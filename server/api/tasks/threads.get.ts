@@ -1,8 +1,6 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
 import { getSupabaseClient } from '#imports';
 import { getUserInfo } from '~~/server/utils/auth';
 import { TASK_THREAD_STATUS } from '~~/shared/constants';
-import type { Database } from '~~/types/supabase';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -77,8 +75,7 @@ export default defineEventHandler(async (event) => {
     // Format threads for frontend consumption
     const formattedThreads = threads?.map((thread) => ({
       id: thread.id,
-      taskThreadId: thread.id,
-      chatThreadId: thread.chat_thread_id, // Include chat_thread_id for navigation
+      taskThreadId: thread.thread_id,
       userTaskId: thread.user_task_id,
       creatorUserInfoId: thread.user_tasks.creator_user_info_id,
       assigneeUserInfoId: thread.user_tasks.assignee_user_info_id,

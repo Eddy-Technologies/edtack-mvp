@@ -222,7 +222,7 @@ const closeTask = async (task: any) => {
   }
 
   try {
-    const response = await $fetch(`/api/tasks/${task.id}/close`, {
+    const response = await $fetch(`/api/tasks/close/${task.id}`, {
       method: 'POST'
     });
 

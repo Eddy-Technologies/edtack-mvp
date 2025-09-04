@@ -1,7 +1,6 @@
 import { ref, computed, readonly } from 'vue';
 import { useMeStore } from '~/stores/me';
 import type { PostMessageReq } from '~~/server/api/chat/message.post';
-import type { GetChatThreadRes } from '~~/server/api/chat/thread/[threadId].get';
 import type { Database } from '~~/types/supabase';
 
 type Thread = Database['public']['Tables']['threads']['Row'];
@@ -66,15 +65,14 @@ export function useThreads() {
     error.value = null;
 
     try {
-      const { threadData, messageData, task, success } = await $fetch(`/api/chat/thread/${threadId}`, { method: 'GET' });
+      const { threadData, success } = await $fetch(`/api/chat/thread/${threadId}`, { method: 'GET' });
 
       if (!success) {
         throw new Error('Thread not found');
       }
 
-      messages.value = messageData || [];
       currentThread.value = threadData;
-      return { thread: threadData, messages: messageData, task };
+      return { thread: threadData, messages: threadData?.thread_messages || [], task: threadData?.task_threads || null };
     } catch (err) {
       console.error('Error loading thread:', err);
       reset();

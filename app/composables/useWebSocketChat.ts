@@ -7,7 +7,7 @@ export enum GenerationIntentType {
 }
 
 interface WebSocketMessage {
-  type: 'start' | 'continue' | 'user_response' | 'cancel';
+  type: 'start' | 'continue' | 'user_response' | 'cancel' | 'task_generation';
   payload?: string;
   user_info?: {
     subject?: string;
@@ -44,6 +44,10 @@ export function useWebSocketChat(threadId: string) {
   const maxReconnectAttempts = 5;
   const reconnectDelay = 1000;
 
+  let connectionPromise: Promise<void> | null = null;
+  let connectionResolver: (() => void) | null = null;
+  let connectionRejecter: ((reason?: any) => void) | null = null;
+
   const clearReconnectTimer = () => {
     if (reconnectTimeout) {
       clearTimeout(reconnectTimeout);
@@ -57,6 +61,12 @@ export function useWebSocketChat(threadId: string) {
     isConnecting.value = true;
     error.value = null;
 
+    // Create a new connection promise
+    connectionPromise = new Promise<void>((resolve, reject) => {
+      connectionResolver = resolve;
+      connectionRejecter = reject;
+    });
+
     try {
       ws.value = new WebSocket(wsUrl);
 
@@ -64,6 +74,11 @@ export function useWebSocketChat(threadId: string) {
         isConnected.value = true;
         isConnecting.value = false;
         reconnectAttempts = 0;
+        if (connectionResolver) {
+          connectionResolver();
+          connectionResolver = null;
+          connectionRejecter = null;
+        }
       };
 
       ws.value.onmessage = (event) => {
@@ -100,11 +115,23 @@ export function useWebSocketChat(threadId: string) {
 
       ws.value.onerror = () => {
         error.value = 'Connection error occurred';
+        if (connectionRejecter) {
+          connectionRejecter(new Error('Connection error occurred'));
+          connectionResolver = null;
+          connectionRejecter = null;
+        }
       };
 
       ws.value.onclose = () => {
         isConnected.value = false;
         isConnecting.value = false;
+
+        // Reject connection promise if still pending
+        if (connectionRejecter) {
+          connectionRejecter(new Error('Connection closed'));
+          connectionResolver = null;
+          connectionRejecter = null;
+        }
 
         if (reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++;
@@ -117,14 +144,26 @@ export function useWebSocketChat(threadId: string) {
           error.value = 'Failed to establish connection after multiple attempts';
         }
       };
-    } catch {
+    } catch (err) {
       error.value = 'Failed to create connection';
       isConnecting.value = false;
+      if (connectionRejecter) {
+        connectionRejecter(err);
+        connectionResolver = null;
+        connectionRejecter = null;
+      }
     }
   };
 
   const disconnect = () => {
     clearReconnectTimer();
+
+    // Reject any pending connection promise
+    if (connectionRejecter) {
+      connectionRejecter(new Error('Manually disconnected'));
+      connectionResolver = null;
+      connectionRejecter = null;
+    }
 
     if (ws.value) {
       ws.value.close();
@@ -185,6 +224,19 @@ export function useWebSocketChat(threadId: string) {
     return success;
   };
 
+  const startTaskGeneration = (prompt: string, userInfo?: WebSocketMessage['user_info']) => {
+    console.log('Starting task generation with prompt:', prompt, 'and userInfo:', userInfo);
+    const success = sendMessage({
+      type: 'start', // TODO: change to task_genration
+      payload: prompt,
+      user_info: userInfo,
+    });
+    if (success) {
+      isWaitingForResponse.value = true;
+    }
+    return success;
+  };
+
   const cancelRequest = () => {
     responsePhase.value = '';
     return sendMessage({
@@ -196,6 +248,24 @@ export function useWebSocketChat(threadId: string) {
     response.value = [];
   };
 
+  const waitForConnection = (timeout: number = 5000): Promise<void> => {
+    if (isConnected.value) {
+      return Promise.resolve();
+    }
+
+    if (!connectionPromise) {
+      return Promise.reject(new Error('No connection attempt in progress'));
+    }
+
+    const timeoutPromise = new Promise<void>((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('Connection timeout'));
+      }, timeout);
+    });
+
+    return Promise.race([connectionPromise, timeoutPromise]);
+  };
+
   onUnmounted(() => {
     disconnect();
   });
@@ -203,9 +273,11 @@ export function useWebSocketChat(threadId: string) {
   return {
     connect,
     disconnect,
+    waitForConnection,
     startChat,
     continueChat,
     sendUserResponse,
+    startTaskGeneration,
     cancelRequest,
     clearMessages,
     response,
