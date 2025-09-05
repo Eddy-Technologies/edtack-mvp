@@ -230,8 +230,7 @@ const initializeChat = async () => {
       const pendingMessage = getPendingMessage();
 
       if (props.task) {
-        // This is a task that needs initial generation
-        console.log('Starting task generation for task:', props.task);
+        console.log('Found task data, starting task init:', props.task);
         initTask();
       } else if (pendingMessage) {
         // Regular pending message
