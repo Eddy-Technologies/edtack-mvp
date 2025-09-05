@@ -124,7 +124,7 @@ interface ChatContentProps {
 const props = defineProps<ChatContentProps>();
 
 // Use global thread state instead of local state
-const { messages, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
+const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
 
 const { updateTaskGeneratedContent } = useTask();
@@ -202,8 +202,8 @@ const initializeChat = async () => {
   // Always treat as new chat since we have no history
   isFirstMessage.value = true;
 
-  // Insert messages to messageStream
-  messageStream.value = messages.value.map(({ content, id, sender }) => {
+  // Insert messageHistory to messageStream
+  messageStream.value = messageHistory.value.map(({ content, id, sender }) => {
     if (!sender) {
       return { ...JSON.parse(content), isUser: false, id };
     }
@@ -290,7 +290,7 @@ onMounted(() => {
           // Scroll to the message with slides (will be implemented)
           nextTick(() => {
             // For now, find the message index and scroll to it
-            const messageIndex = newMessages.length - 1;
+            const messageIndex = newMessages.pop().id;
             scrollToMessage(messageIndex);
           });
         }
@@ -382,7 +382,9 @@ const initTask = () => { // For task threads, ensure init_prompt is the first me
   clearPendingMessage();
 
   nextTick(() => {
-    startTaskGeneration();
+    if (props.task && props.task.init_prompt && !props.task.generated_content) {
+      startTaskGeneration();
+    }
   });
 };
 

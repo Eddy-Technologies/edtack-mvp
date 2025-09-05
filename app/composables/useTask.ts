@@ -6,9 +6,9 @@ export function useTask() {
     }
 
     try {
-      console.log('Updating task generated content for task:', props.task.id);
+      console.log('Updating task generated content for task:', taskId);
 
-      const response = await $fetch(`/api/tasks/update-generation/${props.task.id}`, {
+      const response = await $fetch(`/api/tasks/update-generation/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

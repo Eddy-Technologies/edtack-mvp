@@ -9,7 +9,7 @@ type Message = Database['public']['Tables']['thread_messages']['Row'];
 // Global state
 const threads = ref<Thread[]>([]);
 const currentThread = ref<Thread | null>(null);
-const messages = ref<Message[]>([]);
+const messageHistory = ref<Message[]>([]);
 const isLoadingThreads = ref(false);
 const isLoadingThread = ref(false);
 const error = ref<string | null>(null);
@@ -53,12 +53,12 @@ export function useThreads() {
     }
   };
 
-  // Fetch specific thread with messages
+  // Fetch specific thread with messageHistory
   const fetchThread = async (threadId: string) => {
     if (!threadId || threadId === 'new') {
       currentThread.value = null;
-      messages.value = [];
-      return { thread: null, messages: [], task: null };
+      messageHistory.value = [];
+      return { thread: null, messageHistory: [], task: null };
     }
 
     isLoadingThread.value = true;
@@ -72,8 +72,8 @@ export function useThreads() {
       }
 
       currentThread.value = threadData;
-      messages.value = threadData?.thread_messages || [];
-      return { thread: threadData, messages: threadData?.thread_messages || [], task: threadData?.task_threads || null };
+      messageHistory.value = threadData?.thread_messages || [];
+      return { thread: threadData, messageHistory: threadData?.thread_messages || [], task: threadData?.task_threads || null };
     } catch (err) {
       console.error('Error loading thread:', err);
       reset();
@@ -102,7 +102,7 @@ export function useThreads() {
       // Add to local threads list
       threads.value.unshift(newThread);
       currentThread.value = newThread;
-      messages.value = [];
+      messageHistory.value = [];
 
       return newThread;
     } catch (err) {
@@ -132,20 +132,20 @@ export function useThreads() {
       throw new Error('Failed to send message');
     }
 
-    messages.value.push(response.data);
+    messageHistory.value.push(response.data);
   };
 
   // Clear current thread
   const clearCurrentThread = () => {
     currentThread.value = null;
-    messages.value = [];
+    messageHistory.value = [];
   };
 
   // Reset all state
   const reset = () => {
     threads.value = [];
     currentThread.value = null;
-    messages.value = [];
+    messageHistory.value = [];
     error.value = null;
     pendingMessage.value = null;
     if (import.meta.client) {
@@ -182,7 +182,7 @@ export function useThreads() {
     // State
     threads: readonly(threads),
     currentThread: readonly(currentThread),
-    messages: readonly(messages),
+    messageHistory: readonly(messageHistory),
     isLoadingThreads: readonly(isLoadingThreads),
     isLoadingThread: readonly(isLoadingThread),
     error: readonly(error),
