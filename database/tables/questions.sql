@@ -1,7 +1,7 @@
 -- Questions Table
 CREATE TABLE questions (
   id uuid PRIMARY KEY,
-  syllabus_id VARCHAR(100) NOT NULL REFERENCES syllabus(name) ON DELETE CASCADE, -- Link to syllabus
+  chapter_id VARCHAR(100) NOT NULL REFERENCES chapter(name) ON DELETE CASCADE, -- UPDATED TO CHAPTER
   parent_question_id uuid REFERENCES questions(id) ON DELETE CASCADE, -- NULL for top-level questions
   subquestion_order INT DEFAULT NULL, -- Order among siblings (sub-parts)
   part_label VARCHAR(20) DEFAULT NULL, -- e.g., 'A)', 'ii)', '1)'

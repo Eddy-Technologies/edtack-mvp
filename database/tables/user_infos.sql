@@ -12,6 +12,7 @@ CREATE TABLE user_infos (
   postal_code VARCHAR(10) DEFAULT NULL,
   date_of_birth DATE DEFAULT NULL,
   level_type VARCHAR(50) REFERENCES level_types(level_type) ON DELETE CASCADE,
+  syllabus_type VARCHAR(50) REFERENCES syllabus_types(syllabus_type) ON DELETE CASCADE,
   profile_picture_url VARCHAR(255) DEFAULT NULL,
   onboarding_completed BOOLEAN DEFAULT FALSE,
   payment_customer_id VARCHAR(100) DEFAULT NULL,

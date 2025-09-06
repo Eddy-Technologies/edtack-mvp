@@ -77,8 +77,11 @@ function generateMigrations() {
     const orderedFiles = [
       'roles.sql',
       'level_types.sql',
+      'syllabus_types.sql',
       'codes.sql',
       'subjects.sql',
+      'chapters.sql',
+      'curriculum_subjects.sql',
       'user_infos.sql',
       'user_roles.sql',
       'user_credits.sql',
@@ -205,6 +208,7 @@ function generateSeedFile() {
     // Seed files to combine (in order)
     const seedFiles = [
       'all_seeds.sql',
+      'education_data.sql',
       'characters.sql'
     ];
 
