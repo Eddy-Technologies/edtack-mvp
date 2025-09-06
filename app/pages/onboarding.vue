@@ -66,6 +66,19 @@
               />
             </div>
 
+            <!-- Student Syllabus (shown only for students) -->
+            <div v-if="userRole === USER_ROLE.STUDENT" class="space-y-3">
+              <label class="block text-sm font-medium text-gray-700">
+                What syllabus are you following? <span class="text-red-500">*</span>
+              </label>
+              <USelect
+                v-model="syllabusType"
+                :disabled="isLoading"
+                placeholder="Select your syllabus"
+                :options="syllabusOptions"
+              />
+            </div>
+
             <!-- Additional Info (Optional) -->
             <div v-if="!firstName || !lastName" class="space-y-4">
               <h3 class="text-sm font-medium text-gray-900">
@@ -137,7 +150,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { USER_ROLE, STUDENT_LEVEL } from '~/constants/User';
+import { USER_ROLE } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import AppIcon from '~/components/AppIcon.vue';
 import { useMeStore } from '~/stores/me';
@@ -155,6 +168,7 @@ const me = useMeStore();
 // Form state
 const userRole = ref('');
 const studentLevel = ref('');
+const syllabusType = ref('');
 const firstNameInput = ref('');
 const lastNameInput = ref('');
 const acceptTerms = ref(false);
@@ -165,19 +179,18 @@ const errorMessage = ref('');
 const firstName = ref('');
 const lastName = ref('');
 
-// Level options for students
-const levelOptions = computed(() => Object.entries(STUDENT_LEVEL).map(([key, value]) => ({
-  value: key,
-  label: value,
-})));
+// Options fetched from API
+const levelOptions = ref([]);
+const syllabusOptions = ref([]);
+const optionsLoading = ref(false);
 
 // Form validation
 const canComplete = computed(() => {
   const basicValid = userRole.value && acceptTerms.value && !isLoading.value;
 
-  // If student, require level selection
+  // If student, require level and syllabus selection
   if (userRole.value === USER_ROLE.STUDENT) {
-    return basicValid && studentLevel.value;
+    return basicValid && studentLevel.value && syllabusType.value;
   }
 
   return basicValid;
@@ -192,8 +205,17 @@ onMounted(async () => {
       return;
     }
 
-    // Get fresh user data
-    await me.fetchAndSetMe();
+    // Fetch options and user data in parallel
+    optionsLoading.value = true;
+    const [levelsResponse, syllabusResponse] = await Promise.all([
+      $fetch('/api/options/levels'),
+      $fetch('/api/options/syllabus'),
+      me.fetchAndSetMe()
+    ]);
+
+    levelOptions.value = levelsResponse.levels || [];
+    syllabusOptions.value = syllabusResponse.syllabus || [];
+    optionsLoading.value = false;
 
     if (me) {
       firstName.value = me.first_name || '';
@@ -206,10 +228,14 @@ onMounted(async () => {
       if (me.level_type) {
         studentLevel.value = me.level_type;
       }
+      if (me.syllabus_type) {
+        syllabusType.value = me.syllabus_type;
+      }
     }
   } catch (error) {
-    console.error('Error loading user data:', error);
+    console.error('Error loading data:', error);
     errorMessage.value = 'Failed to load user information. Please refresh the page.';
+    optionsLoading.value = false;
   }
 });
 
@@ -219,6 +245,8 @@ const completeOnboarding = async () => {
       errorMessage.value = 'Please select whether you are a parent or student';
     } else if (userRole.value === USER_ROLE.STUDENT && !studentLevel.value) {
       errorMessage.value = 'Please select your current level';
+    } else if (userRole.value === USER_ROLE.STUDENT && !syllabusType.value) {
+      errorMessage.value = 'Please select your syllabus';
     } else if (!acceptTerms.value) {
       errorMessage.value = 'Please accept the terms and conditions';
     }
@@ -234,6 +262,7 @@ const completeOnboarding = async () => {
       body: {
         userRole: userRole.value,
         studentLevel: userRole.value === USER_ROLE.STUDENT ? studentLevel.value : null,
+        syllabusType: userRole.value === USER_ROLE.STUDENT ? syllabusType.value : null,
         firstName: firstNameInput.value || firstName.value,
         lastName: lastNameInput.value || lastName.value,
         acceptTerms: acceptTerms.value

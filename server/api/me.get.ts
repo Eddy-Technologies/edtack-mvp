@@ -13,6 +13,7 @@ export interface GetMeRes {
   postal_code?: string;
   date_of_birth?: string;
   level_type?: string;
+  syllabus_type?: string;
   profile_picture_url?: string;
   onboarding_completed: boolean;
   payment_customer_id?: string;

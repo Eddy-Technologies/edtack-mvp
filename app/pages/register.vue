@@ -140,6 +140,14 @@
               :options="levelOptions"
             />
 
+            <USelect
+              v-if="userRole === USER_ROLE.STUDENT"
+              v-model="syllabusType"
+              :disabled="isLoading"
+              placeholder="Select your syllabus"
+              :options="syllabusOptions"
+            />
+
             <!-- Terms and Conditions -->
             <div class="flex items-start space-x-3 text-left">
               <input
@@ -176,9 +184,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { validateEmail, validatePassword } from '~~/shared/utils';
-import { USER_ROLE, STUDENT_LEVEL } from '~/constants/User';
+import { USER_ROLE } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
@@ -188,11 +196,10 @@ definePageMeta({
   middleware: ['guest']
 });
 
-// Create level options for students using constant STUDENT_LEVEL with label as the value
-const levelOptions = computed(() => Object.entries(STUDENT_LEVEL).map(([key, value]) => ({
-  value: key,
-  label: value,
-})));
+// Options fetched from API
+const levelOptions = ref([]);
+const syllabusOptions = ref([]);
+const optionsLoading = ref(false);
 
 // Form state
 const firstName = ref('');
@@ -201,10 +208,30 @@ const password = ref('');
 const email = ref('');
 const userRole = ref(''); // 'parent' or 'student'
 const studentLevel = ref(''); // Required for students
+const syllabusType = ref(''); // Required for students
 const acceptTerms = ref(false);
 
 const isLoading = ref(false);
 const errorMessage = ref('');
+
+// Fetch options on component mount
+onMounted(async () => {
+  optionsLoading.value = true;
+  try {
+    const [levelsResponse, syllabusResponse] = await Promise.all([
+      $fetch('/api/options/levels'),
+      $fetch('/api/options/syllabus')
+    ]);
+    levelOptions.value = levelsResponse.levels || [];
+    syllabusOptions.value = syllabusResponse.syllabus || [];
+  } catch (error) {
+    console.error('Failed to fetch options:', error);
+    errorMessage.value = 'Failed to load form options. Please refresh the page.';
+  } finally {
+    optionsLoading.value = false;
+  }
+});
+
 
 const toast = useToast();
 const router = useRouter();
@@ -222,9 +249,9 @@ const canSubmit = computed(() => {
     userRole.value &&
     acceptTerms.value === true;
 
-  // Additional validation for students (student level is required)
+  // Additional validation for students (student level and syllabus are required)
   if (userRole.value === USER_ROLE.STUDENT) {
-    return basicFieldsValid && studentLevel.value;
+    return basicFieldsValid && studentLevel.value && syllabusType.value;
   }
 
   return basicFieldsValid;
@@ -238,6 +265,8 @@ const handleRegister = async () => {
       errorMessage.value = 'Please accept the terms and conditions';
     } else if (userRole.value === USER_ROLE.STUDENT && !studentLevel.value) {
       errorMessage.value = 'Please select your current level';
+    } else if (userRole.value === USER_ROLE.STUDENT && !syllabusType.value) {
+      errorMessage.value = 'Please select your syllabus';
     } else {
       errorMessage.value = 'Please fill in all required fields';
     }
@@ -268,6 +297,7 @@ const handleRegister = async () => {
       lastName: lastName.value.trim(),
       userRole: userRole.value,
       studentLevel: studentLevel.value,
+      syllabusType: syllabusType.value,
       acceptTerms: acceptTerms.value,
     });
     console.log('Email registration successful:', response);

@@ -33,6 +33,13 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    if (body.userRole === USER_ROLE.STUDENT && !body.syllabusType) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Syllabus type is required for student accounts'
+      });
+    }
+
     if (!body.acceptTerms) {
       throw createError({
         statusCode: 400,
@@ -77,6 +84,7 @@ export default defineEventHandler(async (event) => {
         p_first_name: firstName,
         p_last_name: lastName,
         p_level_type: body.studentLevel || null,
+        p_syllabus_type: body.syllabusType || null,
         p_payment_customer_id: stripeCustomerId,
         p_is_active: true,
         p_onboarding_completed: true,
@@ -101,6 +109,7 @@ export default defineEventHandler(async (event) => {
       user_info_id: userInfo.id,
       user_role: body.userRole,
       student_level: body.studentLevel || null,
+      syllabus_type: body.syllabusType || null,
       onboarding_completed: true
     };
   } catch (err: any) {

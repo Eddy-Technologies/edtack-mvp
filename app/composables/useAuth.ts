@@ -8,6 +8,7 @@ export interface SignUpReq {
   lastName: string;
   userRole: string;
   studentLevel?: string;
+  syllabusType?: string;
   acceptTerms: boolean; // Optional, can be used for terms acceptance
 }
 

@@ -30,6 +30,9 @@ export default defineEventHandler(async (event) => {
   if (body.userRole === USER_ROLE.STUDENT && !body.studentLevel) {
     throw createError({ statusCode: 400, statusMessage: 'Student level is required for students.' });
   }
+  if (body.userRole === USER_ROLE.STUDENT && !body.syllabusType) {
+    throw createError({ statusCode: 400, statusMessage: 'Syllabus type is required for students.' });
+  }
   if (!body.acceptTerms) {
     throw createError({ statusCode: 400, statusMessage: 'You must accept the terms and conditions.' });
   }
@@ -64,6 +67,7 @@ export default defineEventHandler(async (event) => {
       p_first_name: body.firstName,
       p_last_name: body.lastName,
       p_level_type: body.studentLevel || null,
+      p_syllabus_type: body.syllabusType || null,
       p_payment_customer_id: paymentCustomerId,
       p_is_active: true,
       p_onboarding_completed: true,
