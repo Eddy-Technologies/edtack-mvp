@@ -8,5 +8,6 @@ CREATE TABLE chapters (
   parent_id VARCHAR(100) REFERENCES chapters(name) ON DELETE CASCADE, -- NULL for top-level
   level INT NOT NULL,
   description TEXT DEFAULT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0, -- For ordering within chapters
   CONSTRAINT unique_chapter_per_subject UNIQUE (subject_id, name) -- Ensure unique chapter names within the same subject
 );
