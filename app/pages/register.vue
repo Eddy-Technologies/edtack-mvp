@@ -232,7 +232,6 @@ onMounted(async () => {
   }
 });
 
-
 const toast = useToast();
 const router = useRouter();
 
