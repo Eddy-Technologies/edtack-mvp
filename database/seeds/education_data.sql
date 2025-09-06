@@ -17,12 +17,12 @@ INSERT INTO syllabus_types (syllabus_type, description) VALUES
 ('SG_PSLE', 'Singapore PSLE'),
 ('SG_O_LEVEL', 'Singapore O Level'),
 ('SG_N_LEVEL', 'Singapore N Level'),
-('SG_A_LEVEL', 'Singapore A Level'),
-('MY_PSLE', 'Malaysia PSLE'),
-('MY_SPM', 'Malaysia SPM'),
-('MY_STPM', 'Malaysia STPM'),
-('US_COMMON_CORE', 'US Common Core'),
-('UK_NATIONAL_CURRICULUM', 'UK National Curriculum');
+('SG_A_LEVEL', 'Singapore A Level');
+-- ('MY_PSLE', 'Malaysia PSLE'),
+-- ('MY_SPM', 'Malaysia SPM'),
+-- ('MY_STPM', 'Malaysia STPM'),
+-- ('US_COMMON_CORE', 'US Common Core'),
+-- ('UK_NATIONAL_CURRICULUM', 'UK National Curriculum');
 
 
 INSERT INTO subjects (name, subject_name, display_name, description, country_code) VALUES
@@ -74,7 +74,7 @@ INSERT INTO curriculum_subjects (level_type, syllabus_type, subject) VALUES
 ('SECONDARY_5', 'SG_N_LEVEL', 'n_level_singapore_biology');
 
 -- O-Level Biology Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_biology_00_introduction', 'Introduction', 'o_level_singapore_biology', 1, 'Introduction to Biology'),
 ('o_level_singapore_biology_chapter_01_cell_structure_and_organization', 'Cell Structure and Organization', 'o_level_singapore_biology', 1, 'Understanding the basic unit of life - cells, their structures and organization'),
 ('o_level_singapore_biology_chapter_02_movement_of_substances', 'Movement of Substances', 'o_level_singapore_biology', 1, 'How substances move in and out of cells through diffusion, osmosis and active transport'),
@@ -93,9 +93,8 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_biology_chapter_15_reproduction_in_plants', 'Reproduction in Plants', 'o_level_singapore_biology', 1, 'Flower structure, pollination, fertilization and seed dispersal'),
 ('o_level_singapore_biology_chapter_16_reproduction_in_humans', 'Reproduction in Humans', 'o_level_singapore_biology', 1, 'Human reproductive systems, fertilization and development'),
 ('o_level_singapore_biology_chapter_17_inheritance', 'Inheritance', 'o_level_singapore_biology', 1, 'Mendelian genetics, variation and natural selection');
-
 -- O-Level Mathematics Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_mathematics_00_introduction_e_math', 'Introduction', 'o_level_singapore_mathematics', 1, 'Introduction to Elementary Mathematics'),
 ('o_level_singapore_mathematics_numbers_and_operations', 'Numbers and Operations', 'o_level_singapore_mathematics', 1, 'Prime factorization, indices, approximation, and standard form for comprehensive number literacy'),
 ('o_level_singapore_mathematics_ratio_and_proportion', 'Ratio and Proportion', 'o_level_singapore_mathematics', 1, 'Fundamental relationships between quantities and how they change together including direct and inverse proportion'),
@@ -115,7 +114,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_mathematics_vectors_in_two_dimensions', 'Vectors in Two Dimensions', 'o_level_singapore_mathematics', 1, 'Vector operations and applications in two-dimensional coordinate systems');
 
 -- O-Level Additional Mathematics Chapters  
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_add_math_00_introduction_a_math', 'Introduction', 'o_level_singapore_add_math', 1, 'Introduction to Additional Mathematics'),
 ('o_level_singapore_add_math_quadratic_functions', 'Quadratic Functions', 'o_level_singapore_add_math', 1, 'Essential properties and applications of quadratic functions with discriminant theory'),
 ('o_level_singapore_add_math_equations_and_inequalities', 'Equations and Inequalities', 'o_level_singapore_add_math', 1, 'Comprehensive equation solving and inequality analysis using discriminant applications'),
@@ -129,7 +128,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_add_math_differentiation_and_integration', 'Differentiation and Integration', 'o_level_singapore_add_math', 1, 'Fundamental calculus tools for analyzing change and accumulation with practical applications');
 
 -- O-Level Chemistry Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_chemistry_00_introduction_chemistry', 'Introduction', 'o_level_singapore_chemistry', 1, 'Introduction to Chemistry'),
 ('o_level_singapore_chemistry_experimental_chemistry', 'Experimental Chemistry', 'o_level_singapore_chemistry', 1, 'Precision, accuracy, and safety in chemical experimentation with purification techniques'),
 ('o_level_singapore_chemistry_the_particulate_nature_of_matter', 'The Particulate Nature of Matter', 'o_level_singapore_chemistry', 1, 'Kinetic particle theory linking macroscopic properties to microscopic behavior and atomic structure'),
@@ -145,7 +144,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_chemistry_maintaining_air_quality', 'Maintaining Air Quality', 'o_level_singapore_chemistry', 1, 'Atmospheric composition, pollution sources, environmental impacts, and air quality strategies');
 
 -- O-Level Physics Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_physics_00_introduction_physics', 'Introduction', 'o_level_singapore_physics', 1, 'Introduction to Physics'),
 ('o_level_singapore_physics_physical_quantities_units_and_measurements', 'Physical Quantities, Units and Measurements', 'o_level_singapore_physics', 1, 'Measurement framework, SI units, vector analysis, and error assessment for physics calculations'),
 ('o_level_singapore_physics_kinematics', 'Kinematics', 'o_level_singapore_physics', 1, 'Motion analysis through mathematical descriptions of position, velocity, and acceleration'),
@@ -164,7 +163,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_physics_dc_circuits', 'DC Circuits', 'o_level_singapore_physics', 1, 'Direct current circuit analysis with series and parallel combinations');
 
 -- O-Level English Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_english_00_introduction_english', 'Introduction', 'o_level_singapore_english', 1, 'Introduction to English'),
 ('o_level_singapore_english_english_vocabulary_bank', 'English Vocabulary Bank', 'o_level_singapore_english', 1, 'Comprehensive vocabulary resource for descriptive language and advanced expressions across all text types'),
 ('o_level_singapore_english_essay_narrative_techniques', 'Essay Narrative Techniques', 'o_level_singapore_english', 1, 'Sophisticated personal recount techniques through engaging narrative elements and character development'),
@@ -178,7 +177,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_english_speech_writing_and_delivery', 'Speech Writing and Delivery', 'o_level_singapore_english', 1, 'Structured guidance for award ceremonies, presentations, and formal speaking occasions');
 
 -- O-Level Geography Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_geography_00_introduction_geography', 'Introduction', 'o_level_singapore_geography', 1, 'Introduction to Geography'),
 ('o_level_singapore_geography_thinking_geographically', 'Thinking Geographically', 'o_level_singapore_geography', 1, 'Geographic thinking and spatial relationships including human-environment interactions'),
 ('o_level_singapore_geography_sustainable_development', 'Sustainable Development', 'o_level_singapore_geography', 1, 'Community development while maintaining environmental and social balance for future generations'),
@@ -191,7 +190,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_geography_climate_action', 'Climate Action', 'o_level_singapore_geography', 1, 'Climate action strategies including adaptation, mitigation, and extreme weather responses');
 
 -- O-Level History Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_history_00_introduction_history', 'Introduction', 'o_level_singapore_history', 1, 'Introduction to History'),
 ('o_level_singapore_history_extension_of_european_control_british_malaya', 'Extension of European Control: British Malaya', 'o_level_singapore_history', 1, 'British intervention in Malaya during 1870s-1920s and transformation impacts on local societies'),
 ('o_level_singapore_history_extension_of_european_control_dutch_indonesia', 'Extension of European Control: Dutch Indonesia', 'o_level_singapore_history', 1, 'Dutch colonial expansion in Indonesia during 1870s-1920s with focus on administrative policies'),
@@ -211,7 +210,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_history_end_of_cold_war', 'End of Cold War', 'o_level_singapore_history', 1, 'Cold War conclusion 1980s-1991 through USSR decline and peaceful transition to post-Cold War order');
 
 -- O-Level Social Studies Chapters
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('o_level_singapore_social_studies_00_introduction_social_studies', 'Introduction', 'o_level_singapore_social_studies', 1, 'Introduction to Social Studies'),
 ('o_level_singapore_social_studies_challenges_in_deciding_what_is_good_for_society', 'Challenges in Deciding What is Good for Society', 'o_level_singapore_social_studies', 1, 'Fundamental challenges governments face when making decisions for collective societal good'),
 ('o_level_singapore_social_studies_ideas_shaping_good_governance', 'Ideas Shaping Good Governance', 'o_level_singapore_social_studies', 1, 'Fundamental principles that shape effective governance including leadership, anticipating change, and meritocracy'),
@@ -230,7 +229,7 @@ INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
 
 -- N-Level Biology Chapters (based on 7 key themes)
 -- example for different chapters for n_level_singapore_biology and o_level_singapore_biology
-INSERT INTO chapter (name, display_name, subject_id, level, description) VALUES
+INSERT INTO chapters (name, display_name, subject_id, level, description) VALUES
 ('n_level_singapore_biology_01_the_cell', 'The Cell', 'n_level_singapore_biology', 1, 'Diverse life forms are similar in that their basic unit are cells'),
 ('n_level_singapore_biology_02_structure_and_function', 'Structure and Function', 'n_level_singapore_biology', 1, 'Structure and function of organisms from the molecular to the organ system levels are related to each other'),
 ('n_level_singapore_biology_03_systems', 'Systems', 'n_level_singapore_biology', 1, 'Biological systems interact among themselves and with the environment resulting in the flow of energy and nutrients'),

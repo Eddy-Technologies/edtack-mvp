@@ -51,7 +51,8 @@ CREATE OR REPLACE FUNCTION public.update_user_info_with_relations(
   p_onboarding_completed BOOLEAN,
   p_role_name TEXT,
   p_email TEXT,
-  p_level_type TEXT DEFAULT NULL
+  p_level_type TEXT DEFAULT NULL,
+  p_syllabus_type TEXT DEFAULT NULL
 ) RETURNS JSONB
 LANGUAGE plpgsql SECURITY DEFINER
 AS $$
@@ -65,7 +66,7 @@ BEGIN
 
   -- Insert or update user_infos record
   INSERT INTO public.user_infos (
-    id, email, user_id, first_name, last_name, level_type, 
+    id, email, user_id, first_name, last_name, level_type, syllabus_type,
     payment_customer_id, is_active, onboarding_completed, created_at, updated_at
   ) VALUES (
     p_user_info_id,
@@ -74,6 +75,7 @@ BEGIN
     p_first_name,
     p_last_name,
     p_level_type,
+    p_syllabus_type,
     p_payment_customer_id,
     p_is_active,
     p_onboarding_completed,
@@ -85,6 +87,7 @@ BEGIN
     first_name = EXCLUDED.first_name,
     last_name = EXCLUDED.last_name,
     level_type = EXCLUDED.level_type,
+    syllabus_type = EXCLUDED.syllabus_type,
     payment_customer_id = EXCLUDED.payment_customer_id,
     is_active = EXCLUDED.is_active,
     onboarding_completed = EXCLUDED.onboarding_completed,
