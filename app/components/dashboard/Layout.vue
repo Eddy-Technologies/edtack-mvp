@@ -278,6 +278,11 @@ const navigationItems: NavigationItem[] = [
     icon: 'i-lucide-layout-dashboard'
   },
   {
+    name: 'Study',
+    route: '/dashboard?tab=study',
+    icon: 'i-lucide-book-open'
+  },
+  {
     name: 'Family',
     icon: 'i-lucide-users',
     children: [

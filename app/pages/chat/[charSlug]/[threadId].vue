@@ -214,6 +214,11 @@ onMounted(async () => {
 
   // Content transitions can start immediately since global loading is handled in app.vue
   showContentTransitions.value = true;
+
+  // Handle study prompt injection from query parameters
+  if (isNewChat.value && route.query.study_prompt) {
+    await handleStudyPromptInjection();
+  }
 });
 
 // Watch for threadId changes to handle URL updates
@@ -316,6 +321,31 @@ const handleChatSend = async (text: string) => {
   // Existing chat - send directly
   if (chatContentRef.value && chatContentRef.value.handleSend) {
     await chatContentRef.value.handleSend(text);
+  }
+};
+
+const handleStudyPromptInjection = async () => {
+  const studyPrompt = route.query.study_prompt as string;
+
+  if (!studyPrompt) return;
+
+  // Wait a bit for the page to be fully initialized
+  await nextTick();
+
+  // Automatically send the study prompt
+  try {
+    // Add a brief delay to ensure smooth UX
+    setTimeout(async () => {
+      await handleChatSend(studyPrompt);
+
+      // Clear the query parameters from URL after injection to keep URL clean
+      await router.replace({
+        path: route.path,
+        query: {}
+      });
+    }, 1000);
+  } catch (error) {
+    console.error('Failed to inject study prompt:', error);
   }
 };
 

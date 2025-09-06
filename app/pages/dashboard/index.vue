@@ -4,6 +4,7 @@
     :user-email="user.email"
   >
     <OverviewTab v-if="currentTab === 'overview'" />
+    <StudyTaskTab v-else-if="currentTab === 'study'" />
     <SubscriptionTab v-else-if="currentTab === 'subscription'" />
     <SettingsTab v-else-if="currentTab === 'settings'" />
     <ShopTab
@@ -39,6 +40,7 @@ import { useMeStore } from '~/stores/me';
 
 // Unified Components
 import OverviewTab from '~/components/dashboard/OverviewTab.vue';
+import StudyTaskTab from '~/components/dashboard/StudyTaskTab.vue';
 import SubscriptionTab from '~/components/dashboard/SubscriptionTab.vue';
 import ShopTab from '~/components/dashboard/ShopTab.vue';
 import WishlistTab from '~/components/dashboard/WishlistTab.vue';
@@ -148,6 +150,7 @@ const pageTitle = computed(() => {
 
   const tabTitles = {
     overview: 'Overview',
+    study: 'Study',
     subscription: 'Subscription',
     settings: 'Settings',
     shop: 'Shop',
