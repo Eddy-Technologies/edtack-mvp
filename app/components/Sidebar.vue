@@ -52,19 +52,19 @@
               class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
               @click="openThread(thread.id, thread.subject)"
             >
-              <Icon name="i-heroicons-chat-bubble-oval-left" class="w-5 h-5 text-gray-600" />
-              <div class="flex flex-row items-center space-x-2 truncate">
+              <div class="flex flex-row items-center space-x-2 min-w-0">
                 <UBadge
                   v-if="thread.task_threads"
                   :color="thread.task_threads.status === TASK_THREAD_STATUS.OPEN ? 'primary' : 'gray'"
                   size="xs"
+                  class="flex-shrink-0"
                 >
                   Task
                 </UBadge>
-                <div v-if="thread.subject" class="text-xs text-gray-500 truncate">
+                <div v-if="thread.subject" class="text-xs text-gray-500 flex-shrink-0 whitespace-nowrap">
                   {{ constantCaseToTitleCase(thread.subject) }}
                 </div>
-                <div class="truncate">{{ thread.title || 'Untitled Chat' }}</div>
+                <div class="truncate min-w-0">{{ thread.title || 'Untitled Chat' }}</div>
               </div>
             </ULink>
           </div>
@@ -151,7 +151,6 @@ import { useRouter } from 'vue-router';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
 import Avatar from '~/components/avatar/Avatar.vue';
-import { useToast } from '#imports';
 import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
