@@ -8,11 +8,8 @@ export interface CreateTaskReq {
   assigneeUserInfoId: string;
   subject: string;
   lessonGenerationType: string;
-  credit: number;
-  questionsPerQuiz: number;
+  creditsPerQuiz: number;
   requiredScore: number;
-  dueDate: string | null;
-  recurrenceFrequency: RECURRENCE_FREQUENCY;
 }
 
 export default defineEventHandler(async (event) => {
@@ -20,13 +17,13 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body: CreateTaskReq = await readBody(event);
 
-    const { assigneeUserInfoId, subject, lessonGenerationType, credit, questionsPerQuiz, requiredScore, dueDate, recurrenceFrequency } = body;
+    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, requiredScore } = body;
 
     // Validate required fields
-    if (!assigneeUserInfoId || !subject || !lessonGenerationType || credit === undefined) {
+    if (!assigneeUserInfoId || !subject || !lessonGenerationType || creditsPerQuiz === undefined) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'assigneeUserInfoId, subject, lessonGenerationType, name, and credit are required'
+        statusMessage: 'assigneeUserInfoId, subject, lessonGenerationType, and creditsPerQuiz are required'
       });
     }
 
@@ -79,10 +76,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Validate quiz fields
-    if (questionsPerQuiz && (questionsPerQuiz < 1 || questionsPerQuiz > 50)) {
+    if (creditsPerQuiz < 1) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'questionsPerQuiz must be between 1 and 50'
+        statusMessage: 'creditsPerQuiz must be at least 1'
       });
     }
 
@@ -92,11 +89,16 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'requiredScore must be between 0 and 100'
       });
     }
+    const { data: subjectData } = await supabase
+      .from('subjects')
+      .select(`*`)
+      .eq('name', subject)
+      .single;
 
     // Generate task name from subject and lesson generation type
     const subjectLabel = await codeService.getCode(supabase, CODE_CATEGORIES.SUBJECT, subject);
     const typeLabel = await codeService.getCode(supabase, CODE_CATEGORIES.LESSON_GENERATION_TYPE, lessonGenerationType);
-    const name = `${subjectLabel?.name} ${typeLabel?.name}`;
+    const name = `${subjectData?.description} ${typeLabel?.name}`;
 
     // Create the task
     const { data: task, error: taskError } = await supabase
@@ -107,11 +109,11 @@ export default defineEventHandler(async (event) => {
         name,
         subject,
         lesson_generation_type: lessonGenerationType,
-        credit,
-        questions_per_quiz: questionsPerQuiz || 10,
+        credit: creditsPerQuiz,
+        questions_per_quiz: 10, // Default to 10 questions
         required_score: requiredScore || 0,
-        recurrence_frequency: recurrenceFrequency || RECURRENCE_FREQUENCY.ONE_OFF,
-        due_date: dueDate ? new Date(dueDate).toISOString() : null,
+        recurrence_frequency: RECURRENCE_FREQUENCY.ONE_OFF,
+        due_date: null,
         status: TASK_STATUS.OPEN,
       })
       .select('*')
@@ -131,8 +133,10 @@ export default defineEventHandler(async (event) => {
     let chatThread = null;
 
     try {
-      // Calculate due date for the initial thread based on task configuration
-      const initialDueDate = calculateInitialDueDate(dueDate, recurrenceFrequency);
+      // Calculate due date for the initial thread - set to end of today
+      const now = new Date();
+      const initialDueDate = new Date(now);
+      initialDueDate.setHours(23, 59, 59, 999);
 
       // Create chat thread for this task thread
       const { data: newChatThread, error: chatThreadError } = await supabase
@@ -153,9 +157,8 @@ export default defineEventHandler(async (event) => {
       chatThread = newChatThread;
 
       // Prepare initial prompt for content generation
-      // TODO: might need the chapters also
       const initPrompt = {
-        prompt: `Create a quiz for the topic: ${subject}. Include ${questionsPerQuiz} questions.`
+        prompt: `Create a quiz for the topic: ${subject}. Include 10 questions.`
       };
 
       // Create the initial task thread record
@@ -207,61 +210,3 @@ export default defineEventHandler(async (event) => {
     });
   }
 });
-
-/**
- * Calculate the initial due date for a new task
- * - For one-off tasks: use provided due_date or end of today
- * - For recurring tasks: use recurrence logic to set appropriate due date
- */
-function calculateInitialDueDate(providedDueDate: string | null, recurrenceFrequency: string | null): Date {
-  const now = new Date();
-
-  // If a specific due date was provided, use it
-  if (providedDueDate) {
-    return new Date(providedDueDate);
-  }
-
-  // For recurring tasks, calculate based on frequency
-  if (recurrenceFrequency) {
-    switch (recurrenceFrequency) {
-      case RECURRENCE_FREQUENCY.DAILY: {
-        // Daily tasks are due at the end of the current day
-        const dailyDue = new Date(now);
-        dailyDue.setHours(23, 59, 59, 999);
-        return dailyDue;
-      }
-
-      case RECURRENCE_FREQUENCY.WEEKLY: {
-        // Weekly tasks are due at the end of Sunday (this Sunday if today is Sunday, next Sunday otherwise)
-        const weeklyDue = new Date(now);
-        const daysUntilSunday = 7 - weeklyDue.getDay();
-        if (daysUntilSunday === 7) {
-          // Today is Sunday, due today
-          weeklyDue.setHours(23, 59, 59, 999);
-        } else {
-          // Due next Sunday
-          weeklyDue.setDate(weeklyDue.getDate() + daysUntilSunday);
-          weeklyDue.setHours(23, 59, 59, 999);
-        }
-        return weeklyDue;
-      }
-
-      case RECURRENCE_FREQUENCY.MONTHLY: {
-        // Monthly tasks are due at the end of the current month
-        const monthlyDue = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-        monthlyDue.setHours(23, 59, 59, 999);
-        return monthlyDue;
-      }
-
-      case RECURRENCE_FREQUENCY.ONE_OFF:
-      default:
-        // Fall through to default behavior
-        break;
-    }
-  }
-
-  // Default: due at the end of today
-  const defaultDue = new Date(now);
-  defaultDue.setHours(23, 59, 59, 999);
-  return defaultDue;
-}

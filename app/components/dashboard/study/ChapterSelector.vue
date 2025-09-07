@@ -1,5 +1,5 @@
 <template>
-  <div class="chapter-selector">
+  <div class="min-h-24">
     <!-- Loading State -->
     <div v-if="isLoading" class="text-center py-8">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-3" />
@@ -32,6 +32,11 @@
               <p class="text-sm text-primary-700 mt-1">
                 {{ group.chapters.length }} chapter{{ group.chapters.length === 1 ? '' : 's' }} available
               </p>
+              <!-- Credits Information -->
+              <div v-if="props.subjectCredits?.[group.subject.name]" class="text-sm text-orange-700 mt-1 font-medium">
+                📋 {{ props.subjectCredits[group.subject.name].totalCredits }} credits allocated
+                ({{ props.subjectCredits[group.subject.name].creditsPerQuiz }} per quiz)
+              </div>
             </div>
             <div class="flex items-center space-x-2">
               <UIcon name="i-lucide-book" class="w-5 h-5 text-primary-600" />
@@ -58,16 +63,25 @@
             <div class="flex items-center space-x-2 flex-shrink-0">
               <button
                 class="px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-colors duration-150"
-                @click="handleTaskSelect(chapter, group.subject, 'lesson')"
+                @click="handleChapterSelect(chapter, group.subject, 'lesson')"
               >
                 <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-1.5" />
                 Lesson
               </button>
               <button
                 class="px-3 py-1.5 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 hover:border-green-300 transition-colors duration-150"
-                @click="handleTaskSelect(chapter, group.subject, 'quiz')"
+                @click="handleChapterSelect(chapter, group.subject, 'practice')"
               >
                 <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1.5" />
+                Practice
+              </button>
+              <!-- Task Button (shown when credits available) -->
+              <button
+                v-if="props.subjectCredits?.[group.subject.name]?.availableTasks?.length > 0"
+                class="px-3 py-1.5 text-sm font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 hover:border-orange-300 transition-colors duration-150"
+                @click="handleTaskButtonClick(group.subject)"
+              >
+                <UIcon name="i-lucide-target" class="w-4 h-4 mr-1.5" />
                 Quiz
               </button>
             </div>
@@ -102,27 +116,30 @@ interface GroupedChapters {
   };
 }
 
-type TaskType = 'lesson' | 'quiz';
-
 // Props
 const props = defineProps<{
   chapters: GroupedChapters;
+  subjectCredits?: Record<string, any>;
   isLoading?: boolean;
 }>();
 
 // Emits
 const emit = defineEmits<{
-  chapterSelected: [chapter: Chapter, subject: Subject, taskType: TaskType];
+  chapterSelected: [chapter: Chapter, subject: Subject, ActionType: StudyActionType];
+  taskSelected: [subject: Subject, threadId: string];
 }>();
 
 // Methods
-const handleTaskSelect = (chapter: Chapter, subject: Subject, taskType: TaskType) => {
-  emit('chapterSelected', chapter, subject, taskType);
+const handleChapterSelect = (chapter: Chapter, subject: Subject, ActionType: StudyActionType) => {
+  emit('chapterSelected', chapter, subject, ActionType);
+};
+
+const handleTaskButtonClick = (subject: Subject) => {
+  const subjectCredits = props.subjectCredits?.[subject.name];
+  if (subjectCredits?.availableTasks?.length > 0) {
+    // Get the first available task
+    const task = subjectCredits.availableTasks[0];
+    emit('taskSelected', subject, task.threadId);
+  }
 };
 </script>
-
-<style scoped>
-.chapter-selector {
-  min-height: 200px;
-}
-</style>

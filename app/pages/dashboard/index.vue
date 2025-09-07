@@ -22,6 +22,7 @@
       @update-cart="updateCart"
       @clear-cart="clearCart"
     />
+    <TasksTab v-else-if="currentTab === 'tasks'" />
     <FamilyTab v-else-if="currentTab === 'family'" />
     <OrdersTab v-else-if="currentTab === 'orders'" />
     <CreditsTab v-else-if="currentTab === 'credits'" />
@@ -46,6 +47,7 @@ import ShopTab from '~/components/dashboard/ShopTab.vue';
 import WishlistTab from '~/components/dashboard/WishlistTab.vue';
 import CartTab from '~/components/dashboard/CartTab.vue';
 import FamilyTab from '~/components/dashboard/FamilyTab.vue';
+import TasksTab from '~/components/dashboard/family/FamilyTasksTab.vue';
 import OrdersTab from '~/components/dashboard/OrdersTab.vue';
 import CreditsTab from '~/components/dashboard/CreditsTab.vue';
 import SettingsTab from '~/components/dashboard/SettingsTab.vue';
@@ -151,6 +153,7 @@ const pageTitle = computed(() => {
   const tabTitles = {
     overview: 'Overview',
     study: 'Study',
+    tasks: 'Tasks',
     subscription: 'Subscription',
     settings: 'Settings',
     shop: 'Shop',

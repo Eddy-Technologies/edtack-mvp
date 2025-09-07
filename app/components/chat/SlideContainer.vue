@@ -329,12 +329,36 @@ function checkAnswer(slide: SlideData) {
 }
 
 // Submit task
-function submitTask() {
-  toast.add({
-    title: 'Task Submitted',
-    description: 'Your task submission is being processed. API integration coming soon!',
-    color: 'green'
-  });
+async function submitTask() {
+  if (!props.task?.id) {
+    toast.add({
+      title: 'Error',
+      description: 'No task ID found. Cannot submit task.',
+      color: 'red'
+    });
+    return;
+  }
+
+  try {
+    const response = await $fetch(`/api/tasks/complete/${props.task.id}`, {
+      method: 'POST'
+    });
+
+    if (response.success) {
+      toast.add({
+        title: 'Task Completed!',
+        description: `Congratulations! You earned ${response.creditsEarned} credits.`,
+        color: 'green'
+      });
+    }
+  } catch (error: any) {
+    console.error('Failed to submit task:', error);
+    toast.add({
+      title: 'Submission Failed',
+      description: error.data?.message || 'Failed to submit task. Please try again.',
+      color: 'red'
+    });
+  }
 }
 
 // Resize functionality

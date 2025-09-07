@@ -283,6 +283,11 @@ const navigationItems: NavigationItem[] = [
     icon: 'i-lucide-book-open'
   },
   {
+    name: 'Tasks',
+    route: '/dashboard?tab=tasks',
+    icon: 'i-lucide-clipboard-list'
+  },
+  {
     name: 'Family',
     icon: 'i-lucide-users',
     children: [
@@ -295,11 +300,6 @@ const navigationItems: NavigationItem[] = [
         name: 'Order Requests',
         route: '/dashboard?tab=family&subtab=order-requests',
         icon: 'i-lucide-shopping-cart'
-      },
-      {
-        name: 'Tasks',
-        route: '/dashboard?tab=family&subtab=tasks',
-        icon: 'i-lucide-clipboard-list'
       }
     ]
   },

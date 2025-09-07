@@ -69,9 +69,22 @@
               </select>
             </div>
 
+            <!-- Credits Filter -->
+            <div class="flex items-center space-x-2">
+              <input
+                id="credits-first"
+                v-model="showCreditsFirst"
+                type="checkbox"
+                class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+              >
+              <label for="credits-first" class="text-sm font-medium text-gray-700">
+                Show subjects with credits first
+              </label>
+            </div>
+
             <!-- Clear Filters -->
             <Button
-              v-if="selectedSubject || selectedSyllabusType"
+              v-if="selectedSubject || selectedSyllabusType || showCreditsFirst"
               variant="secondary"
               text="Clear Filters"
               size="sm"
@@ -96,8 +109,10 @@
         <!-- Chapter Browser -->
         <ChapterSelector
           :chapters="filteredChapters"
+          :subject-credits="subjectCredits"
           :is-loading="isLoadingChapters"
           @chapter-selected="handleChapterSelected"
+          @task-selected="handleTaskSelected"
         />
       </div>
     </div>
@@ -111,7 +126,8 @@ import ChapterSelector from '~/components/dashboard/study/ChapterSelector.vue';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
-import { useStudy } from '~/composables/useStudy';
+import { useStudy, type StudyActionType } from '~/composables/useStudy';
+import { useTask } from '~/composables/useTask';
 
 // Types
 interface Subject {
@@ -139,11 +155,14 @@ interface GroupedChapters {
 // Store
 const meStore = useMeStore();
 const router = useRouter();
+const { getCharacterBySubject } = useCharacters();
+const { loadSubjectCredits: loadCredits } = useTask();
 
 // Reactive state
 const chapters = ref<GroupedChapters>({});
 const allChapters = ref<GroupedChapters>({}); // Keep unfiltered chapters for dropdown
 const syllabusOptions = ref<Array<{ value: string; label: string }>>([]);
+const subjectCredits = ref<Record<string, any>>({});
 const isLoading = ref(true);
 const isLoadingChapters = ref(false);
 const error = ref<string | null>(null);
@@ -151,6 +170,7 @@ const error = ref<string | null>(null);
 // Filters - initialize with user's syllabus type
 const selectedSubject = ref('');
 const selectedSyllabusType = ref(meStore.syllabus_type || '');
+const showCreditsFirst = ref(false);
 
 // Computed properties
 const availableSubjects = computed(() => {
@@ -158,15 +178,41 @@ const availableSubjects = computed(() => {
 });
 
 const filteredChapters = computed(() => {
-  if (!selectedSubject.value) {
-    return allChapters.value;
+  let chapters = allChapters.value;
+
+  // Filter by selected subject if any
+  if (selectedSubject.value) {
+    const filtered: GroupedChapters = {};
+    if (chapters[selectedSubject.value]) {
+      filtered[selectedSubject.value] = chapters[selectedSubject.value];
+    }
+    chapters = filtered;
   }
 
-  const filtered: GroupedChapters = {};
-  if (allChapters.value[selectedSubject.value]) {
-    filtered[selectedSubject.value] = allChapters.value[selectedSubject.value];
+  // Sort subjects with credits first if filter is enabled
+  if (showCreditsFirst.value) {
+    const subjectEntries = Object.entries(chapters);
+
+    // Sort subjects: those with credits first, then alphabetically
+    subjectEntries.sort(([subjectA], [subjectB]) => {
+      const hasCreditsA = subjectCredits.value[subjectA]?.totalCredits > 0;
+      const hasCreditsB = subjectCredits.value[subjectB]?.totalCredits > 0;
+
+      if (hasCreditsA && !hasCreditsB) return -1;
+      if (!hasCreditsA && hasCreditsB) return 1;
+      return subjectA.localeCompare(subjectB);
+    });
+
+    // Rebuild the object with sorted entries
+    const sortedChapters: GroupedChapters = {};
+    subjectEntries.forEach(([key, value]) => {
+      sortedChapters[key] = value;
+    });
+
+    return sortedChapters;
   }
-  return filtered;
+
+  return chapters;
 });
 
 const totalChapters = computed(() => {
@@ -182,6 +228,10 @@ const loadSyllabusOptions = async () => {
   } catch (err) {
     console.error('Failed to load syllabus options:', err);
   }
+};
+
+const loadSubjectCredits = async () => {
+  subjectCredits.value = await loadCredits();
 };
 
 const loadChapters = async () => {
@@ -226,6 +276,7 @@ const handleFilterChange = () => {
 const clearFilters = () => {
   selectedSubject.value = '';
   selectedSyllabusType.value = '';
+  showCreditsFirst.value = false;
   loadChapters();
 };
 
@@ -234,11 +285,8 @@ const getSubjectDisplayName = (subjectName: string) => {
   return group ? group.subject.display_name : subjectName;
 };
 
-const handleChapterSelected = async (chapter: Chapter, subject: Subject, taskType: 'lesson' | 'quiz') => {
+const handleChapterSelected = async (chapter: Chapter, subject: Subject, actionType: StudyActionType) => {
   try {
-    // Use the existing character composable to get character by subject
-    const { getCharacterBySubject } = useCharacters();
-
     // Try different variations of the subject name to find a matching character
     let character = await getCharacterBySubject(subject.subject_name.toUpperCase());
 
@@ -266,7 +314,7 @@ const handleChapterSelected = async (chapter: Chapter, subject: Subject, taskTyp
     const promptResult = generateStudyPrompt(
       chapter.name,
       subject.name,
-      taskType
+      actionType
     );
 
     // Navigate to chat with the generated prompt
@@ -274,6 +322,39 @@ const handleChapterSelected = async (chapter: Chapter, subject: Subject, taskTyp
   } catch (err: any) {
     console.error('Failed to generate study prompt:', err);
     error.value = 'Failed to generate study prompt. Please try again.';
+  }
+};
+
+const handleTaskSelected = async (subject: Subject, threadId: string) => {
+  console.log(subject, threadId);
+  try {
+    // Try different variations of the subject name to find a matching character
+    let character = await getCharacterBySubject(subject.subject_name.toUpperCase());
+
+    if (!character) {
+      character = await getCharacterBySubject(subject.name.toUpperCase());
+    }
+
+    if (!character) {
+      character = await getCharacterBySubject(subject.display_name.toUpperCase());
+    }
+
+    if (!character) {
+      // Log available characters for debugging
+      console.error('No character found for subject:', {
+        subject_name: subject.subject_name,
+        name: subject.name,
+        display_name: subject.display_name
+      });
+      error.value = `No character available for ${subject.display_name}. Please contact support.`;
+      return;
+    }
+
+    // Navigate to chat with the generated prompt
+    router.push(`/chat/${character.slug}/${threadId}`);
+  } catch (err: any) {
+    console.error('Failed to generate task:', err);
+    error.value = 'Failed to generate task. Please try again.';
   }
 };
 
@@ -286,7 +367,8 @@ onMounted(async () => {
     await Promise.all([
       initializeStore(),
       loadSyllabusOptions(),
-      loadChapters()
+      loadChapters(),
+      loadSubjectCredits()
     ]);
   } finally {
     isLoading.value = false;

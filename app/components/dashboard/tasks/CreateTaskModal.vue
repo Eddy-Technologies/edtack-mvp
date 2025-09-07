@@ -36,7 +36,7 @@
             </label>
             <USelect
               v-model="form.subject"
-              :options="subjectOptions"
+              :options="subjects"
               placeholder="Select a subject"
               :disabled="isSubmitting"
               required
@@ -59,13 +59,13 @@
             <p class="text-sm text-gray-500 mt-1">Currently, only quizzes are allowed be assigned as tasks to earn credits.</p>
           </div>
 
-          <!-- Credits -->
+          <!-- Credits per Quiz -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Credit Reward *
+              Credits per Quiz *
             </label>
             <input
-              v-model.number="form.credit"
+              v-model.number="form.creditsPerQuiz"
               type="number"
               min="1"
               max="1000"
@@ -73,24 +73,7 @@
               placeholder="50"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-            <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive when task is completed</p>
-          </div>
-
-          <!-- Number of Questions per Quiz -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Number of Questions per Quiz *
-            </label>
-            <input
-              v-model.number="form.questionsPerQuiz"
-              type="number"
-              min="1"
-              max="50"
-              required
-              placeholder="10"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-            <p class="text-sm text-gray-500 mt-1">Number of questions to include in each quiz</p>
+            <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive for completing each quiz</p>
           </div>
 
           <!-- Required Score for Credit -->
@@ -108,44 +91,6 @@
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
             <p class="text-sm text-gray-500 mt-1">Minimum score percentage (0-100) required to earn credit</p>
-          </div>
-
-          <!-- Recurring Task Options -->
-          <div class="border-t pt-4">
-            <div class="mb-3">
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Schedule
-              </label>
-              <div class="text-xs text-gray-500 mb-3 space-y-1">
-                <p><strong>One-off:</strong> Task is assigned only once</p>
-                <p><strong>Daily:</strong> A new task will be assigned every day</p>
-                <p><strong>Weekly:</strong> A new task will be assigned every Sunday</p>
-                <p><strong>Monthly:</strong> A new task will be assigned on the 1st day of each month</p>
-              </div>
-              <select
-                v-model="form.recurrenceFrequency"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Select schedule</option>
-                <option v-for="frequency in recurrenceOptions" :key="frequency.value" :value="frequency.value">
-                  {{ frequency.label }}
-                </option>
-              </select>
-            </div>
-            <!-- Due Date -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Due Date
-                <p class="text-xs text-gray-500 mb-3">Set a date of which this task will stop repeating. Leave blank if you want it to run forever.</p>
-
-              </label>
-              <input
-                v-model="form.dueDate"
-                type="date"
-                :min="today"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-            </div>
           </div>
 
           <!-- Error Message -->
@@ -178,8 +123,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import Button from '../../common/Button.vue';
-import { LESSON_GENERATION_TYPE, RECURRENCE_FREQUENCY } from '~~/shared/constants';
-import type { CreateTaskReq } from '~~/server/api/tasks/create.post';
+import { LESSON_GENERATION_TYPE } from '~~/shared/constants';
+import { useTask, type CreateTaskReq } from '~/composables/useTask';
 
 const props = defineProps<{
   isOpen: boolean;
@@ -195,17 +140,15 @@ const getInitialForm = () => {
     assigneeUserInfoId: '',
     subject: '',
     lessonGenerationType: LESSON_GENERATION_TYPE.QUIZ, // Default to QUIZ
-    credit: 50,
-    questionsPerQuiz: 10,
+    creditsPerQuiz: 50,
     requiredScore: 80,
-    dueDate: '',
-    recurrenceFrequency: RECURRENCE_FREQUENCY.ONE_OFF,
   };
 };
 
 const form = ref<CreateTaskReq>(getInitialForm());
 const codesStore = useCodesStore();
 const children = ref<any[]>([]);
+const subjects = ref<any[]>([]);
 const isSubmitting = ref(false);
 const error = ref<string | null>(null);
 
@@ -220,15 +163,8 @@ const childrenOptions = computed(() => {
   }));
 });
 
-// Get options from codes store
-const recurrenceOptions = computed(() => codesStore.recurrenceFrequencies);
-const subjectOptions = computed(() => codesStore.subjects);
+// Get options from codes store and API
 const lessonGenerationTypeOptions = computed(() => codesStore.lessonGenerationTypes);
-
-// Check if task is recurring (not one-off)
-const isRecurringTask = computed(() => {
-  return form.value.recurrenceFrequency && form.value.recurrenceFrequency !== 'ONE_OFF';
-});
 
 // Load children when modal opens
 const loadChildren = async () => {
@@ -243,6 +179,24 @@ const loadChildren = async () => {
   }
 };
 
+// Load subjects for selected child
+const loadSubjectsForChild = async (childId: string) => {
+  try {
+    const response = await $fetch(`/api/curriculum/subjects/${childId}`);
+    if (response.success) {
+      subjects.value = response.subjects || [];
+      // Reset subject selection when child changes
+      form.value.subject = '';
+    }
+  } catch (err: any) {
+    console.error('Failed to load subjects for child:', err);
+    subjects.value = [];
+    form.value.subject = '';
+  }
+};
+
+const { createTask: createTaskAPI } = useTask();
+
 const createTask = async () => {
   try {
     isSubmitting.value = true;
@@ -255,38 +209,25 @@ const createTask = async () => {
     }
 
     // Validate quiz fields
-    if (!form.value.questionsPerQuiz || form.value.questionsPerQuiz < 1 || form.value.questionsPerQuiz > 50) {
-      error.value = 'Number of questions must be between 1 and 50';
-      return;
-    }
-
     if (form.value.requiredScore < 0 || form.value.requiredScore > 100) {
       error.value = 'Required score must be between 0 and 100';
       return;
     }
 
-    // Validate recurring task fields
-    if (isRecurringTask.value && !form.value.recurrenceFrequency) {
-      error.value = 'Please select a valid schedule';
+    if (!form.value.creditsPerQuiz || form.value.creditsPerQuiz < 1) {
+      error.value = 'Credits per quiz must be at least 1';
       return;
     }
 
-    const response = await $fetch('/api/tasks/create', {
-      method: 'POST',
-      body: form.value as CreateTaskReq
-    });
+    const response = await createTaskAPI(form.value as CreateTaskReq);
 
     if (response.success) {
       // Reset form
       form.value = getInitialForm();
-
       emit('task-created');
-    } else {
-      throw new Error(response.message || 'Failed to create task');
     }
   } catch (err: any) {
-    console.error('Failed to create task:', err);
-    error.value = err.data?.message || 'Failed to create task. Please try again.';
+    error.value = err.message || 'Failed to create task. Please try again.';
   } finally {
     isSubmitting.value = false;
   }
@@ -304,6 +245,16 @@ watch(() => props.isOpen, (newValue) => {
   if (newValue) {
     loadChildren();
     error.value = null;
+  }
+});
+
+// Watch for child selection to load subjects
+watch(() => form.value.assigneeUserInfoId, (newChildId) => {
+  if (newChildId) {
+    loadSubjectsForChild(newChildId);
+  } else {
+    subjects.value = [];
+    form.value.subject = '';
   }
 });
 </script>

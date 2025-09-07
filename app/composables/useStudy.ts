@@ -1,16 +1,16 @@
-export type StudyTaskType = 'lesson' | 'quiz';
+export type StudyActionType = 'lesson' | 'practice';
 
 export interface StudyPromptResult {
   prompt: string;
   taskTitle: string;
-  taskType: StudyTaskType;
+  taskType: StudyActionType;
 }
 
 export const useStudy = () => {
   const generateStudyPrompt = (
     chapterName: string,
     subjectName: string,
-    taskType: StudyTaskType
+    taskType: StudyActionType
   ): StudyPromptResult => {
     let prompt = '';
     let taskTitle = '';
@@ -21,9 +21,9 @@ export const useStudy = () => {
         prompt = `I want to learn about ${subjectName}, specifically the chapter "${chapterName}".`;
         break;
 
-      case 'quiz':
-        taskTitle = `${chapterName} Quiz`;
-        prompt = `I want to take a 5-question quiz on ${subjectName} covering the chapter "${chapterName}".`;
+      case 'practice':
+        taskTitle = `${chapterName} Practice`;
+        prompt = `I want to take a 5-question practice on ${subjectName} covering the chapter "${chapterName}".`;
         break;
 
       default:

@@ -1,3 +1,11 @@
+export interface CreateTaskReq {
+  assigneeUserInfoId: string;
+  subject: string;
+  lessonGenerationType: string;
+  creditsPerQuiz: number;
+  requiredScore: number;
+}
+
 export function useTask() {
   const updateTaskGeneratedContent = async (taskId: string, generatedMessage: any) => {
     if (!taskId) {
@@ -26,7 +34,40 @@ export function useTask() {
     }
   };
 
+  const createTask = async (taskData: CreateTaskReq) => {
+    try {
+      const response = await $fetch('/api/tasks/create', {
+        method: 'POST',
+        body: taskData
+      });
+
+      if (response.success) {
+        return response;
+      } else {
+        throw new Error(response.message || 'Failed to create task');
+      }
+    } catch (error: any) {
+      console.error('Failed to create task:', error);
+      throw new Error(error.data?.message || 'Failed to create task. Please try again.');
+    }
+  };
+
+  const loadSubjectCredits = async () => {
+    try {
+      const response = await $fetch('/api/tasks/credits-by-subject');
+      if (response.success) {
+        return response.subjectCredits || {};
+      }
+      return {};
+    } catch (error: any) {
+      console.error('Failed to load subject credits:', error);
+      return {};
+    }
+  };
+
   return {
-    updateTaskGeneratedContent
+    updateTaskGeneratedContent,
+    createTask,
+    loadSubjectCredits
   };
 }
