@@ -15,17 +15,20 @@
       <p class="text-gray-500">Try adjusting your filters or check back later.</p>
     </div>
 
-    <!-- Chapters List -->
-    <div v-else class="space-y-6">
+    <!-- Accordion Layout -->
+    <div v-else class="space-y-3">
       <div
         v-for="(group, subjectName) in chapters"
         :key="subjectName"
         class="bg-white rounded-lg border border-gray-200 overflow-hidden"
       >
-        <!-- Subject Header -->
-        <div class="bg-gradient-to-r from-primary-50 to-primary-100 px-6 py-4 border-b border-gray-200">
+        <!-- Accordion Header (Clickable) -->
+        <button
+          class="w-full bg-gradient-to-r from-primary-50 to-primary-100 px-6 py-4 border-b border-gray-200 hover:from-primary-100 hover:to-primary-150 transition-colors duration-150"
+          @click="toggleAccordion(subjectName)"
+        >
           <div class="flex items-center justify-between">
-            <div>
+            <div class="text-left">
               <h3 class="text-lg font-semibold text-primary-900">
                 {{ group.subject.display_name }}
               </h3>
@@ -40,12 +43,19 @@
             </div>
             <div class="flex items-center space-x-2">
               <UIcon name="i-lucide-book" class="w-5 h-5 text-primary-600" />
+              <UIcon
+                :name="expandedSubjects[subjectName] ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+                class="w-5 h-5 text-primary-600 transition-transform duration-200"
+              />
             </div>
           </div>
-        </div>
+        </button>
 
-        <!-- Chapters List -->
-        <div class="divide-y divide-gray-100">
+        <!-- Accordion Content (Collapsible) -->
+        <div
+          v-show="expandedSubjects[subjectName]"
+          class="divide-y divide-gray-100 transition-all duration-300 ease-in-out"
+        >
           <div
             v-for="chapter in group.chapters"
             :key="chapter.name"
@@ -93,6 +103,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
+
 // Types
 interface Subject {
   name: string;
@@ -129,7 +141,36 @@ const emit = defineEmits<{
   taskSelected: [subject: Subject, threadId: string];
 }>();
 
+// Accordion state
+const expandedSubjects = ref<Record<string, boolean>>({});
+
+// Initialize accordion state - expand subjects with credits by default
+const initializeAccordionState = () => {
+  const newState: Record<string, boolean> = {};
+  Object.keys(props.chapters).forEach((subjectName) => {
+    // Expand subjects with credits by default, collapse others
+    const hasCredits = props.subjectCredits?.[subjectName]?.totalCredits > 0;
+    newState[subjectName] = hasCredits;
+  });
+  expandedSubjects.value = newState;
+};
+
+// Watch for changes in chapters and initialize accordion state
+watch(
+  () => props.chapters,
+  () => {
+    if (Object.keys(props.chapters).length > 0) {
+      initializeAccordionState();
+    }
+  },
+  { immediate: true }
+);
+
 // Methods
+const toggleAccordion = (subjectName: string) => {
+  expandedSubjects.value[subjectName] = !expandedSubjects.value[subjectName];
+};
+
 const handleChapterSelect = (chapter: Chapter, subject: Subject, ActionType: StudyActionType) => {
   emit('chapterSelected', chapter, subject, ActionType);
 };
