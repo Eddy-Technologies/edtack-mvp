@@ -20,28 +20,28 @@
             <span class="font-medium text-green-600">{{ formatCredits(task.credit) }}</span>
           </div>
 
-          <div v-if="task.category" class="flex items-center space-x-1">
-            <UIcon name="i-lucide-tag" size="16" />
-            <span>{{ task.category }}</span>
-          </div>
-
-          <div v-if="task.dueDate" class="flex items-center space-x-1">
-            <UIcon name="i-lucide-calendar" size="16" />
-            <span :class="{ 'text-red-600': isOverdue(task.dueDate) }">
-              Due {{ formatDate(task.dueDate) }}
-            </span>
-          </div>
-
           <div v-if="showAssigneeInfo" class="flex items-center space-x-1">
             <UIcon name="i-lucide-user" size="16" />
             <span>{{ task.assigneeInfo?.firstName }} {{ task.assigneeInfo?.lastName || 'Unknown Child' }}</span>
           </div>
         </div>
 
-        <!-- Task Thread Info -->
-        <div v-if="task.isThread" class="bg-blue-50 p-3 rounded-lg mb-3">
-          <p class="text-sm text-blue-800">
-            <strong>Quiz Details:</strong> {{ task.questionsPerQuiz }} questions • Need {{ task.requiredScore }}% to pass
+        <!-- Chapter Information -->
+        <div v-if="task.chapters?.length" class="bg-blue-50 p-3 rounded-lg mb-3">
+          <p class="text-sm text-blue-800 font-medium mb-2">
+            Chapters:
+          </p>
+          <div class="flex flex-wrap gap-2 mb-2">
+            <span
+              v-for="chapter in task.chapters"
+              :key="chapter.name"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200"
+            >
+              {{ chapter.display_name || chapter.name }}
+            </span>
+          </div>
+          <p class="text-xs text-blue-600">
+            {{ task.credit }} credits per quiz • {{ task.chapters.length }} chapter{{ task.chapters.length === 1 ? '' : 's' }} assigned
           </p>
         </div>
 
@@ -52,29 +52,21 @@
           </p>
         </div>
 
-        <!-- Timestamps -->
-        <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500">
-          <span>{{ task.isThread ? 'Thread created' : 'Task created' }} {{ formatDate(task.createdAt) }}</span>
-          <span v-if="task.dueDate && task.isThread">
-            Due {{ formatDate(task.dueDate) }}
-          </span>
+        <!-- Actions -->
+        <div class="flex flex-col space-y-2 ml-4">
+          <!-- Parent Actions -->
+          <template v-if="isParent">
+            <div v-if="!task.isThread">
+              <Button
+                v-if="task.status === 'OPEN'"
+                variant="secondary"
+                text="Close Task"
+                size="sm"
+                @clicked="$emit('close-task', task)"
+              />
+            </div>
+          </template>
         </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex flex-col space-y-2 ml-4">
-        <!-- Parent Actions -->
-        <template v-if="isParent">
-          <div v-if="!task.isThread">
-            <Button
-              v-if="task.status === 'OPEN'"
-              variant="secondary"
-              text="Close Task"
-              size="sm"
-              @clicked="$emit('close-task', task)"
-            />
-          </div>
-        </template>
       </div>
     </div>
   </div>

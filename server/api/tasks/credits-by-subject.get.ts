@@ -18,7 +18,14 @@ export default defineEventHandler(async (event) => {
           id,
           subject,
           credit,
-          assignee_user_info_id
+          assignee_user_info_id,
+          user_tasks_chapters!inner(
+            chapter_name,
+            chapters!inner(
+              name,
+              display_name
+            )
+          )
         )
       `)
       .eq('user_tasks.assignee_user_info_id', userInfo.id)
@@ -39,18 +46,28 @@ export default defineEventHandler(async (event) => {
         taskThreadId: string;
         threadId: string;
         taskId: string;
+        chapters: Array<{
+          name: string;
+          display_name: string;
+        }>;
       }>;
+      availableChapters: Set<string>;
     }> = {};
 
     taskData?.forEach((taskThread: any) => {
       const subject = taskThread.user_tasks.subject;
       const credits = taskThread.user_tasks.credit;
+      const chapters = taskThread.user_tasks.user_tasks_chapters?.map((utc: any) => ({
+        name: utc.chapters.name,
+        display_name: utc.chapters.display_name
+      })) || [];
 
       if (!subjectCredits[subject]) {
         subjectCredits[subject] = {
           totalCredits: 0,
           creditsPerQuiz: credits,
-          availableTasks: []
+          availableTasks: [],
+          availableChapters: new Set()
         };
       }
 
@@ -58,13 +75,28 @@ export default defineEventHandler(async (event) => {
       subjectCredits[subject].availableTasks.push({
         taskThreadId: taskThread.id,
         threadId: taskThread.thread_id,
-        taskId: taskThread.user_tasks.id
+        taskId: taskThread.user_tasks.id,
+        chapters: chapters
       });
+
+      // Track which chapters have tasks available
+      chapters.forEach((chapter) => {
+        subjectCredits[subject].availableChapters.add(chapter.name);
+      });
+    });
+
+    // Convert Sets to Arrays for JSON serialization
+    const serializedSubjectCredits: Record<string, any> = {};
+    Object.entries(subjectCredits).forEach(([subject, data]) => {
+      serializedSubjectCredits[subject] = {
+        ...data,
+        availableChapters: Array.from(data.availableChapters)
+      };
     });
 
     return {
       success: true,
-      subjectCredits
+      subjectCredits: serializedSubjectCredits
     };
   } catch (error: any) {
     console.error('Error fetching task credits by subject:', error);

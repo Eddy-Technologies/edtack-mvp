@@ -25,7 +25,15 @@ export default defineEventHandler(async (event) => {
     // Get user tasks (parent view - task templates/definitions)
     let tasksQuery = supabase
       .from('user_tasks')
-      .select('*, creator:user_infos!creator_user_info_id(*), assignee:user_infos!assignee_user_info_id(*)')
+      .select(`
+        *, 
+        creator:user_infos!creator_user_info_id(*), 
+        assignee:user_infos!assignee_user_info_id(*),
+        user_tasks_chapters(
+          chapter_name,
+          chapters!inner(name, display_name)
+        )
+      `)
       .or(`creator_user_info_id.eq.${userInfo.id},assignee_user_info_id.eq.${userInfo.id}`);
 
     // Apply pagination
@@ -93,6 +101,10 @@ export default defineEventHandler(async (event) => {
       questionsPerQuiz: task.questions_per_quiz,
       requiredScore: task.required_score,
       recurrenceFrequency: task.recurrence_frequency,
+      chapters: task.user_tasks_chapters?.map((utc: any) => ({
+        name: utc.chapters.name,
+        display_name: utc.chapters.display_name
+      })) || [],
       creatorInfo: {
         firstName: task.creator?.first_name,
         lastName: task.creator?.last_name,

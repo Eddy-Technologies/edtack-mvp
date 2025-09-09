@@ -110,6 +110,7 @@
         <ChapterSelector
           :chapters="filteredChapters"
           :subject-credits="subjectCredits"
+          :subject-characters="subjectCharacters"
           :is-loading="isLoadingChapters"
           @chapter-selected="handleChapterSelected"
           @task-selected="handleTaskSelected"
@@ -220,6 +221,28 @@ const totalChapters = computed(() => {
     .reduce((total, group) => total + group.chapters.length, 0);
 });
 
+// Create character mapping for each subject
+const subjectCharacters = computed(() => {
+  const mapping: Record<string, any> = {};
+
+  Object.values(allChapters.value).forEach((group) => {
+    const subject = group.subject;
+    // Try different variations to find character
+    let character = getCharacterBySubject(subject.subject_name.toUpperCase());
+
+    if (!character) {
+      character = getCharacterBySubject(subject.name.toUpperCase());
+    }
+
+    if (!character) {
+      character = getCharacterBySubject(subject.display_name.toUpperCase());
+    }
+
+    mapping[subject.name] = character;
+  });
+  return mapping;
+});
+
 // Methods
 const loadSyllabusOptions = async () => {
   try {
@@ -325,8 +348,8 @@ const handleChapterSelected = async (chapter: Chapter, subject: Subject, actionT
   }
 };
 
-const handleTaskSelected = async (subject: Subject, threadId: string) => {
-  console.log(subject, threadId);
+const handleTaskSelected = async (subject: Subject, threadId: string, chapterName: string) => {
+  console.log(subject, threadId, chapterName);
   try {
     // Try different variations of the subject name to find a matching character
     let character = await getCharacterBySubject(subject.subject_name.toUpperCase());

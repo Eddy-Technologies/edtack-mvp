@@ -4,6 +4,7 @@ export interface CreateTaskReq {
   lessonGenerationType: string;
   creditsPerQuiz: number;
   requiredScore: number;
+  chapters: string[];
 }
 
 export function useTask() {

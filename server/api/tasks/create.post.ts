@@ -10,6 +10,7 @@ export interface CreateTaskReq {
   lessonGenerationType: string;
   creditsPerQuiz: number;
   requiredScore: number;
+  chapters: string[];
 }
 
 export default defineEventHandler(async (event) => {
@@ -17,13 +18,13 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body: CreateTaskReq = await readBody(event);
 
-    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, requiredScore } = body;
+    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, requiredScore, chapters } = body;
 
     // Validate required fields
-    if (!assigneeUserInfoId || !subject || !lessonGenerationType || creditsPerQuiz === undefined) {
+    if (!assigneeUserInfoId || !subject || !lessonGenerationType || creditsPerQuiz === undefined || !chapters?.length) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'assigneeUserInfoId, subject, lessonGenerationType, and creditsPerQuiz are required'
+        statusMessage: 'assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, and chapters are required'
       });
     }
 
@@ -93,12 +94,11 @@ export default defineEventHandler(async (event) => {
       .from('subjects')
       .select(`*`)
       .eq('name', subject)
-      .single;
+      .single();
 
     // Generate task name from subject and lesson generation type
-    const subjectLabel = await codeService.getCode(supabase, CODE_CATEGORIES.SUBJECT, subject);
     const typeLabel = await codeService.getCode(supabase, CODE_CATEGORIES.LESSON_GENERATION_TYPE, lessonGenerationType);
-    const name = `${subjectData?.description} ${typeLabel?.name}`;
+    const name = `${subjectData?.display_name} ${typeLabel?.name}`;
 
     // Create the task
     const { data: task, error: taskError } = await supabase
@@ -124,6 +124,24 @@ export default defineEventHandler(async (event) => {
       throw createError({
         statusCode: 500,
         statusMessage: 'Failed to create task'
+      });
+    }
+
+    // Step 1.5: Create chapter associations for this task
+    const chapterInserts = chapters.map((chapterName) => ({
+      user_task_id: task.id,
+      chapter_name: chapterName
+    }));
+
+    const { error: chapterError } = await supabase
+      .from('user_tasks_chapters')
+      .insert(chapterInserts);
+
+    if (chapterError) {
+      console.error('Failed to create task chapters:', chapterError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to create task chapter associations'
       });
     }
 
@@ -156,11 +174,6 @@ export default defineEventHandler(async (event) => {
 
       chatThread = newChatThread;
 
-      // Prepare initial prompt for content generation
-      const initPrompt = {
-        prompt: `Create a quiz for the topic: ${subject}. Include 10 questions.`
-      };
-
       // Create the initial task thread record
       const { data: newTaskThread, error: taskThreadError } = await supabase
         .from('task_threads')
@@ -168,7 +181,6 @@ export default defineEventHandler(async (event) => {
           user_task_id: task.id,
           thread_id: chatThread.id,
           due_date: initialDueDate.toISOString(),
-          init_prompt: initPrompt,
           status: TASK_THREAD_STATUS.OPEN
         })
         .select('id')

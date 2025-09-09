@@ -25,7 +25,11 @@ export default defineEventHandler(async (event) => {
       .select(`*,
         user_tasks!inner (*,
           creator:user_infos!creator_user_info_id(first_name, last_name, email),
-          assignee:user_infos!assignee_user_info_id(first_name, last_name, email)
+          assignee:user_infos!assignee_user_info_id(first_name, last_name, email),
+          user_tasks_chapters(
+            chapter_name,
+            chapters!inner(name, display_name)
+          )
         )
       `)
       .eq('user_tasks.assignee_user_info_id', userInfo.id);
@@ -88,6 +92,10 @@ export default defineEventHandler(async (event) => {
       createdAt: thread.created_at,
       questionsPerQuiz: thread.user_tasks.questions_per_quiz,
       requiredScore: thread.user_tasks.required_score,
+      chapters: thread.user_tasks.user_tasks_chapters?.map((utc: any) => ({
+        name: utc.chapters.name,
+        display_name: utc.chapters.display_name
+      })) || [],
       creatorInfo: {
         firstName: thread.user_tasks.creator?.first_name,
         lastName: thread.user_tasks.creator?.last_name,

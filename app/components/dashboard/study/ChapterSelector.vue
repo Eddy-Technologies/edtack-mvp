@@ -24,21 +24,33 @@
       >
         <!-- Accordion Header (Clickable) -->
         <button
-          class="w-full bg-gradient-to-r from-primary-50 to-primary-100 px-6 py-4 border-b border-gray-200 hover:from-primary-100 hover:to-primary-150 transition-colors duration-150"
+          class="w-full bg-primary-50 px-6 py-4 border-b border-gray-200 hover:bg-primary-100 transition-colors duration-150"
           @click="toggleAccordion(subjectName)"
         >
           <div class="flex items-center justify-between">
-            <div class="text-left">
-              <h3 class="text-lg font-semibold text-primary-900">
-                {{ group.subject.display_name }}
-              </h3>
-              <p class="text-sm text-primary-700 mt-1">
-                {{ group.chapters.length }} chapter{{ group.chapters.length === 1 ? '' : 's' }} available
-              </p>
-              <!-- Credits Information -->
-              <div v-if="props.subjectCredits?.[group.subject.name]" class="text-sm text-orange-700 mt-1 font-medium">
-                📋 {{ props.subjectCredits[group.subject.name].totalCredits }} credits allocated
-                ({{ props.subjectCredits[group.subject.name].creditsPerQuiz }} per quiz)
+            <div class="flex items-center space-x-4">
+              <!-- Character Image -->
+              <div class="flex-shrink-0">
+                <img
+                  :src="props.subjectCharacters?.[group.subject.name]?.image_url"
+                  :alt="group.subject.display_name + ' character'"
+                  class="w-16 h-16 object-fit rounded-lg border-2 border-primary-200 object-cover"
+                >
+              </div>
+
+              <!-- Subject Info -->
+              <div class="text-left">
+                <h3 class="text-lg font-semibold text-primary-900">
+                  {{ group.subject.display_name }}
+                </h3>
+                <p class="text-sm text-primary-700 mt-1">
+                  {{ group.chapters.length }} chapter{{ group.chapters.length === 1 ? '' : 's' }} available
+                </p>
+                <!-- Credits Information -->
+                <div v-if="props.subjectCredits?.[group.subject.name]" class="text-sm text-orange-700 mt-1 font-medium">
+                  📋 {{ props.subjectCredits[group.subject.name].totalCredits }} credits allocated
+                  ({{ props.subjectCredits[group.subject.name].creditsPerQuiz }} per quiz)
+                </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -85,11 +97,11 @@
                 <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1.5" />
                 Practice
               </button>
-              <!-- Task Button (shown when credits available) -->
+              <!-- Task Button (shown when this specific chapter has credits available) -->
               <button
-                v-if="props.subjectCredits?.[group.subject.name]?.availableTasks?.length > 0"
+                v-if="isChapterTaskAvailable(group.subject.name, chapter.name)"
                 class="px-3 py-1.5 text-sm font-medium text-orange-700 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 hover:border-orange-300 transition-colors duration-150"
-                @click="handleTaskButtonClick(group.subject)"
+                @click="handleTaskButtonClick(group.subject, chapter.name)"
               >
                 <UIcon name="i-lucide-target" class="w-4 h-4 mr-1.5" />
                 Quiz
@@ -132,13 +144,14 @@ interface GroupedChapters {
 const props = defineProps<{
   chapters: GroupedChapters;
   subjectCredits?: Record<string, any>;
+  subjectCharacters?: Record<string, any>;
   isLoading?: boolean;
 }>();
 
 // Emits
 const emit = defineEmits<{
   chapterSelected: [chapter: Chapter, subject: Subject, ActionType: StudyActionType];
-  taskSelected: [subject: Subject, threadId: string];
+  taskSelected: [subject: Subject, threadId: string, chapterName: string];
 }>();
 
 // Accordion state
@@ -175,12 +188,20 @@ const handleChapterSelect = (chapter: Chapter, subject: Subject, ActionType: Stu
   emit('chapterSelected', chapter, subject, ActionType);
 };
 
-const handleTaskButtonClick = (subject: Subject) => {
+const isChapterTaskAvailable = (subjectName: string, chapterName: string): boolean => {
+  const subjectCredits = props.subjectCredits?.[subjectName];
+  return subjectCredits?.availableChapters?.includes(chapterName) || false;
+};
+
+const handleTaskButtonClick = (subject: Subject, chapterName: string) => {
   const subjectCredits = props.subjectCredits?.[subject.name];
   if (subjectCredits?.availableTasks?.length > 0) {
-    // Get the first available task
-    const task = subjectCredits.availableTasks[0];
-    emit('taskSelected', subject, task.threadId);
+    // Find a task that includes this chapter
+    const task = subjectCredits.availableTasks.find((task: any) =>
+      task.chapters.some((chapter: any) => chapter.name === chapterName)
+    ) || subjectCredits.availableTasks[0];
+
+    emit('taskSelected', subject, task.threadId, chapterName);
   }
 };
 </script>

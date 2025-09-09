@@ -41,6 +41,7 @@ export type Database = {
           level: number;
           name: string;
           parent_id: string | null;
+          sort_order: number;
           subject_id: string;
         };
         Insert: {
@@ -49,6 +50,7 @@ export type Database = {
           level: number;
           name: string;
           parent_id?: string | null;
+          sort_order?: number;
           subject_id: string;
         };
         Update: {
@@ -57,6 +59,7 @@ export type Database = {
           level?: number;
           name?: string;
           parent_id?: string | null;
+          sort_order?: number;
           subject_id?: string;
         };
         Relationships: [
@@ -778,13 +781,6 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: 'questions_chapter_id_fkey';
-            columns: ['chapter_id'];
-            isOneToOne: false;
-            referencedRelation: 'chapters';
-            referencedColumns: ['name'];
-          },
-          {
             foreignKeyName: 'questions_parent_question_id_fkey';
             columns: ['parent_question_id'];
             isOneToOne: false;
@@ -1404,6 +1400,42 @@ export type Database = {
             columns: ['creator_user_info_id'];
             isOneToOne: false;
             referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_tasks_chapters: {
+        Row: {
+          chapter_name: string;
+          created_at: string | null;
+          id: string;
+          user_task_id: string;
+        };
+        Insert: {
+          chapter_name: string;
+          created_at?: string | null;
+          id?: string;
+          user_task_id: string;
+        };
+        Update: {
+          chapter_name?: string;
+          created_at?: string | null;
+          id?: string;
+          user_task_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_tasks_chapters_chapter_name_fkey';
+            columns: ['chapter_name'];
+            isOneToOne: false;
+            referencedRelation: 'chapters';
+            referencedColumns: ['name'];
+          },
+          {
+            foreignKeyName: 'user_tasks_chapters_user_task_id_fkey';
+            columns: ['user_task_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_tasks';
             referencedColumns: ['id'];
           },
         ];

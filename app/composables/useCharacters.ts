@@ -203,7 +203,7 @@ export const useCharacters = () => {
     isAvatarPlaying.value = false;
   };
 
-  const getCharacterBySubject = async (subject: string) => {
+  const getCharacterBySubject = (subject: string) => {
     return characters.value.find((char) => char.subject === subject);
   };
 
