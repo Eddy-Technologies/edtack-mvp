@@ -781,6 +781,13 @@ export type Database = {
         };
         Relationships: [
           {
+            foreignKeyName: 'questions_chapter_id_fkey';
+            columns: ['chapter_id'];
+            isOneToOne: false;
+            referencedRelation: 'chapters';
+            referencedColumns: ['name'];
+          },
+          {
             foreignKeyName: 'questions_parent_question_id_fkey';
             columns: ['parent_question_id'];
             isOneToOne: false;
@@ -914,6 +921,7 @@ export type Database = {
       };
       task_threads: {
         Row: {
+          chapter: string;
           created_at: string | null;
           due_date: string;
           generated_content: Json | null;
@@ -924,6 +932,7 @@ export type Database = {
           user_task_id: string;
         };
         Insert: {
+          chapter: string;
           created_at?: string | null;
           due_date: string;
           generated_content?: Json | null;
@@ -934,6 +943,7 @@ export type Database = {
           user_task_id: string;
         };
         Update: {
+          chapter?: string;
           created_at?: string | null;
           due_date?: string;
           generated_content?: Json | null;
@@ -944,6 +954,13 @@ export type Database = {
           user_task_id?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: 'task_threads_chapter_fkey';
+            columns: ['chapter'];
+            isOneToOne: false;
+            referencedRelation: 'chapters';
+            referencedColumns: ['name'];
+          },
           {
             foreignKeyName: 'task_threads_thread_id_fkey';
             columns: ['thread_id'];
@@ -1401,6 +1418,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'user_infos';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'user_tasks_subject_fkey';
+            columns: ['subject'];
+            isOneToOne: false;
+            referencedRelation: 'subjects';
+            referencedColumns: ['name'];
           },
         ];
       };
