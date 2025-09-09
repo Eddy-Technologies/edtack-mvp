@@ -20,16 +20,15 @@ export default defineEventHandler(async (event) => {
     // Get authenticated user info
     const userInfo = await getUserInfo(event);
 
-    if (!userInfo.user_credits) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'User credits not found'
-      });
-    }
+    const { data: userCredits } = await supabase
+      .from('user_credits')
+      .select('*')
+      .eq('user_info_id', userInfo.id)
+      .single();
 
     // TODO: needs to be in same transaction by right
     const amountInCents = Math.round(amount * 100); // Convert dollars to cents
-    const newUserCredit = (userInfo.user_credits?.credit || 0) + amountInCents;
+    const newUserCredit = (userCredits?.credit || 0) + amountInCents;
 
     // Get operation codes
     const operationCodes = await getCodes(supabase, 'operation_type');
