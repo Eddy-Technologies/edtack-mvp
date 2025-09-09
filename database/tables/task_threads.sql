@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS task_threads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_task_id UUID NOT NULL REFERENCES user_tasks(id) ON DELETE CASCADE,
   thread_id UUID UNIQUE NOT NULL REFERENCES threads(id) ON DELETE CASCADE,
+  chapter VARCHAR(100) NOT NULL REFERENCES chapter(name) ON DELETE CASCADE,
   due_date TIMESTAMPTZ NOT NULL,
   init_prompt JSONB,   -- Example: {"subject": "math", "difficulty": "grade_5", "questions": 10}
   generated_content JSONB,   -- TODO: currently not in use, will be generated from the thread on init

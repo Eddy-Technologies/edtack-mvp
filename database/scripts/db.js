@@ -107,7 +107,8 @@ function generateMigrations() {
       'threads.sql',
       'thread_messages.sql',
       'task_threads.sql',
-      'message_feedback.sql'
+      'message_feedback.sql',
+      'user_tasks_chapters.sql'
     ];
 
     // Generate timestamped migration files

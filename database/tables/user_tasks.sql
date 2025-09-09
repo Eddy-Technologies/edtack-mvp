@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   creator_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   assignee_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
-  subject TEXT NOT NULL,
+  subject VARCHAR(100) NOT NULL REFERENCES subjects(name) ON DELETE CASCADE,
   lesson_generation_type TEXT NOT NULL,
   credit INTEGER NOT NULL DEFAULT 0, -- Credit reward in cents
   questions_per_quiz INTEGER DEFAULT 10, -- Number of questions per quiz (for quiz tasks)
