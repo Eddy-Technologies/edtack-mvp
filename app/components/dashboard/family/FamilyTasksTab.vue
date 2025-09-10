@@ -187,7 +187,7 @@ const loadTasks = async (page = 1) => {
     const actualSortOrder = sortBy.value === 'created_at_asc' || sortBy.value === 'credit_asc' ? 'asc' : sortOrder.value;
 
     // Use appropriate endpoint based on user role
-    const endpoint = isParent.value ? '/api/tasks/user-tasks' : '/api/tasks/threads';
+    const endpoint = '/api/tasks/user-tasks';
     const response = await $fetch(endpoint, {
       query: {
         status: selectedStatus.value,
@@ -200,7 +200,7 @@ const loadTasks = async (page = 1) => {
 
     if (response.success) {
       // Extract tasks from the appropriate response field
-      tasks.value = isParent.value ? (response.tasks || []) : (response.threads || []);
+      tasks.value = response.tasks || [];
       pagination.value = response.pagination;
       currentPage.value = page;
     } else {

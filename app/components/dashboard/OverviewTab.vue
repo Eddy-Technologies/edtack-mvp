@@ -84,7 +84,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <p class="font-medium text-green-600">+{{ task.creditInDollars }} credits</p>
+                <p class="font-medium text-green-600">+{{ task.credit }} credits</p>
                 <p class="text-xs text-gray-500">{{ formatDate(task.createdAt) }}</p>
               </div>
             </div>
@@ -256,12 +256,11 @@
                     <span class="px-2 py-1 rounded-full text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                       {{ task.status }}
                     </span>
-                    <span class="text-sm text-gray-600">Due {{ formatDate(task.dueDate) }}</span>
                   </div>
                 </div>
               </div>
               <div class="text-right">
-                <p class="font-medium text-green-600">+{{ task.creditInDollars }} credits</p>
+                <p class="font-medium text-green-600">+{{ task.credit }} credits</p>
                 <p class="text-xs text-gray-500">{{ formatDate(task.createdAt) }}</p>
               </div>
             </div>
@@ -304,7 +303,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <p class="font-medium text-green-600">+{{ task.credits }} credits</p>
+                <p class="font-medium text-green-600">+{{ task.credit }} credits</p>
                 <p class="text-xs text-gray-500">{{ formatDate(task.created_at) }}</p>
               </div>
             </div>
@@ -348,11 +347,9 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
 import OverviewHeader from './overview/OverviewHeader.vue';
-import { useDashboardData } from '~/composables/useDashboardData';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
 
-const { dashboardData, shopChildrenData } = useDashboardData();
 const user = useMeStore();
 
 // Check if user is parent
@@ -417,7 +414,7 @@ onMounted(async () => {
       // Load student's personal data
       // Load credits
       const creditsResponse = await $fetch('/api/credits/unified');
-      userCredits.value = creditsResponse.balance || 0;
+      userCredits.value = creditsResponse.user.balance || 0;
 
       // Load student's pending orders
       try {
@@ -435,7 +432,7 @@ onMounted(async () => {
 
       // Load student's pending tasks
       try {
-        const tasksResponse = await $fetch('/api/tasks/threads', {
+        const tasksResponse = await $fetch('/api/tasks/user-tasks', {
           query: {
             status: 'OPEN',
             limit: 5
@@ -443,7 +440,7 @@ onMounted(async () => {
         });
         if (tasksResponse.success) {
           // All task threads from this endpoint are assigned to this student
-          myPendingTasks.value = tasksResponse.threads || [];
+          myPendingTasks.value = tasksResponse.tasks || [];
           activeTasks.value = myPendingTasks.value.length;
         }
       } catch (tasksError) {
