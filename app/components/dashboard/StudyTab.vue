@@ -183,7 +183,7 @@
                         color="primary"
                         variant="soft"
                         :loading="quizButtonLoading[chapter.name]"
-                        @click="handleQuizAction(chapter, subject.name)"
+                        @click="handleQuizClick(chapter, subject.name)"
                       >
                         <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
                         Quiz
@@ -220,7 +220,7 @@ import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
 
 const router = useRouter();
-const { generateStudyPrompt } = useStudy();
+const { generateStudyPrompt, handleQuizAction } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
 
@@ -340,47 +340,12 @@ const handleStudyAction = async (chapter: Chapter, subjectName: string, actionTy
   }
 };
 
-const handleQuizAction = async (chapter: Chapter, subjectName: string) => {
+const handleQuizClick = async (chapter: Chapter, subjectName: string) => {
   try {
-    quizButtonLoading[chapter.name] = true;
-
-    // Check if task thread already exists
-    if (chapter.taskThreads && chapter.taskThreads.length > 0) {
-      // Navigate to existing thread
-      const threadId = chapter.taskThreads[0].thread_id;
-      // Get the appropriate character for this subject
-      const character = getCharacterBySubject(subjectName);
-      const characterSlug = character?.slug || 'eddy';
-      await router.push(`/chat/${characterSlug}/${threadId}`);
-      return;
-    }
-
-    // Create new task thread
-    const response = await $fetch('/api/study/create-quiz-thread', {
-      method: 'POST',
-      body: {
-        chapterName: chapter.name,
-        subjectName: subjectName
-      }
-    });
-
-    if (response.success) {
-      // Generate quiz prompt and navigate
-      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
-      const queryParams = new URLSearchParams({
-        study_prompt: studyResult.prompt
-      });
-
-      // Get the appropriate character for this subject
-      const character = getCharacterBySubject(subjectName);
-      const characterSlug = character?.slug || 'eddy';
-      await router.push(`/chat/${characterSlug}/${response.threadId}?${queryParams.toString()}`);
-    }
+    await handleQuizAction(chapter, subjectName, quizButtonLoading);
   } catch (error: any) {
-    console.error('Error creating quiz thread:', error);
+    console.error('Error handling quiz click:', error);
     error.value = error.data?.message || 'Failed to create quiz session';
-  } finally {
-    quizButtonLoading[chapter.name] = false;
   }
 };
 
