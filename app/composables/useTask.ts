@@ -53,22 +53,8 @@ export function useTask() {
     }
   };
 
-  const loadSubjectCredits = async () => {
-    try {
-      const response = await $fetch('/api/tasks/credits-by-subject');
-      if (response.success) {
-        return response.subjectCredits || {};
-      }
-      return {};
-    } catch (error: any) {
-      console.error('Failed to load subject credits:', error);
-      return {};
-    }
-  };
-
   return {
     updateTaskGeneratedContent,
     createTask,
-    loadSubjectCredits
   };
 }
