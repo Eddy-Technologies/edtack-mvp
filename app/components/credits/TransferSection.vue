@@ -47,8 +47,9 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import TransferCreditsForm from './TransferCreditsForm.vue';
+import { useToast } from '#imports';
 
-// Use unified credit management - consume shared state
+const toast = useToast(); // Use unified credit management - consume shared state
 const {
   children,
   balance: parentBalance,
@@ -97,11 +98,12 @@ const handleTransfer = async (transferData: {
     });
 
     if (transferResponse.success) {
-      // Show success message
-      // TODO: Replace alert with proper toast notification
-      alert('Transfer successful!');
-    } else {
-      throw new Error('Transfer failed');
+      toast.add({
+        title: 'Success',
+        description: transferResponse.message,
+        color: 'green',
+        timeout: 5000,
+      });
     }
   } catch (error) {
     console.error('Transfer failed:', error);
@@ -109,8 +111,13 @@ const handleTransfer = async (transferData: {
     // Revert optimistic updates on error
     handleCreditTransfer(transferData.toUserInfoId, 'parent', transferData.amount, 'Reverting failed transfer');
 
-    // TODO: Replace alert with proper error notification
-    alert('Transfer failed. Please try again.');
+    // Show error toast
+    toast.add({
+      title: 'Error',
+      description: 'Failed to process transfer. Please try again.',
+      color: 'red',
+      timeout: 5000,
+    });
   } finally {
     isLoading.value = false;
   }

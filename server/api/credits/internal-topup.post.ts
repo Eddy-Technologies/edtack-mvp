@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      message: `Successfully added $${amount.toFixed(2)} SGD to your account`,
+      message: `Successfully added $${amount.toFixed(2)} SGD (${amountInCents}credits) to your account`,
       newBalance: updatedCredits?.credit || amountInCents,
       newBalanceSGD: ((updatedCredits?.credit || amountInCents) / 100).toFixed(2),
       addedAmount: amountInCents,
