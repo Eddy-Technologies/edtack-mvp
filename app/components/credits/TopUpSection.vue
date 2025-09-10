@@ -127,6 +127,9 @@
 import { ref } from 'vue';
 import { useCredit } from '~/composables/useCredit';
 import { useNuxtApp } from '#app';
+import { useToast } from '#imports';
+
+const toast = useToast();
 
 // Quick amount options
 const quickAmounts = [
@@ -143,7 +146,7 @@ const isLoading = ref(false);
 const showConfirmModal = ref(false);
 
 // Get credit composable for refreshing balance
-const { refreshBalance } = useCredit();
+const { refreshCredits } = useCredit();
 const { $toast } = useNuxtApp();
 
 const confirmTopUp = async () => {
@@ -163,20 +166,15 @@ const confirmTopUp = async () => {
       showConfirmModal.value = false;
 
       // Show success toast
-      if ($toast) {
-        $toast.add({
-          title: 'Success',
-          description: response.message,
-          color: 'green',
-          timeout: 5000,
-        });
-      } else {
-        // Fallback if toast is not available
-        alert(response.message);
-      }
+      toast.add({
+        title: 'Success',
+        description: response.message,
+        color: 'green',
+        timeout: 5000,
+      });
 
       // Refresh the credit balance
-      await refreshBalance();
+      await refreshCredits();
 
       // Reset selected amount
       selectedAmount.value = 10;
@@ -188,17 +186,12 @@ const confirmTopUp = async () => {
     console.error('Top-up failed:', error);
 
     // Show error toast
-    if ($toast) {
-      $toast.add({
-        title: 'Error',
-        description: 'Failed to process top-up. Please try again.',
-        color: 'red',
-        timeout: 5000,
-      });
-    } else {
-      // Fallback if toast is not available
-      alert('Failed to process top-up. Please try again.');
-    }
+    toast.add({
+      title: 'Error',
+      description: 'Failed to process top-up. Please try again.',
+      color: 'red',
+      timeout: 5000,
+    });
   } finally {
     isLoading.value = false;
   }
