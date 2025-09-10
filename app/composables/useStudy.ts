@@ -28,27 +28,6 @@ export const useStudy = () => {
     return { prompt, taskTitle, taskType };
   };
 
-  const createQuizThread = async (chapterName: string, subjectName: string) => {
-    try {
-      const response = await $fetch('/api/study/create-quiz-thread', {
-        method: 'POST',
-        body: {
-          chapterName,
-          subjectName
-        }
-      });
-
-      if (!response.success) {
-        throw new Error('Failed to create quiz thread');
-      }
-
-      return response;
-    } catch (error: any) {
-      console.error('Error creating quiz thread:', error);
-      throw new Error(error.data?.message || 'Failed to create quiz thread');
-    }
-  };
-
   const handleQuizAction = async (chapter: any, subjectName: string, loadingState?: { [key: string]: boolean }) => {
     const router = useRouter();
     const { getCharacterBySubject } = useCharacters();
@@ -100,7 +79,6 @@ export const useStudy = () => {
 
   return {
     generateStudyPrompt,
-    createQuizThread,
     handleQuizAction
   };
 };
