@@ -155,7 +155,7 @@
                         size="sm"
                         color="blue"
                         variant="soft"
-                        @click="handleStudyAction(chapter, subject.name, 'lesson')"
+                        @click="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'lesson')"
                       >
                         <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-1" />
                         Lesson
@@ -166,7 +166,7 @@
                         size="sm"
                         color="green"
                         variant="soft"
-                        @click="handleStudyAction(chapter, subject.name, 'practice')"
+                        @click="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'practice')"
                       >
                         <UIcon name="i-lucide-target" class="w-4 h-4 mr-1" />
                         Practice
@@ -182,6 +182,7 @@
                         @click="handleQuizClick(
                           chapter,
                           subject.subject_name,
+                          subject.display_name,
                           chapter.user_tasks_chapters
                             ?.flatMap(utc => utc.user_tasks?.task_threads || [])
                             ?.find(thread => thread.chapter === chapter.name && thread.status === 'OPEN')
@@ -215,7 +216,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
@@ -304,17 +305,18 @@ const fetchSubjects = async () => {
   }
 };
 
-const handleStudyAction = async (chapter: any, subjectName: string, actionType: 'lesson' | 'practice') => {
+const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice') => {
   try {
-    const studyResult = generateStudyPrompt(chapter.display_name, subjectName, actionType);
-
+    const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
+    const upperCaseSubject = subjectName.toUpperCase();
+    console.log(upperCaseSubject);
     // Navigate to chat with study prompt
     const queryParams = new URLSearchParams({
       study_prompt: studyResult.prompt
     });
 
     // Get the appropriate character for this subject
-    const character = getCharacterBySubject(subjectName);
+    const character = getCharacterBySubject(upperCaseSubject);
     const characterSlug = character?.slug || 'eddy';
 
     await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
@@ -323,8 +325,7 @@ const handleStudyAction = async (chapter: any, subjectName: string, actionType: 
   }
 };
 
-const handleQuizClick = async (chapter: any, subjectName: string, existingThread?: any) => {
-  console.log(chapter, subjectName, existingThread);
+const handleQuizClick = async (chapter: any, subjectName: string, subjectDisplayName: string, existingThread?: any) => {
   const upperCaseSubject = subjectName.toUpperCase();
   try {
     // Get the appropriate character for this subject
@@ -332,7 +333,7 @@ const handleQuizClick = async (chapter: any, subjectName: string, existingThread
     let threadId = existingThread?.thread_id ? existingThread.thread_id : '';
 
     if (!existingThread) {
-      const res = await createQuizThread(chapter, subjectName);
+      const res = await createQuizThread(chapter, subjectDisplayName);
       threadId = res;
     }
 

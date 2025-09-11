@@ -116,7 +116,6 @@ export function useThreads() {
 
   // Reset all state
   const reset = () => {
-    threads.value = [];
     messageHistory.value = [];
     error.value = null;
     pendingMessage.value = null;
