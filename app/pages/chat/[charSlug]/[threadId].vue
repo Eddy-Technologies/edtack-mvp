@@ -115,7 +115,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -180,7 +179,6 @@ onMounted(async () => {
 
   handleResize();
   window.addEventListener('resize', handleResize);
-
 
   // Set sidebar collapsed if user is logged in but hasn't started chatting
   if (meStore.isLoggedIn && !hasStartedChat.value) {
@@ -323,10 +321,6 @@ const handleStudyPromptInjection = async () => {
     console.error('Failed to inject study prompt:', error);
   }
 };
-
-
-
-
 
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768;

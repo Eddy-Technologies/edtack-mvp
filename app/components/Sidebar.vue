@@ -195,7 +195,6 @@ const isPlaying = ref(false);
 const currentAudio = ref<HTMLAudioElement | null>(null);
 let wavesurfer: WaveSurfer | null = null;
 
-
 onMounted(() => {
   // Initialize audio store after mounting
   // Fetch threads on mount
