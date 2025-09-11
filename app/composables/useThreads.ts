@@ -8,7 +8,6 @@ type Message = Database['public']['Tables']['thread_messages']['Row'];
 
 // Global state
 const threads = ref<Thread[]>([]);
-const currentThread = ref<Thread | null>(null);
 const messageHistory = ref<Message[]>([]);
 const isLoadingThreads = ref(false);
 const isLoadingThread = ref(false);
@@ -55,15 +54,6 @@ export function useThreads() {
 
   // Fetch specific thread with messageHistory
   const fetchThread = async (threadId: string) => {
-    if (!threadId || threadId === 'new') {
-      currentThread.value = null;
-      messageHistory.value = [];
-      return { thread: null, messageHistory: [], task: null };
-    }
-
-    isLoadingThread.value = true;
-    error.value = null;
-
     try {
       const { threadData, success } = await $fetch(`/api/chat/thread/${threadId}`, { method: 'GET' });
 
@@ -71,14 +61,11 @@ export function useThreads() {
         throw new Error('Thread not found');
       }
 
-      currentThread.value = threadData;
       messageHistory.value = threadData?.thread_messages || [];
       return { thread: threadData, messageHistory: threadData?.thread_messages || [], task: threadData?.task_threads || null };
     } catch (err) {
       console.error('Error loading thread:', err);
       reset();
-    } finally {
-      isLoadingThread.value = false;
     }
   };
 
@@ -101,7 +88,6 @@ export function useThreads() {
 
       // Add to local threads list
       threads.value.unshift(newThread);
-      currentThread.value = newThread;
       messageHistory.value = [];
 
       return newThread;
@@ -113,15 +99,8 @@ export function useThreads() {
   };
 
   // Add message to current thread (handles all message types)
-  const addMessage = async (content: string, type: string, isUser: boolean, newUuid?: string) => {
-    if (!currentThread.value) return;
-    const body: PostMessageReq = {
-      thread_id: currentThread.value.id,
-      content,
-      type,
-      isUser,
-      uuid: newUuid
-    };
+  const addMessage = async (thread_id: string, content: string, type: string, isUser: boolean, newUuid?: string) => {
+    const body: PostMessageReq = { thread_id, content, type, isUser, uuid: newUuid };
 
     const response = await $fetch('/api/chat/message', {
       method: 'POST',
@@ -135,16 +114,9 @@ export function useThreads() {
     messageHistory.value.push(response.data);
   };
 
-  // Clear current thread
-  const clearCurrentThread = () => {
-    currentThread.value = null;
-    messageHistory.value = [];
-  };
-
   // Reset all state
   const reset = () => {
     threads.value = [];
-    currentThread.value = null;
     messageHistory.value = [];
     error.value = null;
     pendingMessage.value = null;
@@ -181,7 +153,6 @@ export function useThreads() {
   return {
     // State
     threads: readonly(threads),
-    currentThread: readonly(currentThread),
     messageHistory: readonly(messageHistory),
     isLoadingThreads: readonly(isLoadingThreads),
     isLoadingThread: readonly(isLoadingThread),
@@ -192,7 +163,6 @@ export function useThreads() {
     fetchThread,
     createThread,
     addMessage,
-    clearCurrentThread,
     reset,
 
     // Pending message management

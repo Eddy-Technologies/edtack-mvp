@@ -149,7 +149,7 @@ const threadData = ref<any>(null); // Store thread data
 const router = useRouter();
 const route = useRoute();
 const meStore = useMeStore();
-const { fetchThread, createThread, clearCurrentThread, setPendingMessage } = useThreads();
+const { fetchThread, createThread, reset, setPendingMessage } = useThreads();
 
 const {
   selectedCharacter,
@@ -223,7 +223,7 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       isLoading.value = false;
     } else if (newThreadId === 'new') {
       // Reset for new chat
-      clearCurrentThread();
+      reset();
       hasStartedChat.value = false;
       task.value = null;
 
