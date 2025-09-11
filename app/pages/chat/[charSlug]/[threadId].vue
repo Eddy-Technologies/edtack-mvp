@@ -20,9 +20,7 @@
           :collapsed="collapsed"
           :sidebar-width="collapsed ? 80 : 400"
           :is-mobile="isMobile"
-          :is-avatar-floating="showFloatingAvatar"
           @toggle-sidebar="toggleSidebar"
-          @toggle-floating-avatar="toggleFloatingAvatar"
           @new-chat="handleNewChat"
         />
       </div>
@@ -118,15 +116,6 @@
       </div>
     </div>
 
-    <!-- Floating Audio Player -->
-    <FloatingAudioPlayer
-      :show="showFloatingAvatar"
-      :initial-position="floatingPosition"
-      :is-playing="isAvatarPlaying"
-      @close="closeFloatingAvatar"
-      @position-change="handlePositionChange"
-      @collapse-toggle="handleCollapseToggle"
-    />
   </div>
 </template>
 
@@ -138,7 +127,6 @@ import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
 import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
-import FloatingAudioPlayer from '@/components/audio/FloatingAudioPlayer.vue';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
@@ -155,11 +143,7 @@ const isMobile = ref(false);
 const currentCharacter = ref(null);
 const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
-const showFloatingAvatar = ref(false);
-const floatingPosition = ref({ x: 0, y: 0 });
-const isFloatingCollapsed = ref(false);
 const chatContentRef = ref<any>(null);
-const floatingAudio = ref<HTMLAudioElement | null>(null);
 const task = ref<any>(null); // Store task data for task threads
 const threadData = ref<any>(null); // Store thread data
 
@@ -197,11 +181,6 @@ onMounted(async () => {
   handleResize();
   window.addEventListener('resize', handleResize);
 
-  // Set initial floating position
-  floatingPosition.value = {
-    x: window.innerWidth / 2 - 150,
-    y: window.innerHeight / 2 - 165,
-  };
 
   // Set sidebar collapsed if user is logged in but hasn't started chatting
   if (meStore.isLoggedIn && !hasStartedChat.value) {
@@ -345,22 +324,9 @@ const handleStudyPromptInjection = async () => {
   }
 };
 
-const toggleFloatingAvatar = () => {
-  showFloatingAvatar.value = !showFloatingAvatar.value;
-};
 
-const closeFloatingAvatar = () => {
-  showFloatingAvatar.value = false;
-  isFloatingCollapsed.value = false;
-};
 
-const handlePositionChange = (position: { x: number; y: number }) => {
-  floatingPosition.value = position;
-};
 
-const handleCollapseToggle = (collapsed: boolean) => {
-  isFloatingCollapsed.value = collapsed;
-};
 
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768;
@@ -369,9 +335,5 @@ const handleResize = () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
-  if (floatingAudio.value) {
-    floatingAudio.value.pause();
-    floatingAudio.value = null;
-  }
 });
 </script>

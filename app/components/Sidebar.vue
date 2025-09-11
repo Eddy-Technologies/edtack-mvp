@@ -84,12 +84,6 @@
         class="relative bg-gray-700 rounded-xl shadow-inner p-4 min-h-[120px] w-full flex flex-col items-center justify-center"
       >
         <p class="text-gray-400 text-sm text-center mb-4">Avatar is floating</p>
-        <button
-          class="w-full px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg text-sm transition-colors"
-          @click="toggleFloatingAvatar"
-        >
-          Close audio player
-        </button>
       </div>
 
       <!-- Normal container when not floating -->
@@ -131,14 +125,6 @@
             >
               <Icon name="i-heroicons-chevron-down" class="w-4 h-4 text-gray-700" />
             </button>
-            <!-- Floating Avatar Toggle Button -->
-            <button
-              v-if="!isMini"
-              class="p-2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-lg shadow-lg transition-all duration-200"
-              @click="toggleFloatingAvatar"
-            >
-              <Icon name="i-heroicons-arrows-pointing-out" class="w-4 h-4 text-gray-700" />
-            </button>
           </div>
         </div>
       </div>
@@ -160,7 +146,6 @@ import { TASK_THREAD_STATUS } from '~~/shared/constants';
 
 const emit = defineEmits([
   'toggle-sidebar',
-  'toggle-floating-avatar',
   'new-chat',
 ]);
 const props = defineProps({
@@ -210,10 +195,6 @@ const isPlaying = ref(false);
 const currentAudio = ref<HTMLAudioElement | null>(null);
 let wavesurfer: WaveSurfer | null = null;
 
-const toggleFloatingAvatar = () => {
-  // Emit event to parent to handle floating avatar
-  emit('toggle-floating-avatar');
-};
 
 onMounted(() => {
   // Initialize audio store after mounting
