@@ -289,8 +289,7 @@ onMounted(() => {
           // Scroll to the message with slides (will be implemented)
           nextTick(() => {
             // For now, find the message index and scroll to it
-            const messageIndex = newMessages.pop().id;
-            scrollToMessage(messageIndex);
+            scrollToMessage(latestMessage.id);
           });
         }
       }
