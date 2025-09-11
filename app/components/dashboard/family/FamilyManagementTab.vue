@@ -403,11 +403,6 @@ const loadFamily = async () => {
   }
 };
 
-const viewProfile = (member: any) => {
-  // Navigate to member profile or show details modal
-  console.log('View profile for:', member);
-};
-
 const transferCredits = (member: any) => {
   selectedMember.value = member;
   showTransferModal.value = true;
@@ -535,10 +530,6 @@ const getRoleBadgeClass = (role: string) => {
     admin: 'bg-purple-100 text-purple-800'
   };
   return classMap[role as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
-};
-
-const formatCredits = (credits: number) => {
-  return `${credits}`;
 };
 
 const formatDate = (dateString: string) => {
