@@ -99,8 +99,8 @@ export function useThreads() {
   };
 
   // Add message to current thread (handles all message types)
-  const addMessage = async (thread_id: string, content: string, type: string, isUser: boolean, newUuid?: string) => {
-    const body: PostMessageReq = { thread_id, content, type, isUser, uuid: newUuid };
+  const addMessage = async ({ thread_id, content, type, isUser, uuid }: PostMessageReq) => {
+    const body: PostMessageReq = { thread_id, content, type, isUser, uuid };
 
     const response = await $fetch('/api/chat/message', {
       method: 'POST',

@@ -438,7 +438,14 @@ const handleWebSocketMessage = (message: any) => {
 
     // Add to global state and local stream
     const newUuid = crypto.randomUUID();
-    addMessage(message, 'json', false, newUuid);
+    const addMessageObj = {
+      thread_id: props.threadId,
+      content: message,
+      type: 'json',
+      isUser: false,
+      uuid: newUuid
+    };
+    addMessage(addMessageObj);
     messageStream.value.push({ ...message, id: newUuid });
 
     isPlayingAllowed.value = true;
@@ -583,16 +590,16 @@ const handleSend = async (text: string) => {
   await nextTick();
   bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
 
-  // Add user message to UI immediately and global state
-  const userMessage = {
+  const messageUuid = crypto.randomUUID();
+  const addMessageObj = {
+    thread_id: props.threadId,
+    content: text,
     type: 'text',
     isUser: true,
-    content: text,
-    id: crypto.randomUUID()
+    uuid: messageUuid
   };
-
-  addMessage(userMessage.content, userMessage.type, userMessage.isUser, userMessage.id);
-  messageStream.value.push({ type: 'text', text: userMessage.content, isUser: true, id: userMessage.id });
+  addMessage(addMessageObj);
+  messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid });
 
   // Since we connect immediately in initializeChat, just try to send
   if (wsChat.value?.isConnected) {
