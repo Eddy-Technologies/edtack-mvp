@@ -1,10 +1,11 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
-import { TASK_STATUS, TASK_THREAD_STATUS } from '~~/shared/constants/codes';
+import { TASK_THREAD_STATUS } from '~~/shared/constants/codes';
 
 interface CreateQuizThreadRequest {
   chapterName: string;
   subjectName: string;
+  init_prompt: string;
 }
 
 export default defineEventHandler(async (event) => {
@@ -13,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const userInfo = await getUserInfo(event);
     const body: CreateQuizThreadRequest = await readBody(event);
 
-    const { chapterName, subjectName } = body;
+    const { chapterName, subjectName, init_prompt } = body;
 
     // Validate required fields
     if (!chapterName || !subjectName) {
@@ -98,11 +99,7 @@ export default defineEventHandler(async (event) => {
         chapter: chapterName,
         due_date: dueDate.toISOString(),
         status: TASK_THREAD_STATUS.OPEN,
-        init_prompt: {
-          taskType: 'quiz',
-          chapterName,
-          subjectName
-        }
+        init_prompt
       })
       .select('id')
       .single();
