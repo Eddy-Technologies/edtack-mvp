@@ -28,57 +28,29 @@ export const useStudy = () => {
     return { prompt, taskTitle, taskType };
   };
 
-  const handleQuizAction = async (chapter: any, subjectName: string, loadingState?: { [key: string]: boolean }) => {
-    const router = useRouter();
-    const { getCharacterBySubject } = useCharacters();
+  const createQuizThread = async (chapter: any, subjectName: string) => {
+    const init_prompt = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
 
     try {
-      if (loadingState) {
-        loadingState[chapter.name] = true;
-      }
-
-      // Check if task thread already exists
-      if (chapter.taskThreads && chapter.taskThreads.length > 0) {
-        // Navigate to existing thread
-        const threadId = chapter.taskThreads[0].thread_id;
-        const character = getCharacterBySubject(subjectName);
-        const characterSlug = character?.slug || 'eddy';
-        await router.push(`/chat/${characterSlug}/${threadId}`);
-        return;
-      }
-
       // Create new task thread
       const response = await $fetch('/api/study/create-quiz-thread', {
         method: 'POST',
         body: {
           chapterName: chapter.name,
-          subjectName: subjectName
+          subjectName: subjectName,
+          init_prompt
         }
       });
-
-      if (response.success) {
-        // Generate quiz prompt and navigate
-        const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
-        const queryParams = new URLSearchParams({
-          study_prompt: studyResult.prompt
-        });
-
-        const character = getCharacterBySubject(subjectName);
-        const characterSlug = character?.slug || 'eddy';
-        await router.push(`/chat/${characterSlug}/${response.threadId}?${queryParams.toString()}`);
-      }
+      console.log(response);
+      return response.threadId;
     } catch (error: any) {
       console.error('Error handling quiz action:', error);
       throw new Error(error.data?.message || 'Failed to create quiz session');
-    } finally {
-      if (loadingState) {
-        loadingState[chapter.name] = false;
-      }
     }
   };
 
   return {
     generateStudyPrompt,
-    handleQuizAction
+    createQuizThread
   };
 };

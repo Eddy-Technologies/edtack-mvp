@@ -1,6 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
-import { TASK_THREAD_STATUS } from '~~/shared/constants/codes';
+import { TASK_STATUS, TASK_THREAD_STATUS } from '~~/shared/constants/codes';
 
 interface CreateQuizThreadRequest {
   chapterName: string;
@@ -23,96 +23,52 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // First, check if a task thread already exists for this chapter and user
-    const { data: existingTaskThreads, error: existingError } = await supabase
-      .from('task_threads')
+    // Single query to get user_task and check for existing task_threads
+    const { data: taskData, error: queryError } = await supabase
+      .from('user_tasks')
       .select(`
-        id,
-        thread_id,
-        status,
-        user_tasks!inner(
+        *,
+        user_tasks_chapters!inner(
+          chapter_name
+        ),
+        task_threads(
           id,
-          assignee_user_info_id,
-          subject
+          thread_id,
+          status,
+          chapter
         )
       `)
-      .eq('chapter', chapterName)
-      .eq('user_tasks.subject', subjectName)
-      .eq('user_tasks.assignee_user_info_id', userInfo.id)
-      .eq('status', TASK_THREAD_STATUS.OPEN);
+      .eq('assignee_user_info_id', userInfo.id)
+      .eq('user_tasks_chapters.chapter_name', chapterName)
+      .single();
 
-    if (existingError) {
-      console.error('Error checking existing task threads:', existingError);
+    if (queryError || !taskData) {
+      console.error('Error fetching task data:', queryError);
       throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to check existing task threads'
+        statusCode: 404,
+        statusMessage: 'No task found for this chapter'
       });
     }
 
-    // If an open task thread already exists, return it
-    if (existingTaskThreads && existingTaskThreads.length > 0) {
+    // Check for existing OPEN thread for this chapter
+    const existingThread = taskData.task_threads?.find(
+      (thread) => thread.chapter === chapterName && thread.status === TASK_THREAD_STATUS.OPEN
+    );
+
+    if (existingThread) {
       return {
         success: true,
-        threadId: existingTaskThreads[0].thread_id,
-        taskThreadId: existingTaskThreads[0].id,
+        threadId: existingThread.thread_id,
+        taskThreadId: existingThread.id,
         isExisting: true
       };
     }
 
-    // Check if user has an available task for this chapter and subject
-    const { data: availableTasks, error: tasksError } = await supabase
-      .from('user_tasks')
-      .select(`
-        id,
-        credit,
-        name,
-        user_tasks_chapters!inner(
-          chapter_name
-        )
-      `)
-      .eq('assignee_user_info_id', userInfo.id)
-      .eq('subject', subjectName)
-      .eq('status', 'OPEN')
-      .eq('user_tasks_chapters.chapter_name', chapterName);
-
-    if (tasksError) {
-      console.error('Error fetching available tasks:', tasksError);
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to fetch available tasks'
-      });
-    }
-
-    if (!availableTasks || availableTasks.length === 0) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'No available tasks found for this chapter'
-      });
-    }
-
-    const task = availableTasks[0];
-
-    // Get chapter display name for thread title
-    const { data: chapterData, error: chapterError } = await supabase
-      .from('chapters')
-      .select('display_name')
-      .eq('name', chapterName)
-      .single();
-
-    if (chapterError) {
-      console.error('Error fetching chapter data:', chapterError);
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to fetch chapter data'
-      });
-    }
+    console.log(userInfo.id, chapterName, subjectName);
 
     // Calculate due date - end of today
-    const now = new Date();
-    const dueDate = new Date(now);
-    dueDate.setHours(23, 59, 59, 999);
-
-    const threadTitle = `${chapterData.display_name} Quiz`;
+    const dueDate = new Date();
+    const threadTitle = `${chapterName} Quiz`;
 
     // Create chat thread
     const { data: newChatThread, error: chatThreadError } = await supabase
@@ -137,7 +93,7 @@ export default defineEventHandler(async (event) => {
     const { data: newTaskThread, error: taskThreadError } = await supabase
       .from('task_threads')
       .insert({
-        user_task_id: task.id,
+        user_task_id: taskData.id,
         thread_id: newChatThread.id,
         chapter: chapterName,
         due_date: dueDate.toISOString(),

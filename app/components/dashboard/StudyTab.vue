@@ -104,9 +104,6 @@
         >
           <div class="flex items-center space-x-3">
             <span class="font-medium text-gray-900">{{ subject.display_name }}</span>
-            <UBadge v-if="subject.totalCredits > 0" color="primary" size="xs">
-              {{ subject.totalCredits }} credits
-            </UBadge>
           </div>
           <UIcon
             :name="openSubjects.includes(subject.name) ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
@@ -141,11 +138,10 @@
                         {{ chapter.description }}
                       </p>
                       <div class="flex items-center space-x-4 text-xs text-gray-500">
-                        <span v-if="chapter.credits > 0" class="flex items-center">
-                          <UIcon name="i-lucide-coins" class="w-3 h-3 mr-1" />
-                          {{ chapter.credits }} credits
-                        </span>
-                        <span v-if="chapter.taskThreads && chapter.taskThreads.length > 0" class="flex items-center">
+                        <span
+                          v-if="chapter.user_tasks_chapters?.length > 0"
+                          class="flex items-center"
+                        >
                           <UIcon name="i-lucide-check-circle" class="w-3 h-3 mr-1 text-green-500" />
                           Quiz available
                         </span>
@@ -178,12 +174,18 @@
 
                       <!-- Quiz Button (only if chapter has tasks) -->
                       <UButton
-                        v-if="chapter.hasUserTasks"
+                        v-if="chapter.user_tasks_chapters?.length > 0"
                         size="sm"
                         color="primary"
                         variant="soft"
                         :loading="quizButtonLoading[chapter.name]"
-                        @click="handleQuizClick(chapter, subject.name)"
+                        @click="handleQuizClick(
+                          chapter,
+                          subject.subject_name,
+                          chapter.user_tasks_chapters
+                            ?.flatMap(utc => utc.user_tasks?.task_threads || [])
+                            ?.find(thread => thread.chapter === chapter.name && thread.status === 'OPEN')
+                        )"
                       >
                         <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
                         Quiz
@@ -220,29 +222,20 @@ import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
 
 const router = useRouter();
-const { generateStudyPrompt, handleQuizAction } = useStudy();
+const { generateStudyPrompt, createQuizThread } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
 
-interface Chapter {
-  name: string;
-  display_name: string;
-  description: string | null;
-  hasUserTasks: boolean;
-  taskThreads: any[];
-  credits: number;
-}
-
 interface Subject {
   name: string;
+  subject_name: string;
   display_name: string;
   description: string | null;
   level_type: string;
   level_type_description?: string;
   syllabus_type: string;
   syllabus_type_description?: string;
-  chapters: Chapter[];
-  totalCredits: number;
+  chapters: any[];
 }
 
 // State
@@ -266,6 +259,25 @@ const syllabusTypeOptions = ref<Array<{ label: string; value: string }>>([]);
 const subjectOptions = ref<Array<{ label: string; value: string }>>([]);
 
 // Methods
+const fetchFilterOptions = async () => {
+  try {
+    // Fetch all filter options in parallel
+    const [levelsResponse, syllabusResponse, subjectsResponse] = await Promise.all([
+      $fetch('/api/options/levels'),
+      $fetch('/api/options/syllabus'),
+      $fetch('/api/options/subjects')
+    ]);
+
+    // Set filter options
+    levelTypeOptions.value = levelsResponse.levels || [];
+    syllabusTypeOptions.value = syllabusResponse.syllabus || [];
+    subjectOptions.value = subjectsResponse.subjects || [];
+  } catch (err: any) {
+    console.error('Error fetching filter options:', err);
+    // Don't set error state for filter options, just log it
+  }
+};
+
 const fetchSubjects = async () => {
   try {
     isLoading.value = true;
@@ -281,7 +293,6 @@ const fetchSubjects = async () => {
 
     if (response.success) {
       subjects.value = response.subjects;
-      populateFilterOptions(response.availableLevelTypes, response.availableSyllabusTypes);
     } else {
       error.value = 'Failed to load study subjects';
     }
@@ -293,35 +304,7 @@ const fetchSubjects = async () => {
   }
 };
 
-const populateFilterOptions = (availableLevelTypes?: Record<string, string>, availableSyllabusTypes?: Record<string, string>) => {
-  // Use the comprehensive level and syllabus data from the API
-  if (availableLevelTypes) {
-    levelTypeOptions.value = Object.entries(availableLevelTypes)
-      .sort(([, a], [, b]) => a.localeCompare(b))
-      .map(([value, label]) => ({
-        label,
-        value
-      }));
-  }
-
-  if (availableSyllabusTypes) {
-    syllabusTypeOptions.value = Object.entries(availableSyllabusTypes)
-      .sort(([, a], [, b]) => a.localeCompare(b))
-      .map(([value, label]) => ({
-        label,
-        value
-      }));
-  }
-
-  // Build subject options from subjects data
-  const subjectList: Array<{ label: string; value: string }> = [];
-  subjects.value.forEach((subject) => {
-    subjectList.push({ label: subject.display_name, value: subject.name });
-  });
-  subjectOptions.value = subjectList.sort((a, b) => a.label.localeCompare(b.label));
-};
-
-const handleStudyAction = async (chapter: Chapter, subjectName: string, actionType: 'lesson' | 'practice') => {
+const handleStudyAction = async (chapter: any, subjectName: string, actionType: 'lesson' | 'practice') => {
   try {
     const studyResult = generateStudyPrompt(chapter.display_name, subjectName, actionType);
 
@@ -340,9 +323,20 @@ const handleStudyAction = async (chapter: Chapter, subjectName: string, actionTy
   }
 };
 
-const handleQuizClick = async (chapter: Chapter, subjectName: string) => {
+const handleQuizClick = async (chapter: any, subjectName: string, existingThread?: any) => {
+  console.log(chapter, subjectName, existingThread);
+  const upperCaseSubject = subjectName.toUpperCase();
   try {
-    await handleQuizAction(chapter, subjectName, quizButtonLoading);
+    // Get the appropriate character for this subject
+    const character = getCharacterBySubject(upperCaseSubject);
+    let threadId = existingThread?.thread_id ? existingThread.thread_id : '';
+
+    if (!existingThread) {
+      const res = await createQuizThread(chapter, subjectName);
+      threadId = res;
+    }
+
+    await router.push(`/chat/${character?.slug}/${threadId}`);
   } catch (error: any) {
     console.error('Error handling quiz click:', error);
     error.value = error.data?.message || 'Failed to create quiz session';
@@ -371,6 +365,9 @@ onMounted(async () => {
   // Load characters first to ensure getCharacterBySubject works
   await fetchCharacters();
 
+  // Fetch filter options from database tables
+  await fetchFilterOptions();
+
   // Set user's default level and syllabus if available
   if (meStore.level_type) {
     filters.levelType = meStore.level_type;
@@ -379,7 +376,7 @@ onMounted(async () => {
     filters.syllabusType = meStore.syllabus_type;
   }
 
-  // Fetch subjects (this will also populate filter options)
+  // Fetch subjects with applied filters
   await fetchSubjects();
 });
 </script>
