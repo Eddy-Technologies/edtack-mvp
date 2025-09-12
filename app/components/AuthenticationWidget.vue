@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
 import UserAvatar from './common/UserAvatar.vue';
@@ -88,15 +88,6 @@ import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
-
-// Props for customization
-interface Props {
-  showLoginButtons?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  showLoginButtons: true
-});
 
 // Emits for parent component communication
 const emit = defineEmits(['login-success', 'register-success', 'logout']);

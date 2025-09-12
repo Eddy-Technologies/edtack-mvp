@@ -378,7 +378,6 @@ const emit = defineEmits<{
 // Reactive state
 const titleInput = ref<HTMLInputElement>();
 const contentEditable = ref<HTMLDivElement>();
-const titleFocused = ref(false);
 const contentFocused = ref(false);
 const isBold = ref(false);
 const isItalic = ref(false);

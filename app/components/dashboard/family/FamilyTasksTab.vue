@@ -145,7 +145,6 @@ import TaskInfoCard from '~/components/dashboard/tasks/TaskInfoCard.vue';
 // Use stores
 const meStore = useMeStore();
 const { isParent } = storeToRefs(meStore);
-const codesStore = useCodesStore();
 
 // Reactive state
 const tasks = ref<any[]>([]);

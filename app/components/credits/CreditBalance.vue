@@ -48,7 +48,6 @@
 // Use unified credit management - consume shared state only
 const {
   balance,
-  currency,
   isLoading,
   error,
   refreshCredits

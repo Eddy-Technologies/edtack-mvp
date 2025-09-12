@@ -1,6 +1,5 @@
 import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import type { Database } from '~~/types/supabase';
 
 export default defineEventHandler(async (event) => {
   try {

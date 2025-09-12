@@ -1,6 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { codeService, getOperationTypes } from '~~/server/services/codeService';
+import { getOperationTypes } from '~~/server/services/codeService';
 
 export default defineEventHandler(async (event) => {
   try {

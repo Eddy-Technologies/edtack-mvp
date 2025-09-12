@@ -88,7 +88,7 @@ export default defineEventHandler(async (event) => {
 
     // Add to recipient (create record if doesn't exist)
     // First get recipient's current balance
-    const { data: recipientCredits, error: recipientError } = await supabase
+    const { data: recipientCredits } = await supabase
       .from('user_credits')
       .select('credit')
       .eq('user_info_id', toUserInfoId)

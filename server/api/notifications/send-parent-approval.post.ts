@@ -1,8 +1,5 @@
-import { getSupabaseClient } from '~~/server/utils/authConfig';
-
 export default defineEventHandler(async (event) => {
   try {
-    const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
 
     const { order_id, parent_emails, child_name, order_details } = body;

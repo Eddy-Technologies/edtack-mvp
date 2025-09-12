@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { computed } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlideBubble from '@/components/playback/SlideBubble.vue';
 import QuestionBubble from '@/components/playback/QuestionBubble.vue';

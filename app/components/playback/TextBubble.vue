@@ -37,7 +37,7 @@
 import UserAvatar from '../common/UserAvatar.vue';
 import MessageActions from '../chat/MessageActions.vue';
 
-const props = defineProps<{
+defineProps<{
   text: string;
   isFirst: boolean;
   startPlayback: boolean;
@@ -45,5 +45,5 @@ const props = defineProps<{
   messageId?: string;
 }>();
 
-const emit = defineEmits(['finish']);
+defineEmits(['finish']);
 </script>

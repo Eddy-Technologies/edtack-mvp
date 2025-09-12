@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import DashboardShop from './shop/DashboardShop.vue';
 
-const props = defineProps<{
+defineProps<{
   cart: Array<any>;
 }>();
 

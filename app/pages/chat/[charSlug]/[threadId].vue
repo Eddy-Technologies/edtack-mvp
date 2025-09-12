@@ -155,7 +155,6 @@ const {
   selectedCharacter,
   initializeStore,
   selectCharacterBySlug,
-  isAvatarPlaying,
 } = useCharacters();
 
 // Get route parameters
@@ -173,12 +172,12 @@ const shouldShowChatInput = computed(() => {
 });
 
 // Route update guard - prevent thread changes during WebSocket response
-onBeforeRouteUpdate((to, from) => {
+onBeforeRouteUpdate(() => {
   return preventNavigation();
 });
 
 // Route leave guard - prevent navigation during WebSocket response
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteLeave(() => {
   return preventNavigation();
 });
 
@@ -293,7 +292,6 @@ const handleChatSend = async (text: string) => {
 
   // If new chat, generate thread ID and update URL
   if (threadId.value === 'new') {
-    const userId = meStore.user_info_id || meStore.id;
     setPendingMessage(text);
 
     try {

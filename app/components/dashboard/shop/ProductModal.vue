@@ -113,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import Button from '../../common/Button.vue';
 
 interface Product {

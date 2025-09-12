@@ -1,7 +1,7 @@
 import { useSupabaseClient, useSupabaseUser } from '#imports';
 import type { Database } from '~~/types/supabase';
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async () => {
   // Check if user is authenticated first
   const user = useSupabaseUser();
   const supabase = useSupabaseClient<Database>();

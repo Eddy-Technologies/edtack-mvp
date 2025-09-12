@@ -110,7 +110,6 @@ import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 import { useTask } from '~/composables/useTask';
-import mockQuizData from '~/mockQuizData';
 
 // Props interface - simplified
 interface ChatContentProps {
@@ -130,10 +129,6 @@ const messageStream = ref<any[]>([]);
 const { updateTaskGeneratedContent } = useTask();
 
 const bottomAnchor = ref<HTMLElement | null>(null);
-
-// Use computed conversation summary instead of static ref
-const MAX_CONTEXT_MESSAGES = 6;
-
 const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
 const tokenCount = ref(0);
@@ -558,17 +553,6 @@ function handleFinish() {
 // Handle user sending a message or lesson request
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
-
-  // Development: Inject mock quiz data when "mock_data" is typed
-  if (text.trim() === 'mock_data') {
-    console.log('Injecting mock quiz data...');
-    addMessage(JSON.stringify(mockQuizData), 'json', false);
-    isPlayingAllowed.value = true;
-    nextTick(() => {
-      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-    });
-    return;
-  }
 
   // Development: Inject mock playback data when "mock_playback" is typed
   if (text.trim() === 'mock_playback') {

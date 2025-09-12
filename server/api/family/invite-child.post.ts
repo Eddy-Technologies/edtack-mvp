@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body = await readBody(event);
 
-    const { email, message } = body;
+    const { email } = body;
 
     if (!email) {
       throw createError({

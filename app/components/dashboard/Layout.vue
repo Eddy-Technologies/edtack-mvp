@@ -213,7 +213,7 @@ interface Props {
   userAvatar?: string;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const route = useRoute();
 const router = useRouter();
@@ -229,7 +229,7 @@ const updateCartCount = () => {
       try {
         const cart = JSON.parse(savedCart);
         cartItemCount.value = cart.reduce((total: number, item: any) => total + item.quantity, 0);
-      } catch (error) {
+      } catch {
         cartItemCount.value = 0;
       }
     } else {

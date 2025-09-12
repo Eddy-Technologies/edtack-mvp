@@ -179,7 +179,7 @@
 <script setup lang="ts">
 import { ORDER_STATUS, ORDER_FULFILLMENT } from '~~/shared/constants';
 
-const props = defineProps({
+defineProps({
   isOpen: {
     type: Boolean,
     default: false

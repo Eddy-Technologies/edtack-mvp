@@ -1,6 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
-import { TASK_THREAD_STATUS } from '~~/shared/constants/codes';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);

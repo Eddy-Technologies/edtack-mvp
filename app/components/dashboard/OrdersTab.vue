@@ -185,11 +185,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 import { ORDER_STATUS } from '~~/shared/constants';
-
-const router = useRouter();
 
 // Order tab state
 const orderTab = ref('current');

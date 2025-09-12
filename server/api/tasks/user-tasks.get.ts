@@ -1,8 +1,6 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
 import { TASK_STATUS } from '~~/shared/constants';
-import type { Database } from '~~/types/supabase';
 
 export default defineEventHandler(async (event) => {
   try {

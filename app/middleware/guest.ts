@@ -1,7 +1,7 @@
 import { defineNuxtRouteMiddleware, navigateTo } from '#app';
 import { useSupabaseClient } from '#imports';
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async () => {
   const supabase = useSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
 

@@ -1,6 +1,6 @@
 // app/components/common/tests/FeedbackButton.spec.ts
 import { mount } from '@vue/test-utils';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import FeedbackButton from '../FeedbackButton.vue'; // Adjust path as needed
 
 describe('FeedbackButton.vue', () => {

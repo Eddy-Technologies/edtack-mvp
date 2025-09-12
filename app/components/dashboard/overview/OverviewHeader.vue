@@ -26,7 +26,7 @@ interface Props {
   showEditButton?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   showEditButton: false,
 });
 

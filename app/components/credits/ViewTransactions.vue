@@ -150,11 +150,6 @@ const goToPage = (page: number) => {
   }
 };
 
-// Format amount - now just display credits as-is
-const formatAmount = (amountInCents: number) => {
-  return amountInCents;
-};
-
 // Format date
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);

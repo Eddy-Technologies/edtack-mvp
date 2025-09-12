@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
-import { getCodes, getOperationTypes } from '~~/server/services/codeService';
+import { getOperationTypes } from '~~/server/services/codeService';
 import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
@@ -209,9 +209,6 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     const orderId = session.metadata.order_id;
     const childUserInfoId = session.metadata.child_user_info_id;
 
-    // Get status codes
-    const statusCodes = await getCodes(supabase, 'order_status');
-
     // Update existing order to paid status
     const { error: updateOrderError } = await supabase
       .from('orders')
@@ -265,7 +262,6 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       }
 
       // Create credit transaction record
-      const operationCodes = await getCodes(supabase, 'operation_type');
       const { error: transactionError } = await supabase
         .from('credit_transactions')
         .insert({

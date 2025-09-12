@@ -12,5 +12,4 @@ export default withNuxt().overrideRules({
   '@typescript-eslint/no-explicit-any': 'off',
   '@typescript-eslint/no-implicit-any': 'off', // temporary fix for all any types
   '@typescript-eslint/explicit-any': 'off',
-  '@typescript-eslint/no-unused-vars': 'off'
 });

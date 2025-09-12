@@ -1,5 +1,4 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { getUserInfo } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, 'userId');
@@ -12,7 +11,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const supabase = await getSupabaseClient(event);
-  const userInfo = await getUserInfo(event);
+  await requireAuth(event);
 
   try {
     // Get the child's syllabus_type and level_type

@@ -1,5 +1,5 @@
 import { ref, computed, readonly } from 'vue';
-import type { QuizState, UserAnswer, QuizQuestion } from '~/types/quiz.types';
+import type { QuizState, UserAnswer } from '~/types/quiz.types';
 
 export const useQuiz = () => {
   const quizState = ref<QuizState>({

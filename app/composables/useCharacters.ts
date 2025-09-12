@@ -114,11 +114,6 @@ export const useCharacters = () => {
     }
   };
 
-  // Internal helper methods (not exported)
-  const getCharacterById = (id: number): Character | undefined => {
-    return characters.value.find((char) => char.id === id);
-  };
-
   const getCharacterBySlug = (slug: string): Character | undefined => {
     return characters.value.find((char) => char.slug === slug);
   };

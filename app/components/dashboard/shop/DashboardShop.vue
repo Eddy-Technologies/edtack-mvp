@@ -248,8 +248,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted } from 'vue';
 import Button from '../../common/Button.vue';
 import ProductModal from './ProductModal.vue';
 
@@ -261,11 +260,7 @@ const emit = defineEmits<{
   (e: 'add-to-cart', updatedCart: any[]): void;
 }>();
 
-const router = useRouter();
 const toast = useToast();
-
-// Use unified credit management for balance updates
-const { formattedBalance, fetchCredits } = useCredit();
 
 // Products data from database (shop products only)
 const items = ref<any[]>([]);
@@ -385,11 +380,6 @@ const hasActiveFilters = computed(() => {
   return searchQuery.value || selectedCategory.value || priceFilter.value || sortBy.value !== 'name';
 });
 
-// Cart computed properties
-const cartTotal = computed(() => {
-  return props.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-});
-
 // Wishlist functions
 const isInWishlist = (itemId: string) => {
   return wishlist.value.some((item) => item.id === itemId);
@@ -425,11 +415,6 @@ const toggleWishlist = async (item: any) => {
       insufficientFundsMessage.value = null;
     }, 2000);
   }
-};
-
-// Navigation functions
-const goToCart = () => {
-  router.push('/dashboard?tab=cart');
 };
 
 // Functions

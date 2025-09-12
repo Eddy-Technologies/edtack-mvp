@@ -105,10 +105,6 @@ function openReportModal() {
   showReport.value = true;
 }
 
-function openChatPanel() {
-  showChatPanel.value = true;
-}
-
 onMounted(() => {
   if (props.question && props.question.title) {
     renderMath(content.value);

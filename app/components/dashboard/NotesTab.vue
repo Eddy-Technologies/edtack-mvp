@@ -545,14 +545,14 @@ const toggleStar = async (note: Note) => {
   }
 };
 
-const openChatWithNote = (note: Note) => {
-  // Navigate to chat with note context
-  const chatContext = `Here's my note titled "${note.title}" from ${note.subject}:\n\n${note.content}\n\nPlease help me understand this better or answer any questions I have about this topic.`;
+// const openChatWithNote = (note: Note) => {
+//   // Navigate to chat with note context
+//   const chatContext = `Here's my note titled "${note.title}" from ${note.subject}:\n\n${note.content}\n\nPlease help me understand this better or answer any questions I have about this topic.`;
 
-  // For now, we'll just console.log the context - in a real app, this would navigate to chat
-  console.log('Chat context:', chatContext);
-  alert('Chat integration would open here with the note context');
-};
+//   // For now, we'll just console.log the context - in a real app, this would navigate to chat
+//   console.log('Chat context:', chatContext);
+//   alert('Chat integration would open here with the note context');
+// };
 
 // Create sample note
 const createSampleNote = (): Note => ({

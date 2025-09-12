@@ -1,12 +1,10 @@
 import type Stripe from 'stripe';
-import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
 import { STRIPE_CUSTOMER } from '~~/shared/constants';
 import { requireAuth } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
-    const supabase = await getSupabaseClient(event);
     const stripe = getStripe();
     const user = await requireAuth(event);
 

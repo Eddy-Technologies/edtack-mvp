@@ -1,6 +1,5 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { getCodes } from '~~/server/services/codeService';
 import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
 
 // Generate order number function
@@ -44,10 +43,6 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'User not authenticated'
       });
     }
-
-    // Get status and operation codes from database early
-    const statusCodes = await getCodes(supabase, 'order_status');
-    const operationCodes = await getCodes(supabase, 'operation_type');
 
     // Get user info
     const { data: userInfo, error: userError } = await supabase
@@ -112,7 +107,7 @@ export default defineEventHandler(async (event) => {
 
     if (use_credits) {
       // Check if user is a parent or child
-      const { data: groupCheck, error: groupError } = await supabase
+      const { data: groupCheck } = await supabase
         .from('group_members')
         .select(`
           groups!inner(

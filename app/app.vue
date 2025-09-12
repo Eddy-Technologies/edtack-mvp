@@ -87,11 +87,11 @@ useHead({
   ],
 });
 
-function giveConsent(agreed: boolean) {
-  hasConsent.value = true;
-  localStorage.setItem(consentKey, agreed.toString());
-  agreedToCookiesScriptConsent.value = agreed;
-}
+// function giveConsent(agreed: boolean) {
+//   hasConsent.value = true;
+//   localStorage.setItem(consentKey, agreed.toString());
+//   agreedToCookiesScriptConsent.value = agreed;
+// }
 
 onMounted(async () => {
   // Handle app loading for external navigation

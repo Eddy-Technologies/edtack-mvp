@@ -126,7 +126,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useCredit } from '~/composables/useCredit';
-import { useNuxtApp } from '#app';
 import { useToast } from '#imports';
 
 const toast = useToast();
@@ -147,7 +146,6 @@ const showConfirmModal = ref(false);
 
 // Get credit composable for refreshing balance
 const { refreshCredits } = useCredit();
-const { $toast } = useNuxtApp();
 
 const confirmTopUp = async () => {
   if (!selectedAmount.value || selectedAmount.value < 1) return;

@@ -281,10 +281,6 @@ const isLoadingChapters = ref(false);
 const showChapterList = ref(false);
 const error = ref<string | null>(null);
 
-const today = computed(() => {
-  return new Date().toISOString().split('T')[0];
-});
-
 const childrenOptions = computed(() => {
   return children.value.map((child) => ({
     value: child.id,

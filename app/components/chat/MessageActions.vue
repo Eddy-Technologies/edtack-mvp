@@ -61,7 +61,6 @@
 import { ref } from 'vue';
 import MessageFeedbackModal from './MessageFeedbackModal.vue';
 import { useToast } from '#imports';
-import { useCharacters } from '~/composables/useCharacters';
 
 interface Props {
   messageText: string;
@@ -71,7 +70,6 @@ interface Props {
 const props = defineProps<Props>();
 
 const toast = useToast();
-const { startAvatarPlayback } = useCharacters();
 
 // Modal state management
 const showFeedbackModal = ref(false);
@@ -86,7 +84,7 @@ const handleCopy = async () => {
       icon: 'i-heroicons-clipboard',
       timeout: 2000
     });
-  } catch (error) {
+  } catch {
     toast.add({
       title: 'Error',
       description: 'Failed to copy to clipboard',
@@ -116,25 +114,25 @@ const handleFeedbackSubmitted = (feedbackData: any) => {
   // Feedback will be handled by the modal component
 };
 
-const handleRetry = () => {
-  toast.add({
-    title: 'Regenerating',
-    description: 'Regenerating response...',
-    icon: 'i-heroicons-arrow-path',
-    timeout: 2000
-  });
-};
+// const handleRetry = () => {
+//   toast.add({
+//     title: 'Regenerating',
+//     description: 'Regenerating response...',
+//     icon: 'i-heroicons-arrow-path',
+//     timeout: 2000
+//   });
+// };
 
-const handleRead = () => {
-  // Start avatar animation for 3 seconds (3000ms)
-  // TODO: when implement tts then remove timeout
-  startAvatarPlayback(3000);
+// const handleRead = () => {
+//   // Start avatar animation for 3 seconds (3000ms)
+//   // TODO: when implement tts then remove timeout
+//   startAvatarPlayback(3000);
 
-  toast.add({
-    title: 'Reading',
-    description: 'Reading message aloud...',
-    icon: 'i-heroicons-speaker-wave',
-    timeout: 2000
-  });
-};
+//   toast.add({
+//     title: 'Reading',
+//     description: 'Reading message aloud...',
+//     icon: 'i-heroicons-speaker-wave',
+//     timeout: 2000
+//   });
+// };
 </script>

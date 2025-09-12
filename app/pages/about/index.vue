@@ -139,7 +139,6 @@ import TeamTab from '~/components/about/TeamTab.vue';
 
 const router = useRouter();
 const route = useRoute();
-const selectedAvatar = ref(null);
 
 // Tabs functionality
 const activeTab = ref('about');

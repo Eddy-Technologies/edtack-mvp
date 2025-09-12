@@ -203,7 +203,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useToast } from '#imports';
 
 const toast = useToast();
@@ -413,10 +413,5 @@ onUnmounted(() => {
   document.removeEventListener('mousemove', handleResize);
   document.removeEventListener('mouseup', stopResize);
   document.removeEventListener('keydown', handleKeyPress);
-});
-
-// Watch mobile tab changes
-watch(mobileActiveTab, (newTab) => {
-  // Could emit events to parent to handle mobile tab switching
 });
 </script>

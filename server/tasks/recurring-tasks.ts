@@ -28,7 +28,7 @@ import { createClient } from '@supabase/supabase-js';
 import { TASK_STATUS, TASK_THREAD_STATUS, RECURRENCE_FREQUENCY } from '~~/shared/constants';
 import type { Database } from '~~/types/supabase';
 
-export default defineNitroPlugin(async (nitroApp) => {
+export default defineNitroPlugin(async () => {
   console.log('Recurring tasks system initialized');
 
   // Schedule cron job to run every day at midnight (or every hour for testing)

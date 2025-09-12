@@ -30,21 +30,12 @@
       >
         {{ item.pillDisplay }}
       </button>
-      <!-- <button
-        v-for="suggestion in suggestions"
-        :key="suggestion"
-        class="bg-gray-100 px-3 py-1 rounded hover:bg-gray-200"
-        @click="sendSuggestion(suggestion)"
-      >
-        {{ suggestion }}
-      </button> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import Button from '~/components/common/Button.vue';
 
 const emit = defineEmits(['send']);
 const input = ref('');
@@ -72,10 +63,6 @@ const emitMessage = () => {
   if (!input.value.trim()) return;
   emit('send', input.value);
   input.value = '';
-};
-
-const sendSuggestion = (text: string) => {
-  emit('send', text);
 };
 
 const appendText = (text: string) => {

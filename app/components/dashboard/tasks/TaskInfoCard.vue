@@ -81,11 +81,11 @@ interface Props {
   showAssigneeInfo?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   showAssigneeInfo: true
 });
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'close-task', task: any): void;
 }>();
 
@@ -116,27 +116,5 @@ const getStatusBadgeClass = (status: string) => {
 
 const formatCredits = (credits: number) => {
   return `${credits} credits`;
-};
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return 'N/A';
-
-  const date = new Date(dateString);
-
-  // Check for invalid date
-  if (isNaN(date.getTime())) return 'N/A';
-
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 1) return 'today';
-  if (diffDays === 2) return 'yesterday';
-  if (diffDays <= 7) return `${diffDays - 1} days ago`;
-  return date.toLocaleDateString();
-};
-
-const isOverdue = (dueDateString: string) => {
-  return new Date(dueDateString) < new Date();
 };
 </script>
