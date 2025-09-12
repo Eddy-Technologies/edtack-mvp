@@ -12,12 +12,6 @@ export function useSpeech() {
   const isLoadingTTS = ref(false);
   let currentAudioUrl: string | null = null;
 
-  let speechEndCallback: (() => void) | null = null;
-
-  function onSpeechEnd(cb: () => void) {
-    speechEndCallback = cb;
-  }
-
   const speakLastAssistantMessage = async (messages: ChatMessage[]) => {
     if (typeof window === 'undefined') return;
 
@@ -68,6 +62,5 @@ export function useSpeech() {
     isSpeaking,
     isLoadingTTS,
     speakLastAssistantMessage,
-    onSpeechEnd,
   };
 }
