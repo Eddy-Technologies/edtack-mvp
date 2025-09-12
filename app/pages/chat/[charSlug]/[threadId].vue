@@ -120,7 +120,7 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch, computed, nextTick } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute, onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
@@ -171,6 +171,24 @@ const isChatCentered = computed(() => {
 const shouldShowChatInput = computed(() => {
   return true;
 });
+
+// Route update guard - prevent thread changes during WebSocket response
+onBeforeRouteUpdate((to, from) => {
+  return preventNavigation();
+});
+
+// Route leave guard - prevent navigation during WebSocket response
+onBeforeRouteLeave((to, from) => {
+  return preventNavigation();
+});
+
+const preventNavigation = () => {
+  if (chatContentRef.value?.wsChat?.isWaitingForResponse || chatContentRef.value?.isWaitingForResponse) {
+    const confirmed = confirm('You are currently waiting for a response. Are you sure you want to leave?');
+    return confirmed;
+  }
+  return true;
+};
 
 // Initialize character based on route
 onMounted(async () => {

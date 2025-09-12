@@ -497,7 +497,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.text,
           isFirst: blockIndex === 0,
-          isUser: block.isUser,
+          isUser: !!block.isUser,
           messageId: block.id?.toString(),
         },
       });
@@ -510,7 +510,7 @@ const flattenedPlaybackUnits = computed(() => {
         props: {
           text: block.message,
           isFirst: blockIndex === 0,
-          isUser: block.isUser,
+          isUser: !!block.isUser,
           messageId: block.id?.toString(),
         },
       });
@@ -525,7 +525,7 @@ const flattenedPlaybackUnits = computed(() => {
           props: {
             text: block.message,
             isFirst: blockIndex === 0,
-            isUser: block.isUser,
+            isUser: !!block.isUser,
             messageId: block.id?.toString(),
           },
         });
@@ -705,10 +705,12 @@ const clearChat = () => {
   currentThreadId.value = '';
 };
 
-// Expose methods to parent component
+// Expose methods and state to parent component
 defineExpose({
   handleSend,
   clearChat,
+  wsChat,
+  isWaitingForResponse,
 });
 
 onUnmounted(() => {
