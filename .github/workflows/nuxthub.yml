@@ -41,7 +41,7 @@ jobs:
           echo "NUXT_PUBLIC_STRIPE_PRICING_TABLE_ID is set: ${{ vars.NUXT_PUBLIC_STRIPE_PRICING_TABLE_ID != '' }}"
           echo "NUXT_PUBLIC_GOOGLE_CLIENT_ID is set: ${{ vars.NUXT_PUBLIC_GOOGLE_CLIENT_ID != '' }}"
           echo "NUXT_STRIPE_WEBHOOK_SECRET is set: ${{ secrets.NUXT_STRIPE_WEBHOOK_SECRET != '' }}"
-          echo "NUXT_PUBLIC_BASE_URL is set: ${{ vars.NUXT_PUBLIC_BASE_URL != '' }}"
+          echo "NUXT_PUBLIC_BASE_URL is set: ${{ vars.NUXT_PUBLIC_BASE_URL }}"
           echo "NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL is set: ${{ vars.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL != '' }}"
 
       - name: Ensure NuxtHub module is installed
