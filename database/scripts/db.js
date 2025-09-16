@@ -74,7 +74,6 @@ function generateMigrations() {
       fs.unlinkSync(path.join(migrationsDir, file));
     });
 
-
     // Generate timestamped migration files
     const baseTimestamp = Date.now();
 
@@ -169,7 +168,6 @@ function generateSeedFile() {
     const supabaseWorkDir = getSupabaseWorkDir();
     const seedsDir = path.join(projectRoot, 'database/seeds');
     const supabaseSeedFile = path.join(supabaseWorkDir, 'supabase/seed.sql');
-
 
     let combinedSeed = '';
     combinedSeed += '-- Combined Seed File for Supabase\n';
