@@ -191,6 +191,10 @@ import Button from '~/components/common/Button.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 
+useHead({
+  title: 'Register'
+});
+
 definePageMeta({
   layout: false,
   middleware: ['guest']

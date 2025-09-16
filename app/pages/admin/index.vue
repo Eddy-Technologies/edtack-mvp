@@ -24,6 +24,10 @@ import TokensTab from '~/components/admin/TokensTab.vue';
 import ProductsTab from '~/components/admin/ProductsTab.vue';
 import CharactersTab from '~/components/admin/CharactersTab.vue';
 
+useHead({
+  title: 'Admin Dashboard'
+});
+
 definePageMeta({
   middleware: ['admin']
 });

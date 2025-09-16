@@ -52,6 +52,10 @@ import OrdersTab from '~/components/dashboard/OrdersTab.vue';
 import CreditsTab from '~/components/dashboard/CreditsTab.vue';
 import SettingsTab from '~/components/dashboard/SettingsTab.vue';
 
+useHead({
+  title: 'Dashboard'
+});
+
 definePageMeta({
   middleware: ['auth'],
 });

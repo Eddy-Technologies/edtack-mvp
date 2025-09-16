@@ -131,6 +131,11 @@ import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
+// Set page title
+useHead({
+  title: 'Chat'
+});
+
 // Prevent component remounting when URL changes
 definePageMeta({
   key: 'chat-page',

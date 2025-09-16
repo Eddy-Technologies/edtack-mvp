@@ -52,6 +52,8 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: 'Eddy - Your Learning Buddy',
+      titleTemplate: '%s | Eddy',
       script: [
         {
           async: true,
