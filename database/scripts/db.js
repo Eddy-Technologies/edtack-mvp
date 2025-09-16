@@ -16,6 +16,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { orderedTableFiles, seedFiles } from './table-config.js';
 
 // Load environment variables
 try {
@@ -73,48 +74,11 @@ function generateMigrations() {
       fs.unlinkSync(path.join(migrationsDir, file));
     });
 
-    // Define table creation order (dependencies)
-    const orderedFiles = [
-      'roles.sql',
-      'level_types.sql',
-      'syllabus_types.sql',
-      'codes.sql',
-      'subjects.sql',
-      'chapters.sql',
-      'curriculum_subjects.sql',
-      'user_infos.sql',
-      'user_roles.sql',
-      'user_credits.sql',
-      'groups.sql',
-      'group_members.sql',
-      'syllabus.sql',
-      'questions.sql',
-      'question_options.sql',
-      'question_correct_answers.sql',
-      'user_question_attempts.sql',
-      'user_question_answers.sql',
-      'products.sql',
-      'orders.sql',
-      'order_items.sql',
-      'wishlists.sql',
-      'user_tasks.sql',
-      'credit_transactions.sql',
-      'characters.sql',
-      'notes.sql',
-      'token_history.sql',
-      'stripe_webhook_events.sql',
-      'functions.sql',
-      'threads.sql',
-      'thread_messages.sql',
-      'task_threads.sql',
-      'message_feedback.sql',
-      'user_tasks_chapters.sql'
-    ];
 
     // Generate timestamped migration files
     const baseTimestamp = Date.now();
 
-    orderedFiles.forEach((file, index) => {
+    orderedTableFiles.forEach((file, index) => {
       const sourceFile = path.join(tablesDir, file);
       if (fs.existsSync(sourceFile)) {
         const timestamp = baseTimestamp + (index * 1000); // 1 second apart
@@ -129,7 +93,7 @@ function generateMigrations() {
       }
     });
 
-    log(`🎉 Generated ${orderedFiles.length} migration files`, 'green');
+    log(`🎉 Generated ${orderedTableFiles.length} migration files`, 'green');
   } catch (error) {
     log(`❌ Failed to generate migrations: ${error.message}`, 'red');
     throw error;
@@ -206,12 +170,6 @@ function generateSeedFile() {
     const seedsDir = path.join(projectRoot, 'database/seeds');
     const supabaseSeedFile = path.join(supabaseWorkDir, 'supabase/seed.sql');
 
-    // Seed files to combine (in order)
-    const seedFiles = [
-      'all_seeds.sql',
-      'education_data.sql',
-      'characters.sql'
-    ];
 
     let combinedSeed = '';
     combinedSeed += '-- Combined Seed File for Supabase\n';

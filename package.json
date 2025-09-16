@@ -16,6 +16,7 @@
     "db:seed": "node database/scripts/db.js seed",
     "db:init-admin": "node database/scripts/db.js init-admin",
     "db:types": "node database/scripts/db.js types",
+    "db:generate-reset": "node database/scripts/generate-reset.js",
     "upload:characters": "node database/scripts/upload-assets.js"
   },
   "dependencies": {
