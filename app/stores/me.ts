@@ -38,6 +38,7 @@ export const useMeStore = defineStore('me', {
       this.isInitialized = value;
     },
     async initialize() {
+      this.setInitialized(false);
       try {
         const supabase = useSupabaseClient();
         const { data: { user } } = await supabase.auth.getUser();
@@ -45,15 +46,12 @@ export const useMeStore = defineStore('me', {
         if (user) {
           // User is authenticated, fetch their profile
           await this.fetchAndSetMe();
-        } else {
-          // No user session, just mark as initialized
-          this.setInitialized(true);
         }
       } catch (error) {
         console.error('Error during authentication initialization:', error);
         // Still mark as initialized to prevent infinite loading
-        this.setInitialized(true);
       }
+      this.setInitialized(true);
     },
     fetchAndSetMe: async function () {
       try {
