@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
 import UserAvatar from './common/UserAvatar.vue';
@@ -108,11 +108,18 @@ const user = useMeStore();
 
 // Add local state
 const userInitialized = ref(false);
+const initTimeout = ref<NodeJS.Timeout | null>(null);
 
 // Watch store state
-watch(() => user.isInitialized, () => {
-  userInitialized.value = !!user.isInitialized;
-});
+watch(() => user.isInitialized, (newVal) => {
+  if (newVal) {
+    userInitialized.value = true;
+    if (initTimeout.value) {
+      clearTimeout(initTimeout.value);
+      initTimeout.value = null;
+    }
+  }
+}, { immediate: true });
 
 // Navigation helper
 const routeTo = (path: string) => {
@@ -164,9 +171,40 @@ const onClickOutside = (e: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', onClickOutside);
+
+  // Check if we're coming from SSO redirect (has auth callback params)
+  const currentUrl = window.location.href;
+  const isAfterSSO = currentUrl.includes('code=') || document.referrer.includes('accounts.google.com');
+
+  // Set up timeout fallback to prevent infinite loading
+  const timeoutDuration = isAfterSSO ? 5000 : 3000; // Give SSO more time
+
+  initTimeout.value = setTimeout(() => {
+    if (!user.isInitialized) {
+      console.warn('Auth initialization timeout - forcing completion');
+      user.setInitialized(true);
+      userInitialized.value = true;
+    }
+  }, timeoutDuration);
+
+  // Try to re-initialize if stuck and not already initializing
+  if (!user.isInitialized && isAfterSSO) {
+    console.log('Detected SSO redirect - attempting re-initialization');
+    // Small delay to let cookies settle
+    setTimeout(() => {
+      if (!user.isInitialized) {
+        user.initialize();
+      }
+    }, 500);
+  }
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', onClickOutside);
+  // Clean up timeout
+  if (initTimeout.value) {
+    clearTimeout(initTimeout.value);
+    initTimeout.value = null;
+  }
 });
 </script>
