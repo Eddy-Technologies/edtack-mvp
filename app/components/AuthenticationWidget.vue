@@ -109,14 +109,9 @@ const user = useMeStore();
 // Add local state
 const userInitialized = ref(false);
 
-// Watch store state - check both initialization flag and user data
-watch([() => user.isInitialized, () => user.id], ([isInitialized, userId]) => {
-  // Consider initialized if flag is true OR if we have user data
-  const shouldBeInitialized = isInitialized || Boolean(userId);
-
-  if (shouldBeInitialized && !userInitialized.value) {
-    userInitialized.value = true;
-  }
+// Watch store state
+watch(() => user.isInitialized, (isInitialized) => {
+  userInitialized.value = !!isInitialized;
 }, { immediate: true });
 
 // Navigation helper
