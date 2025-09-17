@@ -1,12 +1,12 @@
 <template>
   <div class="flex gap-4 items-center">
     <!-- Loading state - skeleton -->
-    <div v-if="!userInitialized" class="flex gap-4 items-center">
-      <!-- Skeleton for buttons (most common case) -->
-      <div class="w-16 h-8 bg-gray-200 rounded animate-pulse" />
-    </div>
+    <!-- <div v-if="!userInitialized" class="flex gap-4 items-center"> -->
+    <!-- Skeleton for buttons (most common case) -->
+    <!-- <div class="w-16 h-8 bg-gray-200 rounded animate-pulse" /> -->
+    <!-- </div> -->
     <!-- Logged in state -->
-    <div v-else-if="user.isLoggedIn" class="relative">
+    <div v-if="user.isLoggedIn" class="relative">
       <UserAvatar @click="menuOpen = !menuOpen" />
       <!-- Dropdown Menu -->
       <div
@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import SubscriptionModal from './subscription/SubscriptionModal.vue';
 import UserAvatar from './common/UserAvatar.vue';
@@ -106,13 +106,13 @@ const subscriptionModalVisible = ref(false);
 const { signOut } = useAuth();
 const user = useMeStore();
 
-// Add local state
-const userInitialized = ref(false);
+// // Add local state
+// const userInitialized = ref(false);
 
-// Watch store state
-watch(() => user.isInitialized, (isInitialized) => {
-  userInitialized.value = !!isInitialized;
-}, { immediate: true });
+// // Watch store state
+// watch(() => user.isInitialized, (isInitialized) => {
+//   userInitialized.value = !!isInitialized;
+// }, { immediate: true });
 
 // Navigation helper
 const routeTo = (path: string) => {
