@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4 items-center">
     <!-- Loading state - skeleton -->
-    <div v-if="user.isInitializing" class="flex gap-4 items-center">
+    <div v-if="!userInitialized" class="flex gap-4 items-center">
       <!-- Skeleton for buttons (most common case) -->
       <div class="w-16 h-8 bg-gray-200 rounded animate-pulse" />
     </div>
@@ -105,6 +105,18 @@ const subscriptionModalVisible = ref(false);
 
 const { signOut } = useAuth();
 const user = useMeStore();
+
+// Add local state
+const userInitialized = ref(false);
+const initTimeout = ref<NodeJS.Timeout | null>(null);
+
+// Watch store state
+watch(() => user.isInitialized, (newVal) => {
+  if (newVal) {
+    userInitialized.value = true;
+    if (initTimeout.value) clearTimeout(initTimeout.value);
+  }
+});
 
 // Navigation helper
 const routeTo = (path: string) => {
