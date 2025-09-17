@@ -108,14 +108,10 @@ const user = useMeStore();
 
 // Add local state
 const userInitialized = ref(false);
-const initTimeout = ref<NodeJS.Timeout | null>(null);
 
 // Watch store state
-watch(() => user.isInitialized, (newVal) => {
-  if (newVal) {
-    userInitialized.value = true;
-    if (initTimeout.value) clearTimeout(initTimeout.value);
-  }
+watch(() => user.isInitialized, () => {
+  userInitialized.value = !!user.isInitialized;
 });
 
 // Navigation helper
