@@ -20,6 +20,14 @@ export default defineEventHandler(async (event) => {
   if (!emailValidation.isValid) {
     throw createError({ statusCode: 400, statusMessage: emailValidation.error });
   }
+  const userExists = await supabase
+    .from('user_infos')
+    .select('id')
+    .eq('email', body.email)
+    .single();
+  if (userExists.data) {
+    throw createError({ statusCode: 400, statusMessage: 'Email is already registered.' });
+  }
   const passwordValidation = validatePassword(body.password);
   if (!passwordValidation.isValid) {
     throw createError({ statusCode: 400, statusMessage: passwordValidation.error });
