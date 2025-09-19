@@ -10,19 +10,17 @@ interface MeState extends GetMeRes {
 
 export const useMeStore = defineStore('me', {
   state: (): MeState => ({
-    id: '',
     user_info_id: '',
     email: '',
     first_name: '',
     last_name: '',
     user_role: '',
     level_type: undefined,
+    syllabus_type: undefined,
     country_code: undefined,
     onboarding_completed: false,
     payment_customer_id: undefined,
     is_active: false,
-    created_at: '',
-    updated_at: '',
     auth_provider: '',
     isInitialized: false,
   }),

@@ -369,10 +369,10 @@ onMounted(async () => {
   // Fetch filter options from database tables
   await fetchFilterOptions();
 
-  // Set user's default level and syllabus if available
-  if (meStore.level_type) {
-    filters.levelType = meStore.level_type;
-  }
+  // Set user's default syllabus if available, level can implement in future
+  // if (meStore.level_type) {
+  //   filters.levelType = meStore.level_type;
+  // }
   if (meStore.syllabus_type) {
     filters.syllabusType = meStore.syllabus_type;
   }
