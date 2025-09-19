@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
     .eq('email', body.email)
     .single();
   if (userExists.data) {
-    throw createError({ statusCode: 400, statusMessage: 'Email is already registered.' });
+    throw createError({ statusCode: 400, statusMessage: 'Email is already registered either with google or email/password.' });
   }
   const passwordValidation = validatePassword(body.password);
   if (!passwordValidation.isValid) {
