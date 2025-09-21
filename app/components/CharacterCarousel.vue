@@ -9,12 +9,8 @@
     <!-- Carousel Content -->
     <template v-else>
       <!-- Gradient overlays for blur effect -->
-      <div
-        class="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none"
-      />
-      <div
-        class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none"
-      />
+      <div class="absolute left-0 top-0 w-32 h-full z-10 pointer-events-none" />
+      <div class="absolute right-0 top-0 w-32 h-full z-10 pointer-events-none" />
 
       <!-- Carousel container -->
       <div
@@ -38,7 +34,8 @@
             <div
               class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[320px] flex flex-col"
               :class="{
-                'ring-4 ring-primary-500 ring-opacity-75': avatar.slug === props.initialCharacterSlug
+                'ring-4 ring-primary-500 ring-opacity-75':
+                  avatar.slug === props.initialCharacterSlug,
               }"
             >
               <!-- Blurred background with gradient to primary -->
@@ -50,10 +47,12 @@
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
                   filter: 'blur(15px)',
-                  transform: 'scale(1.2)'
+                  transform: 'scale(1.2)',
                 }"
               />
-              <div class="absolute inset-0 bg-gradient-to-br from-gray via-transparent to-gray-600" />
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-gray via-transparent to-gray-600"
+              />
 
               <!-- Image container - top 70% -->
               <div class="relative z-10 flex-grow overflow-hidden" style="height: 90%">
@@ -63,15 +62,20 @@
                   class="w-full h-full object-cover"
                   :style="{
                     objectPosition: 'top',
-                    transform: 'scale(1.1) translateY(10%)'
+                    transform: 'scale(1.1) translateY(10%)',
                   }"
-                >
+                />
               </div>
 
               <!-- Text area - bottom 30% -->
-              <div class="relative z-10 p-4 flex flex-col justify-center items-center text-center" style="height: 20%">
+              <div
+                class="relative z-10 p-4 flex flex-col justify-center items-center text-center"
+                style="height: 20%"
+              >
                 <div class="flex items-center gap-2 mb-1">
-                  <h5 class="text-white text-base font-semibold drop-shadow-lg">{{ avatar.name }}</h5>
+                  <h5 class="text-white text-base font-semibold drop-shadow-lg">
+                    {{ avatar.name }}
+                  </h5>
                   <span
                     v-if="avatar.slug === props.initialCharacterSlug"
                     class="px-2 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full shadow-lg"
@@ -79,7 +83,9 @@
                     Selected
                   </span>
                 </div>
-                <p class="text-white/90 text-sm drop-shadow-md">{{ constantCaseToTitleCase(avatar.subject) }}</p>
+                <p class="text-white/90 text-sm drop-shadow-md">
+                  {{ constantCaseToTitleCase(avatar.subject) }}
+                </p>
               </div>
             </div>
           </div>
@@ -162,14 +168,16 @@ const loadCharacters = async () => {
       subject: char.subject,
       image: char.image_url, // Now comes with public URL from composable
       description: char.description,
-      personality_prompt: char.personality_prompt
+      personality_prompt: char.personality_prompt,
     }));
 
     // Set initial character index if we have characters
     if (allAvatars.value.length > 0) {
       // If initialCharacterSlug is provided, find its index and center on it
       if (props.initialCharacterSlug) {
-        const characterIndex = allAvatars.value.findIndex((char) => char.slug === props.initialCharacterSlug);
+        const characterIndex = allAvatars.value.findIndex(
+          (char) => char.slug === props.initialCharacterSlug
+        );
         if (characterIndex !== -1) {
           currentIndex.value = characterIndex;
         } else {
