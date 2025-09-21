@@ -72,7 +72,7 @@ jobs:
         uses: nuxt-hub/action@v1
         id: deploy
         with:
-          project-key: eddy-dev-tv9e
+          project-key: ${{ vars.NUXT_HUB_PROJECT_KEY }}
         env:
           VITE_GOOGLE_AI_STUDIO_API_KEY: ${{ secrets.VITE_GOOGLE_AI_STUDIO_API_KEY }}
           GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
