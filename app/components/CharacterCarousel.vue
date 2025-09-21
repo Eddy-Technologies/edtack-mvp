@@ -64,7 +64,7 @@
                     objectPosition: 'top',
                     transform: 'scale(1.1) translateY(10%)',
                   }"
-                />
+                >
               </div>
 
               <!-- Text area - bottom 30% -->
