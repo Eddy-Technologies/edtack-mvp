@@ -2,26 +2,19 @@ import { getSupabaseClient } from '../utils/authConfig';
 import { serverSupabaseUser } from '#supabase/server';
 
 export interface GetMeRes {
-  id: string;
   email: string;
   user_info_id: string;
   first_name: string;
   last_name: string;
-  gender?: string;
-  address?: string;
   country_code?: string;
-  postal_code?: string;
-  date_of_birth?: string;
   level_type?: string;
   syllabus_type?: string;
-  profile_picture_url?: string;
   onboarding_completed: boolean;
   payment_customer_id?: string;
   is_active: boolean;
-  created_at: string;
-  updated_at: string;
   user_role: string;
   auth_provider: string;
+  id: string;
 }
 
 export default defineEventHandler(async (event) => {
@@ -58,15 +51,23 @@ export default defineEventHandler(async (event) => {
     // Get auth provider from Supabase user metadata
     const authProvider = user.app_metadata?.provider;
 
-    // Return combined user data
-    return {
-      ...userInfo,
+    const res: GetMeRes = {
       id: user.id,
-      email: user.email,
       user_info_id: userInfo.id,
+      email: user.email!,
       user_role: userInfo.user_roles[0].roles.role_name,
-      auth_provider: authProvider
-    } as GetMeRes;
+      auth_provider: authProvider!,
+      first_name: userInfo.first_name!,
+      last_name: userInfo.last_name!,
+      level_type: userInfo.level_type || undefined,
+      syllabus_type: userInfo.syllabus_type || undefined,
+      country_code: userInfo.country_code || undefined,
+      onboarding_completed: !!userInfo.onboarding_completed,
+      payment_customer_id: userInfo.payment_customer_id || undefined,
+      is_active: !!userInfo.is_active,
+    };
+    // Return combined user data
+    return res;
   } catch (err: any) {
     // If the error is already a H3Error (from createError), re-throw it
     if (err.statusCode) {
