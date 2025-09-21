@@ -25,6 +25,7 @@ export const useMeStore = defineStore('me', {
     updated_at: '',
     auth_provider: '',
     isInitialized: false,
+    syllabus_type: undefined
   }),
 
   actions: {
