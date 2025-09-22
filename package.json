@@ -14,7 +14,6 @@
     "prepare": "husky",
     "db:reset": "node database/scripts/db.js reset",
     "db:seed": "node database/scripts/db.js seed",
-    "db:init-admin": "node database/scripts/db.js init-admin",
     "db:types": "node database/scripts/db.js types",
     "db:generate-reset": "node database/scripts/generate-reset.js",
     "upload:characters": "node database/scripts/upload-assets.js"
@@ -72,8 +71,7 @@
   "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
   "scripts-info": {
     "db:reset": "Generate migrations and run supabase db reset",
-    "db:seed": "Generate seed.sql and run via psql",
-    "db:init-admin": "Initialize admin user via Supabase Auth Admin API",
+    "db:seed": "Generate seed.sql, run via psql, and initialize admin user",
     "db:types": "Generate TypeScript types from database schema",
     "upload:characters": "Upload character assets to Supabase Storage"
   },

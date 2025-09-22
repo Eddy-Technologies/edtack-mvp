@@ -285,8 +285,11 @@ async function runCommand(command) {
         checkForExistingData();
         generateSeedFile();
         executeCommand(`psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -f "${path.join(getSupabaseWorkDir(), 'supabase/seed.sql')}"`, 'Running seed file via psql');
-        log('\n🎉 Database seeding completed!', 'green');
+        log('👤 Initializing admin user...', 'bold');
+        executeCommand('node database/scripts/init-admin.js', 'Running admin user initialization script');
+        log('\n🎉 Database seeding and admin initialization completed!', 'green');
         log('💡 Run `pnpm upload:characters` to upload character assets', 'yellow');
+        log('💡 Check the output above for admin login credentials', 'cyan');
         break;
 
       case 'init-admin':

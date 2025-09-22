@@ -24,8 +24,7 @@ This project uses **pnpm** as the package manager.
 
 ### Database Operations
 - `pnpm db:reset` - Generate migrations and run supabase db reset
-- `pnpm db:seed` - Generate seed.sql and run via psql
-- `pnpm db:init-admin` - Initialize admin user via Supabase Auth Admin API
+- `pnpm db:seed` - Generate seed.sql, run via psql, and initialize admin user
 - `pnpm db:types` - Generate TypeScript types from database schema
 
 ## Project Structure
