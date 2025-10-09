@@ -95,5 +95,10 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['ws'],
     },
+    resolve: {
+      alias: {
+        debug: 'debug/src/browser.js', // This is needed for MDC (markdown) to work in the browser
+      },
+    },
   },
 });

@@ -63,6 +63,62 @@ module.exports = {
         dramatic: '0 4px 6px rgba(0,0,0,0.8), 0 6px 20px rgba(0,0,0,0.6)',
         glow: '0 0 8px rgba(255, 255, 255, 0.8)',
       },
+      typography: { // custom typography for markdown rendering in prose class
+        DEFAULT: {
+          css: {
+            'color': 'black',
+            'table': {
+              width: '100%',
+              borderCollapse: 'collapse',
+              border: '1px solid rgb(209 213 219)',
+            },
+            'th': {
+              border: '1px solid rgb(209 213 219)',
+              backgroundColor: 'rgb(243 244 246)',
+              padding: '0.5rem 1rem',
+              textAlign: 'left',
+              fontWeight: '600',
+            },
+            'td': {
+              border: '1px solid rgb(209 213 219)',
+              padding: '0.5rem 1rem',
+            },
+            'p': {
+              marginBottom: '1rem',
+            },
+            'ol': {
+              marginBottom: '1rem',
+            },
+            'ul': {
+              marginBottom: '1rem',
+            },
+            'li': {
+              color: 'black',
+            },
+            'ul > li::marker': {
+              color: 'black',
+            },
+            'ol > li::marker': {
+              color: 'black',
+            },
+            'h1': {
+              marginBottom: '1rem',
+            },
+            'h2': {
+              marginBottom: '1rem',
+            },
+            'h3': {
+              marginBottom: '1rem',
+            },
+            'blockquote': {
+              marginBottom: '1rem',
+            },
+            'pre': {
+              marginBottom: '1rem',
+            },
+          },
+        },
+      },
     },
   },
   safelist: [
@@ -71,6 +127,6 @@ module.exports = {
     { pattern: /bg-background-\d{2,3}/ },
     { pattern: /text-background-\d{2,3}/ },
   ],
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
   darkMode: false,
 };
