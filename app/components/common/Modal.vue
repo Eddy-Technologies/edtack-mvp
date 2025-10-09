@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, defineEmits, defineProps } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const emit = defineEmits(['close']);
 const props = defineProps({
