@@ -86,7 +86,7 @@
                 :class="[
                   'p-3 border rounded-lg cursor-pointer transition-all',
                   selectedOptions[currentSlide.id]?.id === option.id
-                    ? 'border-blue-500 bg-blue-50'
+                    ? 'border-primary-500 bg-primary-50'
                     : 'border-gray-200 hover:bg-gray-50'
                 ]"
                 @click="selectOption(option)"
@@ -100,7 +100,7 @@
             <div class="mt-4 flex justify-center">
               <button
                 v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
-                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
                 @click="checkAnswer(currentSlide)"
               >
                 Check Answer
@@ -132,8 +132,8 @@
           </div>
 
           <!-- Explanation (shown after answer) -->
-          <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p class="text-sm text-blue-800">
+          <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+            <p class="text-sm text-primary-800">
               <strong>Explanation:</strong> {{ currentSlide.explanation }}
             </p>
           </div>
@@ -149,7 +149,7 @@
               :class="[
                 'p-2 border rounded cursor-pointer text-xs transition-colors',
                 index === currentSlideIndex
-                  ? 'border-blue-500 bg-blue-50'
+                  ? 'border-primary-500 bg-primary-50'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               ]"
               @click="jumpToSlide(index)"
@@ -179,7 +179,7 @@
           :class="[
             'flex-1 py-2 px-4 text-sm font-medium rounded-l',
             mobileActiveTab === 'chat'
-              ? 'bg-blue-500 text-white'
+              ? 'bg-primary-500 text-white'
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
           ]"
           @click="mobileActiveTab = 'chat'"
@@ -190,7 +190,7 @@
           :class="[
             'flex-1 py-2 px-4 text-sm font-medium rounded-r',
             mobileActiveTab === 'slides'
-              ? 'bg-blue-500 text-white'
+              ? 'bg-primary-500 text-white'
               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
           ]"
           @click="mobileActiveTab = 'slides'"
@@ -305,8 +305,8 @@ function checkAnswer(slide: SlideData) {
   if (slide.options && slide.answer && slide.answer.length > 0) {
     // Check if selected option matches the correct answer
     // TODO: currently only can check mcq and using index to check which is not very safe. should use ID matching instead
-    const correctAnswerIndex = slide.answer[0];
-    const correctOption = slide.options[correctAnswerIndex];
+    const correctAnswerIndex = slide.answer[0].option_id;
+    const correctOption = slide.options.find((option) => option.id === correctAnswerIndex);
     const isCorrect = !!(correctOption && selectedOption.id === correctOption.id);
 
     answeredQuestions.value[slide.id] = {
@@ -323,7 +323,7 @@ function checkAnswer(slide: SlideData) {
     toast.add({
       title: 'Answer Checked',
       description: 'This question type will be supported soon!',
-      color: 'blue'
+      color: 'primary'
     });
   }
 }

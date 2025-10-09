@@ -2,14 +2,14 @@
   <div class="min-w-0 text-left">
     <!-- Simple Slides Button -->
     <button
-      class="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 rounded-lg p-4 mb-4 text-left group"
+      class="w-full bg-primary-50 hover:bg-primary-100 border border-primary-200 hover:border-primary-300 rounded-lg p-4 mb-4 text-left group"
       @click="openSplitView"
     >
       <div class="flex items-center justify-between">
         <!-- Left side: Icon and content info -->
         <div class="flex items-center gap-3">
-          <div class="flex-shrink-0 w-12 h-12 bg-blue-100 group-hover:bg-blue-200 rounded-xl flex items-center justify-center">
-            <Icon name="i-heroicons-academic-cap" class="w-6 h-6 text-blue-600" />
+          <div class="flex-shrink-0 w-12 h-12 bg-primary-100 group-hover:bg-primary-200 rounded-xl flex items-center justify-center">
+            <Icon name="i-heroicons-academic-cap" class="w-6 h-6 text-primary-600" />
           </div>
           <div>
             <h3 class="font-semibold text-gray-800 text-base">
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Right side: Action indicator -->
-        <div class="flex items-center gap-2 text-blue-600">
+        <div class="flex items-center gap-2 text-primary-600">
           <span class="text-sm font-medium hidden sm:block">View Slides</span>
           <Icon name="i-heroicons-arrow-right" class="w-5 h-5" />
         </div>
