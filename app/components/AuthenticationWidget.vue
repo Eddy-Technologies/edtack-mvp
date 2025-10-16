@@ -6,7 +6,7 @@
     <!-- <div class="w-16 h-8 bg-gray-200 rounded animate-pulse" /> -->
     <!-- </div> -->
     <!-- Logged in state -->
-    <div v-if="user.isLoggedIn" class="relative">
+    <div v-if="user.isLoggedIn" ref="menuContainer" class="relative">
       <UserAvatar @click="menuOpen = !menuOpen" />
       <!-- Dropdown Menu -->
       <div
@@ -155,9 +155,12 @@ const handleLogout = async () => {
 };
 
 // Click outside handler
+const menuContainer = ref<HTMLElement | null>(null);
+
 const onClickOutside = (e: MouseEvent) => {
   const target = e.target as HTMLElement;
-  if (!target.closest('.relative')) {
+  // Check if click is outside the menu container
+  if (menuContainer.value && !menuContainer.value.contains(target)) {
     menuOpen.value = false;
   }
 };
