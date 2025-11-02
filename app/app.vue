@@ -46,14 +46,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 // Import feedback components
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
 import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
+import { useMeStore } from '~/stores/me';
+import { useCodesStore } from '~/stores/codes';
 
 const { $isExternalNavigation } = useNuxtApp();
 const showAppLoading = ref($isExternalNavigation);
+const meStore = useMeStore();
+const codesStore = useCodesStore();
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
 const hasConsent = ref(false);
@@ -96,9 +100,48 @@ useHead({
 onMounted(async () => {
   // Handle app loading for external navigation
   if (showAppLoading.value) {
+    const startTime = Date.now();
+
+    // Wait for stores to initialize
+    await Promise.all([
+      // Wait for meStore initialization
+      meStore.isInitialized ?
+          Promise.resolve() :
+        new Promise<void>((resolve) => {
+          const unwatch = watch(
+            () => meStore.isInitialized,
+            (isInitialized) => {
+              if (isInitialized) {
+                unwatch();
+                resolve();
+              }
+            }
+          );
+        }),
+      // Wait for codesStore to load
+      codesStore.isLoaded ?
+          Promise.resolve() :
+        new Promise<void>((resolve) => {
+          const unwatch = watch(
+            () => codesStore.isLoaded,
+            (isLoaded) => {
+              if (isLoaded) {
+                unwatch();
+                resolve();
+              }
+            }
+          );
+        })
+    ]);
+
+    // Ensure minimum display time for smooth UX (prevent flash)
+    const MIN_DISPLAY_TIME = 300; // milliseconds
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
+
     setTimeout(() => {
       showAppLoading.value = false;
-    }, 2000);
+    }, remaining);
   }
 
   // // Get me
