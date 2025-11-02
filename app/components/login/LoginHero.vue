@@ -15,7 +15,7 @@
       <!-- Feature Cards -->
       <div class="space-y-4 mb-8">
         <!-- Feature 1: Curriculum-Aware -->
-        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
             <UIcon name="i-heroicons-academic-cap" class="w-6 h-6 text-primary" />
           </div>
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Feature 2: AI-Powered Chat -->
-        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
             <UIcon name="i-heroicons-chat-bubble-left-right" class="w-6 h-6 text-primary" />
           </div>
@@ -41,7 +41,7 @@
         </div>
 
         <!-- Feature 3: Instant Feedback -->
-        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
             <UIcon name="i-heroicons-check-badge" class="w-6 h-6 text-primary" />
           </div>
@@ -54,7 +54,7 @@
         </div>
 
         <!-- Feature 4: Parent Dashboard -->
-        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
             <UIcon name="i-heroicons-user-group" class="w-6 h-6 text-primary" />
           </div>
