@@ -139,6 +139,7 @@ useHead({
 // Prevent component remounting when URL changes
 definePageMeta({
   key: 'chat-page',
+  middleware: 'auth',
 });
 
 const isLoading = ref(true);
