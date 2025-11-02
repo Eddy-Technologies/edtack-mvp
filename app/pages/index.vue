@@ -1,10 +1,12 @@
 <!-- pages/index.vue -->
 <script setup lang="ts">
-// Redirect directly to default character to avoid routing conflicts
-navigateTo('/chat/eddy/new', { replace: true });
+// Redirect handled by middleware to avoid flash of content
+definePageMeta({
+  middleware: 'redirect-chat'
+});
 </script>
 
 <template>
-  <!-- Optional: fallback loading -->
+  <!-- Fallback content (won't render due to middleware redirect) -->
   <div>Redirecting to chat...</div>
 </template>
