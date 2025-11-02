@@ -4,10 +4,10 @@
     <div class="max-w-xl mx-auto">
       <!-- Hero Headline -->
       <div class="mb-8">
-        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3 text-center">
           StudyWithEddy
         </h1>
-        <p class="text-lg text-gray-600">
+        <p class="text-lg text-gray-600 text-center">
           AI-Powered Learning Platform for Singapore Students
         </p>
       </div>
