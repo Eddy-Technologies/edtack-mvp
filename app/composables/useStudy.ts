@@ -1,4 +1,4 @@
-export type StudyActionType = 'lesson' | 'practice';
+export type StudyActionType = 'lesson' | 'practice' | 'quiz';
 
 export const useStudy = () => {
   const generateStudyPrompt = (chapterName: string, subjectName: string, taskType: StudyActionType) => {
@@ -16,8 +16,13 @@ export const useStudy = () => {
         prompt = `I want to take a 5-question practice on ${subjectName} covering the chapter "${chapterName}".`;
         break;
 
+      case 'quiz':
+        taskTitle = `${chapterName} Quiz`;
+        prompt = `I want to take a 10-question quiz on ${subjectName} covering the chapter "${chapterName}".`;
+        break;
+
       default:
-        throw new Error(`Invalid task type: ${taskType}. Must be 'lesson' or 'practice'.`);
+        throw new Error(`Invalid task type: ${taskType}. Must be 'lesson', 'practice', or 'quiz'.`);
     }
 
     return { prompt, taskTitle, taskType };

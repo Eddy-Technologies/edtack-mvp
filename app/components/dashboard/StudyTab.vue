@@ -172,21 +172,18 @@
                         Practice
                       </UButton>
 
-                      <!-- Quiz Button - Coming Soon -->
-                      <UTooltip
+                      <!-- Quiz Button -->
+                      <UButton
                         v-if="chapter.user_tasks_chapters?.length > 0"
-                        text="Quiz feature coming soon!"
+                        size="sm"
+                        color="primary"
+                        variant="soft"
+                        :loading="quizButtonLoading[chapter.name]"
+                        @click="handleQuizClick(chapter, subject.subject_name)"
                       >
-                        <UButton
-                          size="sm"
-                          color="primary"
-                          variant="soft"
-                          disabled
-                        >
-                          <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
-                          Quiz
-                        </UButton>
-                      </UTooltip>
+                        <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
+                        Quiz
+                      </UButton>
                     </div>
                   </div>
                 </div>
@@ -240,6 +237,7 @@ const subjects = ref<Subject[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 const openSubjects = ref<string[]>([]);
+const quizButtonLoading = reactive<Record<string, boolean>>({});
 
 // Filters
 const filters = reactive({
@@ -300,7 +298,7 @@ const fetchSubjects = async () => {
   }
 };
 
-const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice') => {
+const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice' | 'quiz') => {
   try {
     const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
     const upperCaseSubject = subjectName.toUpperCase();
@@ -317,6 +315,62 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
     await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
   } catch (error) {
     console.error('Error handling study action:', error);
+  }
+};
+
+const handleQuizClick = async (chapter: any, subjectName: string) => {
+  const chapterName = chapter.name;
+
+  try {
+    // Set loading state
+    quizButtonLoading[chapterName] = true;
+
+    // Check if quiz already exists
+    const checkResponse = await $fetch('/api/quiz/check-existing', {
+      method: 'GET',
+      query: {
+        chapterId: chapterName,
+      },
+    });
+
+    if (checkResponse.exists) {
+      // Quiz already exists - show placeholder alert
+      alert(`Quiz ready for ${chapter.display_name}!\n\nQuiz page coming soon. You have ${checkResponse.questionCount} questions available.`);
+    } else {
+      // No quiz exists - generate one
+      console.log('Generating quiz for chapter:', chapterName);
+
+      // Generate prompt using useStudy composable
+      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
+
+      const generateResponse = await $fetch('/api/quiz/generate', {
+        method: 'POST',
+        body: {
+          prompt: studyResult.prompt,
+          chapterName: chapterName,
+          chapterDisplayName: chapter.display_name,
+          subjectName: subjectName,
+          userLevel: meStore.level_type || '',
+          syllabusType: meStore.syllabus_type || '',
+          numQuestions: 10,
+        },
+      });
+
+      if (generateResponse.success) {
+        alert(`Quiz generated successfully!\n\n${generateResponse.questionCount} questions created for ${chapter.display_name}.\n\nQuiz page coming soon.`);
+      } else {
+        throw new Error('Failed to generate quiz');
+      }
+    }
+  } catch (err: any) {
+    console.error('Error handling quiz click:', err);
+
+    // Show user-friendly error message
+    const errorMessage = err.data?.message || err.message || 'An error occurred while loading the quiz';
+    alert(`Error: ${errorMessage}`);
+  } finally {
+    // Clear loading state
+    quizButtonLoading[chapterName] = false;
   }
 };
 
