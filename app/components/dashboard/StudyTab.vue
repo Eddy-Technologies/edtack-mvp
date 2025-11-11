@@ -172,25 +172,21 @@
                         Practice
                       </UButton>
 
-                      <!-- Quiz Button (only if chapter has tasks) -->
-                      <UButton
+                      <!-- Quiz Button - Coming Soon -->
+                      <UTooltip
                         v-if="chapter.user_tasks_chapters?.length > 0"
-                        size="sm"
-                        color="primary"
-                        variant="soft"
-                        :loading="quizButtonLoading[chapter.name]"
-                        @click="handleQuizClick(
-                          chapter,
-                          subject.subject_name,
-                          subject.display_name,
-                          chapter.user_tasks_chapters
-                            ?.flatMap(utc => utc.user_tasks?.task_threads || [])
-                            ?.find(thread => thread.chapter === chapter.name && thread.status === 'OPEN')
-                        )"
+                        text="Quiz feature coming soon!"
                       >
-                        <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
-                        Quiz
-                      </UButton>
+                        <UButton
+                          size="sm"
+                          color="primary"
+                          variant="soft"
+                          disabled
+                        >
+                          <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
+                          Quiz
+                        </UButton>
+                      </UTooltip>
                     </div>
                   </div>
                 </div>
@@ -223,7 +219,7 @@ import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
 
 const router = useRouter();
-const { generateStudyPrompt, createQuizThread } = useStudy();
+const { generateStudyPrompt } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
 
@@ -243,7 +239,6 @@ interface Subject {
 const subjects = ref<Subject[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
-const quizButtonLoading = reactive<Record<string, boolean>>({});
 const openSubjects = ref<string[]>([]);
 
 // Filters
@@ -322,25 +317,6 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
     await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
   } catch (error) {
     console.error('Error handling study action:', error);
-  }
-};
-
-const handleQuizClick = async (chapter: any, subjectName: string, subjectDisplayName: string, existingThread?: any) => {
-  const upperCaseSubject = subjectName.toUpperCase();
-  try {
-    // Get the appropriate character for this subject
-    const character = getCharacterBySubject(upperCaseSubject);
-    let threadId = existingThread?.thread_id ? existingThread.thread_id : '';
-
-    if (!existingThread) {
-      const res = await createQuizThread(chapter, subjectDisplayName);
-      threadId = res;
-    }
-
-    await router.push(`/chat/${character?.slug}/${threadId}`);
-  } catch (error: any) {
-    console.error('Error handling quiz click:', error);
-    error.value = error.data?.message || 'Failed to create quiz session';
   }
 };
 
