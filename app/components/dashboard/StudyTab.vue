@@ -182,7 +182,7 @@
                         @click="handleQuizClick(chapter, subject.subject_name)"
                       >
                         <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
-                        Quiz
+                        {{ quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz' }}
                       </UButton>
                     </div>
                   </div>
@@ -238,6 +238,7 @@ const isLoading = ref(true);
 const error = ref<string | null>(null);
 const openSubjects = ref<string[]>([]);
 const quizButtonLoading = reactive<Record<string, boolean>>({});
+const quizExists = reactive<Record<string, boolean>>({});
 
 // Filters
 const filters = reactive({
@@ -318,6 +319,29 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
   }
 };
 
+const checkQuizExistence = async (chapters: any[], subjectName: string) => {
+  for (const chapter of chapters) {
+    if (chapter.user_tasks_chapters?.length > 0) {
+      const userTasksChapterId = chapter.user_tasks_chapters[0]?.id;
+      if (userTasksChapterId) {
+        try {
+          const checkResponse = await $fetch('/api/quiz/check-existing', {
+            method: 'GET',
+            query: {
+              chapterId: chapter.name,
+              userTasksChapterId: userTasksChapterId,
+            },
+          });
+          quizExists[chapter.name] = checkResponse.exists;
+        } catch (err) {
+          console.error(`Error checking quiz for ${chapter.name}:`, err);
+          quizExists[chapter.name] = false;
+        }
+      }
+    }
+  }
+};
+
 const handleQuizClick = async (chapter: any, subjectName: string) => {
   const chapterName = chapter.name;
 
@@ -325,11 +349,19 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
     // Set loading state
     quizButtonLoading[chapterName] = true;
 
-    // Check if quiz already exists
+    // Get the task-chapter ID for linking questions
+    const userTasksChapterId = chapter.user_tasks_chapters?.[0]?.id;
+    if (!userTasksChapterId) {
+      alert('No task assignment found for this chapter.');
+      return;
+    }
+
+    // Check if quiz already exists for this task-chapter
     const checkResponse = await $fetch('/api/quiz/check-existing', {
       method: 'GET',
       query: {
         chapterId: chapterName,
+        userTasksChapterId: userTasksChapterId,
       },
     });
 
@@ -353,10 +385,12 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
           userLevel: meStore.level_type || '',
           syllabusType: meStore.syllabus_type || '',
           numQuestions: 10,
+          userTasksChapterId: userTasksChapterId,
         },
       });
 
       if (generateResponse.success) {
+        quizExists[chapterName] = true;
         alert(`Quiz generated successfully!\n\n${generateResponse.questionCount} questions created for ${chapter.display_name}.\n\nQuiz page coming soon.`);
       } else {
         throw new Error('Failed to generate quiz');
@@ -374,12 +408,17 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
   }
 };
 
-const toggleAccordion = (subjectName: string) => {
+const toggleAccordion = async (subjectName: string) => {
   const index = openSubjects.value.indexOf(subjectName);
   if (index > -1) {
     openSubjects.value.splice(index, 1);
   } else {
     openSubjects.value.push(subjectName);
+    // Check quiz existence when opening accordion
+    const subject = subjects.value.find(s => s.name === subjectName);
+    if (subject?.chapters) {
+      await checkQuizExistence(subject.chapters, subject.subject_name);
+    }
   }
 };
 

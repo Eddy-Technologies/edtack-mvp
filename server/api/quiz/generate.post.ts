@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
     // Parse request body
     const body = await readBody(event);
-    const { prompt, chapterName, chapterDisplayName, subjectName, userLevel, syllabusType, numQuestions = 10 } = body;
+    const { prompt, chapterName, chapterDisplayName, subjectName, userLevel, syllabusType, numQuestions = 10, userTasksChapterId } = body;
 
     // Validate required fields
     if (!prompt || !chapterName || !chapterDisplayName || !subjectName) {
@@ -101,6 +101,37 @@ export default defineEventHandler(async (event) => {
 
     console.log('[generate] Successfully persisted', successCount, 'questions');
 
+    // Link questions to task-chapter if userTasksChapterId provided
+    if (userTasksChapterId) {
+      const questionIds = persistResults
+        .filter((r) => r.success)
+        .map((r) => r.questionId);
+
+      if (questionIds.length > 0) {
+        console.log('[generate] Linking', questionIds.length, 'questions to task-chapter:', userTasksChapterId);
+
+        const linkRecords = questionIds.map((questionId, index) => ({
+          user_tasks_chapters_id: userTasksChapterId,
+          question_id: questionId,
+          display_order: index,
+        }));
+
+        const { error: linkError } = await supabase
+          .from('user_tasks_chapters_questions')
+          .insert(linkRecords);
+
+        if (linkError) {
+          console.error('[generate] Error linking questions to task-chapter:', linkError);
+          throw createError({
+            statusCode: 500,
+            message: 'Failed to link questions to task',
+          });
+        }
+
+        console.log('[generate] Successfully linked questions to task-chapter');
+      }
+    }
+
     return {
       success: true,
       questionCount: successCount,
@@ -136,10 +167,10 @@ async function persistQuizQuestionsServer(
   const results = [];
 
   for (const question of questions) {
-    try {
-      // 1. Insert into questions table
-      const questionId = crypto.randomUUID();
+    // 1. Insert into questions table
+    const questionId = crypto.randomUUID();
 
+    try {
       const questionRecord = {
         id: questionId,
         chapter_id: chapterId,
@@ -209,10 +240,10 @@ async function persistQuizQuestionsServer(
         }
       }
 
-      results.push({ success: true, questionId: question.id });
+      results.push({ success: true, questionId: questionId });
     } catch (error) {
       console.error(`[persistQuizQuestionsServer] Failed to persist question ${question.id}:`, error);
-      results.push({ success: false, questionId: question.id, error });
+      results.push({ success: false, questionId: questionId, error });
     }
   }
 

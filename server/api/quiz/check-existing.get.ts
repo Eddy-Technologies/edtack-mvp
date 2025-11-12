@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
     // Get query parameters
     const query = getQuery(event);
     const chapterId = query.chapterId as string;
+    const userTasksChapterId = query.userTasksChapterId as string;
 
     if (!chapterId) {
       throw createError({
@@ -35,8 +36,37 @@ export default defineEventHandler(async (event) => {
     // Get Supabase client
     const supabase = await getSupabaseClient(event);
 
-    // Check if user has questions for this chapter
-    // Note: Currently we check questions directly. In the future, this will query quiz_sessions
+    // If userTasksChapterId provided, check junction table for linked questions
+    if (userTasksChapterId) {
+      const { data: linkedQuestions, error } = await supabase
+        .from('user_tasks_chapters_questions')
+        .select('id')
+        .eq('user_tasks_chapters_id', userTasksChapterId);
+
+      if (error) {
+        console.error('[check-existing] Error querying linked questions:', error);
+        throw createError({
+          statusCode: 500,
+          message: 'Failed to check existing quiz',
+        });
+      }
+
+      const hasQuestions = linkedQuestions && linkedQuestions.length > 0;
+      const questionCount = linkedQuestions?.length || 0;
+
+      console.log(
+        `[check-existing] Task-Chapter ${userTasksChapterId}: ${hasQuestions ? 'has' : 'no'} linked quiz (${questionCount} questions)`
+      );
+
+      return {
+        success: true,
+        exists: hasQuestions,
+        hasQuestions,
+        questionCount,
+      };
+    }
+
+    // Fallback: Check if questions exist for this chapter (original behavior)
     const { data: questions, error } = await supabase
       .from('questions')
       .select('id')
