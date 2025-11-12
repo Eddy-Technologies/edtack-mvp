@@ -39,18 +39,16 @@ export default defineEventHandler(async (event) => {
             id,
             user_task_id,
             chapter_name,
+            status,
+            score,
+            total_score,
+            completed_at,
             user_tasks!inner(
               id,
               assignee_user_info_id,
               status,
               credit,
-              lesson_generation_type,
-              task_threads(
-                id,
-                thread_id,
-                chapter,
-                status
-              )
+              lesson_generation_type
             )
           )
         )

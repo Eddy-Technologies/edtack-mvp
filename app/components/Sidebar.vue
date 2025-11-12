@@ -53,14 +53,6 @@
               @click="openThread(thread.id, thread.subject)"
             >
               <div class="flex flex-row items-center space-x-2 min-w-0">
-                <UBadge
-                  v-if="thread.task_threads"
-                  :color="thread.task_threads.status === TASK_THREAD_STATUS.OPEN ? 'primary' : 'gray'"
-                  size="xs"
-                  class="flex-shrink-0"
-                >
-                  Task
-                </UBadge>
                 <div v-if="thread.subject" class="text-xs text-gray-500 flex-shrink-0 whitespace-nowrap">
                   {{ constantCaseToTitleCase(thread.subject) }}
                 </div>
@@ -142,7 +134,6 @@ import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
-import { TASK_THREAD_STATUS } from '~~/shared/constants';
 
 const emit = defineEmits([
   'toggle-sidebar',

@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     // Fetch thread data
     const { data: threadData, error: threadError } = await supabase
       .from('threads')
-      .select('*, thread_messages(*), task_threads(*)')
+      .select('*, thread_messages(*)')
       .eq('id', id)
       .single();
 

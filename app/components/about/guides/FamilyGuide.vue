@@ -320,10 +320,6 @@
                   <h6 class="text-sm font-medium text-gray-700 mb-1">Track Progress</h6>
                   <p class="text-xs text-gray-600">Monitor task completion and approve submissions</p>
                 </div>
-                <div>
-                  <h6 class="text-sm font-medium text-gray-700 mb-1">Manage Templates</h6>
-                  <p class="text-xs text-gray-600">Create recurring tasks and task templates</p>
-                </div>
               </div>
             </div>
           </div>
