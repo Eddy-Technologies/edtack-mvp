@@ -38,6 +38,7 @@ export enum ORDER_FULFILLMENT {
 }
 
 export enum LESSON_GENERATION_TYPE {
+  QUIZ = 'QUIZ',
   LESSON = 'LESSON'
 }
 
