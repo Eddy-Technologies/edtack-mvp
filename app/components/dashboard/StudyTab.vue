@@ -219,6 +219,7 @@ const router = useRouter();
 const { generateStudyPrompt } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
+const toast = useToast();
 
 interface Subject {
   name: string;
@@ -319,7 +320,7 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
   }
 };
 
-const checkQuizExistence = async (chapters: any[], subjectName: string) => {
+const checkQuizExistence = async (chapters: any[]) => {
   for (const chapter of chapters) {
     if (chapter.user_tasks_chapters?.length > 0) {
       const userTasksChapterId = chapter.user_tasks_chapters[0]?.id;
@@ -352,7 +353,12 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
     // Get the task-chapter ID for linking questions
     const userTasksChapterId = chapter.user_tasks_chapters?.[0]?.id;
     if (!userTasksChapterId) {
-      alert('No task assignment found for this chapter.');
+      toast.add({
+        title: 'No Task Assignment',
+        description: 'No task assignment found for this chapter.',
+        color: 'red',
+        timeout: 5000
+      });
       return;
     }
 
@@ -366,8 +372,13 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
     });
 
     if (checkResponse.exists) {
-      // Quiz already exists - show placeholder alert
-      alert(`Quiz ready for ${chapter.display_name}!\n\nQuiz page coming soon. You have ${checkResponse.questionCount} questions available.`);
+      // Quiz already exists
+      toast.add({
+        title: 'Quiz Ready!',
+        description: `You have ${checkResponse.questionCount} questions available for ${chapter.display_name}. Quiz page coming soon.`,
+        color: 'blue',
+        timeout: 6000
+      });
     } else {
       // No quiz exists - generate one
       console.log('Generating quiz for chapter:', chapterName);
@@ -391,7 +402,12 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
 
       if (generateResponse.success) {
         quizExists[chapterName] = true;
-        alert(`Quiz generated successfully!\n\n${generateResponse.questionCount} questions created for ${chapter.display_name}.\n\nQuiz page coming soon.`);
+        toast.add({
+          title: 'Quiz Generated!',
+          description: `${generateResponse.questionCount} questions created for ${chapter.display_name}. Quiz page coming soon.`,
+          color: 'green',
+          timeout: 6000
+        });
       } else {
         throw new Error('Failed to generate quiz');
       }
@@ -401,7 +417,12 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
 
     // Show user-friendly error message
     const errorMessage = err.data?.message || err.message || 'An error occurred while loading the quiz';
-    alert(`Error: ${errorMessage}`);
+    toast.add({
+      title: 'Quiz Error',
+      description: errorMessage,
+      color: 'red',
+      timeout: 5000
+    });
   } finally {
     // Clear loading state
     quizButtonLoading[chapterName] = false;
@@ -415,7 +436,7 @@ const toggleAccordion = async (subjectName: string) => {
   } else {
     openSubjects.value.push(subjectName);
     // Check quiz existence when opening accordion
-    const subject = subjects.value.find(s => s.name === subjectName);
+    const subject = subjects.value.find((s) => s.name === subjectName);
     if (subject?.chapters) {
       await checkQuizExistence(subject.chapters, subject.subject_name);
     }
