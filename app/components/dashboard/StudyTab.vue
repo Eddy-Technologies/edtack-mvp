@@ -256,6 +256,7 @@ const quizCompleted = reactive<Record<string, boolean>>({});
 const isQuizModalOpen = ref(false);
 const selectedUserTasksChapterId = ref<string>('');
 const selectedChapterDisplayName = ref<string>('');
+const selectedChapterName = ref<string>(''); // Track chapter.name for state updates
 
 // Filters
 const filters = reactive({
@@ -402,6 +403,7 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
       // Quiz already exists - open modal (will automatically show results if completed)
       selectedUserTasksChapterId.value = userTasksChapterId;
       selectedChapterDisplayName.value = chapter.display_name;
+      selectedChapterName.value = chapterName;
       isQuizModalOpen.value = true;
     } else {
       // No quiz exists - generate one
@@ -482,6 +484,11 @@ const handleQuizSubmitted = (score: number, totalScore: number) => {
     color: score === totalScore ? 'green' : 'blue',
     timeout: 6000
   });
+
+  // Mark quiz as completed immediately for UI update
+  if (selectedChapterName.value) {
+    quizCompleted[selectedChapterName.value] = true;
+  }
 
   // Refresh subjects to update completion status
   fetchSubjects();

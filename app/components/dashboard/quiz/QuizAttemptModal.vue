@@ -120,6 +120,48 @@
                 </p>
               </div>
 
+              <!-- User's Answer -->
+              <div v-if="result.userAnswers && result.userAnswers.length > 0" class="ml-9 mb-3 p-3 bg-gray-50 rounded border border-gray-200">
+                <h6 class="text-sm font-semibold text-gray-700 mb-1">Your Answer:</h6>
+
+                <!-- MCQ Answer -->
+                <div v-if="result.questionType === 'mcq'" class="text-sm text-gray-600">
+                  <ul class="list-disc list-inside">
+                    <li v-for="(answer, idx) in result.userAnswers" :key="idx">
+                      {{ answer.option_text }}
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Boolean Answer -->
+                <div v-else-if="result.questionType === 'boolean'" class="text-sm text-gray-600">
+                  {{ result.userAnswers[0].answer_boolean ? 'True' : 'False' }}
+                </div>
+
+                <!-- Fill/Open Answer -->
+                <div v-else-if="result.questionType === 'fill' || result.questionType === 'open'" class="text-sm text-gray-600">
+                  <div v-if="result.userAnswers.length === 1">
+                    {{ result.userAnswers[0].answer_text }}
+                  </div>
+                  <ol v-else class="list-decimal list-inside">
+                    <li v-for="(answer, idx) in result.userAnswers" :key="idx">
+                      {{ answer.answer_text }}
+                    </li>
+                  </ol>
+                </div>
+
+                <!-- Draw Answer -->
+                <div v-else-if="result.questionType === 'draw'" class="text-sm text-gray-600">
+                  <img
+                    v-if="result.userAnswers[0].answer_draw_file"
+                    :src="result.userAnswers[0].answer_draw_file"
+                    alt="Your drawing"
+                    class="max-w-xs h-auto rounded border border-gray-300 mt-2"
+                  >
+                  <p v-else class="text-gray-400 italic">No drawing submitted</p>
+                </div>
+              </div>
+
               <!-- Explanation -->
               <div v-if="questions[index]?.explanation" class="ml-9 mt-3 p-3 bg-white rounded border border-gray-200">
                 <h6 class="text-sm font-semibold text-gray-700 mb-1">Explanation:</h6>
