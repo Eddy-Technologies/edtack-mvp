@@ -17,7 +17,7 @@
         <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
           <div class="flex items-center space-x-1">
             <UIcon name="i-lucide-coins" size="16" />
-            <span class="font-medium text-green-600">{{ formatCredits(task.credit) }}</span>
+            <span class="font-medium text-secondary-600">{{ formatCredits(task.credit) }}</span>
           </div>
 
           <div v-if="showAssigneeInfo" class="flex items-center space-x-1">
@@ -27,20 +27,20 @@
         </div>
 
         <!-- Chapter Information -->
-        <div v-if="task.chapters?.length" class="bg-blue-50 p-3 rounded-lg mb-3">
-          <p class="text-sm text-blue-800 font-medium mb-2">
+        <div v-if="task.chapters?.length" class="bg-primary-50 p-3 rounded-lg mb-3">
+          <p class="text-sm text-primary-800 font-medium mb-2">
             Chapters:
           </p>
           <div class="flex flex-wrap gap-2 mb-2">
             <span
               v-for="chapter in task.chapters"
               :key="chapter.name"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 border border-primary-200"
             >
               {{ chapter.display_name || chapter.name }}
             </span>
           </div>
-          <p class="text-xs text-blue-600">
+          <p class="text-xs text-primary-600">
             {{ task.credit }} credits per quiz • {{ task.chapters.length }} chapter{{ task.chapters.length === 1 ? '' : 's' }} assigned
           </p>
         </div>
@@ -105,7 +105,7 @@ const getStatusText = (status: string) => {
 const getStatusBadgeClass = (status: string) => {
   const classMap = {
     // Task thread statuses (uppercase)
-    OPEN: 'bg-blue-100 text-blue-800',
+    OPEN: 'bg-primary-100 text-primary-800',
     COMPLETED: 'bg-green-100 text-green-800',
     EXPIRED: 'bg-red-100 text-red-800',
     // Task statuses (uppercase)

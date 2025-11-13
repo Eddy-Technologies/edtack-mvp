@@ -182,7 +182,7 @@
                         @click="handleQuizClick(chapter, subject.subject_name)"
                       >
                         <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
-                        {{ quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz' }}
+                        {{ quizCompleted[chapter.name] ? 'Review Quiz' : (quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz') }}
                       </UButton>
                     </div>
                   </div>
@@ -205,6 +205,15 @@
         Clear filters
       </UButton>
     </div>
+
+    <!-- Quiz Attempt Modal -->
+    <QuizAttemptModal
+      :is-open="isQuizModalOpen"
+      :user-tasks-chapter-id="selectedUserTasksChapterId"
+      :chapter-display-name="selectedChapterDisplayName"
+      @close="isQuizModalOpen = false"
+      @quiz-submitted="handleQuizSubmitted"
+    />
   </div>
 </template>
 
@@ -214,6 +223,7 @@ import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
+import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 
 const router = useRouter();
 const { generateStudyPrompt } = useStudy();
@@ -240,6 +250,12 @@ const error = ref<string | null>(null);
 const openSubjects = ref<string[]>([]);
 const quizButtonLoading = reactive<Record<string, boolean>>({});
 const quizExists = reactive<Record<string, boolean>>({});
+const quizCompleted = reactive<Record<string, boolean>>({});
+
+// Quiz modal state
+const isQuizModalOpen = ref(false);
+const selectedUserTasksChapterId = ref<string>('');
+const selectedChapterDisplayName = ref<string>('');
 
 // Filters
 const filters = reactive({
@@ -334,9 +350,20 @@ const checkQuizExistence = async (chapters: any[]) => {
             },
           });
           quizExists[chapter.name] = checkResponse.exists;
+
+          // Also check if quiz is completed
+          if (checkResponse.exists) {
+            const resultsResponse = await $fetch(`/api/quiz/${userTasksChapterId}/results`, {
+              method: 'GET',
+            });
+            quizCompleted[chapter.name] = resultsResponse.isCompleted || false;
+          } else {
+            quizCompleted[chapter.name] = false;
+          }
         } catch (err) {
           console.error(`Error checking quiz for ${chapter.name}:`, err);
           quizExists[chapter.name] = false;
+          quizCompleted[chapter.name] = false;
         }
       }
     }
@@ -372,13 +399,10 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
     });
 
     if (checkResponse.exists) {
-      // Quiz already exists
-      toast.add({
-        title: 'Quiz Ready!',
-        description: `You have ${checkResponse.questionCount} questions available for ${chapter.display_name}. Quiz page coming soon.`,
-        color: 'blue',
-        timeout: 6000
-      });
+      // Quiz already exists - open modal (will automatically show results if completed)
+      selectedUserTasksChapterId.value = userTasksChapterId;
+      selectedChapterDisplayName.value = chapter.display_name;
+      isQuizModalOpen.value = true;
     } else {
       // No quiz exists - generate one
       console.log('Generating quiz for chapter:', chapterName);
@@ -448,6 +472,18 @@ const clearFilters = () => {
   filters.syllabusType = '';
   filters.subject = '';
   filters.hasCreditsOnly = false;
+  fetchSubjects();
+};
+
+const handleQuizSubmitted = (score: number, totalScore: number) => {
+  toast.add({
+    title: 'Quiz Completed!',
+    description: `You scored ${score} out of ${totalScore} points`,
+    color: score === totalScore ? 'green' : 'blue',
+    timeout: 6000
+  });
+
+  // Refresh subjects to update completion status
   fetchSubjects();
 };
 
