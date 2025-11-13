@@ -128,7 +128,7 @@
                 <div
                   v-for="chapter in subject.chapters"
                   :key="chapter.name"
-                  class="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  class="border border-primary rounded-lg p-4"
                 >
                   <div class="flex justify-between items-start">
                     <!-- Chapter Info -->
@@ -151,38 +151,50 @@
                     <!-- Action Buttons -->
                     <div class="flex space-x-2">
                       <!-- Lesson Button -->
+                      <!-- Height will offset from the outer div -->
                       <UButton
-                        size="sm"
-                        color="blue"
-                        variant="soft"
+                        size="xl"
+                        color="secondary"
+                        variant="outline"
                         @click="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'lesson')"
                       >
-                        <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-1" />
-                        Lesson
+                        <div>
+                          <UIcon name="i-lucide-book-open" size="24" />
+                          <div>
+                            Lesson
+                          </div>
+                        </div>
                       </UButton>
 
                       <!-- Practice Button -->
                       <UButton
-                        size="sm"
-                        color="green"
-                        variant="soft"
+                        size="xl"
+                        variant="outline"
                         @click="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'practice')"
                       >
-                        <UIcon name="i-lucide-target" class="w-4 h-4 mr-1" />
-                        Practice
+                        <div>
+                          <UIcon name="i-lucide-target" size="24" />
+                          <div>
+                            Practice
+                          </div>
+                        </div>
                       </UButton>
 
                       <!-- Quiz Button -->
                       <UButton
                         v-if="chapter.user_tasks_chapters?.length > 0"
-                        size="sm"
-                        color="primary"
-                        variant="soft"
+                        size="xl"
+                        color="blue"
+                        variant="outline"
                         :loading="quizButtonLoading[chapter.name]"
                         @click="handleQuizClick(chapter, subject.subject_name)"
                       >
-                        <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
-                        {{ quizCompleted[chapter.name] ? 'Review Quiz' : (quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz') }}
+                        <div>
+                          <UIcon name="i-lucide-brain" size="24" />
+                          <div>
+                            {{ quizCompleted[chapter.name] ? 'Review Quiz' : (quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz') }}
+                          </div>
+                        </div>
                       </UButton>
                     </div>
                   </div>
