@@ -112,8 +112,4 @@ const getStatusBadgeClass = (status: string) => {
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
-
-const formatCredits = (credits: number) => {
-  return `${credits} credits`;
-};
 </script>
