@@ -23,6 +23,37 @@
           </button>
         </div>
 
+        <!-- Question Navigation Pills -->
+        <div v-if="!isLoading && !error && !showResults && questions.length > 0" class="sticky top-0 z-10 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-sm font-medium text-gray-700">Quick Navigation:</span>
+            <div class="flex items-center gap-3 text-xs text-gray-500">
+              <div class="flex items-center gap-1">
+                <div class="w-3 h-3 rounded bg-primary" />
+                <span>Answered</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-3 h-3 rounded bg-white border-2 border-gray-300" />
+                <span>Unanswered</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="(question, index) in questions"
+              :key="question.id"
+              class="w-10 h-10 rounded-lg font-medium transition-all"
+              :class="{
+                'bg-primary text-white': userAnswers[index] !== undefined,
+                'bg-white border-2 border-gray-300 text-gray-700 hover:border-primary hover:bg-blue-50': userAnswers[index] === undefined
+              }"
+              @click="scrollToQuestion(index)"
+            >
+              {{ index + 1 }}
+            </button>
+          </div>
+        </div>
+
         <!-- Loading State -->
         <div v-if="isLoading" class="flex flex-col items-center justify-center py-12">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4" />
@@ -189,7 +220,8 @@
             <div
               v-for="(question, index) in questions"
               :key="question.id"
-              class="border border-gray-200 rounded-lg p-4"
+              :ref="el => { if (el) questionRefs[index] = el as HTMLElement }"
+              class="border border-gray-200 rounded-lg p-4 scroll-mt-32"
             >
               <div class="flex items-start mb-3">
                 <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium mr-3 flex-shrink-0">
@@ -271,6 +303,7 @@ const isSubmitting = ref(false);
 const error = ref<string | null>(null);
 const showResults = ref(false);
 const quizResults = ref<any>(null);
+const questionRefs = ref<HTMLElement[]>([]);
 
 // Computed
 const allQuestionsAnswered = computed(() => {
@@ -278,6 +311,12 @@ const allQuestionsAnswered = computed(() => {
 });
 
 // Methods
+const scrollToQuestion = (index: number) => {
+  const element = questionRefs.value[index];
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
 const loadQuestions = async () => {
   if (!props.userTasksChapterId) return;
 
@@ -366,6 +405,7 @@ watch(() => props.isOpen, (newValue) => {
     // Reset state when modal opens
     questions.value = [];
     userAnswers.value = {};
+    questionRefs.value = [];
     error.value = null;
     showResults.value = false;
     quizResults.value = null;
