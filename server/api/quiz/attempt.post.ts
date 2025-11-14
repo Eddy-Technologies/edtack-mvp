@@ -17,6 +17,7 @@
 
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { markQuestion } from '~~/server/utils/markingApi';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -94,6 +95,7 @@ export default defineEventHandler(async (event) => {
           type,
           title,
           question,
+          explanation,
           question_options(
             id,
             option_text
@@ -146,17 +148,18 @@ export default defineEventHandler(async (event) => {
       const questionData = questionLinks[i].questions;
       const userAnswer = answers[i];
 
-      // Each question worth 1 point for now (can be configurable later)
-      const questionPoints = 1;
-      totalScore += questionPoints;
-
       let isCorrect = false;
       let feedback = '';
+      let questionPoints = 1; // Default point value for MCQ/Boolean
 
       // Score based on question type
+      let userAnswers: any[] = [];
+
       switch (questionData.type) {
         case 'mcq': {
           // MCQ: Compare selected option IDs
+          totalScore += questionPoints;
+
           const correctOptionIds = questionData.question_correct_answers
             .filter((a: any) => a.option_id)
             .map((a: any) => a.option_id)
@@ -176,11 +179,21 @@ export default defineEventHandler(async (event) => {
           } else {
             feedback = 'Incorrect';
           }
+
+          // Build userAnswers array for MCQ
+          userAnswers = questionData.question_options
+            .filter((opt: any) => userOptionIds.includes(opt.id))
+            .map((opt: any) => ({
+              option_text: opt.option_text,
+            }));
+
           break;
         }
 
         case 'boolean': {
           // Boolean: Compare true/false
+          totalScore += questionPoints;
+
           const correctAnswer = questionData.question_correct_answers[0]?.answer_boolean;
           const userBooleanAnswer = userAnswer?.answer;
 
@@ -192,22 +205,69 @@ export default defineEventHandler(async (event) => {
           } else {
             feedback = 'Incorrect';
           }
+
+          // Build userAnswers array for Boolean
+          userAnswers = [{
+            answer_boolean: userBooleanAnswer === 'true' || userBooleanAnswer === true,
+          }];
+
           break;
         }
 
         case 'open':
-        case 'fill': {
-          // Open/Fill: For now, mark as requiring manual grading
-          // In future, could implement fuzzy text matching
-          feedback = 'Answer submitted - requires manual grading';
-          // Don't add to score yet - manual grading needed
-          break;
-        }
-
+        case 'fill':
         case 'draw': {
-          // Draw: Requires manual grading
-          feedback = 'Drawing submitted - requires manual grading';
-          break;
+          // Use marking API for open, fill, and draw questions
+          try {
+            const markingResponse = await markQuestion(
+              questionData,
+              userAnswer?.answer || userAnswer?.answers || userAnswer?.drawingFile,
+              {}
+            );
+
+            const markingResult = markingResponse.result;
+
+            // Add actual score from marking API
+            totalScore += markingResult.score.total;
+            earnedScore += markingResult.score.awarded;
+
+            // Build userAnswers array based on question type
+            if (questionData.type === 'open') {
+              userAnswers = [{ answer_text: userAnswer?.answer || '' }];
+            } else if (questionData.type === 'fill') {
+              if (Array.isArray(userAnswer?.answers)) {
+                userAnswers = userAnswer.answers.map((ans: string, idx: number) => ({
+                  answer_text: ans,
+                  order_index: idx,
+                }));
+              } else {
+                userAnswers = [{ answer_text: userAnswer?.answer || '' }];
+              }
+            } else if (questionData.type === 'draw') {
+              userAnswers = [{ answer_draw_file: userAnswer?.drawingFile || '' }];
+            }
+
+            // Store marking result for database persistence
+            results[i] = {
+              questionIndex: i,
+              questionId: questionData.id,
+              questionType: questionData.type,
+              isCorrect: markingResult.status === 'correct',
+              feedback: markingResult.feedback.positive || 'Answer evaluated',
+              pointsEarned: markingResult.score.awarded,
+              pointsPossible: markingResult.score.total,
+              markingResult: markingResult,
+              userAnswers: userAnswers,
+            };
+
+            continue; // Skip the results.push at the end of the loop
+          } catch (error) {
+            console.error('[attempt] Marking API error:', error);
+            throw createError({
+              statusCode: 500,
+              message: 'Failed to mark question',
+            });
+          }
         }
 
         default: {
@@ -224,6 +284,7 @@ export default defineEventHandler(async (event) => {
         feedback,
         pointsEarned: isCorrect ? questionPoints : 0,
         pointsPossible: questionPoints,
+        userAnswers: userAnswers,
       });
     }
 
@@ -231,6 +292,7 @@ export default defineEventHandler(async (event) => {
 
     // Store attempts and answers in database
     console.log('[attempt] Persisting attempts and answers to database');
+    console.log('[attempt] User info ID:', userInfo.id);
     const attemptIds = [];
 
     for (let i = 0; i < questionLinks.length; i++) {
@@ -246,9 +308,8 @@ export default defineEventHandler(async (event) => {
         submitted_at: new Date().toISOString(),
         duration_seconds: 0, // Frontend doesn't track timing yet
         score: result.pointsEarned,
-        is_correct: result.questionType === 'open' || result.questionType === 'fill' || result.questionType === 'draw' ?
-          null :
-          result.isCorrect,
+        is_correct: result.isCorrect,
+        marking_result: result.markingResult || null,
       };
 
       const { data: attemptData, error: attemptError } = await supabase
@@ -267,6 +328,7 @@ export default defineEventHandler(async (event) => {
 
       const attemptId = attemptData.id;
       attemptIds.push(attemptId);
+      console.log(`[attempt] Created attempt ${attemptId} for question ${questionData.id} with user_info_id ${userInfo.id}`);
 
       // Create user_question_answers records based on question type
       const answerRecords = [];

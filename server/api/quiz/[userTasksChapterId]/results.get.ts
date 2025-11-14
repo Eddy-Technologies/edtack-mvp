@@ -16,13 +16,13 @@
  * - questions: array of questions with results
  */
 
-import { requireAuth } from '~~/server/utils/auth';
+import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 export default defineEventHandler(async (event) => {
   try {
     // Get authenticated user
-    await requireAuth(event);
+    const userInfo = await getUserInfo(event);
 
     // Get userTasksChapterId from route params
     const userTasksChapterId = getRouterParam(event, 'userTasksChapterId');
@@ -146,34 +146,24 @@ export default defineEventHandler(async (event) => {
     // Fetch actual attempt results from database
     const results = [];
 
+    console.log('[results] Looking for attempts with user_info_id:', userInfo.id);
+
     for (let index = 0; index < questions.length; index++) {
       const question = questions[index];
 
       // Fetch attempt for this question
       const { data: attemptData, error: attemptError } = await supabase
         .from('user_question_attempts')
-        .select(`
-          id,
-          score,
-          is_correct,
-          submitted_at,
-          user_question_answers(
-            option_id,
-            option_text,
-            option_image,
-            answer_text,
-            answer_boolean,
-            answer_draw_file,
-            order_index
-          )
-        `)
+        .select(`*, user_question_answers(*)`)
         .eq('question_id', question.id)
+        .eq('user_info_id', userInfo.id)
         .order('submitted_at', { ascending: false })
         .limit(1)
         .single();
 
       if (attemptError) {
         console.warn('[results] No attempt found for question:', question.id);
+        console.warn('[results] Error details:', attemptError);
         // If no attempt found, create placeholder result
         results.push({
           questionIndex: index,
@@ -191,14 +181,23 @@ export default defineEventHandler(async (event) => {
       // Build user answers array based on question type
       const userAnswers = attemptData.user_question_answers || [];
 
-      // Determine feedback based on question type
+      // Determine feedback and points
       let feedback = '';
-      if (question.type === 'open' || question.type === 'fill' || question.type === 'draw') {
-        feedback = attemptData.is_correct === null ?
-          'Answer submitted - requires manual grading' :
-            (attemptData.is_correct ? 'Correct!' : 'Incorrect');
+      let pointsPossible = 1;
+
+      // Use marking result if available
+      if (attemptData.marking_result) {
+        feedback = attemptData.marking_result.feedback?.positive || 'Answer evaluated';
+        pointsPossible = attemptData.marking_result.score?.total || 1;
       } else {
-        feedback = attemptData.is_correct ? 'Correct!' : 'Incorrect';
+        // Fallback to simple feedback
+        if (question.type === 'open' || question.type === 'fill' || question.type === 'draw') {
+          feedback = attemptData.is_correct === null ?
+            'Answer submitted - requires manual grading' :
+              (attemptData.is_correct ? 'Correct!' : 'Incorrect');
+        } else {
+          feedback = attemptData.is_correct ? 'Correct!' : 'Incorrect';
+        }
       }
 
       results.push({
@@ -208,8 +207,9 @@ export default defineEventHandler(async (event) => {
         isCorrect: attemptData.is_correct !== null ? attemptData.is_correct : false,
         feedback,
         pointsEarned: attemptData.score || 0,
-        pointsPossible: 1,
+        pointsPossible,
         userAnswers: userAnswers.sort((a: any, b: any) => a.order_index - b.order_index),
+        markingResult: attemptData.marking_result || null,
       });
     }
 

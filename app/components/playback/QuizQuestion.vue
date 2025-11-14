@@ -43,6 +43,7 @@
       <div v-if="question.question_type === 'open'" class="space-y-3">
         <textarea
           v-model="userAnswer"
+          maxlength="500"
           class="w-full p-3 border-2 border-gray-200 rounded-lg resize-y min-h-24 focus:border-blue-500 focus:outline-none"
           placeholder="Enter your answer here..."
           rows="4"
@@ -54,6 +55,7 @@
         <div v-if="question.answer.length === 1">
           <input
             v-model="userAnswer"
+            maxlength="500"
             type="text"
             class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
             placeholder="Fill in the blank..."

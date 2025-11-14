@@ -18,7 +18,7 @@ export const useStudy = () => {
 
       case 'quiz':
         taskTitle = `${chapterName} Quiz`;
-        prompt = `I want to take a 10-question quiz on ${subjectName} covering the chapter "${chapterName}".`;
+        prompt = `I want to take a 10-question quiz consisting of 8 mcq and 2 open-ended questions on ${subjectName} covering the chapter "${chapterName}".`;
         break;
 
       default:
