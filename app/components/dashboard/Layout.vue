@@ -334,11 +334,11 @@ const navigationItems: NavigationItem[] = [
     route: '/dashboard?tab=credits',
     icon: 'i-lucide-coins'
   },
-  {
-    name: 'Subscription',
-    route: '/dashboard?tab=subscription',
-    icon: 'i-lucide-credit-card'
-  }
+  // {
+  //   name: 'Subscription',
+  //   route: '/dashboard?tab=subscription',
+  //   icon: 'i-lucide-credit-card'
+  // }
 ];
 
 const settingsItems: NavigationItem[] = [
