@@ -37,9 +37,9 @@ export const orderedTableFiles = [
   'functions.sql',
   'threads.sql',
   'thread_messages.sql',
-  'task_threads.sql',
   'message_feedback.sql',
-  'user_tasks_chapters.sql'
+  'user_tasks_chapters.sql',
+  'user_tasks_chapters_questions.sql'
 ];
 
 // Seed files to include (in order)

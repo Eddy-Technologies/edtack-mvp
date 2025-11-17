@@ -68,6 +68,7 @@ export default defineNuxtConfig({
       stripeCustomerPortalUrl: process.env.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL,
       chatWsUrl: process.env.NUXT_PUBLIC_CHAT_WS_URL || 'ws://localhost:8000',
       chatResponseTimeout: parseInt(process.env.NUXT_PUBLIC_CHAT_RESPONSE_TIMEOUT || '60000'),
+      pythonApiUrl: process.env.NUXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000/api/v1',
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,

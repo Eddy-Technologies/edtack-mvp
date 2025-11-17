@@ -18,7 +18,7 @@ export const useStudy = () => {
 
       case 'quiz':
         taskTitle = `${chapterName} Quiz`;
-        prompt = `I want to take a 10-question quiz on ${subjectName} covering the chapter "${chapterName}".`;
+        prompt = `I want to take a 10-question quiz consisting of 8 mcq and 2 open-ended questions on ${subjectName} covering the chapter "${chapterName}".`;
         break;
 
       default:
@@ -28,29 +28,7 @@ export const useStudy = () => {
     return { prompt, taskTitle, taskType };
   };
 
-  const createQuizThread = async (chapter: any, subjectName: string) => {
-    const init_prompt = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
-
-    try {
-      // Create new task thread
-      const response = await $fetch('/api/study/create-quiz-thread', {
-        method: 'POST',
-        body: {
-          chapterName: chapter.name,
-          subjectName: subjectName,
-          init_prompt
-        }
-      });
-      console.log(response);
-      return response.threadId;
-    } catch (error: any) {
-      console.error('Error handling quiz action:', error);
-      throw new Error(error.data?.message || 'Failed to create quiz session');
-    }
-  };
-
   return {
-    generateStudyPrompt,
-    createQuizThread
+    generateStudyPrompt
   };
 };

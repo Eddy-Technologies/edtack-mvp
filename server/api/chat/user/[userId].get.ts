@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const { data, error } = await supabase
       .from('threads')
-      .select('*, thread_messages(*), task_threads(*)')
+      .select('*, thread_messages(*)')
       .eq('user_infos_id', id)
       .order('updated_at', { ascending: false });
 

@@ -121,6 +121,120 @@ export type Database = {
         };
         Relationships: [];
       };
+      checkpoint_blobs: {
+        Row: {
+          blob: string | null;
+          channel: string;
+          checkpoint_ns: string;
+          created_at: string | null;
+          thread_id: string;
+          type: string;
+          version: string;
+        };
+        Insert: {
+          blob?: string | null;
+          channel: string;
+          checkpoint_ns?: string;
+          created_at?: string | null;
+          thread_id: string;
+          type: string;
+          version: string;
+        };
+        Update: {
+          blob?: string | null;
+          channel?: string;
+          checkpoint_ns?: string;
+          created_at?: string | null;
+          thread_id?: string;
+          type?: string;
+          version?: string;
+        };
+        Relationships: [];
+      };
+      checkpoint_migrations: {
+        Row: {
+          v: number;
+        };
+        Insert: {
+          v: number;
+        };
+        Update: {
+          v?: number;
+        };
+        Relationships: [];
+      };
+      checkpoint_writes: {
+        Row: {
+          blob: string | null;
+          channel: string;
+          checkpoint_id: string;
+          checkpoint_ns: string;
+          created_at: string | null;
+          idx: number;
+          task_id: string;
+          task_path: string;
+          thread_id: string;
+          type: string | null;
+        };
+        Insert: {
+          blob?: string | null;
+          channel: string;
+          checkpoint_id: string;
+          checkpoint_ns?: string;
+          created_at?: string | null;
+          idx: number;
+          task_id: string;
+          task_path?: string;
+          thread_id: string;
+          type?: string | null;
+        };
+        Update: {
+          blob?: string | null;
+          channel?: string;
+          checkpoint_id?: string;
+          checkpoint_ns?: string;
+          created_at?: string | null;
+          idx?: number;
+          task_id?: string;
+          task_path?: string;
+          thread_id?: string;
+          type?: string | null;
+        };
+        Relationships: [];
+      };
+      checkpoints: {
+        Row: {
+          checkpoint: Json;
+          checkpoint_id: string;
+          checkpoint_ns: string;
+          created_at: string | null;
+          metadata: Json;
+          parent_checkpoint_id: string | null;
+          thread_id: string;
+          type: string | null;
+        };
+        Insert: {
+          checkpoint: Json;
+          checkpoint_id: string;
+          checkpoint_ns?: string;
+          created_at?: string | null;
+          metadata?: Json;
+          parent_checkpoint_id?: string | null;
+          thread_id: string;
+          type?: string | null;
+        };
+        Update: {
+          checkpoint?: Json;
+          checkpoint_id?: string;
+          checkpoint_ns?: string;
+          created_at?: string | null;
+          metadata?: Json;
+          parent_checkpoint_id?: string | null;
+          thread_id?: string;
+          type?: string | null;
+        };
+        Relationships: [];
+      };
       codes: {
         Row: {
           category: string;
@@ -422,45 +536,6 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
-      };
-      notes: {
-        Row: {
-          category: string | null;
-          content: string;
-          created_at: string | null;
-          id: string;
-          is_archived: boolean | null;
-          is_pinned: boolean | null;
-          tags: string[] | null;
-          title: string;
-          updated_at: string | null;
-          user_id: string;
-        };
-        Insert: {
-          category?: string | null;
-          content: string;
-          created_at?: string | null;
-          id?: string;
-          is_archived?: boolean | null;
-          is_pinned?: boolean | null;
-          tags?: string[] | null;
-          title: string;
-          updated_at?: string | null;
-          user_id: string;
-        };
-        Update: {
-          category?: string | null;
-          content?: string;
-          created_at?: string | null;
-          id?: string;
-          is_archived?: boolean | null;
-          is_pinned?: boolean | null;
-          tags?: string[] | null;
-          title?: string;
-          updated_at?: string | null;
-          user_id?: string;
-        };
-        Relationships: [];
       };
       order_items: {
         Row: {
@@ -919,64 +994,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      task_threads: {
-        Row: {
-          chapter: string;
-          created_at: string | null;
-          due_date: string;
-          generated_content: Json | null;
-          id: string;
-          init_prompt: Json | null;
-          status: string;
-          thread_id: string;
-          user_task_id: string;
-        };
-        Insert: {
-          chapter: string;
-          created_at?: string | null;
-          due_date: string;
-          generated_content?: Json | null;
-          id?: string;
-          init_prompt?: Json | null;
-          status?: string;
-          thread_id: string;
-          user_task_id: string;
-        };
-        Update: {
-          chapter?: string;
-          created_at?: string | null;
-          due_date?: string;
-          generated_content?: Json | null;
-          id?: string;
-          init_prompt?: Json | null;
-          status?: string;
-          thread_id?: string;
-          user_task_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'task_threads_chapter_fkey';
-            columns: ['chapter'];
-            isOneToOne: false;
-            referencedRelation: 'chapters';
-            referencedColumns: ['name'];
-          },
-          {
-            foreignKeyName: 'task_threads_thread_id_fkey';
-            columns: ['thread_id'];
-            isOneToOne: true;
-            referencedRelation: 'threads';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'task_threads_user_task_id_fkey';
-            columns: ['user_task_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_tasks';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       thread_messages: {
         Row: {
           content: string;
@@ -1366,7 +1383,6 @@ export type Database = {
           lesson_generation_type: string;
           name: string;
           questions_per_quiz: number | null;
-          recurrence_frequency: string | null;
           required_score: number | null;
           status: string;
           subject: string;
@@ -1382,7 +1398,6 @@ export type Database = {
           lesson_generation_type: string;
           name: string;
           questions_per_quiz?: number | null;
-          recurrence_frequency?: string | null;
           required_score?: number | null;
           status: string;
           subject: string;
@@ -1398,7 +1413,6 @@ export type Database = {
           lesson_generation_type?: string;
           name?: string;
           questions_per_quiz?: number | null;
-          recurrence_frequency?: string | null;
           required_score?: number | null;
           status?: string;
           subject?: string;
@@ -1431,20 +1445,35 @@ export type Database = {
       user_tasks_chapters: {
         Row: {
           chapter_name: string;
+          completed_at: string | null;
           created_at: string | null;
           id: string;
+          score: number | null;
+          status: string;
+          total_score: number | null;
+          updated_at: string | null;
           user_task_id: string;
         };
         Insert: {
           chapter_name: string;
+          completed_at?: string | null;
           created_at?: string | null;
           id?: string;
+          score?: number | null;
+          status?: string;
+          total_score?: number | null;
+          updated_at?: string | null;
           user_task_id: string;
         };
         Update: {
           chapter_name?: string;
+          completed_at?: string | null;
           created_at?: string | null;
           id?: string;
+          score?: number | null;
+          status?: string;
+          total_score?: number | null;
+          updated_at?: string | null;
           user_task_id?: string;
         };
         Relationships: [
@@ -1460,6 +1489,45 @@ export type Database = {
             columns: ['user_task_id'];
             isOneToOne: false;
             referencedRelation: 'user_tasks';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_tasks_chapters_questions: {
+        Row: {
+          created_at: string | null;
+          display_order: number;
+          id: string;
+          question_id: string;
+          user_tasks_chapters_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          display_order?: number;
+          id?: string;
+          question_id: string;
+          user_tasks_chapters_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          display_order?: number;
+          id?: string;
+          question_id?: string;
+          user_tasks_chapters_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_tasks_chapters_questions_question_id_fkey';
+            columns: ['question_id'];
+            isOneToOne: false;
+            referencedRelation: 'questions';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'user_tasks_chapters_questions_user_tasks_chapters_id_fkey';
+            columns: ['user_tasks_chapters_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_tasks_chapters';
             referencedColumns: ['id'];
           },
         ];
@@ -1508,26 +1576,6 @@ export type Database = {
       [_ in never]: never
     };
     Functions: {
-      search_notes: {
-        Args: {
-          p_archived?: boolean;
-          p_category?: string;
-          p_search_term?: string;
-          p_tags?: string[];
-          p_user_id: string;
-        };
-        Returns: {
-          id: string;
-          title: string;
-          content: string;
-          category: string;
-          tags: string[];
-          is_pinned: boolean;
-          is_archived: boolean;
-          created_at: string;
-          updated_at: string;
-        }[];
-      };
       update_user_info_with_relations: {
         Args: {
           p_email: string;

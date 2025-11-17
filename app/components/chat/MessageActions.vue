@@ -2,6 +2,7 @@
   <div class="flex items-center gap-1 mt-2 transition-opacity duration-200">
     <!-- Copy Button -->
     <button
+      v-if="!hideCopy"
       class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
       title="Copy to clipboard"
       @click="handleCopy"
@@ -65,6 +66,7 @@ import { useToast } from '#imports';
 interface Props {
   messageText: string;
   messageId?: string;
+  hideCopy?: boolean;
 }
 
 const props = defineProps<Props>();

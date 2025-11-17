@@ -261,6 +261,7 @@ const emit = defineEmits<{
 }>();
 
 const toast = useToast();
+const { fetchCredits } = useCredit();
 
 // Products data from database (shop products only)
 const items = ref<any[]>([]);

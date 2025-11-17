@@ -2,7 +2,7 @@
 CREATE TABLE user_question_answers (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_question_attempts_id uuid NOT NULL REFERENCES user_question_attempts(id) ON DELETE CASCADE,
-  option_id uuid NOT NULL REFERENCES question_options(id) ON DELETE CASCADE,
+  option_id uuid REFERENCES question_options(id) ON DELETE CASCADE,
   option_text VARCHAR(255) DEFAULT NULL,   -- snapshot
   option_image VARCHAR(255) DEFAULT NULL,  -- snapshot
   answer_text TEXT DEFAULT NULL,

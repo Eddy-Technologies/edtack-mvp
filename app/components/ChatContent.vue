@@ -110,6 +110,8 @@ import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 import { useTask } from '~/composables/useTask';
+import { useQuestions } from '~/composables/supabase/useQuestions';
+import type { QuizQuestion } from '~/types/quiz.types';
 
 // Props interface - simplified
 interface ChatContentProps {
@@ -127,6 +129,7 @@ const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = u
 const messageStream = ref<any[]>([]);
 
 const { updateTaskGeneratedContent } = useTask();
+const { persistQuizQuestions } = useQuestions();
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 const isPlayingAllowed = ref(false);
@@ -425,6 +428,34 @@ const processMessageQueue = () => {
   }
 };
 
+// Persist quiz questions to database
+const persistQuestionsToDatabase = async (slides: any[], chapterId: string) => {
+  try {
+    // Filter only question slides (not lesson content)
+    const questions = slides.filter((slide: any) => slide.type === 'question') as QuizQuestion[];
+
+    if (questions.length === 0) {
+      console.log('No questions found in slides to persist');
+      return;
+    }
+
+    console.log(`Persisting ${questions.length} questions to database for chapter: ${chapterId}`);
+    const results = await persistQuizQuestions(questions, chapterId);
+
+    const successCount = results.filter((r) => r.success).length;
+    const failCount = results.filter((r) => !r.success).length;
+
+    console.log(`Question persistence complete: ${successCount} succeeded, ${failCount} failed`);
+
+    if (failCount > 0) {
+      console.warn('Some questions failed to persist:', results.filter((r) => !r.success));
+    }
+  } catch (error) {
+    console.error('Error persisting questions:', error);
+    // Don't throw - we don't want to disrupt the quiz flow if persistence fails
+  }
+};
+
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
   // Display any message with message.message field unconditionally
@@ -452,6 +483,23 @@ const handleWebSocketMessage = (message: any) => {
 
       // Mark the message as task-generated for proper ordering
       messageStream.value[messageStream.value.length - 1].isTaskGenerated = true;
+    }
+
+    // Persist questions to database ONLY if from task-based thread
+    if (message.slides && Array.isArray(message.slides) && message.slides.length > 0) {
+      // Explicit check: ensure this is a task-based thread with valid task data
+      const taskData = Array.isArray(props.task) ? props.task[0] : props.task;
+
+      // Only persist if we have valid task data with a chapter
+      // This ensures we're in a task-based thread (from StudyTab), not a regular chat
+      if (taskData && taskData.chapter) {
+        console.log('Task-based thread detected - persisting questions for chapter:', taskData.chapter);
+        // Persist questions asynchronously (don't wait)
+        persistQuestionsToDatabase(message.slides, taskData.chapter);
+      } else {
+        // This is a regular chat (not from StudyTab) or task data is missing
+        console.log('Regular chat or no task data - skipping question persistence');
+      }
     }
 
     // The watcher will automatically handle slides and scrolling

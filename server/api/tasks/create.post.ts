@@ -1,5 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { RECURRENCE_FREQUENCY, TASK_STATUS, TASK_THREAD_STATUS } from '~~/shared/constants';
+import { TASK_STATUS } from '~~/shared/constants';
 import { getUserInfo } from '~~/server/utils/auth';
 import { codeService } from '~~/server/services/codeService';
 import { CODE_CATEGORIES } from '~/stores/codes';
@@ -112,7 +112,6 @@ export default defineEventHandler(async (event) => {
         credit: creditsPerQuiz,
         questions_per_quiz: 10, // Default to 10 questions
         required_score: requiredScore || 0,
-        recurrence_frequency: RECURRENCE_FREQUENCY.ONE_OFF,
         due_date: null,
         status: TASK_STATUS.OPEN,
       })
@@ -127,15 +126,16 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Step 1.5: Create chapter associations for this task
+    // Create chapter associations for this task
     const chapterInserts = chapters.map((chapterName) => ({
       user_task_id: task.id,
       chapter_name: chapterName
     }));
 
-    const { error: chapterError } = await supabase
+    const { data: taskChapters, error: chapterError } = await supabase
       .from('user_tasks_chapters')
-      .insert(chapterInserts);
+      .insert(chapterInserts)
+      .select('*');
 
     if (chapterError) {
       console.error('Failed to create task chapters:', chapterError);
@@ -145,69 +145,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Step 2: Create initial task_thread for this task
-    // According to the architecture, every task gets an immediate thread instance
-    let taskThread = null;
-    let chatThread = null;
-
-    try {
-      // Calculate due date for the initial thread - set to end of today
-      const now = new Date();
-      const initialDueDate = new Date(now);
-      initialDueDate.setHours(23, 59, 59, 999);
-
-      // Create chat thread for this task thread
-      const { data: newChatThread, error: chatThreadError } = await supabase
-        .from('threads')
-        .insert({
-          subject: subject,
-          user_infos_id: assigneeUserInfoId,
-          title: name
-        })
-        .select('id')
-        .single();
-
-      if (chatThreadError) {
-        console.error('Failed to create chat thread:', chatThreadError);
-        throw new Error('Chat thread creation failed');
-      }
-
-      chatThread = newChatThread;
-
-      // Create the initial task thread record
-      const { data: newTaskThread, error: taskThreadError } = await supabase
-        .from('task_threads')
-        .insert({
-          user_task_id: task.id,
-          thread_id: chatThread.id,
-          due_date: initialDueDate.toISOString(),
-          status: TASK_THREAD_STATUS.OPEN
-        })
-        .select('id')
-        .single();
-
-      if (taskThreadError) {
-        console.error('Failed to create task thread:', taskThreadError);
-        throw new Error('Task thread creation failed');
-      }
-
-      taskThread = newTaskThread;
-      console.log(`Successfully created initial task thread ${taskThread.id} for new task "${name}"`);
-    } catch (threadError) {
-      console.error('Failed to create initial task thread:', threadError);
-      // Task was created successfully, but thread creation failed
-      // Log the error but don't fail the entire request
-      console.warn('Task created successfully but initial thread creation failed - will be handled by recurring tasks job');
-    }
+    console.log(`Successfully created task "${name}" with ${chapters.length} chapters`);
 
     return {
       success: true,
       task: {
         ...task,
-      },
-      // Include thread info if created successfully
-      ...(taskThread && { taskThread: { id: taskThread.id } }),
-      ...(chatThread && { chatThread: { id: chatThread.id } })
+        chapters: taskChapters
+      }
     };
   } catch (error) {
     console.error('Failed to create task:', error);

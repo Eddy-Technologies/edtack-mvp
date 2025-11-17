@@ -128,7 +128,7 @@
                 <div
                   v-for="chapter in subject.chapters"
                   :key="chapter.name"
-                  class="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  class="border border-primary rounded-lg p-4"
                 >
                   <div class="flex justify-between items-start">
                     <!-- Chapter Info -->
@@ -151,45 +151,50 @@
                     <!-- Action Buttons -->
                     <div class="flex space-x-2">
                       <!-- Lesson Button -->
+                      <!-- Height will offset from the outer div -->
                       <UButton
-                        size="sm"
-                        color="blue"
-                        variant="soft"
+                        size="xl"
+                        color="secondary"
+                        variant="outline"
                         @click="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'lesson')"
                       >
-                        <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-1" />
-                        Lesson
+                        <div>
+                          <UIcon name="i-lucide-book-open" size="24" />
+                          <div>
+                            Lesson
+                          </div>
+                        </div>
                       </UButton>
 
                       <!-- Practice Button -->
                       <UButton
-                        size="sm"
-                        color="green"
-                        variant="soft"
+                        size="xl"
+                        variant="outline"
                         @click="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'practice')"
                       >
-                        <UIcon name="i-lucide-target" class="w-4 h-4 mr-1" />
-                        Practice
+                        <div>
+                          <UIcon name="i-lucide-target" size="24" />
+                          <div>
+                            Practice
+                          </div>
+                        </div>
                       </UButton>
 
-                      <!-- Quiz Button (only if chapter has tasks) -->
+                      <!-- Quiz Button -->
                       <UButton
                         v-if="chapter.user_tasks_chapters?.length > 0"
-                        size="sm"
-                        color="primary"
-                        variant="soft"
+                        size="xl"
+                        color="blue"
+                        variant="outline"
                         :loading="quizButtonLoading[chapter.name]"
-                        @click="handleQuizClick(
-                          chapter,
-                          subject.subject_name,
-                          subject.display_name,
-                          chapter.user_tasks_chapters
-                            ?.flatMap(utc => utc.user_tasks?.task_threads || [])
-                            ?.find(thread => thread.chapter === chapter.name && thread.status === 'OPEN')
-                        )"
+                        @click="handleQuizClick(chapter, subject.subject_name)"
                       >
-                        <UIcon name="i-lucide-brain" class="w-4 h-4 mr-1" />
-                        Quiz
+                        <div>
+                          <UIcon name="i-lucide-brain" size="24" />
+                          <div>
+                            {{ quizCompleted[chapter.name] ? 'Review Quiz' : (quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz') }}
+                          </div>
+                        </div>
                       </UButton>
                     </div>
                   </div>
@@ -212,6 +217,15 @@
         Clear filters
       </UButton>
     </div>
+
+    <!-- Quiz Attempt Modal -->
+    <QuizAttemptModal
+      :is-open="isQuizModalOpen"
+      :user-tasks-chapter-id="selectedUserTasksChapterId"
+      :chapter-display-name="selectedChapterDisplayName"
+      @close="isQuizModalOpen = false"
+      @quiz-submitted="handleQuizSubmitted"
+    />
   </div>
 </template>
 
@@ -221,11 +235,13 @@ import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
+import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 
 const router = useRouter();
-const { generateStudyPrompt, createQuizThread } = useStudy();
+const { generateStudyPrompt } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
+const toast = useToast();
 
 interface Subject {
   name: string;
@@ -243,8 +259,16 @@ interface Subject {
 const subjects = ref<Subject[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
-const quizButtonLoading = reactive<Record<string, boolean>>({});
 const openSubjects = ref<string[]>([]);
+const quizButtonLoading = reactive<Record<string, boolean>>({});
+const quizExists = reactive<Record<string, boolean>>({});
+const quizCompleted = reactive<Record<string, boolean>>({});
+
+// Quiz modal state
+const isQuizModalOpen = ref(false);
+const selectedUserTasksChapterId = ref<string>('');
+const selectedChapterDisplayName = ref<string>('');
+const selectedChapterName = ref<string>(''); // Track chapter.name for state updates
 
 // Filters
 const filters = reactive({
@@ -305,7 +329,7 @@ const fetchSubjects = async () => {
   }
 };
 
-const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice') => {
+const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice' | 'quiz') => {
   try {
     const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
     const upperCaseSubject = subjectName.toUpperCase();
@@ -325,31 +349,135 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
   }
 };
 
-const handleQuizClick = async (chapter: any, subjectName: string, subjectDisplayName: string, existingThread?: any) => {
-  const upperCaseSubject = subjectName.toUpperCase();
-  try {
-    // Get the appropriate character for this subject
-    const character = getCharacterBySubject(upperCaseSubject);
-    let threadId = existingThread?.thread_id ? existingThread.thread_id : '';
+const checkQuizExistence = async (chapters: any[]) => {
+  for (const chapter of chapters) {
+    if (chapter.user_tasks_chapters?.length > 0) {
+      const userTasksChapterId = chapter.user_tasks_chapters[0]?.id;
+      if (userTasksChapterId) {
+        try {
+          const checkResponse = await $fetch('/api/quiz/check-existing', {
+            method: 'GET',
+            query: {
+              chapterId: chapter.name,
+              userTasksChapterId: userTasksChapterId,
+            },
+          });
+          quizExists[chapter.name] = checkResponse.exists;
 
-    if (!existingThread) {
-      const res = await createQuizThread(chapter, subjectDisplayName);
-      threadId = res;
+          // Also check if quiz is completed
+          if (checkResponse.exists) {
+            const resultsResponse = await $fetch(`/api/quiz/${userTasksChapterId}/results`, {
+              method: 'GET',
+            });
+            quizCompleted[chapter.name] = resultsResponse.isCompleted || false;
+          } else {
+            quizCompleted[chapter.name] = false;
+          }
+        } catch (err) {
+          console.error(`Error checking quiz for ${chapter.name}:`, err);
+          quizExists[chapter.name] = false;
+          quizCompleted[chapter.name] = false;
+        }
+      }
     }
-
-    await router.push(`/chat/${character?.slug}/${threadId}`);
-  } catch (error: any) {
-    console.error('Error handling quiz click:', error);
-    error.value = error.data?.message || 'Failed to create quiz session';
   }
 };
 
-const toggleAccordion = (subjectName: string) => {
+const handleQuizClick = async (chapter: any, subjectName: string) => {
+  const chapterName = chapter.name;
+
+  try {
+    // Set loading state
+    quizButtonLoading[chapterName] = true;
+
+    // Get the task-chapter ID for linking questions
+    const userTasksChapterId = chapter.user_tasks_chapters?.[0]?.id;
+    if (!userTasksChapterId) {
+      toast.add({
+        title: 'No Task Assignment',
+        description: 'No task assignment found for this chapter.',
+        color: 'red',
+        timeout: 5000
+      });
+      return;
+    }
+
+    // Check if quiz already exists for this task-chapter
+    const checkResponse = await $fetch('/api/quiz/check-existing', {
+      method: 'GET',
+      query: {
+        chapterId: chapterName,
+        userTasksChapterId: userTasksChapterId,
+      },
+    });
+
+    if (checkResponse.exists) {
+      // Quiz already exists - open modal (will automatically show results if completed)
+      selectedUserTasksChapterId.value = userTasksChapterId;
+      selectedChapterDisplayName.value = chapter.display_name;
+      selectedChapterName.value = chapterName;
+      isQuizModalOpen.value = true;
+    } else {
+      // No quiz exists - generate one
+      console.log('Generating quiz for chapter:', chapterName);
+
+      // Generate prompt using useStudy composable
+      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
+
+      const generateResponse = await $fetch('/api/quiz/generate', {
+        method: 'POST',
+        body: {
+          prompt: studyResult.prompt,
+          chapterName: chapterName,
+          chapterDisplayName: chapter.display_name,
+          subjectName: subjectName,
+          userLevel: meStore.level_type || '',
+          syllabusType: meStore.syllabus_type || '',
+          numQuestions: 10,
+          userTasksChapterId: userTasksChapterId,
+        },
+      });
+
+      if (generateResponse.success) {
+        quizExists[chapterName] = true;
+        toast.add({
+          title: 'Quiz Generated!',
+          description: `${generateResponse.questionCount} questions created for ${chapter.display_name}. Quiz page coming soon.`,
+          color: 'green',
+          timeout: 6000
+        });
+      } else {
+        throw new Error('Failed to generate quiz');
+      }
+    }
+  } catch (err: any) {
+    console.error('Error handling quiz click:', err);
+
+    // Show user-friendly error message
+    const errorMessage = err.data?.message || err.message || 'An error occurred while loading the quiz';
+    toast.add({
+      title: 'Quiz Error',
+      description: errorMessage,
+      color: 'red',
+      timeout: 5000
+    });
+  } finally {
+    // Clear loading state
+    quizButtonLoading[chapterName] = false;
+  }
+};
+
+const toggleAccordion = async (subjectName: string) => {
   const index = openSubjects.value.indexOf(subjectName);
   if (index > -1) {
     openSubjects.value.splice(index, 1);
   } else {
     openSubjects.value.push(subjectName);
+    // Check quiz existence when opening accordion
+    const subject = subjects.value.find((s) => s.name === subjectName);
+    if (subject?.chapters) {
+      await checkQuizExistence(subject.chapters, subject.subject_name);
+    }
   }
 };
 
@@ -358,6 +486,23 @@ const clearFilters = () => {
   filters.syllabusType = '';
   filters.subject = '';
   filters.hasCreditsOnly = false;
+  fetchSubjects();
+};
+
+const handleQuizSubmitted = (score: number, totalScore: number) => {
+  toast.add({
+    title: 'Quiz Completed!',
+    description: `You scored ${score} out of ${totalScore} points`,
+    color: score === totalScore ? 'green' : 'blue',
+    timeout: 6000
+  });
+
+  // Mark quiz as completed immediately for UI update
+  if (selectedChapterName.value) {
+    quizCompleted[selectedChapterName.value] = true;
+  }
+
+  // Refresh subjects to update completion status
   fetchSubjects();
 };
 

@@ -7,5 +7,6 @@ CREATE TABLE user_question_attempts (
   submitted_at TIMESTAMP NOT NULL,
   duration_seconds INT NOT NULL,
   score DECIMAL(5, 2) DEFAULT NULL,
-  is_correct BOOLEAN DEFAULT NULL
+  is_correct BOOLEAN DEFAULT NULL,
+  marking_result JSONB DEFAULT NULL
 );

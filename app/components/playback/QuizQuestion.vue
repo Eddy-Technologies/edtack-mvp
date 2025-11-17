@@ -43,6 +43,7 @@
       <div v-if="question.question_type === 'open'" class="space-y-3">
         <textarea
           v-model="userAnswer"
+          maxlength="500"
           class="w-full p-3 border-2 border-gray-200 rounded-lg resize-y min-h-24 focus:border-blue-500 focus:outline-none"
           placeholder="Enter your answer here..."
           rows="4"
@@ -54,6 +55,7 @@
         <div v-if="question.answer.length === 1">
           <input
             v-model="userAnswer"
+            maxlength="500"
             type="text"
             class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
             placeholder="Fill in the blank..."
@@ -128,7 +130,7 @@
       </div>
 
       <!-- Submit Button -->
-      <div class="flex justify-center mt-6">
+      <div v-if="!hideSubmitButton" class="flex justify-center mt-6">
         <Button
           variant="primary"
           :disabled="!hasAnswer"
@@ -153,7 +155,7 @@
       </div>
 
       <!-- Message Actions -->
-      <MessageActions :message-text="questionText" />
+      <MessageActions :message-text="questionText" :hide-copy="hideSubmitButton" />
     </div>
   </div>
 </template>
@@ -167,6 +169,7 @@ import MessageActions from '~/components/chat/MessageActions.vue';
 const props = defineProps<{
   question: QuizQuestion;
   startPlayback: boolean;
+  hideSubmitButton?: boolean;
 }>();
 
 const emit = defineEmits(['finish', 'answer-submitted']);
@@ -312,6 +315,57 @@ function checkAnswer(userAnswers: string[]): boolean {
 
 // Initialize fillAnswers on component setup
 fillAnswers.value = new Array(props.question.answer.length).fill('');
+
+// Auto-submit answers in quiz mode (when submit button is hidden)
+if (props.hideSubmitButton) {
+  // Watch for MCQ selections
+  watch(selectedOptions, () => {
+    if (props.question.question_type === 'mcq' && selectedOptions.value.length > 0) {
+      emit('answer-submitted', {
+        questionId: props.question.id,
+        selectedOptions: selectedOptions.value
+      });
+    }
+  }, { deep: true });
+
+  // Watch for text answers (open, boolean, fill single)
+  watch(userAnswer, () => {
+    if (['open', 'boolean'].includes(props.question.question_type) && userAnswer.value) {
+      emit('answer-submitted', {
+        questionId: props.question.id,
+        answer: userAnswer.value
+      });
+    } else if (props.question.question_type === 'fill' && props.question.answer.length === 1 && userAnswer.value) {
+      emit('answer-submitted', {
+        questionId: props.question.id,
+        answer: userAnswer.value
+      });
+    }
+  });
+
+  // Watch for fill answers (multiple blanks)
+  watch(fillAnswers, () => {
+    if (props.question.question_type === 'fill' && props.question.answer.length > 1) {
+      const allFilled = fillAnswers.value.every((a) => a.trim() !== '');
+      if (allFilled) {
+        emit('answer-submitted', {
+          questionId: props.question.id,
+          answers: fillAnswers.value
+        });
+      }
+    }
+  }, { deep: true });
+
+  // Watch for drawing file
+  watch(drawingFile, () => {
+    if (props.question.question_type === 'draw' && drawingFile.value) {
+      emit('answer-submitted', {
+        questionId: props.question.id,
+        drawingFile: drawingFile.value
+      });
+    }
+  });
+}
 
 // Emit finish immediately when component is mounted
 onMounted(() => {

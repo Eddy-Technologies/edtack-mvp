@@ -35,24 +35,11 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('BALANCE_ADJUSTMENT', 'Balance Adjustment', 'Manual balance adjustment by administrator', 'OPERATION_TYPE', 40, true, NOW(), NOW()),
 ('PURCHASE', 'Purchase', 'Product purchase using customer credit balance', 'OPERATION_TYPE', 50, true, NOW(), NOW());
 
--- Task Status Constants (for user_tasks - master task definitions)
+-- Task Status Constants (for user_tasks - task assignments)
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('OPEN', 'Open', 'Task is active and can generate new threads', 'TASK_STATUS', 10, true, NOW(), NOW()),
-('CLOSED', 'Closed', 'Task has been manually stopped/disabled', 'TASK_STATUS', 20, true, NOW(), NOW()),
+('OPEN', 'Open', 'Task is active and assigned', 'TASK_STATUS', 10, true, NOW(), NOW()),
+('CLOSED', 'Closed', 'Task has been manually closed/disabled', 'TASK_STATUS', 20, true, NOW(), NOW()),
 ('EXPIRED', 'Expired', 'Task has reached its end date or been automatically expired', 'TASK_STATUS', 30, true, NOW(), NOW());
-
--- Task Thread Status Constants (for task_threads - individual task instances)
-INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('OPEN', 'Open', 'Thread is active, awaiting completion', 'TASK_THREAD_STATUS', 10, true, NOW(), NOW()),
-('COMPLETED', 'Completed', 'Thread has been completed by student', 'TASK_THREAD_STATUS', 20, true, NOW(), NOW()),
-('EXPIRED', 'Expired', 'Thread passed due date without completion', 'TASK_THREAD_STATUS', 30, true, NOW(), NOW());
-
--- Recurrence Frequency Constants
-INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('ONE_OFF', 'One-off', 'Task occurs once only', 'RECURRENCE_FREQUENCY', 5, true, NOW(), NOW()),
-('DAILY', 'Daily', 'Task repeats every day', 'RECURRENCE_FREQUENCY', 10, true, NOW(), NOW()),
-('WEEKLY', 'Weekly', 'Task repeats every week', 'RECURRENCE_FREQUENCY', 20, true, NOW(), NOW()),
-('MONTHLY', 'Monthly', 'Task repeats every month', 'RECURRENCE_FREQUENCY', 30, true, NOW(), NOW());
 
 -- Order Fulfillment Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
