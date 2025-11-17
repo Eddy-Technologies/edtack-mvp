@@ -118,7 +118,7 @@
           <UserGuidesTab v-if="activeTab === 'user-guides'" :active-guide="activeGuide" />
           <FAQTab v-if="activeTab === 'faq'" />
           <FeedbackTab v-if="activeTab === 'feedback'" />
-          <SubscriptionTab v-if="activeTab === 'subscription'" />
+          <!-- <SubscriptionTab v-if="activeTab === 'subscription'" /> -->
           <TeamTab v-if="activeTab === 'team'" @switch-tab="switchTab" />
         </div>
       </main>
@@ -134,7 +134,7 @@ import AboutTab from '~/components/about/AboutTab.vue';
 import UserGuidesTab from '~/components/about/UserGuidesTab.vue';
 import FAQTab from '~/components/about/FAQTab.vue';
 import FeedbackTab from '~/components/about/FeedbackTab.vue';
-import SubscriptionTab from '~/components/about/SubscriptionTab.vue';
+// import SubscriptionTab from '~/components/about/SubscriptionTab.vue';
 import TeamTab from '~/components/about/TeamTab.vue';
 
 const router = useRouter();
@@ -149,7 +149,7 @@ const tabs = ref([
   { id: 'about', name: 'About', icon: 'i-lucide-info' },
   { id: 'faq', name: 'FAQ', icon: 'i-lucide-help-circle' },
   { id: 'feedback', name: 'Feedback', icon: 'i-lucide-message-square' },
-  { id: 'subscription', name: 'Subscription', icon: 'i-lucide-credit-card' },
+  // { id: 'subscription', name: 'Subscription', icon: 'i-lucide-credit-card' },
   { id: 'team', name: 'Team', icon: 'i-lucide-users' },
 ]);
 

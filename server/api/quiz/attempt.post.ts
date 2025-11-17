@@ -150,7 +150,7 @@ export default defineEventHandler(async (event) => {
 
       let isCorrect = false;
       let feedback = '';
-      let questionPoints = 1; // Default point value for MCQ/Boolean
+      const questionPoints = 1; // Default point value for MCQ/Boolean
 
       // Score based on question type
       let userAnswers: any[] = [];
