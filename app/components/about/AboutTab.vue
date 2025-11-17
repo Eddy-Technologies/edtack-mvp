@@ -5,9 +5,9 @@
         <AppIcon class="w-16 h-16 text-gray-500 mb-4" />
         <h3 class="text-2xl font-bold text-primary mb-4">Welcome to StudyWithEddy</h3>
       </div>
-      <H2 class="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+      <h2 class="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
         An AI powered chat platform where Singapore Students can learn through interactive conversations and personalized learning experiences.
-      </H2>
+      </h2>
     </div>
 
     <div
