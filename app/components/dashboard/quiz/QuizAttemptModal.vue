@@ -144,36 +144,36 @@
               <!-- Feedback -->
               <div class="ml-9 mb-2">
                 <!-- Simple feedback for MCQ/Boolean -->
-                <p v-if="!result.markingResult" class="text-sm font-medium" :class="result.isCorrect ? 'text-green-700' : result.feedback.includes('manual grading') ? 'text-yellow-700' : 'text-red-700'">
+                <p v-if="!result.feedbackPositive && !result.feedbackGaps && !result.feedbackImprovement" class="text-sm font-medium" :class="result.isCorrect ? 'text-green-700' : result.feedback.includes('manual grading') ? 'text-yellow-700' : 'text-red-700'">
                   {{ result.feedback }}
                 </p>
 
                 <!-- Detailed marking feedback for Open/Fill/Draw -->
-                <div v-else class="space-y-2">
+                <div v-else-if="result.feedbackPositive || result.feedbackGaps || result.feedbackImprovement" class="space-y-2">
                   <!-- Positive Feedback -->
-                  <div v-if="result.markingResult.feedback.positive" class="p-2 bg-green-50 border border-green-200 rounded">
+                  <div v-if="result.feedbackPositive" class="p-2 bg-green-50 border border-green-200 rounded">
                     <p class="text-xs font-semibold text-green-800 mb-1">What you did well:</p>
-                    <p class="text-sm text-green-700">{{ result.markingResult.feedback.positive }}</p>
+                    <p class="text-sm text-green-700">{{ result.feedbackPositive }}</p>
                   </div>
 
                   <!-- Knowledge Gaps -->
-                  <div v-if="result.markingResult.feedback.gaps" class="p-2 bg-orange-50 border border-orange-200 rounded">
+                  <div v-if="result.feedbackGaps" class="p-2 bg-orange-50 border border-orange-200 rounded">
                     <p class="text-xs font-semibold text-orange-800 mb-1">Areas to review:</p>
-                    <p class="text-sm text-orange-700">{{ result.markingResult.feedback.gaps }}</p>
+                    <p class="text-sm text-orange-700">{{ result.feedbackGaps }}</p>
                   </div>
 
                   <!-- Improvement Suggestions -->
-                  <div v-if="result.markingResult.feedback.improvement" class="p-2 bg-blue-50 border border-blue-200 rounded">
+                  <div v-if="result.feedbackImprovement" class="p-2 bg-blue-50 border border-blue-200 rounded">
                     <p class="text-xs font-semibold text-blue-800 mb-1">How to improve:</p>
-                    <p class="text-sm text-blue-700">{{ result.markingResult.feedback.improvement }}</p>
+                    <p class="text-sm text-blue-700">{{ result.feedbackImprovement }}</p>
                   </div>
 
                   <!-- Key Concepts -->
-                  <div v-if="result.markingResult.key_concepts_assessed && result.markingResult.key_concepts_assessed.length > 0" class="p-2 bg-purple-50 border border-purple-200 rounded">
+                  <div v-if="result.keyConcepts && result.keyConcepts.length > 0" class="p-2 bg-purple-50 border border-purple-200 rounded">
                     <p class="text-xs font-semibold text-purple-800 mb-1">Concepts assessed:</p>
                     <div class="flex flex-wrap gap-1 mt-1">
                       <span
-                        v-for="concept in result.markingResult.key_concepts_assessed"
+                        v-for="concept in result.keyConcepts"
                         :key="concept"
                         class="inline-block px-2 py-0.5 text-xs bg-purple-100 text-purple-700 rounded"
                       >

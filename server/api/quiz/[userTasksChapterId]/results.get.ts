@@ -181,23 +181,25 @@ export default defineEventHandler(async (event) => {
       // Build user answers array based on question type
       const userAnswers = attemptData.user_question_answers || [];
 
-      // Determine feedback and points
-      let feedback = '';
-      let pointsPossible = 1;
+      // Read from individual columns
+      const feedbackPositive = attemptData.feedback_positive || null;
+      const feedbackGaps = attemptData.feedback_gaps || null;
+      const feedbackImprovement = attemptData.feedback_improvement || null;
+      const markingStatus = attemptData.marking_status || null;
+      const pointsPossible = attemptData.max_score || 1;
+      const keyConcepts = attemptData.key_concepts_assessed || null;
+      const markingRationale = attemptData.marking_rationale || null;
 
-      // Use marking result if available
-      if (attemptData.marking_result) {
-        feedback = attemptData.marking_result.feedback?.positive || 'Answer evaluated';
-        pointsPossible = attemptData.marking_result.score?.total || 1;
+      // Determine primary feedback for display
+      let feedback = '';
+      if (feedbackPositive) {
+        feedback = feedbackPositive;
+      } else if (question.type === 'open' || question.type === 'fill' || question.type === 'draw') {
+        feedback = attemptData.is_correct === null ?
+          'Answer submitted - requires manual grading' :
+            (attemptData.is_correct ? 'Correct!' : 'Incorrect');
       } else {
-        // Fallback to simple feedback
-        if (question.type === 'open' || question.type === 'fill' || question.type === 'draw') {
-          feedback = attemptData.is_correct === null ?
-            'Answer submitted - requires manual grading' :
-              (attemptData.is_correct ? 'Correct!' : 'Incorrect');
-        } else {
-          feedback = attemptData.is_correct ? 'Correct!' : 'Incorrect';
-        }
+        feedback = attemptData.is_correct ? 'Correct!' : 'Incorrect';
       }
 
       results.push({
@@ -206,10 +208,14 @@ export default defineEventHandler(async (event) => {
         questionType: question.type,
         isCorrect: attemptData.is_correct !== null ? attemptData.is_correct : false,
         feedback,
+        feedbackGaps,
+        feedbackImprovement,
+        markingStatus,
+        keyConcepts,
+        markingRationale,
         pointsEarned: attemptData.score || 0,
         pointsPossible,
         userAnswers: userAnswers.sort((a: any, b: any) => a.order_index - b.order_index),
-        markingResult: attemptData.marking_result || null,
       });
     }
 

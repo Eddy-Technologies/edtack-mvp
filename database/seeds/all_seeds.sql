@@ -79,6 +79,12 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('QUIZ', 'Quiz', 'Generate quiz questions and assessments', 'LESSON_GENERATION_TYPE', 10, true, NOW(), NOW()),
 ('LESSON', 'Lesson', 'Generate lesson content and materials', 'LESSON_GENERATION_TYPE', 20, true, NOW(), NOW());
 
+-- Marking Status Constants (for AI/manual marking results)
+INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('CORRECT', 'Correct', 'Answer is fully correct', 'MARKING_STATUS', 10, true, NOW(), NOW()),
+('PARTIALLY_CORRECT', 'Partially Correct', 'Answer is partially correct with some gaps', 'MARKING_STATUS', 20, true, NOW(), NOW()),
+('INCORRECT', 'Incorrect', 'Answer is incorrect', 'MARKING_STATUS', 30, true, NOW(), NOW());
+
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
 -- =============================================================================

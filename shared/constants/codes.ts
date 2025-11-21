@@ -42,9 +42,17 @@ export enum LESSON_GENERATION_TYPE {
   LESSON = 'LESSON'
 }
 
+// Marking status for question attempts (AI/manual marking results)
+export enum MARKING_STATUS {
+  CORRECT = 'CORRECT',
+  PARTIALLY_CORRECT = 'PARTIALLY_CORRECT',
+  INCORRECT = 'INCORRECT'
+}
+
 // Export all enum types for convenience
 export type OrderStatus = keyof typeof ORDER_STATUS;
 export type OperationType = keyof typeof OPERATION_TYPE;
 export type TaskStatus = keyof typeof TASK_STATUS;
 export type OrderFulfillment = keyof typeof ORDER_FULFILLMENT;
 export type LessonGenerationType = keyof typeof LESSON_GENERATION_TYPE;
+export type MarkingStatus = keyof typeof MARKING_STATUS;

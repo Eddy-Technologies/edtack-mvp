@@ -18,6 +18,26 @@
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { markQuestion } from '~~/server/utils/markingApi';
+import { MARKING_STATUS } from '~~/shared/constants';
+
+/**
+ * Transform marking API status (snake_case) to MARKING_STATUS enum (CONSTANT_CASE)
+ */
+function transformMarkingStatus(apiStatus: string | undefined): string {
+  if (!apiStatus) return MARKING_STATUS.INCORRECT;
+
+  switch (apiStatus) {
+    case 'correct':
+      return MARKING_STATUS.CORRECT;
+    case 'partially_correct':
+      return MARKING_STATUS.PARTIALLY_CORRECT;
+    case 'incorrect':
+      return MARKING_STATUS.INCORRECT;
+    default:
+      console.warn(`[attempt] Unknown marking status: ${apiStatus}, defaulting to INCORRECT`);
+      return MARKING_STATUS.INCORRECT;
+  }
+}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -309,7 +329,16 @@ export default defineEventHandler(async (event) => {
         duration_seconds: 0, // Frontend doesn't track timing yet
         score: result.pointsEarned,
         is_correct: result.isCorrect,
-        marking_result: result.markingResult || null,
+        // Store marking fields in individual columns
+        max_score: result.markingResult?.score?.total || result.pointsPossible,
+        marking_status: result.markingResult?.status ?
+            transformMarkingStatus(result.markingResult.status) :
+            (result.isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT),
+        feedback_positive: result.markingResult?.feedback?.positive || null,
+        feedback_gaps: result.markingResult?.feedback?.gaps || null,
+        feedback_improvement: result.markingResult?.feedback?.improvement || null,
+        key_concepts_assessed: result.markingResult?.key_concepts_assessed || null,
+        marking_rationale: result.markingResult?.marking_rationale || null,
       };
 
       const { data: attemptData, error: attemptError } = await supabase

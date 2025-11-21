@@ -30,7 +30,8 @@ export const CODE_CATEGORIES = {
   ORDER_FULFILLMENT: 'ORDER_FULFILLMENT',
   OPERATION_TYPE: 'OPERATION_TYPE',
   SUBJECT: 'SUBJECT',
-  LESSON_GENERATION_TYPE: 'LESSON_GENERATION_TYPE'
+  LESSON_GENERATION_TYPE: 'LESSON_GENERATION_TYPE',
+  MARKING_STATUS: 'MARKING_STATUS'
 } as const;
 
 export type CodeCategory = typeof CODE_CATEGORIES[keyof typeof CODE_CATEGORIES];
@@ -87,6 +88,10 @@ export const useCodesStore = defineStore('codes', {
 
     lessonGenerationTypes(): CodeOption[] {
       return this.getCodesByCategory(CODE_CATEGORIES.LESSON_GENERATION_TYPE);
+    },
+
+    markingStatuses(): CodeOption[] {
+      return this.getCodesByCategory(CODE_CATEGORIES.MARKING_STATUS);
     },
 
     // Get a specific code's label

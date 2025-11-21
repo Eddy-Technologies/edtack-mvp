@@ -41,3 +41,12 @@ This is a Nuxt 3 application with:
 
 ### Codes
 - constants and codes and code catgory are in constant case
+
+### Schemas
+- Update database/tables when altering tables
+
+## System Codes
+
+System codes are shared CONSTANT_CASE enums (e.g., `CORRECT`, `PENDING`) used across BE/FE for type safety.
+
+**Adding new codes:** 1) Add enum to `shared/constants/codes.ts` 2) Add type guard to `server/services/codeService.ts` 3) Add seed data to `database/seeds/all_seeds.sql` 4) Add to `app/stores/codes.ts` CODE_CATEGORIES 5) Optional: Add CHECK constraint to table schema

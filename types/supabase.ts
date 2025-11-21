@@ -151,18 +151,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      checkpoint_migrations: {
-        Row: {
-          v: number;
-        };
-        Insert: {
-          v: number;
-        };
-        Update: {
-          v?: number;
-        };
-        Relationships: [];
-      };
       checkpoint_writes: {
         Row: {
           blob: string | null;
@@ -1243,7 +1231,7 @@ export type Database = {
           answer_draw_file: string | null;
           answer_text: string | null;
           id: string;
-          option_id: string;
+          option_id: string | null;
           option_image: string | null;
           option_text: string | null;
           order_index: number;
@@ -1254,7 +1242,7 @@ export type Database = {
           answer_draw_file?: string | null;
           answer_text?: string | null;
           id?: string;
-          option_id: string;
+          option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
           order_index: number;
@@ -1265,7 +1253,7 @@ export type Database = {
           answer_draw_file?: string | null;
           answer_text?: string | null;
           id?: string;
-          option_id?: string;
+          option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
           order_index?: number;
@@ -1292,8 +1280,15 @@ export type Database = {
         Row: {
           attempt_number: number | null;
           duration_seconds: number;
+          feedback_gaps: string | null;
+          feedback_improvement: string | null;
+          feedback_positive: string | null;
           id: string;
           is_correct: boolean | null;
+          key_concepts_assessed: string[] | null;
+          marking_rationale: string | null;
+          marking_status: string | null;
+          max_score: number | null;
           question_id: string;
           score: number | null;
           submitted_at: string;
@@ -1302,8 +1297,15 @@ export type Database = {
         Insert: {
           attempt_number?: number | null;
           duration_seconds: number;
+          feedback_gaps?: string | null;
+          feedback_improvement?: string | null;
+          feedback_positive?: string | null;
           id?: string;
           is_correct?: boolean | null;
+          key_concepts_assessed?: string[] | null;
+          marking_rationale?: string | null;
+          marking_status?: string | null;
+          max_score?: number | null;
           question_id: string;
           score?: number | null;
           submitted_at: string;
@@ -1312,8 +1314,15 @@ export type Database = {
         Update: {
           attempt_number?: number | null;
           duration_seconds?: number;
+          feedback_gaps?: string | null;
+          feedback_improvement?: string | null;
+          feedback_positive?: string | null;
           id?: string;
           is_correct?: boolean | null;
+          key_concepts_assessed?: string[] | null;
+          marking_rationale?: string | null;
+          marking_status?: string | null;
+          max_score?: number | null;
           question_id?: string;
           score?: number | null;
           submitted_at?: string;
