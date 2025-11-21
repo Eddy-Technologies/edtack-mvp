@@ -18,7 +18,7 @@
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { markQuestion } from '~~/server/utils/markingApi';
-import { MARKING_STATUS } from '~~/shared/constants';
+import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 
 /**
  * Transform marking API status (snake_case) to MARKING_STATUS enum (CONSTANT_CASE)
@@ -176,7 +176,7 @@ export default defineEventHandler(async (event) => {
       let userAnswers: any[] = [];
 
       switch (questionData.type) {
-        case 'mcq': {
+        case QUESTION_TYPE.MCQ: {
           // MCQ: Compare selected option IDs
           totalScore += questionPoints;
 
@@ -210,7 +210,7 @@ export default defineEventHandler(async (event) => {
           break;
         }
 
-        case 'boolean': {
+        case QUESTION_TYPE.BOOLEAN: {
           // Boolean: Compare true/false
           totalScore += questionPoints;
 
@@ -234,9 +234,9 @@ export default defineEventHandler(async (event) => {
           break;
         }
 
-        case 'open':
-        case 'fill':
-        case 'draw': {
+        case QUESTION_TYPE.OPEN:
+        case QUESTION_TYPE.FILL:
+        case QUESTION_TYPE.DRAW: {
           // Use marking API for open, fill, and draw questions
           try {
             const markingResponse = await markQuestion(
@@ -252,9 +252,9 @@ export default defineEventHandler(async (event) => {
             earnedScore += markingResult.score.awarded;
 
             // Build userAnswers array based on question type
-            if (questionData.type === 'open') {
+            if (questionData.type === QUESTION_TYPE.OPEN) {
               userAnswers = [{ answer_text: userAnswer?.answer || '' }];
-            } else if (questionData.type === 'fill') {
+            } else if (questionData.type === QUESTION_TYPE.FILL) {
               if (Array.isArray(userAnswer?.answers)) {
                 userAnswers = userAnswer.answers.map((ans: string, idx: number) => ({
                   answer_text: ans,
@@ -263,7 +263,7 @@ export default defineEventHandler(async (event) => {
               } else {
                 userAnswers = [{ answer_text: userAnswer?.answer || '' }];
               }
-            } else if (questionData.type === 'draw') {
+            } else if (questionData.type === QUESTION_TYPE.DRAW) {
               userAnswers = [{ answer_draw_file: userAnswer?.drawingFile || '' }];
             }
 
@@ -363,7 +363,7 @@ export default defineEventHandler(async (event) => {
       const answerRecords = [];
 
       switch (questionData.type) {
-        case 'mcq': {
+        case QUESTION_TYPE.MCQ: {
           // MCQ: Insert one record per selected option
           const selectedOptionIds = userAnswer?.selectedOptions || [];
 
@@ -398,7 +398,7 @@ export default defineEventHandler(async (event) => {
           break;
         }
 
-        case 'boolean': {
+        case QUESTION_TYPE.BOOLEAN: {
           // Boolean: Insert one record with answer_boolean
           answerRecords.push({
             user_question_attempts_id: attemptId,
@@ -413,7 +413,7 @@ export default defineEventHandler(async (event) => {
           break;
         }
 
-        case 'open': {
+        case QUESTION_TYPE.OPEN: {
           // Open: Insert one record with answer_text
           answerRecords.push({
             user_question_attempts_id: attemptId,
@@ -428,7 +428,7 @@ export default defineEventHandler(async (event) => {
           break;
         }
 
-        case 'fill': {
+        case QUESTION_TYPE.FILL: {
           // Fill: Insert records for each answer (single or multiple)
           if (Array.isArray(userAnswer?.answers)) {
             // Multiple blanks
@@ -460,7 +460,7 @@ export default defineEventHandler(async (event) => {
           break;
         }
 
-        case 'draw': {
+        case QUESTION_TYPE.DRAW: {
           // Draw: Insert one record with answer_draw_file
           answerRecords.push({
             user_question_attempts_id: attemptId,

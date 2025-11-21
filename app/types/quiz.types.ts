@@ -1,3 +1,5 @@
+import type { QUESTION_TYPE } from '~~/shared/constants';
+
 export interface QuizOption {
   id: string;
   option_text: string | null;
@@ -14,7 +16,7 @@ export interface QuizAnswer {
   order_index: number;
 }
 
-export interface BaseQuizQuestion {
+export interface QuizQuestion {
   id: string;
   syllabus_id: string;
   parent_id: string | null;
@@ -30,49 +32,12 @@ export interface BaseQuizQuestion {
   updated_at: string;
   source_timestamp: string;
   notes_url: string | null;
+  question_type: QUESTION_TYPE;
+  options?: QuizOption[];
 }
-
-export interface MCQQuestion extends BaseQuizQuestion {
-  question_type: 'mcq';
-  options: QuizOption[];
-}
-
-export interface OpenQuestion extends BaseQuizQuestion {
-  question_type: 'open';
-  options: [];
-}
-
-export interface FillQuestion extends BaseQuizQuestion {
-  question_type: 'fill';
-  options: [];
-}
-
-export interface BooleanQuestion extends BaseQuizQuestion {
-  question_type: 'boolean';
-  options: [];
-}
-
-export interface DrawQuestion extends BaseQuizQuestion {
-  question_type: 'draw';
-  options: [];
-}
-
-export interface HTMLQuestion extends BaseQuizQuestion {
-  question_type: 'html';
-  options: [];
-}
-
-export type QuizQuestion = MCQQuestion | OpenQuestion | FillQuestion | BooleanQuestion | DrawQuestion | HTMLQuestion;
 
 export type UserAnswer = {
   questionId: string;
   answers: string[];
   isCorrect?: boolean;
 };
-
-export interface QuizState {
-  userAnswers: Record<string, UserAnswer>;
-  showExplanations: Record<string, boolean>;
-  score: number;
-  totalQuestions: number;
-}

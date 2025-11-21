@@ -24,6 +24,7 @@
 import type { QuizQuestion } from '~/types/quiz.types';
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { QUESTION_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -198,7 +199,7 @@ async function persistQuizQuestionsServer(
       // Create mapping from Python API option IDs to database UUIDs
       const optionIdMap = new Map<string, string>();
 
-      if (question.question_type === 'mcq' && question.options && question.options.length > 0) {
+      if (question.question_type === QUESTION_TYPE.MCQ && question.options && question.options.length > 0) {
         const optionRecords = question.options.map((option) => {
           const newOptionId = crypto.randomUUID();
           // Store mapping: Python option ID -> Database UUID

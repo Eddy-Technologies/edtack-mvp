@@ -18,6 +18,7 @@
 
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { QUESTION_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -194,7 +195,7 @@ export default defineEventHandler(async (event) => {
       let feedback = '';
       if (feedbackPositive) {
         feedback = feedbackPositive;
-      } else if (question.type === 'open' || question.type === 'fill' || question.type === 'draw') {
+      } else if (question.type === QUESTION_TYPE.OPEN || question.type === QUESTION_TYPE.FILL || question.type === QUESTION_TYPE.DRAW) {
         feedback = attemptData.is_correct === null ?
           'Answer submitted - requires manual grading' :
             (attemptData.is_correct ? 'Correct!' : 'Incorrect');

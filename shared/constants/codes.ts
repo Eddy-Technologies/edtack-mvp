@@ -49,6 +49,16 @@ export enum MARKING_STATUS {
   INCORRECT = 'INCORRECT'
 }
 
+// Question types (matches database CHECK constraint)
+export enum QUESTION_TYPE {
+  PARENT = 'parent',
+  MCQ = 'mcq',
+  OPEN = 'open',
+  BOOLEAN = 'boolean',
+  DRAW = 'draw',
+  FILL = 'fill'
+}
+
 // Export all enum types for convenience
 export type OrderStatus = keyof typeof ORDER_STATUS;
 export type OperationType = keyof typeof OPERATION_TYPE;
@@ -56,3 +66,4 @@ export type TaskStatus = keyof typeof TASK_STATUS;
 export type OrderFulfillment = keyof typeof ORDER_FULFILLMENT;
 export type LessonGenerationType = keyof typeof LESSON_GENERATION_TYPE;
 export type MarkingStatus = keyof typeof MARKING_STATUS;
+export type QuestionType = keyof typeof QUESTION_TYPE;

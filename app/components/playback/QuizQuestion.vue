@@ -10,7 +10,7 @@
     <!-- Question Type Specific UI -->
     <div class="space-y-4">
       <!-- MCQ Questions -->
-      <div v-if="question.question_type === 'mcq'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.MCQ" class="space-y-3">
         <div
           v-for="option in question.options"
           :key="option.id"
@@ -40,7 +40,7 @@
       </div>
 
       <!-- Open Questions -->
-      <div v-if="question.question_type === 'open'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.OPEN" class="space-y-3">
         <textarea
           v-model="userAnswer"
           maxlength="500"
@@ -51,7 +51,7 @@
       </div>
 
       <!-- Fill Questions -->
-      <div v-if="question.question_type === 'fill'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.FILL" class="space-y-3">
         <div v-if="question.answer.length === 1">
           <input
             v-model="userAnswer"
@@ -75,7 +75,7 @@
       </div>
 
       <!-- Boolean Questions -->
-      <div v-if="question.question_type === 'boolean'" class="flex gap-4">
+      <div v-if="question.question_type === QUESTION_TYPE.BOOLEAN" class="flex gap-4">
         <button
           class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
           :class="{
@@ -99,7 +99,7 @@
       </div>
 
       <!-- Draw Questions -->
-      <div v-if="question.question_type === 'draw'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.DRAW" class="space-y-3">
         <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
           <div v-if="!drawingFile">
             <p class="text-gray-500 mb-4">Draw your answer or upload an image</p>
@@ -165,6 +165,7 @@ import { ref, computed, onMounted } from 'vue';
 import type { QuizQuestion } from '~/types/quiz.types';
 import Button from '~/components/common/Button.vue';
 import MessageActions from '~/components/chat/MessageActions.vue';
+import { QUESTION_TYPE } from '~/shared/constants';
 
 const props = defineProps<{
   question: QuizQuestion;
@@ -194,18 +195,18 @@ const questionText = computed(() => {
 
 const hasAnswer = computed(() => {
   switch (props.question.question_type) {
-    case 'mcq':
+    case QUESTION_TYPE.MCQ:
       return selectedOptions.value.length > 0;
-    case 'open':
+    case QUESTION_TYPE.OPEN:
       return userAnswer.value.trim().length > 0;
-    case 'fill':
+    case QUESTION_TYPE.FILL:
       if (props.question.answer.length === 1) {
         return userAnswer.value.trim().length > 0;
       }
       return fillAnswers.value.every((answer) => answer.trim().length > 0);
-    case 'boolean':
+    case QUESTION_TYPE.BOOLEAN:
       return userAnswer.value !== '';
-    case 'draw':
+    case QUESTION_TYPE.DRAW:
       return drawingFile.value !== null;
     default:
       return false;
@@ -255,23 +256,23 @@ function submitAnswer() {
   let userAnswers: string[] = [];
 
   switch (props.question.question_type) {
-    case 'mcq':
+    case QUESTION_TYPE.MCQ:
       userAnswers = selectedOptions.value;
       break;
-    case 'open':
+    case QUESTION_TYPE.OPEN:
       userAnswers = [userAnswer.value.trim()];
       break;
-    case 'fill':
+    case QUESTION_TYPE.FILL:
       if (props.question.answer.length === 1) {
         userAnswers = [userAnswer.value.trim()];
       } else {
         userAnswers = fillAnswers.value.map((a) => a.trim());
       }
       break;
-    case 'boolean':
+    case QUESTION_TYPE.BOOLEAN:
       userAnswers = [userAnswer.value];
       break;
-    case 'draw':
+    case QUESTION_TYPE.DRAW:
       userAnswers = [drawingFile.value || ''];
       break;
   }
@@ -290,22 +291,22 @@ function checkAnswer(userAnswers: string[]): boolean {
   const correctAnswers = props.question.answer;
 
   switch (props.question.question_type) {
-    case 'mcq': {
+    case QUESTION_TYPE.MCQ: {
       const correctOptionIds = correctAnswers.map((a) => a.option_id).filter(Boolean);
       return correctOptionIds.every((id) => userAnswers.includes(id)) &&
         userAnswers.every((id) => correctOptionIds.includes(id));
     }
-    case 'boolean': {
+    case QUESTION_TYPE.BOOLEAN: {
       const correctBoolean = correctAnswers[0]?.answer_boolean;
       return userAnswers[0] === correctBoolean?.toString();
     }
-    case 'open':
-    case 'fill': {
+    case QUESTION_TYPE.OPEN:
+    case QUESTION_TYPE.FILL: {
       const correctTexts = correctAnswers.map((a) => a.answer_text?.toLowerCase().trim()).filter(Boolean);
       const userTexts = userAnswers.map((a) => a.toLowerCase().trim());
       return correctTexts.every((correct, index) => userTexts[index] === correct);
     }
-    case 'draw':
+    case QUESTION_TYPE.DRAW:
       return true;
 
     default:
@@ -320,7 +321,7 @@ fillAnswers.value = new Array(props.question.answer.length).fill('');
 if (props.hideSubmitButton) {
   // Watch for MCQ selections
   watch(selectedOptions, () => {
-    if (props.question.question_type === 'mcq' && selectedOptions.value.length > 0) {
+    if (props.question.question_type === QUESTION_TYPE.MCQ && selectedOptions.value.length > 0) {
       emit('answer-submitted', {
         questionId: props.question.id,
         selectedOptions: selectedOptions.value

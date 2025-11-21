@@ -193,7 +193,7 @@
                 <h6 class="text-sm font-semibold text-gray-700 mb-1">Your Answer:</h6>
 
                 <!-- MCQ Answer -->
-                <div v-if="result.questionType === 'mcq'" class="text-sm text-gray-600">
+                <div v-if="result.questionType === QUESTION_TYPE.MCQ" class="text-sm text-gray-600">
                   <ul class="list-disc list-inside">
                     <li v-for="(answer, idx) in result.userAnswers" :key="idx">
                       {{ answer.option_text }}
@@ -202,12 +202,12 @@
                 </div>
 
                 <!-- Boolean Answer -->
-                <div v-else-if="result.questionType === 'boolean'" class="text-sm text-gray-600">
+                <div v-else-if="result.questionType === QUESTION_TYPE.BOOLEAN" class="text-sm text-gray-600">
                   {{ result.userAnswers[0].answer_boolean ? 'True' : 'False' }}
                 </div>
 
                 <!-- Fill/Open Answer -->
-                <div v-else-if="result.questionType === 'fill' || result.questionType === 'open'" class="text-sm text-gray-600">
+                <div v-else-if="result.questionType === QUESTION_TYPE.FILL || result.questionType === QUESTION_TYPE.OPEN" class="text-sm text-gray-600">
                   <div v-if="result.userAnswers.length === 1">
                     {{ result.userAnswers[0].answer_text }}
                   </div>
@@ -219,7 +219,7 @@
                 </div>
 
                 <!-- Draw Answer -->
-                <div v-else-if="result.questionType === 'draw'" class="text-sm text-gray-600">
+                <div v-else-if="result.questionType === QUESTION_TYPE.DRAW" class="text-sm text-gray-600">
                   <img
                     v-if="result.userAnswers[0].answer_draw_file"
                     :src="result.userAnswers[0].answer_draw_file"
@@ -320,6 +320,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import QuizQuestion from '~/components/playback/QuizQuestion.vue';
+import { QUESTION_TYPE } from '~/shared/constants';
 
 const props = defineProps<{
   isOpen: boolean;
