@@ -141,15 +141,29 @@
       </div>
 
       <!-- Explanation (shown after submission) -->
-      <div v-if="showExplanation && question.explanation" class="mt-6 p-4 rounded-lg" :class="isCorrect ? 'bg-green-100' : 'bg-red-200'">
+      <div
+        v-if="showExplanation && question.explanation"
+        class="mt-6 p-4 rounded-lg"
+        :class="{
+          'bg-green-100': markingStatus === MARKING_STATUS.CORRECT,
+          'bg-amber-100': markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+          'bg-red-200': markingStatus === MARKING_STATUS.INCORRECT
+        }"
+      >
         <h4 class="font-semibold mb-2">Explanation:</h4>
         <div v-html="processedExplanationHtml" />
-        <div v-if="isCorrect !== undefined" class="mt-3 flex items-center gap-2">
+        <div v-if="markingStatus" class="mt-3 flex items-center gap-2">
           <span
             class="px-3 py-1 rounded-full text-sm font-medium"
-            :class="isCorrect ? 'bg-green-300 text-green-800' : 'bg-red-300 text-red-800'"
+            :class="{
+              'bg-green-300 text-green-800': markingStatus === MARKING_STATUS.CORRECT,
+              'bg-amber-300 text-amber-800': markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+              'bg-red-300 text-red-800': markingStatus === MARKING_STATUS.INCORRECT
+            }"
           >
-            {{ isCorrect ? 'Correct!' : 'Incorrect' }}
+            <span v-if="markingStatus === MARKING_STATUS.CORRECT">Correct!</span>
+            <span v-else-if="markingStatus === MARKING_STATUS.PARTIALLY_CORRECT">Partially Correct</span>
+            <span v-else>Incorrect</span>
           </span>
         </div>
       </div>
@@ -165,7 +179,7 @@ import { ref, computed, onMounted } from 'vue';
 import type { QuizQuestion } from '~/types/quiz.types';
 import Button from '~/components/common/Button.vue';
 import MessageActions from '~/components/chat/MessageActions.vue';
-import { QUESTION_TYPE } from '~/shared/constants';
+import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 
 const props = defineProps<{
   question: QuizQuestion;
@@ -181,7 +195,7 @@ const selectedOptions = ref<string[]>([]);
 const fillAnswers = ref<string[]>(new Array(props.question.answer.length).fill(''));
 const drawingFile = ref<string | null>(null);
 const showExplanation = ref(false);
-const isCorrect = ref<boolean | undefined>(undefined);
+const markingStatus = ref<string | undefined>(undefined);
 
 const processedContentHtml = computed(() => convertImages(props.question.content || ''));
 const processedExplanationHtml = computed(() => convertImages(props.question.explanation || ''));
@@ -277,40 +291,43 @@ function submitAnswer() {
       break;
   }
 
-  isCorrect.value = checkAnswer(userAnswers);
+  markingStatus.value = checkAnswer(userAnswers);
   showExplanation.value = true;
 
   emit('answer-submitted', {
     questionId: props.question.id,
     answers: userAnswers,
-    isCorrect: isCorrect.value
+    markingStatus: markingStatus.value
   });
 }
 
-function checkAnswer(userAnswers: string[]): boolean {
+function checkAnswer(userAnswers: string[]): string {
   const correctAnswers = props.question.answer;
 
   switch (props.question.question_type) {
     case QUESTION_TYPE.MCQ: {
       const correctOptionIds = correctAnswers.map((a) => a.option_id).filter(Boolean);
-      return correctOptionIds.every((id) => userAnswers.includes(id)) &&
+      const isCorrect = correctOptionIds.every((id) => userAnswers.includes(id)) &&
         userAnswers.every((id) => correctOptionIds.includes(id));
+      return isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
     case QUESTION_TYPE.BOOLEAN: {
       const correctBoolean = correctAnswers[0]?.answer_boolean;
-      return userAnswers[0] === correctBoolean?.toString();
+      const isCorrect = userAnswers[0] === correctBoolean?.toString();
+      return isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
     case QUESTION_TYPE.OPEN:
     case QUESTION_TYPE.FILL: {
       const correctTexts = correctAnswers.map((a) => a.answer_text?.toLowerCase().trim()).filter(Boolean);
       const userTexts = userAnswers.map((a) => a.toLowerCase().trim());
-      return correctTexts.every((correct, index) => userTexts[index] === correct);
+      const isCorrect = correctTexts.every((correct, index) => userTexts[index] === correct);
+      return isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
     case QUESTION_TYPE.DRAW:
-      return true;
+      return MARKING_STATUS.CORRECT;
 
     default:
-      return false;
+      return MARKING_STATUS.INCORRECT;
   }
 }
 
@@ -336,7 +353,7 @@ if (props.hideSubmitButton) {
         questionId: props.question.id,
         answer: userAnswer.value
       });
-    } else if (props.question.question_type === 'fill' && props.question.answer.length === 1 && userAnswer.value) {
+    } else if (props.question.question_type === QUESTION_TYPE.FILL && props.question.answer.length === 1 && userAnswer.value) {
       emit('answer-submitted', {
         questionId: props.question.id,
         answer: userAnswer.value
@@ -346,7 +363,7 @@ if (props.hideSubmitButton) {
 
   // Watch for fill answers (multiple blanks)
   watch(fillAnswers, () => {
-    if (props.question.question_type === 'fill' && props.question.answer.length > 1) {
+    if (props.question.question_type === QUESTION_TYPE.FILL && props.question.answer.length > 1) {
       const allFilled = fillAnswers.value.every((a) => a.trim() !== '');
       if (allFilled) {
         emit('answer-submitted', {
@@ -359,7 +376,7 @@ if (props.hideSubmitButton) {
 
   // Watch for drawing file
   watch(drawingFile, () => {
-    if (props.question.question_type === 'draw' && drawingFile.value) {
+    if (props.question.question_type === QUESTION_TYPE.DRAW && drawingFile.value) {
       emit('answer-submitted', {
         questionId: props.question.id,
         drawingFile: drawingFile.value

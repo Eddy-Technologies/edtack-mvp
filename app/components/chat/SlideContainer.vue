@@ -112,17 +112,21 @@
               <div
                 :class="[
                   'p-3 rounded-lg',
-                  answeredQuestions[currentSlide.id]?.isCorrect
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
                     ? 'bg-green-50 border border-green-200'
-                    : 'bg-red-50 border border-red-200'
+                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                      ? 'bg-amber-50 border border-amber-200'
+                      : 'bg-red-50 border border-red-200'
                 ]"
               >
                 <p
                   :class="[
                     'text-sm font-semibold',
-                    answeredQuestions[currentSlide.id]?.isCorrect
+                    answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
                       ? 'text-green-800'
-                      : 'text-red-800'
+                      : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                        ? 'text-amber-800'
+                        : 'text-red-800'
                   ]"
                 >
                   {{ answeredQuestions[currentSlide.id]?.feedback }}
@@ -244,7 +248,7 @@ const showExplanation = ref(false);
 
 // Question and answer state
 const selectedOptions = ref<Record<string, any>>({});
-const answeredQuestions = ref<Record<string, { isCorrect: boolean; feedback: string }>>({});
+const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: string }>>({});
 
 // Refs
 const rightPanel = ref<HTMLElement>();
@@ -308,10 +312,11 @@ function checkAnswer(slide: SlideData) {
     const correctAnswerIndex = slide.answer[0].option_id;
     const correctOption = slide.options.find((option) => option.id === correctAnswerIndex);
     const isCorrect = !!(correctOption && selectedOption.id === correctOption.id);
+    const markingStatus = isCorrect ? 'CORRECT' : 'INCORRECT';
 
     answeredQuestions.value[slide.id] = {
-      isCorrect,
-      feedback: isCorrect ? '✅ Correct!' : '❌ Incorrect. Try again!'
+      markingStatus,
+      feedback: markingStatus === 'CORRECT' ? '✅ Correct!' : '❌ Incorrect. Try again!'
     };
 
     // Show explanation if available

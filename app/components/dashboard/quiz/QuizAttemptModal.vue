@@ -119,13 +119,23 @@
               v-for="(result, index) in quizResults.results"
               :key="result.questionId"
               class="border rounded-lg p-4"
-              :class="result.isCorrect ? 'border-green-200 bg-green-50' : result.feedback.includes('manual grading') ? 'border-yellow-200 bg-yellow-50' : 'border-red-200 bg-red-50'"
+              :class="{
+                'border-green-200 bg-green-50': result.markingStatus === MARKING_STATUS.CORRECT,
+                'border-amber-200 bg-amber-50': result.markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+                'border-red-200 bg-red-50': result.markingStatus === MARKING_STATUS.INCORRECT,
+                'border-gray-200 bg-gray-50': !result.markingStatus
+              }"
             >
               <div class="flex items-start justify-between mb-3">
                 <div class="flex items-start flex-1">
                   <span
                     class="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-sm font-medium mr-3 flex-shrink-0"
-                    :class="result.isCorrect ? 'bg-green-500' : result.feedback.includes('manual grading') ? 'bg-yellow-500' : 'bg-red-500'"
+                    :class="{
+                      'bg-green-500': result.markingStatus === MARKING_STATUS.CORRECT,
+                      'bg-amber-500': result.markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+                      'bg-red-500': result.markingStatus === MARKING_STATUS.INCORRECT,
+                      'bg-gray-500': !result.markingStatus
+                    }"
                   >
                     {{ index + 1 }}
                   </span>
@@ -135,16 +145,26 @@
                   </div>
                 </div>
                 <div class="ml-4">
-                  <UIcon v-if="result.isCorrect" name="i-lucide-check-circle" class="w-6 h-6 text-green-600" />
-                  <UIcon v-else-if="result.feedback.includes('manual grading')" name="i-lucide-clock" class="w-6 h-6 text-yellow-600" />
-                  <UIcon v-else name="i-lucide-x-circle" class="w-6 h-6 text-red-600" />
+                  <UIcon v-if="result.markingStatus === 'CORRECT'" name="i-lucide-check-circle" class="w-6 h-6 text-green-600" />
+                  <UIcon v-else-if="result.markingStatus === 'PARTIALLY_CORRECT'" name="i-lucide-alert-circle" class="w-6 h-6 text-amber-600" />
+                  <UIcon v-else-if="result.markingStatus === 'INCORRECT'" name="i-lucide-x-circle" class="w-6 h-6 text-red-600" />
+                  <UIcon v-else name="i-lucide-clock" class="w-6 h-6 text-gray-600" />
                 </div>
               </div>
 
               <!-- Feedback -->
               <div class="ml-9 mb-2">
                 <!-- Simple feedback for MCQ/Boolean -->
-                <p v-if="!result.feedbackPositive && !result.feedbackGaps && !result.feedbackImprovement" class="text-sm font-medium" :class="result.isCorrect ? 'text-green-700' : result.feedback.includes('manual grading') ? 'text-yellow-700' : 'text-red-700'">
+                <p
+                  v-if="!result.feedbackPositive && !result.feedbackGaps && !result.feedbackImprovement"
+                  class="text-sm font-medium"
+                  :class="{
+                    'text-green-700': result.markingStatus === MARKING_STATUS.CORRECT,
+                    'text-amber-700': result.markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+                    'text-red-700': result.markingStatus === MARKING_STATUS.INCORRECT,
+                    'text-gray-700': !result.markingStatus
+                  }"
+                >
                   {{ result.feedback }}
                 </p>
 
@@ -320,7 +340,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import QuizQuestion from '~/components/playback/QuizQuestion.vue';
-import { QUESTION_TYPE } from '~/shared/constants';
+import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 
 const props = defineProps<{
   isOpen: boolean;
