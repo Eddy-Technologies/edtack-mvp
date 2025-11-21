@@ -7,7 +7,6 @@ CREATE TABLE user_question_attempts (
   submitted_at TIMESTAMP NOT NULL,
   duration_seconds INT NOT NULL,
   score DECIMAL(5, 2) DEFAULT NULL,
-  is_correct BOOLEAN DEFAULT NULL,
   max_score DECIMAL(5, 2) DEFAULT NULL,
   marking_status TEXT CHECK (marking_status IN ('CORRECT', 'PARTIALLY_CORRECT', 'INCORRECT')) DEFAULT NULL,
   feedback_positive TEXT DEFAULT NULL,

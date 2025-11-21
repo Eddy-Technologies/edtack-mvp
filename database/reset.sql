@@ -1,6 +1,6 @@
 -- ==========================================
 -- EdTack Database Complete Reset Script
--- Generated: 2025-09-16T10:45:44.435Z
+-- Generated: 2025-11-21T06:16:38.904Z
 -- ==========================================
 
 -- This script completely resets the database:
@@ -18,6 +18,7 @@ BEGIN;
 DROP TRIGGER IF EXISTS trg_user_infos_updated_at ON user_infos CASCADE;
 DROP TRIGGER IF EXISTS trg_enforce_user_role_user_type ON user_roles CASCADE;
 DROP TRIGGER IF EXISTS update_characters_updated_at_trigger ON characters CASCADE;
+DROP TRIGGER IF EXISTS trigger_update_user_tasks_chapters_updated_at ON user_tasks_chapters CASCADE;
 
 -- All triggers dropped
 
@@ -29,6 +30,7 @@ DROP FUNCTION IF EXISTS update_updated_at_column CASCADE;
 DROP FUNCTION IF EXISTS update_user_info_with_relations CASCADE;
 DROP FUNCTION IF EXISTS enforce_user_role_user_type CASCADE;
 DROP FUNCTION IF EXISTS update_characters_updated_at CASCADE;
+DROP FUNCTION IF EXISTS update_user_tasks_chapters_updated_at CASCADE;
 
 -- All functions dropped
 
@@ -482,15 +484,31 @@ CREATE TABLE user_question_attempts (
   submitted_at TIMESTAMP NOT NULL,
   duration_seconds INT NOT NULL,
   score DECIMAL(5, 2) DEFAULT NULL,
-  is_correct BOOLEAN DEFAULT NULL
+  max_score DECIMAL(5, 2) DEFAULT NULL,
+  marking_status TEXT CHECK (marking_status IN ('CORRECT', 'PARTIALLY_CORRECT', 'INCORRECT')) DEFAULT NULL,
+  feedback_positive TEXT DEFAULT NULL,
+  feedback_gaps TEXT DEFAULT NULL,
+  feedback_improvement TEXT DEFAULT NULL,
+  key_concepts_assessed TEXT[] DEFAULT NULL,
+  marking_rationale TEXT DEFAULT NULL
 );
+
+-- Add indexes for marking analytics and AI operations
+CREATE INDEX IF NOT EXISTS idx_user_question_attempts_marking_status
+ON user_question_attempts(marking_status) WHERE marking_status IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_user_question_attempts_scores
+ON user_question_attempts(score, max_score) WHERE max_score IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_user_question_attempts_user_status
+ON user_question_attempts(user_info_id, marking_status);
 
 -- From: user_question_answers.sql
 -- Stores the history of all user answers for all questions (all attempts)
 CREATE TABLE user_question_answers (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_question_attempts_id uuid NOT NULL REFERENCES user_question_attempts(id) ON DELETE CASCADE,
-  option_id uuid NOT NULL REFERENCES question_options(id) ON DELETE CASCADE,
+  option_id uuid REFERENCES question_options(id) ON DELETE CASCADE,
   option_text VARCHAR(255) DEFAULT NULL,   -- snapshot
   option_image VARCHAR(255) DEFAULT NULL,  -- snapshot
   answer_text TEXT DEFAULT NULL,
@@ -602,6 +620,7 @@ ALTER TABLE wishlists ADD CONSTRAINT unique_user_product
 
 -- From: user_tasks.sql
 -- User Tasks table for task-based credit earning
+-- Each task is a one-off assignment from parent to student covering one or more chapters
 CREATE TABLE IF NOT EXISTS user_tasks (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   creator_user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
@@ -612,9 +631,8 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   credit INTEGER NOT NULL DEFAULT 0, -- Credit reward in cents
   questions_per_quiz INTEGER DEFAULT 10, -- Number of questions per quiz (for quiz tasks)
   required_score INTEGER DEFAULT 70, -- Required score percentage (0-100) to earn credit
-  recurrence_frequency TEXT, -- ONE_OFF, DAILY, WEEKLY, MONTHLY - controls task scheduling
   due_date TIMESTAMPTZ,
-  status TEXT NOT NULL, 
+  status TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -748,11 +766,17 @@ CREATE POLICY "Service role can manage webhook events" ON stripe_webhook_events
 GRANT ALL ON stripe_webhook_events TO service_role;
 
 -- From: checkpointer_tables.sql
--- LangGraph Checkpointer Tables for AsyncPostgresSaver
--- These tables store conversation state and checkpoints for AI conversations
--- Based on LangGraph requirements for persistent state management
+-- PostgreSQL Checkpointer Tables for LangGraph AsyncPostgresSaver
+-- These tables are required for persistent state management in the tutoring graph
+-- Created: 2025-09-12
 
--- 1. Main checkpoints table (stores conversation state)
+-- Drop existing tables to ensure clean setup with correct schema
+DROP TABLE IF EXISTS checkpoint_blobs CASCADE;
+DROP TABLE IF EXISTS checkpoint_writes CASCADE;
+DROP TABLE IF EXISTS checkpoints CASCADE;
+
+-- Table: checkpoints
+-- Stores the main checkpoint data for each conversation thread
 CREATE TABLE IF NOT EXISTS checkpoints (
     thread_id TEXT NOT NULL,
     checkpoint_ns TEXT NOT NULL DEFAULT '',
@@ -765,37 +789,64 @@ CREATE TABLE IF NOT EXISTS checkpoints (
     PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id)
 );
 
--- 2. Checkpoint writes table (tracks state changes)
+-- Add indexes for better query performance
+CREATE INDEX IF NOT EXISTS idx_checkpoints_thread_id ON checkpoints(thread_id);
+CREATE INDEX IF NOT EXISTS idx_checkpoints_created_at ON checkpoints(created_at);
+
+-- Table: checkpoint_writes
+-- Stores incremental writes/updates to checkpoints
 CREATE TABLE IF NOT EXISTS checkpoint_writes (
     thread_id TEXT NOT NULL,
     checkpoint_ns TEXT NOT NULL DEFAULT '',
     checkpoint_id TEXT NOT NULL,
     task_id TEXT NOT NULL,
     idx INTEGER NOT NULL,
+    task_path TEXT NOT NULL DEFAULT '',  -- Path to the task in the graph hierarchy (string format)
     channel TEXT NOT NULL,
     type TEXT,
-    value JSONB,
+    blob BYTEA,  -- Binary data for the write
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (thread_id, checkpoint_ns, checkpoint_id, task_id, idx)
 );
 
--- 3. Checkpoint blobs table (large data storage)
+-- Add indexes for checkpoint_writes
+CREATE INDEX IF NOT EXISTS idx_checkpoint_writes_thread_id ON checkpoint_writes(thread_id);
+CREATE INDEX IF NOT EXISTS idx_checkpoint_writes_checkpoint_id ON checkpoint_writes(checkpoint_id);
+
+-- Table: checkpoint_blobs
+-- Stores binary data associated with checkpoints (e.g., serialized objects)
 CREATE TABLE IF NOT EXISTS checkpoint_blobs (
     thread_id TEXT NOT NULL,
     checkpoint_ns TEXT NOT NULL DEFAULT '',
     channel TEXT NOT NULL,
     version TEXT NOT NULL,
     type TEXT NOT NULL,
-    blob BYTEA,
+    blob BYTEA,  -- Binary data
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (thread_id, checkpoint_ns, channel, version)
 );
 
--- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_checkpoints_thread_id ON checkpoints(thread_id);
-CREATE INDEX IF NOT EXISTS idx_checkpoints_created_at ON checkpoints(created_at);
-CREATE INDEX IF NOT EXISTS idx_checkpoint_writes_thread_id ON checkpoint_writes(thread_id);
+-- Add indexes for checkpoint_blobs
 CREATE INDEX IF NOT EXISTS idx_checkpoint_blobs_thread_id ON checkpoint_blobs(thread_id);
+
+-- Grant permissions (adjust user as needed)
+-- GRANT ALL PRIVILEGES ON TABLE checkpoints TO your_app_user;
+-- GRANT ALL PRIVILEGES ON TABLE checkpoint_writes TO your_app_user;
+-- GRANT ALL PRIVILEGES ON TABLE checkpoint_blobs TO your_app_user;
+
+-- Verify tables were created
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'checkpoints') THEN
+        RAISE NOTICE 'Table checkpoints created successfully';
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'checkpoint_writes') THEN
+        RAISE NOTICE 'Table checkpoint_writes created successfully';
+    END IF;
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'checkpoint_blobs') THEN
+        RAISE NOTICE 'Table checkpoint_blobs created successfully';
+    END IF;
+END $$;
 
 -- From: functions.sql
 -- Database Functions and Extensions
@@ -853,22 +904,79 @@ CREATE INDEX idx_message_feedback_user_infos_id ON message_feedback(user_infos_i
 -- User Tasks Chapters Table
 -- Junction table linking user_tasks to chapters for multi-chapter task assignments
 -- This allows parents to assign tasks covering multiple chapters within a subject
+-- ENHANCED: Now includes status tracking and completion data for each chapter within a task
 CREATE TABLE IF NOT EXISTS user_tasks_chapters (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_task_id UUID NOT NULL REFERENCES user_tasks(id) ON DELETE CASCADE,
   chapter_name VARCHAR(100) NOT NULL REFERENCES chapters(name) ON DELETE CASCADE,
+
+  -- Status tracking fields
+  status TEXT DEFAULT 'OPEN' NOT NULL,
+  score INTEGER,
+  total_score INTEGER,
+  completed_at TIMESTAMPTZ,
+
+  -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+
   -- Ensure no duplicate chapter assignments per task
-  CONSTRAINT unique_task_chapter UNIQUE(user_task_id, chapter_name)
+  CONSTRAINT unique_task_chapter UNIQUE(user_task_id, chapter_name),
+
+  -- Ensure valid status values
+  CONSTRAINT chk_user_tasks_chapters_status CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED'))
 );
 
 -- Performance indexes for common query patterns
 CREATE INDEX IF NOT EXISTS idx_user_tasks_chapters_task ON user_tasks_chapters(user_task_id);
 CREATE INDEX IF NOT EXISTS idx_user_tasks_chapters_chapter ON user_tasks_chapters(chapter_name);
+CREATE INDEX IF NOT EXISTS idx_user_tasks_chapters_status ON user_tasks_chapters(status);
+CREATE INDEX IF NOT EXISTS idx_user_tasks_chapters_completed_at ON user_tasks_chapters(completed_at);
 
 -- Composite index for querying task chapters together
 CREATE INDEX IF NOT EXISTS idx_user_tasks_chapters_task_chapter ON user_tasks_chapters(user_task_id, chapter_name);
+
+-- Trigger to automatically update updated_at timestamp
+CREATE OR REPLACE FUNCTION update_user_tasks_chapters_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_user_tasks_chapters_updated_at
+  BEFORE UPDATE ON user_tasks_chapters
+  FOR EACH ROW
+  EXECUTE FUNCTION update_user_tasks_chapters_updated_at();
+
+-- From: user_tasks_chapters_questions.sql
+-- User Tasks Chapters Questions Junction Table
+-- Links specific questions to each task-chapter combination
+-- This enables custom question selection per task assignment, allowing different
+-- students to have different question sets for the same chapter
+
+CREATE TABLE IF NOT EXISTS user_tasks_chapters_questions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_tasks_chapters_id UUID NOT NULL REFERENCES user_tasks_chapters(id) ON DELETE CASCADE,
+  question_id UUID NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+  display_order INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+
+  -- Ensure each question appears only once per task-chapter combination
+  CONSTRAINT unique_task_chapter_question UNIQUE(user_tasks_chapters_id, question_id)
+);
+
+-- Performance indexes for efficient querying
+CREATE INDEX IF NOT EXISTS idx_utcq_task_chapter
+  ON user_tasks_chapters_questions(user_tasks_chapters_id);
+
+CREATE INDEX IF NOT EXISTS idx_utcq_question
+  ON user_tasks_chapters_questions(question_id);
+
+CREATE INDEX IF NOT EXISTS idx_utcq_display_order
+  ON user_tasks_chapters_questions(user_tasks_chapters_id, display_order);
+
 
 -- ==========================================
 -- SEED DATA
@@ -912,24 +1020,11 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('BALANCE_ADJUSTMENT', 'Balance Adjustment', 'Manual balance adjustment by administrator', 'OPERATION_TYPE', 40, true, NOW(), NOW()),
 ('PURCHASE', 'Purchase', 'Product purchase using customer credit balance', 'OPERATION_TYPE', 50, true, NOW(), NOW());
 
--- Task Status Constants (for user_tasks - master task definitions)
+-- Task Status Constants (for user_tasks - task assignments)
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('OPEN', 'Open', 'Task is active and can generate new threads', 'TASK_STATUS', 10, true, NOW(), NOW()),
-('CLOSED', 'Closed', 'Task has been manually stopped/disabled', 'TASK_STATUS', 20, true, NOW(), NOW()),
+('OPEN', 'Open', 'Task is active and assigned', 'TASK_STATUS', 10, true, NOW(), NOW()),
+('CLOSED', 'Closed', 'Task has been manually closed/disabled', 'TASK_STATUS', 20, true, NOW(), NOW()),
 ('EXPIRED', 'Expired', 'Task has reached its end date or been automatically expired', 'TASK_STATUS', 30, true, NOW(), NOW());
-
--- Task Thread Status Constants (for task_threads - individual task instances)
-INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('OPEN', 'Open', 'Thread is active, awaiting completion', 'TASK_THREAD_STATUS', 10, true, NOW(), NOW()),
-('COMPLETED', 'Completed', 'Thread has been completed by student', 'TASK_THREAD_STATUS', 20, true, NOW(), NOW()),
-('EXPIRED', 'Expired', 'Thread passed due date without completion', 'TASK_THREAD_STATUS', 30, true, NOW(), NOW());
-
--- Recurrence Frequency Constants
-INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
-('ONE_OFF', 'One-off', 'Task occurs once only', 'RECURRENCE_FREQUENCY', 5, true, NOW(), NOW()),
-('DAILY', 'Daily', 'Task repeats every day', 'RECURRENCE_FREQUENCY', 10, true, NOW(), NOW()),
-('WEEKLY', 'Weekly', 'Task repeats every week', 'RECURRENCE_FREQUENCY', 20, true, NOW(), NOW()),
-('MONTHLY', 'Monthly', 'Task repeats every month', 'RECURRENCE_FREQUENCY', 30, true, NOW(), NOW());
 
 -- Order Fulfillment Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
@@ -968,6 +1063,12 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
 ('QUIZ', 'Quiz', 'Generate quiz questions and assessments', 'LESSON_GENERATION_TYPE', 10, true, NOW(), NOW()),
 ('LESSON', 'Lesson', 'Generate lesson content and materials', 'LESSON_GENERATION_TYPE', 20, true, NOW(), NOW());
+
+-- Marking Status Constants (for AI/manual marking results)
+INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('CORRECT', 'Correct', 'Answer is fully correct', 'MARKING_STATUS', 10, true, NOW(), NOW()),
+('PARTIALLY_CORRECT', 'Partially Correct', 'Answer is partially correct with some gaps', 'MARKING_STATUS', 20, true, NOW(), NOW()),
+('INCORRECT', 'Incorrect', 'Answer is incorrect', 'MARKING_STATUS', 30, true, NOW(), NOW());
 
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
@@ -1465,10 +1566,10 @@ COMMIT;
 
 -- ==========================================
 -- RESET COMPLETE
--- Triggers dropped: 3
--- Functions dropped: 4
+-- Triggers dropped: 4
+-- Functions dropped: 5
 -- Tables dropped: 33
 -- Tables created: 34
 -- Seed files applied: 3
--- Generated: 2025-09-16T10:45:44.443Z
+-- Generated: 2025-11-21T06:16:38.911Z
 -- ==========================================

@@ -1284,7 +1284,6 @@ export type Database = {
           feedback_improvement: string | null;
           feedback_positive: string | null;
           id: string;
-          is_correct: boolean | null;
           key_concepts_assessed: string[] | null;
           marking_rationale: string | null;
           marking_status: string | null;
@@ -1301,7 +1300,6 @@ export type Database = {
           feedback_improvement?: string | null;
           feedback_positive?: string | null;
           id?: string;
-          is_correct?: boolean | null;
           key_concepts_assessed?: string[] | null;
           marking_rationale?: string | null;
           marking_status?: string | null;
@@ -1318,7 +1316,6 @@ export type Database = {
           feedback_improvement?: string | null;
           feedback_positive?: string | null;
           id?: string;
-          is_correct?: boolean | null;
           key_concepts_assessed?: string[] | null;
           marking_rationale?: string | null;
           marking_status?: string | null;
