@@ -39,5 +39,5 @@ export interface QuizQuestion {
 export type UserAnswer = {
   questionId: string;
   answers: string[];
-  isCorrect?: boolean;
+  markingStatus?: string; // CORRECT | PARTIALLY_CORRECT | INCORRECT
 };
