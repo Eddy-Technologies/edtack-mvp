@@ -8,9 +8,5 @@ CREATE TABLE user_question_answers (
   answer_text TEXT DEFAULT NULL,
   answer_boolean BOOLEAN DEFAULT NULL,
   answer_draw_file VARCHAR(255) DEFAULT NULL,
-  order_index INT NOT NULL -- Order of this option in the answer used to sort
+  order_index INT DEFAULT NULL -- Order of this option in the answer used to sort
 );
-
--- Index for performance as answers has order
-CREATE INDEX idx_user_attempted_question_answers_order
-ON user_question_answers (user_question_attempts_id, order_index);

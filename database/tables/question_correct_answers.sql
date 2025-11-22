@@ -7,7 +7,7 @@ CREATE TABLE question_correct_answers (
   answer_boolean BOOLEAN DEFAULT NULL,
   answer_draw_file VARCHAR(255) DEFAULT NULL,
   image_url VARCHAR(255) DEFAULT NULL, -- S3 url temp
-  order_index INT NOT NULL, -- Order of this option in the answer used to sort
+  order_index INT DEFAULT NULL, -- Order of this option in the answer used to sort
   CHECK (
     option_id IS NOT NULL
     OR answer_text IS NOT NULL
@@ -15,7 +15,3 @@ CREATE TABLE question_correct_answers (
     OR answer_draw_file IS NOT NULL
   )
 );
-
--- Index for performance as answers has order
-CREATE INDEX idx_correct_answers_question_order
-ON question_correct_answers (question_id, order_index);
