@@ -168,8 +168,10 @@ export default defineEventHandler(async (event) => {
       const questionData = questionLinks[i].questions;
       const userAnswer = answers[i];
 
-      let isCorrect = false;
-      let feedback = '';
+      let markingStatus = MARKING_STATUS.INCORRECT;
+      const feedbackPositive = null;
+      const feedbackGaps = null;
+      const feedbackImprovement = null;
       const questionPoints = 1; // Default point value for MCQ/Boolean
 
       // Score based on question type
@@ -189,15 +191,15 @@ export default defineEventHandler(async (event) => {
               userAnswer.selectedOptions.sort() :
               [];
 
-          isCorrect =
+          const isAnswerCorrect =
             correctOptionIds.length === userOptionIds.length &&
             correctOptionIds.every((id: string, idx: number) => id === userOptionIds[idx]);
 
-          if (isCorrect) {
+          if (isAnswerCorrect) {
             earnedScore += questionPoints;
-            feedback = 'Correct!';
+            markingStatus = MARKING_STATUS.CORRECT;
           } else {
-            feedback = 'Incorrect';
+            markingStatus = MARKING_STATUS.INCORRECT;
           }
 
           // Build userAnswers array for MCQ
@@ -217,13 +219,15 @@ export default defineEventHandler(async (event) => {
           const correctAnswer = questionData.question_correct_answers[0]?.answer_boolean;
           const userBooleanAnswer = userAnswer?.answer;
 
-          isCorrect = correctAnswer === userBooleanAnswer;
+          // Normalize both values to boolean for comparison
+          const normalizedUserAnswer = userBooleanAnswer === 'true' || userBooleanAnswer === true;
+          const isAnswerCorrect = correctAnswer === normalizedUserAnswer;
 
-          if (isCorrect) {
+          if (isAnswerCorrect) {
             earnedScore += questionPoints;
-            feedback = 'Correct!';
+            markingStatus = MARKING_STATUS.CORRECT;
           } else {
-            feedback = 'Incorrect';
+            markingStatus = MARKING_STATUS.INCORRECT;
           }
 
           // Build userAnswers array for Boolean
@@ -272,11 +276,14 @@ export default defineEventHandler(async (event) => {
               questionIndex: i,
               questionId: questionData.id,
               questionType: questionData.type,
-              isCorrect: markingResult.status === 'correct',
-              feedback: markingResult.feedback.positive || 'Answer evaluated',
+              markingStatus: transformMarkingStatus(markingResult.status),
+              feedbackPositive: markingResult.feedback.positive || null,
+              feedbackGaps: markingResult.feedback.gaps || null,
+              feedbackImprovement: markingResult.feedback.improvement || null,
+              keyConcepts: markingResult.key_concepts_assessed || null,
+              markingRationale: markingResult.marking_rationale || null,
               pointsEarned: markingResult.score.awarded,
               pointsPossible: markingResult.score.total,
-              markingResult: markingResult,
               userAnswers: userAnswers,
             };
 
@@ -300,9 +307,13 @@ export default defineEventHandler(async (event) => {
         questionIndex: i,
         questionId: questionData.id,
         questionType: questionData.type,
-        isCorrect,
-        feedback,
-        pointsEarned: isCorrect ? questionPoints : 0,
+        markingStatus,
+        feedbackPositive,
+        feedbackGaps,
+        feedbackImprovement,
+        keyConcepts: null,
+        markingRationale: null,
+        pointsEarned: markingStatus === MARKING_STATUS.CORRECT ? questionPoints : 0,
         pointsPossible: questionPoints,
         userAnswers: userAnswers,
       });
@@ -328,17 +339,14 @@ export default defineEventHandler(async (event) => {
         submitted_at: new Date().toISOString(),
         duration_seconds: 0, // Frontend doesn't track timing yet
         score: result.pointsEarned,
-        is_correct: result.isCorrect,
         // Store marking fields in individual columns
-        max_score: result.markingResult?.score?.total || result.pointsPossible,
-        marking_status: result.markingResult?.status ?
-            transformMarkingStatus(result.markingResult.status) :
-            (result.isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT),
-        feedback_positive: result.markingResult?.feedback?.positive || null,
-        feedback_gaps: result.markingResult?.feedback?.gaps || null,
-        feedback_improvement: result.markingResult?.feedback?.improvement || null,
-        key_concepts_assessed: result.markingResult?.key_concepts_assessed || null,
-        marking_rationale: result.markingResult?.marking_rationale || null,
+        max_score: result.pointsPossible,
+        marking_status: result.markingStatus,
+        feedback_positive: result.feedbackPositive || null,
+        feedback_gaps: result.feedbackGaps || null,
+        feedback_improvement: result.feedbackImprovement || null,
+        key_concepts_assessed: result.keyConcepts || null,
+        marking_rationale: result.markingRationale || null,
       };
 
       const { data: attemptData, error: attemptError } = await supabase

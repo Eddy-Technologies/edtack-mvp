@@ -35,8 +35,6 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    console.log('[results] Fetching quiz results for task-chapter:', userTasksChapterId);
-
     const supabase = await getSupabaseClient(event);
 
     // Fetch task-chapter data with user_tasks info
@@ -170,7 +168,6 @@ export default defineEventHandler(async (event) => {
           questionIndex: index,
           questionId: question.id,
           questionType: question.type,
-          isCorrect: false,
           feedback: 'No attempt recorded',
           pointsEarned: 0,
           pointsPossible: 1,
@@ -191,24 +188,11 @@ export default defineEventHandler(async (event) => {
       const keyConcepts = attemptData.key_concepts_assessed || null;
       const markingRationale = attemptData.marking_rationale || null;
 
-      // Determine primary feedback for display
-      let feedback = '';
-      if (feedbackPositive) {
-        feedback = feedbackPositive;
-      } else if (question.type === QUESTION_TYPE.OPEN || question.type === QUESTION_TYPE.FILL || question.type === QUESTION_TYPE.DRAW) {
-        feedback = attemptData.is_correct === null ?
-          'Answer submitted - requires manual grading' :
-            (attemptData.is_correct ? 'Correct!' : 'Incorrect');
-      } else {
-        feedback = attemptData.is_correct ? 'Correct!' : 'Incorrect';
-      }
-
       results.push({
         questionIndex: index,
         questionId: question.id,
         questionType: question.type,
-        isCorrect: attemptData.is_correct !== null ? attemptData.is_correct : false,
-        feedback,
+        feedbackPositive,
         feedbackGaps,
         feedbackImprovement,
         markingStatus,

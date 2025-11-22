@@ -311,8 +311,7 @@ function checkAnswer(slide: SlideData) {
     // TODO: currently only can check mcq and using index to check which is not very safe. should use ID matching instead
     const correctAnswerIndex = slide.answer[0].option_id;
     const correctOption = slide.options.find((option) => option.id === correctAnswerIndex);
-    const isCorrect = !!(correctOption && selectedOption.id === correctOption.id);
-    const markingStatus = isCorrect ? 'CORRECT' : 'INCORRECT';
+    const markingStatus = (correctOption && selectedOption.id === correctOption.id) ? 'CORRECT' : 'INCORRECT';
 
     answeredQuestions.value[slide.id] = {
       markingStatus,

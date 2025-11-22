@@ -307,21 +307,21 @@ function checkAnswer(userAnswers: string[]): string {
   switch (props.question.question_type) {
     case QUESTION_TYPE.MCQ: {
       const correctOptionIds = correctAnswers.map((a) => a.option_id).filter(Boolean);
-      const isCorrect = correctOptionIds.every((id) => userAnswers.includes(id)) &&
+      const answersMatch = correctOptionIds.every((id) => userAnswers.includes(id)) &&
         userAnswers.every((id) => correctOptionIds.includes(id));
-      return isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
+      return answersMatch ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
     case QUESTION_TYPE.BOOLEAN: {
       const correctBoolean = correctAnswers[0]?.answer_boolean;
-      const isCorrect = userAnswers[0] === correctBoolean?.toString();
-      return isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
+      const answersMatch = userAnswers[0] === correctBoolean?.toString();
+      return answersMatch ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
     case QUESTION_TYPE.OPEN:
     case QUESTION_TYPE.FILL: {
       const correctTexts = correctAnswers.map((a) => a.answer_text?.toLowerCase().trim()).filter(Boolean);
       const userTexts = userAnswers.map((a) => a.toLowerCase().trim());
-      const isCorrect = correctTexts.every((correct, index) => userTexts[index] === correct);
-      return isCorrect ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
+      const answersMatch = correctTexts.every((correct, index) => userTexts[index] === correct);
+      return answersMatch ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
     case QUESTION_TYPE.DRAW:
       return MARKING_STATUS.CORRECT;
