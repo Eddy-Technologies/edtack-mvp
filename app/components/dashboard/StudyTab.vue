@@ -358,7 +358,6 @@ const checkQuizExistence = async (chapters: any[]) => {
           const checkResponse = await $fetch('/api/quiz/check-existing', {
             method: 'GET',
             query: {
-              chapterId: chapter.name,
               userTasksChapterId: userTasksChapterId,
             },
           });
@@ -406,7 +405,6 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
     const checkResponse = await $fetch('/api/quiz/check-existing', {
       method: 'GET',
       query: {
-        chapterId: chapterName,
         userTasksChapterId: userTasksChapterId,
       },
     });
