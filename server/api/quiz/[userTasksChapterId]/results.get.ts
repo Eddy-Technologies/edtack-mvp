@@ -18,7 +18,6 @@
 
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { QUESTION_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
