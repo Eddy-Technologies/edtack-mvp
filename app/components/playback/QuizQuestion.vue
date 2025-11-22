@@ -348,7 +348,7 @@ if (props.hideSubmitButton) {
 
   // Watch for text answers (open, boolean, fill single)
   watch(userAnswer, () => {
-    if (['open', 'boolean'].includes(props.question.question_type) && userAnswer.value) {
+    if ([QUESTION_TYPE.OPEN, QUESTION_TYPE.BOOLEAN].includes(props.question.question_type) && userAnswer.value) {
       emit('answer-submitted', {
         questionId: props.question.id,
         answer: userAnswer.value
