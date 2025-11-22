@@ -178,7 +178,7 @@ async function persistQuizQuestionsServer(
         parent_question_id: question.parent_id || null,
         subquestion_order: question.order || null,
         part_label: question.part_label || null,
-        type: question.question_type.toUpperCase(),
+        type: question.question_type,
         title: question.title,
         question: question.content,
         explanation: question.explanation || null,
