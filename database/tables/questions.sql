@@ -5,7 +5,7 @@ CREATE TABLE questions (
   parent_question_id uuid REFERENCES questions(id) ON DELETE CASCADE, -- NULL for top-level questions
   subquestion_order INT DEFAULT NULL, -- Order among siblings (sub-parts)
   part_label VARCHAR(20) DEFAULT NULL, -- e.g., 'A)', 'ii)', '1)'
-  type TEXT NOT NULL CHECK (type IN ('PARENT', 'MCQ', 'OPEN', 'BOOLEAN', 'DRAW', 'FILL')),
+  type TEXT NOT NULL CHECK (type IN ('parent', 'mcq', 'open', 'boolean', 'draw', 'fill')),
   title VARCHAR(255) NOT NULL,
   question TEXT NOT NULL,
   explanation TEXT DEFAULT NULL,

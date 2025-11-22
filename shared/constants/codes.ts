@@ -51,12 +51,12 @@ export enum MARKING_STATUS {
 
 // Question types (matches database CHECK constraint)
 export enum QUESTION_TYPE {
-  PARENT = 'PARENT',
-  MCQ = 'MCQ',
-  OPEN = 'OPEN',
-  BOOLEAN = 'BOOLEAN',
-  DRAW = 'DRAW',
-  FILL = 'FILL'
+  PARENT = 'parent',
+  MCQ = 'mcq',
+  OPEN = 'open',
+  BOOLEAN = 'boolean',
+  DRAW = 'draw',
+  FILL = 'fill'
 }
 
 // Export all enum types for convenience
