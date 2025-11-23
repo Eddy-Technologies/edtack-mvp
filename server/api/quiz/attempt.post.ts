@@ -140,7 +140,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Calculate next attempt number by checking existing attempts
-    const questionIds = questionLinks.map(link => link.questions.id);
+    const questionIds = questionLinks.map((link) => link.questions.id);
 
     const { data: existingAttempts } = await supabase
       .from('user_question_attempts')
@@ -150,9 +150,9 @@ export default defineEventHandler(async (event) => {
       .order('attempt_number', { ascending: false })
       .limit(1);
 
-    const nextAttemptNumber = existingAttempts?.[0]?.attempt_number
-      ? existingAttempts[0].attempt_number + 1
-      : 1;
+    const nextAttemptNumber = existingAttempts?.[0]?.attempt_number ?
+      existingAttempts[0].attempt_number + 1 :
+      1;
 
     console.log('[attempt] Next attempt number:', nextAttemptNumber);
 
@@ -538,7 +538,7 @@ export default defineEventHandler(async (event) => {
     // Group by attempt_number and calculate totals
     const attemptScores: Record<number, { score: number; totalScore: number }> = {};
 
-    allAttempts?.forEach(att => {
+    allAttempts?.forEach((att) => {
       if (!attemptScores[att.attempt_number]) {
         attemptScores[att.attempt_number] = { score: 0, totalScore: 0 };
       }
@@ -551,7 +551,7 @@ export default defineEventHandler(async (event) => {
     let bestTotalScore = totalScore;
     let bestPercentage = currentPercentage;
 
-    Object.values(attemptScores).forEach(attempt => {
+    Object.values(attemptScores).forEach((attempt) => {
       const percentage = attempt.totalScore > 0 ? Math.round((attempt.score / attempt.totalScore) * 100) : 0;
       if (percentage > bestPercentage) {
         bestScore = attempt.score;
@@ -617,55 +617,55 @@ export default defineEventHandler(async (event) => {
           // Skip disbursement, credits already given
         } else {
           // Get user's credit record
-        const { data: userCredit, error: creditFetchError } = await supabase
-          .from('user_credits')
-          .select('*')
-          .eq('user_info_id', userInfo.id)
-          .single();
+          const { data: userCredit, error: creditFetchError } = await supabase
+            .from('user_credits')
+            .select('*')
+            .eq('user_info_id', userInfo.id)
+            .single();
 
-        if (creditFetchError && creditFetchError.code !== 'PGRST116') {
-          console.error('[attempt] Error fetching user credits:', creditFetchError);
-          throw creditFetchError;
-        }
+          if (creditFetchError && creditFetchError.code !== 'PGRST116') {
+            console.error('[attempt] Error fetching user credits:', creditFetchError);
+            throw creditFetchError;
+          }
 
-        // Update or insert user credits
-        const newCreditBalance = (userCredit?.credit || 0) + creditReward;
+          // Update or insert user credits
+          const newCreditBalance = (userCredit?.credit || 0) + creditReward;
 
-        const { error: creditUpdateError } = await supabase
-          .from('user_credits')
-          .upsert({
-            user_info_id: userInfo.id,
-            credit: newCreditBalance,
-            reserved_credit: userCredit?.reserved_credit || 0,
-          });
+          const { error: creditUpdateError } = await supabase
+            .from('user_credits')
+            .upsert({
+              user_info_id: userInfo.id,
+              credit: newCreditBalance,
+              reserved_credit: userCredit?.reserved_credit || 0,
+            });
 
-        if (creditUpdateError) {
-          console.error('[attempt] Error updating credits:', creditUpdateError);
-          throw creditUpdateError;
-        }
+          if (creditUpdateError) {
+            console.error('[attempt] Error updating credits:', creditUpdateError);
+            throw creditUpdateError;
+          }
 
-        // Create credit transaction record
-        const { error: transactionError } = await supabase
-          .from('credit_transactions')
-          .insert({
-            user_info_id: userInfo.id,
-            transaction_type: 'topup',
-            amount: creditReward,
-            currency: 'SGD',
-            description: `Quiz reward for ${chapterData.user_tasks.id}`,
-            metadata: {
-              source: 'quiz_completion',
-              userTasksChapterId,
-              score: bestScore,
-              totalScore: bestTotalScore,
-              percentage: bestPercentage,
-            },
-          });
+          // Create credit transaction record
+          const { error: transactionError } = await supabase
+            .from('credit_transactions')
+            .insert({
+              user_info_id: userInfo.id,
+              transaction_type: 'topup',
+              amount: creditReward,
+              currency: 'SGD',
+              description: `Quiz reward for ${chapterData.user_tasks.id}`,
+              metadata: {
+                source: 'quiz_completion',
+                userTasksChapterId,
+                score: bestScore,
+                totalScore: bestTotalScore,
+                percentage: bestPercentage,
+              },
+            });
 
-        if (transactionError) {
-          console.error('[attempt] Error creating transaction:', transactionError);
-          throw transactionError;
-        }
+          if (transactionError) {
+            console.error('[attempt] Error creating transaction:', transactionError);
+            throw transactionError;
+          }
 
           creditEarned = creditReward;
           console.log('[attempt] Credits disbursed:', { creditEarned, newBalance: newCreditBalance });

@@ -559,7 +559,7 @@ const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: stri
   }
 };
 
-const handleQuizReview = async (taskChapter: any, chapter: any, subjectName: string) => {
+const handleQuizReview = async (taskChapter: any, chapter: any) => {
   const userTasksChapterId = taskChapter.id;
 
   try {

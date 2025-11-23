@@ -122,7 +122,7 @@ export default defineEventHandler(async (event) => {
       answer: link.questions.question_correct_answers,
     }));
 
-    const questionIds = questions.map(q => q.id);
+    const questionIds = questions.map((q) => q.id);
 
     // Fetch ALL attempts for this quiz to calculate best and latest scores
     const { data: allAttempts, error: allAttemptsError } = await supabase
@@ -142,7 +142,7 @@ export default defineEventHandler(async (event) => {
     // Group by attempt_number and calculate totals
     const attemptScores: Record<number, { score: number; totalScore: number; submittedAt: string }> = {};
 
-    allAttempts?.forEach(att => {
+    allAttempts?.forEach((att) => {
       if (!attemptScores[att.attempt_number]) {
         attemptScores[att.attempt_number] = {
           score: 0,
@@ -165,9 +165,6 @@ export default defineEventHandler(async (event) => {
 
     // Find best and latest
     const latestAttempt = attempts.length > 0 ? attempts[attempts.length - 1] : null;
-    const bestAttempt = attempts.length > 0
-      ? attempts.reduce((best, curr) => curr.percentage > best.percentage ? curr : best)
-      : null;
 
     // Use stored best score from user_tasks_chapters (should match calculated best)
     const bestScore = chapterData.score || 0;
