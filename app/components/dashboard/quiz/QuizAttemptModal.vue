@@ -78,36 +78,97 @@
         <div v-else-if="showResults && quizResults" class="space-y-6">
           <!-- Overall Score Card -->
           <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
-            <div class="text-center mb-4">
-              <h3 class="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h3>
-              <div class="text-5xl font-bold mb-2" :class="quizResults.passedThreshold ? 'text-green-600' : 'text-orange-600'">
-                {{ quizResults.percentage }}%
+            <!-- Score Summary -->
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div class="text-center p-4 bg-white rounded-lg">
+                <p class="text-sm text-gray-600 mb-1">Latest Attempt</p>
+                <div class="text-3xl font-bold" :class="(quizResults.latestPercentage ?? quizResults.percentage ?? 0) >= quizResults.requiredScore ? 'text-green-600' : 'text-orange-600'">
+                  {{ quizResults.latestPercentage ?? quizResults.percentage ?? 0 }}%
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  {{ quizResults.latestScore ?? quizResults.score ?? 0 }} / {{ quizResults.latestTotalScore ?? quizResults.totalScore ?? 0 }}
+                </p>
               </div>
-              <p class="text-gray-600 mb-1">
-                Score: {{ quizResults.score }} / {{ quizResults.totalScore }} points
-              </p>
-              <p class="text-sm text-gray-500">
-                Required: {{ quizResults.requiredScore }}%
-              </p>
+
+              <div class="text-center p-4 bg-white rounded-lg border-2 border-blue-300">
+                <p class="text-sm text-gray-600 mb-1">Best Score</p>
+                <div class="text-3xl font-bold text-blue-600">
+                  {{ quizResults.bestPercentage }}%
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  {{ quizResults.bestScore }} / {{ quizResults.bestTotalScore }}
+                </p>
+              </div>
+
+              <div class="text-center p-4 bg-white rounded-lg">
+                <p class="text-sm text-gray-600 mb-1">Required</p>
+                <div class="text-3xl font-bold text-gray-700">
+                  {{ quizResults.requiredScore }}%
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  Attempts: {{ quizResults.attemptCount || 1 }}
+                </p>
+              </div>
             </div>
 
             <!-- Pass/Fail Badge -->
             <div class="flex justify-center mb-4">
               <span v-if="quizResults.passedThreshold" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800">
                 <UIcon name="i-lucide-check-circle" class="w-5 h-5 mr-2" />
-                Passed!
+                Passed! (Best Score)
               </span>
               <span v-else class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
                 <UIcon name="i-lucide-x-circle" class="w-5 h-5 mr-2" />
-                Did not meet threshold
+                Keep trying!
               </span>
             </div>
 
-            <!-- Credits Earned -->
-            <div v-if="quizResults.creditEarned > 0" class="text-center p-4 bg-white rounded-lg border border-green-200">
-              <UIcon name="i-lucide-coins" class="w-6 h-6 text-yellow-500 mx-auto mb-2" />
-              <p class="font-semibold text-gray-900">Credits Earned!</p>
-              <p class="text-2xl font-bold text-green-600">{{ (quizResults.creditEarned / 100).toFixed(2) }} SGD</p>
+            <!-- Credits Status -->
+            <div class="text-center p-4 bg-white rounded-lg border" :class="quizResults.creditDisbursed ? 'border-green-200' : 'border-yellow-200'">
+              <UIcon :name="quizResults.creditDisbursed ? 'i-lucide-check-circle' : 'i-lucide-coins'" class="w-6 h-6 mx-auto mb-2" :class="quizResults.creditDisbursed ? 'text-green-500' : 'text-yellow-500'" />
+              <p class="font-semibold text-gray-900">
+                {{ quizResults.creditDisbursed ? 'Credits Earned!' : (quizResults.creditReward > 0 ? 'Credits Pending' : 'No Credits') }}
+              </p>
+              <p v-if="quizResults.creditDisbursed" class="text-2xl font-bold text-green-600">
+                {{ quizResults.creditEarned }} Credits
+              </p>
+              <p v-else-if="quizResults.creditReward > 0" class="text-sm text-gray-600 mt-1">
+                Reach {{ quizResults.requiredScore }}% to earn {{ quizResults.creditReward }} Credits.
+              </p>
+            </div>
+
+            <!-- Attempt History -->
+            <div v-if="quizResults.attempts && quizResults.attempts.length > 1" class="mt-4 p-4 bg-white rounded-lg">
+              <h5 class="text-sm font-medium text-gray-700 mb-3">Attempt History</h5>
+              <div class="space-y-2">
+                <div
+                  v-for="attempt in quizResults.attempts"
+                  :key="attempt.attemptNumber"
+                  class="flex items-center justify-between text-sm p-2 rounded"
+                  :class="{
+                    'bg-blue-50 border border-blue-200': attempt.percentage === quizResults.bestPercentage,
+                    'bg-gray-50': attempt.percentage !== quizResults.bestPercentage
+                  }"
+                >
+                  <div class="flex items-center gap-2">
+                    <span class="font-medium text-gray-700">Attempt {{ attempt.attemptNumber }}</span>
+                    <span v-if="attempt.percentage === quizResults.bestPercentage" class="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">
+                      ⭐ Best
+                    </span>
+                    <span v-if="attempt.attemptNumber === quizResults.attemptCount" class="text-xs px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full">
+                      📍 Latest
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="font-semibold" :class="attempt.percentage >= quizResults.requiredScore ? 'text-green-600' : 'text-gray-700'">
+                      {{ attempt.percentage }}%
+                    </span>
+                    <span class="text-xs text-gray-500">
+                      {{ new Date(attempt.submittedAt).toLocaleDateString() }}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -258,14 +319,23 @@
             </div>
           </div>
 
-          <!-- Close Button -->
-          <div class="flex justify-center pt-4 border-t">
+          <!-- Action Buttons -->
+          <div class="flex justify-center gap-3 pt-4 border-t">
             <UButton
-              color="primary"
+              color="gray"
+              variant="outline"
               size="lg"
               @click="$emit('close')"
             >
               Close
+            </UButton>
+            <UButton
+              color="primary"
+              size="lg"
+              @click="handleReattempt"
+            >
+              <UIcon name="i-lucide-refresh-cw" class="w-5 h-5 mr-2" />
+              Reattempt Quiz
             </UButton>
           </div>
         </div>
@@ -346,6 +416,7 @@ const props = defineProps<{
   isOpen: boolean;
   userTasksChapterId: string;
   chapterDisplayName: string;
+  mode?: 'attempt' | 'review';
 }>();
 
 const emit = defineEmits<{
@@ -382,21 +453,6 @@ const loadQuestions = async () => {
   error.value = null;
 
   try {
-    // First check if quiz is already completed
-    const resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/results`, {
-      method: 'GET',
-    });
-
-    if (resultsResponse.isCompleted) {
-      // Quiz is completed - show results view
-      questions.value = resultsResponse.questions || [];
-      quizResults.value = resultsResponse;
-      showResults.value = true;
-      console.log('Loading completed quiz results');
-      return;
-    }
-
-    // Quiz not completed - load questions for attempt
     const response = await $fetch(`/api/quiz/${props.userTasksChapterId}/questions`, {
       method: 'GET',
     });
@@ -457,8 +513,42 @@ const submitQuiz = async () => {
   }
 };
 
+const handleReattempt = () => {
+  // Reset to attempt mode
+  showResults.value = false;
+  userAnswers.value = {};
+  quizResults.value = null;
+
+  // Reload questions for new attempt
+  loadQuestions();
+};
+
+const loadResults = async () => {
+  isLoading.value = true;
+  error.value = null;
+
+  try {
+    const resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/results`, {
+      method: 'GET',
+    });
+
+    if (resultsResponse.isCompleted) {
+      questions.value = resultsResponse.questions || [];
+      quizResults.value = resultsResponse;
+      showResults.value = true;
+    } else {
+      error.value = 'Quiz has not been completed yet';
+    }
+  } catch (err: any) {
+    console.error('Error loading quiz results:', err);
+    error.value = err.data?.message || err.message || 'Failed to load quiz results';
+  } finally {
+    isLoading.value = false;
+  }
+};
+
 // Watch for modal open/close
-watch(() => props.isOpen, (newValue) => {
+watch(() => props.isOpen, async (newValue) => {
   if (newValue) {
     // Reset state when modal opens
     questions.value = [];
@@ -467,8 +557,22 @@ watch(() => props.isOpen, (newValue) => {
     error.value = null;
     showResults.value = false;
     quizResults.value = null;
-    // Load questions
-    loadQuestions();
+
+    // Handle based on mode
+    if (props.mode === 'review') {
+      // Review mode: Load results immediately
+      await loadResults();
+    } else {
+      // Attempt mode: Check if quiz is completed, if yes show results, else load questions
+      await checkAndLoadQuiz();
+    }
   }
 });
+
+// Check if quiz is completed and decide what to load
+const checkAndLoadQuiz = async () => {
+  // For attempt/reattempt mode, just load questions
+  // Questions are always fresh and ready for a new attempt
+  await loadQuestions();
+};
 </script>

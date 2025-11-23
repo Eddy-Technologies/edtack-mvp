@@ -91,14 +91,6 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Enforce 1 attempt limit
-    if (chapterData.completed_at) {
-      throw createError({
-        statusCode: 409,
-        message: 'Quiz already completed. Only one attempt is allowed.',
-      });
-    }
-
     const requiredScore = chapterData.user_tasks.required_score || 70;
     const creditReward = chapterData.user_tasks.credit || 0;
 
@@ -147,6 +139,23 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Calculate next attempt number by checking existing attempts
+    const questionIds = questionLinks.map(link => link.questions.id);
+
+    const { data: existingAttempts } = await supabase
+      .from('user_question_attempts')
+      .select('attempt_number')
+      .in('question_id', questionIds)
+      .eq('user_info_id', userInfo.id)
+      .order('attempt_number', { ascending: false })
+      .limit(1);
+
+    const nextAttemptNumber = existingAttempts?.[0]?.attempt_number
+      ? existingAttempts[0].attempt_number + 1
+      : 1;
+
+    console.log('[attempt] Next attempt number:', nextAttemptNumber);
+
     // Validate all questions have been answered
     for (let i = 0; i < questionLinks.length; i++) {
       if (answers[i] === undefined || answers[i] === null) {
@@ -162,7 +171,7 @@ export default defineEventHandler(async (event) => {
     // Score each question
     let totalScore = 0;
     let earnedScore = 0;
-    const results = [];
+    const results: any[] = new Array(questionLinks.length);
 
     for (let i = 0; i < questionLinks.length; i++) {
       const questionData = questionLinks[i].questions;
@@ -298,12 +307,12 @@ export default defineEventHandler(async (event) => {
         }
 
         default: {
-          feedback = 'Unknown question type';
+          console.warn('[attempt] Unknown question type:', questionData.type);
           break;
         }
       }
 
-      results.push({
+      results[i] = {
         questionIndex: i,
         questionId: questionData.id,
         questionType: questionData.type,
@@ -316,7 +325,7 @@ export default defineEventHandler(async (event) => {
         pointsEarned: markingStatus === MARKING_STATUS.CORRECT ? questionPoints : 0,
         pointsPossible: questionPoints,
         userAnswers: userAnswers,
-      });
+      };
     }
 
     console.log('[attempt] Quiz scored:', { earnedScore, totalScore, userId: userInfo.id });
@@ -335,7 +344,7 @@ export default defineEventHandler(async (event) => {
       const attemptRecord = {
         user_info_id: userInfo.id,
         question_id: questionData.id,
-        attempt_number: 1,
+        attempt_number: nextAttemptNumber,
         submitted_at: new Date().toISOString(),
         duration_seconds: 0, // Frontend doesn't track timing yet
         score: result.pointsEarned,
@@ -506,21 +515,78 @@ export default defineEventHandler(async (event) => {
 
     console.log('[attempt] Successfully persisted all attempts and answers');
 
-    // Calculate percentage score
-    const percentage = totalScore > 0 ? Math.round((earnedScore / totalScore) * 100) : 0;
-    const passedThreshold = percentage >= requiredScore;
+    // Calculate current attempt percentage
+    const currentPercentage = totalScore > 0 ? Math.round((earnedScore / totalScore) * 100) : 0;
 
-    console.log('[attempt] Score analysis:', { percentage, requiredScore, passedThreshold, creditReward });
+    console.log('[attempt] Current attempt score:', { earnedScore, totalScore, currentPercentage });
 
-    // Update user_tasks_chapters with score and completion
+    // Fetch all attempts for this quiz to find the best score
+    const { data: allAttempts, error: allAttemptsError } = await supabase
+      .from('user_question_attempts')
+      .select('attempt_number, score, max_score')
+      .in('question_id', questionIds)
+      .eq('user_info_id', userInfo.id);
+
+    if (allAttemptsError) {
+      console.error('[attempt] Error fetching all attempts:', allAttemptsError);
+      throw createError({
+        statusCode: 500,
+        message: 'Failed to fetch attempt history',
+      });
+    }
+
+    // Group by attempt_number and calculate totals
+    const attemptScores: Record<number, { score: number; totalScore: number }> = {};
+
+    allAttempts?.forEach(att => {
+      if (!attemptScores[att.attempt_number]) {
+        attemptScores[att.attempt_number] = { score: 0, totalScore: 0 };
+      }
+      attemptScores[att.attempt_number].score += att.score;
+      attemptScores[att.attempt_number].totalScore += att.max_score;
+    });
+
+    // Find best percentage across all attempts
+    let bestScore = earnedScore;
+    let bestTotalScore = totalScore;
+    let bestPercentage = currentPercentage;
+
+    Object.values(attemptScores).forEach(attempt => {
+      const percentage = attempt.totalScore > 0 ? Math.round((attempt.score / attempt.totalScore) * 100) : 0;
+      if (percentage > bestPercentage) {
+        bestScore = attempt.score;
+        bestTotalScore = attempt.totalScore;
+        bestPercentage = percentage;
+      }
+    });
+
+    // Use best score to determine if threshold is passed
+    const passedThreshold = bestPercentage >= requiredScore;
+
+    console.log('[attempt] Score analysis:', {
+      currentAttempt: { earnedScore, totalScore, currentPercentage },
+      bestAttempt: { bestScore, bestTotalScore, bestPercentage },
+      requiredScore,
+      passedThreshold,
+      creditReward
+    });
+
+    // Update user_tasks_chapters with best score and completion
+    // Only set completed_at on first attempt, keep it for subsequent attempts
+    const updateData: any = {
+      score: bestScore,
+      total_score: bestTotalScore,
+      status: 'COMPLETED',
+    };
+
+    // Only set completed_at if this is the first attempt
+    if (nextAttemptNumber === 1) {
+      updateData.completed_at = new Date().toISOString();
+    }
+
     const { error: updateError } = await supabase
       .from('user_tasks_chapters')
-      .update({
-        score: earnedScore,
-        total_score: totalScore,
-        status: 'COMPLETED',
-        completed_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq('id', userTasksChapterId);
 
     if (updateError) {
@@ -537,7 +603,20 @@ export default defineEventHandler(async (event) => {
     let creditEarned = 0;
     if (passedThreshold && creditReward > 0) {
       try {
-        // Get user's credit record
+        // Check if credits have already been disbursed for this quiz
+        const { data: existingTransaction } = await supabase
+          .from('credit_transactions')
+          .select('id, amount')
+          .eq('metadata->>userTasksChapterId', userTasksChapterId)
+          .eq('metadata->>source', 'quiz_completion')
+          .maybeSingle();
+
+        if (existingTransaction) {
+          console.log('[attempt] Credits already disbursed:', existingTransaction.amount);
+          creditEarned = existingTransaction.amount;
+          // Skip disbursement, credits already given
+        } else {
+          // Get user's credit record
         const { data: userCredit, error: creditFetchError } = await supabase
           .from('user_credits')
           .select('*')
@@ -577,9 +656,9 @@ export default defineEventHandler(async (event) => {
             metadata: {
               source: 'quiz_completion',
               userTasksChapterId,
-              score: earnedScore,
-              totalScore,
-              percentage,
+              score: bestScore,
+              totalScore: bestTotalScore,
+              percentage: bestPercentage,
             },
           });
 
@@ -588,8 +667,9 @@ export default defineEventHandler(async (event) => {
           throw transactionError;
         }
 
-        creditEarned = creditReward;
-        console.log('[attempt] Credits disbursed:', { creditEarned, newBalance: newCreditBalance });
+          creditEarned = creditReward;
+          console.log('[attempt] Credits disbursed:', { creditEarned, newBalance: newCreditBalance });
+        }
       } catch (creditError) {
         console.error('[attempt] Credit disbursement failed:', creditError);
         // Don't fail the quiz submission if credit disbursement fails
@@ -599,12 +679,32 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
+      // Current/Latest attempt (just submitted)
       score: earnedScore,
       totalScore,
-      percentage,
+      percentage: currentPercentage,
+      latestScore: earnedScore,
+      latestTotalScore: totalScore,
+      latestPercentage: currentPercentage,
+      // Best attempt across all attempts
+      bestScore,
+      bestTotalScore,
+      bestPercentage,
+      // Other fields
       requiredScore,
       passedThreshold,
       creditEarned,
+      creditDisbursed: creditEarned > 0,
+      creditReward,
+      attemptNumber: nextAttemptNumber,
+      attemptCount: nextAttemptNumber,
+      attempts: Object.entries(attemptScores).map(([attemptNum, data]) => ({
+        attemptNumber: parseInt(attemptNum),
+        score: data.score,
+        totalScore: data.totalScore,
+        percentage: data.totalScore > 0 ? Math.round((data.score / data.totalScore) * 100) : 0,
+        submittedAt: data.submittedAt || new Date().toISOString(),
+      })).sort((a, b) => a.attemptNumber - b.attemptNumber),
       results,
     };
   } catch (error: any) {

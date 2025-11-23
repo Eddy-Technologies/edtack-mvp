@@ -51,22 +51,23 @@ export default defineEventHandler(async (event) => {
       userId: userInfo.user_id,
     });
 
-    // Check if quiz already exists for this chapter
+    // Check if quiz already exists for this specific task-chapter combination
     const supabase = await getSupabaseClient(event);
 
-    const { data: existingQuestions } = await supabase
-      .from('questions')
-      .select('id')
-      .eq('chapter_id', chapterName)
-      .eq('source_name', 'AI_GENERATED')
-      .limit(1);
+    if (userTasksChapterId) {
+      const { data: existingLinks } = await supabase
+        .from('user_tasks_chapters_questions')
+        .select('id')
+        .eq('user_tasks_chapters_id', userTasksChapterId)
+        .limit(1);
 
-    if (existingQuestions && existingQuestions.length > 0) {
-      console.log('[generate] Quiz already exists for chapter:', chapterName);
-      throw createError({
-        statusCode: 409,
-        message: 'Quiz already exists for this chapter. Please use the existing quiz.',
-      });
+      if (existingLinks && existingLinks.length > 0) {
+        console.log('[generate] Quiz already generated for this task-chapter:', userTasksChapterId);
+        throw createError({
+          statusCode: 409,
+          message: 'Quiz already generated for this task. Please use the existing quiz.',
+        });
+      }
     }
 
     // Call Python backend to generate quiz

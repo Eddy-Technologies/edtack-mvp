@@ -122,12 +122,65 @@ export default defineEventHandler(async (event) => {
       answer: link.questions.question_correct_answers,
     }));
 
-    // Calculate results
-    const score = chapterData.score || 0;
-    const totalScore = chapterData.total_score || 0;
-    const percentage = totalScore > 0 ? Math.round((score / totalScore) * 100) : 0;
+    const questionIds = questions.map(q => q.id);
+
+    // Fetch ALL attempts for this quiz to calculate best and latest scores
+    const { data: allAttempts, error: allAttemptsError } = await supabase
+      .from('user_question_attempts')
+      .select('attempt_number, submitted_at, score, max_score')
+      .in('question_id', questionIds)
+      .eq('user_info_id', userInfo.id);
+
+    if (allAttemptsError) {
+      console.error('[results] Error fetching all attempts:', allAttemptsError);
+      throw createError({
+        statusCode: 500,
+        message: 'Failed to fetch attempt history',
+      });
+    }
+
+    // Group by attempt_number and calculate totals
+    const attemptScores: Record<number, { score: number; totalScore: number; submittedAt: string }> = {};
+
+    allAttempts?.forEach(att => {
+      if (!attemptScores[att.attempt_number]) {
+        attemptScores[att.attempt_number] = {
+          score: 0,
+          totalScore: 0,
+          submittedAt: att.submitted_at
+        };
+      }
+      attemptScores[att.attempt_number].score += att.score;
+      attemptScores[att.attempt_number].totalScore += att.max_score;
+    });
+
+    // Calculate percentages for each attempt
+    const attempts = Object.entries(attemptScores).map(([attemptNum, data]) => ({
+      attemptNumber: parseInt(attemptNum),
+      score: data.score,
+      totalScore: data.totalScore,
+      percentage: data.totalScore > 0 ? Math.round((data.score / data.totalScore) * 100) : 0,
+      submittedAt: data.submittedAt
+    })).sort((a, b) => a.attemptNumber - b.attemptNumber);
+
+    // Find best and latest
+    const latestAttempt = attempts.length > 0 ? attempts[attempts.length - 1] : null;
+    const bestAttempt = attempts.length > 0
+      ? attempts.reduce((best, curr) => curr.percentage > best.percentage ? curr : best)
+      : null;
+
+    // Use stored best score from user_tasks_chapters (should match calculated best)
+    const bestScore = chapterData.score || 0;
+    const bestTotalScore = chapterData.total_score || 0;
+    const bestPercentage = bestTotalScore > 0 ? Math.round((bestScore / bestTotalScore) * 100) : 0;
+
+    const latestScore = latestAttempt?.score || 0;
+    const latestTotalScore = latestAttempt?.totalScore || 0;
+    const latestPercentage = latestAttempt?.percentage || 0;
+
     const requiredScore = chapterData.user_tasks.required_score || 70;
-    const passedThreshold = percentage >= requiredScore;
+    const passedThreshold = bestPercentage >= requiredScore;
+    const attemptCount = attempts.length;
 
     // Check if credits were earned (look for transaction)
     const { data: transactions, error: txError } = await supabase
@@ -141,22 +194,25 @@ export default defineEventHandler(async (event) => {
       transactions[0].amount :
       0;
 
-    // Fetch actual attempt results from database
-    const results = [];
+    const creditDisbursed = creditEarned > 0;
+    const creditReward = chapterData.user_tasks.credit || 0;
 
-    console.log('[results] Looking for attempts with user_info_id:', userInfo.id);
+    // Fetch actual attempt results from database for LATEST attempt only
+    const results = [];
+    const latestAttemptNumber = latestAttempt?.attemptNumber || 1;
+
+    console.log('[results] Looking for latest attempt (#' + latestAttemptNumber + ') with user_info_id:', userInfo.id);
 
     for (let index = 0; index < questions.length; index++) {
       const question = questions[index];
 
-      // Fetch attempt for this question
+      // Fetch LATEST attempt for this question
       const { data: attemptData, error: attemptError } = await supabase
         .from('user_question_attempts')
         .select(`*, user_question_answers(*)`)
         .eq('question_id', question.id)
         .eq('user_info_id', userInfo.id)
-        .order('submitted_at', { ascending: false })
-        .limit(1)
+        .eq('attempt_number', latestAttemptNumber)
         .single();
 
       if (attemptError) {
@@ -204,21 +260,41 @@ export default defineEventHandler(async (event) => {
     }
 
     console.log('[results] Retrieved results:', {
-      score,
-      totalScore,
-      percentage,
-      passedThreshold
+      latestScore,
+      latestTotalScore,
+      latestPercentage,
+      bestScore,
+      bestTotalScore,
+      bestPercentage,
+      passedThreshold,
+      attemptCount
     });
 
     return {
       success: true,
       isCompleted: true,
-      score,
-      totalScore,
-      percentage,
+      // Latest attempt scores (for review display)
+      latestScore,
+      latestTotalScore,
+      latestPercentage,
+      // Best attempt scores (for credit calculation)
+      bestScore,
+      bestTotalScore,
+      bestPercentage,
+      // Legacy fields (keep for backward compatibility, use best score)
+      score: bestScore,
+      totalScore: bestTotalScore,
+      percentage: bestPercentage,
+      // Threshold and credits
       requiredScore,
       passedThreshold,
       creditEarned,
+      creditDisbursed,
+      creditReward,
+      // Attempt metadata
+      attemptCount,
+      attempts,
+      // Questions and results (from latest attempt)
       questions,
       results,
     };
