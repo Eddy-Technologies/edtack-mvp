@@ -34,12 +34,16 @@ export const orderedTableFiles = [
   'token_history.sql',
   'stripe_webhook_events.sql',
   'checkpointer_tables.sql',
-  'functions.sql',
   'threads.sql',
   'thread_messages.sql',
   'message_feedback.sql',
   'user_tasks_chapters.sql',
   'user_tasks_chapters_questions.sql'
+];
+
+// Function files to include (in order)
+export const functionFiles = [
+  'transfer_credits_atomic.sql'
 ];
 
 // Seed files to include (in order)

@@ -14,7 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { orderedTableFiles, seedFiles } from './table-config.js';
+import { orderedTableFiles, functionFiles, seedFiles } from './table-config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -94,8 +94,10 @@ function extractTableNames() {
 function extractFunctions() {
   const projectRoot = path.resolve(__dirname, '../..');
   const tablesDir = path.join(projectRoot, 'database/tables');
+  const functionsDir = path.join(projectRoot, 'database/functions');
   const functions = [];
 
+  // Extract functions from table files
   orderedTableFiles.forEach((file) => {
     const tablePath = path.join(tablesDir, file);
     if (fs.existsSync(tablePath)) {
@@ -115,6 +117,28 @@ function extractFunctions() {
       }
     }
   });
+
+  // Extract functions from dedicated functions directory
+  if (fs.existsSync(functionsDir)) {
+    functionFiles.forEach((file) => {
+      const functionPath = path.join(functionsDir, file);
+      if (fs.existsSync(functionPath)) {
+        const content = fs.readFileSync(functionPath, 'utf8');
+        const functionMatches = content.match(/CREATE\s+(OR REPLACE\s+)?FUNCTION\s+([a-zA-Z_][a-zA-Z0-9_.]*)\s*\(/gi);
+        if (functionMatches) {
+          functionMatches.forEach((match) => {
+            const funcMatch = match.match(/CREATE\s+(OR REPLACE\s+)?FUNCTION\s+([a-zA-Z_][a-zA-Z0-9_.]*)\s*\(/i);
+            if (funcMatch) {
+              const funcName = funcMatch[2].replace(/^public\./, '').trim();
+              if (!functions.includes(funcName)) {
+                functions.push(funcName);
+              }
+            }
+          });
+        }
+      }
+    });
+  }
 
   return functions;
 }
@@ -247,6 +271,32 @@ function generateResetScript() {
     });
 
     // =====================================
+    // FUNCTIONS SECTION
+    // =====================================
+    resetScript += `-- ==========================================\n`;
+    resetScript += `-- CREATE ALL FUNCTIONS\n`;
+    resetScript += `-- ==========================================\n\n`;
+
+    let functionsCreated = 0;
+    const functionsDir = path.join(projectRoot, 'database/functions');
+    if (fs.existsSync(functionsDir)) {
+      functionFiles.forEach((file) => {
+        const functionPath = path.join(functionsDir, file);
+        if (fs.existsSync(functionPath)) {
+          const content = fs.readFileSync(functionPath, 'utf8');
+          resetScript += `-- From: functions/${file}\n`;
+          resetScript += content + '\n\n';
+          functionsCreated++;
+          log(`   ✅ Added function: ${file}`, 'green');
+        } else {
+          log(`   ⚠️  Skipping function ${file} - not found`, 'yellow');
+        }
+      });
+    } else {
+      log(`   ⚠️  Functions directory not found at database/functions`, 'yellow');
+    }
+
+    // =====================================
     // SEED DATA SECTION
     // =====================================
     resetScript += `-- ==========================================\n`;
@@ -281,6 +331,7 @@ function generateResetScript() {
     resetScript += `-- Functions dropped: ${functions.length}\n`;
     resetScript += `-- Tables dropped: ${tableNames.length}\n`;
     resetScript += `-- Tables created: ${tablesCreated}\n`;
+    resetScript += `-- Functions created: ${functionsCreated}\n`;
     resetScript += `-- Seed files applied: ${seedsAdded}\n`;
     resetScript += `-- Generated: ${new Date().toISOString()}\n`;
     resetScript += `-- ==========================================\n`;
@@ -290,7 +341,7 @@ function generateResetScript() {
 
     log(`\n🎉 Database reset script generated successfully!`, 'green');
     log(`📁 Output: database/reset.sql`, 'cyan');
-    log(`📊 Triggers: ${triggers.length}, Functions: ${functions.length}, Tables: ${tablesCreated}, Seeds: ${seedsAdded}`, 'cyan');
+    log(`📊 Triggers: ${triggers.length}, Functions Dropped: ${functions.length}, Functions Created: ${functionsCreated}, Tables: ${tablesCreated}, Seeds: ${seedsAdded}`, 'cyan');
     log(`\n💡 To use this script:`, 'yellow');
     log(`   1. Copy the contents of database/reset.sql`, 'white');
     log(`   2. Paste into Supabase SQL Editor`, 'white');

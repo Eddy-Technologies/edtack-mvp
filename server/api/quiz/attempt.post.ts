@@ -70,7 +70,8 @@ export default defineEventHandler(async (event) => {
         user_tasks!inner(
           id,
           required_score,
-          credit
+          credit,
+          creator_user_info_id
         )
       `)
       .eq('id', userTasksChapterId)
@@ -601,79 +602,73 @@ export default defineEventHandler(async (event) => {
 
     // Disburse credits if threshold is met and credit reward exists
     let creditEarned = 0;
+    let creditDisbursed = false;
     if (passedThreshold && creditReward > 0) {
       try {
+        const parentUserId = chapterData.user_tasks.creator_user_info_id;
+
         // Check if credits have already been disbursed for this quiz
+        // Enhanced idempotency: check for transfer from parent to student
         const { data: existingTransaction } = await supabase
           .from('credit_transactions')
           .select('id, amount')
-          .eq('metadata->>userTasksChapterId', userTasksChapterId)
+          .eq('user_info_id', userInfo.id)
+          .eq('transaction_type', 'TRANSFER_IN')
+          .eq('from_user_info_id', parentUserId)
           .eq('metadata->>source', 'quiz_completion')
+          .eq('metadata->>userTasksChapterId', userTasksChapterId)
           .maybeSingle();
 
         if (existingTransaction) {
           console.log('[attempt] Credits already disbursed:', existingTransaction.amount);
           creditEarned = existingTransaction.amount;
+          creditDisbursed = true;
           // Skip disbursement, credits already given
         } else {
-          // Get user's credit record
-          const { data: userCredit, error: creditFetchError } = await supabase
-            .from('user_credits')
-            .select('*')
-            .eq('user_info_id', userInfo.id)
-            .single();
-
-          if (creditFetchError && creditFetchError.code !== 'PGRST116') {
-            console.error('[attempt] Error fetching user credits:', creditFetchError);
-            throw creditFetchError;
-          }
-
-          // Update or insert user credits
-          const newCreditBalance = (userCredit?.credit || 0) + creditReward;
-
-          const { error: creditUpdateError } = await supabase
-            .from('user_credits')
-            .upsert({
-              user_info_id: userInfo.id,
-              credit: newCreditBalance,
-              reserved_credit: userCredit?.reserved_credit || 0,
-            });
-
-          if (creditUpdateError) {
-            console.error('[attempt] Error updating credits:', creditUpdateError);
-            throw creditUpdateError;
-          }
-
-          // Create credit transaction record
-          const { error: transactionError } = await supabase
-            .from('credit_transactions')
-            .insert({
-              user_info_id: userInfo.id,
-              transaction_type: 'topup',
-              amount: creditReward,
-              currency: 'SGD',
-              description: `Quiz reward for ${chapterData.user_tasks.id}`,
-              metadata: {
+          // Transfer credits atomically from parent to student
+          const { data: transferResult, error: transferError } = await supabase
+            .rpc('transfer_credits_atomic', {
+              p_from_user_info_id: parentUserId,
+              p_to_user_info_id: userInfo.id,
+              p_amount: creditReward,
+              p_description_from: `Quiz reward transfer to student for task ${chapterData.user_tasks.id}`,
+              p_description_to: `Quiz reward for completing ${chapterData.user_tasks.id}`,
+              p_metadata_from: {
                 source: 'quiz_completion',
                 userTasksChapterId,
                 score: bestScore,
                 totalScore: bestTotalScore,
                 percentage: bestPercentage,
+                transfer_type: 'quiz_reward',
+              },
+              p_metadata_to: {
+                source: 'quiz_completion',
+                userTasksChapterId,
+                score: bestScore,
+                totalScore: bestTotalScore,
+                percentage: bestPercentage,
+                transfer_type: 'quiz_reward',
               },
             });
 
-          if (transactionError) {
-            console.error('[attempt] Error creating transaction:', transactionError);
-            throw transactionError;
+          if (transferError) {
+            console.error('[attempt] Credit transfer failed:', transferError);
+            throw transferError;
           }
 
           creditEarned = creditReward;
-          console.log('[attempt] Credits disbursed:', { creditEarned, newBalance: newCreditBalance });
+          creditDisbursed = true;
+          console.log('[attempt] Credits disbursed:', {
+            creditEarned,
+            newBalance: transferResult.recipientBalance,
+            parentBalance: transferResult.senderBalance,
+          });
         }
       } catch (creditError) {
         console.error('[attempt] Credit disbursement failed:', creditError);
         // Don't fail the quiz submission if credit disbursement fails
         // Just log the error and continue
+        // creditDisbursed remains false, student can see "credits pending"
       }
     }
 
@@ -694,7 +689,7 @@ export default defineEventHandler(async (event) => {
       requiredScore,
       passedThreshold,
       creditEarned,
-      creditDisbursed: creditEarned > 0,
+      creditDisbursed,
       creditReward,
       attemptNumber: nextAttemptNumber,
       attemptCount: nextAttemptNumber,
