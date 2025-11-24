@@ -165,11 +165,11 @@ const formatDate = (dateString: string) => {
 // Get transaction type label
 const getTransactionLabel = (type: string) => {
   const labels = {
-    credit_topup: 'Credit Top-up',
-    transfer_in: 'Credit Received',
-    transfer_out: 'Credit Sent',
-    balance_adjustment: 'Balance Adjustment',
-    purchase: 'Credit Purchase',
+    CREDIT_TOPUP: 'Credit Top-up',
+    TRANSFER_IN: 'Credit Received',
+    TRANSFER_OUT: 'Credit Sent',
+    BALANCE_ADJUSTMENT: 'Balance Adjustment',
+    PURCHASE: 'Credit Purchase',
   };
   return labels[type] || type.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 };
@@ -177,27 +177,27 @@ const getTransactionLabel = (type: string) => {
 // Get transaction type icon
 const getTransactionIcon = (type: string) => {
   const icons = {
-    credit_topup: {
+    CREDIT_TOPUP: {
       textColor: 'text-primary',
       bgColor: 'bg-primary-100',
       name: 'i-lucide-circle-plus'
     },
-    balance_adjustment: {
+    BALANCE_ADJUSTMENT: {
       textColor: 'text-gray-600',
       bgColor: 'bg-gray-100',
       name: 'i-lucide-wrench'
     },
-    transfer_in: {
+    TRANSFER_IN: {
       bgColor: 'bg-green-100',
       textColor: 'text-green-600',
       name: 'i-lucide-circle-dollar-sign'
     },
-    transfer_out: {
+    TRANSFER_OUT: {
       textColor: 'text-red-600',
       bgColor: 'bg-red-100',
       name: 'i-lucide-circle-dollar-sign'
     },
-    purchase: {
+    PURCHASE: {
       textColor: 'text-blue-600',
       bgColor: 'bg-blue-100',
       name: 'i-lucide-shopping-basket'
@@ -205,8 +205,9 @@ const getTransactionIcon = (type: string) => {
   };
 
   return icons[type] || {
-    class: 'bg-gray-100 rounded-full p-2 text-gray-600',
-    path: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+    textColor: 'text-gray-600',
+    bgColor: 'bg-gray-100',
+    name: 'i-lucide-file-text'
   };
 };
 
