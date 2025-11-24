@@ -25,11 +25,11 @@
     <TasksTab v-else-if="currentTab === 'tasks'" />
     <FamilyTab v-else-if="currentTab === 'family'" />
     <OrdersTab v-else-if="currentTab === 'orders'" />
-    <CreditsTab v-else-if="currentTab === 'credits'" />
-    <div v-else class="text-center py-12">
+    <div v-else-if="!currentTab || !['overview', 'study', 'settings', 'shop', 'wishlist', 'cart', 'tasks', 'family', 'orders', 'credits'].includes(currentTab)" class="text-center py-12">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
       <p class="text-gray-600">Select a section from the sidebar to get started.</p>
     </div>
+    <CreditsTab v-show="currentTab === 'credits'" />
   </Layout>
 </template>
 
