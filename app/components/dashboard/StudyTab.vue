@@ -124,7 +124,7 @@
           <div v-if="openSubjects.includes(subject.name)" class="overflow-hidden">
             <div class="px-6 pb-6 space-y-4">
               <!-- Chapter Cards -->
-              <div class="grid gap-4">
+              <div class="grid gap-4 mt-4">
                 <div
                   v-for="chapter in subject.chapters"
                   :key="chapter.name"

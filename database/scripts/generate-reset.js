@@ -200,21 +200,8 @@ function generateResetScript() {
     const functions = extractFunctions();
     const triggers = extractTriggers();
 
-    // =====================================
-    // DROP TRIGGERS SECTION
-    // =====================================
-    if (triggers.length > 0) {
-      resetScript += `-- ==========================================\n`;
-      resetScript += `-- DROP ALL TRIGGERS\n`;
-      resetScript += `-- ==========================================\n\n`;
-
-      triggers.forEach((trigger) => {
-        resetScript += `DROP TRIGGER IF EXISTS ${trigger.name} ON ${trigger.table} CASCADE;\n`;
-      });
-
-      resetScript += `\n-- All triggers dropped\n\n`;
-      log(`   ✅ Found ${triggers.length} triggers to drop`, 'green');
-    }
+    // Note: Triggers are automatically dropped by DROP TABLE ... CASCADE
+    // No need to explicitly drop triggers
 
     // =====================================
     // DROP FUNCTIONS SECTION
@@ -327,7 +314,6 @@ function generateResetScript() {
 
     resetScript += `-- ==========================================\n`;
     resetScript += `-- RESET COMPLETE\n`;
-    resetScript += `-- Triggers dropped: ${triggers.length}\n`;
     resetScript += `-- Functions dropped: ${functions.length}\n`;
     resetScript += `-- Tables dropped: ${tableNames.length}\n`;
     resetScript += `-- Tables created: ${tablesCreated}\n`;
@@ -341,7 +327,7 @@ function generateResetScript() {
 
     log(`\n🎉 Database reset script generated successfully!`, 'green');
     log(`📁 Output: database/reset.sql`, 'cyan');
-    log(`📊 Triggers: ${triggers.length}, Functions Dropped: ${functions.length}, Functions Created: ${functionsCreated}, Tables: ${tablesCreated}, Seeds: ${seedsAdded}`, 'cyan');
+    log(`📊 Functions Dropped: ${functions.length}, Functions Created: ${functionsCreated}, Tables: ${tablesCreated}, Seeds: ${seedsAdded}`, 'cyan');
     log(`\n💡 To use this script:`, 'yellow');
     log(`   1. Copy the contents of database/reset.sql`, 'white');
     log(`   2. Paste into Supabase SQL Editor`, 'white');
