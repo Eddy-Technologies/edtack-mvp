@@ -198,7 +198,6 @@ function generateResetScript() {
     // Extract all database objects
     const tableNames = extractTableNames();
     const functions = extractFunctions();
-    const triggers = extractTriggers();
 
     // Note: Triggers are automatically dropped by DROP TABLE ... CASCADE
     // No need to explicitly drop triggers
