@@ -143,33 +143,6 @@ function extractFunctions() {
   return functions;
 }
 
-function extractTriggers() {
-  const projectRoot = path.resolve(__dirname, '../..');
-  const tablesDir = path.join(projectRoot, 'database/tables');
-  const triggers = [];
-
-  orderedTableFiles.forEach((file) => {
-    const tablePath = path.join(tablesDir, file);
-    if (fs.existsSync(tablePath)) {
-      const content = fs.readFileSync(tablePath, 'utf8');
-      // Extract trigger names and tables from CREATE TRIGGER
-      const triggerMatches = content.match(/CREATE\s+TRIGGER\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+[^;]*?\s+ON\s+([a-zA-Z_][a-zA-Z0-9_]*)/gi);
-      if (triggerMatches) {
-        triggerMatches.forEach((match) => {
-          const trigMatch = match.match(/CREATE\s+TRIGGER\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+[^;]*?\s+ON\s+([a-zA-Z_][a-zA-Z0-9_]*)/i);
-          if (trigMatch) {
-            const triggerName = trigMatch[1].trim();
-            const tableName = trigMatch[2].trim();
-            triggers.push({ name: triggerName, table: tableName });
-          }
-        });
-      }
-    }
-  });
-
-  return triggers;
-}
-
 function generateResetScript() {
   try {
     log('\n🔧 Generating database reset script...', 'magenta');
