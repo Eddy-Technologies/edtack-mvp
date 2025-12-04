@@ -24,6 +24,15 @@ interface WebSocketResponse {
   is_complete?: boolean; // For partial responses
   timestamp?: number; // For heartbeat
   data?: any; // For additional data
+
+  // Streaming support
+  type?: 'slide_batch_ready';
+  batch?: {
+    slides: any[];
+    batch_size: number;
+    total_slides_so_far: number;
+  };
+
   [key: string]: any;
 }
 
@@ -92,6 +101,12 @@ export function useWebSocketChat(threadId: string) {
 
           if (data.status === 'status_update') {
             responsePhase.value = data.phase || 'Processing...';
+            return;
+          }
+
+          // Pass through batch messages for ChatContent to handle
+          if (data.type === 'slide_batch_ready') {
+            response.value.push(data);
             return;
           }
 

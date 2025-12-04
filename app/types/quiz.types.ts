@@ -41,3 +41,23 @@ export type UserAnswer = {
   answers: string[];
   markingStatus?: string; // CORRECT | PARTIALLY_CORRECT | INCORRECT
 };
+
+export interface StreamingMessage {
+  id: string;
+  status: 'streaming' | 'user_message' | 'error';
+  message: string;
+  slides: QuizQuestion[];
+  contentType: 'quiz' | 'lesson';
+  isStreaming: boolean;
+  timestamp?: number;
+}
+
+export interface SlideBatchMessage {
+  type: 'slide_batch_ready';
+  timestamp: number;
+  batch: {
+    slides: QuizQuestion[];
+    batch_size: number;
+    total_slides_so_far: number;
+  };
+}

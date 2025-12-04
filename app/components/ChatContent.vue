@@ -65,6 +65,22 @@
             :is-loading="true"
           />
 
+          <!-- Streaming Progress in Split View -->
+          <div
+            v-if="isStreaming && streamingProgress"
+            class="mb-3 p-3 bg-primary-50 border border-primary-200 rounded-lg"
+          >
+            <div class="flex items-center justify-between text-sm">
+              <span class="font-medium text-gray-800">
+                Generating {{ activeStreamingMessage?.contentType === 'quiz' ? 'quiz' : 'lesson' }}...
+              </span>
+              <span class="text-primary-600 font-semibold">
+                {{ streamingProgress.slidesReceived }}
+                {{ activeStreamingMessage?.contentType === 'quiz' ? 'questions' : 'slides' }}
+              </span>
+            </div>
+          </div>
+
           <div ref="bottomAnchor" />
         </div>
       </template>
@@ -94,6 +110,36 @@
         :character="character"
         :is-loading="true"
       />
+
+      <!-- Streaming Progress Indicator -->
+      <div
+        v-if="isStreaming && streamingProgress"
+        class="mb-4 p-4 bg-gradient-to-r from-primary-50 to-blue-50 rounded-lg border border-primary-200"
+      >
+        <div class="flex items-center gap-3">
+          <div class="flex space-x-1">
+            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms" />
+            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 150ms" />
+            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 300ms" />
+          </div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-800">
+              {{ activeStreamingMessage?.contentType === 'quiz' ? 'Generating Quiz' : 'Creating Lesson' }}
+            </p>
+            <p class="text-xs text-gray-600">
+              {{ streamingProgress.slidesReceived }}
+              {{ activeStreamingMessage?.contentType === 'quiz' ? 'questions' : 'slides' }}
+              generated so far...
+            </p>
+          </div>
+        </div>
+        <div class="mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-gradient-to-r from-primary-500 to-blue-500 rounded-full transition-all duration-500"
+            style="width: 100%"
+          />
+        </div>
+      </div>
 
       <div ref="bottomAnchor" />
     </div>
@@ -140,6 +186,23 @@ const tokenCount = ref(0);
 const viewMode = ref<'stream' | 'split'>('stream');
 const currentSlideIndex = ref(0);
 const selectedSlides = ref<any[]>([]);
+
+// Streaming state management
+const activeStreamingMessage = ref<{
+  id: string;
+  messageIndex: number;
+  totalSlides: number;
+  contentType: 'lesson' | 'quiz' | null;
+  startTime: number;
+} | null>(null);
+
+const streamingProgress = ref<{
+  slidesReceived: number;
+  totalExpected: number | null;
+  estimatedTimeRemaining: number | null;
+} | null>(null);
+
+const isStreaming = computed(() => activeStreamingMessage.value !== null);
 
 // Message refs for scrolling
 const messageRefs = ref<Record<string, HTMLElement>>({});
@@ -456,12 +519,177 @@ const persistQuestionsToDatabase = async (slides: any[], chapterId: string) => {
   }
 };
 
+// Handle slide batch streaming
+const handleSlideBatch = (batchMessage: any) => {
+  const { batch } = batchMessage;
+
+  if (!batch || !batch.slides || !Array.isArray(batch.slides)) {
+    console.warn('Invalid batch message:', batchMessage);
+    return;
+  }
+
+  const { slides, batch_size, total_slides_so_far } = batch;
+
+  // Case 1: First batch - initialize streaming message
+  if (!activeStreamingMessage.value) {
+    console.log('First batch received, initializing streaming message');
+
+    // Detect content type from first slide
+    const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
+
+    // Create the streaming message structure
+    const newMessageId = crypto.randomUUID();
+    const newMessage = {
+      status: 'streaming',
+      message: contentType === 'quiz' ?
+        `Generating quiz questions...` :
+        `Preparing lesson slides...`,
+      slides: [...slides],
+      contentType,
+      isStreaming: true,
+      id: newMessageId,
+    };
+
+    // Add to message stream
+    messageStream.value.push(newMessage);
+    const messageIndex = messageStream.value.length - 1;
+
+    // Initialize streaming state
+    activeStreamingMessage.value = {
+      id: newMessageId,
+      messageIndex,
+      totalSlides: total_slides_so_far,
+      contentType,
+      startTime: Date.now(),
+    };
+
+    streamingProgress.value = {
+      slidesReceived: total_slides_so_far,
+      totalExpected: null, // Unknown until completion
+      estimatedTimeRemaining: null,
+    };
+
+    // Auto-open split view on first batch
+    selectedSlides.value = [...slides];
+    viewMode.value = 'split';
+
+    isWaitingForResponse.value = true;
+
+    return;
+  }
+
+  // Case 2: Subsequent batches - append to existing message
+  console.log(`Batch received: ${batch_size} slides (total: ${total_slides_so_far})`);
+
+  const messageIndex = activeStreamingMessage.value.messageIndex;
+  const existingMessage = messageStream.value[messageIndex];
+
+  if (!existingMessage) {
+    console.error('Streaming message not found at index:', messageIndex);
+    return;
+  }
+
+  // Append new slides to existing message
+  existingMessage.slides = [...existingMessage.slides, ...slides];
+
+  // Update streaming state
+  activeStreamingMessage.value.totalSlides = total_slides_so_far;
+
+  if (streamingProgress.value) {
+    streamingProgress.value.slidesReceived = total_slides_so_far;
+
+    // Calculate estimated time remaining
+    const elapsed = Date.now() - activeStreamingMessage.value.startTime;
+    const slidesPerMs = total_slides_so_far / elapsed;
+    // Rough estimate: assume 10-15 slides typical
+    const estimatedTotal = Math.max(total_slides_so_far + 2, 10);
+    const remaining = (estimatedTotal - total_slides_so_far) / slidesPerMs;
+    streamingProgress.value.estimatedTimeRemaining = remaining;
+  }
+
+  // Update split view slides if currently viewing
+  if (viewMode.value === 'split') {
+    selectedSlides.value = [...existingMessage.slides];
+  }
+
+  // Trigger reactivity
+  messageStream.value = [...messageStream.value];
+};
+
+// Handle streaming completion
+const handleStreamingComplete = (completionMessage: any) => {
+  if (!activeStreamingMessage.value) {
+    console.warn('Received completion but no active streaming message');
+    return;
+  }
+
+  console.log('Streaming completed');
+
+  const messageIndex = activeStreamingMessage.value.messageIndex;
+  const streamingMessage = messageStream.value[messageIndex];
+
+  if (streamingMessage) {
+    // Update message to final state
+    streamingMessage.status = 'user_message';
+    streamingMessage.isStreaming = false;
+    streamingMessage.message = completionMessage.message || streamingMessage.message;
+
+    // Trigger final update
+    messageStream.value = [...messageStream.value];
+
+    // Persist to database if task-based thread
+    if (streamingMessage.slides && Array.isArray(streamingMessage.slides)) {
+      const taskData = Array.isArray(props.task) ? props.task[0] : props.task;
+
+      if (taskData && taskData.chapter) {
+        console.log('Persisting questions for chapter:', taskData.chapter);
+        persistQuestionsToDatabase(streamingMessage.slides, taskData.chapter);
+      }
+    }
+
+    // Add to global thread state
+    const addMessageObj = {
+      thread_id: props.threadId,
+      content: streamingMessage,
+      type: 'json',
+      isUser: false,
+      uuid: streamingMessage.id
+    };
+    addMessage(addMessageObj);
+
+    // Update task if applicable
+    if (props.task && !props.task.generated_content) {
+      updateTaskGeneratedContent(props.task.id, streamingMessage);
+    }
+  }
+
+  // Clear streaming state
+  activeStreamingMessage.value = null;
+  streamingProgress.value = null;
+  isWaitingForResponse.value = false;
+
+  // Scroll to ensure content is visible
+  nextTick(() => {
+    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  });
+};
+
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
+  // Route slide batch messages
+  if (message.type === 'slide_batch_ready') {
+    handleSlideBatch(message);
+    return;
+  }
+
+  // Handle streaming completion
+  if (message.status === 'completed' && activeStreamingMessage.value) {
+    handleStreamingComplete(message);
+    return;
+  }
+
   // Display any message with message.message field unconditionally
   if (message.status === 'user_message') {
-    console.log('Received user_message message:', message);
-
     // Add to global state and local stream
     const newUuid = crypto.randomUUID();
     const addMessageObj = {
@@ -513,6 +741,19 @@ const handleWebSocketMessage = (message: any) => {
   }
 
   if (['timeout', 'cancelled', 'error'].includes(message.status)) {
+    // Clear streaming state on error
+    if (activeStreamingMessage.value) {
+      const messageIndex = activeStreamingMessage.value.messageIndex;
+      const streamingMessage = messageStream.value[messageIndex];
+      if (streamingMessage) {
+        streamingMessage.status = 'error';
+        streamingMessage.isStreaming = false;
+        streamingMessage.message = `[Error: ${message.error || 'Generation failed'}]`;
+      }
+      activeStreamingMessage.value = null;
+      streamingProgress.value = null;
+    }
+
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -720,6 +961,11 @@ const clearChat = () => {
   messageQueue.value = [];
   selectedSlides.value = [];
   messageRefs.value = {};
+
+  // Clear streaming state
+  activeStreamingMessage.value = null;
+  streamingProgress.value = null;
+
   // Reset to stream view (default)
   viewMode.value = 'stream';
   if (import.meta.client) {

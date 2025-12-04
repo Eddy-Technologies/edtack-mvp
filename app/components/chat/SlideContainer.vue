@@ -146,22 +146,33 @@
         <!-- Slide Thumbnail Overview -->
         <div v-if="showThumbnails" class="mt-6">
           <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
-          <div class="grid grid-cols-2 gap-2">
+          <TransitionGroup
+            name="slide-list"
+            tag="div"
+            class="grid grid-cols-2 gap-2"
+          >
             <div
               v-for="(slide, index) in slides"
               :key="slide.id"
               :class="[
-                'p-2 border rounded cursor-pointer text-xs transition-colors',
+                'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
                 index === currentSlideIndex
-                  ? 'border-primary-500 bg-primary-50'
+                  ? 'border-primary-500 bg-primary-50 scale-105'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               ]"
               @click="jumpToSlide(index)"
             >
               <div class="font-medium">{{ slide.part_label }}</div>
               <div class="text-gray-600 truncate">{{ slide.title }}</div>
+              <!-- NEW: Badge for newly added slides -->
+              <span
+                v-if="isSlideNew(index)"
+                class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
+              >
+                NEW
+              </span>
             </div>
-          </div>
+          </TransitionGroup>
         </div>
 
         <!-- Task Submit Button -->
@@ -253,6 +264,29 @@ const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: 
 // Refs
 const rightPanel = ref<HTMLElement>();
 const resizeHandle = ref<HTMLElement>();
+
+// Track newly added slides for animation
+const newSlideIndices = ref<Set<number>>(new Set());
+
+watch(() => props.slides.length, (newLength, oldLength) => {
+  if (newLength > oldLength) {
+    // Mark new slides
+    for (let i = oldLength; i < newLength; i++) {
+      newSlideIndices.value.add(i);
+    }
+
+    // Remove "new" badge after 3 seconds
+    setTimeout(() => {
+      for (let i = oldLength; i < newLength; i++) {
+        newSlideIndices.value.delete(i);
+      }
+    }, 3000);
+  }
+});
+
+const isSlideNew = (index: number) => {
+  return newSlideIndices.value.has(index);
+};
 
 // Computed properties
 const currentSlide = computed(() => props.slides[currentSlideIndex.value]);
