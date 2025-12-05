@@ -12,8 +12,13 @@
             <Icon name="i-heroicons-academic-cap" class="w-6 h-6 text-primary-600" />
           </div>
           <div>
-            <h3 class="font-semibold text-gray-800 text-base">
+            <h3 class="font-semibold text-gray-800 text-base flex items-center gap-2">
               {{ slides.length }} {{ slides.length === 1 ? 'Slide' : 'Slides' }}
+              <Icon
+                v-if="isStreaming"
+                name="i-heroicons-arrow-path"
+                class="w-4 h-4 text-primary-600 animate-spin"
+              />
             </h3>
           </div>
         </div>
@@ -52,6 +57,7 @@ const props = defineProps<{
   slidesTitle?: string;
   startPlayback?: boolean;
   messageId?: string;
+  isStreaming?: boolean;
 }>();
 
 const emit = defineEmits(['finish', 'open-split-view']);

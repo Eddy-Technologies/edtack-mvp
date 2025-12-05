@@ -65,22 +65,6 @@
             :is-loading="true"
           />
 
-          <!-- Streaming Progress in Split View -->
-          <div
-            v-if="isStreaming && streamingProgress"
-            class="mb-3 p-3 bg-primary-50 border border-primary-200 rounded-lg"
-          >
-            <div class="flex items-center justify-between text-sm">
-              <span class="font-medium text-gray-800">
-                Generating {{ activeStreamingMessage?.contentType === 'quiz' ? 'quiz' : 'lesson' }}...
-              </span>
-              <span class="text-primary-600 font-semibold">
-                {{ streamingProgress.slidesReceived }}
-                {{ activeStreamingMessage?.contentType === 'quiz' ? 'questions' : 'slides' }}
-              </span>
-            </div>
-          </div>
-
           <div ref="bottomAnchor" />
         </div>
       </template>
@@ -110,36 +94,6 @@
         :character="character"
         :is-loading="true"
       />
-
-      <!-- Streaming Progress Indicator -->
-      <div
-        v-if="isStreaming && streamingProgress"
-        class="mb-4 p-4 bg-gradient-to-r from-primary-50 to-blue-50 rounded-lg border border-primary-200"
-      >
-        <div class="flex items-center gap-3">
-          <div class="flex space-x-1">
-            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms" />
-            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 150ms" />
-            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 300ms" />
-          </div>
-          <div class="flex-1">
-            <p class="text-sm font-semibold text-gray-800">
-              {{ activeStreamingMessage?.contentType === 'quiz' ? 'Generating Quiz' : 'Creating Lesson' }}
-            </p>
-            <p class="text-xs text-gray-600">
-              {{ streamingProgress.slidesReceived }}
-              {{ activeStreamingMessage?.contentType === 'quiz' ? 'questions' : 'slides' }}
-              generated so far...
-            </p>
-          </div>
-        </div>
-        <div class="mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-gradient-to-r from-primary-500 to-blue-500 rounded-full transition-all duration-500"
-            style="width: 100%"
-          />
-        </div>
-      </div>
 
       <div ref="bottomAnchor" />
     </div>
@@ -201,8 +155,6 @@ const streamingProgress = ref<{
   totalExpected: number | null;
   estimatedTimeRemaining: number | null;
 } | null>(null);
-
-const isStreaming = computed(() => activeStreamingMessage.value !== null);
 
 // Message refs for scrolling
 const messageRefs = ref<Record<string, HTMLElement>>({});
@@ -688,55 +640,42 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  // Display any message with message.message field unconditionally
+  // Display summary message from user_message status
   if (message.status === 'user_message') {
-    // Add to global state and local stream
+    // NOTE: Save only the message text, ignore slides array
+    // The slides were already saved via handleStreamingComplete()
     const newUuid = crypto.randomUUID();
+
+    // Create clean message object WITHOUT slides for database
+    const cleanMessage = {
+      message: message.message,
+      status: 'user_message',
+      timestamp: message.timestamp
+      // Explicitly exclude slides - they're already saved
+    };
+
+    // Save clean message to database (text only, no slides)
     const addMessageObj = {
       thread_id: props.threadId,
-      content: message,
+      content: cleanMessage,
       type: 'json',
       isUser: false,
       uuid: newUuid
     };
     addMessage(addMessageObj);
-    messageStream.value.push({ ...message, id: newUuid });
 
+    // Display in UI
+    messageStream.value.push({ ...cleanMessage, id: newUuid });
+
+    // Update state flags
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
 
-    // If this is a response to task generation, update the task's generated_content
-    if (props.task && !props.task.generated_content && message.slides.length > 0) {
-      updateTaskGeneratedContent(props.task.id, message);
+    // Scroll to bottom
+    nextTick(() => {
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    });
 
-      // Mark the message as task-generated for proper ordering
-      messageStream.value[messageStream.value.length - 1].isTaskGenerated = true;
-    }
-
-    // Persist questions to database ONLY if from task-based thread
-    if (message.slides && Array.isArray(message.slides) && message.slides.length > 0) {
-      // Explicit check: ensure this is a task-based thread with valid task data
-      const taskData = Array.isArray(props.task) ? props.task[0] : props.task;
-
-      // Only persist if we have valid task data with a chapter
-      // This ensures we're in a task-based thread (from StudyTab), not a regular chat
-      if (taskData && taskData.chapter) {
-        console.log('Task-based thread detected - persisting questions for chapter:', taskData.chapter);
-        // Persist questions asynchronously (don't wait)
-        persistQuestionsToDatabase(message.slides, taskData.chapter);
-      } else {
-        // This is a regular chat (not from StudyTab) or task data is missing
-        console.log('Regular chat or no task data - skipping question persistence');
-      }
-    }
-
-    // The watcher will automatically handle slides and scrolling
-    // For messages without slides, scroll to bottom
-    if (!message.slides || !Array.isArray(message.slides) || message.slides.length === 0) {
-      nextTick(() => {
-        bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
     return;
   }
 
@@ -824,6 +763,7 @@ const flattenedPlaybackUnits = computed(() => {
           showThumbnails: true,
           startPlayback: false,
           messageId: block.id?.toString(),
+          isStreaming: activeStreamingMessage.value?.id === block.id,
         },
       });
     }
