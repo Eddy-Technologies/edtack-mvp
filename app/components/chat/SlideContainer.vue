@@ -174,16 +174,6 @@
             </div>
           </TransitionGroup>
         </div>
-
-        <!-- Task Submit Button -->
-        <div v-if="task" class="mt-6 flex justify-center">
-          <button
-            class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
-            @click="submitTask"
-          >
-            Submit Task
-          </button>
-        </div>
       </div>
     </div>
 
@@ -243,7 +233,6 @@ const props = defineProps<{
   slides: SlideData[];
   initialSlideIndex?: number;
   showThumbnails?: boolean;
-  task?: any; // Task data to determine if this is a task
 }>();
 
 const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view']);
@@ -362,39 +351,6 @@ function checkAnswer(slide: SlideData) {
       title: 'Answer Checked',
       description: 'This question type will be supported soon!',
       color: 'primary'
-    });
-  }
-}
-
-// Submit task
-async function submitTask() {
-  if (!props.task?.id) {
-    toast.add({
-      title: 'Error',
-      description: 'No task ID found. Cannot submit task.',
-      color: 'red'
-    });
-    return;
-  }
-
-  try {
-    const response = await $fetch(`/api/tasks/complete/${props.task.id}`, {
-      method: 'POST'
-    });
-
-    if (response.success) {
-      toast.add({
-        title: 'Task Completed!',
-        description: `Congratulations! You earned ${response.creditsEarned} credits.`,
-        color: 'green'
-      });
-    }
-  } catch (error: any) {
-    console.error('Failed to submit task:', error);
-    toast.add({
-      title: 'Submission Failed',
-      description: error.data?.message || 'Failed to submit task. Please try again.',
-      color: 'red'
     });
   }
 }

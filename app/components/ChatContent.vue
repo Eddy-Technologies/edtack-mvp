@@ -36,7 +36,6 @@
       :slides="selectedSlides"
       :initial-slide-index="0"
       :show-thumbnails="true"
-      :task="task"
       @slide-changed="handleSlideChanged"
       @close-split-view="handleCloseSplitView"
     >
@@ -109,16 +108,12 @@ import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
-import { useTask } from '~/composables/useTask';
-import { useQuestions } from '~/composables/supabase/useQuestions';
-import type { QuizQuestion } from '~/types/quiz.types';
 
 // Props interface - simplified
 interface ChatContentProps {
   threadId: string;
   character: any;
   threadData: any;
-  task: any; // TODO: define proper task interface
 }
 
 // Component props
@@ -127,9 +122,6 @@ const props = defineProps<ChatContentProps>();
 // Use global thread state instead of local state
 const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
-
-const { updateTaskGeneratedContent } = useTask();
-const { persistQuizQuestions } = useQuestions();
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 const isPlayingAllowed = ref(false);
@@ -239,13 +231,10 @@ const initializeChat = async () => {
       await wsChat.value?.waitForConnection();
       console.log('🔌 WebSocket connected successfully');
 
-      // Check for task generation or pending message
+      // Check for pending message
       const pendingMessage = getPendingMessage();
 
-      if (props.task) {
-        console.log('Found task data, starting task init:', props.task);
-        initTask();
-      } else if (pendingMessage) {
+      if (pendingMessage) {
         // Regular pending message
         console.log('Found pending message, sending:', pendingMessage);
         clearPendingMessage();
@@ -360,74 +349,6 @@ const sendMessage = async (text: string) => {
   return success;
 };
 
-const initTask = () => { // For task threads, ensure init_prompt is the first message
-  if (props.task?.init_prompt) {
-    const initPromptMessage = {
-      type: 'text',
-      text: `Task: ${
-        typeof props.task.init_prompt === 'object' && props.task.init_prompt !== null && 'prompt' in props.task.init_prompt ?
-            (props.task.init_prompt as any).prompt :
-            JSON.stringify(props.task.init_prompt)
-      }`,
-      isUser: true,
-      id: props.task.id,
-    };
-
-    // Add init_prompt as the first message
-    messageStream.value = [initPromptMessage, ...messageStream.value];
-
-    // If task has generated_content, add it as the second message
-    if (props.task.generated_content) {
-      const generatedContentMessage = {
-        ...props.task.generated_content,
-        isUser: false,
-        id: `generated-content-${props.task.id}`,
-        isTaskGenerated: true
-      };
-      // Insert generated content after init prompt but before other messages
-      const otherMessages = messageStream.value.slice(1); // Remove the init prompt we just added
-      messageStream.value = [initPromptMessage, generatedContentMessage, ...otherMessages];
-    }
-  }
-
-  clearPendingMessage();
-
-  nextTick(() => {
-    if (props.task && props.task.init_prompt && !props.task.generated_content) {
-      startTaskGeneration();
-    }
-  });
-};
-
-// Start task generation via WebSocket
-const startTaskGeneration = async () => {
-  console.log('Starting task generation via WebSocket for task:', props.task);
-  if (!wsChat.value?.isConnected || !props.task?.init_prompt) {
-    console.warn('Cannot start task generation: WebSocket not connected or no task data');
-    return false;
-  }
-  const character = props.character;
-  const subjectForBackend = character?.subject?.toLowerCase() || 'general';
-
-  const userInfo = {
-    subject: subjectForBackend,
-    level: meStore.level_type,
-    country: meStore.country_code,
-    character_slug: character?.slug,
-    personality_prompt: character?.personality_prompt
-  };
-
-  const prompt = (props.task.init_prompt as any).prompt;
-  const success = wsChat.value.startTaskGeneration(prompt, userInfo);
-
-  if (success) {
-    isFirstMessage.value = false;
-    isWaitingForResponse.value = true;
-  }
-
-  return success;
-};
-
 // Process queued messages when WebSocket connects
 const processMessageQueue = () => {
   if (wsChat.value?.isConnected && messageQueue.value.length > 0) {
@@ -440,34 +361,6 @@ const processMessageQueue = () => {
         sendMessage(message);
       });
     });
-  }
-};
-
-// Persist quiz questions to database
-const persistQuestionsToDatabase = async (slides: any[], chapterId: string) => {
-  try {
-    // Filter only question slides (not lesson content)
-    const questions = slides.filter((slide: any) => slide.type === 'question') as QuizQuestion[];
-
-    if (questions.length === 0) {
-      console.log('No questions found in slides to persist');
-      return;
-    }
-
-    console.log(`Persisting ${questions.length} questions to database for chapter: ${chapterId}`);
-    const results = await persistQuizQuestions(questions, chapterId);
-
-    const successCount = results.filter((r) => r.success).length;
-    const failCount = results.filter((r) => !r.success).length;
-
-    console.log(`Question persistence complete: ${successCount} succeeded, ${failCount} failed`);
-
-    if (failCount > 0) {
-      console.warn('Some questions failed to persist:', results.filter((r) => !r.success));
-    }
-  } catch (error) {
-    console.error('Error persisting questions:', error);
-    // Don't throw - we don't want to disrupt the quiz flow if persistence fails
   }
 };
 
@@ -589,16 +482,6 @@ const handleStreamingComplete = (completionMessage: any) => {
     // Trigger final update
     messageStream.value = [...messageStream.value];
 
-    // Persist to database if task-based thread
-    if (streamingMessage.slides && Array.isArray(streamingMessage.slides)) {
-      const taskData = Array.isArray(props.task) ? props.task[0] : props.task;
-
-      if (taskData && taskData.chapter) {
-        console.log('Persisting questions for chapter:', taskData.chapter);
-        persistQuestionsToDatabase(streamingMessage.slides, taskData.chapter);
-      }
-    }
-
     // Add to global thread state
     const addMessageObj = {
       thread_id: props.threadId,
@@ -608,11 +491,6 @@ const handleStreamingComplete = (completionMessage: any) => {
       uuid: streamingMessage.id
     };
     addMessage(addMessageObj);
-
-    // Update task if applicable
-    if (props.task && !props.task.generated_content) {
-      updateTaskGeneratedContent(props.task.id, streamingMessage);
-    }
   }
 
   // Clear streaming state

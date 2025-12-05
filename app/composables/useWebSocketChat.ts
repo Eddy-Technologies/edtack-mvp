@@ -239,19 +239,6 @@ export function useWebSocketChat(threadId: string) {
     return success;
   };
 
-  const startTaskGeneration = (prompt: string, userInfo?: WebSocketMessage['user_info']) => {
-    console.log('Starting task generation with prompt:', prompt, 'and userInfo:', userInfo);
-    const success = sendMessage({
-      type: 'start', // TODO: change to task_genration
-      payload: prompt,
-      user_info: userInfo,
-    });
-    if (success) {
-      isWaitingForResponse.value = true;
-    }
-    return success;
-  };
-
   const cancelRequest = () => {
     responsePhase.value = '';
     return sendMessage({
@@ -292,7 +279,6 @@ export function useWebSocketChat(threadId: string) {
     startChat,
     continueChat,
     sendUserResponse,
-    startTaskGeneration,
     cancelRequest,
     clearMessages,
     response,

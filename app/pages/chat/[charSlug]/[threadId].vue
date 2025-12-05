@@ -56,7 +56,6 @@
             :messages="[]"
             :character="selectedCharacter"
             :thread-data="threadData"
-            :task="task"
           />
         </div>
 
@@ -149,7 +148,6 @@ const currentCharacter = ref(null);
 const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
-const task = ref<any>(null); // Store task data for task threads
 const threadData = ref<any>(null); // Store thread data
 
 const router = useRouter();
@@ -229,11 +227,9 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       try {
         const response = await fetchThread(newThreadId);
         if (!response) return;
-        const { thread, task: taskRes } = response;
+        const { thread } = response;
         // Store thread data for use in ChatContent
         threadData.value = thread || null;
-        // Store task data for use in ChatContent
-        task.value = taskRes || null;
       } catch (err) {
         console.error('Error loading thread:', err);
       }
@@ -248,7 +244,6 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       // Reset for new chat
       reset();
       hasStartedChat.value = false;
-      task.value = null;
 
       // Clear chat content if available
       if (chatContentRef.value && chatContentRef.value.clearChat) {
