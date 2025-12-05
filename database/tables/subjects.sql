@@ -5,5 +5,8 @@ CREATE TABLE subjects (
   subject_name VARCHAR(100) NOT NULL,  -- e.g. 'Mathematics'
   display_name VARCHAR(100) NOT NULL,  -- e.g. 'Malaysia PSLE Standard Math'
   description TEXT DEFAULT NULL,
-  country_code VARCHAR(2) DEFAULT 'SG'
+  country_code VARCHAR(2) DEFAULT 'SG',
+  is_active BOOLEAN DEFAULT TRUE NOT NULL
 );
+
+CREATE INDEX idx_subjects_active ON subjects(is_active) WHERE is_active = true;

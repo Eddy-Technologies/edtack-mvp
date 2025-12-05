@@ -54,6 +54,7 @@ export default defineEventHandler(async (event) => {
           )
         )
       `)
+      .eq('is_active', true)
       .order('display_name');
 
     // Apply filters

@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const { data: subjects, error } = await supabase
       .from('subjects')
       .select('name, display_name')
+      .eq('is_active', true)
       .order('display_name');
 
     if (error) {

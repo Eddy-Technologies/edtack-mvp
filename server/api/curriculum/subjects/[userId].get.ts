@@ -42,6 +42,7 @@ export default defineEventHandler(async (event) => {
         subject,
         subjects!inner(*)
       `)
+      .eq('subjects.is_active', true)
       .eq('syllabus_type', childInfo.syllabus_type)
       .eq('level_type', childInfo.level_type);
 
