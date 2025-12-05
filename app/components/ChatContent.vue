@@ -386,9 +386,6 @@ const handleSlideBatch = (batchMessage: any) => {
     const newMessageId = crypto.randomUUID();
     const newMessage = {
       status: 'streaming',
-      message: contentType === 'quiz' ?
-        `Generating quiz questions...` :
-        `Preparing lesson slides...`,
       slides: [...slides],
       contentType,
       isStreaming: true,
