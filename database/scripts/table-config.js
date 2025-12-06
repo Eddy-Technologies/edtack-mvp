@@ -9,12 +9,14 @@ export const orderedTableFiles = [
   'level_types.sql',
   'syllabus_types.sql',
   'codes.sql',
+  'subscription_tier_limits.sql', // Token limits for subscription tiers
   'subjects.sql',
   'chapters.sql',
   'curriculum_subjects.sql',
   'user_infos.sql',
   'user_roles.sql',
   'user_credits.sql',
+  'user_subscriptions.sql', // User subscription sync from Stripe
   'groups.sql',
   'group_members.sql',
   'syllabus.sql',
@@ -32,6 +34,7 @@ export const orderedTableFiles = [
   'characters.sql',
   // 'notes.sql',
   'token_history.sql',
+  'token_usage_summary.sql', // Pre-aggregated token usage for fast queries
   'stripe_webhook_events.sql',
   'checkpointer_tables.sql',
   'threads.sql',

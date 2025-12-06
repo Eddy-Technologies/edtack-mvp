@@ -86,6 +86,20 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('INCORRECT', 'Incorrect', 'Answer is incorrect', 'MARKING_STATUS', 30, true, NOW(), NOW());
 
 -- =============================================================================
+-- 4.5. SUBSCRIPTION TIER LIMITS SEED DATA
+-- =============================================================================
+
+-- Token limits for each subscription tier (configurable)
+INSERT INTO subscription_tier_limits (tier_lookup_key, display_name, token_limit_monthly, is_active, created_at, updated_at) VALUES
+('EDDY_FREE_MONTHLY', 'Free Monthly', 100000, true, NOW(), NOW()),
+('EDDY_FREE_YEARLY', 'Free Yearly', 100000, true, NOW(), NOW()),
+('EDDY_PRO_MONTHLY', 'Pro Monthly', 500000, true, NOW(), NOW()),
+('EDDY_PRO_YEARLY', 'Pro Yearly', 500000, true, NOW(), NOW()),
+('EDDY_MAX_MONTHLY', 'Max Monthly', 0, true, NOW(), NOW()),  -- 0 = unlimited
+('EDDY_MAX_YEARLY', 'Max Yearly', 0, true, NOW(), NOW())     -- 0 = unlimited
+ON CONFLICT (tier_lookup_key) DO NOTHING;
+
+-- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
 -- =============================================================================
 

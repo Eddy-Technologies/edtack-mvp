@@ -721,7 +721,7 @@ export type Database = {
           id: string;
           image_url: string | null;
           option_id: string | null;
-          order_index: number;
+          order_index: number | null;
           question_id: string;
         };
         Insert: {
@@ -731,7 +731,7 @@ export type Database = {
           id: string;
           image_url?: string | null;
           option_id?: string | null;
-          order_index: number;
+          order_index?: number | null;
           question_id: string;
         };
         Update: {
@@ -741,7 +741,7 @@ export type Database = {
           id?: string;
           image_url?: string | null;
           option_id?: string | null;
-          order_index?: number;
+          order_index?: number | null;
           question_id?: string;
         };
         Relationships: [
@@ -906,6 +906,7 @@ export type Database = {
           country_code: string | null;
           description: string | null;
           display_name: string;
+          is_active: boolean;
           name: string;
           subject_name: string;
         };
@@ -913,6 +914,7 @@ export type Database = {
           country_code?: string | null;
           description?: string | null;
           display_name: string;
+          is_active?: boolean;
           name: string;
           subject_name: string;
         };
@@ -920,8 +922,39 @@ export type Database = {
           country_code?: string | null;
           description?: string | null;
           display_name?: string;
+          is_active?: boolean;
           name?: string;
           subject_name?: string;
+        };
+        Relationships: [];
+      };
+      subscription_tier_limits: {
+        Row: {
+          created_at: string | null;
+          display_name: string;
+          id: string;
+          is_active: boolean | null;
+          tier_lookup_key: string;
+          token_limit_monthly: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          display_name: string;
+          id?: string;
+          is_active?: boolean | null;
+          tier_lookup_key: string;
+          token_limit_monthly?: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          display_name?: string;
+          id?: string;
+          is_active?: boolean | null;
+          tier_lookup_key?: string;
+          token_limit_monthly?: number;
+          updated_at?: string | null;
         };
         Relationships: [];
       };
@@ -1115,6 +1148,56 @@ export type Database = {
           },
         ];
       };
+      token_usage_summary: {
+        Row: {
+          created_at: string | null;
+          id: string;
+          input_tokens: number;
+          last_aggregated_at: string;
+          last_token_history_id: number | null;
+          output_tokens: number;
+          period_end: string;
+          period_start: string;
+          total_tokens: number;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: string;
+          input_tokens?: number;
+          last_aggregated_at: string;
+          last_token_history_id?: number | null;
+          output_tokens?: number;
+          period_end: string;
+          period_start: string;
+          total_tokens?: number;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: string;
+          input_tokens?: number;
+          last_aggregated_at?: string;
+          last_token_history_id?: number | null;
+          output_tokens?: number;
+          period_end?: string;
+          period_start?: string;
+          total_tokens?: number;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'token_usage_summary_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       user_credits: {
         Row: {
           credit: number;
@@ -1234,7 +1317,7 @@ export type Database = {
           option_id: string | null;
           option_image: string | null;
           option_text: string | null;
-          order_index: number;
+          order_index: number | null;
           user_question_attempts_id: string;
         };
         Insert: {
@@ -1245,7 +1328,7 @@ export type Database = {
           option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
-          order_index: number;
+          order_index?: number | null;
           user_question_attempts_id: string;
         };
         Update: {
@@ -1256,7 +1339,7 @@ export type Database = {
           option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
-          order_index?: number;
+          order_index?: number | null;
           user_question_attempts_id?: string;
         };
         Relationships: [
@@ -1371,6 +1454,56 @@ export type Database = {
           },
           {
             foreignKeyName: 'user_roles_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_subscriptions: {
+        Row: {
+          billing_interval: string;
+          created_at: string | null;
+          current_period_end: string;
+          current_period_start: string;
+          id: string;
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          tier_lookup_key: string;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          billing_interval: string;
+          created_at?: string | null;
+          current_period_end: string;
+          current_period_start: string;
+          id?: string;
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          tier_lookup_key: string;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          billing_interval?: string;
+          created_at?: string | null;
+          current_period_end?: string;
+          current_period_start?: string;
+          id?: string;
+          status?: string;
+          stripe_customer_id?: string;
+          stripe_subscription_id?: string;
+          tier_lookup_key?: string;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_subscriptions_user_info_id_fkey';
             columns: ['user_info_id'];
             isOneToOne: false;
             referencedRelation: 'user_infos';

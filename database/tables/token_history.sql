@@ -20,3 +20,5 @@ CREATE TABLE token_history (
 -- Indexes for token_history for faster lookups
 CREATE INDEX idx_token_history_user_infos_id ON token_history(user_infos_id);
 CREATE INDEX idx_token_history_thread_id ON token_history(thread_id);
+CREATE INDEX idx_token_history_user_query_at ON token_history(user_infos_id, query_at); -- For billing cycle queries
+CREATE INDEX idx_token_history_id_user ON token_history(id, user_infos_id); -- For incremental rollup
