@@ -213,8 +213,6 @@ export default defineEventHandler(async (event) => {
         .single();
 
       if (attemptError) {
-        console.warn('[results] No attempt found for question:', question.id);
-        console.warn('[results] Error details:', attemptError);
         // If no attempt found, create placeholder result
         results.push({
           questionIndex: index,
@@ -255,17 +253,6 @@ export default defineEventHandler(async (event) => {
         userAnswers: userAnswers.sort((a: any, b: any) => a.order_index - b.order_index),
       });
     }
-
-    console.log('[results] Retrieved results:', {
-      latestScore,
-      latestTotalScore,
-      latestPercentage,
-      bestScore,
-      bestTotalScore,
-      bestPercentage,
-      passedThreshold,
-      attemptCount
-    });
 
     return {
       success: true,
