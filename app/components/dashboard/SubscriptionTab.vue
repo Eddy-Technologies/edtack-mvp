@@ -120,6 +120,9 @@
       </div>
     </div>
 
+    <!-- Token Usage Card -->
+    <TokenUsageCard />
+
     <!-- Manage Billing Card (only show for active subscriptions or customers with no active subscription) -->
     <div
       v-if="stripeCustomerState === STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION"
@@ -183,6 +186,7 @@
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
+import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useStripe } from '#imports';
 import { STRIPE_CUSTOMER } from '~~/shared/constants';
 

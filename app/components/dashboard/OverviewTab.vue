@@ -20,6 +20,9 @@
         </div>
       </div>
 
+      <!-- Token Usage Summary -->
+      <TokenUsageCard />
+
       <!-- Pending Order Requests -->
       <div v-if="pendingOrders.length > 0" class="bg-white rounded-xl shadow-sm border">
         <div class="p-6 border-b">
@@ -197,6 +200,9 @@
         </div>
       </div>
 
+      <!-- Token Usage Summary -->
+      <TokenUsageCard />
+
       <!-- My Pending Orders -->
       <div v-if="myPendingOrders.length > 0" class="bg-white rounded-xl shadow-sm border">
         <div class="p-6 border-b">
@@ -347,6 +353,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
 import OverviewHeader from './overview/OverviewHeader.vue';
+import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
 

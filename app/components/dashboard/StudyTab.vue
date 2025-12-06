@@ -314,6 +314,7 @@ import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
+import { useTokenUsage } from '~/composables/useTokenUsage';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 
 const router = useRouter();
@@ -411,15 +412,27 @@ const fetchSubjects = async () => {
 
 const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice' | 'quiz') => {
   try {
+    // Check token limits - show toast if exceeded but allow action (soft limit)
+    const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
+    await fetchTokenUsage();
+
+    if (isLimitExceeded.value) {
+      toast.add({
+        title: 'Token limit reached',
+        description: 'You have exceeded your token limit for this billing period.',
+        color: 'red',
+        timeout: 5000
+      });
+    }
+
+    // Proceed with action (soft limit - always allow)
     const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
     const upperCaseSubject = subjectName.toUpperCase();
-    console.log(upperCaseSubject);
-    // Navigate to chat with study prompt
+
     const queryParams = new URLSearchParams({
       study_prompt: studyResult.prompt
     });
 
-    // Get the appropriate character for this subject
     const character = getCharacterBySubject(upperCaseSubject);
     const characterSlug = character?.slug || 'eddy';
 

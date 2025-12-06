@@ -36,9 +36,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useTokenUsage } from '~/composables/useTokenUsage';
 
 const emit = defineEmits(['send']);
 const input = ref('');
+const toast = useToast();
+
+const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
 
 const autocomplete = [
   { key: 'lesson', pillDisplay: 'Give me a lesson on...', input: 'Give me a lesson on ' },
@@ -46,21 +50,30 @@ const autocomplete = [
   { key: 'quiz', pillDisplay: 'Quiz me on...', input: 'Quiz me on ' }
 ];
 
-// const suggestions = ['Give me a quiz', 'Mark my paper', 'Explain my textbook'];
-
 const handleEnterKey = (event: KeyboardEvent) => {
   if (event.shiftKey) {
-    // Allow default behavior for Shift+Enter (new line)
     return;
   }
-
-  // Prevent default for Enter only (send message)
   event.preventDefault();
   emitMessage();
 };
 
-const emitMessage = () => {
+const emitMessage = async () => {
   if (!input.value.trim()) return;
+
+  // Check token limit - show toast if exceeded but allow action (soft limit)
+  await fetchTokenUsage();
+
+  if (isLimitExceeded.value) {
+    toast.add({
+      title: 'Token limit reached',
+      description: 'You have exceeded your token limit for this billing period.',
+      color: 'red',
+      timeout: 5000
+    });
+  }
+
+  // Proceed with message (soft limit - always allow)
   emit('send', input.value);
   input.value = '';
 };

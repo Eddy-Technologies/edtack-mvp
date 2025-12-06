@@ -5,7 +5,7 @@
   >
     <OverviewTab v-if="currentTab === 'overview'" />
     <StudyTab v-else-if="currentTab === 'study'" />
-    <!-- <SubscriptionTab v-else-if="currentTab === 'subscription'" /> -->
+    <SubscriptionTab v-else-if="currentTab === 'subscription'" />
     <SettingsTab v-else-if="currentTab === 'settings'" />
     <ShopTab
       v-else-if="currentTab === 'shop'"
@@ -25,7 +25,7 @@
     <TasksTab v-else-if="currentTab === 'tasks'" />
     <FamilyTab v-else-if="currentTab === 'family'" />
     <OrdersTab v-else-if="currentTab === 'orders'" />
-    <div v-else-if="!currentTab || !['overview', 'study', 'settings', 'shop', 'wishlist', 'cart', 'tasks', 'family', 'orders', 'credits'].includes(currentTab)" class="text-center py-12">
+    <div v-else-if="!currentTab || !['overview', 'study', 'subscription', 'settings', 'shop', 'wishlist', 'cart', 'tasks', 'family', 'orders', 'credits'].includes(currentTab)" class="text-center py-12">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
       <p class="text-gray-600">Select a section from the sidebar to get started.</p>
     </div>
@@ -42,7 +42,7 @@ import { useMeStore } from '~/stores/me';
 // Unified Components
 import OverviewTab from '~/components/dashboard/OverviewTab.vue';
 import StudyTab from '~/components/dashboard/StudyTab.vue';
-// import SubscriptionTab from '~/components/dashboard/SubscriptionTab.vue';
+import SubscriptionTab from '~/components/dashboard/SubscriptionTab.vue';
 import ShopTab from '~/components/dashboard/ShopTab.vue';
 import WishlistTab from '~/components/dashboard/WishlistTab.vue';
 import CartTab from '~/components/dashboard/CartTab.vue';
@@ -158,7 +158,7 @@ const pageTitle = computed(() => {
     overview: 'Overview',
     study: 'Study',
     tasks: 'Tasks',
-    // subscription: 'Subscription',
+    subscription: 'Subscription',
     settings: 'Settings',
     shop: 'Shop',
     wishlist: 'Wishlist',
