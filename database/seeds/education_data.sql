@@ -25,19 +25,19 @@ INSERT INTO syllabus_types (syllabus_type, description) VALUES
 -- ('UK_NATIONAL_CURRICULUM', 'UK National Curriculum');
 
 
-INSERT INTO subjects (name, subject_name, display_name, description, country_code) VALUES
-('o_level_singapore_mathematics', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG'),
-('o_level_singapore_add_math', 'Additional_Mathematics', 'Singapore O Level Additional Mathematics', 'Additional Mathematics for Singapore O Level', 'SG'),
-('n_level_singapore_add_math', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG'),
-('lower_secondary_singapore_mathemathics', 'Mathematics', 'Singapore Lower Secondary Mathematics', 'Mathematics for Singapore Lower Secondary shared for o_level and n_level syllabus types', 'SG'),
-('o_level_singapore_biology', 'Biology', 'Singapore O Level Biology', 'Biology for Singapore O Level', 'SG'),
-('n_level_singapore_biology', 'Biology', 'Singapore N Level Biology', 'Biology for Singapore N Level Academic', 'SG'),
-('o_level_singapore_chemistry', 'Chemistry', 'Singapore O Level Chemistry', 'Chemistry for Singapore O Level', 'SG'),
-('o_level_singapore_physics', 'Physics', 'Singapore O Level Physics', 'Physics for Singapore O Level', 'SG'),
-('o_level_singapore_english', 'English', 'Singapore O Level English', 'English for Singapore O Level', 'SG'),
-('o_level_singapore_geography', 'Geography', 'Singapore O Level Geography', 'Geography for Singapore O Level', 'SG'),
-('o_level_singapore_history', 'History', 'Singapore O Level History', 'History for Singapore O Level', 'SG'),
-('o_level_singapore_social_studies', 'Social_Studies', 'Singapore O Level Social Studies', 'Social Studies for Singapore O Level', 'SG');
+INSERT INTO subjects (name, subject_name, display_name, description, country_code, is_active) VALUES
+('o_level_singapore_mathematics', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_add_math', 'Additional_Mathematics', 'Singapore O Level Additional Mathematics', 'Additional Mathematics for Singapore O Level', 'SG', FALSE),
+('n_level_singapore_add_math', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG', FALSE),
+('lower_secondary_singapore_mathemathics', 'Mathematics', 'Singapore Lower Secondary Mathematics', 'Mathematics for Singapore Lower Secondary shared for o_level and n_level syllabus types', 'SG', FALSE),
+('o_level_singapore_biology', 'Biology', 'Singapore O Level Biology', 'Biology for Singapore O Level', 'SG', TRUE),
+('n_level_singapore_biology', 'Biology', 'Singapore N Level Biology', 'Biology for Singapore N Level Academic', 'SG', TRUE),
+('o_level_singapore_chemistry', 'Chemistry', 'Singapore O Level Chemistry', 'Chemistry for Singapore O Level', 'SG', TRUE),
+('o_level_singapore_physics', 'Physics', 'Singapore O Level Physics', 'Physics for Singapore O Level', 'SG', TRUE),
+('o_level_singapore_english', 'English', 'Singapore O Level English', 'English for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_geography', 'Geography', 'Singapore O Level Geography', 'Geography for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_history', 'History', 'Singapore O Level History', 'History for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_social_studies', 'Social_Studies', 'Singapore O Level Social Studies', 'Social Studies for Singapore O Level', 'SG', FALSE);
 
 -- Curriculum Subjects Data for O-Level and N-Level
 INSERT INTO curriculum_subjects (level_type, syllabus_type, subject) VALUES

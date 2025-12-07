@@ -22,7 +22,7 @@ INSERT INTO characters (
   'A friendly lion character who loves to teach and learn with students',
   'eddy.png',
   'Eddy is a lion character that talks and is highly intelligent, he educates with passion. He is friendly, encouraging, and always ready to help students learn.',
-  true,
+  false,
   1,
   NOW(),
   NOW()
@@ -61,7 +61,7 @@ INSERT INTO characters (
   'A wise storyteller who brings history to life through engaging narratives',
   'maya.png',
   'Maya is a wise and experienced historian who brings the past to life through captivating stories. She helps students understand historical events and their significance through engaging narratives and critical thinking.',
-  true,
+  false,
   4,
   NOW(),
   NOW()
@@ -74,7 +74,7 @@ INSERT INTO characters (
   'A detective character who investigates social phenomena and human behavior',
   'sherlock.png',
   'Sherlock is an analytical thinker who loves investigating social phenomena and human behavior. He helps students understand society, culture, and social structures through investigative methods and logical reasoning.',
-  true,
+  false,
   5,
   NOW(),
   NOW()
@@ -87,7 +87,7 @@ INSERT INTO characters (
   'A cheerful character ready to help with any subject',
   'mickey.png',
   'Mickey is a cheerful and enthusiastic character who loves learning and teaching. He brings positive energy to any subject and helps keep students motivated and engaged.',
-  true,
+  false,
   6,
   NOW(),
   NOW()
@@ -113,7 +113,7 @@ INSERT INTO characters (
   'An adventurous explorer passionate about world geography and cultures',
   'atlas.png',
   'Atlas is an adventurous explorer who has traveled the world and loves sharing knowledge about different places, cultures, and geographical features. He brings geography to life through exciting stories and helps students understand our interconnected world.',
-  true,
+  false,
   8,
   NOW(),
   NOW()
@@ -126,7 +126,7 @@ INSERT INTO characters (
   'A mathematical genius who finds beauty in numbers and patterns',
   'pythagoras.png',
   'Pythagoras is a passionate mathematician who sees beauty in numbers, patterns, and geometric relationships. He helps students discover the logic and elegance of mathematics through clear explanations and practical applications.',
-  true,
+  false,
   9,
   NOW(),
   NOW()
@@ -139,7 +139,7 @@ INSERT INTO characters (
   'A mathematical mastermind specializing in advanced concepts and calculus',
   'euler.png',
   'Euler is a mathematical mastermind who excels at advanced mathematics and calculus. He breaks down complex mathematical concepts into manageable steps and helps students build confidence in tackling challenging problems.',
-  true,
+  false,
   10,
   NOW(),
   NOW()
@@ -152,7 +152,7 @@ INSERT INTO characters (
   'A master storyteller who brings literary works to life with passion',
   'shakespeare.png',
   'Shakespeare is a passionate storyteller and literary expert who brings classic and modern literature to life. He helps students understand themes, characters, and writing techniques while fostering a love for reading and creative expression.',
-  true,
+  false,
   11,
   NOW(),
   NOW()
@@ -165,7 +165,7 @@ INSERT INTO characters (
   'An eloquent language expert who masters grammar, writing, and communication',
   'oxford.png',
   'Oxford is an eloquent and knowledgeable English language expert who helps students master grammar, writing, and effective communication. He makes language learning engaging through practical exercises and clear explanations.',
-  true,
+  false,
   12,
   NOW(),
   NOW()
