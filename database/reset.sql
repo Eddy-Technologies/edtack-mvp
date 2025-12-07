@@ -1,6 +1,6 @@
 -- ==========================================
 -- EdTack Database Complete Reset Script
--- Generated: 2025-12-01T12:43:49.342Z
+-- Generated: 2025-12-07T07:21:50.624Z
 -- ==========================================
 
 -- This script completely resets the database:
@@ -21,6 +21,7 @@ DROP FUNCTION IF EXISTS enforce_user_role_user_type CASCADE;
 DROP FUNCTION IF EXISTS update_characters_updated_at CASCADE;
 DROP FUNCTION IF EXISTS update_user_tasks_chapters_updated_at CASCADE;
 DROP FUNCTION IF EXISTS transfer_credits_atomic CASCADE;
+DROP FUNCTION IF EXISTS rollup_token_usage CASCADE;
 
 -- All functions dropped
 
@@ -35,6 +36,7 @@ DROP TABLE IF EXISTS thread_messages CASCADE;
 DROP TABLE IF EXISTS threads CASCADE;
 DROP TABLE IF EXISTS checkpoints CASCADE;
 DROP TABLE IF EXISTS stripe_webhook_events CASCADE;
+DROP TABLE IF EXISTS token_usage_summary CASCADE;
 DROP TABLE IF EXISTS token_history CASCADE;
 DROP TABLE IF EXISTS characters CASCADE;
 DROP TABLE IF EXISTS credit_transactions CASCADE;
@@ -51,12 +53,14 @@ DROP TABLE IF EXISTS questions CASCADE;
 DROP TABLE IF EXISTS syllabus CASCADE;
 DROP TABLE IF EXISTS group_members CASCADE;
 DROP TABLE IF EXISTS groups CASCADE;
+DROP TABLE IF EXISTS user_subscriptions CASCADE;
 DROP TABLE IF EXISTS user_credits CASCADE;
 DROP TABLE IF EXISTS user_roles CASCADE;
 DROP TABLE IF EXISTS user_infos CASCADE;
 DROP TABLE IF EXISTS curriculum_subjects CASCADE;
 DROP TABLE IF EXISTS chapters CASCADE;
 DROP TABLE IF EXISTS subjects CASCADE;
+DROP TABLE IF EXISTS subscription_tier_limits CASCADE;
 DROP TABLE IF EXISTS codes CASCADE;
 DROP TABLE IF EXISTS syllabus_types CASCADE;
 DROP TABLE IF EXISTS level_types CASCADE;
@@ -114,6 +118,23 @@ CREATE INDEX IF NOT EXISTS idx_codes_sort_order ON codes(sort_order);
 CREATE INDEX IF NOT EXISTS idx_codes_category_active ON codes(category, is_active);
 CREATE INDEX IF NOT EXISTS idx_codes_code_category ON codes(code, category);
 
+-- From: subscription_tier_limits.sql
+-- Subscription Tier Limits Table (Configurable token limits per tier)
+CREATE TABLE subscription_tier_limits (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tier_lookup_key VARCHAR(50) NOT NULL UNIQUE,
+  display_name VARCHAR(100) NOT NULL,
+  token_limit_monthly BIGINT NOT NULL DEFAULT 0, -- 0 = unlimited
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for fast lookups
+CREATE INDEX idx_subscription_tier_limits_lookup_key ON subscription_tier_limits(tier_lookup_key);
+CREATE INDEX idx_subscription_tier_limits_active ON subscription_tier_limits(is_active);
+
+
 -- From: subjects.sql
 -- Subject Table
 -- Represents the subject structure (e.g. Mathematics, Science)
@@ -122,8 +143,11 @@ CREATE TABLE subjects (
   subject_name VARCHAR(100) NOT NULL,  -- e.g. 'Mathematics'
   display_name VARCHAR(100) NOT NULL,  -- e.g. 'Malaysia PSLE Standard Math'
   description TEXT DEFAULT NULL,
-  country_code VARCHAR(2) DEFAULT 'SG'
+  country_code VARCHAR(2) DEFAULT 'SG',
+  is_active BOOLEAN DEFAULT TRUE NOT NULL
 );
+
+CREATE INDEX idx_subjects_active ON subjects(is_active) WHERE is_active = true;
 
 -- From: chapters.sql
 -- Chapter Table
@@ -368,6 +392,28 @@ CHECK (reserved_credit <= credit);
 
 -- Add indexes for user_credits
 CREATE INDEX IF NOT EXISTS idx_user_credits_user_info_id ON user_credits(user_info_id);
+
+-- From: user_subscriptions.sql
+-- User Subscriptions Table (Local Stripe sync to avoid API latency)
+CREATE TABLE user_subscriptions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
+  stripe_subscription_id VARCHAR(255) NOT NULL UNIQUE,
+  stripe_customer_id VARCHAR(255) NOT NULL,
+  tier_lookup_key VARCHAR(50) NOT NULL REFERENCES subscription_tier_limits(tier_lookup_key),
+  status VARCHAR(50) NOT NULL, -- active, canceled, past_due, trialing, etc.
+  current_period_start TIMESTAMPTZ NOT NULL,
+  current_period_end TIMESTAMPTZ NOT NULL,
+  billing_interval VARCHAR(10) NOT NULL, -- 'month' or 'year'
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for fast queries
+CREATE INDEX idx_user_subscriptions_user_info_id ON user_subscriptions(user_info_id);
+CREATE INDEX idx_user_subscriptions_stripe_sub_id ON user_subscriptions(stripe_subscription_id);
+CREATE INDEX idx_user_subscriptions_status ON user_subscriptions(status);
+
 
 -- From: groups.sql
 CREATE TABLE groups (
@@ -724,6 +770,29 @@ CREATE TABLE token_history (
 -- Indexes for token_history for faster lookups
 CREATE INDEX idx_token_history_user_infos_id ON token_history(user_infos_id);
 CREATE INDEX idx_token_history_thread_id ON token_history(thread_id);
+CREATE INDEX idx_token_history_user_query_at ON token_history(user_infos_id, query_at); -- For billing cycle queries
+CREATE INDEX idx_token_history_id_user ON token_history(id, user_infos_id); -- For incremental rollup
+
+-- From: token_usage_summary.sql
+-- Token Usage Summary Table (Pre-aggregated for fast queries)
+CREATE TABLE token_usage_summary (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
+  period_start TIMESTAMPTZ NOT NULL,
+  period_end TIMESTAMPTZ NOT NULL,
+  total_tokens BIGINT NOT NULL DEFAULT 0,
+  input_tokens BIGINT NOT NULL DEFAULT 0,
+  output_tokens BIGINT NOT NULL DEFAULT 0,
+  last_aggregated_at TIMESTAMPTZ NOT NULL,
+  last_token_history_id INTEGER, -- Track last processed record for incremental rollup
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_info_id, period_start, period_end)
+);
+
+-- Index for fast period lookups
+CREATE INDEX idx_token_usage_summary_user_period ON token_usage_summary(user_info_id, period_start, period_end);
+
 
 -- From: stripe_webhook_events.sql
 -- Stripe Webhook Events table for idempotency
@@ -1117,6 +1186,119 @@ EXCEPTION WHEN OTHERS THEN
 END;
 $$;
 
+-- From: functions/token_rollup.sql
+-- Token Rollup Function
+-- Aggregates tokens from token_history into token_usage_summary incrementally
+
+CREATE OR REPLACE FUNCTION rollup_token_usage()
+RETURNS TABLE(processed INT, errors INT)
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
+DECLARE
+  sub RECORD;
+  v_last_id INTEGER;
+  v_new_total BIGINT;
+  v_new_input BIGINT;
+  v_new_output BIGINT;
+  v_max_id INTEGER;
+  v_processed INT := 0;
+  v_errors INT := 0;
+BEGIN
+  FOR sub IN
+    SELECT user_info_id, current_period_start, current_period_end
+    FROM user_subscriptions
+    WHERE status = 'active'
+  LOOP
+    BEGIN
+      -- Get last processed ID
+      SELECT COALESCE(last_token_history_id, 0) INTO v_last_id
+      FROM token_usage_summary
+      WHERE user_info_id = sub.user_info_id
+        AND period_start = sub.current_period_start
+        AND period_end = sub.current_period_end;
+
+      IF NOT FOUND THEN
+        v_last_id := 0;
+      END IF;
+
+      -- Aggregate new records
+      SELECT
+        COALESCE(SUM(token_count), 0),
+        COALESCE(SUM(input_tokens), 0),
+        COALESCE(SUM(output_tokens), 0),
+        COALESCE(MAX(id), v_last_id)
+      INTO v_new_total, v_new_input, v_new_output, v_max_id
+      FROM token_history
+      WHERE user_infos_id = sub.user_info_id
+        AND query_at >= sub.current_period_start
+        AND query_at < sub.current_period_end
+        AND id > v_last_id;
+
+      -- Skip if no new records
+      CONTINUE WHEN v_max_id = v_last_id;
+
+      -- Upsert with simple increment
+      INSERT INTO token_usage_summary (
+        user_info_id, period_start, period_end,
+        total_tokens, input_tokens, output_tokens,
+        last_aggregated_at, last_token_history_id
+      ) VALUES (
+        sub.user_info_id, sub.current_period_start, sub.current_period_end,
+        v_new_total, v_new_input, v_new_output,
+        NOW(), v_max_id
+      )
+      ON CONFLICT (user_info_id, period_start, period_end) DO UPDATE SET
+        total_tokens = token_usage_summary.total_tokens + EXCLUDED.total_tokens,
+        input_tokens = token_usage_summary.input_tokens + EXCLUDED.input_tokens,
+        output_tokens = token_usage_summary.output_tokens + EXCLUDED.output_tokens,
+        last_aggregated_at = NOW(),
+        last_token_history_id = EXCLUDED.last_token_history_id,
+        updated_at = NOW();
+
+      v_processed := v_processed + 1;
+    EXCEPTION WHEN OTHERS THEN
+      v_errors := v_errors + 1;
+      RAISE WARNING 'Error processing user %: %', sub.user_info_id, SQLERRM;
+    END;
+  END LOOP;
+
+  RETURN QUERY SELECT v_processed, v_errors;
+END;
+$$;
+
+
+-- ==========================================
+-- CRON JOBS
+-- ==========================================
+
+-- From: cron/token_rollup.sql
+-- Token Rollup Cron Job
+-- Runs every 10 minutes to aggregate token usage
+
+-- Enable pg_cron extension (safe to run multiple times)
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+-- Grant permissions on cron schema and tables
+GRANT USAGE ON SCHEMA cron TO postgres;
+
+-- Remove existing job if it exists (idempotent)
+DO $$
+BEGIN
+  PERFORM cron.unschedule('token-rollup-job');
+EXCEPTION WHEN undefined_table THEN
+  -- cron.job table doesn't exist yet, ignore
+WHEN OTHERS THEN
+  -- Job doesn't exist or other error, ignore
+END $$;
+
+-- Schedule the job
+SELECT cron.schedule(
+  'token-rollup-job',
+  '*/5 * * * *',
+  'SELECT * FROM rollup_token_usage()'
+);
+
+
 -- ==========================================
 -- SEED DATA
 -- ==========================================
@@ -1208,6 +1390,20 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('CORRECT', 'Correct', 'Answer is fully correct', 'MARKING_STATUS', 10, true, NOW(), NOW()),
 ('PARTIALLY_CORRECT', 'Partially Correct', 'Answer is partially correct with some gaps', 'MARKING_STATUS', 20, true, NOW(), NOW()),
 ('INCORRECT', 'Incorrect', 'Answer is incorrect', 'MARKING_STATUS', 30, true, NOW(), NOW());
+
+-- =============================================================================
+-- 4.5. SUBSCRIPTION TIER LIMITS SEED DATA
+-- =============================================================================
+
+-- Token limits for each subscription tier (configurable)
+INSERT INTO subscription_tier_limits (tier_lookup_key, display_name, token_limit_monthly, is_active, created_at, updated_at) VALUES
+('EDDY_FREE_MONTHLY', 'Free Monthly', 100000, true, NOW(), NOW()),
+('EDDY_FREE_YEARLY', 'Free Yearly', 100000, true, NOW(), NOW()),
+('EDDY_PRO_MONTHLY', 'Pro Monthly', 500000, true, NOW(), NOW()),
+('EDDY_PRO_YEARLY', 'Pro Yearly', 500000, true, NOW(), NOW()),
+('EDDY_MAX_MONTHLY', 'Max Monthly', 0, true, NOW(), NOW()),  -- 0 = unlimited
+('EDDY_MAX_YEARLY', 'Max Yearly', 0, true, NOW(), NOW())     -- 0 = unlimited
+ON CONFLICT (tier_lookup_key) DO NOTHING;
 
 -- =============================================================================
 -- 5. SAMPLE PRODUCTS FOR TESTING
@@ -1312,19 +1508,19 @@ INSERT INTO syllabus_types (syllabus_type, description) VALUES
 -- ('UK_NATIONAL_CURRICULUM', 'UK National Curriculum');
 
 
-INSERT INTO subjects (name, subject_name, display_name, description, country_code) VALUES
-('o_level_singapore_mathematics', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG'),
-('o_level_singapore_add_math', 'Additional_Mathematics', 'Singapore O Level Additional Mathematics', 'Additional Mathematics for Singapore O Level', 'SG'),
-('n_level_singapore_add_math', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG'),
-('lower_secondary_singapore_mathemathics', 'Mathematics', 'Singapore Lower Secondary Mathematics', 'Mathematics for Singapore Lower Secondary shared for o_level and n_level syllabus types', 'SG'),
-('o_level_singapore_biology', 'Biology', 'Singapore O Level Biology', 'Biology for Singapore O Level', 'SG'),
-('n_level_singapore_biology', 'Biology', 'Singapore N Level Biology', 'Biology for Singapore N Level Academic', 'SG'),
-('o_level_singapore_chemistry', 'Chemistry', 'Singapore O Level Chemistry', 'Chemistry for Singapore O Level', 'SG'),
-('o_level_singapore_physics', 'Physics', 'Singapore O Level Physics', 'Physics for Singapore O Level', 'SG'),
-('o_level_singapore_english', 'English', 'Singapore O Level English', 'English for Singapore O Level', 'SG'),
-('o_level_singapore_geography', 'Geography', 'Singapore O Level Geography', 'Geography for Singapore O Level', 'SG'),
-('o_level_singapore_history', 'History', 'Singapore O Level History', 'History for Singapore O Level', 'SG'),
-('o_level_singapore_social_studies', 'Social_Studies', 'Singapore O Level Social Studies', 'Social Studies for Singapore O Level', 'SG');
+INSERT INTO subjects (name, subject_name, display_name, description, country_code, is_active) VALUES
+('o_level_singapore_mathematics', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_add_math', 'Additional_Mathematics', 'Singapore O Level Additional Mathematics', 'Additional Mathematics for Singapore O Level', 'SG', FALSE),
+('n_level_singapore_add_math', 'Mathematics', 'Singapore O Level Mathematics', 'Mathematics for Singapore O Level', 'SG', FALSE),
+('lower_secondary_singapore_mathemathics', 'Mathematics', 'Singapore Lower Secondary Mathematics', 'Mathematics for Singapore Lower Secondary shared for o_level and n_level syllabus types', 'SG', FALSE),
+('o_level_singapore_biology', 'Biology', 'Singapore O Level Biology', 'Biology for Singapore O Level', 'SG', TRUE),
+('n_level_singapore_biology', 'Biology', 'Singapore N Level Biology', 'Biology for Singapore N Level Academic', 'SG', TRUE),
+('o_level_singapore_chemistry', 'Chemistry', 'Singapore O Level Chemistry', 'Chemistry for Singapore O Level', 'SG', TRUE),
+('o_level_singapore_physics', 'Physics', 'Singapore O Level Physics', 'Physics for Singapore O Level', 'SG', TRUE),
+('o_level_singapore_english', 'English', 'Singapore O Level English', 'English for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_geography', 'Geography', 'Singapore O Level Geography', 'Geography for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_history', 'History', 'Singapore O Level History', 'History for Singapore O Level', 'SG', FALSE),
+('o_level_singapore_social_studies', 'Social_Studies', 'Singapore O Level Social Studies', 'Social Studies for Singapore O Level', 'SG', FALSE);
 
 -- Curriculum Subjects Data for O-Level and N-Level
 INSERT INTO curriculum_subjects (level_type, syllabus_type, subject) VALUES
@@ -1551,7 +1747,7 @@ INSERT INTO characters (
   'A friendly lion character who loves to teach and learn with students',
   'eddy.png',
   'Eddy is a lion character that talks and is highly intelligent, he educates with passion. He is friendly, encouraging, and always ready to help students learn.',
-  true,
+  false,
   1,
   NOW(),
   NOW()
@@ -1590,7 +1786,7 @@ INSERT INTO characters (
   'A wise storyteller who brings history to life through engaging narratives',
   'maya.png',
   'Maya is a wise and experienced historian who brings the past to life through captivating stories. She helps students understand historical events and their significance through engaging narratives and critical thinking.',
-  true,
+  false,
   4,
   NOW(),
   NOW()
@@ -1603,7 +1799,7 @@ INSERT INTO characters (
   'A detective character who investigates social phenomena and human behavior',
   'sherlock.png',
   'Sherlock is an analytical thinker who loves investigating social phenomena and human behavior. He helps students understand society, culture, and social structures through investigative methods and logical reasoning.',
-  true,
+  false,
   5,
   NOW(),
   NOW()
@@ -1616,7 +1812,7 @@ INSERT INTO characters (
   'A cheerful character ready to help with any subject',
   'mickey.png',
   'Mickey is a cheerful and enthusiastic character who loves learning and teaching. He brings positive energy to any subject and helps keep students motivated and engaged.',
-  true,
+  false,
   6,
   NOW(),
   NOW()
@@ -1642,7 +1838,7 @@ INSERT INTO characters (
   'An adventurous explorer passionate about world geography and cultures',
   'atlas.png',
   'Atlas is an adventurous explorer who has traveled the world and loves sharing knowledge about different places, cultures, and geographical features. He brings geography to life through exciting stories and helps students understand our interconnected world.',
-  true,
+  false,
   8,
   NOW(),
   NOW()
@@ -1655,7 +1851,7 @@ INSERT INTO characters (
   'A mathematical genius who finds beauty in numbers and patterns',
   'pythagoras.png',
   'Pythagoras is a passionate mathematician who sees beauty in numbers, patterns, and geometric relationships. He helps students discover the logic and elegance of mathematics through clear explanations and practical applications.',
-  true,
+  false,
   9,
   NOW(),
   NOW()
@@ -1668,7 +1864,7 @@ INSERT INTO characters (
   'A mathematical mastermind specializing in advanced concepts and calculus',
   'euler.png',
   'Euler is a mathematical mastermind who excels at advanced mathematics and calculus. He breaks down complex mathematical concepts into manageable steps and helps students build confidence in tackling challenging problems.',
-  true,
+  false,
   10,
   NOW(),
   NOW()
@@ -1681,7 +1877,7 @@ INSERT INTO characters (
   'A master storyteller who brings literary works to life with passion',
   'shakespeare.png',
   'Shakespeare is a passionate storyteller and literary expert who brings classic and modern literature to life. He helps students understand themes, characters, and writing techniques while fostering a love for reading and creative expression.',
-  true,
+  false,
   11,
   NOW(),
   NOW()
@@ -1694,7 +1890,7 @@ INSERT INTO characters (
   'An eloquent language expert who masters grammar, writing, and communication',
   'oxford.png',
   'Oxford is an eloquent and knowledgeable English language expert who helps students master grammar, writing, and effective communication. He makes language learning engaging through practical exercises and clear explanations.',
-  true,
+  false,
   12,
   NOW(),
   NOW()
@@ -1705,10 +1901,11 @@ COMMIT;
 
 -- ==========================================
 -- RESET COMPLETE
--- Functions dropped: 6
--- Tables dropped: 33
--- Tables created: 33
--- Functions created: 1
+-- Functions dropped: 7
+-- Tables dropped: 36
+-- Tables created: 36
+-- Functions created: 2
+-- Cron jobs created: 1
 -- Seed files applied: 3
--- Generated: 2025-12-01T12:43:49.350Z
+-- Generated: 2025-12-07T07:21:50.640Z
 -- ==========================================
