@@ -35,6 +35,7 @@ jobs:
           echo "NUXT_PUBLIC_SUPABASE_KEY is set: ${{ secrets.NUXT_PUBLIC_SUPABASE_KEY != '' }}"
           echo "NUXT_PRIVATE_SUPABASE_URL is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL != '' }}"
           echo "NUXT_PRIVATE_SUPABASE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY != '' }}"
+          echo "NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY is set: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY != '' }}"
           echo "JWT_SECRET is set: ${{ secrets.JWT_SECRET != '' }}"
           echo "NUXT_STRIPE_SECRET_KEY is set: ${{ secrets.NUXT_STRIPE_SECRET_KEY != '' }}"
           echo "NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is set: ${{ vars.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY != '' }}"
@@ -60,6 +61,7 @@ jobs:
           # Private runtime config variables
           NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
           NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
+          NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           NUXT_STRIPE_SECRET_KEY: ${{ secrets.NUXT_STRIPE_SECRET_KEY }}
           NUXT_STRIPE_WEBHOOK_SECRET: ${{ secrets.NUXT_STRIPE_WEBHOOK_SECRET }}
@@ -85,6 +87,7 @@ jobs:
           # Private runtime config variables
           NUXT_PRIVATE_SUPABASE_URL: ${{ secrets.NUXT_PRIVATE_SUPABASE_URL }}
           NUXT_PRIVATE_SUPABASE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_KEY }}
+          NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           NUXT_STRIPE_SECRET_KEY: ${{ secrets.NUXT_STRIPE_SECRET_KEY }}
           NUXT_STRIPE_WEBHOOK_SECRET: ${{ secrets.NUXT_STRIPE_WEBHOOK_SECRET }}

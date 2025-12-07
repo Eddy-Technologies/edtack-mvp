@@ -74,8 +74,7 @@ export default defineNuxtConfig({
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
       // For privileged client, ensure these are set in your deployment environment
       supabaseUrl: process.env.NUXT_PRIVATE_SUPABASE_URL,
-      supabaseServiceRoleKey:
-        process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
+      supabaseServiceRoleKey: process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
       stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
       stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
@@ -85,6 +84,7 @@ export default defineNuxtConfig({
   supabase: {
     url: process.env.NUXT_PUBLIC_SUPABASE_URL,
     key: process.env.NUXT_PUBLIC_SUPABASE_KEY,
+    serviceKey: process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY, // Add this
     redirect: false, // Set to true if you want to use the redirect URL for authentication
   },
 
