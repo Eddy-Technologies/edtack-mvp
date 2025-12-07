@@ -1503,6 +1503,13 @@ export type Database = {
         };
         Relationships: [
           {
+            foreignKeyName: 'user_subscriptions_tier_lookup_key_fkey';
+            columns: ['tier_lookup_key'];
+            isOneToOne: false;
+            referencedRelation: 'subscription_tier_limits';
+            referencedColumns: ['tier_lookup_key'];
+          },
+          {
             foreignKeyName: 'user_subscriptions_user_info_id_fkey';
             columns: ['user_info_id'];
             isOneToOne: false;
