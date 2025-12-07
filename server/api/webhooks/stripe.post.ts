@@ -52,7 +52,11 @@ export default defineEventHandler(async (event) => {
           await handleCheckoutCompleted(privilegedSupabase, stripeEvent);
           break;
 
-          // Removed customer_cash_balance_transaction handling for internal credit system
+        case 'customer.subscription.created':
+        case 'customer.subscription.updated':
+        case 'customer.subscription.deleted':
+          await handleSubscriptionEvent(privilegedSupabase, stripeEvent);
+          break;
 
         default:
           // Don't store unhandled event types
@@ -393,6 +397,70 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       // Don't throw error here as payment is still successful, just log the issue
     }
   }
+}
+
+// Handle subscription created/updated events
+async function handleSubscriptionEvent(supabase: SupabaseClient, event: Stripe.Event) {
+  console.log(`[StripeWebhook] Handling ${event.type} event`);
+  const subscription = event.data.object as Stripe.Subscription;
+
+  // Get customer ID
+  const customerId = typeof subscription.customer === 'string' ?
+    subscription.customer :
+    subscription.customer.id;
+
+  // Find user by stripe customer ID
+  const { data: userInfo, error: userError } = await supabase
+    .from('user_infos')
+    .select('id')
+    .eq('payment_customer_id', customerId)
+    .single();
+
+  if (userError || !userInfo) {
+    console.error(`[StripeWebhook] User not found for customer ${customerId}`);
+    throw createError({
+      statusCode: 404,
+      statusMessage: `User not found for customer ${customerId}`
+    });
+  }
+
+  // Extract subscription details
+  const subscriptionItem = subscription.items.data[0];
+  const lookupKey = subscriptionItem?.price.lookup_key;
+  const billingInterval = subscriptionItem?.price.recurring?.interval || 'month';
+
+  if (!lookupKey) {
+    console.error(`[StripeWebhook] No lookup_key found for subscription ${subscription.id}`);
+    throw createError({
+      statusCode: 400,
+      statusMessage: `No lookup_key found for subscription ${subscription.id}`
+    });
+  }
+
+  // Upsert subscription record
+  const { error: upsertError } = await supabase
+    .from('user_subscriptions')
+    .upsert({
+      user_info_id: userInfo.id,
+      stripe_subscription_id: subscription.id,
+      stripe_customer_id: customerId,
+      tier_lookup_key: lookupKey,
+      status: subscription.status,
+      billing_interval: billingInterval,
+      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'stripe_subscription_id' });
+
+  if (upsertError) {
+    console.error(`[StripeWebhook] Failed to upsert subscription:`, upsertError);
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Failed to upsert subscription for user ${userInfo.id}`
+    });
+  }
+
+  console.log(`[StripeWebhook] Successfully synced subscription ${subscription.id} for user ${userInfo.id}, status: ${subscription.status}, tier: ${lookupKey}`);
 }
 
 // Note: handleCashBalanceTransaction removed - no longer needed for internal credit system
