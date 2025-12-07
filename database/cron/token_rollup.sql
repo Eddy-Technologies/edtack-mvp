@@ -20,6 +20,6 @@ END $$;
 -- Schedule the job
 SELECT cron.schedule(
   'token-rollup-job',
-  '*/1 * * * *',
+  '*/5 * * * *',
   'SELECT * FROM rollup_token_usage()'
 );
