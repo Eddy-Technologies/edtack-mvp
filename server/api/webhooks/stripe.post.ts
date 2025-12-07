@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type Stripe from 'stripe';
+import Stripe from 'stripe';
 import { getOperationTypes } from '~~/server/services/codeService';
 import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
 
@@ -21,7 +21,13 @@ export default defineEventHandler(async (event) => {
     // Verify webhook signature
     let stripeEvent: Stripe.Event;
     try {
-      stripeEvent = await stripe.webhooks.constructEventAsync(body!, signature, webhookSecret);
+      stripeEvent = await stripe.webhooks.constructEventAsync(
+        body!,
+        signature,
+        webhookSecret,
+        undefined,
+        Stripe.createSubtleCryptoProvider()
+      );
     } catch (err) {
       console.error('Webhook signature verification failed:', err);
       throw createError({
