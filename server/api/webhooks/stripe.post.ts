@@ -453,8 +453,8 @@ async function handleSubscriptionEvent(supabase: SupabaseClient, event: Stripe.E
       tier_lookup_key: lookupKey,
       status: subscription.status,
       billing_interval: billingInterval,
-      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+      current_period_start: new Date(subscriptionItem.current_period_start * 1000).toISOString(),
+      current_period_end: new Date(subscriptionItem.current_period_end * 1000).toISOString(),
       updated_at: new Date().toISOString()
     }, { onConflict: 'stripe_subscription_id' });
 
