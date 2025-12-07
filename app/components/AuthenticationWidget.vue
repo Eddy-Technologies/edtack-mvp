@@ -53,7 +53,7 @@
 
         <button
           class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          @click="openSubscriptionModal"
+          @click="routeTo('/dashboard?tab=subscription')"
         >
           Upgrade Plan
         </button>
@@ -77,18 +77,11 @@
     </div>
   </div>
 
-  <!-- Subscription Modal -->
-  <SubscriptionModal
-    v-if="subscriptionModalVisible"
-    :is-visible="subscriptionModalVisible"
-    @close="subscriptionModalVisible = false"
-  />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import SubscriptionModal from './subscription/SubscriptionModal.vue';
 import UserAvatar from './common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
@@ -101,7 +94,6 @@ const emit = defineEmits(['login-success', 'register-success', 'logout']);
 const toast = useToast();
 const router = useRouter();
 const menuOpen = ref(false);
-const subscriptionModalVisible = ref(false);
 
 const { signOut } = useAuth();
 const user = useMeStore();
@@ -127,11 +119,6 @@ const login = () => {
 
 const register = () => {
   router.push('/register');
-};
-
-const openSubscriptionModal = () => {
-  subscriptionModalVisible.value = true;
-  menuOpen.value = false;
 };
 
 const handleLogout = async () => {

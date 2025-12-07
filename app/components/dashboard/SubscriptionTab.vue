@@ -100,10 +100,6 @@
               <div class="flex items-center space-x-2 mt-1" />
             </div>
           </div>
-          <div class="text-right">
-            <div class="text-3xl font-bold text-gray-900">${{ subscription.amount }}</div>
-            <div class="text-sm text-gray-500">per {{ subscription.monthOrYear || 'month' }}</div>
-          </div>
         </div>
 
         <!-- Error State -->
