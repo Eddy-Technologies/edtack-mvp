@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     // Verify webhook signature
     let stripeEvent: Stripe.Event;
     try {
-      stripeEvent = stripe.webhooks.constructEvent(body!, signature, webhookSecret);
+      stripeEvent = await stripe.webhooks.constructEventAsync(body!, signature, webhookSecret);
     } catch (err) {
       console.error('Webhook signature verification failed:', err);
       throw createError({
