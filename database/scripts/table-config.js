@@ -46,7 +46,8 @@ export const orderedTableFiles = [
 
 // Function files to include (in order)
 export const functionFiles = [
-  'transfer_credits_atomic.sql'
+  'transfer_credits_atomic.sql',
+  'token_rollup.sql'
 ];
 
 // Seed files to include (in order)
@@ -54,4 +55,9 @@ export const seedFiles = [
   'all_seeds.sql',
   'education_data.sql',
   'characters.sql'
+];
+
+// Cron job files to include (in order)
+export const cronFiles = [
+  'token_rollup.sql'
 ];

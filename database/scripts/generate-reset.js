@@ -14,7 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { orderedTableFiles, functionFiles, seedFiles } from './table-config.js';
+import { orderedTableFiles, functionFiles, cronFiles, seedFiles } from './table-config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -256,6 +256,32 @@ function generateResetScript() {
     }
 
     // =====================================
+    // CRON JOBS SECTION
+    // =====================================
+    resetScript += `-- ==========================================\n`;
+    resetScript += `-- CRON JOBS\n`;
+    resetScript += `-- ==========================================\n\n`;
+
+    let cronJobsCreated = 0;
+    const cronDir = path.join(projectRoot, 'database/cron');
+    if (fs.existsSync(cronDir) && cronFiles && cronFiles.length > 0) {
+      cronFiles.forEach((file) => {
+        const cronPath = path.join(cronDir, file);
+        if (fs.existsSync(cronPath)) {
+          const content = fs.readFileSync(cronPath, 'utf8');
+          resetScript += `-- From: cron/${file}\n`;
+          resetScript += content + '\n\n';
+          cronJobsCreated++;
+          log(`   ✅ Added cron job: ${file}`, 'green');
+        } else {
+          log(`   ⚠️  Skipping cron job ${file} - not found`, 'yellow');
+        }
+      });
+    } else {
+      log(`   ⚠️  Cron directory not found or no cron files configured`, 'yellow');
+    }
+
+    // =====================================
     // SEED DATA SECTION
     // =====================================
     resetScript += `-- ==========================================\n`;
@@ -290,6 +316,7 @@ function generateResetScript() {
     resetScript += `-- Tables dropped: ${tableNames.length}\n`;
     resetScript += `-- Tables created: ${tablesCreated}\n`;
     resetScript += `-- Functions created: ${functionsCreated}\n`;
+    resetScript += `-- Cron jobs created: ${cronJobsCreated}\n`;
     resetScript += `-- Seed files applied: ${seedsAdded}\n`;
     resetScript += `-- Generated: ${new Date().toISOString()}\n`;
     resetScript += `-- ==========================================\n`;

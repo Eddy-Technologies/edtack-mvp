@@ -1722,6 +1722,25 @@ export type Database = {
       [_ in never]: never
     };
     Functions: {
+      rollup_token_usage: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          processed: number;
+          errors: number;
+        }[];
+      };
+      transfer_credits_atomic: {
+        Args: {
+          p_amount: number;
+          p_description_from: string;
+          p_description_to: string;
+          p_from_user_info_id: string;
+          p_metadata_from?: Json;
+          p_metadata_to?: Json;
+          p_to_user_info_id: string;
+        };
+        Returns: Json;
+      };
       update_user_info_with_relations: {
         Args: {
           p_email: string;

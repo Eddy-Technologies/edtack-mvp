@@ -16,7 +16,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { orderedTableFiles, seedFiles } from './table-config.js';
+import { orderedTableFiles, functionFiles, cronFiles, seedFiles } from './table-config.js';
 
 // Load environment variables
 try {
@@ -76,23 +76,66 @@ function generateMigrations() {
 
     // Generate timestamped migration files
     const baseTimestamp = Date.now();
+    let migrationCount = 0;
 
-    orderedTableFiles.forEach((file, index) => {
+    // Generate table migrations
+    orderedTableFiles.forEach((file) => {
       const sourceFile = path.join(tablesDir, file);
       if (fs.existsSync(sourceFile)) {
-        const timestamp = baseTimestamp + (index * 1000); // 1 second apart
+        const timestamp = baseTimestamp + (migrationCount * 1000);
         const migrationFile = path.join(migrationsDir, `${timestamp}_${file.replace('.sql', '')}.sql`);
 
         const content = fs.readFileSync(sourceFile, 'utf8');
         fs.writeFileSync(migrationFile, content);
 
         log(`   ✅ Generated ${path.basename(migrationFile)}`, 'green');
+        migrationCount++;
       } else {
         log(`   ⚠️  Skipping ${file} - not found`, 'yellow');
       }
     });
 
-    log(`🎉 Generated ${orderedTableFiles.length} migration files`, 'green');
+    // Generate function migrations
+    const functionsDir = path.join(projectRoot, 'database/functions');
+    if (fs.existsSync(functionsDir) && functionFiles && functionFiles.length > 0) {
+      functionFiles.forEach((file) => {
+        const sourceFile = path.join(functionsDir, file);
+        if (fs.existsSync(sourceFile)) {
+          const timestamp = baseTimestamp + (migrationCount * 1000);
+          const migrationFile = path.join(migrationsDir, `${timestamp}_func_${file.replace('.sql', '')}.sql`);
+
+          const content = fs.readFileSync(sourceFile, 'utf8');
+          fs.writeFileSync(migrationFile, content);
+
+          log(`   ✅ Generated ${path.basename(migrationFile)}`, 'green');
+          migrationCount++;
+        } else {
+          log(`   ⚠️  Skipping function ${file} - not found`, 'yellow');
+        }
+      });
+    }
+
+    // Generate cron migrations
+    const cronDir = path.join(projectRoot, 'database/cron');
+    if (fs.existsSync(cronDir) && cronFiles && cronFiles.length > 0) {
+      cronFiles.forEach((file) => {
+        const sourceFile = path.join(cronDir, file);
+        if (fs.existsSync(sourceFile)) {
+          const timestamp = baseTimestamp + (migrationCount * 1000);
+          const migrationFile = path.join(migrationsDir, `${timestamp}_cron_${file.replace('.sql', '')}.sql`);
+
+          const content = fs.readFileSync(sourceFile, 'utf8');
+          fs.writeFileSync(migrationFile, content);
+
+          log(`   ✅ Generated ${path.basename(migrationFile)}`, 'green');
+          migrationCount++;
+        } else {
+          log(`   ⚠️  Skipping cron ${file} - not found`, 'yellow');
+        }
+      });
+    }
+
+    log(`🎉 Generated ${migrationCount} migration files`, 'green');
   } catch (error) {
     log(`❌ Failed to generate migrations: ${error.message}`, 'red');
     throw error;
