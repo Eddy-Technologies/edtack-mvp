@@ -83,7 +83,7 @@ export async function generateQuiz(params: GenerateQuizParams): Promise<Generate
     console.log('[pythonApi] Request body:', JSON.stringify(requestBody, null, 2));
 
     // Call Python backend API with explicit type
-    const response = await $fetch<PythonTaskGenerationResponse>(`${pythonApiUrl}/task/${threadId}`, {
+    const response = await $fetch<PythonTaskGenerationResponse>(`${pythonApiUrl}/api/v1/task/${threadId}`, {
       method: 'POST',
       body: requestBody,
       timeout: 60000 * 5, // TODO: revise 5 minute timeout

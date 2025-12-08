@@ -88,7 +88,7 @@ STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
 # WebSocket AI Service
-NUXT_PUBLIC_CHAT_WS_URL=ws://localhost:8000/api/v1/ws
+NUXT_PUBLIC_CHAT_WS_URL=ws://localhost:8000
 
 # JWT
 JWT_SECRET=your_jwt_secret_key

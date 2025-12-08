@@ -80,7 +80,7 @@ export async function markQuestion(
   };
 
   // Call marking API
-  const response = await $fetch<MarkingApiResponse>(`${pythonApiUrl}/mark/question`, {
+  const response = await $fetch<MarkingApiResponse>(`${pythonApiUrl}/api/v1/mark/question`, {
     method: 'POST',
     body: request,
     timeout: 30000, // 30 seconds
