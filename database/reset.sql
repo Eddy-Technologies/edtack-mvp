@@ -1,19 +1,5 @@
--- ==========================================
--- EdTack Database Complete Reset Script
--- Generated: 2025-12-07T07:21:50.624Z
--- ==========================================
-
--- This script completely resets the database:
--- 1. Drops all tables (CASCADE)
--- 2. Creates all tables with proper structure
--- 3. Inserts all seed data
-
--- Begin transaction
+-- Generated: 2025-12-08T07:50:23.376Z
 BEGIN;
-
--- ==========================================
--- DROP ALL FUNCTIONS
--- ==========================================
 
 DROP FUNCTION IF EXISTS update_updated_at_column CASCADE;
 DROP FUNCTION IF EXISTS update_user_info_with_relations CASCADE;
@@ -22,12 +8,6 @@ DROP FUNCTION IF EXISTS update_characters_updated_at CASCADE;
 DROP FUNCTION IF EXISTS update_user_tasks_chapters_updated_at CASCADE;
 DROP FUNCTION IF EXISTS transfer_credits_atomic CASCADE;
 DROP FUNCTION IF EXISTS rollup_token_usage CASCADE;
-
--- All functions dropped
-
--- ==========================================
--- DROP ALL TABLES (CASCADE for dependencies)
--- ==========================================
 
 DROP TABLE IF EXISTS user_tasks_chapters_questions CASCADE;
 DROP TABLE IF EXISTS user_tasks_chapters CASCADE;
@@ -66,34 +46,24 @@ DROP TABLE IF EXISTS syllabus_types CASCADE;
 DROP TABLE IF EXISTS level_types CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 
--- All tables dropped
-
--- ==========================================
--- CREATE ALL TABLES
--- ==========================================
-
--- From: roles.sql
 -- Roles Table
 CREATE TABLE roles (
   id SERIAL PRIMARY KEY,
   role_name TEXT NOT NULL CHECK (role_name IN ('ADMIN', 'PARENT', 'TEACHER', 'STUDENT'))
 );
 
--- From: level_types.sql
 -- Level Types Table
 CREATE TABLE level_types (
   level_type VARCHAR(50) PRIMARY KEY,
   description VARCHAR(255) DEFAULT NULL
 );
 
--- From: syllabus_types.sql
 -- Syllabus Types Table
 CREATE TABLE syllabus_types (
   syllabus_type VARCHAR(50) PRIMARY KEY,
   description VARCHAR(255) DEFAULT NULL
 );
 
--- From: codes.sql
 -- Generic Codes System
 CREATE TABLE IF NOT EXISTS codes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -118,7 +88,6 @@ CREATE INDEX IF NOT EXISTS idx_codes_sort_order ON codes(sort_order);
 CREATE INDEX IF NOT EXISTS idx_codes_category_active ON codes(category, is_active);
 CREATE INDEX IF NOT EXISTS idx_codes_code_category ON codes(code, category);
 
--- From: subscription_tier_limits.sql
 -- Subscription Tier Limits Table (Configurable token limits per tier)
 CREATE TABLE subscription_tier_limits (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -135,7 +104,6 @@ CREATE INDEX idx_subscription_tier_limits_lookup_key ON subscription_tier_limits
 CREATE INDEX idx_subscription_tier_limits_active ON subscription_tier_limits(is_active);
 
 
--- From: subjects.sql
 -- Subject Table
 -- Represents the subject structure (e.g. Mathematics, Science)
 CREATE TABLE subjects (
@@ -149,7 +117,6 @@ CREATE TABLE subjects (
 
 CREATE INDEX idx_subjects_active ON subjects(is_active) WHERE is_active = true;
 
--- From: chapters.sql
 -- Chapter Table
 -- Represents the hierarchical educational content structure (main topics, sub-strands, sub-topics)
 -- Recursive structure with parent_id referencing the same table
@@ -164,7 +131,6 @@ CREATE TABLE chapters (
   CONSTRAINT unique_chapter_per_subject UNIQUE (subject_id, name) -- Ensure unique chapter names within the same subject
 );
 
--- From: curriculum_subjects.sql
 -- Curriculum Subjects Table
 -- Junction table linking level_types, syllabus_types, and subjects
 -- Defines which subjects are available for each level/syllabus combination
@@ -175,7 +141,6 @@ CREATE TABLE curriculum_subjects (
     CONSTRAINT pk_curriculum_subjects PRIMARY KEY (level_type, syllabus_type, subject)
 );
 
--- From: user_infos.sql
 -- User Infos Table (Centralized Profile Data, links to auth.users only)
 CREATE TABLE user_infos (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -318,7 +283,6 @@ END;
 $$;
 
 
--- From: user_roles.sql
 -- User Roles Table (Many-to-Many, now links to user_infos)
 CREATE TABLE user_roles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -375,7 +339,6 @@ CREATE TRIGGER trg_enforce_user_role_user_type
 BEFORE INSERT OR UPDATE ON user_roles
 FOR EACH ROW EXECUTE FUNCTION enforce_user_role_user_type();
 
--- From: user_credits.sql
 -- User Credits table for internal credit tracking
 CREATE TABLE IF NOT EXISTS user_credits (
   user_info_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE,
@@ -393,7 +356,6 @@ CHECK (reserved_credit <= credit);
 -- Add indexes for user_credits
 CREATE INDEX IF NOT EXISTS idx_user_credits_user_info_id ON user_credits(user_info_id);
 
--- From: user_subscriptions.sql
 -- User Subscriptions Table (Local Stripe sync to avoid API latency)
 CREATE TABLE user_subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -415,7 +377,6 @@ CREATE INDEX idx_user_subscriptions_stripe_sub_id ON user_subscriptions(stripe_s
 CREATE INDEX idx_user_subscriptions_status ON user_subscriptions(status);
 
 
--- From: groups.sql
 CREATE TABLE groups (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text,
@@ -427,7 +388,6 @@ CREATE TABLE groups (
   updated_at timestamp with time zone DEFAULT now()
 );
 
--- From: group_members.sql
 CREATE TABLE group_members (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   group_id uuid NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
@@ -442,7 +402,6 @@ CREATE TABLE group_members (
 
 CREATE INDEX idx_group_members_group_id ON group_members(group_id);
 
--- From: syllabus.sql
 -- Syllabus Table
 -- Represents the syllabus structure (main topics, sub-strands, sub-topics)
 -- Recursive structure with parent_id referencing the same table
@@ -455,7 +414,6 @@ CREATE TABLE syllabus (
   description TEXT DEFAULT NULL
 );
 
--- From: questions.sql
 -- Questions Table
 CREATE TABLE questions (
   id uuid PRIMARY KEY,
@@ -475,7 +433,6 @@ CREATE TABLE questions (
   source_name TEXT NOT NULL
 );
 
--- From: question_options.sql
 -- Options Table
 CREATE TABLE question_options (
   id uuid PRIMARY KEY,
@@ -487,7 +444,6 @@ CREATE TABLE question_options (
   )
 );
 
--- From: question_correct_answers.sql
 -- Correct Answers Table
 CREATE TABLE question_correct_answers (
   id uuid PRIMARY KEY,
@@ -506,7 +462,6 @@ CREATE TABLE question_correct_answers (
   )
 );
 
--- From: user_question_attempts.sql
 -- Stores the history of all user answers for all questions (all attempts) - now links to user_infos
 CREATE TABLE user_question_attempts (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -535,7 +490,6 @@ ON user_question_attempts(score, max_score) WHERE max_score IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_user_question_attempts_user_status
 ON user_question_attempts(user_info_id, marking_status);
 
--- From: user_question_answers.sql
 -- Stores the history of all user answers for all questions (all attempts)
 CREATE TABLE user_question_answers (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -549,7 +503,6 @@ CREATE TABLE user_question_answers (
   order_index INT DEFAULT NULL -- Order of this option in the answer used to sort
 );
 
--- From: products.sql
 -- Products table for storefront catalog
 CREATE TABLE IF NOT EXISTS products (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -582,7 +535,6 @@ CREATE INDEX IF NOT EXISTS idx_products_sku ON products(sku);
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON products TO service_role;
 
--- From: orders.sql
 -- Orders table (replaces user_purchases)
 CREATE TABLE IF NOT EXISTS orders (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -609,7 +561,6 @@ CREATE INDEX IF NOT EXISTS idx_orders_order_number ON orders(order_number);
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON orders TO service_role;
 
--- From: order_items.sql
 -- Order Items table for individual products in orders
 CREATE TABLE IF NOT EXISTS order_items (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -632,7 +583,6 @@ CREATE TABLE IF NOT EXISTS order_items (
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON order_items TO service_role;
 
--- From: wishlists.sql
 -- Wishlist table for user wishlist management
 CREATE TABLE IF NOT EXISTS wishlists (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -646,7 +596,6 @@ CREATE TABLE IF NOT EXISTS wishlists (
 ALTER TABLE wishlists ADD CONSTRAINT unique_user_product 
   UNIQUE (user_info_id, product_id);
 
--- From: user_tasks.sql
 -- User Tasks table for task-based credit earning
 -- Each task is a one-off assignment from parent to student covering one or more chapters
 CREATE TABLE IF NOT EXISTS user_tasks (
@@ -673,7 +622,6 @@ CREATE INDEX IF NOT EXISTS idx_user_tasks_assignee ON user_tasks(assignee_user_i
 ALTER TABLE user_tasks ADD CONSTRAINT chk_different_users 
   CHECK (creator_user_info_id != assignee_user_info_id);
 
--- From: credit_transactions.sql
 -- Credit Transactions table for credit operations
 CREATE TABLE IF NOT EXISTS credit_transactions (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -707,7 +655,6 @@ CREATE POLICY "Users can view own credit transactions" ON credit_transactions
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON credit_transactions TO service_role;
 
--- From: characters.sql
 -- Characters Table
 CREATE TABLE characters (
     id SERIAL PRIMARY KEY,
@@ -747,7 +694,6 @@ BEFORE UPDATE ON characters
 FOR EACH ROW
 EXECUTE FUNCTION update_characters_updated_at();
 
--- From: token_history.sql
 -- Token History Table (Track AI token usage by users)
 CREATE TABLE token_history (
   id SERIAL PRIMARY KEY,
@@ -773,7 +719,6 @@ CREATE INDEX idx_token_history_thread_id ON token_history(thread_id);
 CREATE INDEX idx_token_history_user_query_at ON token_history(user_infos_id, query_at); -- For billing cycle queries
 CREATE INDEX idx_token_history_id_user ON token_history(id, user_infos_id); -- For incremental rollup
 
--- From: token_usage_summary.sql
 -- Token Usage Summary Table (Pre-aggregated for fast queries)
 CREATE TABLE token_usage_summary (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -794,7 +739,6 @@ CREATE TABLE token_usage_summary (
 CREATE INDEX idx_token_usage_summary_user_period ON token_usage_summary(user_info_id, period_start, period_end);
 
 
--- From: stripe_webhook_events.sql
 -- Stripe Webhook Events table for idempotency
 CREATE TABLE IF NOT EXISTS stripe_webhook_events (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -816,7 +760,6 @@ CREATE POLICY "Service role can manage webhook events" ON stripe_webhook_events
 -- Grant permissions to service role for webhook processing
 GRANT ALL ON stripe_webhook_events TO service_role;
 
--- From: checkpointer_tables.sql
 -- PostgreSQL Checkpointer Tables for LangGraph AsyncPostgresSaver
 -- These tables are required for persistent state management in the tutoring graph
 -- Created: 2025-09-12
@@ -899,7 +842,6 @@ BEGIN
     END IF;
 END $$;
 
--- From: threads.sql
 CREATE TABLE threads (
                               id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                               user_infos_id UUID NOT NULL REFERENCES user_infos(id) ON DELETE CASCADE, -- who owns this thread
@@ -912,7 +854,6 @@ CREATE TABLE threads (
 CREATE INDEX idx_threads_user_infos_id ON threads(user_infos_id);
 
 
--- From: thread_messages.sql
 CREATE TABLE thread_messages (
                                id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
                                thread_id UUID NOT NULL REFERENCES threads(id) ON DELETE CASCADE,
@@ -926,7 +867,6 @@ CREATE INDEX idx_thread_messages_thread_id ON thread_messages(thread_id);
 CREATE INDEX idx_thread_messages_sender ON thread_messages(sender);
 
 
--- From: message_feedback.sql
 CREATE TABLE message_feedback (
                                id BIGSERIAL PRIMARY KEY,
                                message_id UUID NOT NULL REFERENCES thread_messages(id) ON DELETE CASCADE,
@@ -942,7 +882,6 @@ CREATE INDEX idx_message_feedback_message_id ON message_feedback(message_id);
 CREATE INDEX idx_message_feedback_user_infos_id ON message_feedback(user_infos_id);
 
 
--- From: user_tasks_chapters.sql
 -- User Tasks Chapters Table
 -- Junction table linking user_tasks to chapters for multi-chapter task assignments
 -- This allows parents to assign tasks covering multiple chapters within a subject
@@ -992,7 +931,6 @@ CREATE TRIGGER trigger_update_user_tasks_chapters_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_user_tasks_chapters_updated_at();
 
--- From: user_tasks_chapters_questions.sql
 -- User Tasks Chapters Questions Junction Table
 -- Links specific questions to each task-chapter combination
 -- This enables custom question selection per task assignment, allowing different
@@ -1020,11 +958,6 @@ CREATE INDEX IF NOT EXISTS idx_utcq_display_order
   ON user_tasks_chapters_questions(user_tasks_chapters_id, display_order);
 
 
--- ==========================================
--- CREATE ALL FUNCTIONS
--- ==========================================
-
--- From: functions/transfer_credits_atomic.sql
 -- Database Functions and Extensions
 
 -- Enable pgcrypto for gen_random_uuid()
@@ -1186,7 +1119,6 @@ EXCEPTION WHEN OTHERS THEN
 END;
 $$;
 
--- From: functions/token_rollup.sql
 -- Token Rollup Function
 -- Aggregates tokens from token_history into token_usage_summary incrementally
 
@@ -1267,11 +1199,6 @@ END;
 $$;
 
 
--- ==========================================
--- CRON JOBS
--- ==========================================
-
--- From: cron/token_rollup.sql
 -- Token Rollup Cron Job
 -- Runs every 10 minutes to aggregate token usage
 
@@ -1299,11 +1226,6 @@ SELECT cron.schedule(
 );
 
 
--- ==========================================
--- SEED DATA
--- ==========================================
-
--- Seed data from: all_seeds.sql
 -- Consolidated Seed Data for EdTack MVP Database
 -- This file contains all INSERT statements from various migration files
 
@@ -1480,7 +1402,6 @@ ON CONFLICT (user_info_id) DO NOTHING;
 -- SELECT 'Sample Products:', name, sku, price_cents/100.0 as price_sgd, category FROM products WHERE metadata->>'sample_data' = 'true' ORDER BY category, price_cents;
 -- SELECT 'System Codes:', category, count(*) as count FROM codes GROUP BY category ORDER BY category;
 
--- Seed data from: education_data.sql
 INSERT INTO level_types (level_type, description) VALUES
 ('PRIMARY_1', 'Primary 1'),
 ('PRIMARY_2', 'Primary 2'),
@@ -1722,7 +1643,6 @@ INSERT INTO chapters (name, display_name, subject_id, level, description, sort_o
 ('n_level_singapore_biology_07_evolution', 'Evolution', 'n_level_singapore_biology', 1, 'The diversity of living organisms is achieved through a process of evolution, driven by mechanisms such as natural selection', 7);
 
 
--- Seed data from: characters.sql
 -- Characters Seed Data
 -- This seeds the characters table with the current character data
 
@@ -1896,16 +1816,4 @@ INSERT INTO characters (
   NOW()
 );
 
--- Commit transaction
 COMMIT;
-
--- ==========================================
--- RESET COMPLETE
--- Functions dropped: 7
--- Tables dropped: 36
--- Tables created: 36
--- Functions created: 2
--- Cron jobs created: 1
--- Seed files applied: 3
--- Generated: 2025-12-07T07:21:50.640Z
--- ==========================================
