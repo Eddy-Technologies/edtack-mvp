@@ -36,11 +36,11 @@ server/
 ├── utils/
 │   ├── authConfig.ts   # Auth configuration
 │   └── stripe.ts       # Stripe integration
-database/
-├── tables/             # Database schema files (semantic naming)
+supabase/
+├── schemas/            # Source of truth - SQL definitions
+├── migrations/         # Timestamped migrations (synced across environments)
 ├── seeds/              # Seed data for development
-├── drop/               # Database cleanup scripts
-└── scripts/            # Migration and management scripts
+└── scripts/            # User and asset management scripts
 middleware/
 └── auth.ts             # Route protection
 types/
@@ -125,10 +125,10 @@ The application will be available at `http://localhost:3000`.
 pnpm dev
 
 # Database management
-pnpm db:generate     # Generate reset.sql from table definitions
-pnpm db:reset        # Full reset: tables + seeds + users + assets (local only)
+pnpm db:reset        # Reset local DB + users + assets
 pnpm db:types        # Generate TypeScript types from schema
-pnpm db:diff         # Generate incremental migration via supabase db diff
+supabase db diff -f <name>  # Generate migration from schema changes
+supabase db push     # Push migrations to remote
 
 # Code quality
 pnpm lint            # Run ESLint
@@ -217,11 +217,12 @@ functions.sql               # Database functions and views
 5. Follow error handling patterns with `createError`
 
 ### Database Changes
-1. Add new table file to `/database/tables/` with semantic naming
-2. Update migration script dependency order if needed
-3. Run `pnpm db:fresh` to test complete migration
-5. Regenerate TypeScript types with `pnpm db:types`
-6. Test with both user and service role clients
+1. Add new table file to `supabase/schemas/`
+2. Add to `supabase/config.toml` schema_paths in dependency order
+3. Reset local: `supabase db reset`
+4. Generate migration: `supabase db diff -f <name>`
+5. Push to remote: `supabase db push`
+6. Regenerate TypeScript types with `pnpm db:types`
 
 ### Documentation
 - Update `CLAUDE.md` for architectural changes

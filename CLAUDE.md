@@ -17,65 +17,97 @@ This project uses **pnpm** as the package manager.
 - `pnpm format` - Format code with Prettier
 
 ### Database Operations
-- `pnpm db:generate` - Generate `database/reset.sql`
-- `pnpm db:reset` - Reset local database (tables + seeds + users + assets)
-- `pnpm db:types` - Generate TypeScript types from database schema
-- `pnpm db:diff` - Generate incremental migration via supabase db diff
+- `pnpm db:reset` - Reset local DB (migrations + seeds + users + assets)
+- `pnpm db:types` - Generate TypeScript types
+- `supabase db diff -f <name>` - Generate migration from schema changes
+- `supabase db push` - Push migrations to remote
+- `supabase db reset --linked` - Reset remote DB (destructive)
+
+## Supabase Projects
+| Env | Project ID | URL |
+|-----|------------|-----|
+| dev | `qfzqwbwwzqmacnhtihov` | https://qfzqwbwwzqmacnhtihov.supabase.co |
+| prod | `yxbebpfjblokjxvroebw` | https://yxbebpfjblokjxvroebw.supabase.co |
 
 ## Database Workflows
 
 ### Local Development
 ```bash
-pnpm db:generate    # Generate reset.sql
-pnpm db:reset       # Reset local DB + create users + upload assets
-```
-### Dev/Prod - Full Reset
-```bash
-pnpm db:generate
-# Copy database/reset.sql contents to Supabase SQL Editor and run
+supabase start   # Start local Supabase
+pnpm db:reset    # Reset DB + create users + upload assets
 ```
 
-### Dev/Prod - Create Users
+### Making Schema Changes
 ```bash
-NUXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co \
-NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=your-service-role-key \
-node database/scripts/init-admin.js
+# 1. Edit schema source file
+vim supabase/schemas/user_infos.sql
+
+# 2. Reset local to apply changes
+supabase db reset
+
+# 3. Generate migration from diff
+supabase db diff -f add_new_column
+
+# 4. Push to dev
+supabase link --project-ref qfzqwbwwzqmacnhtihov
+supabase db push
+
+# 5. Push to prod (when ready)
+supabase link --project-ref yxbebpfjblokjxvroebw
+supabase db push
 ```
 
-Creates test users:
+### Reset Remote Database (Destructive)
+```bash
+supabase link --project-ref <project-id>
+supabase db reset --linked
+```
+
+### Create Test Users on Dev/Prod
+```bash
+# Dev
+NUXT_PUBLIC_SUPABASE_URL=https://qfzqwbwwzqmacnhtihov.supabase.co \
+NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
+node supabase/scripts/init-admin.js
+
+# Prod
+NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
+NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
+node supabase/scripts/init-admin.js
+```
+
+### Upload Assets to Dev/Prod
+```bash
+# Dev
+NUXT_PUBLIC_SUPABASE_URL=https://qfzqwbwwzqmacnhtihov.supabase.co \
+NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
+node supabase/scripts/upload-assets.js
+
+# Prod
+NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
+NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
+node supabase/scripts/upload-assets.js
+```
+
+### Test Users
 - `admin@edtack.com / admin123` - ADMIN role
 - `parent@test.com / Test123!` - PARENT role, PRO subscription
 - `student@test.com / Test123!` - STUDENT role, linked to parent
 
-### Dev/Prod - Upload Assets
-```bash
-NUXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co \
-NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=your-service-role-key \
-node database/scripts/upload-assets.js
-```
-
-Uploads `assets/characters/*.png` to Supabase Storage.
-
-### Incremental Changes
-```bash
-pnpm db:diff    # Shows ALTER statements
-# Copy output to Supabase SQL Editor
-```
-
-## Database Scripts
+## Database Structure
 
 ```
-database/
-├── scripts/
-│   ├── db.js           # Main CLI (generate, reset, types, diff)
-│   ├── init-admin.js   # Create test users via Auth API
-│   ├── upload-assets.js # Upload character images to Storage
-│   └── table-config.js # Table ordering config
-├── tables/             # SQL table definitions
-├── functions/          # SQL functions
-├── cron/               # Cron jobs
-├── seeds/              # Seed data
-└── reset.sql           # Generated full reset script
+supabase/
+├── config.toml         # Schema paths and seed config
+├── migrations/         # Timestamped migrations (synced across environments)
+├── schemas/            # Source of truth - SQL definitions
+│   ├── *.sql          # Table definitions
+│   ├── functions/     # SQL functions
+│   └── cron/          # Cron job definitions
+├── seeds/             # Seed data
+└── scripts/
+    ├── init-admin.js  # Create test users via Auth API
+    └── upload-assets.js # Upload character images to Storage
 ```
 
 ## Project Structure
@@ -94,7 +126,7 @@ This is a Nuxt 3 application with:
 - Constants and codes and code category are in CONSTANT_CASE
 
 ### Schemas
-- Update `database/tables/` when altering tables
+- Update `supabase/schemas/` when altering tables
 
 ## System Codes
 
@@ -103,6 +135,6 @@ System codes are shared CONSTANT_CASE enums (e.g., `CORRECT`, `PENDING`) used ac
 **Adding new codes:**
 1. Add enum to `shared/constants/codes.ts`
 2. Add type guard to `server/services/codeService.ts`
-3. Add seed data to `database/seeds/all_seeds.sql`
+3. Add seed data to `supabase/seeds/all_seeds.sql`
 4. Add to `app/stores/codes.ts` CODE_CATEGORIES
 5. Optional: Add CHECK constraint to table schema
