@@ -45,6 +45,7 @@ jobs:
           echo "NUXT_PUBLIC_BASE_URL is set: ${{ vars.NUXT_PUBLIC_BASE_URL != '' }}"
           echo "NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL is set: ${{ vars.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL != '' }}"
           echo "NUXT_PUBLIC_CHAT_WS_URL is set: ${{ secrets.NUXT_PUBLIC_CHAT_WS_URL != '' }}"
+          echo "NUXT_PUBLIC_PYTHON_API_URL is set: ${{ secrets.NUXT_PUBLIC_PYTHON_API_URL != '' }}"
 
       - name: Ensure NuxtHub module is installed
         run: pnpx nuxthub@latest ensure
@@ -72,6 +73,7 @@ jobs:
           NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL: ${{ vars.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL }}
           # Render websocket URL
           NUXT_PUBLIC_CHAT_WS_URL: ${{ secrets.NUXT_PUBLIC_CHAT_WS_URL }}
+          NUXT_PUBLIC_PYTHON_API_URL: ${{ secrets.NUXT_PUBLIC_PYTHON_API_URL }}
 
       - name: Deploy to NuxtHub
         uses: nuxt-hub/action@v1
@@ -98,3 +100,4 @@ jobs:
           NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL: ${{ vars.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL }}
           # Render websocket URL
           NUXT_PUBLIC_CHAT_WS_URL: ${{ secrets.NUXT_PUBLIC_CHAT_WS_URL }}
+          NUXT_PUBLIC_PYTHON_API_URL: ${{ secrets.NUXT_PUBLIC_PYTHON_API_URL }}
