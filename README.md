@@ -75,17 +75,17 @@ pnpm install
 cp .env.example .env
 ```
 
-Configure the following environment variables:
+Configure the following environment variables (see `.env.example` for full list):
 ```bash
 # Supabase
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+NUXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NUXT_PUBLIC_SUPABASE_KEY=your_supabase_anon_key
+NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 # Stripe
-STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
+NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+NUXT_STRIPE_SECRET_KEY=sk_test_...
+NUXT_STRIPE_WEBHOOK_SECRET=whsec_...
 
 # WebSocket AI Service
 NUXT_PUBLIC_CHAT_WS_URL=ws://localhost:8000
@@ -99,8 +99,8 @@ JWT_SECRET=your_jwt_secret_key
 # Start local Supabase (requires Docker)
 supabase start
 
-# Run complete database setup (creates all tables and seed data)
-pnpm db:fresh
+# Reset database (creates tables, seeds data, creates test users, uploads assets)
+pnpm db:reset
 
 # Generate TypeScript types
 pnpm db:types
@@ -125,11 +125,10 @@ The application will be available at `http://localhost:3000`.
 pnpm dev
 
 # Database management
-pnpm db:fresh        # Complete database reset + migration + seeding
-pnpm db:migrate      # Run migrations only
-pnpm db:seed         # Run seed data only
-pnpm db:reset        # Drop all tables
-pnpm db:types        # Generate TypeScript types
+pnpm db:generate     # Generate reset.sql from table definitions
+pnpm db:reset        # Full reset: tables + seeds + users + assets (local only)
+pnpm db:types        # Generate TypeScript types from schema
+pnpm db:diff         # Generate incremental migration via supabase db diff
 
 # Code quality
 pnpm lint            # Run ESLint

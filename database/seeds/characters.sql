@@ -22,7 +22,7 @@ INSERT INTO characters (
   'A friendly lion character who loves to teach and learn with students',
   'eddy.png',
   'Eddy is a lion character that talks and is highly intelligent, he educates with passion. He is friendly, encouraging, and always ready to help students learn.',
-  false,
+  true,
   1,
   NOW(),
   NOW()

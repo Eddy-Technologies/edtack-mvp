@@ -36,7 +36,7 @@ function getConfig() {
     studentEmail: 'student@test.com',
     studentPassword: 'Test123!',
     supabaseUrl: env.NUXT_PRIVATE_SUPABASE_URL || env.NUXT_PUBLIC_SUPABASE_URL,
-    supabaseServiceKey: env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY || env.NUXT_PRIVATE_SUPABASE_KEY
+    supabaseServiceKey: env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY
   };
 
   if (!config.supabaseUrl) throw new Error('SUPABASE_URL required');
