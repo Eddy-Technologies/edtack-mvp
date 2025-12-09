@@ -56,6 +56,7 @@
             :messages="[]"
             :character="selectedCharacter"
             :thread-data="threadData"
+            @response-received="handleResponseReceived"
           />
         </div>
 
@@ -108,7 +109,7 @@
             </div>
 
             <div class="w-full max-w-4xl mx-auto">
-              <ChatInput @send="handleChatSend" />
+              <ChatInput ref="chatInputRef" @send="handleChatSend" />
             </div>
           </div>
         </div>
@@ -148,6 +149,7 @@ const currentCharacter = ref(null);
 const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
+const chatInputRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
 
 const router = useRouter();
@@ -311,6 +313,13 @@ const handleChatSend = async (text: string) => {
   // Existing chat - send directly
   if (chatContentRef.value && chatContentRef.value.handleSend) {
     await chatContentRef.value.handleSend(text);
+  }
+};
+
+// Reset ChatInput sending state when response is received
+const handleResponseReceived = () => {
+  if (chatInputRef.value && chatInputRef.value.resetSendState) {
+    chatInputRef.value.resetSendState();
   }
 };
 

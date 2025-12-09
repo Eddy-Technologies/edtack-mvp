@@ -4,26 +4,22 @@
     <div
       class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300 flex justify-between items-center px-4"
     >
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
+        <!-- Connection status -->
         <span v-if="useWebSocket && wsChat" class="flex items-center gap-1">
           <span
             class="w-2 h-2 rounded-full"
-            :class="{
-              'bg-green-500': wsChat.isConnected,
-              'bg-yellow-500': wsChat.isConnecting,
-              'bg-red-500': !wsChat.isConnected && !wsChat.isConnecting && wsChat.error,
-              'bg-gray-400': !wsChat.isConnected && !wsChat.isConnecting && !wsChat.error,
-            }"
+            :class="connectionStatusClass"
           />
-          <span class="text-xs">
-            {{
-              wsChat.isConnected
-                ? 'Connected'
-                : wsChat.isConnecting
-                  ? 'Connecting...'
-                  : 'Disconnected'
-            }}
+          <span class="text-xs" :class="connectionStatusTextClass">
+            {{ connectionStatusText }}
           </span>
+        </span>
+
+        <!-- Queue indicator -->
+        <span v-if="messageQueue.length > 0" class="flex items-center gap-1 text-xs text-yellow-600">
+          <Icon name="i-heroicons-queue-list" class="w-3 h-3" />
+          {{ messageQueue.length }} message{{ messageQueue.length > 1 ? 's' : '' }} queued
         </span>
       </div>
 
@@ -119,6 +115,11 @@ interface ChatContentProps {
 // Component props
 const props = defineProps<ChatContentProps>();
 
+// Component events
+const emit = defineEmits<{
+  (e: 'responseReceived'): void;
+}>();
+
 // Use global thread state instead of local state
 const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
@@ -157,7 +158,7 @@ const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
-const messageQueue = ref<string[]>([]); // Queue for messages waiting to be sent
+const messageQueue = ref<{ text: string; messageId: string }[]>([]); // Queue for messages waiting to be sent
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -165,6 +166,49 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
+
+// Connection status computed properties
+const connectionStatusClass = computed(() => {
+  if (!wsChat.value) return 'bg-gray-400';
+
+  if (wsChat.value.isConnected) {
+    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
+      return 'bg-blue-500 animate-pulse';
+    }
+    return 'bg-green-500';
+  }
+  if (wsChat.value.isConnecting) return 'bg-yellow-500 animate-pulse';
+  if (wsChat.value.error) return 'bg-red-500';
+  return 'bg-gray-400';
+});
+
+const connectionStatusText = computed(() => {
+  if (!wsChat.value) return 'Not initialized';
+
+  if (wsChat.value.isConnected) {
+    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
+      return wsChat.value.responsePhase || 'Waiting for response...';
+    }
+    return 'Connected';
+  }
+  if (wsChat.value.isConnecting) return 'Connecting...';
+  if (wsChat.value.error) return 'Connection failed';
+  return 'Disconnected';
+});
+
+const connectionStatusTextClass = computed(() => {
+  if (!wsChat.value) return 'text-gray-500';
+
+  if (wsChat.value.isConnected) {
+    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
+      return 'text-blue-600';
+    }
+    return 'text-green-600';
+  }
+  if (wsChat.value.isConnecting) return 'text-yellow-600';
+  if (wsChat.value.error) return 'text-red-600';
+  return 'text-gray-500';
+});
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
@@ -349,6 +393,17 @@ const sendMessage = async (text: string) => {
   return success;
 };
 
+// Helper to update message status by ID
+const updateMessageStatus = (messageId: string, status: 'queued' | 'sending' | 'sent' | 'failed') => {
+  const msgIndex = messageStream.value.findIndex((m) => m.id === messageId);
+  if (msgIndex !== -1) {
+    messageStream.value[msgIndex] = {
+      ...messageStream.value[msgIndex],
+      status,
+    };
+  }
+};
+
 // Process queued messages when WebSocket connects
 const processMessageQueue = () => {
   if (wsChat.value?.isConnected && messageQueue.value.length > 0) {
@@ -356,9 +411,16 @@ const processMessageQueue = () => {
     const messages = [...messageQueue.value];
     messageQueue.value = [];
 
-    messages.forEach((message) => {
+    messages.forEach((queuedMsg) => {
       nextTick(() => {
-        sendMessage(message);
+        // Update status to 'sending' before actually sending
+        if (queuedMsg.messageId) {
+          updateMessageStatus(queuedMsg.messageId, 'sending');
+        }
+        const success = sendMessage(queuedMsg.text);
+        if (!success && queuedMsg.messageId) {
+          updateMessageStatus(queuedMsg.messageId, 'failed');
+        }
       });
     });
   }
@@ -501,8 +563,26 @@ const handleStreamingComplete = (completionMessage: any) => {
   });
 };
 
+// Mark the most recent user message as 'sent'
+const markLastUserMessageSent = () => {
+  // Find the last user message and mark it as sent
+  for (let i = messageStream.value.length - 1; i >= 0; i--) {
+    const msg = messageStream.value[i];
+    if (msg.isUser && (msg.status === 'sending' || msg.status === 'queued')) {
+      messageStream.value[i] = { ...msg, status: 'sent' };
+      break;
+    }
+  }
+};
+
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
+  // Any valid response means our message was received - mark as sent and notify parent
+  if (message.status && !['heartbeat', 'status_update'].includes(message.status)) {
+    markLastUserMessageSent();
+    emit('responseReceived');
+  }
+
   // Route slide batch messages
   if (message.type === 'slide_batch_ready') {
     handleSlideBatch(message);
@@ -597,6 +677,7 @@ const flattenedPlaybackUnits = computed(() => {
           isFirst: blockIndex === 0,
           isUser: !!block.isUser,
           messageId: block.id?.toString(),
+          status: block.status, // Pass message status for visual indicators
         },
       });
     }
@@ -687,19 +768,20 @@ const handleSend = async (text: string) => {
     uuid: messageUuid
   };
   addMessage(addMessageObj);
-  messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid });
+
+  // Determine initial status based on connection state
+  const initialStatus = wsChat.value?.isConnected ? 'sending' : 'queued';
+  messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
 
   // Since we connect immediately in initializeChat, just try to send
   if (wsChat.value?.isConnected) {
     const success = sendMessage(text);
     if (!success) {
-      // Handle send failure
+      // Handle send failure - update message status
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
-        type: 'text',
-        text: '[Failed to send message - WebSocket error]',
-        isUser: false,
-        playable: false,
+        ...messageStream.value[lastIdx],
+        status: 'failed',
       };
       isPlayingAllowed.value = true;
       isWaitingForResponse.value = false;
@@ -707,7 +789,7 @@ const handleSend = async (text: string) => {
   } else {
     // Queue the message for later sending (fallback)
     console.log('WebSocket not connected, queuing message:', text);
-    messageQueue.value.push(text);
+    messageQueue.value.push({ text, messageId: messageUuid });
   }
 };
 

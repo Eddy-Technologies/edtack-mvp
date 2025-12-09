@@ -14,10 +14,19 @@
         @keydown.enter="handleEnterKey"
       />
       <button
-        class="p-3 bg-primary hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
+        :class="[
+          'p-3 rounded-lg transition-colors duration-200',
+          isSending
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-primary hover:bg-blue-700 text-white'
+        ]"
+        :disabled="isSending"
         @click="emitMessage"
       >
-        <Icon name="i-heroicons-paper-airplane" class="w-5 h-5" />
+        <Icon
+          :name="isSending ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
+          :class="['w-5 h-5', isSending ? 'animate-spin text-white' : '']"
+        />
       </button>
     </div>
 
@@ -41,8 +50,18 @@ import { useTokenUsage } from '~/composables/useTokenUsage';
 const emit = defineEmits(['send']);
 const input = ref('');
 const toast = useToast();
+const isSending = ref(false);
+const DEBOUNCE_MS = 2000; // 2 second cooldown to prevent spam
 
 const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
+
+// Reset sending state (can be called by parent when response received)
+const resetSendState = () => {
+  isSending.value = false;
+};
+
+// Expose methods for parent component
+defineExpose({ resetSendState });
 
 const autocomplete = [
   { key: 'lesson', pillDisplay: 'Give me a lesson on...', input: 'Give me a lesson on ' },
@@ -59,7 +78,7 @@ const handleEnterKey = (event: KeyboardEvent) => {
 };
 
 const emitMessage = async () => {
-  if (!input.value.trim()) return;
+  if (!input.value.trim() || isSending.value) return;
 
   // Check token limit - show toast if exceeded but allow action (soft limit)
   await fetchTokenUsage();
@@ -73,9 +92,17 @@ const emitMessage = async () => {
     });
   }
 
+  // Set sending state to prevent spam clicks
+  isSending.value = true;
+
   // Proceed with message (soft limit - always allow)
   emit('send', input.value);
   input.value = '';
+
+  // Auto-reset after cooldown (in case parent doesn't call resetSendState)
+  setTimeout(() => {
+    isSending.value = false;
+  }, DEBOUNCE_MS);
 };
 
 const appendText = (text: string) => {
