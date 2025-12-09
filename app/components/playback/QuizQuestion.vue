@@ -4,7 +4,13 @@
       <h3 class="text-lg font-semibold mb-2 whitespace-pre-wrap">
         {{ displayedTitle }}
       </h3>
-      <div class="mb-4" v-html="processedContentHtml" />
+      <MDCRenderer
+        v-if="contentMarkdownBody"
+        :body="contentMarkdownBody"
+        tag="div"
+        class="prose prose-md max-w-none mb-4"
+      />
+      <div v-else class="mb-4" v-html="processedContentHtml" />
     </div>
 
     <!-- Question Type Specific UI -->
@@ -151,7 +157,13 @@
         }"
       >
         <h4 class="font-semibold mb-2">Explanation:</h4>
-        <div v-html="processedExplanationHtml" />
+        <MDCRenderer
+          v-if="explanationMarkdownBody"
+          :body="explanationMarkdownBody"
+          tag="div"
+          class="prose prose-md max-w-none"
+        />
+        <div v-else v-html="processedExplanationHtml" />
         <div v-if="markingStatus" class="mt-3 flex items-center gap-2">
           <span
             class="px-3 py-1 rounded-full text-sm font-medium"
@@ -175,11 +187,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch, watchEffect } from 'vue';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import type { QuizQuestion } from '~/types/quiz.types';
 import Button from '~/components/common/Button.vue';
 import MessageActions from '~/components/chat/MessageActions.vue';
 import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
+import { convertHighlights, convertImages, stripImages } from '~/utils/markdownUtils';
 
 const props = defineProps<{
   question: QuizQuestion;
@@ -197,8 +211,38 @@ const drawingFile = ref<string | null>(null);
 const showExplanation = ref(false);
 const markingStatus = ref<string | undefined>(undefined);
 
-const processedContentHtml = computed(() => convertImages(props.question.content || ''));
-const processedExplanationHtml = computed(() => convertImages(props.question.explanation || ''));
+const processedContentHtml = computed(() => convertHighlights(convertImages(props.question.content || '', 'Question image')));
+const processedExplanationHtml = computed(() => convertHighlights(convertImages(props.question.explanation || '', 'Explanation image')));
+
+// Markdown parsing for content and explanation
+const contentMarkdownBody = ref();
+const explanationMarkdownBody = ref();
+
+watchEffect(async () => {
+  if (processedContentHtml.value) {
+    try {
+      const parsed = await parseMarkdown(processedContentHtml.value);
+      contentMarkdownBody.value = parsed?.body;
+    } catch (e) {
+      contentMarkdownBody.value = null;
+    }
+  } else {
+    contentMarkdownBody.value = null;
+  }
+});
+
+watchEffect(async () => {
+  if (processedExplanationHtml.value) {
+    try {
+      const parsed = await parseMarkdown(processedExplanationHtml.value);
+      explanationMarkdownBody.value = parsed?.body;
+    } catch (e) {
+      explanationMarkdownBody.value = null;
+    }
+  } else {
+    explanationMarkdownBody.value = null;
+  }
+});
 
 // Computed property for MessageActions - combines title and content
 const questionText = computed(() => {
@@ -226,17 +270,6 @@ const hasAnswer = computed(() => {
       return false;
   }
 });
-
-function stripImages(raw: string) {
-  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image]');
-}
-
-function convertImages(raw: string) {
-  return raw.replace(
-    /&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g,
-    '<img src="$1" alt="Question image" class="my-2 max-w-full rounded-md"/>'
-  );
-}
 
 function isSelected(optionId: string) {
   return selectedOptions.value.includes(optionId);

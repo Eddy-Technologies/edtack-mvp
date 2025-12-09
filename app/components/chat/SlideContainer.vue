@@ -29,7 +29,7 @@
       ]"
       :style="{ width: isMobile ? '100%' : `${rightPanelWidth}%` }"
     >
-      <div class="p-6">
+      <div class="p-6 pb-24">
         <!-- Close Split View Button -->
         <button
           class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
@@ -71,8 +71,14 @@
           <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
             {{ currentSlide.title }}
           </h2>
+          <MDCRenderer
+            v-if="slideMarkdownBody"
+            :body="slideMarkdownBody"
+            tag="div"
+            class="prose prose-md max-w-none text-lg"
+          />
           <div
-            v-if="currentSlide.content"
+            v-else-if="currentSlide.content"
             class="text-lg max-w-none"
             v-html="processedSlideContent"
           />
@@ -208,8 +214,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import { useToast } from '#imports';
+import { convertHighlights, convertImages } from '~/utils/markdownUtils';
 
 const toast = useToast();
 
@@ -283,12 +291,26 @@ const totalSlides = computed(() => props.slides.length);
 
 const processedSlideContent = computed(() => {
   if (!currentSlide.value?.content) return '';
+  let processed = convertImages(currentSlide.value.content, 'Slide image');
+  processed = convertHighlights(processed);
+  return processed;
+});
 
-  // Convert &&img&& markers to actual images
-  return currentSlide.value.content.replace(
-    /&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g,
-    '<img src="$1" alt="Slide image" class="my-2 max-w-full rounded-md"/>'
-  );
+// Parse markdown for slide content
+const slideMarkdownBody = ref();
+
+watchEffect(async () => {
+  if (processedSlideContent.value) {
+    try {
+      const parsed = await parseMarkdown(processedSlideContent.value);
+      slideMarkdownBody.value = parsed?.body;
+    } catch (e) {
+      // Fallback to raw content if parsing fails
+      slideMarkdownBody.value = null;
+    }
+  } else {
+    slideMarkdownBody.value = null;
+  }
 });
 
 // Methods
