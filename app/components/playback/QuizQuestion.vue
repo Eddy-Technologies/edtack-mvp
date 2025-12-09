@@ -224,6 +224,7 @@ watchEffect(async () => {
       const parsed = await parseMarkdown(processedContentHtml.value);
       contentMarkdownBody.value = parsed?.body;
     } catch (e) {
+      console.error('Markdown parsing error:', e);
       contentMarkdownBody.value = null;
     }
   } else {
@@ -237,6 +238,7 @@ watchEffect(async () => {
       const parsed = await parseMarkdown(processedExplanationHtml.value);
       explanationMarkdownBody.value = parsed?.body;
     } catch (e) {
+      console.error('Markdown parsing error:', e);
       explanationMarkdownBody.value = null;
     }
   } else {

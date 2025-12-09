@@ -110,9 +110,9 @@ module.exports = {
               fontWeight: '600',
             },
             'a': {
-              color: 'inherit',        // Same color as surrounding text
-              textDecoration: 'none',  // No underline
-              fontWeight: 'inherit',   // Same weight as surrounding text
+              color: 'inherit', // Same color as surrounding text
+              textDecoration: 'none', // No underline
+              fontWeight: 'inherit', // Same weight as surrounding text
             },
             'code': {
               color: '#14b8a6', // primary-500

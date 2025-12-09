@@ -305,6 +305,7 @@ watchEffect(async () => {
       const parsed = await parseMarkdown(processedSlideContent.value);
       slideMarkdownBody.value = parsed?.body;
     } catch (e) {
+      console.error('Markdown parsing error:', e);
       // Fallback to raw content if parsing fails
       slideMarkdownBody.value = null;
     }

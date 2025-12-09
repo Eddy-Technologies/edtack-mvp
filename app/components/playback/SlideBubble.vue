@@ -74,6 +74,7 @@ watchEffect(async () => {
       const parsed = await parseMarkdown(processedHtml.value);
       markdownBody.value = parsed?.body;
     } catch (e) {
+      console.error('Markdown parsing error:', e);
       markdownBody.value = null;
     }
   } else {
