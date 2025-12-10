@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS stripe_webhook_events (
   stripe_event_id TEXT UNIQUE NOT NULL,
   event_type TEXT NOT NULL,
   processed BOOLEAN DEFAULT FALSE,
+  error_message TEXT DEFAULT NULL,
   data JSONB,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
