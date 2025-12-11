@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
 
   modules: [
-    '@nuxthub/core',
     '@pinia/nuxt',
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -16,11 +15,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
   ],
-
-  hub: {
-    cache: true,
-    database: true,
-  },
 
   ui: {
     colorMode: false
