@@ -82,6 +82,10 @@ export default defineNuxtConfig({
     redirect: false, // Set to true if you want to use the redirect URL for authentication
   },
 
+  nitro: {
+    preset: 'vercel',
+  },
+
   vite: {
     optimizeDeps: {
       include: ['ws'],
