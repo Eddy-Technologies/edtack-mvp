@@ -41,33 +41,6 @@ export function useQuestions() {
     return true;
   }
 
-  // Attempt a question (record a user's attempt)
-  async function attemptQuestion({
-    userId,
-    questionId,
-    selectedAnswer,
-    isCorrect,
-    attemptData = {},
-  }: {
-    userId: string | number;
-    questionId: string | number;
-    selectedAnswer: string;
-    isCorrect: boolean;
-    attemptData?: Record<string, any>;
-  }) {
-    const { error } = await supabase.from('question_attempts').insert([
-      {
-        user_id: userId,
-        question_id: questionId,
-        selected_answer: selectedAnswer,
-        is_correct: isCorrect,
-        ...attemptData,
-      },
-    ]);
-    if (error) throw error;
-    return true;
-  }
-
   /**
    * Persist a quiz question from AI backend to database (3 tables)
    * Handles all question types: MCQ, open, fill, boolean, draw
@@ -165,7 +138,6 @@ export function useQuestions() {
     addQuestion,
     updateQuestion,
     deleteQuestion,
-    attemptQuestion,
     persistQuizQuestion,
     persistQuizQuestions,
   };

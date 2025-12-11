@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { ORDER_STATUS, OPERATION_TYPE, TASK_STATUS } from '~~/shared/constants';
+import { ORDER_STATUS, OPERATION_TYPE, TASK_STATUS, MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 import { CODE_CATEGORIES } from '~~/app/stores/codes';
 
 export interface Code {
@@ -125,3 +125,9 @@ export const isValidOperationType = (type: string): type is OPERATION_TYPE =>
 
 export const isValidTaskStatus = (status: string): status is TASK_STATUS =>
   Object.values(TASK_STATUS).includes(status as TASK_STATUS);
+
+export const isValidMarkingStatus = (status: string): status is MARKING_STATUS =>
+  Object.values(MARKING_STATUS).includes(status as MARKING_STATUS);
+
+export const isValidQuestionType = (type: string): type is QUESTION_TYPE =>
+  Object.values(QUESTION_TYPE).includes(type as QUESTION_TYPE);

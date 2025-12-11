@@ -184,6 +184,11 @@ const managementItems: NavigationItem[] = [
     name: 'Characters',
     route: '/admin?tab=characters',
     icon: 'i-lucide-users'
+  },
+  {
+    name: 'Subjects',
+    route: '/admin?tab=subjects',
+    icon: 'i-lucide-book'
   }
 ];
 

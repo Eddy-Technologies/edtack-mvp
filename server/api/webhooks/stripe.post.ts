@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type Stripe from 'stripe';
+import Stripe from 'stripe';
 import { getOperationTypes } from '~~/server/services/codeService';
-import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
+import { ORDER_STATUS, OPERATION_TYPE, STRIPE_LOOKUP_KEYS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -21,7 +21,13 @@ export default defineEventHandler(async (event) => {
     // Verify webhook signature
     let stripeEvent: Stripe.Event;
     try {
-      stripeEvent = stripe.webhooks.constructEvent(body!, signature, webhookSecret);
+      stripeEvent = await stripe.webhooks.constructEventAsync(
+        body!,
+        signature,
+        webhookSecret,
+        undefined,
+        Stripe.createSubtleCryptoProvider()
+      );
     } catch (err) {
       console.error('Webhook signature verification failed:', err);
       throw createError({
@@ -40,7 +46,7 @@ export default defineEventHandler(async (event) => {
     if (existingEvent) {
       return { received: true, message: 'Event already processed' };
     }
-
+    let errorMsg: string | undefined;
     // Process the event based on type - only store events we actually handle
     try {
       switch (stripeEvent.type) {
@@ -52,7 +58,17 @@ export default defineEventHandler(async (event) => {
           await handleCheckoutCompleted(privilegedSupabase, stripeEvent);
           break;
 
-          // Removed customer_cash_balance_transaction handling for internal credit system
+        case 'customer.subscription.created':
+          errorMsg = await handleSubscriptionCreated(privilegedSupabase, stripeEvent);
+          break;
+
+        case 'customer.subscription.updated':
+          errorMsg = await handleSubscriptionUpdated(privilegedSupabase, stripeEvent);
+          break;
+
+        case 'customer.subscription.deleted':
+          errorMsg = await handleSubscriptionDeleted(privilegedSupabase, stripeEvent);
+          break;
 
         default:
           // Don't store unhandled event types
@@ -66,6 +82,7 @@ export default defineEventHandler(async (event) => {
           stripe_event_id: stripeEvent.id,
           event_type: stripeEvent.type,
           processed: true,
+          error_message: errorMsg || null,
           data: JSON.stringify(stripeEvent.data.object),
         });
 
@@ -105,9 +122,12 @@ async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event
     .single();
 
   if (error || !userInfo) {
-    console.log(`[StripeWebhook] No user found with email ${customer.email}`);
-    return;
+    throw createError({
+      statusCode: 404,
+      statusMessage: `[StripeWebhook] No user found with email ${customer.email}`
+    });
   }
+
   if (userInfo.payment_customer_id) {
     console.log(`[StripeWebhook] User ${userInfo.id} already has a payment_customer_id, skipping update`);
     return; // Already has a customer ID, no need to update
@@ -393,6 +413,134 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
       // Don't throw error here as payment is still successful, just log the issue
     }
   }
+}
+
+// Handle subscription created event - graceful handling if user not found
+async function handleSubscriptionCreated(supabase: SupabaseClient, event: Stripe.CustomerSubscriptionCreatedEvent): Promise<string | undefined> {
+  console.log(`[StripeWebhook] Handling customer.subscription.created event`);
+
+  const subscription = event.data.object;
+  const customerId = typeof subscription.customer === 'string' ? subscription.customer : subscription.customer.id;
+  const subscriptionItem = subscription.items.data[0];
+  const lookupKey = subscriptionItem?.price.lookup_key;
+  const billingInterval = subscriptionItem?.price.recurring?.interval;
+
+  // Validate lookup key
+  if (!lookupKey || !Object.values(STRIPE_LOOKUP_KEYS).includes(lookupKey as string)) {
+    console.warn(`[StripeWebhook] Invalid or missing lookup_key for subscription ${subscription.id}, skipping`);
+    return `Invalid or missing lookup_key for subscription ${subscription.id}`;
+  }
+
+  // Find user by payment_customer_id - graceful handling if not found
+  const { data: userInfo, error: userError } = await supabase
+    .from('user_infos')
+    .select('id')
+    .eq('payment_customer_id', customerId)
+    .single();
+
+  if (userError || !userInfo) {
+    console.warn(`[StripeWebhook] User not found for customer ${customerId}, skipping subscription sync`);
+    return `User not found for customer ${customerId}`; // Graceful return - don't throw error
+  }
+
+  // Insert new subscription record
+  const { error: insertError } = await supabase
+    .from('user_subscriptions')
+    .insert({
+      user_info_id: userInfo.id,
+      stripe_subscription_id: subscription.id,
+      stripe_customer_id: customerId,
+      tier_lookup_key: lookupKey,
+      status: subscription.status,
+      billing_interval: billingInterval,
+      current_period_start: new Date(subscriptionItem.current_period_start * 1000).toISOString(),
+      current_period_end: new Date(subscriptionItem.current_period_end * 1000).toISOString()
+    });
+
+  if (insertError) {
+    // If conflict on user_info_id, subscription already exists - that's fine
+    if (insertError.code === '23505') {
+      console.log(`[StripeWebhook] Subscription already exists for user ${userInfo.id}, skipping insert`);
+      return `[StripeWebhook] Subscription already exists for user ${userInfo.id}, skipping insert`;
+    }
+    console.error(`[StripeWebhook] Failed to insert subscription:`, insertError);
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Failed to create subscription for user ${userInfo.id}`
+    });
+  }
+
+  console.log(`[StripeWebhook] Successfully created subscription ${subscription.id} for user ${userInfo.id}, status: ${subscription.status}, tier: ${lookupKey}`);
+}
+
+// Handle subscription updated event
+async function handleSubscriptionUpdated(supabase: SupabaseClient, event: Stripe.CustomerSubscriptionUpdatedEvent): Promise<string | undefined> {
+  console.log(`[StripeWebhook] Handling customer.subscription.updated event`);
+
+  const subscription = event.data.object;
+  const subscriptionItem = subscription.items.data[0];
+  const lookupKey = subscriptionItem?.price.lookup_key;
+  const billingInterval = subscriptionItem?.price.recurring?.interval || 'month';
+
+  // Validate lookup key
+  if (!lookupKey || !Object.values(STRIPE_LOOKUP_KEYS).includes(lookupKey as string)) {
+    console.warn(`[StripeWebhook] Invalid or missing lookup_key for subscription ${subscription.id}, skipping`);
+    return `Invalid or missing lookup_key for subscription ${subscription.id}`;
+  }
+
+  // Update existing subscription by stripe_subscription_id
+  const { data: updatedSub, error: updateError } = await supabase
+    .from('user_subscriptions')
+    .update({
+      tier_lookup_key: lookupKey,
+      status: subscription.status,
+      billing_interval: billingInterval,
+      current_period_start: new Date(subscriptionItem.current_period_start * 1000).toISOString(),
+      current_period_end: new Date(subscriptionItem.current_period_end * 1000).toISOString(),
+      updated_at: new Date().toISOString()
+    })
+    .eq('stripe_subscription_id', subscription.id)
+    .select('user_info_id')
+    .single();
+
+  if (updateError) {
+    // Subscription not found - throw error
+    console.error(`[StripeWebhook] Subscription ${subscription.id} not found for update`);
+    throw createError({
+      statusCode: 404,
+      statusMessage: `Subscription ${subscription.id} not found`
+    });
+  }
+
+  console.log(`[StripeWebhook] Successfully updated subscription ${subscription.id} for user ${updatedSub.user_info_id}, status: ${subscription.status}, tier: ${lookupKey}`);
+}
+
+// Handle subscription deleted event
+async function handleSubscriptionDeleted(supabase: SupabaseClient, event: Stripe.CustomerSubscriptionDeletedEvent): Promise<string | undefined> {
+  console.log(`[StripeWebhook] Handling customer.subscription.deleted event`);
+
+  const subscription = event.data.object;
+
+  // Update subscription status to canceled
+  const { data: updatedSub, error: updateError } = await supabase
+    .from('user_subscriptions')
+    .update({
+      tier_lookup_key: STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY,
+      status: 'active', // Free tier is active
+      billing_interval: 'month',
+      updated_at: new Date().toISOString()
+    })
+    .eq('stripe_subscription_id', subscription.id)
+    .select('user_info_id')
+    .single();
+
+  if (updateError || !updatedSub) {
+    // Subscription not found - might have been deleted already or never created
+    console.warn(`[StripeWebhook] Subscription ${subscription.id} not found for deletion, skipping`);
+    return `Subscription ${subscription.id} not found for deletion`; // Graceful return - idempotent
+  }
+
+  console.log(`[StripeWebhook] Successfully marked subscription ${subscription.id} as canceled for user ${updatedSub.user_info_id}`);
 }
 
 // Note: handleCashBalanceTransaction removed - no longer needed for internal credit system

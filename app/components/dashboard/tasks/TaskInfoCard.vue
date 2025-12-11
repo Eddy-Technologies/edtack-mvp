@@ -29,7 +29,7 @@
         </div>
 
         <!-- Chapter Information -->
-        <div v-if="task.chapters?.length" class="p-3 rounded-lg mb-3 border border-primary">
+        <div v-if="task.chapters?.length" class="p-3 rounded-lg mb-3 border border-primary bg-primary-50">
           <p class="text-sm text-primary-800 font-medium mb-2">
             Chapters:
           </p>
@@ -37,7 +37,7 @@
             <span
               v-for="chapter in task.chapters"
               :key="chapter.name"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium  text-primary-800 border border-primary"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium  text-primary-800 border border-primary bg-white"
             >
               {{ chapter.display_name || chapter.name }}
             </span>

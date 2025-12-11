@@ -78,36 +78,97 @@
         <div v-else-if="showResults && quizResults" class="space-y-6">
           <!-- Overall Score Card -->
           <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
-            <div class="text-center mb-4">
-              <h3 class="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h3>
-              <div class="text-5xl font-bold mb-2" :class="quizResults.passedThreshold ? 'text-green-600' : 'text-orange-600'">
-                {{ quizResults.percentage }}%
+            <!-- Score Summary -->
+            <div class="grid grid-cols-3 gap-4 mb-6">
+              <div class="text-center p-4 bg-white rounded-lg">
+                <p class="text-sm text-gray-600 mb-1">Latest Attempt</p>
+                <div class="text-3xl font-bold" :class="(quizResults.latestPercentage ?? quizResults.percentage ?? 0) >= quizResults.requiredScore ? 'text-green-600' : 'text-orange-600'">
+                  {{ quizResults.latestPercentage ?? quizResults.percentage ?? 0 }}%
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  {{ quizResults.latestScore ?? quizResults.score ?? 0 }} / {{ quizResults.latestTotalScore ?? quizResults.totalScore ?? 0 }}
+                </p>
               </div>
-              <p class="text-gray-600 mb-1">
-                Score: {{ quizResults.score }} / {{ quizResults.totalScore }} points
-              </p>
-              <p class="text-sm text-gray-500">
-                Required: {{ quizResults.requiredScore }}%
-              </p>
+
+              <div class="text-center p-4 bg-white rounded-lg border-2 border-blue-300">
+                <p class="text-sm text-gray-600 mb-1">Best Score</p>
+                <div class="text-3xl font-bold text-blue-600">
+                  {{ quizResults.bestPercentage }}%
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  {{ quizResults.bestScore }} / {{ quizResults.bestTotalScore }}
+                </p>
+              </div>
+
+              <div class="text-center p-4 bg-white rounded-lg">
+                <p class="text-sm text-gray-600 mb-1">Required</p>
+                <div class="text-3xl font-bold text-gray-700">
+                  {{ quizResults.requiredScore }}%
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                  Attempts: {{ quizResults.attemptCount || 1 }}
+                </p>
+              </div>
             </div>
 
             <!-- Pass/Fail Badge -->
             <div class="flex justify-center mb-4">
               <span v-if="quizResults.passedThreshold" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800">
                 <UIcon name="i-lucide-check-circle" class="w-5 h-5 mr-2" />
-                Passed!
+                Passed! (Best Score)
               </span>
               <span v-else class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
                 <UIcon name="i-lucide-x-circle" class="w-5 h-5 mr-2" />
-                Did not meet threshold
+                Keep trying!
               </span>
             </div>
 
-            <!-- Credits Earned -->
-            <div v-if="quizResults.creditEarned > 0" class="text-center p-4 bg-white rounded-lg border border-green-200">
-              <UIcon name="i-lucide-coins" class="w-6 h-6 text-yellow-500 mx-auto mb-2" />
-              <p class="font-semibold text-gray-900">Credits Earned!</p>
-              <p class="text-2xl font-bold text-green-600">{{ (quizResults.creditEarned / 100).toFixed(2) }} SGD</p>
+            <!-- Credits Status -->
+            <div class="text-center p-4 bg-white rounded-lg border" :class="quizResults.creditDisbursed ? 'border-green-200' : 'border-yellow-200'">
+              <UIcon :name="quizResults.creditDisbursed ? 'i-lucide-check-circle' : 'i-lucide-coins'" class="w-6 h-6 mx-auto mb-2" :class="quizResults.creditDisbursed ? 'text-green-500' : 'text-yellow-500'" />
+              <p class="font-semibold text-gray-900">
+                {{ quizResults.creditDisbursed ? 'Credits Earned!' : (quizResults.creditReward > 0 ? 'Credits Pending' : 'No Credits') }}
+              </p>
+              <p v-if="quizResults.creditDisbursed" class="text-2xl font-bold text-green-600">
+                {{ quizResults.creditEarned }} Credits
+              </p>
+              <p v-else-if="quizResults.creditReward > 0" class="text-sm text-gray-600 mt-1">
+                Reach {{ quizResults.requiredScore }}% to earn {{ quizResults.creditReward }} Credits.
+              </p>
+            </div>
+
+            <!-- Attempt History -->
+            <div v-if="quizResults.attempts && quizResults.attempts.length > 1" class="mt-4 p-4 bg-white rounded-lg">
+              <h5 class="text-sm font-medium text-gray-700 mb-3">Attempt History</h5>
+              <div class="space-y-2">
+                <div
+                  v-for="attempt in quizResults.attempts"
+                  :key="attempt.attemptNumber"
+                  class="flex items-center justify-between text-sm p-2 rounded"
+                  :class="{
+                    'bg-blue-50 border border-blue-200': attempt.percentage === quizResults.bestPercentage,
+                    'bg-gray-50': attempt.percentage !== quizResults.bestPercentage
+                  }"
+                >
+                  <div class="flex items-center gap-2">
+                    <span class="font-medium text-gray-700">Attempt {{ attempt.attemptNumber }}</span>
+                    <span v-if="attempt.percentage === quizResults.bestPercentage" class="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">
+                      ⭐ Best
+                    </span>
+                    <span v-if="attempt.attemptNumber === quizResults.attemptCount" class="text-xs px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full">
+                      📍 Latest
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="font-semibold" :class="attempt.percentage >= quizResults.requiredScore ? 'text-green-600' : 'text-gray-700'">
+                      {{ attempt.percentage }}%
+                    </span>
+                    <span class="text-xs text-gray-500">
+                      {{ new Date(attempt.submittedAt).toLocaleDateString() }}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -119,13 +180,23 @@
               v-for="(result, index) in quizResults.results"
               :key="result.questionId"
               class="border rounded-lg p-4"
-              :class="result.isCorrect ? 'border-green-200 bg-green-50' : result.feedback.includes('manual grading') ? 'border-yellow-200 bg-yellow-50' : 'border-red-200 bg-red-50'"
+              :class="{
+                'border-green-200 bg-green-50': result.markingStatus === MARKING_STATUS.CORRECT,
+                'border-amber-200 bg-amber-50': result.markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+                'border-red-200 bg-red-50': result.markingStatus === MARKING_STATUS.INCORRECT,
+                'border-gray-200 bg-gray-50': !result.markingStatus
+              }"
             >
               <div class="flex items-start justify-between mb-3">
                 <div class="flex items-start flex-1">
                   <span
                     class="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-sm font-medium mr-3 flex-shrink-0"
-                    :class="result.isCorrect ? 'bg-green-500' : result.feedback.includes('manual grading') ? 'bg-yellow-500' : 'bg-red-500'"
+                    :class="{
+                      'bg-green-500': result.markingStatus === MARKING_STATUS.CORRECT,
+                      'bg-amber-500': result.markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+                      'bg-red-500': result.markingStatus === MARKING_STATUS.INCORRECT,
+                      'bg-gray-500': !result.markingStatus
+                    }"
                   >
                     {{ index + 1 }}
                   </span>
@@ -135,45 +206,55 @@
                   </div>
                 </div>
                 <div class="ml-4">
-                  <UIcon v-if="result.isCorrect" name="i-lucide-check-circle" class="w-6 h-6 text-green-600" />
-                  <UIcon v-else-if="result.feedback.includes('manual grading')" name="i-lucide-clock" class="w-6 h-6 text-yellow-600" />
-                  <UIcon v-else name="i-lucide-x-circle" class="w-6 h-6 text-red-600" />
+                  <UIcon v-if="result.markingStatus === 'CORRECT'" name="i-lucide-check-circle" class="w-6 h-6 text-green-600" />
+                  <UIcon v-else-if="result.markingStatus === 'PARTIALLY_CORRECT'" name="i-lucide-alert-circle" class="w-6 h-6 text-amber-600" />
+                  <UIcon v-else-if="result.markingStatus === 'INCORRECT'" name="i-lucide-x-circle" class="w-6 h-6 text-red-600" />
+                  <UIcon v-else name="i-lucide-clock" class="w-6 h-6 text-gray-600" />
                 </div>
               </div>
 
               <!-- Feedback -->
               <div class="ml-9 mb-2">
                 <!-- Simple feedback for MCQ/Boolean -->
-                <p v-if="!result.markingResult" class="text-sm font-medium" :class="result.isCorrect ? 'text-green-700' : result.feedback.includes('manual grading') ? 'text-yellow-700' : 'text-red-700'">
+                <p
+                  v-if="!result.feedbackPositive && !result.feedbackGaps && !result.feedbackImprovement"
+                  class="text-sm font-medium"
+                  :class="{
+                    'text-green-700': result.markingStatus === MARKING_STATUS.CORRECT,
+                    'text-amber-700': result.markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+                    'text-red-700': result.markingStatus === MARKING_STATUS.INCORRECT,
+                    'text-gray-700': !result.markingStatus
+                  }"
+                >
                   {{ result.feedback }}
                 </p>
 
                 <!-- Detailed marking feedback for Open/Fill/Draw -->
-                <div v-else class="space-y-2">
+                <div v-else-if="result.feedbackPositive || result.feedbackGaps || result.feedbackImprovement" class="space-y-2">
                   <!-- Positive Feedback -->
-                  <div v-if="result.markingResult.feedback.positive" class="p-2 bg-green-50 border border-green-200 rounded">
+                  <div v-if="result.feedbackPositive" class="p-2 bg-green-50 border border-green-200 rounded">
                     <p class="text-xs font-semibold text-green-800 mb-1">What you did well:</p>
-                    <p class="text-sm text-green-700">{{ result.markingResult.feedback.positive }}</p>
+                    <p class="text-sm text-green-700">{{ result.feedbackPositive }}</p>
                   </div>
 
                   <!-- Knowledge Gaps -->
-                  <div v-if="result.markingResult.feedback.gaps" class="p-2 bg-orange-50 border border-orange-200 rounded">
+                  <div v-if="result.feedbackGaps" class="p-2 bg-orange-50 border border-orange-200 rounded">
                     <p class="text-xs font-semibold text-orange-800 mb-1">Areas to review:</p>
-                    <p class="text-sm text-orange-700">{{ result.markingResult.feedback.gaps }}</p>
+                    <p class="text-sm text-orange-700">{{ result.feedbackGaps }}</p>
                   </div>
 
                   <!-- Improvement Suggestions -->
-                  <div v-if="result.markingResult.feedback.improvement" class="p-2 bg-blue-50 border border-blue-200 rounded">
+                  <div v-if="result.feedbackImprovement" class="p-2 bg-blue-50 border border-blue-200 rounded">
                     <p class="text-xs font-semibold text-blue-800 mb-1">How to improve:</p>
-                    <p class="text-sm text-blue-700">{{ result.markingResult.feedback.improvement }}</p>
+                    <p class="text-sm text-blue-700">{{ result.feedbackImprovement }}</p>
                   </div>
 
                   <!-- Key Concepts -->
-                  <div v-if="result.markingResult.key_concepts_assessed && result.markingResult.key_concepts_assessed.length > 0" class="p-2 bg-purple-50 border border-purple-200 rounded">
+                  <div v-if="result.keyConcepts && result.keyConcepts.length > 0" class="p-2 bg-purple-50 border border-purple-200 rounded">
                     <p class="text-xs font-semibold text-purple-800 mb-1">Concepts assessed:</p>
                     <div class="flex flex-wrap gap-1 mt-1">
                       <span
-                        v-for="concept in result.markingResult.key_concepts_assessed"
+                        v-for="concept in result.keyConcepts"
                         :key="concept"
                         class="inline-block px-2 py-0.5 text-xs bg-purple-100 text-purple-700 rounded"
                       >
@@ -193,7 +274,7 @@
                 <h6 class="text-sm font-semibold text-gray-700 mb-1">Your Answer:</h6>
 
                 <!-- MCQ Answer -->
-                <div v-if="result.questionType === 'mcq'" class="text-sm text-gray-600">
+                <div v-if="result.questionType === QUESTION_TYPE.MCQ" class="text-sm text-gray-600">
                   <ul class="list-disc list-inside">
                     <li v-for="(answer, idx) in result.userAnswers" :key="idx">
                       {{ answer.option_text }}
@@ -202,12 +283,12 @@
                 </div>
 
                 <!-- Boolean Answer -->
-                <div v-else-if="result.questionType === 'boolean'" class="text-sm text-gray-600">
+                <div v-else-if="result.questionType === QUESTION_TYPE.BOOLEAN" class="text-sm text-gray-600">
                   {{ result.userAnswers[0].answer_boolean ? 'True' : 'False' }}
                 </div>
 
                 <!-- Fill/Open Answer -->
-                <div v-else-if="result.questionType === 'fill' || result.questionType === 'open'" class="text-sm text-gray-600">
+                <div v-else-if="result.questionType === QUESTION_TYPE.FILL || result.questionType === QUESTION_TYPE.OPEN" class="text-sm text-gray-600">
                   <div v-if="result.userAnswers.length === 1">
                     {{ result.userAnswers[0].answer_text }}
                   </div>
@@ -219,7 +300,7 @@
                 </div>
 
                 <!-- Draw Answer -->
-                <div v-else-if="result.questionType === 'draw'" class="text-sm text-gray-600">
+                <div v-else-if="result.questionType === QUESTION_TYPE.DRAW" class="text-sm text-gray-600">
                   <img
                     v-if="result.userAnswers[0].answer_draw_file"
                     :src="result.userAnswers[0].answer_draw_file"
@@ -238,14 +319,23 @@
             </div>
           </div>
 
-          <!-- Close Button -->
-          <div class="flex justify-center pt-4 border-t">
+          <!-- Action Buttons -->
+          <div class="flex justify-center gap-3 pt-4 border-t">
             <UButton
-              color="primary"
+              color="gray"
+              variant="outline"
               size="lg"
               @click="$emit('close')"
             >
               Close
+            </UButton>
+            <UButton
+              color="primary"
+              size="lg"
+              @click="handleReattempt"
+            >
+              <UIcon name="i-lucide-refresh-cw" class="w-5 h-5 mr-2" />
+              Reattempt Quiz
             </UButton>
           </div>
         </div>
@@ -320,11 +410,13 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import QuizQuestion from '~/components/playback/QuizQuestion.vue';
+import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 
 const props = defineProps<{
   isOpen: boolean;
   userTasksChapterId: string;
   chapterDisplayName: string;
+  mode?: 'attempt' | 'review';
 }>();
 
 const emit = defineEmits<{
@@ -361,21 +453,6 @@ const loadQuestions = async () => {
   error.value = null;
 
   try {
-    // First check if quiz is already completed
-    const resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/results`, {
-      method: 'GET',
-    });
-
-    if (resultsResponse.isCompleted) {
-      // Quiz is completed - show results view
-      questions.value = resultsResponse.questions || [];
-      quizResults.value = resultsResponse;
-      showResults.value = true;
-      console.log('Loading completed quiz results');
-      return;
-    }
-
-    // Quiz not completed - load questions for attempt
     const response = await $fetch(`/api/quiz/${props.userTasksChapterId}/questions`, {
       method: 'GET',
     });
@@ -436,8 +513,42 @@ const submitQuiz = async () => {
   }
 };
 
+const handleReattempt = () => {
+  // Reset to attempt mode
+  showResults.value = false;
+  userAnswers.value = {};
+  quizResults.value = null;
+
+  // Reload questions for new attempt
+  loadQuestions();
+};
+
+const loadResults = async () => {
+  isLoading.value = true;
+  error.value = null;
+
+  try {
+    const resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/results`, {
+      method: 'GET',
+    });
+
+    if (resultsResponse.isCompleted) {
+      questions.value = resultsResponse.questions || [];
+      quizResults.value = resultsResponse;
+      showResults.value = true;
+    } else {
+      error.value = 'Quiz has not been completed yet';
+    }
+  } catch (err: any) {
+    console.error('Error loading quiz results:', err);
+    error.value = err.data?.message || err.message || 'Failed to load quiz results';
+  } finally {
+    isLoading.value = false;
+  }
+};
+
 // Watch for modal open/close
-watch(() => props.isOpen, (newValue) => {
+watch(() => props.isOpen, async (newValue) => {
   if (newValue) {
     // Reset state when modal opens
     questions.value = [];
@@ -446,8 +557,22 @@ watch(() => props.isOpen, (newValue) => {
     error.value = null;
     showResults.value = false;
     quizResults.value = null;
-    // Load questions
-    loadQuestions();
+
+    // Handle based on mode
+    if (props.mode === 'review') {
+      // Review mode: Load results immediately
+      await loadResults();
+    } else {
+      // Attempt mode: Check if quiz is completed, if yes show results, else load questions
+      await checkAndLoadQuiz();
+    }
   }
 });
+
+// Check if quiz is completed and decide what to load
+const checkAndLoadQuiz = async () => {
+  // For attempt/reattempt mode, just load questions
+  // Questions are always fresh and ready for a new attempt
+  await loadQuestions();
+};
 </script>

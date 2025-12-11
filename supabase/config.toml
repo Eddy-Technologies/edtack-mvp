@@ -1,0 +1,50 @@
+[db.migrations]
+schema_paths = [
+  "./schemas/roles.sql",
+  "./schemas/level_types.sql",
+  "./schemas/syllabus_types.sql",
+  "./schemas/codes.sql",
+  "./schemas/subscription_tier_limits.sql",
+  "./schemas/subjects.sql",
+  "./schemas/chapters.sql",
+  "./schemas/curriculum_subjects.sql",
+  "./schemas/user_infos.sql",
+  "./schemas/user_roles.sql",
+  "./schemas/user_credits.sql",
+  "./schemas/user_subscriptions.sql",
+  "./schemas/groups.sql",
+  "./schemas/group_members.sql",
+  "./schemas/syllabus.sql",
+  "./schemas/questions.sql",
+  "./schemas/question_options.sql",
+  "./schemas/question_correct_answers.sql",
+  "./schemas/user_question_attempts.sql",
+  "./schemas/user_question_answers.sql",
+  "./schemas/products.sql",
+  "./schemas/orders.sql",
+  "./schemas/order_items.sql",
+  "./schemas/wishlists.sql",
+  "./schemas/user_tasks.sql",
+  "./schemas/credit_transactions.sql",
+  "./schemas/characters.sql",
+  "./schemas/token_history.sql",
+  "./schemas/token_usage_summary.sql",
+  "./schemas/stripe_webhook_events.sql",
+  "./schemas/checkpointer_tables.sql",
+  "./schemas/threads.sql",
+  "./schemas/thread_messages.sql",
+  "./schemas/message_feedback.sql",
+  "./schemas/user_tasks_chapters.sql",
+  "./schemas/user_tasks_chapters_questions.sql",
+  "./schemas/functions/transfer_credits_atomic.sql",
+  "./schemas/functions/token_rollup.sql",
+  "./schemas/cron/token_rollup.sql"
+]
+
+[db.seed]
+enabled = true
+sql_paths = [
+  "./seeds/all_seeds.sql",
+  "./seeds/education_data.sql",
+  "./seeds/characters.sql"
+]

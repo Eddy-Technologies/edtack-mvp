@@ -1,37 +1,33 @@
-import type Stripe from 'stripe';
-import { getPriceWithProductByPriceId } from '~~/server/utils/stripe';
 import { STRIPE_CUSTOMER } from '~~/shared/constants';
-import { requireAuth } from '~~/server/utils/auth';
+import { getUserInfo } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
   try {
-    const stripe = getStripe();
-    const user = await requireAuth(event);
+    const supabase = await getSupabaseClient(event);
+    const userInfo = await getUserInfo(event);
 
-    // Find customer by email
-    const customer: Stripe.Customer = await stripe.customers.search({
-      query: `email:'${user.email}'`,
-      limit: 1,
-      expand: ['data.subscriptions']
-    }).then((res) => res.data[0]);
+    const { data: subscription } = await supabase
+      .from('user_subscriptions')
+      .select(`
+        *,
+        subscription_tier_limits!inner(display_name, token_limit_monthly)
+      `)
+      .eq('user_info_id', userInfo.id)
+      .eq('status', 'active')
+      .single();
 
-    if (!customer) {
-      return { stripeCustomerState: STRIPE_CUSTOMER.NOT_EXISTENT }; // No customer found, return null
+    if (!subscription) {
+      return { stripeCustomerState: STRIPE_CUSTOMER.NOT_EXISTENT };
     }
 
-    const activeSubscription = customer.subscriptions?.data.find((sub) => sub.status === 'active');
-    if (!activeSubscription) {
-      return { stripeCustomerState: STRIPE_CUSTOMER.NO_ACTIVE_SUBSCRIPTION, email: customer.email }; // No active subscription found
-    }
-
-    const price = await getPriceWithProductByPriceId(activeSubscription.plan.id);
     return {
-      ...price,
       stripeCustomerState: STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION,
-      email: customer.email,
-      id: customer.id,
-      subscriptionId: activeSubscription.id,
-      subscriptionStatus: activeSubscription.status,
+      productName: subscription.subscription_tier_limits.display_name,
+      productDescription: `${subscription.billing_interval}ly subscription`,
+      email: userInfo.email,
+      id: subscription.stripe_customer_id,
+      subscriptionId: subscription.stripe_subscription_id,
+      subscriptionStatus: subscription.status,
     };
   } catch (error) {
     console.error('Failed to fetch subscription:', error);

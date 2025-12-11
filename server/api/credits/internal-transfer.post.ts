@@ -1,5 +1,4 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { getCodes } from '~~/server/services/codeService';
 import { getUserInfo } from '~~/server/utils/auth';
 
 export default defineEventHandler(async (event) => {
@@ -66,134 +65,50 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get operation codes
-    const operationCodes = await getCodes(supabase, 'operation_type');
-
-    // Perform the transfer - deduct from sender
-    const newSenderCredit = senderCredits.credit - amountInCents;
-    const { error: deductError } = await supabase
-      .from('user_credits')
-      .update({
-        credit: newSenderCredit
-      })
-      .eq('user_info_id', senderInfo.id);
-
-    if (deductError) {
-      console.error('Failed to deduct credits from sender:', deductError);
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to process transfer'
-      });
-    }
-
-    // Add to recipient (create record if doesn't exist)
-    // First get recipient's current balance
-    const { data: recipientCredits } = await supabase
-      .from('user_credits')
-      .select('credit')
-      .eq('user_info_id', toUserInfoId)
-      .single();
-
-    let addError = null;
-    if (!addError && recipientCredits) {
-      const newRecipientCredit = recipientCredits.credit + amountInCents;
-      const { error: updateError } = await supabase
-        .from('user_credits')
-        .update({
-          credit: newRecipientCredit
-        })
-        .eq('user_info_id', toUserInfoId);
-      addError = updateError;
-    }
-
-    if (addError) {
-      // Try to create the record if it doesn't exist
-      const { error: insertError } = await supabase
-        .from('user_credits')
-        .insert({
-          user_info_id: toUserInfoId,
-          credit: amountInCents
-        });
-
-      if (insertError) {
-        console.error('Failed to add credits to recipient:', insertError);
-        // Rollback sender deduction
-        await supabase
-          .from('user_credits')
-          .update({
-            credit: senderCredits.credit
-          })
-          .eq('user_info_id', senderInfo.id);
-
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Failed to complete transfer'
-        });
-      }
-    }
-
-    // Create transaction records
-    const description = `Transfer ${(amountInCents / 100).toFixed(2)} SGD to child`;
-
-    // Sender transaction (outgoing)
-    const { error: senderTransactionError } = await supabase
-      .from('credit_transactions')
-      .insert({
-        user_info_id: senderInfo.id,
-        transaction_type: operationCodes.transfer_out || 'transfer_out',
-        amount: -amountInCents, // Negative for outgoing
-        currency: 'SGD',
-        description: description,
-        is_internal: true,
-        metadata: JSON.stringify({
+    // Perform atomic transfer using database function
+    const { data: transferResult, error: transferError } = await supabase
+      .rpc('transfer_credits_atomic', {
+        p_from_user_info_id: senderInfo.id,
+        p_to_user_info_id: toUserInfoId,
+        p_amount: amountInCents,
+        p_description_from: `Transfer ${(amountInCents / 100).toFixed(2)} SGD to child`,
+        p_description_to: `Received ${(amountInCents / 100).toFixed(2)} SGD from parent`,
+        p_metadata_from: {
           transfer_type: 'parent_to_child',
           recipient_user_info_id: toUserInfoId,
           amount_cents: amountInCents
-        })
-      });
-
-    // Recipient transaction (incoming)
-    const { error: recipientTransactionError } = await supabase
-      .from('credit_transactions')
-      .insert({
-        user_info_id: toUserInfoId,
-        transaction_type: operationCodes.transfer_in || 'transfer_in',
-        amount: amountInCents, // Positive for incoming
-        currency: 'SGD',
-        description: `Received ${(amountInCents / 100).toFixed(2)} SGD from parent`,
-        is_internal: true,
-        metadata: JSON.stringify({
+        },
+        p_metadata_to: {
           transfer_type: 'parent_to_child',
           sender_user_info_id: senderInfo.id,
           amount_cents: amountInCents
-        })
+        }
       });
 
-    if (senderTransactionError || recipientTransactionError) {
-      console.error('Failed to create transaction records:', { senderTransactionError, recipientTransactionError });
-      // Don't fail the transfer, but log the error
+    if (transferError) {
+      console.error('Failed to transfer credits:', transferError);
+
+      // Check if it's an insufficient balance error
+      if (transferError.message && transferError.message.includes('Insufficient credits')) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: transferError.message
+        });
+      }
+
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to complete transfer'
+      });
     }
-
-    // Get updated balances
-    const { data: updatedSenderCredits } = await supabase
-      .from('user_credits')
-      .select('credit')
-      .eq('user_info_id', senderInfo.id)
-      .single();
-
-    const { data: updatedRecipientCredits } = await supabase
-      .from('user_credits')
-      .select('credit')
-      .eq('user_info_id', toUserInfoId)
-      .single();
 
     return {
       success: true,
-      message: `Successfully transferred ${(amountInCents / 100).toFixed(2)} SGD to child`,
-      newSenderBalance: updatedSenderCredits?.credit || 0,
-      newRecipientBalance: updatedRecipientCredits?.credit || 0,
-      transferAmount: amountInCents,
-      transferAmountSGD: (amountInCents / 100).toFixed(2)
+      message: transferResult.message,
+      newSenderBalance: transferResult.senderBalance,
+      newRecipientBalance: transferResult.recipientBalance,
+      transferAmount: transferResult.transferAmount,
+      transferAmountSGD: (transferResult.transferAmount / 100).toFixed(2)
     };
   } catch (error) {
     console.error('Failed to transfer internal credits:', error);

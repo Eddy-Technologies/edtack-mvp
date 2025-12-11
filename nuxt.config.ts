@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
 
   modules: [
-    '@nuxthub/core',
     '@pinia/nuxt',
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -16,11 +15,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase',
   ],
-
-  hub: {
-    cache: true,
-    database: true,
-  },
 
   ui: {
     colorMode: false
@@ -66,16 +60,15 @@ export default defineNuxtConfig({
       stripePricingTableId: process.env.NUXT_PUBLIC_STRIPE_PRICING_TABLE_ID,
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL,
       stripeCustomerPortalUrl: process.env.NUXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL,
-      chatWsUrl: process.env.NUXT_PUBLIC_CHAT_WS_URL || 'ws://localhost:8000',
       chatResponseTimeout: parseInt(process.env.NUXT_PUBLIC_CHAT_RESPONSE_TIMEOUT || '60000'),
-      pythonApiUrl: process.env.NUXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000/api/v1',
+      chatWsUrl: process.env.NUXT_PUBLIC_CHAT_WS_URL,
+      pythonApiUrl: process.env.NUXT_PUBLIC_PYTHON_API_URL,
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
       // For privileged client, ensure these are set in your deployment environment
       supabaseUrl: process.env.NUXT_PRIVATE_SUPABASE_URL,
-      supabaseServiceRoleKey:
-        process.env.NUXT_PRIVATE_SUPABASE_KEY || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
+      supabaseServiceRoleKey: process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY,
       jwtSecret: process.env.JWT_SECRET,
       stripeSecretKey: process.env.NUXT_STRIPE_SECRET_KEY,
       stripeWebhookSecret: process.env.NUXT_STRIPE_WEBHOOK_SECRET,
@@ -85,7 +78,12 @@ export default defineNuxtConfig({
   supabase: {
     url: process.env.NUXT_PUBLIC_SUPABASE_URL,
     key: process.env.NUXT_PUBLIC_SUPABASE_KEY,
+    serviceKey: process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY, // Add this
     redirect: false, // Set to true if you want to use the redirect URL for authentication
+  },
+
+  nitro: {
+    preset: 'vercel',
   },
 
   vite: {

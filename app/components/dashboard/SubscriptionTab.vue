@@ -100,10 +100,6 @@
               <div class="flex items-center space-x-2 mt-1" />
             </div>
           </div>
-          <div class="text-right">
-            <div class="text-3xl font-bold text-gray-900">${{ subscription.amount }}</div>
-            <div class="text-sm text-gray-500">per {{ subscription.monthOrYear || 'month' }}</div>
-          </div>
         </div>
 
         <!-- Error State -->
@@ -119,6 +115,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Token Usage Card -->
+    <TokenUsageCard />
 
     <!-- Manage Billing Card (only show for active subscriptions or customers with no active subscription) -->
     <div
@@ -183,6 +182,7 @@
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
+import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useStripe } from '#imports';
 import { STRIPE_CUSTOMER } from '~~/shared/constants';
 

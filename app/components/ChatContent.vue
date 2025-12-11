@@ -4,26 +4,22 @@
     <div
       class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300 flex justify-between items-center px-4"
     >
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
+        <!-- Connection status -->
         <span v-if="useWebSocket && wsChat" class="flex items-center gap-1">
           <span
             class="w-2 h-2 rounded-full"
-            :class="{
-              'bg-green-500': wsChat.isConnected,
-              'bg-yellow-500': wsChat.isConnecting,
-              'bg-red-500': !wsChat.isConnected && !wsChat.isConnecting && wsChat.error,
-              'bg-gray-400': !wsChat.isConnected && !wsChat.isConnecting && !wsChat.error,
-            }"
+            :class="connectionStatusClass"
           />
-          <span class="text-xs">
-            {{
-              wsChat.isConnected
-                ? 'Connected'
-                : wsChat.isConnecting
-                  ? 'Connecting...'
-                  : 'Disconnected'
-            }}
+          <span class="text-xs" :class="connectionStatusTextClass">
+            {{ connectionStatusText }}
           </span>
+        </span>
+
+        <!-- Queue indicator -->
+        <span v-if="messageQueue.length > 0" class="flex items-center gap-1 text-xs text-yellow-600">
+          <Icon name="i-heroicons-queue-list" class="w-3 h-3" />
+          {{ messageQueue.length }} message{{ messageQueue.length > 1 ? 's' : '' }} queued
         </span>
       </div>
 
@@ -36,7 +32,6 @@
       :slides="selectedSlides"
       :initial-slide-index="0"
       :show-thumbnails="true"
-      :task="task"
       @slide-changed="handleSlideChanged"
       @close-split-view="handleCloseSplitView"
     >
@@ -109,27 +104,25 @@ import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
-import { useTask } from '~/composables/useTask';
-import { useQuestions } from '~/composables/supabase/useQuestions';
-import type { QuizQuestion } from '~/types/quiz.types';
 
 // Props interface - simplified
 interface ChatContentProps {
   threadId: string;
   character: any;
   threadData: any;
-  task: any; // TODO: define proper task interface
 }
 
 // Component props
 const props = defineProps<ChatContentProps>();
 
+// Component events
+const emit = defineEmits<{
+  (e: 'responseReceived'): void;
+}>();
+
 // Use global thread state instead of local state
 const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
-
-const { updateTaskGeneratedContent } = useTask();
-const { persistQuizQuestions } = useQuestions();
 
 const bottomAnchor = ref<HTMLElement | null>(null);
 const isPlayingAllowed = ref(false);
@@ -141,6 +134,21 @@ const viewMode = ref<'stream' | 'split'>('stream');
 const currentSlideIndex = ref(0);
 const selectedSlides = ref<any[]>([]);
 
+// Streaming state management
+const activeStreamingMessage = ref<{
+  id: string;
+  messageIndex: number;
+  totalSlides: number;
+  contentType: 'lesson' | 'quiz' | null;
+  startTime: number;
+} | null>(null);
+
+const streamingProgress = ref<{
+  slidesReceived: number;
+  totalExpected: number | null;
+  estimatedTimeRemaining: number | null;
+} | null>(null);
+
 // Message refs for scrolling
 const messageRefs = ref<Record<string, HTMLElement>>({});
 
@@ -150,7 +158,7 @@ const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
-const messageQueue = ref<string[]>([]); // Queue for messages waiting to be sent
+const messageQueue = ref<{ text: string; messageId: string }[]>([]); // Queue for messages waiting to be sent
 
 if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
@@ -158,6 +166,49 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
+
+// Connection status computed properties
+const connectionStatusClass = computed(() => {
+  if (!wsChat.value) return 'bg-gray-400';
+
+  if (wsChat.value.isConnected) {
+    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
+      return 'bg-blue-500 animate-pulse';
+    }
+    return 'bg-green-500';
+  }
+  if (wsChat.value.isConnecting) return 'bg-yellow-500 animate-pulse';
+  if (wsChat.value.error) return 'bg-red-500';
+  return 'bg-gray-400';
+});
+
+const connectionStatusText = computed(() => {
+  if (!wsChat.value) return 'Not initialized';
+
+  if (wsChat.value.isConnected) {
+    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
+      return wsChat.value.responsePhase || 'Waiting for response...';
+    }
+    return 'Connected';
+  }
+  if (wsChat.value.isConnecting) return 'Connecting...';
+  if (wsChat.value.error) return 'Connection failed';
+  return 'Disconnected';
+});
+
+const connectionStatusTextClass = computed(() => {
+  if (!wsChat.value) return 'text-gray-500';
+
+  if (wsChat.value.isConnected) {
+    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
+      return 'text-blue-600';
+    }
+    return 'text-green-600';
+  }
+  if (wsChat.value.isConnecting) return 'text-yellow-600';
+  if (wsChat.value.error) return 'text-red-600';
+  return 'text-gray-500';
+});
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
@@ -224,13 +275,10 @@ const initializeChat = async () => {
       await wsChat.value?.waitForConnection();
       console.log('🔌 WebSocket connected successfully');
 
-      // Check for task generation or pending message
+      // Check for pending message
       const pendingMessage = getPendingMessage();
 
-      if (props.task) {
-        console.log('Found task data, starting task init:', props.task);
-        initTask();
-      } else if (pendingMessage) {
+      if (pendingMessage) {
         // Regular pending message
         console.log('Found pending message, sending:', pendingMessage);
         clearPendingMessage();
@@ -345,72 +393,15 @@ const sendMessage = async (text: string) => {
   return success;
 };
 
-const initTask = () => { // For task threads, ensure init_prompt is the first message
-  if (props.task?.init_prompt) {
-    const initPromptMessage = {
-      type: 'text',
-      text: `Task: ${
-        typeof props.task.init_prompt === 'object' && props.task.init_prompt !== null && 'prompt' in props.task.init_prompt ?
-            (props.task.init_prompt as any).prompt :
-            JSON.stringify(props.task.init_prompt)
-      }`,
-      isUser: true,
-      id: props.task.id,
+// Helper to update message status by ID
+const updateMessageStatus = (messageId: string, status: 'queued' | 'sending' | 'sent' | 'failed') => {
+  const msgIndex = messageStream.value.findIndex((m) => m.id === messageId);
+  if (msgIndex !== -1) {
+    messageStream.value[msgIndex] = {
+      ...messageStream.value[msgIndex],
+      status,
     };
-
-    // Add init_prompt as the first message
-    messageStream.value = [initPromptMessage, ...messageStream.value];
-
-    // If task has generated_content, add it as the second message
-    if (props.task.generated_content) {
-      const generatedContentMessage = {
-        ...props.task.generated_content,
-        isUser: false,
-        id: `generated-content-${props.task.id}`,
-        isTaskGenerated: true
-      };
-      // Insert generated content after init prompt but before other messages
-      const otherMessages = messageStream.value.slice(1); // Remove the init prompt we just added
-      messageStream.value = [initPromptMessage, generatedContentMessage, ...otherMessages];
-    }
   }
-
-  clearPendingMessage();
-
-  nextTick(() => {
-    if (props.task && props.task.init_prompt && !props.task.generated_content) {
-      startTaskGeneration();
-    }
-  });
-};
-
-// Start task generation via WebSocket
-const startTaskGeneration = async () => {
-  console.log('Starting task generation via WebSocket for task:', props.task);
-  if (!wsChat.value?.isConnected || !props.task?.init_prompt) {
-    console.warn('Cannot start task generation: WebSocket not connected or no task data');
-    return false;
-  }
-  const character = props.character;
-  const subjectForBackend = character?.subject?.toLowerCase() || 'general';
-
-  const userInfo = {
-    subject: subjectForBackend,
-    level: meStore.level_type,
-    country: meStore.country_code,
-    character_slug: character?.slug,
-    personality_prompt: character?.personality_prompt
-  };
-
-  const prompt = (props.task.init_prompt as any).prompt;
-  const success = wsChat.value.startTaskGeneration(prompt, userInfo);
-
-  if (success) {
-    isFirstMessage.value = false;
-    isWaitingForResponse.value = true;
-  }
-
-  return success;
 };
 
 // Process queued messages when WebSocket connects
@@ -420,99 +411,243 @@ const processMessageQueue = () => {
     const messages = [...messageQueue.value];
     messageQueue.value = [];
 
-    messages.forEach((message) => {
+    messages.forEach((queuedMsg) => {
       nextTick(() => {
-        sendMessage(message);
+        // Update status to 'sending' before actually sending
+        if (queuedMsg.messageId) {
+          updateMessageStatus(queuedMsg.messageId, 'sending');
+        }
+        const success = sendMessage(queuedMsg.text);
+        if (!success && queuedMsg.messageId) {
+          updateMessageStatus(queuedMsg.messageId, 'failed');
+        }
       });
     });
   }
 };
 
-// Persist quiz questions to database
-const persistQuestionsToDatabase = async (slides: any[], chapterId: string) => {
-  try {
-    // Filter only question slides (not lesson content)
-    const questions = slides.filter((slide: any) => slide.type === 'question') as QuizQuestion[];
+// Handle slide batch streaming
+const handleSlideBatch = (batchMessage: any) => {
+  const { batch } = batchMessage;
 
-    if (questions.length === 0) {
-      console.log('No questions found in slides to persist');
-      return;
+  if (!batch || !batch.slides || !Array.isArray(batch.slides)) {
+    console.warn('Invalid batch message:', batchMessage);
+    return;
+  }
+
+  const { slides, batch_size, total_slides_so_far } = batch;
+
+  // Case 1: First batch - initialize streaming message
+  if (!activeStreamingMessage.value) {
+    console.log('First batch received, initializing streaming message');
+
+    // Detect content type from first slide
+    const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
+
+    // Create the streaming message structure
+    const newMessageId = crypto.randomUUID();
+    const newMessage = {
+      status: 'streaming',
+      slides: [...slides],
+      contentType,
+      isStreaming: true,
+      id: newMessageId,
+    };
+
+    // Add to message stream
+    messageStream.value.push(newMessage);
+    const messageIndex = messageStream.value.length - 1;
+
+    // Initialize streaming state
+    activeStreamingMessage.value = {
+      id: newMessageId,
+      messageIndex,
+      totalSlides: total_slides_so_far,
+      contentType,
+      startTime: Date.now(),
+    };
+
+    streamingProgress.value = {
+      slidesReceived: total_slides_so_far,
+      totalExpected: null, // Unknown until completion
+      estimatedTimeRemaining: null,
+    };
+
+    // Auto-open split view on first batch
+    selectedSlides.value = [...slides];
+    viewMode.value = 'split';
+
+    isWaitingForResponse.value = true;
+
+    return;
+  }
+
+  // Case 2: Subsequent batches - append to existing message
+  console.log(`Batch received: ${batch_size} slides (total: ${total_slides_so_far})`);
+
+  const messageIndex = activeStreamingMessage.value.messageIndex;
+  const existingMessage = messageStream.value[messageIndex];
+
+  if (!existingMessage) {
+    console.error('Streaming message not found at index:', messageIndex);
+    return;
+  }
+
+  // Append new slides to existing message
+  existingMessage.slides = [...existingMessage.slides, ...slides];
+
+  // Update streaming state
+  activeStreamingMessage.value.totalSlides = total_slides_so_far;
+
+  if (streamingProgress.value) {
+    streamingProgress.value.slidesReceived = total_slides_so_far;
+
+    // Calculate estimated time remaining
+    const elapsed = Date.now() - activeStreamingMessage.value.startTime;
+    const slidesPerMs = total_slides_so_far / elapsed;
+    // Rough estimate: assume 10-15 slides typical
+    const estimatedTotal = Math.max(total_slides_so_far + 2, 10);
+    const remaining = (estimatedTotal - total_slides_so_far) / slidesPerMs;
+    streamingProgress.value.estimatedTimeRemaining = remaining;
+  }
+
+  // Update split view slides if currently viewing
+  if (viewMode.value === 'split') {
+    selectedSlides.value = [...existingMessage.slides];
+  }
+
+  // Trigger reactivity
+  messageStream.value = [...messageStream.value];
+};
+
+// Handle streaming completion
+const handleStreamingComplete = (completionMessage: any) => {
+  if (!activeStreamingMessage.value) {
+    console.warn('Received completion but no active streaming message');
+    return;
+  }
+
+  console.log('Streaming completed');
+
+  const messageIndex = activeStreamingMessage.value.messageIndex;
+  const streamingMessage = messageStream.value[messageIndex];
+
+  if (streamingMessage) {
+    // Update message to final state
+    streamingMessage.status = 'user_message';
+    streamingMessage.isStreaming = false;
+    streamingMessage.message = completionMessage.message || streamingMessage.message;
+
+    // Trigger final update
+    messageStream.value = [...messageStream.value];
+
+    // Add to global thread state
+    const addMessageObj = {
+      thread_id: props.threadId,
+      content: streamingMessage,
+      type: 'json',
+      isUser: false,
+      uuid: streamingMessage.id
+    };
+    addMessage(addMessageObj);
+  }
+
+  // Clear streaming state
+  activeStreamingMessage.value = null;
+  streamingProgress.value = null;
+  isWaitingForResponse.value = false;
+
+  // Scroll to ensure content is visible
+  nextTick(() => {
+    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+  });
+};
+
+// Mark the most recent user message as 'sent'
+const markLastUserMessageSent = () => {
+  // Find the last user message and mark it as sent
+  for (let i = messageStream.value.length - 1; i >= 0; i--) {
+    const msg = messageStream.value[i];
+    if (msg.isUser && (msg.status === 'sending' || msg.status === 'queued')) {
+      messageStream.value[i] = { ...msg, status: 'sent' };
+      break;
     }
-
-    console.log(`Persisting ${questions.length} questions to database for chapter: ${chapterId}`);
-    const results = await persistQuizQuestions(questions, chapterId);
-
-    const successCount = results.filter((r) => r.success).length;
-    const failCount = results.filter((r) => !r.success).length;
-
-    console.log(`Question persistence complete: ${successCount} succeeded, ${failCount} failed`);
-
-    if (failCount > 0) {
-      console.warn('Some questions failed to persist:', results.filter((r) => !r.success));
-    }
-  } catch (error) {
-    console.error('Error persisting questions:', error);
-    // Don't throw - we don't want to disrupt the quiz flow if persistence fails
   }
 };
 
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
-  // Display any message with message.message field unconditionally
-  if (message.status === 'user_message') {
-    console.log('Received user_message message:', message);
+  // Any valid response means our message was received - mark as sent and notify parent
+  if (message.status && !['heartbeat', 'status_update'].includes(message.status)) {
+    markLastUserMessageSent();
+    emit('responseReceived');
+  }
 
-    // Add to global state and local stream
+  // Route slide batch messages
+  if (message.type === 'slide_batch_ready') {
+    handleSlideBatch(message);
+    return;
+  }
+
+  // Handle streaming completion
+  if (message.status === 'completed' && activeStreamingMessage.value) {
+    handleStreamingComplete(message);
+    return;
+  }
+
+  // Display summary message from user_message status
+  if (message.status === 'user_message') {
+    // NOTE: Save only the message text, ignore slides array
+    // The slides were already saved via handleStreamingComplete()
     const newUuid = crypto.randomUUID();
+
+    // Create clean message object WITHOUT slides for database
+    const cleanMessage = {
+      message: message.message,
+      status: 'user_message',
+      timestamp: message.timestamp
+      // Explicitly exclude slides - they're already saved
+    };
+
+    // Save clean message to database (text only, no slides)
     const addMessageObj = {
       thread_id: props.threadId,
-      content: message,
+      content: cleanMessage,
       type: 'json',
       isUser: false,
       uuid: newUuid
     };
     addMessage(addMessageObj);
-    messageStream.value.push({ ...message, id: newUuid });
 
+    // Display in UI
+    messageStream.value.push({ ...cleanMessage, id: newUuid });
+
+    // Update state flags
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
 
-    // If this is a response to task generation, update the task's generated_content
-    if (props.task && !props.task.generated_content && message.slides.length > 0) {
-      updateTaskGeneratedContent(props.task.id, message);
+    // Scroll to bottom
+    nextTick(() => {
+      bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+    });
 
-      // Mark the message as task-generated for proper ordering
-      messageStream.value[messageStream.value.length - 1].isTaskGenerated = true;
-    }
-
-    // Persist questions to database ONLY if from task-based thread
-    if (message.slides && Array.isArray(message.slides) && message.slides.length > 0) {
-      // Explicit check: ensure this is a task-based thread with valid task data
-      const taskData = Array.isArray(props.task) ? props.task[0] : props.task;
-
-      // Only persist if we have valid task data with a chapter
-      // This ensures we're in a task-based thread (from StudyTab), not a regular chat
-      if (taskData && taskData.chapter) {
-        console.log('Task-based thread detected - persisting questions for chapter:', taskData.chapter);
-        // Persist questions asynchronously (don't wait)
-        persistQuestionsToDatabase(message.slides, taskData.chapter);
-      } else {
-        // This is a regular chat (not from StudyTab) or task data is missing
-        console.log('Regular chat or no task data - skipping question persistence');
-      }
-    }
-
-    // The watcher will automatically handle slides and scrolling
-    // For messages without slides, scroll to bottom
-    if (!message.slides || !Array.isArray(message.slides) || message.slides.length === 0) {
-      nextTick(() => {
-        bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
     return;
   }
 
   if (['timeout', 'cancelled', 'error'].includes(message.status)) {
+    // Clear streaming state on error
+    if (activeStreamingMessage.value) {
+      const messageIndex = activeStreamingMessage.value.messageIndex;
+      const streamingMessage = messageStream.value[messageIndex];
+      if (streamingMessage) {
+        streamingMessage.status = 'error';
+        streamingMessage.isStreaming = false;
+        streamingMessage.message = `[Error: ${message.error || 'Generation failed'}]`;
+      }
+      activeStreamingMessage.value = null;
+      streamingProgress.value = null;
+    }
+
     const lastIdx = messageStream.value.length - 1;
     if (lastIdx >= 0 && !messageStream.value[lastIdx].isUser) {
       messageStream.value[lastIdx] = {
@@ -542,6 +677,7 @@ const flattenedPlaybackUnits = computed(() => {
           isFirst: blockIndex === 0,
           isUser: !!block.isUser,
           messageId: block.id?.toString(),
+          status: block.status, // Pass message status for visual indicators
         },
       });
     }
@@ -583,6 +719,7 @@ const flattenedPlaybackUnits = computed(() => {
           showThumbnails: true,
           startPlayback: false,
           messageId: block.id?.toString(),
+          isStreaming: activeStreamingMessage.value?.id === block.id,
         },
       });
     }
@@ -631,19 +768,20 @@ const handleSend = async (text: string) => {
     uuid: messageUuid
   };
   addMessage(addMessageObj);
-  messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid });
+
+  // Determine initial status based on connection state
+  const initialStatus = wsChat.value?.isConnected ? 'sending' : 'queued';
+  messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
 
   // Since we connect immediately in initializeChat, just try to send
   if (wsChat.value?.isConnected) {
     const success = sendMessage(text);
     if (!success) {
-      // Handle send failure
+      // Handle send failure - update message status
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
-        type: 'text',
-        text: '[Failed to send message - WebSocket error]',
-        isUser: false,
-        playable: false,
+        ...messageStream.value[lastIdx],
+        status: 'failed',
       };
       isPlayingAllowed.value = true;
       isWaitingForResponse.value = false;
@@ -651,7 +789,7 @@ const handleSend = async (text: string) => {
   } else {
     // Queue the message for later sending (fallback)
     console.log('WebSocket not connected, queuing message:', text);
-    messageQueue.value.push(text);
+    messageQueue.value.push({ text, messageId: messageUuid });
   }
 };
 
@@ -720,6 +858,11 @@ const clearChat = () => {
   messageQueue.value = [];
   selectedSlides.value = [];
   messageRefs.value = {};
+
+  // Clear streaming state
+  activeStreamingMessage.value = null;
+  streamingProgress.value = null;
+
   // Reset to stream view (default)
   viewMode.value = 'stream';
   if (import.meta.client) {

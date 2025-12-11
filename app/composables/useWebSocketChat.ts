@@ -24,6 +24,15 @@ interface WebSocketResponse {
   is_complete?: boolean; // For partial responses
   timestamp?: number; // For heartbeat
   data?: any; // For additional data
+
+  // Streaming support
+  type?: 'slide_batch_ready';
+  batch?: {
+    slides: any[];
+    batch_size: number;
+    total_slides_so_far: number;
+  };
+
   [key: string]: any;
 }
 
@@ -92,6 +101,12 @@ export function useWebSocketChat(threadId: string) {
 
           if (data.status === 'status_update') {
             responsePhase.value = data.phase || 'Processing...';
+            return;
+          }
+
+          // Pass through batch messages for ChatContent to handle
+          if (data.type === 'slide_batch_ready') {
+            response.value.push(data);
             return;
           }
 
@@ -224,19 +239,6 @@ export function useWebSocketChat(threadId: string) {
     return success;
   };
 
-  const startTaskGeneration = (prompt: string, userInfo?: WebSocketMessage['user_info']) => {
-    console.log('Starting task generation with prompt:', prompt, 'and userInfo:', userInfo);
-    const success = sendMessage({
-      type: 'start', // TODO: change to task_genration
-      payload: prompt,
-      user_info: userInfo,
-    });
-    if (success) {
-      isWaitingForResponse.value = true;
-    }
-    return success;
-  };
-
   const cancelRequest = () => {
     responsePhase.value = '';
     return sendMessage({
@@ -277,7 +279,6 @@ export function useWebSocketChat(threadId: string) {
     startChat,
     continueChat,
     sendUserResponse,
-    startTaskGeneration,
     cancelRequest,
     clearMessages,
     response,

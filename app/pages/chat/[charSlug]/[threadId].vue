@@ -56,7 +56,7 @@
             :messages="[]"
             :character="selectedCharacter"
             :thread-data="threadData"
-            :task="task"
+            @response-received="handleResponseReceived"
           />
         </div>
 
@@ -109,7 +109,7 @@
             </div>
 
             <div class="w-full max-w-4xl mx-auto">
-              <ChatInput @send="handleChatSend" />
+              <ChatInput ref="chatInputRef" @send="handleChatSend" />
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@ const currentCharacter = ref(null);
 const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
-const task = ref<any>(null); // Store task data for task threads
+const chatInputRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
 
 const router = useRouter();
@@ -229,11 +229,9 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       try {
         const response = await fetchThread(newThreadId);
         if (!response) return;
-        const { thread, task: taskRes } = response;
+        const { thread } = response;
         // Store thread data for use in ChatContent
         threadData.value = thread || null;
-        // Store task data for use in ChatContent
-        task.value = taskRes || null;
       } catch (err) {
         console.error('Error loading thread:', err);
       }
@@ -248,7 +246,6 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       // Reset for new chat
       reset();
       hasStartedChat.value = false;
-      task.value = null;
 
       // Clear chat content if available
       if (chatContentRef.value && chatContentRef.value.clearChat) {
@@ -316,6 +313,13 @@ const handleChatSend = async (text: string) => {
   // Existing chat - send directly
   if (chatContentRef.value && chatContentRef.value.handleSend) {
     await chatContentRef.value.handleSend(text);
+  }
+};
+
+// Reset ChatInput sending state when response is received
+const handleResponseReceived = () => {
+  if (chatInputRef.value && chatInputRef.value.resetSendState) {
+    chatInputRef.value.resetSendState();
   }
 };
 

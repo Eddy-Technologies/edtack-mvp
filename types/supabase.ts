@@ -151,18 +151,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      checkpoint_migrations: {
-        Row: {
-          v: number;
-        };
-        Insert: {
-          v: number;
-        };
-        Update: {
-          v?: number;
-        };
-        Relationships: [];
-      };
       checkpoint_writes: {
         Row: {
           blob: string | null;
@@ -733,7 +721,7 @@ export type Database = {
           id: string;
           image_url: string | null;
           option_id: string | null;
-          order_index: number;
+          order_index: number | null;
           question_id: string;
         };
         Insert: {
@@ -743,7 +731,7 @@ export type Database = {
           id: string;
           image_url?: string | null;
           option_id?: string | null;
-          order_index: number;
+          order_index?: number | null;
           question_id: string;
         };
         Update: {
@@ -753,7 +741,7 @@ export type Database = {
           id?: string;
           image_url?: string | null;
           option_id?: string | null;
-          order_index?: number;
+          order_index?: number | null;
           question_id?: string;
         };
         Relationships: [
@@ -918,6 +906,7 @@ export type Database = {
           country_code: string | null;
           description: string | null;
           display_name: string;
+          is_active: boolean;
           name: string;
           subject_name: string;
         };
@@ -925,6 +914,7 @@ export type Database = {
           country_code?: string | null;
           description?: string | null;
           display_name: string;
+          is_active?: boolean;
           name: string;
           subject_name: string;
         };
@@ -932,8 +922,39 @@ export type Database = {
           country_code?: string | null;
           description?: string | null;
           display_name?: string;
+          is_active?: boolean;
           name?: string;
           subject_name?: string;
+        };
+        Relationships: [];
+      };
+      subscription_tier_limits: {
+        Row: {
+          created_at: string | null;
+          display_name: string;
+          id: string;
+          is_active: boolean | null;
+          tier_lookup_key: string;
+          token_limit_monthly: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          display_name: string;
+          id?: string;
+          is_active?: boolean | null;
+          tier_lookup_key: string;
+          token_limit_monthly?: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          display_name?: string;
+          id?: string;
+          is_active?: boolean | null;
+          tier_lookup_key?: string;
+          token_limit_monthly?: number;
+          updated_at?: string | null;
         };
         Relationships: [];
       };
@@ -1127,6 +1148,56 @@ export type Database = {
           },
         ];
       };
+      token_usage_summary: {
+        Row: {
+          created_at: string | null;
+          id: string;
+          input_tokens: number;
+          last_aggregated_at: string;
+          last_token_history_id: number | null;
+          output_tokens: number;
+          period_end: string;
+          period_start: string;
+          total_tokens: number;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: string;
+          input_tokens?: number;
+          last_aggregated_at: string;
+          last_token_history_id?: number | null;
+          output_tokens?: number;
+          period_end: string;
+          period_start: string;
+          total_tokens?: number;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: string;
+          input_tokens?: number;
+          last_aggregated_at?: string;
+          last_token_history_id?: number | null;
+          output_tokens?: number;
+          period_end?: string;
+          period_start?: string;
+          total_tokens?: number;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'token_usage_summary_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       user_credits: {
         Row: {
           credit: number;
@@ -1243,10 +1314,10 @@ export type Database = {
           answer_draw_file: string | null;
           answer_text: string | null;
           id: string;
-          option_id: string;
+          option_id: string | null;
           option_image: string | null;
           option_text: string | null;
-          order_index: number;
+          order_index: number | null;
           user_question_attempts_id: string;
         };
         Insert: {
@@ -1254,10 +1325,10 @@ export type Database = {
           answer_draw_file?: string | null;
           answer_text?: string | null;
           id?: string;
-          option_id: string;
+          option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
-          order_index: number;
+          order_index?: number | null;
           user_question_attempts_id: string;
         };
         Update: {
@@ -1265,10 +1336,10 @@ export type Database = {
           answer_draw_file?: string | null;
           answer_text?: string | null;
           id?: string;
-          option_id?: string;
+          option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
-          order_index?: number;
+          order_index?: number | null;
           user_question_attempts_id?: string;
         };
         Relationships: [
@@ -1292,8 +1363,14 @@ export type Database = {
         Row: {
           attempt_number: number | null;
           duration_seconds: number;
+          feedback_gaps: string | null;
+          feedback_improvement: string | null;
+          feedback_positive: string | null;
           id: string;
-          is_correct: boolean | null;
+          key_concepts_assessed: string[] | null;
+          marking_rationale: string | null;
+          marking_status: string | null;
+          max_score: number | null;
           question_id: string;
           score: number | null;
           submitted_at: string;
@@ -1302,8 +1379,14 @@ export type Database = {
         Insert: {
           attempt_number?: number | null;
           duration_seconds: number;
+          feedback_gaps?: string | null;
+          feedback_improvement?: string | null;
+          feedback_positive?: string | null;
           id?: string;
-          is_correct?: boolean | null;
+          key_concepts_assessed?: string[] | null;
+          marking_rationale?: string | null;
+          marking_status?: string | null;
+          max_score?: number | null;
           question_id: string;
           score?: number | null;
           submitted_at: string;
@@ -1312,8 +1395,14 @@ export type Database = {
         Update: {
           attempt_number?: number | null;
           duration_seconds?: number;
+          feedback_gaps?: string | null;
+          feedback_improvement?: string | null;
+          feedback_positive?: string | null;
           id?: string;
-          is_correct?: boolean | null;
+          key_concepts_assessed?: string[] | null;
+          marking_rationale?: string | null;
+          marking_status?: string | null;
+          max_score?: number | null;
           question_id?: string;
           score?: number | null;
           submitted_at?: string;
@@ -1365,6 +1454,63 @@ export type Database = {
           },
           {
             foreignKeyName: 'user_roles_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_subscriptions: {
+        Row: {
+          billing_interval: string;
+          created_at: string | null;
+          current_period_end: string;
+          current_period_start: string;
+          id: string;
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          tier_lookup_key: string;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          billing_interval: string;
+          created_at?: string | null;
+          current_period_end: string;
+          current_period_start: string;
+          id?: string;
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          tier_lookup_key: string;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          billing_interval?: string;
+          created_at?: string | null;
+          current_period_end?: string;
+          current_period_start?: string;
+          id?: string;
+          status?: string;
+          stripe_customer_id?: string;
+          stripe_subscription_id?: string;
+          tier_lookup_key?: string;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_subscriptions_tier_lookup_key_fkey';
+            columns: ['tier_lookup_key'];
+            isOneToOne: false;
+            referencedRelation: 'subscription_tier_limits';
+            referencedColumns: ['tier_lookup_key'];
+          },
+          {
+            foreignKeyName: 'user_subscriptions_user_info_id_fkey';
             columns: ['user_info_id'];
             isOneToOne: false;
             referencedRelation: 'user_infos';
@@ -1576,6 +1722,25 @@ export type Database = {
       [_ in never]: never
     };
     Functions: {
+      rollup_token_usage: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          processed: number;
+          errors: number;
+        }[];
+      };
+      transfer_credits_atomic: {
+        Args: {
+          p_amount: number;
+          p_description_from: string;
+          p_description_to: string;
+          p_from_user_info_id: string;
+          p_metadata_from?: Json;
+          p_metadata_to?: Json;
+          p_to_user_info_id: string;
+        };
+        Returns: Json;
+      };
       update_user_info_with_relations: {
         Args: {
           p_email: string;

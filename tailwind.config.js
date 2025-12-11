@@ -66,7 +66,7 @@ module.exports = {
       typography: { // custom typography for markdown rendering in prose class
         DEFAULT: {
           css: {
-            'color': 'black',
+            'color': '#374151', // gray-700
             'table': {
               width: '100%',
               borderCollapse: 'collapse',
@@ -93,14 +93,36 @@ module.exports = {
               marginBottom: '1rem',
             },
             'li': {
-              color: 'black',
+              color: '#374151', // gray-700
             },
             'ul > li::marker': {
-              color: 'black',
+              color: '#9ca3af', // gray-400
             },
             'ol > li::marker': {
-              color: 'black',
+              color: '#9ca3af', // gray-400
             },
+            'strong': {
+              color: '#111827', // gray-900
+              fontWeight: '600',
+            },
+            'h1, h2, h3, h4': {
+              color: '#111827', // gray-900
+              fontWeight: '600',
+            },
+            'a': {
+              color: 'inherit', // Same color as surrounding text
+              textDecoration: 'none', // No underline
+              fontWeight: 'inherit', // Same weight as surrounding text
+            },
+            'code': {
+              color: '#14b8a6', // primary-500
+              backgroundColor: '#f3f4f6', // gray-100
+              padding: '0.125rem 0.25rem',
+              borderRadius: '0.25rem',
+              fontWeight: '500',
+            },
+            'code::before': { content: '""' },
+            'code::after': { content: '""' },
             'h1': {
               marginBottom: '1rem',
             },
@@ -126,6 +148,9 @@ module.exports = {
     { pattern: /text-primary-\d{2,3}/ },
     { pattern: /bg-background-\d{2,3}/ },
     { pattern: /text-background-\d{2,3}/ },
+    // Color highlight classes for ::color[text] markers
+    { pattern: /bg-(yellow|green|blue|red|purple|pink|orange)-200/ },
+    { pattern: /text-(yellow|green|blue|red|purple|pink|orange)-900/ },
   ],
   plugins: [require('@tailwindcss/typography')],
   darkMode: false,

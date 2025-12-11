@@ -13,6 +13,12 @@
     <div v-else>
       <h2 class="text-lg font-semibold mb-2 whitespace-pre-wrap">{{ displayedTitle }}</h2>
       <div v-if="isTyping" class="whitespace-pre-wrap">{{ displayedText }}</div>
+      <MDCRenderer
+        v-else-if="markdownBody"
+        :body="markdownBody"
+        tag="div"
+        class="prose prose-md max-w-none"
+      />
       <div v-else v-html="processedHtml" />
 
       <!-- Message Actions for regular slides -->
@@ -26,10 +32,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onBeforeUnmount, computed } from 'vue';
+import { ref, watch, onBeforeUnmount, computed, watchEffect } from 'vue';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import MessageActions from '../chat/MessageActions.vue';
 import QuizQuestion from './QuizQuestion.vue';
 import type { UserAnswer } from '~/types/quiz.types';
+import { convertHighlights, convertImages, stripImages } from '~/utils/markdownUtils';
 
 const props = defineProps<{
   slide: any;
@@ -56,18 +64,23 @@ const displayedTitle = ref('');
 const displayedText = ref('');
 const isTyping = ref(false);
 const processedHtml = ref('');
+const markdownBody = ref();
 let intervalId: number | null = null;
 
-function stripImages(raw: string) {
-  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image]');
-}
-
-function convertImages(raw: string) {
-  return raw.replace(
-    /&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g,
-    `<img src="https://picsum.photos/id/1/200/300" alt="Slide image" class="my-2 max-w-full rounded-md"/>`
-  );
-}
+// Parse markdown for slide content
+watchEffect(async () => {
+  if (processedHtml.value) {
+    try {
+      const parsed = await parseMarkdown(processedHtml.value);
+      markdownBody.value = parsed?.body;
+    } catch (e) {
+      console.error('Markdown parsing error:', e);
+      markdownBody.value = null;
+    }
+  } else {
+    markdownBody.value = null;
+  }
+});
 
 function typeSlideSimultaneous(title: string, content: string) {
   displayedTitle.value = '';
@@ -93,7 +106,7 @@ function typeSlideSimultaneous(title: string, content: string) {
       clearInterval(intervalId);
       intervalId = null;
       isTyping.value = false;
-      processedHtml.value = convertImages(props.slide.content || '');
+      processedHtml.value = convertHighlights(convertImages(props.slide.content || '', 'Slide image'));
       emit('finish');
     }
   }, 5);

@@ -29,7 +29,7 @@
       ]"
       :style="{ width: isMobile ? '100%' : `${rightPanelWidth}%` }"
     >
-      <div class="p-6">
+      <div class="p-6 pb-24">
         <!-- Close Split View Button -->
         <button
           class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
@@ -71,8 +71,14 @@
           <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
             {{ currentSlide.title }}
           </h2>
+          <MDCRenderer
+            v-if="slideMarkdownBody"
+            :body="slideMarkdownBody"
+            tag="div"
+            class="prose prose-md max-w-none text-lg"
+          />
           <div
-            v-if="currentSlide.content"
+            v-else-if="currentSlide.content"
             class="text-lg max-w-none"
             v-html="processedSlideContent"
           />
@@ -112,17 +118,21 @@
               <div
                 :class="[
                   'p-3 rounded-lg',
-                  answeredQuestions[currentSlide.id]?.isCorrect
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
                     ? 'bg-green-50 border border-green-200'
-                    : 'bg-red-50 border border-red-200'
+                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                      ? 'bg-amber-50 border border-amber-200'
+                      : 'bg-red-50 border border-red-200'
                 ]"
               >
                 <p
                   :class="[
                     'text-sm font-semibold',
-                    answeredQuestions[currentSlide.id]?.isCorrect
+                    answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
                       ? 'text-green-800'
-                      : 'text-red-800'
+                      : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                        ? 'text-amber-800'
+                        : 'text-red-800'
                   ]"
                 >
                   {{ answeredQuestions[currentSlide.id]?.feedback }}
@@ -142,32 +152,33 @@
         <!-- Slide Thumbnail Overview -->
         <div v-if="showThumbnails" class="mt-6">
           <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
-          <div class="grid grid-cols-2 gap-2">
+          <TransitionGroup
+            name="slide-list"
+            tag="div"
+            class="grid grid-cols-2 gap-2"
+          >
             <div
               v-for="(slide, index) in slides"
               :key="slide.id"
               :class="[
-                'p-2 border rounded cursor-pointer text-xs transition-colors',
+                'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
                 index === currentSlideIndex
-                  ? 'border-primary-500 bg-primary-50'
+                  ? 'border-primary-500 bg-primary-50 scale-105'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               ]"
               @click="jumpToSlide(index)"
             >
               <div class="font-medium">{{ slide.part_label }}</div>
               <div class="text-gray-600 truncate">{{ slide.title }}</div>
+              <!-- NEW: Badge for newly added slides -->
+              <span
+                v-if="isSlideNew(index)"
+                class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
+              >
+                NEW
+              </span>
             </div>
-          </div>
-        </div>
-
-        <!-- Task Submit Button -->
-        <div v-if="task" class="mt-6 flex justify-center">
-          <button
-            class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
-            @click="submitTask"
-          >
-            Submit Task
-          </button>
+          </TransitionGroup>
         </div>
       </div>
     </div>
@@ -203,8 +214,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import { useToast } from '#imports';
+import { convertHighlights, convertImages } from '~/utils/markdownUtils';
 
 const toast = useToast();
 
@@ -228,7 +241,6 @@ const props = defineProps<{
   slides: SlideData[];
   initialSlideIndex?: number;
   showThumbnails?: boolean;
-  task?: any; // Task data to determine if this is a task
 }>();
 
 const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view']);
@@ -244,11 +256,34 @@ const showExplanation = ref(false);
 
 // Question and answer state
 const selectedOptions = ref<Record<string, any>>({});
-const answeredQuestions = ref<Record<string, { isCorrect: boolean; feedback: string }>>({});
+const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: string }>>({});
 
 // Refs
 const rightPanel = ref<HTMLElement>();
 const resizeHandle = ref<HTMLElement>();
+
+// Track newly added slides for animation
+const newSlideIndices = ref<Set<number>>(new Set());
+
+watch(() => props.slides.length, (newLength, oldLength) => {
+  if (newLength > oldLength) {
+    // Mark new slides
+    for (let i = oldLength; i < newLength; i++) {
+      newSlideIndices.value.add(i);
+    }
+
+    // Remove "new" badge after 3 seconds
+    setTimeout(() => {
+      for (let i = oldLength; i < newLength; i++) {
+        newSlideIndices.value.delete(i);
+      }
+    }, 3000);
+  }
+});
+
+const isSlideNew = (index: number) => {
+  return newSlideIndices.value.has(index);
+};
 
 // Computed properties
 const currentSlide = computed(() => props.slides[currentSlideIndex.value]);
@@ -256,12 +291,27 @@ const totalSlides = computed(() => props.slides.length);
 
 const processedSlideContent = computed(() => {
   if (!currentSlide.value?.content) return '';
+  let processed = convertImages(currentSlide.value.content, 'Slide image');
+  processed = convertHighlights(processed);
+  return processed;
+});
 
-  // Convert &&img&& markers to actual images
-  return currentSlide.value.content.replace(
-    /&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g,
-    '<img src="$1" alt="Slide image" class="my-2 max-w-full rounded-md"/>'
-  );
+// Parse markdown for slide content
+const slideMarkdownBody = ref();
+
+watchEffect(async () => {
+  if (processedSlideContent.value) {
+    try {
+      const parsed = await parseMarkdown(processedSlideContent.value);
+      slideMarkdownBody.value = parsed?.body;
+    } catch (e) {
+      console.error('Markdown parsing error:', e);
+      // Fallback to raw content if parsing fails
+      slideMarkdownBody.value = null;
+    }
+  } else {
+    slideMarkdownBody.value = null;
+  }
 });
 
 // Methods
@@ -307,11 +357,11 @@ function checkAnswer(slide: SlideData) {
     // TODO: currently only can check mcq and using index to check which is not very safe. should use ID matching instead
     const correctAnswerIndex = slide.answer[0].option_id;
     const correctOption = slide.options.find((option) => option.id === correctAnswerIndex);
-    const isCorrect = !!(correctOption && selectedOption.id === correctOption.id);
+    const markingStatus = (correctOption && selectedOption.id === correctOption.id) ? 'CORRECT' : 'INCORRECT';
 
     answeredQuestions.value[slide.id] = {
-      isCorrect,
-      feedback: isCorrect ? '✅ Correct!' : '❌ Incorrect. Try again!'
+      markingStatus,
+      feedback: markingStatus === 'CORRECT' ? '✅ Correct!' : '❌ Incorrect. Try again!'
     };
 
     // Show explanation if available
@@ -324,39 +374,6 @@ function checkAnswer(slide: SlideData) {
       title: 'Answer Checked',
       description: 'This question type will be supported soon!',
       color: 'primary'
-    });
-  }
-}
-
-// Submit task
-async function submitTask() {
-  if (!props.task?.id) {
-    toast.add({
-      title: 'Error',
-      description: 'No task ID found. Cannot submit task.',
-      color: 'red'
-    });
-    return;
-  }
-
-  try {
-    const response = await $fetch(`/api/tasks/complete/${props.task.id}`, {
-      method: 'POST'
-    });
-
-    if (response.success) {
-      toast.add({
-        title: 'Task Completed!',
-        description: `Congratulations! You earned ${response.creditsEarned} credits.`,
-        color: 'green'
-      });
-    }
-  } catch (error: any) {
-    console.error('Failed to submit task:', error);
-    toast.add({
-      title: 'Submission Failed',
-      description: error.data?.message || 'Failed to submit task. Please try again.',
-      color: 'red'
     });
   }
 }

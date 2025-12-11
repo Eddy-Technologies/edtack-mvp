@@ -4,13 +4,19 @@
       <h3 class="text-lg font-semibold mb-2 whitespace-pre-wrap">
         {{ displayedTitle }}
       </h3>
-      <div class="mb-4" v-html="processedContentHtml" />
+      <MDCRenderer
+        v-if="contentMarkdownBody"
+        :body="contentMarkdownBody"
+        tag="div"
+        class="prose prose-md max-w-none mb-4"
+      />
+      <div v-else class="mb-4" v-html="processedContentHtml" />
     </div>
 
     <!-- Question Type Specific UI -->
     <div class="space-y-4">
       <!-- MCQ Questions -->
-      <div v-if="question.question_type === 'mcq'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.MCQ" class="space-y-3">
         <div
           v-for="option in question.options"
           :key="option.id"
@@ -40,7 +46,7 @@
       </div>
 
       <!-- Open Questions -->
-      <div v-if="question.question_type === 'open'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.OPEN" class="space-y-3">
         <textarea
           v-model="userAnswer"
           maxlength="500"
@@ -51,7 +57,7 @@
       </div>
 
       <!-- Fill Questions -->
-      <div v-if="question.question_type === 'fill'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.FILL" class="space-y-3">
         <div v-if="question.answer.length === 1">
           <input
             v-model="userAnswer"
@@ -75,7 +81,7 @@
       </div>
 
       <!-- Boolean Questions -->
-      <div v-if="question.question_type === 'boolean'" class="flex gap-4">
+      <div v-if="question.question_type === QUESTION_TYPE.BOOLEAN" class="flex gap-4">
         <button
           class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
           :class="{
@@ -99,7 +105,7 @@
       </div>
 
       <!-- Draw Questions -->
-      <div v-if="question.question_type === 'draw'" class="space-y-3">
+      <div v-if="question.question_type === QUESTION_TYPE.DRAW" class="space-y-3">
         <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
           <div v-if="!drawingFile">
             <p class="text-gray-500 mb-4">Draw your answer or upload an image</p>
@@ -141,15 +147,35 @@
       </div>
 
       <!-- Explanation (shown after submission) -->
-      <div v-if="showExplanation && question.explanation" class="mt-6 p-4 rounded-lg" :class="isCorrect ? 'bg-green-100' : 'bg-red-200'">
+      <div
+        v-if="showExplanation && question.explanation"
+        class="mt-6 p-4 rounded-lg"
+        :class="{
+          'bg-green-100': markingStatus === MARKING_STATUS.CORRECT,
+          'bg-amber-100': markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+          'bg-red-200': markingStatus === MARKING_STATUS.INCORRECT
+        }"
+      >
         <h4 class="font-semibold mb-2">Explanation:</h4>
-        <div v-html="processedExplanationHtml" />
-        <div v-if="isCorrect !== undefined" class="mt-3 flex items-center gap-2">
+        <MDCRenderer
+          v-if="explanationMarkdownBody"
+          :body="explanationMarkdownBody"
+          tag="div"
+          class="prose prose-md max-w-none"
+        />
+        <div v-else v-html="processedExplanationHtml" />
+        <div v-if="markingStatus" class="mt-3 flex items-center gap-2">
           <span
             class="px-3 py-1 rounded-full text-sm font-medium"
-            :class="isCorrect ? 'bg-green-300 text-green-800' : 'bg-red-300 text-red-800'"
+            :class="{
+              'bg-green-300 text-green-800': markingStatus === MARKING_STATUS.CORRECT,
+              'bg-amber-300 text-amber-800': markingStatus === MARKING_STATUS.PARTIALLY_CORRECT,
+              'bg-red-300 text-red-800': markingStatus === MARKING_STATUS.INCORRECT
+            }"
           >
-            {{ isCorrect ? 'Correct!' : 'Incorrect' }}
+            <span v-if="markingStatus === MARKING_STATUS.CORRECT">Correct!</span>
+            <span v-else-if="markingStatus === MARKING_STATUS.PARTIALLY_CORRECT">Partially Correct</span>
+            <span v-else>Incorrect</span>
           </span>
         </div>
       </div>
@@ -161,10 +187,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch, watchEffect } from 'vue';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import type { QuizQuestion } from '~/types/quiz.types';
 import Button from '~/components/common/Button.vue';
 import MessageActions from '~/components/chat/MessageActions.vue';
+import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
+import { convertHighlights, convertImages, stripImages } from '~/utils/markdownUtils';
 
 const props = defineProps<{
   question: QuizQuestion;
@@ -180,10 +209,42 @@ const selectedOptions = ref<string[]>([]);
 const fillAnswers = ref<string[]>(new Array(props.question.answer.length).fill(''));
 const drawingFile = ref<string | null>(null);
 const showExplanation = ref(false);
-const isCorrect = ref<boolean | undefined>(undefined);
+const markingStatus = ref<string | undefined>(undefined);
 
-const processedContentHtml = computed(() => convertImages(props.question.content || ''));
-const processedExplanationHtml = computed(() => convertImages(props.question.explanation || ''));
+const processedContentHtml = computed(() => convertHighlights(convertImages(props.question.content || '', 'Question image')));
+const processedExplanationHtml = computed(() => convertHighlights(convertImages(props.question.explanation || '', 'Explanation image')));
+
+// Markdown parsing for content and explanation
+const contentMarkdownBody = ref();
+const explanationMarkdownBody = ref();
+
+watchEffect(async () => {
+  if (processedContentHtml.value) {
+    try {
+      const parsed = await parseMarkdown(processedContentHtml.value);
+      contentMarkdownBody.value = parsed?.body;
+    } catch (e) {
+      console.error('Markdown parsing error:', e);
+      contentMarkdownBody.value = null;
+    }
+  } else {
+    contentMarkdownBody.value = null;
+  }
+});
+
+watchEffect(async () => {
+  if (processedExplanationHtml.value) {
+    try {
+      const parsed = await parseMarkdown(processedExplanationHtml.value);
+      explanationMarkdownBody.value = parsed?.body;
+    } catch (e) {
+      console.error('Markdown parsing error:', e);
+      explanationMarkdownBody.value = null;
+    }
+  } else {
+    explanationMarkdownBody.value = null;
+  }
+});
 
 // Computed property for MessageActions - combines title and content
 const questionText = computed(() => {
@@ -194,34 +255,23 @@ const questionText = computed(() => {
 
 const hasAnswer = computed(() => {
   switch (props.question.question_type) {
-    case 'mcq':
+    case QUESTION_TYPE.MCQ:
       return selectedOptions.value.length > 0;
-    case 'open':
+    case QUESTION_TYPE.OPEN:
       return userAnswer.value.trim().length > 0;
-    case 'fill':
+    case QUESTION_TYPE.FILL:
       if (props.question.answer.length === 1) {
         return userAnswer.value.trim().length > 0;
       }
       return fillAnswers.value.every((answer) => answer.trim().length > 0);
-    case 'boolean':
+    case QUESTION_TYPE.BOOLEAN:
       return userAnswer.value !== '';
-    case 'draw':
+    case QUESTION_TYPE.DRAW:
       return drawingFile.value !== null;
     default:
       return false;
   }
 });
-
-function stripImages(raw: string) {
-  return raw.replace(/&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g, '[Image]');
-}
-
-function convertImages(raw: string) {
-  return raw.replace(
-    /&&img&&\s*(https?:\/\/[^\s]+)\s*&&img&&/g,
-    '<img src="$1" alt="Question image" class="my-2 max-w-full rounded-md"/>'
-  );
-}
 
 function isSelected(optionId: string) {
   return selectedOptions.value.includes(optionId);
@@ -255,61 +305,64 @@ function submitAnswer() {
   let userAnswers: string[] = [];
 
   switch (props.question.question_type) {
-    case 'mcq':
+    case QUESTION_TYPE.MCQ:
       userAnswers = selectedOptions.value;
       break;
-    case 'open':
+    case QUESTION_TYPE.OPEN:
       userAnswers = [userAnswer.value.trim()];
       break;
-    case 'fill':
+    case QUESTION_TYPE.FILL:
       if (props.question.answer.length === 1) {
         userAnswers = [userAnswer.value.trim()];
       } else {
         userAnswers = fillAnswers.value.map((a) => a.trim());
       }
       break;
-    case 'boolean':
+    case QUESTION_TYPE.BOOLEAN:
       userAnswers = [userAnswer.value];
       break;
-    case 'draw':
+    case QUESTION_TYPE.DRAW:
       userAnswers = [drawingFile.value || ''];
       break;
   }
 
-  isCorrect.value = checkAnswer(userAnswers);
+  markingStatus.value = checkAnswer(userAnswers);
   showExplanation.value = true;
 
   emit('answer-submitted', {
     questionId: props.question.id,
     answers: userAnswers,
-    isCorrect: isCorrect.value
+    markingStatus: markingStatus.value
   });
 }
 
-function checkAnswer(userAnswers: string[]): boolean {
+function checkAnswer(userAnswers: string[]): string {
   const correctAnswers = props.question.answer;
 
   switch (props.question.question_type) {
-    case 'mcq': {
+    case QUESTION_TYPE.MCQ: {
       const correctOptionIds = correctAnswers.map((a) => a.option_id).filter(Boolean);
-      return correctOptionIds.every((id) => userAnswers.includes(id)) &&
+      const answersMatch = correctOptionIds.every((id) => userAnswers.includes(id)) &&
         userAnswers.every((id) => correctOptionIds.includes(id));
+      return answersMatch ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
-    case 'boolean': {
+    case QUESTION_TYPE.BOOLEAN: {
       const correctBoolean = correctAnswers[0]?.answer_boolean;
-      return userAnswers[0] === correctBoolean?.toString();
+      const answersMatch = userAnswers[0] === correctBoolean?.toString();
+      return answersMatch ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
-    case 'open':
-    case 'fill': {
+    case QUESTION_TYPE.OPEN:
+    case QUESTION_TYPE.FILL: {
       const correctTexts = correctAnswers.map((a) => a.answer_text?.toLowerCase().trim()).filter(Boolean);
       const userTexts = userAnswers.map((a) => a.toLowerCase().trim());
-      return correctTexts.every((correct, index) => userTexts[index] === correct);
+      const answersMatch = correctTexts.every((correct, index) => userTexts[index] === correct);
+      return answersMatch ? MARKING_STATUS.CORRECT : MARKING_STATUS.INCORRECT;
     }
-    case 'draw':
-      return true;
+    case QUESTION_TYPE.DRAW:
+      return MARKING_STATUS.CORRECT;
 
     default:
-      return false;
+      return MARKING_STATUS.INCORRECT;
   }
 }
 
@@ -320,7 +373,7 @@ fillAnswers.value = new Array(props.question.answer.length).fill('');
 if (props.hideSubmitButton) {
   // Watch for MCQ selections
   watch(selectedOptions, () => {
-    if (props.question.question_type === 'mcq' && selectedOptions.value.length > 0) {
+    if (props.question.question_type === QUESTION_TYPE.MCQ && selectedOptions.value.length > 0) {
       emit('answer-submitted', {
         questionId: props.question.id,
         selectedOptions: selectedOptions.value
@@ -330,12 +383,12 @@ if (props.hideSubmitButton) {
 
   // Watch for text answers (open, boolean, fill single)
   watch(userAnswer, () => {
-    if (['open', 'boolean'].includes(props.question.question_type) && userAnswer.value) {
+    if ([QUESTION_TYPE.OPEN, QUESTION_TYPE.BOOLEAN].includes(props.question.question_type) && userAnswer.value) {
       emit('answer-submitted', {
         questionId: props.question.id,
         answer: userAnswer.value
       });
-    } else if (props.question.question_type === 'fill' && props.question.answer.length === 1 && userAnswer.value) {
+    } else if (props.question.question_type === QUESTION_TYPE.FILL && props.question.answer.length === 1 && userAnswer.value) {
       emit('answer-submitted', {
         questionId: props.question.id,
         answer: userAnswer.value
@@ -345,7 +398,7 @@ if (props.hideSubmitButton) {
 
   // Watch for fill answers (multiple blanks)
   watch(fillAnswers, () => {
-    if (props.question.question_type === 'fill' && props.question.answer.length > 1) {
+    if (props.question.question_type === QUESTION_TYPE.FILL && props.question.answer.length > 1) {
       const allFilled = fillAnswers.value.every((a) => a.trim() !== '');
       if (allFilled) {
         emit('answer-submitted', {
@@ -358,7 +411,7 @@ if (props.hideSubmitButton) {
 
   // Watch for drawing file
   watch(drawingFile, () => {
-    if (props.question.question_type === 'draw' && drawingFile.value) {
+    if (props.question.question_type === QUESTION_TYPE.DRAW && drawingFile.value) {
       emit('answer-submitted', {
         questionId: props.question.id,
         drawingFile: drawingFile.value

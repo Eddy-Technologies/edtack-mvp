@@ -48,11 +48,13 @@ export default defineEventHandler(async (event) => {
               assignee_user_info_id,
               status,
               credit,
+              required_score,
               lesson_generation_type
             )
           )
         )
       `)
+      .eq('is_active', true)
       .order('display_name');
 
     // Apply filters

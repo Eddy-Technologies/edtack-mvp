@@ -124,7 +124,7 @@
           <div v-if="openSubjects.includes(subject.name)" class="overflow-hidden">
             <div class="px-6 pb-6 space-y-4">
               <!-- Chapter Cards -->
-              <div class="grid gap-4">
+              <div class="grid gap-4 mt-4">
                 <div
                   v-for="chapter in subject.chapters"
                   :key="chapter.name"
@@ -179,23 +179,101 @@
                           </div>
                         </div>
                       </UButton>
+                    </div>
+                  </div>
 
-                      <!-- Quiz Button -->
-                      <UButton
-                        v-if="chapter.user_tasks_chapters?.length > 0"
-                        size="xl"
-                        color="blue"
-                        variant="outline"
-                        :loading="quizButtonLoading[chapter.name]"
-                        @click="handleQuizClick(chapter, subject.subject_name)"
-                      >
-                        <div>
-                          <UIcon name="i-lucide-brain" size="24" />
-                          <div>
-                            {{ quizCompleted[chapter.name] ? 'Review Quiz' : (quizExists[chapter.name] ? 'Attempt Quiz' : 'Generate Quiz') }}
+                  <!-- Quiz Tasks - Show each task-chapter assignment separately -->
+                  <div
+                    v-if="chapter.user_tasks_chapters?.length > 0"
+                    class="mt-4 space-y-3 border-t pt-4"
+                  >
+                    <div
+                      v-for="(taskChapter, index) in chapter.user_tasks_chapters"
+                      :key="taskChapter.id"
+                      class="bg-gray-50 rounded-lg p-3"
+                    >
+                      <div class="flex items-center justify-between">
+                        <!-- Task Info -->
+                        <div class="flex-1">
+                          <div class="flex items-center gap-2 mb-1">
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-xs font-semibold mr-2">
+                              {{ index + 1 }}
+                            </span>
+                            <span class="text-sm font-medium text-gray-900">
+                              {{ taskChapter.user_tasks?.name || 'Quiz Task' }}
+                            </span>
+                            <span v-if="taskChapter.user_tasks?.credit > 0" class="px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 ml-2">
+                              {{ taskChapter.user_tasks.credit }} credits
+                            </span>
+                            <span v-if="taskChapter.user_tasks?.required_score" class="text-xs text-gray-600 ml-1">
+                              · {{ taskChapter.user_tasks.required_score }}% required
+                            </span>
+                            <!-- Credit Status Pill -->
+                            <span
+                              v-if="quizMetadata[taskChapter.id]?.creditDisbursed"
+                              class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-700"
+                            >
+                              ✓ Credits Earned
+                            </span>
+                            <span
+                              v-else-if="quizMetadata[taskChapter.id]?.isCompleted && quizMetadata[taskChapter.id]?.creditReward > 0"
+                              class="px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700"
+                            >
+                              Credits Pending
+                            </span>
+                          </div>
+
+                          <!-- Scores -->
+                          <div
+                            v-if="quizMetadata[taskChapter.id]?.isCompleted"
+                            class="flex items-center gap-4 text-xs text-gray-600"
+                          >
+                            <span>
+                              Best: <strong>{{ quizMetadata[taskChapter.id]?.bestPercentage || 0 }}%</strong>
+                            </span>
+                            <span>
+                              Latest: <strong>{{ quizMetadata[taskChapter.id]?.latestPercentage || 0 }}%</strong>
+                            </span>
+                            <span v-if="quizMetadata[taskChapter.id]?.attemptCount">
+                              Attempts: {{ quizMetadata[taskChapter.id].attemptCount }}
+                            </span>
                           </div>
                         </div>
-                      </UButton>
+
+                        <!-- Quiz Action Buttons -->
+                        <div class="flex space-x-2">
+                          <!-- Review Button -->
+                          <UButton
+                            v-if="quizMetadata[taskChapter.id]?.isCompleted"
+                            size="sm"
+                            color="gray"
+                            variant="outline"
+                            :loading="quizButtonLoading[taskChapter.id]"
+                            @click="handleQuizReview(taskChapter, chapter, subject.subject_name)"
+                          >
+                            <UIcon name="i-lucide-eye" class="w-4 h-4 mr-1" />
+                            Review Quiz
+                          </UButton>
+
+                          <!-- Reattempt / Attempt / Generate Button -->
+                          <UButton
+                            size="sm"
+                            :color="quizMetadata[taskChapter.id]?.isCompleted ? 'primary' : 'blue'"
+                            :loading="quizButtonLoading[taskChapter.id]"
+                            @click="handleQuizClick(taskChapter, chapter, subject.subject_name)"
+                          >
+                            <UIcon
+                              :name="quizMetadata[taskChapter.id]?.isCompleted ? 'i-lucide-refresh-cw' : 'i-lucide-brain'"
+                              class="w-4 h-4 mr-1"
+                            />
+                            {{
+                              quizMetadata[taskChapter.id]?.isCompleted
+                                ? 'Reattempt Quiz'
+                                : (quizExists[taskChapter.id] ? 'Attempt Quiz' : 'Generate Quiz')
+                            }}
+                          </UButton>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -223,6 +301,7 @@
       :is-open="isQuizModalOpen"
       :user-tasks-chapter-id="selectedUserTasksChapterId"
       :chapter-display-name="selectedChapterDisplayName"
+      :mode="quizModalMode"
       @close="isQuizModalOpen = false"
       @quiz-submitted="handleQuizSubmitted"
     />
@@ -235,6 +314,7 @@ import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
+import { useTokenUsage } from '~/composables/useTokenUsage';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 
 const router = useRouter();
@@ -263,12 +343,13 @@ const openSubjects = ref<string[]>([]);
 const quizButtonLoading = reactive<Record<string, boolean>>({});
 const quizExists = reactive<Record<string, boolean>>({});
 const quizCompleted = reactive<Record<string, boolean>>({});
+const quizMetadata = reactive<Record<string, any>>({}); // Store quiz metadata by taskChapterId
 
 // Quiz modal state
 const isQuizModalOpen = ref(false);
 const selectedUserTasksChapterId = ref<string>('');
 const selectedChapterDisplayName = ref<string>('');
-const selectedChapterName = ref<string>(''); // Track chapter.name for state updates
+const quizModalMode = ref<'attempt' | 'review'>('attempt'); // Track modal mode
 
 // Filters
 const filters = reactive({
@@ -331,15 +412,27 @@ const fetchSubjects = async () => {
 
 const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice' | 'quiz') => {
   try {
+    // Check token limits - show toast if exceeded but allow action (soft limit)
+    const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
+    await fetchTokenUsage();
+
+    if (isLimitExceeded.value) {
+      toast.add({
+        title: 'Token limit reached',
+        description: 'You have exceeded your token limit for this billing period.',
+        color: 'red',
+        timeout: 5000
+      });
+    }
+
+    // Proceed with action (soft limit - always allow)
     const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
     const upperCaseSubject = subjectName.toUpperCase();
-    console.log(upperCaseSubject);
-    // Navigate to chat with study prompt
+
     const queryParams = new URLSearchParams({
       study_prompt: studyResult.prompt
     });
 
-    // Get the appropriate character for this subject
     const character = getCharacterBySubject(upperCaseSubject);
     const characterSlug = character?.slug || 'eddy';
 
@@ -352,74 +445,80 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
 const checkQuizExistence = async (chapters: any[]) => {
   for (const chapter of chapters) {
     if (chapter.user_tasks_chapters?.length > 0) {
-      const userTasksChapterId = chapter.user_tasks_chapters[0]?.id;
-      if (userTasksChapterId) {
-        try {
-          const checkResponse = await $fetch('/api/quiz/check-existing', {
-            method: 'GET',
-            query: {
-              chapterId: chapter.name,
-              userTasksChapterId: userTasksChapterId,
-            },
-          });
-          quizExists[chapter.name] = checkResponse.exists;
-
-          // Also check if quiz is completed
-          if (checkResponse.exists) {
-            const resultsResponse = await $fetch(`/api/quiz/${userTasksChapterId}/results`, {
+      // Check ALL task-chapter assignments, not just the first one
+      for (const taskChapter of chapter.user_tasks_chapters) {
+        const userTasksChapterId = taskChapter.id;
+        if (userTasksChapterId) {
+          try {
+            const checkResponse = await $fetch('/api/quiz/check-existing', {
               method: 'GET',
+              query: {
+                userTasksChapterId: userTasksChapterId,
+              },
             });
-            quizCompleted[chapter.name] = resultsResponse.isCompleted || false;
-          } else {
-            quizCompleted[chapter.name] = false;
+            quizExists[userTasksChapterId] = checkResponse.exists;
+
+            // Fetch quiz metadata (scores, completion, credits, etc.)
+            if (checkResponse.exists) {
+              const resultsResponse = await $fetch(`/api/quiz/${userTasksChapterId}/results`, {
+                method: 'GET',
+              });
+
+              quizCompleted[userTasksChapterId] = resultsResponse.isCompleted || false;
+              quizMetadata[userTasksChapterId] = {
+                isCompleted: resultsResponse.isCompleted,
+                bestScore: resultsResponse.bestScore,
+                bestPercentage: resultsResponse.bestPercentage,
+                latestScore: resultsResponse.latestScore,
+                latestPercentage: resultsResponse.latestPercentage,
+                creditDisbursed: resultsResponse.creditDisbursed,
+                creditReward: resultsResponse.creditReward,
+                attemptCount: resultsResponse.attemptCount,
+              };
+            } else {
+              quizCompleted[userTasksChapterId] = false;
+              quizMetadata[userTasksChapterId] = {
+                isCompleted: false,
+              };
+            }
+          } catch (err) {
+            console.error(`Error checking quiz for task-chapter ${userTasksChapterId}:`, err);
+            quizExists[userTasksChapterId] = false;
+            quizCompleted[userTasksChapterId] = false;
+            quizMetadata[userTasksChapterId] = {
+              isCompleted: false,
+            };
           }
-        } catch (err) {
-          console.error(`Error checking quiz for ${chapter.name}:`, err);
-          quizExists[chapter.name] = false;
-          quizCompleted[chapter.name] = false;
         }
       }
     }
   }
 };
 
-const handleQuizClick = async (chapter: any, subjectName: string) => {
-  const chapterName = chapter.name;
+const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: string) => {
+  const userTasksChapterId = taskChapter.id;
 
   try {
     // Set loading state
-    quizButtonLoading[chapterName] = true;
-
-    // Get the task-chapter ID for linking questions
-    const userTasksChapterId = chapter.user_tasks_chapters?.[0]?.id;
-    if (!userTasksChapterId) {
-      toast.add({
-        title: 'No Task Assignment',
-        description: 'No task assignment found for this chapter.',
-        color: 'red',
-        timeout: 5000
-      });
-      return;
-    }
+    quizButtonLoading[userTasksChapterId] = true;
 
     // Check if quiz already exists for this task-chapter
     const checkResponse = await $fetch('/api/quiz/check-existing', {
       method: 'GET',
       query: {
-        chapterId: chapterName,
         userTasksChapterId: userTasksChapterId,
       },
     });
 
     if (checkResponse.exists) {
-      // Quiz already exists - open modal (will automatically show results if completed)
+      // Quiz already exists - open modal in attempt mode
       selectedUserTasksChapterId.value = userTasksChapterId;
       selectedChapterDisplayName.value = chapter.display_name;
-      selectedChapterName.value = chapterName;
+      quizModalMode.value = 'attempt';
       isQuizModalOpen.value = true;
     } else {
       // No quiz exists - generate one
-      console.log('Generating quiz for chapter:', chapterName);
+      console.log('Generating quiz for task-chapter:', userTasksChapterId);
 
       // Generate prompt using useStudy composable
       const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
@@ -428,7 +527,7 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
         method: 'POST',
         body: {
           prompt: studyResult.prompt,
-          chapterName: chapterName,
+          chapterName: chapter.name,
           chapterDisplayName: chapter.display_name,
           subjectName: subjectName,
           userLevel: meStore.level_type || '',
@@ -439,13 +538,19 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
       });
 
       if (generateResponse.success) {
-        quizExists[chapterName] = true;
+        quizExists[userTasksChapterId] = true;
         toast.add({
           title: 'Quiz Generated!',
-          description: `${generateResponse.questionCount} questions created for ${chapter.display_name}. Quiz page coming soon.`,
+          description: `${generateResponse.questionCount} questions created. You can now attempt the quiz.`,
           color: 'green',
           timeout: 6000
         });
+
+        // Open modal immediately after generation
+        selectedUserTasksChapterId.value = userTasksChapterId;
+        selectedChapterDisplayName.value = chapter.display_name;
+        quizModalMode.value = 'attempt';
+        isQuizModalOpen.value = true;
       } else {
         throw new Error('Failed to generate quiz');
       }
@@ -463,7 +568,33 @@ const handleQuizClick = async (chapter: any, subjectName: string) => {
     });
   } finally {
     // Clear loading state
-    quizButtonLoading[chapterName] = false;
+    quizButtonLoading[userTasksChapterId] = false;
+  }
+};
+
+const handleQuizReview = async (taskChapter: any, chapter: any) => {
+  const userTasksChapterId = taskChapter.id;
+
+  try {
+    // Set loading state
+    quizButtonLoading[userTasksChapterId] = true;
+
+    // Open modal in review mode
+    selectedUserTasksChapterId.value = userTasksChapterId;
+    selectedChapterDisplayName.value = chapter.display_name;
+    quizModalMode.value = 'review';
+    isQuizModalOpen.value = true;
+  } catch (err: any) {
+    console.error('Error opening quiz review:', err);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to open quiz review',
+      color: 'red',
+      timeout: 5000
+    });
+  } finally {
+    // Clear loading state
+    quizButtonLoading[userTasksChapterId] = false;
   }
 };
 
@@ -476,7 +607,7 @@ const toggleAccordion = async (subjectName: string) => {
     // Check quiz existence when opening accordion
     const subject = subjects.value.find((s) => s.name === subjectName);
     if (subject?.chapters) {
-      await checkQuizExistence(subject.chapters, subject.subject_name);
+      await checkQuizExistence(subject.chapters);
     }
   }
 };
@@ -489,7 +620,7 @@ const clearFilters = () => {
   fetchSubjects();
 };
 
-const handleQuizSubmitted = (score: number, totalScore: number) => {
+const handleQuizSubmitted = async (score: number, totalScore: number) => {
   toast.add({
     title: 'Quiz Completed!',
     description: `You scored ${score} out of ${totalScore} points`,
@@ -497,9 +628,27 @@ const handleQuizSubmitted = (score: number, totalScore: number) => {
     timeout: 6000
   });
 
-  // Mark quiz as completed immediately for UI update
-  if (selectedChapterName.value) {
-    quizCompleted[selectedChapterName.value] = true;
+  // Refresh quiz metadata for the submitted quiz
+  if (selectedUserTasksChapterId.value) {
+    try {
+      const resultsResponse = await $fetch(`/api/quiz/${selectedUserTasksChapterId.value}/results`, {
+        method: 'GET',
+      });
+
+      quizCompleted[selectedUserTasksChapterId.value] = resultsResponse.isCompleted || false;
+      quizMetadata[selectedUserTasksChapterId.value] = {
+        isCompleted: resultsResponse.isCompleted,
+        bestScore: resultsResponse.bestScore,
+        bestPercentage: resultsResponse.bestPercentage,
+        latestScore: resultsResponse.latestScore,
+        latestPercentage: resultsResponse.latestPercentage,
+        creditDisbursed: resultsResponse.creditDisbursed,
+        creditReward: resultsResponse.creditReward,
+        attemptCount: resultsResponse.attemptCount,
+      };
+    } catch (err) {
+      console.error('Error refreshing quiz metadata:', err);
+    }
   }
 
   // Refresh subjects to update completion status
