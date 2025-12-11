@@ -22,7 +22,7 @@
     "@nuxt/eslint": "^0.5.7",
     "@nuxt/scripts": "0.11.6",
     "@nuxt/ui": "^2.21.1",
-    "@nuxthub/core": "^0.7.37",
+    "@nuxthub/core": "^0.10.0",
     "@nuxtjs/mdc": "^0.9.5",
     "@nuxtjs/supabase": "^1.5.1",
     "@octokit/rest": "^21.1.1",
