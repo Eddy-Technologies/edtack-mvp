@@ -24,24 +24,6 @@
     <FeedbackButton @open-feedback="openFeedbackModal" />
     <!-- End Feedback Components -->
     <FeedbackModal v-if="showFeedbackModal" @close="closeFeedbackModal" />
-    <!--
- <div v-if="!hasConsent" class="fixed bottom-0 left-0 w-full bg-gray-200 p-4 z-50 shadow-md">
- <div class="container mx-auto flex justify-between items-center">
- <p class="text-gray-700 text-sm">
- This website uses cookies to enhance your experience. By continuing to use this site, you consent to our use of cookies.
- Do you consent to the use of analytics scripts?
- </p>
- <div>
- <button @click="giveConsent(true)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
- Yes, I consent
- </button>
- <button @click="giveConsent(false)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
- No, thank you
- </button>
- </div>
- </div>
- </div>
- -->
   </div>
 </template>
 
@@ -54,8 +36,8 @@ import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
 import { useMeStore } from '~/stores/me';
 import { useCodesStore } from '~/stores/codes';
 
-const { $isExternalNavigation } = useNuxtApp();
-const showAppLoading = ref($isExternalNavigation);
+// Loading state - always show initially, hide when stores are ready
+const showAppLoading = ref(true);
 const meStore = useMeStore();
 const codesStore = useCodesStore();
 
@@ -91,37 +73,19 @@ useHead({
   ],
 });
 
-// function giveConsent(agreed: boolean) {
-//   hasConsent.value = true;
-//   localStorage.setItem(consentKey, agreed.toString());
-//   agreedToCookiesScriptConsent.value = agreed;
-// }
-
 onMounted(async () => {
-  // Handle app loading for external navigation
-  if (showAppLoading.value) {
-    const startTime = Date.now();
+  const startTime = Date.now();
+  const MIN_DISPLAY_TIME = 300; // milliseconds
 
-    // Wait for stores to initialize
-    await Promise.all([
-      // Wait for meStore initialization
-      meStore.isInitialized ?
-          Promise.resolve() :
-        new Promise<void>((resolve) => {
-          const unwatch = watch(
-            () => meStore.isInitialized,
-            (isInitialized) => {
-              if (isInitialized) {
-                unwatch();
-                resolve();
-              }
-            }
-          );
-        }),
-      // Wait for codesStore to load
-      codesStore.isLoaded ?
-          Promise.resolve() :
-        new Promise<void>((resolve) => {
+  try {
+    // Initialize meStore (fetches user data if authenticated)
+    await meStore.initialize();
+
+    // Wait for codesStore to load (may already be loading via codes.client.ts plugin)
+    if (!codesStore.isLoaded) {
+      if (codesStore.isLoading) {
+        // Plugin is loading codes, wait for it to complete
+        await new Promise<void>((resolve) => {
           const unwatch = watch(
             () => codesStore.isLoaded,
             (isLoaded) => {
@@ -129,35 +93,33 @@ onMounted(async () => {
                 unwatch();
                 resolve();
               }
-            }
+            },
+            { immediate: true }
           );
-        })
-    ]);
-
-    // Ensure minimum display time for smooth UX (prevent flash)
-    const MIN_DISPLAY_TIME = 300; // milliseconds
-    const elapsed = Date.now() - startTime;
-    const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
-
-    setTimeout(() => {
-      showAppLoading.value = false;
-    }, remaining);
+        });
+      } else {
+        // Not loading yet, start loading
+        await codesStore.loadCodes();
+      }
+    }
+  } catch (error) {
+    console.error('Error during app initialization:', error);
+    // Still hide loading screen to prevent stuck state
   }
 
-  // // Get me
-  // if (!me) {
-  //   const { data: session } = await supabase.auth.getSession();
-  //   if (session && !me) {
-  //     await fetchMe();
-  //   }
-  // }
+  // Ensure minimum display time for smooth UX (prevent flash)
+  const elapsed = Date.now() - startTime;
+  const remaining = Math.max(0, MIN_DISPLAY_TIME - elapsed);
 
+  setTimeout(() => {
+    showAppLoading.value = false;
+  }, remaining);
+
+  // Handle cookie consent
   const storedConsent = localStorage.getItem(consentKey);
   if (storedConsent) {
     hasConsent.value = true;
     agreedToCookiesScriptConsent.value = storedConsent === 'true';
-  } else {
-    // If no consent is stored, the consent form will be shown
   }
 });
 

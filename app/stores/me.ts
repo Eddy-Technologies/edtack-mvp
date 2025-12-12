@@ -55,24 +55,19 @@ export const useMeStore = defineStore('me', {
       this.setInitialized(true);
     },
     fetchAndSetMe: async function () {
-      try {
-        const { fetchMe } = useMe();
-        const { data, error } = await fetchMe();
-        if (error) {
-          console.error('Error fetching user profile:', error);
-          return;
-        }
-        if (!data) {
-          console.warn('No user profile data found');
-          return;
-        }
-        console.log('Fetched user profile:', data);
-        this.setMe(data);
-        return data;
-      } finally {
-        this.setInitialized(true);
-        console.log('User profile fetch completed');
+      const { fetchMe } = useMe();
+      const { data, error } = await fetchMe();
+      if (error) {
+        console.error('Error fetching user profile:', error);
+        return;
       }
+      if (!data) {
+        console.warn('No user profile data found');
+        return;
+      }
+      console.log('Fetched user profile:', data);
+      this.setMe(data);
+      return data;
     },
   },
   getters: {
