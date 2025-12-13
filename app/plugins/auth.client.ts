@@ -3,21 +3,18 @@ import { useSupabaseClient } from '#imports';
 import { useMeStore } from '~/stores/me';
 
 // plugins/auth.client.js
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
   console.log('Auth client plugin initialized');
   const supabase = useSupabaseClient();
-  const { fetchAndSetMe, resetMe } = useMeStore();
+  const { fetchAndSetMe, resetMe, initialize } = useMeStore();
   const router = useRouter();
 
-  // Listen for in-session auth changes (login/logout while app is running)
-  // Note: INITIAL_SESSION and initial auth state are handled by app.vue
+  // Initialize authentication state
+  await initialize();
+
+  // Listen for changes
   supabase.auth.onAuthStateChange((event, session) => {
     console.log('Auth state changed:', event, session);
-
-    // Skip INITIAL_SESSION - handled by app.vue initialization
-    if (event === 'INITIAL_SESSION') {
-      return;
-    }
 
     if (event === 'SIGNED_IN' && session) {
       console.log('User signed in:', session.user);
@@ -30,5 +27,6 @@ export default defineNuxtPlugin(() => {
       console.log('User profile updated');
       fetchAndSetMe();
     }
+    // Note: INITIAL_SESSION is now handled by the initialize() call above
   });
 });
