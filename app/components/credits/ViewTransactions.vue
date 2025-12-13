@@ -1,49 +1,72 @@
 <template>
   <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-    <div class="flex items-center mb-4 space-x-2">
-      <div class="flex items-center justify-center w-10 h-10 bg-orange-100 rounded-full">
-        <UIcon name="i-lucide-history" class="text-orange-600" size="24" />
+    <!-- Standardized Header -->
+    <div class="flex items-center gap-3 mb-6">
+      <div class="flex items-center justify-center w-11 h-11 bg-amber-100 rounded-xl">
+        <UIcon name="i-lucide-history" class="text-amber-600" size="22" />
       </div>
-      <h3 class="text-xl font-semibold text-gray-900">Transaction History</h3>
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900">Transaction History</h3>
+        <p class="text-sm text-gray-500">View your recent credit activity</p>
+      </div>
     </div>
 
-    <p class="text-gray-600 mb-6">View your recent credit transactions</p>
-
-    <!-- Loading State -->
-    <div v-if="isLoading" class="text-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4" />
-      <p class="text-gray-500">Loading transactions...</p>
+    <!-- Loading State with Skeleton -->
+    <div v-if="isLoading" class="space-y-3">
+      <div v-for="i in 5" :key="i" class="border border-gray-100 rounded-xl p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 bg-gray-200 rounded-xl animate-pulse" />
+            <div class="space-y-2">
+              <div class="h-4 w-28 bg-gray-200 rounded animate-pulse" />
+              <div class="h-3 w-40 bg-gray-100 rounded animate-pulse" />
+              <div class="h-3 w-24 bg-gray-100 rounded animate-pulse" />
+            </div>
+          </div>
+          <div class="space-y-1 text-right">
+            <div class="h-5 w-20 bg-gray-200 rounded animate-pulse" />
+            <div class="h-3 w-12 bg-gray-100 rounded animate-pulse ml-auto" />
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-8">
-      <UIcon name="i-lucide-alert-circle" class="w-12 h-12 mx-auto text-red-400 mb-4" />
+    <div v-else-if="error" class="text-center py-12">
+      <div class="w-16 h-16 mx-auto bg-red-100 rounded-2xl flex items-center justify-center mb-4">
+        <UIcon name="i-lucide-alert-circle" class="text-red-500" size="32" />
+      </div>
       <p class="text-red-600 mb-4">{{ error }}</p>
-      <Button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" @click="fetchTransactions">
+      <button class="bg-amber-600 text-white px-5 py-2.5 rounded-xl hover:bg-amber-700 transition-all duration-200" @click="fetchTransactions">
         Try Again
-      </Button>
+      </button>
     </div>
 
     <!-- Transactions List -->
     <div v-else>
-      <div v-if="transactions.length === 0" class="text-center py-8">
-        <UIcon name="i-lucide-file-text" class="text-gray-400" size="48" />
-        <p class="text-gray-500">No transactions yet</p>
-        <p class="text-gray-400 text-sm mt-1">Your credit transactions will appear here</p>
+      <!-- Empty State -->
+      <div v-if="transactions.length === 0" class="text-center py-16">
+        <div class="w-20 h-20 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+          <UIcon name="i-lucide-receipt" class="text-gray-400" size="40" />
+        </div>
+        <h4 class="text-lg font-medium text-gray-700 mb-2">No Transactions Yet</h4>
+        <p class="text-gray-500 text-sm max-w-xs mx-auto">
+          Your credit transactions will appear here once you start topping up or transferring credits.
+        </p>
       </div>
 
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-3">
         <!-- Transaction Cards -->
         <div
           v-for="transaction in transactions"
           :key="transaction.id"
-          class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors"
+          class="group border border-gray-100 rounded-xl p-4 hover:border-gray-200 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center gap-4">
               <!-- Transaction Type Icon -->
               <div
-                class="flex items-center justify-center w-10 h-10 rounded-full"
+                class="flex items-center justify-center w-11 h-11 rounded-xl transition-transform group-hover:scale-105"
                 :class="getTransactionIcon(transaction.transaction_type).bgColor"
               >
                 <UIcon :name="getTransactionIcon(transaction.transaction_type).name" :class="getTransactionIcon(transaction.transaction_type).textColor" size="20" />
@@ -53,10 +76,10 @@
                 <div class="font-medium text-gray-900">
                   {{ getTransactionLabel(transaction.transaction_type) }}
                 </div>
-                <div class="text-sm text-gray-500">
+                <div class="text-sm text-gray-500 line-clamp-1">
                   {{ transaction.description || 'No description' }}
                 </div>
-                <div class="text-xs text-gray-400">
+                <div class="text-xs text-gray-400 mt-0.5">
                   {{ formatDate(transaction.created_at) }}
                 </div>
               </div>
@@ -66,41 +89,46 @@
             <div class="text-right">
               <div
                 :class="[
-                  'font-semibold',
+                  'font-bold text-lg tabular-nums',
                   transaction.amount >= 0 ? 'text-green-600' : 'text-red-600'
                 ]"
               >
-                {{ transaction.amount >= 0 ? '+' : '' }}{{ transaction.amount }} credits
+                {{ transaction.amount >= 0 ? '+' : '' }}{{ transaction.amount.toLocaleString() }}
               </div>
+              <div class="text-xs text-gray-400">credits</div>
             </div>
           </div>
         </div>
 
         <!-- Pagination -->
-        <div v-if="pagination && pagination.totalPages > 1" class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
+        <div v-if="pagination && pagination.totalPages > 1" class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 pt-6 border-t border-gray-100">
           <div class="text-sm text-gray-500">
-            Showing {{ ((pagination.currentPage - 1) * pagination.limit) + 1 }}-{{ Math.min(pagination.currentPage * pagination.limit, pagination.totalCount) }} of {{ pagination.totalCount }} transactions
+            Showing <span class="font-medium text-gray-700">{{ ((pagination.currentPage - 1) * pagination.limit) + 1 }}</span>
+            to <span class="font-medium text-gray-700">{{ Math.min(pagination.currentPage * pagination.limit, pagination.totalCount) }}</span>
+            of <span class="font-medium text-gray-700">{{ pagination.totalCount }}</span> transactions
           </div>
 
-          <div class="flex space-x-2">
+          <div class="flex items-center gap-2">
             <button
               :disabled="!pagination.hasPrevPage || isLoading"
-              class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+              class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1"
               @click="goToPage(pagination.currentPage - 1)"
             >
+              <UIcon name="i-lucide-chevron-left" size="16" />
               Previous
             </button>
 
-            <span class="px-3 py-1 text-sm font-medium text-gray-700">
-              Page {{ pagination.currentPage }} of {{ pagination.totalPages }}
-            </span>
+            <div class="px-4 py-2 bg-gray-100 rounded-xl text-sm font-medium text-gray-700">
+              {{ pagination.currentPage }} / {{ pagination.totalPages }}
+            </div>
 
             <button
               :disabled="!pagination.hasNextPage || isLoading"
-              class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+              class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1"
               @click="goToPage(pagination.currentPage + 1)"
             >
               Next
+              <UIcon name="i-lucide-chevron-right" size="16" />
             </button>
           </div>
         </div>
@@ -111,7 +139,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import Button from '../common/Button.vue';
+
 // State
 const transactions = ref<any[]>([]);
 const pagination = ref<any>(null);

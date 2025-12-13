@@ -1,18 +1,30 @@
 <template>
   <!-- Loading State -->
   <div v-if="isLoadingData" class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-    <div class="text-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4" />
-      <p class="text-gray-500">Loading family data...</p>
+    <!-- Skeleton Header -->
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-11 h-11 bg-purple-100 rounded-xl animate-pulse" />
+      <div class="space-y-2">
+        <div class="h-5 w-32 bg-gray-200 rounded animate-pulse" />
+        <div class="h-4 w-48 bg-gray-100 rounded animate-pulse" />
+      </div>
+    </div>
+    <!-- Skeleton Form -->
+    <div class="space-y-4">
+      <div class="h-12 bg-gray-100 rounded-xl animate-pulse" />
+      <div class="h-12 bg-gray-100 rounded-xl animate-pulse" />
+      <div class="h-12 bg-gray-200 rounded-xl animate-pulse" />
     </div>
   </div>
 
   <!-- Error State -->
   <div v-else-if="error" class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
     <div class="text-center py-8">
-      <UIcon name="i-lucide-alert-circle" class="w-12 h-12 mx-auto text-red-400 mb-4" />
+      <div class="w-16 h-16 mx-auto bg-red-100 rounded-2xl flex items-center justify-center mb-4">
+        <UIcon name="i-lucide-alert-circle" class="text-red-500" size="32" />
+      </div>
       <p class="text-red-600 mb-4">{{ error }}</p>
-      <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors" @click="loadFamilyData">
+      <button class="bg-purple-600 text-white px-5 py-2.5 rounded-xl hover:bg-purple-700 transition-all duration-200" @click="loadFamilyData">
         Try Again
       </button>
     </div>
@@ -20,17 +32,25 @@
 
   <!-- Non-parent access denied -->
   <div v-else-if="!isParent" class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-    <div class="flex items-center mb-4">
-      <div class="bg-purple-100 rounded-full p-2 mr-3">
-        <UIcon name="i-lucide-arrow-left-right" class="w-6 h-6 text-purple-600" />
+    <!-- Standardized Header -->
+    <div class="flex items-center gap-3 mb-6">
+      <div class="flex items-center justify-center w-11 h-11 bg-purple-100 rounded-xl">
+        <UIcon name="i-lucide-send" class="text-purple-600" size="22" />
       </div>
-      <h3 class="text-xl font-semibold text-gray-900">Transfer Credits</h3>
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900">Transfer Credits</h3>
+        <p class="text-sm text-gray-500">Send credits to family members</p>
+      </div>
     </div>
 
-    <div class="text-center py-8">
-      <UIcon name="i-lucide-lock" class="w-12 h-12 mx-auto text-gray-300 mb-3" />
-      <p class="text-gray-500 text-sm">Only parents can transfer credits</p>
-      <p class="text-gray-400 text-xs mt-1">Ask your parent to send you credits</p>
+    <div class="text-center py-10">
+      <div class="w-16 h-16 mx-auto bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+        <UIcon name="i-lucide-lock" class="text-gray-400" size="32" />
+      </div>
+      <h4 class="text-lg font-medium text-gray-700 mb-2">Parent Access Only</h4>
+      <p class="text-gray-500 text-sm max-w-xs mx-auto">
+        Only parents can transfer credits. Ask your parent to send you credits if needed.
+      </p>
     </div>
   </div>
 
@@ -99,8 +119,8 @@ const handleTransfer = async (transferData: {
 
     if (transferResponse.success) {
       toast.add({
-        title: 'Success',
-        description: transferResponse.message,
+        title: 'Transfer Complete',
+        description: `Successfully transferred ${transferData.amount.toLocaleString()} credits to ${transferData.recipientName}`,
         color: 'green',
         timeout: 5000,
       });
