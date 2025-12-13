@@ -103,14 +103,4 @@ const getProviderDisplayName = (provider: string) => {
       return provider.charAt(0).toUpperCase() + provider.slice(1);
   }
 };
-
-// // Event handlers
-// const handleEmailUpdated = (newEmail: string) => {
-//   // The email will be updated when Supabase auth state changes
-//   // No need to manually update since userInfo is computed from user.value
-// };
-
-// const handlePasswordUpdated = () => {
-//   // Password updated successfully
-// };
 </script>

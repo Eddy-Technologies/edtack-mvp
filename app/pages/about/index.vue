@@ -130,7 +130,6 @@ import AboutTab from '~/components/about/AboutTab.vue';
 import UserGuidesTab from '~/components/about/UserGuidesTab.vue';
 import FAQTab from '~/components/about/FAQTab.vue';
 import FeedbackTab from '~/components/about/FeedbackTab.vue';
-// import SubscriptionTab from '~/components/about/SubscriptionTab.vue';
 import TeamTab from '~/components/about/TeamTab.vue';
 
 const router = useRouter();

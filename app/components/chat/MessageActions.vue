@@ -115,26 +115,4 @@ const handleFeedbackSubmitted = (feedbackData: any) => {
   console.log('Feedback submitted:', feedbackData);
   // Feedback will be handled by the modal component
 };
-
-// const handleRetry = () => {
-//   toast.add({
-//     title: 'Regenerating',
-//     description: 'Regenerating response...',
-//     icon: 'i-heroicons-arrow-path',
-//     timeout: 2000
-//   });
-// };
-
-// const handleRead = () => {
-//   // Start avatar animation for 3 seconds (3000ms)
-//   // TODO: when implement tts then remove timeout
-//   startAvatarPlayback(3000);
-
-//   toast.add({
-//     title: 'Reading',
-//     description: 'Reading message aloud...',
-//     icon: 'i-heroicons-speaker-wave',
-//     timeout: 2000
-//   });
-// };
 </script>

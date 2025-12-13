@@ -93,7 +93,6 @@ if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
 }
 
-// const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
 
 // Initialize chat - simplified approach
@@ -619,22 +618,6 @@ function handleFinish() {
 // Handle user sending a message or lesson request
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
-
-  // Development: Inject mock playback data when "mock_playback" is typed
-  if (text.trim() === 'mock_playback') {
-    console.log('Injecting mock playback data...');
-    const { default: mockPlaybackData } = await import('~/mockPlaybackData');
-    console.log('Mock playback data loaded:', mockPlaybackData);
-    messageStream.value = mockPlaybackData;
-
-    console.log('MessageStream after setting:', messageStream.value);
-
-    isPlayingAllowed.value = true;
-
-    // The watcher will automatically detect slides and open split view
-    // No need to manually trigger split view here
-    return;
-  }
 
   isPlayingAllowed.value = false;
   await nextTick();
