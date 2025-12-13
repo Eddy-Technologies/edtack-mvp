@@ -3,6 +3,8 @@ import { getSupabaseClient } from '~~/server/utils/authConfig';
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
+    const config = useRuntimeConfig();
+    const supabaseUrl = config.public.supabaseUrl;
 
     // Get all active products from database
     const { data: products, error } = await supabase
@@ -71,6 +73,21 @@ export default defineEventHandler(async (event) => {
       };
     };
 
+    // Helper function to resolve image URL
+    const resolveImageUrl = (imageUrl: string | null): string => {
+      if (!imageUrl) return '';
+      // If it starts with 'products/', resolve to Supabase storage URL
+      if (imageUrl.startsWith('products/')) {
+        return `${supabaseUrl}/storage/v1/object/public/${imageUrl}`;
+      }
+      // If it's already a full URL, return as-is
+      if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        return imageUrl;
+      }
+      // Otherwise return empty (will show placeholder)
+      return '';
+    };
+
     // Transform database products to shop format
     const transformedProducts = products.map((product) => {
       const pricingInfo = calculateDiscountedPrice(product);
@@ -83,11 +100,8 @@ export default defineEventHandler(async (event) => {
         originalPrice: pricingInfo.originalPrice,
         discountPercentage: pricingInfo.discountPercentage,
         isOnSale: pricingInfo.isOnSale,
-        image: product.image_url || '/placeholder-product.png',
+        image: resolveImageUrl(product.image_url),
         category: product.category || 'Other',
-        rating: Math.max(0, Math.min(5, parseFloat(product.metadata?.rating || '4.5'))), // Clamp between 0-5
-        reviewCount: Math.max(0, parseInt(product.metadata?.review_count || '0')),
-        isNew: product.metadata?.is_new === 'true',
         availability: product.metadata?.availability || 'in_stock',
         metadata: {
           product_type: product.product_type,

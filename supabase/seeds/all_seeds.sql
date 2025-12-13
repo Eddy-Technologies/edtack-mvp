@@ -103,57 +103,68 @@ ON CONFLICT (tier_lookup_key) DO NOTHING;
 -- 5. SAMPLE PRODUCTS FOR TESTING
 -- =============================================================================
 
+-- Delete existing sample products first to avoid duplicates
+DELETE FROM products WHERE metadata->>'sample_data' = 'true';
+
 -- Insert sample products with all fields
+-- Image URLs use 'products/' prefix - resolved by API to full Supabase storage URL
 INSERT INTO products (
-  name, description, product_type, price_cents, currency, 
-  category, image_url, stock_count, sku, 
+  name, description, product_type, price_cents, currency,
+  category, image_url, stock_count, sku,
   discount_percentage, discount_amount_cents, discount_start_date, discount_end_date,
   is_active, metadata, created_at, updated_at
 ) VALUES
--- Gift Cards
-('KFC Gift Card - S$20', 'S$20 KFC Gift Card for delicious fried chicken and sides', 'gift_card', 2000, 'SGD',
- 'Food & Dining', 'https://via.placeholder.com/300x200?text=KFC+Gift+Card', 100, 'KFC-GC-20',
+-- Gaming / Digital
+('Fortnite V-Bucks - 1000', '1000 V-Bucks for Fortnite Battle Royale. Get skins, emotes, and battle pass!', 'digital', 1500, 'SGD',
+ 'Gaming', 'products/a.png', 999, 'FORT-VB-1000',
  NULL, NULL, NULL, NULL,
- true, '{"rating": 4.5, "review_count": "120", "is_new": "false", "sample_data": "true"}', NOW(), NOW()),
+ true, '{"sample_data": "true"}', NOW(), NOW()),
 
-('Grab Food Voucher - S$15', 'S$15 Grab Food delivery voucher for your favorite meals', 'gift_card', 1500, 'SGD',
- 'Food & Dining', 'https://via.placeholder.com/300x200?text=Grab+Food+Voucher', 50, 'GRAB-FD-15',
- 10.00, NULL, NOW(), NOW() + INTERVAL '30 days',
- true, '{"rating": 4.7, "review_count": "89", "is_new": "false", "sample_data": "true"}', NOW(), NOW()),
-
--- Digital Products  
-('Fortnite V-Bucks - 1000', '1000 V-Bucks for Fortnite Battle Royale - cosmetics and battle pass', 'digital', 1500, 'SGD',
- 'Gaming', 'https://via.placeholder.com/300x200?text=Fortnite+V-Bucks', 999, 'FORT-VB-1000',
+('Roblox Gift Card - S$30', 'S$30 Roblox gift card for Robux. Build, play, and explore endless games!', 'digital', 3000, 'SGD',
+ 'Gaming', 'products/e.png', 200, 'RBLX-GC-30',
  NULL, NULL, NULL, NULL,
- true, '{"rating": 4.8, "review_count": "156", "is_new": "true", "sample_data": "true"}', NOW(), NOW()),
+ true, '{"sample_data": "true"}', NOW(), NOW()),
 
-('Roblox Gift Card - S$10', 'S$10 Roblox gift card for Robux and premium memberships', 'digital', 1000, 'SGD',
- 'Gaming', 'https://via.placeholder.com/300x200?text=Roblox+Gift+Card', 200, 'RBLX-GC-10',
- NULL, 100, NOW() - INTERVAL '7 days', NOW() + INTERVAL '7 days',
- true, '{"rating": 4.6, "review_count": "203", "is_new": "false", "sample_data": "true"}', NOW(), NOW()),
-
--- Physical Products
-('Pikachu Plush Toy', 'Official Nintendo Pikachu plush toy - soft and cuddly', 'physical', 2500, 'SGD',
- 'Toys', 'https://via.placeholder.com/300x200?text=Pikachu+Plush', 25, 'POKE-PIKA-01',
- 20.00, NULL, NOW(), NOW() + INTERVAL '14 days',
- true, '{"rating": 4.9, "review_count": "45", "is_new": "false", "sample_data": "true"}', NOW(), NOW()),
-
-('Math Workbook Set', 'Complete set of Primary 6 math workbooks with answer keys', 'physical', 3500, 'SGD',
- 'Education', 'https://via.placeholder.com/300x200?text=Math+Workbooks', 30, 'EDU-MATH-P6',
+('Riot Points - S$30', 'S$30 worth of Riot Points for League of Legends and Valorant', 'digital', 3000, 'SGD',
+ 'Gaming', 'products/c.png', 150, 'RIOT-RP-30',
  NULL, NULL, NULL, NULL,
- true, '{"rating": 4.4, "review_count": "78", "is_new": "false", "sample_data": "true"}', NOW(), NOW()),
+ true, '{"sample_data": "true"}', NOW(), NOW()),
 
--- Courses
-('Premium Math Course', 'Lifetime access to interactive Primary 6 math lessons', 'course', 4999, 'SGD',
- 'Education', 'https://via.placeholder.com/300x200?text=Premium+Math+Course', 999, 'CRS-MATH-PREM',
- 15.00, NULL, NOW() - INTERVAL '3 days', NOW() + INTERVAL '60 days',
- true, '{"rating": 4.9, "review_count": "67", "is_new": "true", "sample_data": "true"}', NOW(), NOW()),
-
-('Science Experiment Kit', 'DIY science experiments with step-by-step video guides', 'course', 2999, 'SGD',
- 'Education', 'https://via.placeholder.com/300x200?text=Science+Kit', 15, 'CRS-SCI-KIT',
+('Steam Gift Card - S$30', 'S$30 Steam Wallet gift card. Access thousands of PC games!', 'digital', 3000, 'SGD',
+ 'Gaming', 'products/h.png', 100, 'STEAM-GC-30',
  NULL, NULL, NULL, NULL,
- false, '{"rating": 4.7, "review_count": "34", "is_new": "false", "sample_data": "true", "note": "Out of stock until next batch"}', NOW(), NOW())
-ON CONFLICT (sku) DO NOTHING;
+ true, '{"sample_data": "true"}', NOW(), NOW()),
+
+-- Food & Dining
+('KFC Gift Card - S$10', 'S$10 KFC Gift Card for delicious fried chicken and sides', 'gift_card', 1000, 'SGD',
+ 'Food & Dining', 'products/b.png', 100, 'KFC-GC-10',
+ NULL, NULL, NULL, NULL,
+ true, '{"sample_data": "true"}', NOW(), NOW()),
+
+('Chi Cha San Chen - S$5', 'S$5 voucher for Chi Cha San Chen bubble tea. Treat yourself!', 'gift_card', 500, 'SGD',
+ 'Food & Dining', 'products/d.png', 75, 'CHICHA-GC-5',
+ NULL, NULL, NULL, NULL,
+ true, '{"sample_data": "true"}', NOW(), NOW()),
+
+-- Toys
+('Labubu Plush', 'Adorable Labubu plush toy from Pop Mart. Super cute and collectible!', 'physical', 3500, 'SGD',
+ 'Toys', 'products/f.png', 20, 'LABUBU-PLUSH-01',
+ NULL, NULL, NULL, NULL,
+ true, '{"sample_data": "true"}', NOW(), NOW()),
+
+('Pikachu Plush Toy', 'Official Pokemon Pikachu plush toy - soft, cuddly, and perfect for fans!', 'physical', 2500, 'SGD',
+ 'Toys', 'products/g.png', 25, 'POKE-PIKA-01',
+ NULL, NULL, NULL, NULL,
+ true, '{"sample_data": "true"}', NOW(), NOW())
+ON CONFLICT (sku) DO UPDATE SET
+  name = EXCLUDED.name,
+  description = EXCLUDED.description,
+  price_cents = EXCLUDED.price_cents,
+  image_url = EXCLUDED.image_url,
+  category = EXCLUDED.category,
+  is_active = EXCLUDED.is_active,
+  metadata = EXCLUDED.metadata,
+  updated_at = NOW();
 
 -- Initialize user_credits for existing user_infos that don't have credit records yet
 INSERT INTO user_credits (user_info_id, credit, reserved_credit)
