@@ -71,6 +71,7 @@
             </div>
             <div class="text-right">
               <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
+              <p class="text-xs text-gray-500">({{ Math.round(order.totalAmountSGD * 100) }} credits)</p>
             </div>
           </div>
 
@@ -151,6 +152,7 @@
             </div>
             <div class="text-right">
               <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
+              <p class="text-xs text-gray-500">({{ Math.round(order.totalAmountSGD * 100) }} credits)</p>
             </div>
           </div>
 

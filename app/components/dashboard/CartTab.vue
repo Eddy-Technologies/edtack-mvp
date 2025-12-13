@@ -81,6 +81,7 @@
                   <h3 class="font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
                   <div class="flex items-center gap-2 mt-2">
                     <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
+                    <span class="text-sm text-gray-500">({{ Math.round(item.price * 100) }} credits)</span>
                     <span class="text-sm text-gray-400">each</span>
                   </div>
                 </div>
@@ -109,6 +110,9 @@
                     <div class="text-lg font-bold text-gray-900">
                       S${{ (item.price * item.quantity).toFixed(2) }}
                     </div>
+                    <div class="text-xs text-gray-500">
+                      ({{ Math.round(item.price * item.quantity * 100) }} credits)
+                    </div>
                   </div>
 
                   <!-- Remove Button -->
@@ -132,7 +136,7 @@
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Items ({{ totalItems }})</span>
-                <span class="text-gray-900">S${{ subtotal.toFixed(2) }}</span>
+                <span class="text-gray-900">S${{ subtotal.toFixed(2) }} <span class="text-gray-500">({{ Math.round(subtotal * 100) }} credits)</span></span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Shipping</span>
@@ -141,7 +145,10 @@
               <div class="border-t pt-3">
                 <div class="flex justify-between text-lg font-semibold">
                   <span class="text-gray-900">Total</span>
-                  <span class="text-gray-900">S${{ total.toFixed(2) }}</span>
+                  <div class="text-right">
+                    <span class="text-gray-900">S${{ total.toFixed(2) }}</span>
+                    <span class="text-sm text-gray-500 block">({{ Math.round(total * 100) }} credits)</span>
+                  </div>
                 </div>
               </div>
             </div>

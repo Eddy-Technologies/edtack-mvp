@@ -111,7 +111,10 @@
           <h3 class="font-medium text-gray-900 text-sm line-clamp-2 mb-2 min-h-[2.5rem]">{{ item.name }}</h3>
 
           <div class="flex items-center justify-between">
-            <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
+            <div>
+              <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
+              <span class="text-xs text-gray-500 block">({{ Math.round(item.price * 100) }} credits)</span>
+            </div>
             <button
               class="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
               @click.stop="addToCart(item)"

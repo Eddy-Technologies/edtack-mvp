@@ -73,7 +73,7 @@
         />
 
         <div class="grid gap-6">
-          <div v-for="order in pendingOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
+          <div v-for="order in pendingOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 hover:border-primary/30 hover:shadow-md transition-all duration-200 p-6">
             <!-- Order Header -->
             <div class="flex items-center justify-between mb-4">
               <div>
@@ -95,19 +95,28 @@
 
             <!-- Order Items -->
             <div class="space-y-3 mb-6">
-              <div v-for="item in order.items" :key="item.id" class="flex items-center space-x-4 p-3 bg-stone-50 rounded-xl">
-                <img
-                  :src="item.product.imageUrl"
-                  :alt="item.product.name"
-                  class="w-12 h-12 object-cover rounded-lg"
-                >
-                <div class="flex-1">
-                  <h4 class="font-medium text-gray-900">{{ item.product.name }}</h4>
-                  <p class="text-sm text-gray-600">Quantity: {{ item.quantity }}</p>
+              <div v-for="item in order.items" :key="item.id" class="flex items-center space-x-4 p-3 bg-stone-50 rounded-xl hover:bg-stone-100 transition-colors">
+                <!-- Product Image with fallback -->
+                <div class="w-16 h-16 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
+                  <img
+                    v-if="item.product.imageUrl && !imageErrors[item.id]"
+                    :src="item.product.imageUrl"
+                    :alt="item.product.name"
+                    class="w-full h-full object-cover"
+                    @error="imageErrors[item.id] = true"
+                  >
+                  <div v-else class="w-full h-full flex items-center justify-center p-1">
+                    <span class="text-gray-400 text-center text-xs font-medium line-clamp-2">{{ item.product.name }}</span>
+                  </div>
                 </div>
-                <div class="text-right">
-                  <p class="font-semibold text-gray-900">S${{ item.totalPriceSGD }}</p>
-                  <p class="text-sm text-gray-500">S${{ item.unitPriceSGD }} each</p>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-medium text-gray-900 line-clamp-1">{{ item.product.name }}</h4>
+                  <p class="text-sm text-gray-600">Qty: {{ item.quantity }}</p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <p class="font-semibold text-primary">S${{ item.totalPriceSGD }}</p>
+                  <p class="text-xs text-gray-500">({{ Math.round(item.totalPriceSGD * 100) }} credits)</p>
+                  <p class="text-xs text-gray-400">S${{ item.unitPriceSGD }} each</p>
                 </div>
               </div>
             </div>
@@ -115,7 +124,10 @@
             <!-- Order Total -->
             <div class="flex justify-between items-center py-3 border-t border-gray-200 mb-6">
               <span class="text-lg font-medium text-gray-900">Total Amount</span>
-              <span class="text-xl font-bold text-primary">S${{ order.totalAmountSGD }}</span>
+              <div class="text-right">
+                <span class="text-xl font-bold text-primary">S${{ order.totalAmountSGD }}</span>
+                <span class="text-sm text-gray-500 block">({{ Math.round(order.totalAmountSGD * 100) }} credits)</span>
+              </div>
             </div>
 
             <!-- Action Buttons -->
@@ -130,8 +142,7 @@
                   @clicked="approveOrder(order.id)"
                 />
                 <Button
-                  variant="secondary"
-                  color="red"
+                  variant="danger"
                   text="Reject"
                   icon="i-lucide-x"
                   :loading="isProcessing && processingOrderId === order.id"
@@ -183,7 +194,10 @@
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Total Amount:</span>
-                <span class="font-bold text-primary">S${{ selectedOrder.totalAmountSGD }}</span>
+                <div class="text-right">
+                  <span class="font-bold text-primary">S${{ selectedOrder.totalAmountSGD }}</span>
+                  <span class="text-sm text-gray-500 block">({{ Math.round(selectedOrder.totalAmountSGD * 100) }} credits)</span>
+                </div>
               </div>
             </div>
           </div>
@@ -191,20 +205,29 @@
           <div>
             <h4 class="font-semibold text-gray-900 mb-2">Items ({{ selectedOrder.itemCount }})</h4>
             <div class="space-y-3">
-              <div v-for="item in selectedOrder.items" :key="item.id" class="flex items-center space-x-4 p-3 border border-gray-200 rounded-xl">
-                <img
-                  :src="item.product.imageUrl"
-                  :alt="item.product.name"
-                  class="w-16 h-16 object-cover rounded-lg"
-                >
-                <div class="flex-1">
-                  <h5 class="font-medium text-gray-900">{{ item.product.name }}</h5>
-                  <p class="text-sm text-gray-600">{{ item.product.description }}</p>
-                  <p class="text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+              <div v-for="item in selectedOrder.items" :key="item.id" class="flex items-center space-x-4 p-3 border border-gray-200 rounded-xl hover:bg-stone-50 transition-colors">
+                <!-- Product Image with fallback -->
+                <div class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
+                  <img
+                    v-if="item.product.imageUrl && !imageErrors[`modal-${item.id}`]"
+                    :src="item.product.imageUrl"
+                    :alt="item.product.name"
+                    class="w-full h-full object-cover"
+                    @error="imageErrors[`modal-${item.id}`] = true"
+                  >
+                  <div v-else class="w-full h-full flex items-center justify-center p-2">
+                    <span class="text-gray-400 text-center text-xs font-medium line-clamp-2">{{ item.product.name }}</span>
+                  </div>
                 </div>
-                <div class="text-right">
-                  <p class="font-semibold text-gray-900">S${{ item.totalPriceSGD }}</p>
-                  <p class="text-sm text-gray-500">S${{ item.unitPriceSGD }} each</p>
+                <div class="flex-1 min-w-0">
+                  <h5 class="font-medium text-gray-900 line-clamp-1">{{ item.product.name }}</h5>
+                  <p class="text-sm text-gray-600 line-clamp-2">{{ item.product.description }}</p>
+                  <p class="text-sm text-gray-500">Qty: {{ item.quantity }}</p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <p class="font-semibold text-primary">S${{ item.totalPriceSGD }}</p>
+                  <p class="text-xs text-gray-500">({{ Math.round(item.totalPriceSGD * 100) }} credits)</p>
+                  <p class="text-xs text-gray-400">S${{ item.unitPriceSGD }} each</p>
                 </div>
               </div>
             </div>
@@ -234,6 +257,8 @@ const showDetailsModal = ref(false);
 const selectedOrder = ref<any>(null);
 // Set default status based on user role
 const selectedStatus = ref('all');
+// Track image loading errors
+const imageErrors = ref<Record<string, boolean>>({});
 
 // Pagination state
 const pagination = ref<any>(null);
