@@ -23,10 +23,7 @@
     <!-- Current Orders -->
     <div v-if="orderTab === 'current'">
       <!-- Loading State -->
-      <div v-if="isLoadingOrders" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-        <p class="text-gray-600">Loading orders...</p>
-      </div>
+      <DashboardSkeleton v-if="isLoadingOrders" variant="list" :count="4" />
 
       <!-- Error State -->
       <div v-else-if="ordersError" class="text-center py-12">
@@ -107,10 +104,7 @@
     <!-- Past Orders -->
     <div v-if="orderTab === 'past'">
       <!-- Loading State -->
-      <div v-if="isLoadingOrders" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-        <p class="text-gray-600">Loading orders...</p>
-      </div>
+      <DashboardSkeleton v-if="isLoadingOrders" variant="list" :count="4" />
 
       <!-- Error State -->
       <div v-else-if="ordersError" class="text-center py-12">
@@ -186,6 +180,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
+import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import { ORDER_STATUS } from '~~/shared/constants';
 
 // Order tab state
@@ -208,7 +203,7 @@ const orderStatusCodes = ref({
 // Orders data from database
 const currentOrders = ref<any[]>([]);
 const pastOrders = ref<any[]>([]);
-const isLoadingOrders = ref(false);
+const isLoadingOrders = ref(true);
 const ordersError = ref<string | null>(null);
 
 // Load orders from API

@@ -1,10 +1,7 @@
 <template>
   <div>
     <!-- Loading State -->
-    <div v-if="isLoadingOrders" class="text-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-      <p class="text-gray-600">Loading order requests...</p>
-    </div>
+    <DashboardSkeleton v-if="isLoadingOrders" variant="list" :count="4" />
 
     <!-- Error State -->
     <div v-else-if="ordersError" class="text-center py-12">
@@ -223,12 +220,13 @@ import { ref, computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
+import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 import { useMeStore } from '~/stores/me';
 import { ORDER_STATUS } from '~~/shared/constants/codes';
 
 // Reactive state
 const pendingOrders = ref<any[]>([]);
-const isLoadingOrders = ref(false);
+const isLoadingOrders = ref(true);
 const ordersError = ref<string | null>(null);
 const isProcessing = ref(false);
 const processingOrderId = ref<string | null>(null);

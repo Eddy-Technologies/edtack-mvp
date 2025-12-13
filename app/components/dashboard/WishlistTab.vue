@@ -2,10 +2,7 @@
   <div class="dashboard-wishlist">
     <div class="wishlist-container">
       <!-- Loading State -->
-      <div v-if="isLoading" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-        <p class="text-gray-600">Loading your wishlist...</p>
-      </div>
+      <DashboardSkeleton v-if="isLoading" variant="grid" :count="8" />
 
       <!-- Error State -->
       <div v-else-if="error" class="text-center py-12">
@@ -165,6 +162,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
+import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 
 const router = useRouter();
 const toast = useToast();

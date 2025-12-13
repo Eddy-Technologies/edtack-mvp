@@ -16,22 +16,7 @@
       </div>
       <div class="p-6">
         <!-- Loading State -->
-        <div v-if="loading && !subscription" class="animate-pulse">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <div class="w-16 h-16 bg-gray-200 rounded-xl" />
-              <div>
-                <div class="h-6 bg-gray-200 rounded w-32 mb-2" />
-                <div class="h-4 bg-gray-200 rounded w-48 mb-2" />
-                <div class="h-4 bg-gray-200 rounded w-24" />
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="h-8 bg-gray-200 rounded w-20 mb-2" />
-              <div class="h-4 bg-gray-200 rounded w-16" />
-            </div>
-          </div>
-        </div>
+        <DashboardSkeleton v-if="loading && !subscription" variant="list" :count="1" />
 
         <!-- No Customer State -->
         <div v-else-if="stripeCustomerState === STRIPE_CUSTOMER.NOT_EXISTENT" class="text-center py-8">
@@ -181,6 +166,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
+import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useStripe } from '#imports';

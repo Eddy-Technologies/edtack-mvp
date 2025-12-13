@@ -1,10 +1,7 @@
 <template>
   <div>
     <!-- Loading State -->
-    <div v-if="isLoading" class="text-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-      <p class="text-gray-600">Loading tasks...</p>
-    </div>
+    <DashboardSkeleton v-if="isLoading" variant="list" :count="4" />
 
     <!-- Error State -->
     <div v-else-if="error" class="text-center py-12">
@@ -141,6 +138,7 @@ import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
 import TaskInfoCard from '~/components/dashboard/tasks/TaskInfoCard.vue';
+import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 
 // Use stores
 const meStore = useMeStore();
