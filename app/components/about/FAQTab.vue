@@ -1,30 +1,69 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8 space-y-6">
-    <h3 class="text-2xl font-bold text-gray-800 mb-6">Frequently Asked Questions</h3>
+  <div class="space-y-10">
+    <!-- Header -->
+    <div class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-gradient-to-br from-primary-100 to-primary-50 rounded-xl flex items-center justify-center">
+          <UIcon name="i-lucide-help-circle" class="w-5 h-5 text-primary-600" />
+        </div>
+        <h2 class="text-3xl font-heading font-bold text-slate-900">Frequently Asked Questions</h2>
+      </div>
+      <p class="text-lg text-slate-500">Find answers to common questions about StudyWithEddy</p>
+    </div>
 
+    <!-- FAQ Items -->
     <div class="space-y-4">
       <div
         v-for="(faq, index) in faqs"
         :key="index"
-        class="border-2 border-gray-200 rounded-lg"
+        :class="[
+          'rounded-2xl bg-white shadow-sm ring-1 overflow-hidden transition-all duration-300',
+          openFaqs.includes(index) ? 'ring-primary-100 shadow-md' : 'ring-slate-100 hover:shadow-md hover:ring-slate-200'
+        ]"
       >
         <button
-          class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200"
+          class="w-full text-left px-6 py-5 flex justify-between items-center"
           @click="toggleFaq(index)"
         >
-          <span class="font-medium text-gray-800">{{ faq.question }}</span>
-          <UIcon
-            name="i-lucide-chevron-down"
-            class="w-5 h-5 text-gray-500 transition-transform duration-200"
-            :class="openFaqs.includes(index) ? 'rotate-180' : ''"
-          />
+          <span class="font-medium text-slate-900 pr-4">{{ faq.question }}</span>
+          <div
+            :class="[
+              'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300',
+              openFaqs.includes(index) ? 'bg-primary-100 rotate-180' : 'bg-slate-100'
+            ]"
+          >
+            <UIcon
+              name="i-lucide-chevron-down"
+              :class="[
+                'w-4 h-4 transition-colors duration-200',
+                openFaqs.includes(index) ? 'text-primary-600' : 'text-slate-500'
+              ]"
+            />
+          </div>
         </button>
-        <div
-          v-if="openFaqs.includes(index)"
-          class="p-4 pt-0 text-gray-600 leading-relaxed"
+        <Transition
+          enter-active-class="transition-all duration-300 ease-out overflow-hidden"
+          enter-from-class="max-h-0 opacity-0"
+          enter-to-class="max-h-96 opacity-100"
+          leave-active-class="transition-all duration-200 ease-in overflow-hidden"
+          leave-from-class="max-h-96 opacity-100"
+          leave-to-class="max-h-0 opacity-0"
         >
-          {{ faq.answer }}
+          <div v-if="openFaqs.includes(index)" class="px-6 pb-6">
+            <p class="text-slate-600 leading-relaxed">{{ faq.answer }}</p>
+          </div>
+        </Transition>
+      </div>
+    </div>
+
+    <!-- Help CTA -->
+    <div class="rounded-2xl bg-gradient-to-r from-primary-50 to-secondary-50 p-8 ring-1 ring-slate-100">
+      <div class="text-center">
+        <div class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center mx-auto mb-4">
+          <UIcon name="i-lucide-message-circle" class="w-6 h-6 text-primary-600" />
         </div>
+        <h3 class="text-lg font-heading font-semibold text-slate-900 mb-2">Still have questions?</h3>
+        <p class="text-slate-600 mb-4">We're here to help! Reach out to our support team.</p>
       </div>
     </div>
   </div>

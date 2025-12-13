@@ -346,6 +346,11 @@ const settingsItems: NavigationItem[] = [
     name: 'Settings',
     route: '/dashboard?tab=settings',
     icon: 'i-lucide-settings'
+  },
+  {
+    name: 'User Guides',
+    route: '/about?tab=guides',
+    icon: 'i-lucide-book-open'
   }
 ];
 

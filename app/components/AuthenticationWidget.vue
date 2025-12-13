@@ -60,6 +60,13 @@
               <Icon name="i-heroicons-book-open" class="w-4 h-4" />
               Study
             </button>
+            <button
+              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              @click="routeTo('/about?tab=user-guides')"
+            >
+              <Icon name="i-heroicons-document-text" class="w-4 h-4" />
+              User Guide
+            </button>
           </div>
 
           <div class="border-t border-gray-100" />
@@ -152,6 +159,12 @@
           @click="routeTo('/about')"
         >
           About
+        </button>
+        <button
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+          @click="routeTo('/about?tab=user-guides')"
+        >
+          User Guide
         </button>
         <div class="border-t my-1" />
 

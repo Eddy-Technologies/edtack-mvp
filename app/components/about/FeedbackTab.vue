@@ -1,64 +1,90 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8 space-y-8">
-    <div class="text-center mb-8">
-      <h3 class="text-2xl font-bold text-gray-800 mb-4">We need your help!</h3>
-      <p class="text-gray-600 text-md mb-4">
-        We are currently collecting as much surveys as we can to help improve our platform both for parents and students.
-        We want to make sure we provide the best experience for all our users and we can only do that with your help.
+  <div class="space-y-10">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="flex justify-center mb-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-secondary-100 to-secondary-50 rounded-2xl flex items-center justify-center">
+          <UIcon name="i-lucide-message-square-heart" class="w-7 h-7 text-secondary-600" />
+        </div>
+      </div>
+      <h2 class="text-3xl font-heading font-bold text-slate-900 mb-4">We Need Your Help!</h2>
+      <p class="text-lg text-slate-500 max-w-2xl mx-auto mb-6">
+        We are collecting feedback to improve our platform for parents and students. Your input helps us create the best learning experience.
       </p>
-      <p class="font-bold mb-4">
-        Help us improve Eddy by sharing your thoughts and suggestions. It can be as simple as telling us what other characters you would like to see!
-      </p>
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-secondary-50 to-primary-50 rounded-full text-secondary-700 font-medium">
+        <UIcon name="i-lucide-sparkles" class="w-4 h-4" />
+        Tell us what characters you'd like to see!
+      </div>
     </div>
 
-    <!-- Survey buttons layout -->
-    <div class="space-y-6">
-      <!-- First row: Parent and Student surveys -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Parent Survey Card -->
-        <div class="bg-white rounded-xl border-2 border-gray-200 p-8">
-          <div class="text-center">
-            <h4 class="text-2xl font-bold text-gray-800 mb-4">Parent Survey</h4>
-            <p class="pb-4">This survey will take approximately 8-10 minutes to complete. Your responses are valuable and will help us understand parent perspectives on student learning and education.</p>
-            <Button
-              variant="primary"
-              text="Take Parent Survey"
-              class="w-full"
-              @click="openParentSurvey"
-            />
+    <!-- Survey Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- Parent Survey Card -->
+      <div class="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 hover:shadow-lg transition-all duration-300">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 to-secondary-400" />
+        <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-50 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+            <UIcon name="i-lucide-users" class="w-8 h-8 text-primary-600" />
           </div>
-        </div>
-
-        <!-- Student Survey Card -->
-        <div class="bg-white  rounded-xl border-2 border-gray-200 p-8">
-          <div class="text-center">
-            <h4 class="text-2xl font-bold text-gray-800 mb-4">Student Survey</h4>
-            <p class="pb-4">
-              This survey will take approximately 10-12 minutes to complete. Your responses are valuable and will help us understand student learning habits and preferences.
-            </p>
-            <Button
-              variant="primary"
-              text="Take Student Survey"
-              class="w-full"
-              @click="openStudentSurvey"
-            />
+          <h4 class="text-xl font-heading font-semibold text-slate-900 mb-3">Parent Survey</h4>
+          <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+            Help us understand parent perspectives on student learning and education.
+          </p>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-full text-xs text-slate-600 mb-6">
+            <UIcon name="i-lucide-clock" class="w-3.5 h-3.5" />
+            8-10 minutes
           </div>
+          <button
+            class="w-full py-3 px-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-medium rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/20 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+            @click="openParentSurvey"
+          >
+            Take Parent Survey
+          </button>
         </div>
       </div>
 
-      <!-- Second row: Platform Feedback -->
-      <div class="flex justify-center">
-        <div class="bg-white rounded-xl border-2 border-gray-200 p-8 w-full max-w-md">
-          <div class="text-center">
-            <h4 class="text-2xl font-bold text-gray-800 mb-4">Platform Feedback Form</h4>
-            <p class="pb-4">Please provide us with any technical feedback or improvements for our platform.</p>
-            <Button
-              variant="primary"
-              text="Give Platform Feedback"
-              class="w-full"
-              @click="openPlatformFeedback"
-            />
+      <!-- Student Survey Card -->
+      <div class="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 hover:shadow-lg transition-all duration-300">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary-400 to-primary-400" />
+        <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-secondary-100 to-secondary-50 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+            <UIcon name="i-lucide-graduation-cap" class="w-8 h-8 text-secondary-600" />
           </div>
+          <h4 class="text-xl font-heading font-semibold text-slate-900 mb-3">Student Survey</h4>
+          <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+            Help us understand student learning habits and preferences.
+          </p>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-full text-xs text-slate-600 mb-6">
+            <UIcon name="i-lucide-clock" class="w-3.5 h-3.5" />
+            10-12 minutes
+          </div>
+          <button
+            class="w-full py-3 px-4 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white font-medium rounded-xl hover:from-secondary-600 hover:to-secondary-700 shadow-lg shadow-secondary-500/20 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+            @click="openStudentSurvey"
+          >
+            Take Student Survey
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Feedback Card -->
+    <div class="flex justify-center">
+      <div class="max-w-md w-full rounded-2xl bg-gradient-to-br from-slate-50 to-white p-8 shadow-sm ring-1 ring-slate-100">
+        <div class="text-center">
+          <div class="w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center mb-5 mx-auto">
+            <UIcon name="i-lucide-settings" class="w-7 h-7 text-slate-600" />
+          </div>
+          <h4 class="text-xl font-heading font-semibold text-slate-900 mb-3">Platform Feedback</h4>
+          <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+            Share technical feedback or suggestions for platform improvements.
+          </p>
+          <button
+            class="w-full py-3 px-4 bg-slate-900 text-white font-medium rounded-xl hover:bg-slate-800 shadow-lg shadow-slate-900/10 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+            @click="openPlatformFeedback"
+          >
+            Give Platform Feedback
+          </button>
         </div>
       </div>
     </div>
@@ -66,9 +92,6 @@
 </template>
 
 <script setup lang="ts">
-import Button from '~/components/common/Button.vue';
-
-// Survey opening functions
 function openParentSurvey() {
   window.open('https://docs.google.com/forms/d/e/1FAIpQLSdbxaBt-Dhu5MKdNe3SeqJaEoEABQ3vdMmWtPkZZxhBRJVDZw/viewform?usp=header', '_blank');
 }
