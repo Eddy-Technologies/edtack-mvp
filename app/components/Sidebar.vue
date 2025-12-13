@@ -10,7 +10,7 @@
         @click="routeTo('/')"
       >
       <button
-        class="p-1.5 rounded-md hover:bg-gray-200/60 text-gray-500 transition-colors"
+        :class="['p-1.5 rounded-md hover:bg-gray-200/60 text-gray-500 transition-colors', isMini ? 'w-full' : '']"
         @click="emit('toggle-sidebar')"
       >
         <Icon
@@ -25,7 +25,7 @@
       <div class="px-3">
         <div class="pt-2">
           <button
-            :class="['flex items-center w-full px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-200/50 text-sm font-medium text-gray-700 transition-colors', isMini ? 'justify-center' : 'gap-2']"
+            :class="['flex items-center w-full px-3 py-2 rounded-lg border bg-primary hover:bg-primary/75 text-sm font-medium text-white transition-colors', isMini ? 'justify-center' : 'gap-2']"
             @click="handleNewChat"
           >
             <Icon name="i-heroicons-plus" class="w-5 h-5" />
