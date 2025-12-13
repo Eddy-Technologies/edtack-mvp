@@ -367,18 +367,6 @@ const goToShop = () => {
   router.push('/dashboard?tab=shop');
 };
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 1) return 'today';
-  if (diffDays === 2) return 'yesterday';
-  if (diffDays <= 7) return `${diffDays - 1} days ago`;
-  return date.toLocaleDateString();
-};
-
 // Fetch credit data when cart loads
 onMounted(async () => {
   await fetchCredits();
