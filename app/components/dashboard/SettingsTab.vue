@@ -45,13 +45,11 @@
       :is-open="showEmailModal"
       :current-email="userInfo.email"
       @close="showEmailModal = false"
-      @email-updated="handleEmailUpdated"
     />
 
     <ChangePasswordModal
       :is-open="showPasswordModal"
       @close="showPasswordModal = false"
-      @password-updated="handlePasswordUpdated"
     />
   </div>
 </template>

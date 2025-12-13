@@ -20,6 +20,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  if (newPassword === currentPassword) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'New password must be different from current password.',
+    });
+  }
+
   const passwordValidation = validatePassword(newPassword);
   if (!passwordValidation.isValid) {
     throw createError({

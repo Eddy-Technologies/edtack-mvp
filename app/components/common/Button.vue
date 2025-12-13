@@ -1,6 +1,6 @@
 <template>
   <UButton
-    :color="color"
+    :color="buttonColor"
     :size="buttonSize"
     :disabled="isDisabled"
     :class="computedClass"
@@ -52,6 +52,15 @@ const props = defineProps<{
 
 const buttonSize = computed(() => {
   return props.size || 'md'; // Default to 'md' if not specified
+});
+
+// Determine UButton color based on variant to prevent default green color
+const buttonColor = computed(() => {
+  if (props.color) return props.color;
+  if (props.variant === 'danger') return 'red';
+  if (props.variant === 'info') return 'gray';
+  if (props.variant === 'secondary') return 'primary';
+  return 'primary'; // Default for 'primary' variant
 });
 
 const emit = defineEmits(['clicked']);
