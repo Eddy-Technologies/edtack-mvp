@@ -53,7 +53,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-if="!isLoadingOrders && pendingOrders.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-if="!isLoadingOrders && pendingOrders.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-shopping-cart" size="64" />
         </div>
@@ -76,7 +76,7 @@
         />
 
         <div class="grid gap-6">
-          <div v-for="order in pendingOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
+          <div v-for="order in pendingOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
             <!-- Order Header -->
             <div class="flex items-center justify-between mb-4">
               <div>
@@ -98,7 +98,7 @@
 
             <!-- Order Items -->
             <div class="space-y-3 mb-6">
-              <div v-for="item in order.items" :key="item.id" class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+              <div v-for="item in order.items" :key="item.id" class="flex items-center space-x-4 p-3 bg-stone-50 rounded-xl">
                 <img
                   :src="item.product.imageUrl"
                   :alt="item.product.name"
@@ -160,7 +160,7 @@
 
     <!-- Order Details Modal -->
     <div v-if="showDetailsModal && selectedOrder" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-6 max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="bg-white rounded-xl p-6 max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-lg font-semibold text-gray-900">Order Details</h3>
           <button class="text-gray-400 hover:text-gray-600" @click="showDetailsModal = false">
@@ -171,7 +171,7 @@
         <div class="space-y-4">
           <div>
             <h4 class="font-semibold text-gray-900 mb-2">Order Information</h4>
-            <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+            <div class="bg-stone-50 rounded-xl p-4 space-y-2">
               <div class="flex justify-between">
                 <span class="text-gray-600">Order Number:</span>
                 <span class="font-medium">{{ selectedOrder.orderNumber }}</span>
@@ -194,7 +194,7 @@
           <div>
             <h4 class="font-semibold text-gray-900 mb-2">Items ({{ selectedOrder.itemCount }})</h4>
             <div class="space-y-3">
-              <div v-for="item in selectedOrder.items" :key="item.id" class="flex items-center space-x-4 p-3 border rounded-lg">
+              <div v-for="item in selectedOrder.items" :key="item.id" class="flex items-center space-x-4 p-3 border border-gray-200 rounded-xl">
                 <img
                   :src="item.product.imageUrl"
                   :alt="item.product.name"

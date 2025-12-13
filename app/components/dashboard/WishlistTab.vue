@@ -21,7 +21,7 @@
       </div>
 
       <!-- Empty Wishlist State -->
-      <div v-else-if="!isLoading && wishlistItems.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoading && wishlistItems.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-heart" size="64" />
         </div>
@@ -57,7 +57,7 @@
           <div
             v-for="item in wishlistItems"
             :key="item.id"
-            class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4"
+            class="bg-white rounded-xl border border-gray-200 hover:shadow-sm transition-all duration-300 transform hover:-translate-y-1 p-4"
           >
             <div class="relative mb-4">
               <img

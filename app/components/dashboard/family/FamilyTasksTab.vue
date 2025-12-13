@@ -32,7 +32,7 @@
       </div>
 
       <!-- Filters and Stats -->
-      <div class="bg-white rounded-lg border p-4">
+      <div class="bg-white rounded-xl border border-gray-200 p-4">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <!-- Sort Dropdown -->
           <div class="flex items-center space-x-2">
@@ -94,7 +94,7 @@
       />
 
       <!-- Empty State -->
-      <div v-if="!isLoading && tasks.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-if="!isLoading && tasks.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-clipboard-list" size="64" />
         </div>

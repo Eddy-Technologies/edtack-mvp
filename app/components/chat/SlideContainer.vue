@@ -169,7 +169,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect, watch } from 'vue';
 import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import { useToast } from '#imports';
 import { convertHighlights, convertImages } from '~/utils/markdownUtils';
@@ -218,8 +218,24 @@ const resizeHandle = ref<HTMLElement>();
 
 // Track newly added slides for animation
 const newSlideIndices = ref<Set<number>>(new Set());
+let previousSlidesId: string | null = null;
 
-watch(() => props.slides.length, (newLength, oldLength) => {
+watch(() => props.slides, (newSlides, oldSlides) => {
+  // Detect if this is a completely different slides array (different message)
+  const newSlidesId = newSlides?.[0]?.id || null;
+  const isNewArray = previousSlidesId !== null && newSlidesId !== previousSlidesId;
+
+  if (isNewArray) {
+    // Clear all badges when switching to different slides array
+    newSlideIndices.value.clear();
+    previousSlidesId = newSlidesId;
+    return;
+  }
+
+  // Same array, check for new slides added
+  const oldLength = oldSlides?.length || 0;
+  const newLength = newSlides?.length || 0;
+
   if (newLength > oldLength) {
     // Mark new slides
     for (let i = oldLength; i < newLength; i++) {
@@ -232,6 +248,15 @@ watch(() => props.slides.length, (newLength, oldLength) => {
         newSlideIndices.value.delete(i);
       }
     }, 3000);
+  }
+
+  previousSlidesId = newSlidesId;
+}, { deep: false });
+
+// Reset slide index when slides array changes to a different set
+watch(() => props.slides?.[0]?.id, (newFirstId, oldFirstId) => {
+  if (newFirstId && oldFirstId && newFirstId !== oldFirstId) {
+    currentSlideIndex.value = 0;
   }
 });
 

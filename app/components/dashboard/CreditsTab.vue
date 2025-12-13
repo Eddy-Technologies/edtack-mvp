@@ -21,7 +21,7 @@
       </div>
 
       <!-- Information Banner -->
-      <div class="mb-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+      <div class="mb-8 bg-yellow-50 border border-yellow-200 rounded-xl p-4">
         <div class="flex items-start space-x-3">
           <UIcon name="i-lucide-info" class="text-yellow-600 mt-0.5" size="20" />
           <div class="flex-1">

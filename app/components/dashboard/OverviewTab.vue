@@ -6,13 +6,13 @@
     <!-- Parent View: Family Overview -->
     <template v-if="isParent">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
           <div class="text-center">
             <div class="text-3xl font-bold text-blue-600">{{ stats.totalChildren }}</div>
             <div class="text-sm text-gray-600 mt-1">Total Students</div>
           </div>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
           <div class="text-center">
             <div class="text-3xl font-bold text-green-600">{{ stats.activeToday }}</div>
             <div class="text-sm text-gray-600 mt-1">Active Today</div>
@@ -24,7 +24,7 @@
       <TokenUsageCard />
 
       <!-- Pending Order Requests -->
-      <div v-if="pendingOrders.length > 0" class="bg-white rounded-xl shadow-sm border">
+      <div v-if="pendingOrders.length > 0" class="bg-white rounded-xl border border-gray-200">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">Pending Order Requests</h3>
@@ -35,7 +35,7 @@
         </div>
         <div class="p-6">
           <div class="space-y-4">
-            <div v-for="order in pendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div v-for="order in pendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-4 bg-stone-50 rounded-xl">
               <div class="flex items-center space-x-3">
                 <div class="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
                   <UIcon name="i-lucide-shopping-cart" class="text-yellow-600" size="20" />
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Pending Tasks -->
-      <div v-if="pendingTasks.length > 0" class="bg-white rounded-xl shadow-sm border">
+      <div v-if="pendingTasks.length > 0" class="bg-white rounded-xl border border-gray-200">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">Pending Tasks</h3>
@@ -71,7 +71,7 @@
         </div>
         <div class="p-6">
           <div class="space-y-4">
-            <div v-for="task in pendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div v-for="task in pendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-4 bg-stone-50 rounded-xl">
               <div class="flex items-center space-x-3">
                 <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
                   <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="20" />
@@ -96,7 +96,7 @@
       </div>
 
       <!-- Children Overview -->
-      <div class="bg-white rounded-xl shadow-sm border">
+      <div class="bg-white rounded-xl border border-gray-200">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">Student Overview</h3>
@@ -114,7 +114,7 @@
             </NuxtLink>
           </div>
           <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="student in familyMembers" :key="student.id" class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div v-for="student in familyMembers" :key="student.id" class="border border-gray-200 rounded-xl p-4 hover:shadow-sm transition-shadow">
               <div class="flex items-center space-x-3 mb-4">
                 <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full">
                   <span class="text-blue-700 font-medium">{{ getInitials(student.userDisplayFullName || student.email) }}</span>
@@ -171,7 +171,7 @@
     <!-- Student View: Personal Overview -->
     <template v-else>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
           <div class="text-center">
             <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mx-auto mb-3">
               <UIcon name="i-lucide-coins" class="text-green-600" size="24" />
@@ -180,7 +180,7 @@
             <div class="text-sm text-gray-600 mt-1">Available Credits</div>
           </div>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
           <div class="text-center">
             <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mx-auto mb-3">
               <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="24" />
@@ -189,7 +189,7 @@
             <div class="text-sm text-gray-600 mt-1">Active Tasks</div>
           </div>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <div class="bg-white p-6 rounded-xl border border-gray-200">
           <div class="text-center">
             <div class="flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mx-auto mb-3">
               <UIcon name="i-lucide-check-circle" class="text-purple-600" size="24" />
@@ -204,7 +204,7 @@
       <TokenUsageCard />
 
       <!-- My Pending Orders -->
-      <div v-if="myPendingOrders.length > 0" class="bg-white rounded-xl shadow-sm border">
+      <div v-if="myPendingOrders.length > 0" class="bg-white rounded-xl border border-gray-200">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">My Pending Orders</h3>
@@ -215,7 +215,7 @@
         </div>
         <div class="p-6">
           <div class="space-y-4">
-            <div v-for="order in myPendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div v-for="order in myPendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-4 bg-stone-50 rounded-xl">
               <div class="flex items-center space-x-3">
                 <div class="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-full">
                   <UIcon name="i-lucide-shopping-cart" class="text-yellow-600" size="20" />
@@ -240,7 +240,7 @@
       </div>
 
       <!-- My Pending Tasks -->
-      <div v-if="myPendingTasks.length > 0" class="bg-white rounded-xl shadow-sm border">
+      <div v-if="myPendingTasks.length > 0" class="bg-white rounded-xl border border-gray-200">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">My Pending Tasks</h3>
@@ -251,7 +251,7 @@
         </div>
         <div class="p-6">
           <div class="space-y-4">
-            <div v-for="task in myPendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div v-for="task in myPendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-4 bg-stone-50 rounded-xl">
               <div class="flex items-center space-x-3">
                 <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
                   <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="20" />
@@ -275,7 +275,7 @@
       </div>
 
       <!-- Recent Tasks -->
-      <div class="bg-white rounded-xl shadow-sm border">
+      <div class="bg-white rounded-xl border border-gray-200">
         <div class="p-6 border-b">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-gray-900">Recent Tasks</h3>
@@ -289,7 +289,7 @@
             <p class="text-gray-500">No tasks yet. Check with your family to get started!</p>
           </div>
           <div v-else class="space-y-4">
-            <div v-for="task in recentTasks" :key="task.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div v-for="task in recentTasks" :key="task.id" class="flex items-center justify-between p-4 bg-stone-50 rounded-xl">
               <div class="flex items-center space-x-3">
                 <div
                   :class="[
@@ -320,7 +320,7 @@
       <!-- Quick Actions -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <NuxtLink to="/dashboard?tab=shop" class="block">
-          <div class="bg-white p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow cursor-pointer">
+          <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-sm transition-shadow cursor-pointer">
             <div class="flex items-center space-x-4">
               <div class="flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-full">
                 <UIcon name="i-lucide-shopping-bag" class="text-indigo-600" size="24" />
@@ -333,7 +333,7 @@
           </div>
         </NuxtLink>
         <NuxtLink to="/dashboard?tab=family" class="block">
-          <div class="bg-white p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow cursor-pointer">
+          <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-sm transition-shadow cursor-pointer">
             <div class="flex items-center space-x-4">
               <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full">
                 <UIcon name="i-lucide-users" class="text-blue-600" size="24" />

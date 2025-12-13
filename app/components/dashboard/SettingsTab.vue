@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Username & Password Section -->
-    <div class="bg-white rounded-xl shadow-sm border">
+    <div class="bg-white rounded-xl border border-gray-200">
       <div class="p-6 border-b">
         <h2 class="text-2xl font-bold text-gray-900">Account Settings</h2>
       </div>

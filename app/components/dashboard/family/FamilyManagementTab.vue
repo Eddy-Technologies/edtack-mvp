@@ -32,7 +32,7 @@
       </div>
 
       <!-- Family Stats -->
-      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-lg border p-6">
+      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-xl border border-gray-200 p-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div class="text-center">
             <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mx-auto mb-3">
@@ -69,7 +69,7 @@
       </div>
 
       <!-- Student Pending Invitations Section -->
-      <div v-if="!isParent && pendingInvitations.length > 0" class="bg-white rounded-lg border">
+      <div v-if="!isParent && pendingInvitations.length > 0" class="bg-white rounded-xl border border-gray-200">
         <div class="px-6 py-4 border-b">
           <h2 class="text-lg font-semibold text-gray-900 flex items-center">
             <UIcon name="i-lucide-mail-plus" class="text-blue-600 mr-2" size="20" />
@@ -121,7 +121,7 @@
       </div>
 
       <!-- Parent Pending Invitations Section -->
-      <div v-if="isParent && pendingInvitations.length > 0" class="bg-white rounded-lg border">
+      <div v-if="isParent && pendingInvitations.length > 0" class="bg-white rounded-xl border border-gray-200">
         <div class="px-6 py-4 border-b">
           <h2 class="text-lg font-semibold text-gray-900 flex items-center">
             <UIcon name="i-lucide-clock" class="text-yellow-600 mr-2" size="20" />
@@ -170,7 +170,7 @@
       </div>
 
       <!-- Student Empty State (no family connections and no pending invitations) -->
-      <div v-if="!isParent && activeMembers.length === 0 && pendingInvitations.length === 0" class="bg-white rounded-lg border">
+      <div v-if="!isParent && activeMembers.length === 0 && pendingInvitations.length === 0" class="bg-white rounded-xl border border-gray-200">
         <div class="text-center py-16">
           <div class="flex items-center justify-center w-20 h-20 mx-auto text-gray-300 mb-6">
             <UIcon name="i-lucide-users-x" size="80" />
@@ -194,7 +194,7 @@
       </div>
 
       <!-- Active Members List -->
-      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-lg border">
+      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-xl border border-gray-200">
         <div class="px-6 py-4 border-b">
           <h2 class="text-lg font-semibold text-gray-900">
             {{ isParent ? 'Active Family Members' : 'Family Members' }}
@@ -226,7 +226,7 @@
           <div
             v-for="member in activeMembers"
             :key="member.id"
-            class="p-6 hover:bg-gray-50 transition-colors"
+            class="p-6 hover:bg-stone-100 transition-colors"
           >
             <div class="flex items-start justify-between">
               <!-- Member Info -->

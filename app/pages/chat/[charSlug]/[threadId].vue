@@ -62,14 +62,15 @@
             :class="[
               'absolute bottom-0 left-0 right-0 z-20',
               isChatCentered
-                ? 'top-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm'
+                ? 'top-0 bg-white/95 backdrop-blur-sm'
                 : 'p-4 bg-white/95 backdrop-blur-sm',
             ]"
           >
-            <div class="w-full max-w-4xl px-4 mx-auto">
-              <!-- Character Carousel - only shown when centered (new chat) -->
-              <div v-if="isChatCentered" class="mb-6">
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            <!-- Centered layout: Single container with carousel and input -->
+            <div v-if="isChatCentered" class="absolute top-[15%] left-0 right-0 flex justify-center px-4">
+              <div class="w-full max-w-4xl flex flex-col gap-6">
+                <!-- Character Carousel - fixed height -->
+                <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                   <div class="px-6 py-4 border-b border-gray-100">
                     <div class="flex items-center justify-between">
                       <div>
@@ -109,9 +110,25 @@
                     />
                   </div>
                 </div>
-              </div>
 
-              <ChatInput ref="chatInputRef" :show-suggestions="!hasStartedChat && isNewChat" @send="handleChatSend" />
+                <!-- ChatInput - expands downward -->
+                <ChatInput
+                  ref="chatInputRef"
+                  :show-suggestions="!hasStartedChat && isNewChat"
+                  :subject="selectedCharacter?.subject || 'GENERAL'"
+                  @send="handleChatSend"
+                />
+              </div>
+            </div>
+
+            <!-- Non-centered layout: normal flow -->
+            <div v-if="!isChatCentered" class="w-full max-w-4xl px-4 mx-auto">
+              <ChatInput
+                ref="chatInputRef"
+                :show-suggestions="!hasStartedChat && isNewChat"
+                :subject="selectedCharacter?.subject || 'GENERAL'"
+                @send="handleChatSend"
+              />
             </div>
           </div>
         </div>
@@ -235,6 +252,9 @@ onMounted(async () => {
 // Watch for threadId changes to handle URL updates
 watch(threadId, async (newThreadId, oldThreadId) => {
   if (newThreadId !== oldThreadId) {
+    // Close slides panel when navigating to a different thread
+    selectedSlides.value = [];
+
     console.log('ThreadId changed from', oldThreadId, 'to', newThreadId);
 
     // If switching to existing thread, load messages
@@ -271,6 +291,9 @@ watch(threadId, async (newThreadId, oldThreadId) => {
 }, { immediate: true });
 
 const handleCharacterSelection = async (character) => {
+  // Close slides panel when changing character
+  selectedSlides.value = [];
+
   // Update character store
   await selectCharacterBySlug(character.slug);
 

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Current Plan -->
-    <div class="bg-white rounded-xl shadow-sm border">
+    <div class="bg-white rounded-xl border border-gray-200">
       <div class="p-6 border-b">
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">My Subscription</h2>
@@ -122,7 +122,7 @@
     <!-- Manage Billing Card (only show for active subscriptions or customers with no active subscription) -->
     <div
       v-if="stripeCustomerState === STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION"
-      class="bg-white rounded-xl shadow-sm border"
+      class="bg-white rounded-xl border border-gray-200"
     >
       <div class="p-6">
         <div class="flex items-start space-x-4">

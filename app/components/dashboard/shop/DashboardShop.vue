@@ -75,7 +75,7 @@
       <!-- Wishlist View -->
       <div v-if="showWishlist" class="mb-8">
         <h3 class="text-xl font-semibold text-gray-900 mb-4">Your Wishlist</h3>
-        <div v-if="wishlist.length === 0" class="text-center py-12 bg-gray-50 rounded-lg">
+        <div v-if="wishlist.length === 0" class="text-center py-12 bg-stone-50 rounded-xl">
           <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
             <UIcon name="i-lucide-heart" size="64" />
           </div>
@@ -86,7 +86,7 @@
           <div
             v-for="item in wishlist"
             :key="item.id"
-            class="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow p-4"
+            class="bg-white rounded-xl border border-gray-200 hover:shadow-sm transition-shadow p-4"
           >
             <div class="relative">
               <img :src="item.image" :alt="item.name" class="w-full h-40 object-cover rounded mb-3">
@@ -129,7 +129,7 @@
       </div>
 
       <!-- Empty Products State -->
-      <div v-else-if="!isLoadingProducts && items.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoadingProducts && items.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-package" size="64" />
         </div>
@@ -147,7 +147,7 @@
         <div
           v-for="item in filteredItems"
           :key="item.id"
-          class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4 cursor-pointer"
+          class="bg-white rounded-xl border border-gray-200 hover:shadow-sm transition-all duration-300 transform hover:-translate-y-1 p-4 cursor-pointer"
           @click="openProductModal(item)"
         >
           <div class="relative mb-4">

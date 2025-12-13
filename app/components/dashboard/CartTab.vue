@@ -24,7 +24,7 @@
       </div>
 
       <!-- Empty Cart State -->
-      <div v-if="cart.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-if="cart.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-shopping-cart" size="64" />
         </div>
@@ -41,7 +41,7 @@
       <!-- Cart Items -->
       <div v-else class="space-y-6">
         <!-- Cart Items List -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Items in Your Cart</h2>
 
@@ -49,7 +49,7 @@
               <div
                 v-for="item in sortedCart"
                 :key="item.id"
-                class="flex items-center space-x-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                class="flex items-center space-x-4 p-4 border border-gray-200 rounded-xl hover:bg-stone-100 transition-colors"
               >
                 <img
                   :src="item.image"
@@ -106,7 +106,7 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
 
@@ -130,13 +130,13 @@
         </div>
 
         <!-- Payment Method Selection -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Method</h2>
 
             <div class="space-y-3">
               <!-- Pay with Credits Option (Children only) -->
-              <label v-if="!isParent" class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+              <label v-if="!isParent" class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -161,7 +161,7 @@
               </label>
 
               <!-- Pay with Card Option (Parents always, Children as alternative) -->
-              <label class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+              <label class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -183,7 +183,7 @@
         </div>
 
         <!-- Checkout Actions -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <div class="flex flex-col sm:flex-row gap-4">
               <Button
@@ -205,7 +205,7 @@
             </div>
 
             <!-- Payment Method Info -->
-            <div v-if="paymentMethod && !isLoading" class="mt-4 p-3 bg-gray-50 rounded-lg">
+            <div v-if="paymentMethod && !isLoading" class="mt-4 p-3 bg-stone-50 rounded-xl">
               <div v-if="paymentMethod === 'credits'" class="text-sm text-gray-700">
                 <UIcon name="i-lucide-info" class="inline mr-1" size="16" />
                 Your parent will be notified to approve and complete this purchase with their credit card.
@@ -217,7 +217,7 @@
             </div>
 
             <!-- Insufficient Credits Warning -->
-            <div v-if="paymentMethod === 'credits' && !hasEnoughCredits" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div v-if="paymentMethod === 'credits' && !hasEnoughCredits" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl">
               <div class="text-sm text-red-700">
                 <UIcon name="i-lucide-alert-triangle" class="inline mr-1" size="16" />
                 Insufficient credits. You need {{ totalCents - balance }} more credits.
@@ -229,7 +229,7 @@
 
       <!-- Processing Modal -->
       <div v-if="showProcessingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md mx-4">
+        <div class="bg-white rounded-xl p-6 max-w-md mx-4">
           <div class="text-center">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
             <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ processingMessage }}</h3>

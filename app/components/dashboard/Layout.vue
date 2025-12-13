@@ -1,17 +1,17 @@
 <template>
-  <div class="flex h-screen bg-slate-50">
+  <div class="flex h-screen bg-stone-50">
     <!-- Modern Sidebar -->
-    <div class="w-72 bg-white border-r border-slate-200 flex flex-col">
+    <div class="w-72 bg-white border-r border-gray-200 flex flex-col">
       <!-- Header -->
-      <div class="px-6 py-6 border-b border-slate-200">
+      <div class="px-6 py-6 border-b border-gray-200">
         <div class="flex items-center space-x-3">
           <NuxtLink to="/" class="flex items-center space-x-3">
             <div class="w-8 h-8 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
               <span class="text-white font-bold text-sm">E</span>
             </div>
             <div>
-              <h1 class="text-lg font-semibold text-slate-900">StudyWithEddy</h1>
-              <p class="text-xs text-slate-500">Dashboard</p>
+              <h1 class="text-lg font-semibold text-gray-900">StudyWithEddy</h1>
+              <p class="text-xs text-gray-500">Dashboard</p>
             </div>
           </NuxtLink>
         </div>
@@ -20,7 +20,7 @@
       <!-- Navigation -->
       <nav class="flex-1 px-6 py-6 space-y-2">
         <div class="space-y-1">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Main</p>
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 py-2">Main</p>
 
           <div v-for="item in navigationItems" :key="item.name">
             <!-- Simple navigation item -->
@@ -29,8 +29,8 @@
               :class="[
                 'group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
                 isActiveRoute(item.route)
-                  ? 'bg-primary-50 text-primary-700 shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-primary-50 text-primary-700'
+                  : 'text-gray-600 hover:bg-stone-100 hover:text-gray-900'
               ]"
               @click="navigateToRoute(item)"
             >
@@ -61,8 +61,8 @@
                 :class="[
                   'group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
                   hasActiveChild(item) || openSubmenus.includes(item.name)
-                    ? 'bg-slate-50 text-slate-900'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-stone-100 text-gray-900'
+                    : 'text-gray-600 hover:bg-stone-100 hover:text-gray-900'
                 ]"
                 @click="toggleSubmenu(item.name)"
               >
@@ -89,20 +89,20 @@
                 leave-to-class="opacity-0 max-h-0"
               >
                 <div v-if="openSubmenus.includes(item.name)" class="overflow-hidden">
-                  <div class="ml-6 mt-1 space-y-1 border-l border-slate-200 pl-4">
+                  <div class="ml-6 mt-1 space-y-1 border-l border-gray-200 pl-4">
                     <div
                       v-for="child in item.children"
                       :key="child.name"
                       :class="[
-                        'flex items-center justify-between px-3 py-2 text-sm rounded-lg cursor-pointer transition-all duration-200',
+                        'flex items-center justify-between px-3 py-2 text-sm rounded-xl cursor-pointer transition-all duration-200',
                         isActiveRoute(child.route)
                           ? 'bg-primary-50 text-primary-700 font-medium'
-                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                          : 'text-gray-500 hover:bg-stone-100 hover:text-gray-700'
                       ]"
                       @click="navigateToRoute(child)"
                     >
                       <div class="flex items-center space-x-3">
-                        <div class="w-1.5 h-1.5 bg-slate-300 rounded-full" />
+                        <div class="w-1.5 h-1.5 bg-gray-300 rounded-full" />
                         <span>{{ child.name }}</span>
                       </div>
                       <!-- Badge for cart in submenu -->
@@ -121,8 +121,8 @@
         </div>
 
         <!-- Settings Section -->
-        <div class="pt-6 mt-6 border-t border-slate-200">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Account</p>
+        <div class="pt-6 mt-6 border-t border-gray-200">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 py-2">Account</p>
 
           <!-- Settings Items -->
           <div v-for="item in settingsItems" :key="item.name">
@@ -130,8 +130,8 @@
               :class="[
                 'group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
                 isActiveRoute(item.route)
-                  ? 'bg-primary-50 text-primary-700 shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-primary-50 text-primary-700'
+                  : 'text-gray-600 hover:bg-stone-100 hover:text-gray-900'
               ]"
               @click="navigateToRoute(item)"
             >
@@ -144,7 +144,7 @@
           <div
             :class="[
               'group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
-              isLoggingOut ? 'text-slate-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'
+              isLoggingOut ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'
             ]"
             @click="logout"
           >
@@ -158,11 +158,11 @@
       <!-- Bottom Actions -->
       <div class="px-6 pb-6 space-y-4">
         <!-- User Profile -->
-        <div class="flex items-center space-x-3 p-3 bg-slate-50 rounded-xl">
+        <div class="flex items-center space-x-3 p-3 bg-stone-100 rounded-xl">
           <UserAvatar />
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-slate-900 truncate">{{ userName }}</p>
-            <p class="text-xs text-slate-500 truncate">{{ userEmail }}</p>
+            <p class="text-sm font-medium text-gray-900 truncate">{{ userName }}</p>
+            <p class="text-xs text-gray-500 truncate">{{ userEmail }}</p>
             <span class="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium rounded-full" :class="accountTypeBadgeClass">
               {{ accountTypeLabel }}
             </span>
@@ -171,7 +171,7 @@
 
         <!-- Back to Chat Button -->
         <Button
-          class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors shadow-sm"
+          class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors"
           icon="i-lucide-message-circle"
           @click="router.push('/')"
         >
@@ -262,7 +262,7 @@ const accountTypeBadgeClass = computed(() => {
   } else if (accountType.value === 'student') {
     return 'bg-green-100 text-green-700';
   }
-  return 'bg-slate-100 text-slate-700';
+  return 'bg-stone-100 text-gray-700';
 });
 
 // Check if a parent item has any active children

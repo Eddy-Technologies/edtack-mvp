@@ -4,7 +4,7 @@
       <h2 class="text-2xl font-bold text-gray-900 mb-4">My Orders</h2>
 
       <!-- Order Tabs -->
-      <div class="flex space-x-1 mb-6 bg-gray-100 rounded-lg p-1">
+      <div class="flex space-x-1 mb-6 bg-stone-100 rounded-xl p-1">
         <button
           :class="['flex-1 px-4 py-2 rounded text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
           @click="orderTab = 'current'"
@@ -40,7 +40,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!isLoadingOrders && currentOrders.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoadingOrders && currentOrders.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-file-text" size="64" />
         </div>
@@ -55,7 +55,7 @@
       </div>
 
       <div v-else class="grid gap-6">
-        <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
+        <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
@@ -124,7 +124,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!isLoadingOrders && pastOrders.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoadingOrders && pastOrders.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-file-text" size="64" />
         </div>
@@ -138,7 +138,7 @@
       </div>
 
       <div v-else class="grid gap-6">
-        <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
+        <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>

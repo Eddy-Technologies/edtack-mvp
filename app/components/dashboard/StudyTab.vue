@@ -9,7 +9,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-sm border p-6">
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-medium text-gray-900">Filters</h3>
         <UButton
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-6">
+    <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-xl p-6">
       <div class="flex">
         <UIcon name="i-lucide-alert-circle" class="w-5 h-5 text-red-500 mr-3 mt-0.5" />
         <div>
@@ -95,11 +95,11 @@
       <div
         v-for="subject in subjects"
         :key="subject.name"
-        class="bg-white rounded-lg shadow-sm border"
+        class="bg-white rounded-xl border border-gray-200"
       >
         <!-- Accordion Header -->
         <button
-          class="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+          class="w-full px-6 py-4 flex items-center justify-between hover:bg-stone-100 transition-colors rounded-xl"
           @click="toggleAccordion(subject.name)"
         >
           <div class="flex items-center space-x-3">
@@ -128,7 +128,7 @@
                 <div
                   v-for="chapter in subject.chapters"
                   :key="chapter.name"
-                  class="border border-primary rounded-lg p-4"
+                  class="border border-primary rounded-xl p-4"
                 >
                   <div class="flex justify-between items-start">
                     <!-- Chapter Info -->
@@ -190,7 +190,7 @@
                     <div
                       v-for="(taskChapter, index) in chapter.user_tasks_chapters"
                       :key="taskChapter.id"
-                      class="bg-gray-50 rounded-lg p-3"
+                      class="bg-stone-50 rounded-xl p-3"
                     >
                       <div class="flex items-center justify-between">
                         <!-- Task Info -->
