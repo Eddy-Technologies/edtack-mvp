@@ -138,7 +138,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+
+// Get transaction version for refresh trigger
+const { transactionVersion } = useCredit();
 
 // State
 const transactions = ref<any[]>([]);
@@ -241,6 +244,11 @@ const getTransactionIcon = (type: string) => {
 
 // Load transactions on component mount
 onMounted(() => {
+  fetchTransactions();
+});
+
+// Watch for transaction version changes (triggered after transfers)
+watch(transactionVersion, () => {
   fetchTransactions();
 });
 </script>

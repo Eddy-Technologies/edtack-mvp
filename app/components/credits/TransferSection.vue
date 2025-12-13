@@ -76,7 +76,8 @@ const {
   isLoading: isLoadingData,
   error,
   handleTransfer: handleCreditTransfer,
-  fetchCredits
+  fetchCredits,
+  incrementTransactionVersion
 } = useCredit();
 
 // Use me store for user role
@@ -118,6 +119,7 @@ const handleTransfer = async (transferData: {
     });
 
     if (transferResponse.success) {
+      incrementTransactionVersion(); // Trigger transaction history refresh
       toast.add({
         title: 'Transfer Complete',
         description: `Successfully transferred ${transferData.amount.toLocaleString()} credits to ${transferData.recipientName}`,

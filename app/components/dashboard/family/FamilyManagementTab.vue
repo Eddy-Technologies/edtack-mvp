@@ -357,7 +357,7 @@ const meStore = useMeStore();
 const { isParent } = storeToRefs(meStore);
 
 // Use credit management for parent balance
-const { balance: parentBalance, fetchCredits } = useCredit();
+const { balance: parentBalance, fetchCredits, incrementTransactionVersion } = useCredit();
 
 // Reactive state
 const familyMembers = ref<any[]>([]);
@@ -519,6 +519,7 @@ const handleTransfer = async (transferData: {
     if (transferResponse.success) {
       // Show success message and refresh family data
       alert('Transfer successful!');
+      incrementTransactionVersion(); // Trigger transaction history refresh
       onTransferCompleted();
     } else {
       throw new Error('Transfer failed');

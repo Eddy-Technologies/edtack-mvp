@@ -24,6 +24,9 @@ const isLoading = ref(false);
 const error = ref<string | null>(null);
 const lastFetchTime = ref(0);
 
+// Transaction version - increment to trigger transaction history refresh
+const transactionVersion = ref(0);
+
 // Cache duration (5 minutes)
 const CACHE_DURATION = 5 * 60 * 1000;
 
@@ -211,6 +214,13 @@ export const useCredit = () => {
     error.value = null;
   };
 
+  /**
+   * Increment transaction version to trigger ViewTransactions refresh
+   */
+  const incrementTransactionVersion = (): void => {
+    transactionVersion.value++;
+  };
+
   // No automatic initialization - only fetch when explicitly called
 
   return {
@@ -239,6 +249,10 @@ export const useCredit = () => {
     setBalance,
     clearCache,
     hasSufficientBalance,
-    getChildById
+    getChildById,
+    incrementTransactionVersion,
+
+    // Transaction refresh trigger
+    transactionVersion: readonly(transactionVersion)
   };
 };
