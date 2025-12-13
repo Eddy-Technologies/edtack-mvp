@@ -33,8 +33,8 @@
       </div>
     </div>
 
-    <!-- Suggestions - only show on new chat when input is empty -->
-    <div v-if="showSuggestions && !input.trim()" class="flex flex-wrap gap-2 justify-center">
+    <!-- Suggestions - only show on new chat -->
+    <div v-if="showSuggestions" class="flex flex-wrap gap-2 justify-center">
       <button
         v-for="item in autocomplete"
         :key="item.key"
