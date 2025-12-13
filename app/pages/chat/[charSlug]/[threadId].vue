@@ -82,11 +82,11 @@
                         </div>
                       </div>
                       <UTooltip
-                        :ui="{ width: 'max-w-xs', height: 'auto' }"
+                        :ui="{ base: 'h-auto px-2 py-1 text-xs font-normal', width: 'max-w-[200px]' }"
                         :popper="{ placement: 'bottom-end' }"
                       >
                         <template #text>
-                          <span class="text-sm whitespace-normal">Click on a character to select your subject focus, then start typing below.</span>
+                          <span class="whitespace-normal">Click on a character to select your subject focus, then start typing below.</span>
                         </template>
                         <div class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-help transition-colors">
                           <UIcon name="i-lucide-help-circle" class="w-5 h-5 text-gray-500" />
@@ -288,6 +288,9 @@ const handleNewChat = () => {
 
   // Reset chat state
   hasStartedChat.value = false;
+
+  // Close slides panel
+  selectedSlides.value = [];
 
   // Clear chat content if available
   if (chatContentRef.value && chatContentRef.value.clearChat) {
