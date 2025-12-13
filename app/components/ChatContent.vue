@@ -71,7 +71,6 @@ const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
 const tokenCount = ref(0);
 
-
 // Streaming state management
 const activeStreamingMessage = ref<{
   id: string;
@@ -104,7 +103,6 @@ if (import.meta.client) {
 
 // const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
-
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
@@ -697,7 +695,6 @@ const handleOpenSplitView = (slides: any[], messageId?: string) => {
     }
   });
 };
-
 
 // Helper function to set message refs
 const setMessageRef = (el: HTMLElement | null, messageId: string) => {

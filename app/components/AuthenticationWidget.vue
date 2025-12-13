@@ -91,8 +91,20 @@
 
     <!-- Not logged in - sidebar variant -->
     <div v-else class="flex flex-col gap-2 p-2">
-      <Button variant="primary" text="Login" size="sm" class="w-full" @click="login" />
-      <Button variant="secondary" text="Register" size="sm" class="w-full" @click="register" />
+      <Button
+        variant="primary"
+        text="Login"
+        size="sm"
+        class="w-full"
+        @click="login"
+      />
+      <Button
+        variant="secondary"
+        text="Register"
+        size="sm"
+        class="w-full"
+        @click="register"
+      />
     </div>
   </div>
 
@@ -184,7 +196,7 @@ interface Props {
   collapsed?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   variant: 'topbar',
   collapsed: false,
 });

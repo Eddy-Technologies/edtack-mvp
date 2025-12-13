@@ -22,149 +22,149 @@
       >
         <Icon name="i-heroicons-x-mark" size="20" />
       </button>
-        <!-- Slide Navigation Header -->
-        <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-lg font-semibold text-gray-800">
-            {{ currentSlide?.part_label || 'Slide' }}
-          </h3>
-          <div class="flex items-center gap-2">
-            <button
-              v-if="currentSlideIndex > 0"
-              class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
-              :disabled="currentSlideIndex === 0"
-              @click="previousSlide"
-            >
-              ←
-            </button>
-            <span class="text-sm text-gray-600">
-              {{ currentSlideIndex + 1 }} / {{ totalSlides }}
-            </span>
-            <button
-              v-if="currentSlideIndex < totalSlides - 1"
-              class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
-              :disabled="currentSlideIndex === totalSlides - 1"
-              @click="nextSlide"
-            >
-              →
-            </button>
-          </div>
-        </div>
-
-        <!-- Current Slide Display -->
-        <div v-if="currentSlide" class="bg-white rounded-lg p-4 shadow-sm">
-          <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
-            {{ currentSlide.title }}
-          </h2>
-          <MDCRenderer
-            v-if="slideMarkdownBody"
-            :body="slideMarkdownBody"
-            tag="div"
-            class="prose prose-md max-w-none text-lg"
-          />
-          <div
-            v-else-if="currentSlide.content"
-            class="text-lg max-w-none"
-            v-html="processedSlideContent"
-          />
-
-          <!-- Question Options for MCQ slides -->
-          <div v-if="currentSlide.type === 'question' && currentSlide.options" class="mt-4">
-            <div class="space-y-2">
-              <div
-                v-for="(option, index) in currentSlide.options"
-                :key="option.id"
-                :class="[
-                  'p-3 border rounded-lg cursor-pointer transition-all',
-                  selectedOptions[currentSlide.id]?.id === option.id
-                    ? 'border-primary-500 bg-primary-50'
-                    : 'border-gray-200 hover:bg-gray-50'
-                ]"
-                @click="selectOption(option)"
-              >
-                <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
-                {{ option.option_text }}
-              </div>
-            </div>
-
-            <!-- Check Answer Button for Questions -->
-            <div class="mt-4 flex justify-center">
-              <button
-                v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
-                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-                @click="checkAnswer(currentSlide)"
-              >
-                Check Answer
-              </button>
-            </div>
-
-            <!-- Answer Feedback -->
-            <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
-              <div
-                :class="[
-                  'p-3 rounded-lg',
-                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
-                    ? 'bg-green-50 border border-green-200'
-                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
-                      ? 'bg-amber-50 border border-amber-200'
-                      : 'bg-red-50 border border-red-200'
-                ]"
-              >
-                <p
-                  :class="[
-                    'text-sm font-semibold',
-                    answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
-                      ? 'text-green-800'
-                      : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
-                        ? 'text-amber-800'
-                        : 'text-red-800'
-                  ]"
-                >
-                  {{ answeredQuestions[currentSlide.id]?.feedback }}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Explanation (shown after answer) -->
-          <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
-            <p class="text-sm text-primary-800">
-              <strong>Explanation:</strong> {{ currentSlide.explanation }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Slide Thumbnail Overview -->
-        <div v-if="showThumbnails" class="mt-6">
-          <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
-          <TransitionGroup
-            name="slide-list"
-            tag="div"
-            class="grid grid-cols-2 gap-2"
+      <!-- Slide Navigation Header -->
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ currentSlide?.part_label || 'Slide' }}
+        </h3>
+        <div class="flex items-center gap-2">
+          <button
+            v-if="currentSlideIndex > 0"
+            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
+            :disabled="currentSlideIndex === 0"
+            @click="previousSlide"
           >
-            <div
-              v-for="(slide, index) in slides"
-              :key="slide.id"
-              :class="[
-                'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
-                index === currentSlideIndex
-                  ? 'border-primary-500 bg-primary-50 scale-105'
-                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-              ]"
-              @click="jumpToSlide(index)"
-            >
-              <div class="font-medium">{{ slide.part_label }}</div>
-              <div class="text-gray-600 truncate">{{ slide.title }}</div>
-              <!-- NEW: Badge for newly added slides -->
-              <span
-                v-if="isSlideNew(index)"
-                class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
-              >
-                NEW
-              </span>
-            </div>
-          </TransitionGroup>
+            ←
+          </button>
+          <span class="text-sm text-gray-600">
+            {{ currentSlideIndex + 1 }} / {{ totalSlides }}
+          </span>
+          <button
+            v-if="currentSlideIndex < totalSlides - 1"
+            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
+            :disabled="currentSlideIndex === totalSlides - 1"
+            @click="nextSlide"
+          >
+            →
+          </button>
         </div>
       </div>
+
+      <!-- Current Slide Display -->
+      <div v-if="currentSlide" class="bg-white rounded-lg p-4 shadow-sm">
+        <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
+          {{ currentSlide.title }}
+        </h2>
+        <MDCRenderer
+          v-if="slideMarkdownBody"
+          :body="slideMarkdownBody"
+          tag="div"
+          class="prose prose-md max-w-none text-lg"
+        />
+        <div
+          v-else-if="currentSlide.content"
+          class="text-lg max-w-none"
+          v-html="processedSlideContent"
+        />
+
+        <!-- Question Options for MCQ slides -->
+        <div v-if="currentSlide.type === 'question' && currentSlide.options" class="mt-4">
+          <div class="space-y-2">
+            <div
+              v-for="(option, index) in currentSlide.options"
+              :key="option.id"
+              :class="[
+                'p-3 border rounded-lg cursor-pointer transition-all',
+                selectedOptions[currentSlide.id]?.id === option.id
+                  ? 'border-primary-500 bg-primary-50'
+                  : 'border-gray-200 hover:bg-gray-50'
+              ]"
+              @click="selectOption(option)"
+            >
+              <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
+              {{ option.option_text }}
+            </div>
+          </div>
+
+          <!-- Check Answer Button for Questions -->
+          <div class="mt-4 flex justify-center">
+            <button
+              v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
+              class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              @click="checkAnswer(currentSlide)"
+            >
+              Check Answer
+            </button>
+          </div>
+
+          <!-- Answer Feedback -->
+          <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+            <div
+              :class="[
+                'p-3 rounded-lg',
+                answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                  ? 'bg-green-50 border border-green-200'
+                  : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                    ? 'bg-amber-50 border border-amber-200'
+                    : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <p
+                :class="[
+                  'text-sm font-semibold',
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                    ? 'text-green-800'
+                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                      ? 'text-amber-800'
+                      : 'text-red-800'
+                ]"
+              >
+                {{ answeredQuestions[currentSlide.id]?.feedback }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explanation (shown after answer) -->
+        <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+          <p class="text-sm text-primary-800">
+            <strong>Explanation:</strong> {{ currentSlide.explanation }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide Thumbnail Overview -->
+      <div v-if="showThumbnails" class="mt-6">
+        <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
+        <TransitionGroup
+          name="slide-list"
+          tag="div"
+          class="grid grid-cols-2 gap-2"
+        >
+          <div
+            v-for="(slide, index) in slides"
+            :key="slide.id"
+            :class="[
+              'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
+              index === currentSlideIndex
+                ? 'border-primary-500 bg-primary-50 scale-105'
+                : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+            ]"
+            @click="jumpToSlide(index)"
+          >
+            <div class="font-medium">{{ slide.part_label }}</div>
+            <div class="text-gray-600 truncate">{{ slide.title }}</div>
+            <!-- NEW: Badge for newly added slides -->
+            <span
+              v-if="isSlideNew(index)"
+              class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
+            >
+              NEW
+            </span>
+          </div>
+        </TransitionGroup>
+      </div>
+    </div>
   </div>
 </template>
 
