@@ -1,17 +1,5 @@
 <template>
   <div class="flex flex-col gap-3">
-    <!-- Suggestions - only show when input is empty -->
-    <div v-if="!input.trim()" class="flex flex-wrap gap-2 justify-center">
-      <button
-        v-for="item in autocomplete"
-        :key="item.key"
-        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-full hover:bg-stone-100 hover:border-gray-300 transition-colors"
-        @click="appendText(item.input)"
-      >
-        {{ item.pillDisplay }}
-      </button>
-    </div>
-
     <!-- Input container -->
     <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
       <div class="flex items-start gap-2">
@@ -44,12 +32,31 @@
         </button>
       </div>
     </div>
+
+    <!-- Suggestions - only show on new chat when input is empty -->
+    <div v-if="showSuggestions && !input.trim()" class="flex flex-wrap gap-2 justify-center">
+      <button
+        v-for="item in autocomplete"
+        :key="item.key"
+        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-full hover:bg-stone-100 hover:border-gray-300 transition-colors"
+        @click="appendText(item.input)"
+      >
+        {{ item.pillDisplay }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useTokenUsage } from '~/composables/useTokenUsage';
+
+defineProps({
+  showSuggestions: {
+    type: Boolean,
+    default: true,
+  },
+});
 
 const emit = defineEmits(['send']);
 const input = ref('');

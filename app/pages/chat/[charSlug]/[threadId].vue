@@ -111,7 +111,7 @@
                 </div>
               </div>
 
-              <ChatInput ref="chatInputRef" @send="handleChatSend" />
+              <ChatInput ref="chatInputRef" :show-suggestions="!hasStartedChat && isNewChat" @send="handleChatSend" />
             </div>
           </div>
         </div>
