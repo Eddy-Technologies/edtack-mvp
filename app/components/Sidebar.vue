@@ -1,21 +1,21 @@
 <template>
-  <aside class="h-full flex flex-col border-r bg-white max-w-[900px] overflow-visible">
+  <aside class="h-full flex flex-col border-r border-gray-200 bg-stone-50 max-w-[900px] overflow-visible">
     <!-- Header -->
-    <div class="p-4 flex items-center justify-between">
+    <div :class="['p-3 flex items-center', isMini ? 'justify-center' : 'justify-between']">
       <img
         v-if="!isMini"
         src="/logo.png"
         alt="eddy"
-        class="w-[40px] h-[40px] hover:bg-gray-400 rounded-lg cursor-pointer"
+        class="w-9 h-9 hover:bg-gray-200/60 rounded-lg cursor-pointer transition-colors"
         @click="routeTo('/')"
       >
       <button
-        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
+        class="p-1.5 rounded-md hover:bg-gray-200/60 text-gray-500 transition-colors"
         @click="emit('toggle-sidebar')"
       >
         <Icon
           :name="isMini ? 'i-heroicons-chevron-right' : 'i-heroicons-chevron-left'"
-          class="w-5 h-5 text-gray-700"
+          class="w-4 h-4"
         />
       </button>
     </div>
@@ -23,58 +23,53 @@
     <!-- Scrollable Content -->
     <div class="flex-1 overflow-y-auto">
       <div class="px-3">
-        <div class="border-t border-black">
-          <ULink
-            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
+        <div class="pt-2">
+          <button
+            :class="['flex items-center w-full px-3 py-2 rounded-lg border border-gray-300 hover:bg-gray-200/50 text-sm font-medium text-gray-700 transition-colors', isMini ? 'justify-center' : 'gap-2']"
             @click="handleNewChat"
           >
-            <Icon name="i-heroicons-plus" class="w-6 h-6" />
-            <span v-if="!isMini" class="truncate">New Chat</span>
-          </ULink>
+            <Icon name="i-heroicons-plus" class="w-5 h-5" />
+            <span v-if="!isMini" class="truncate">New chat</span>
+          </button>
         </div>
       </div>
-      <div class="px-3">
-        <div class="border-t border-black">
-          <ULink
-            class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-            @click="handleChatHistory"
+      <div class="px-3 mt-4">
+        <!-- Section header -->
+        <button
+          :class="['flex items-center px-2 py-1.5 w-full', isMini ? 'justify-center' : 'gap-2 text-left']"
+          @click="handleChatHistory"
+        >
+          <Icon name="i-heroicons-clock" class="w-4 h-4 text-gray-500" />
+          <span v-if="!isMini" class="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent</span>
+        </button>
+
+        <!-- List chat threads -->
+        <div v-if="chatThreads.length && !collapsed" class="mt-1 space-y-0.5">
+          <button
+            v-for="thread in chatThreads"
+            :key="thread.id"
+            class="flex flex-col items-start w-full px-2 py-2 rounded-lg hover:bg-gray-200/50 text-left transition-colors"
+            @click="openThread(thread.id, thread.subject)"
           >
-            <Icon name="i-heroicons-clock" class="w-6 h-6" />
-            <span v-if="!isMini" class="truncate">Chat History</span>
-          </ULink>
+            <span class="text-sm text-gray-900 truncate w-full">{{ thread.title || 'Untitled' }}</span>
+            <span v-if="thread.subject" class="text-xs text-gray-500">{{ constantCaseToTitleCase(thread.subject) }}</span>
+          </button>
+        </div>
 
-          <!-- List chat threads -->
-          <div v-if="chatThreads.length && !collapsed">
-            <ULink
-              v-for="thread in chatThreads"
-              :key="thread.id"
-              class="flex items-center gap-2 px-4 py-3 rounded hover:bg-gray-100 w-full"
-              @click="openThread(thread.id, thread.subject)"
-            >
-              <div class="flex flex-row items-center space-x-2 min-w-0">
-                <div v-if="thread.subject" class="text-xs text-gray-500 flex-shrink-0 whitespace-nowrap">
-                  {{ constantCaseToTitleCase(thread.subject) }}
-                </div>
-                <div class="truncate min-w-0">{{ thread.title || 'Untitled Chat' }}</div>
-              </div>
-            </ULink>
-          </div>
-
-          <div v-else-if="!isLoadingThreads && !collapsed" class="px-4 py-2 text-gray-400 text-sm text-center">
-            No previous chats
-          </div>
+        <div v-else-if="!isLoadingThreads && !collapsed" class="px-2 py-3 text-gray-400 text-xs text-center">
+          No previous chats
         </div>
       </div>
     </div>
 
     <!-- Avatar & Audio Player Container -->
-    <div v-if="!isMini" class="p-4">
+    <div v-if="!isMini" class="p-3">
       <!-- Show placeholder when floating and sidebar is expanded -->
       <div
         v-if="isAvatarFloating"
         class="relative bg-gray-700 rounded-xl shadow-inner p-4 min-h-[120px] w-full flex flex-col items-center justify-center"
       >
-        <p class="text-gray-400 text-sm text-center mb-4">Avatar is floating</p>
+        <p class="text-gray-400 text-xs text-center mb-4">Avatar is floating</p>
       </div>
 
       <!-- Normal container when not floating -->
@@ -88,7 +83,7 @@
       >
         <!-- Collapsed Header -->
         <div v-if="isAudioPlayerCollapsed" class="flex items-center justify-between p-2">
-          <span class="text-gray-300 text-sm font-medium">Audio Player</span>
+          <span class="text-gray-300 text-xs font-medium">Audio Player</span>
           <div class="flex gap-1">
             <button
               class="p-1.5 hover:bg-gray-600 rounded transition-colors"
@@ -122,7 +117,7 @@
     </div>
 
     <!-- User Profile Section - Bottom -->
-    <div class="p-3 border-t border-gray-200 overflow-visible">
+    <div class="px-3 py-2 border-t border-gray-200 overflow-visible">
       <div class="flex justify-center overflow-visible">
         <AuthenticationWidget
           variant="sidebar"
