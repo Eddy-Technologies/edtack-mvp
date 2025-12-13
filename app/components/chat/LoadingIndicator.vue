@@ -1,23 +1,23 @@
 <template>
-  <div class="flex items-center gap-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100">
+  <div class="flex items-center gap-3 p-3 bg-stone-50 rounded-xl border border-gray-200">
     <!-- Animated character icon or dots -->
     <div class="flex items-center gap-2">
       <!-- Character-specific icon if available -->
-      <div v-if="character?.slug === 'eddy'" class="text-2xl animate-pulse">
+      <div v-if="character?.slug === 'eddy'" class="text-xl animate-pulse">
         🦁
       </div>
-      <div v-else-if="character?.slug === 'mia'" class="text-2xl animate-pulse">
+      <div v-else-if="character?.slug === 'mia'" class="text-xl animate-pulse">
         🦊
       </div>
       <div v-else class="flex space-x-1">
-        <div class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full animate-bounce" style="animation-delay: 0ms" />
-        <div class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full animate-bounce" style="animation-delay: 150ms" />
-        <div class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full animate-bounce" style="animation-delay: 300ms" />
+        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms" />
+        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms" />
+        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms" />
       </div>
     </div>
 
     <!-- Dynamic loading message -->
-    <span class="text-gray-700 text-sm font-medium italic">
+    <span class="text-gray-600 text-sm">
       {{ currentMessage }}
     </span>
   </div>

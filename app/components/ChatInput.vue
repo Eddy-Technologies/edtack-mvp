@@ -1,44 +1,48 @@
 <template>
-  <div class="bg-white border shadow-lg rounded-xl p-4">
-    <div class="flex items-start gap-2">
-      <UTextarea
-        v-model="input"
-        placeholder="How can I help you today?"
-        :maxlength="500"
-        :rows="2"
-        :autoresize="true"
-        :resize="false"
-        class="flex-1"
-        style="max-height: 30vh; font-size: 16px;"
-        textarea-class="text-gray-600 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
-        @keydown.enter="handleEnterKey"
-      />
-      <button
-        :class="[
-          'p-3 rounded-lg transition-colors duration-200',
-          isSending
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-primary hover:bg-blue-700 text-white'
-        ]"
-        :disabled="isSending"
-        @click="emitMessage"
-      >
-        <Icon
-          :name="isSending ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
-          :class="['w-5 h-5', isSending ? 'animate-spin text-white' : '']"
-        />
-      </button>
-    </div>
-
-    <div class="mt-2 flex flex-wrap gap-2 text-sm justify-center">
+  <div class="flex flex-col gap-3">
+    <!-- Suggestions - only show when input is empty -->
+    <div v-if="!input.trim()" class="flex flex-wrap gap-2 justify-center">
       <button
         v-for="item in autocomplete"
         :key="item.key"
-        class="px-3 py-1 rounded-full hover:bg-gray-100 border border-primary text-gray-500"
+        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-full hover:bg-stone-100 hover:border-gray-300 transition-colors"
         @click="appendText(item.input)"
       >
         {{ item.pillDisplay }}
       </button>
+    </div>
+
+    <!-- Input container -->
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+      <div class="flex items-start gap-2">
+        <UTextarea
+          v-model="input"
+          placeholder="How can I help you today?"
+          :maxlength="500"
+          :rows="2"
+          :autoresize="true"
+          :resize="false"
+          class="flex-1"
+          style="max-height: 30vh; font-size: 16px;"
+          textarea-class="text-gray-600 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+          @keydown.enter="handleEnterKey"
+        />
+        <button
+          :class="[
+            'p-3 rounded-lg transition-colors duration-200',
+            isSending
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-primary hover:bg-blue-700 text-white'
+          ]"
+          :disabled="isSending"
+          @click="emitMessage"
+        >
+          <Icon
+            :name="isSending ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
+            :class="['w-5 h-5', isSending ? 'animate-spin text-white' : '']"
+          />
+        </button>
+      </div>
     </div>
   </div>
 </template>
