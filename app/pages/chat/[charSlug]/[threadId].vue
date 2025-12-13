@@ -32,87 +32,91 @@
         @click="toggleSidebar"
       />
 
-      <!-- Main Content -->
-      <div class="flex flex-col flex-1 h-full relative">
-        <!-- Top Bar with User Avatar -->
-        <div
-          :class="[
-            'flex justify-end items-center px-4 py-3 bg-white relative z-50 transition-all duration-400 ease-out',
-            showContentTransitions
-              ? 'opacity-100 transform scale-100'
-              : 'opacity-0 transform scale-95',
-          ]"
-          :style="{ transitionDelay: showContentTransitions ? '0.2s' : '0s' }"
-        >
-          <AuthenticationWidget />
-        </div>
+      <!-- Main Content Area -->
+      <div class="flex flex-1 h-full overflow-hidden">
+        <!-- Chat Column -->
+        <div class="flex-1 flex flex-col h-full relative">
+          <!-- Chat Content Area - takes remaining space -->
+          <div class="flex-1 overflow-hidden relative">
+            <ChatContent
+              v-if="!isLoading"
+              ref="chatContentRef"
+              :thread-id="threadId"
+              :messages="[]"
+              :character="selectedCharacter"
+              :thread-data="threadData"
+              @response-received="handleResponseReceived"
+              @open-slides="handleOpenSlides"
+            />
+          </div>
 
-        <!-- Chat Content Area - takes remaining space -->
-        <div class="flex-1 overflow-hidden relative">
-          <ChatContent
-            v-if="!isLoading"
-            ref="chatContentRef"
-            :thread-id="threadId"
-            :messages="[]"
-            :character="selectedCharacter"
-            :thread-data="threadData"
-            @response-received="handleResponseReceived"
-          />
-        </div>
-
-        <!-- Chat Input - positioned as footer below content -->
-        <div
-          v-if="shouldShowChatInput"
-          :class="[
-            'flex flex-col items-center gap-4 shadow-lg flex-shrink-0',
-            isChatCentered
-              ? 'fixed top-0 bottom-0 bg-white/95 backdrop-blur-sm justify-center z-30'
-              : 'bg-white border-t p-6',
-          ]"
-          :style="{
-            left: isChatCentered ? (collapsed ? '80px' : '400px') : 'auto',
-            right: isChatCentered ? '0' : 'auto',
-          }"
-        >
-          <div class="w-full max-w-4xl px-4">
-            <!-- Character Carousel Card - only shown when centered (new chat) -->
-            <div v-if="isChatCentered" class="mb-6">
-              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
-                      <div class="flex items-center gap-2 mt-1">
-                        <p class="text-sm text-gray-600">
-                          <span v-if="selectedCharacter">
-                            Currently:
-                            <span class="font-medium text-gray-800">{{
-                              selectedCharacter.name
-                            }}</span>
-                            <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
-                          </span>
-                          <span v-else>Select a character to start chatting</span>
-                        </p>
+          <!-- Floating Chat Input -->
+          <div
+            v-if="shouldShowChatInput"
+            :class="[
+              'absolute bottom-0 left-0 right-0 z-20',
+              isChatCentered
+                ? 'top-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur-sm'
+                : 'p-4 bg-white/95 backdrop-blur-sm',
+            ]"
+          >
+            <div class="w-full max-w-4xl px-4 mx-auto">
+              <!-- Character Carousel - only shown when centered (new chat) -->
+              <div v-if="isChatCentered" class="mb-6">
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div class="px-6 py-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
+                        <div class="flex items-center gap-2 mt-1">
+                          <p class="text-sm text-gray-600">
+                            <span v-if="selectedCharacter">
+                              Currently:
+                              <span class="font-medium text-gray-800">{{
+                                selectedCharacter.name
+                              }}</span>
+                              <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
+                            </span>
+                            <span v-else>Select a character to start chatting</span>
+                          </p>
+                        </div>
                       </div>
+                      <UTooltip
+                        :ui="{ width: 'max-w-xs', height: 'auto' }"
+                        :popper="{ placement: 'bottom-end' }"
+                      >
+                        <template #text>
+                          <span class="text-sm whitespace-normal">Click on a character to select your subject focus, then start typing below.</span>
+                        </template>
+                        <div class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-help transition-colors">
+                          <UIcon name="i-lucide-help-circle" class="w-5 h-5 text-gray-500" />
+                        </div>
+                      </UTooltip>
                     </div>
                   </div>
-                </div>
-                <div class="p-4">
-                  <CharacterCarousel
-                    v-model="currentCharacter"
-                    :initial-character-slug="charSlug"
-                    :go-to-chat-on-click="true"
-                    @select="handleCharacterSelection"
-                  />
+                  <div class="p-4">
+                    <CharacterCarousel
+                      v-model="currentCharacter"
+                      :initial-character-slug="charSlug"
+                      :go-to-chat-on-click="true"
+                      @select="handleCharacterSelection"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="w-full max-w-4xl mx-auto">
               <ChatInput ref="chatInputRef" @send="handleChatSend" />
             </div>
           </div>
         </div>
+
+        <!-- Slides Column (conditional) -->
+        <SlideContainer
+          v-if="showSlides"
+          :slides="selectedSlides"
+          :show-thumbnails="true"
+          @close-split-view="handleCloseSlides"
+        />
       </div>
     </div>
   </div>
@@ -125,11 +129,12 @@ import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
 import CharacterCarousel from '@/components/CharacterCarousel.vue';
-import AuthenticationWidget from '@/components/AuthenticationWidget.vue';
+import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
+import type { _height } from '#tailwind-config/theme';
 
 // Set page title
 useHead({
@@ -151,6 +156,10 @@ const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
 const chatInputRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
+
+// Slide state management (lifted from ChatContent)
+const selectedSlides = ref<any[]>([]);
+const showSlides = computed(() => selectedSlides.value.length > 0);
 
 const router = useRouter();
 const route = useRoute();
@@ -321,6 +330,15 @@ const handleResponseReceived = () => {
   if (chatInputRef.value && chatInputRef.value.resetSendState) {
     chatInputRef.value.resetSendState();
   }
+};
+
+// Slide event handlers
+const handleOpenSlides = (slides: any[]) => {
+  selectedSlides.value = slides;
+};
+
+const handleCloseSlides = () => {
+  selectedSlides.value = [];
 };
 
 const handleStudyPromptInjection = async () => {

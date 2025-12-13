@@ -1,43 +1,27 @@
 <template>
-  <div class="flex h-full">
-    <!-- Left Panel: Conversation -->
-    <div
-      :class="[
-        'flex-1 flex flex-col overflow-hidden',
-        isMobile ? (mobileActiveTab === 'chat' ? 'w-full' : 'hidden') : ''
-      ]"
-    >
-      <div class="flex-1 overflow-y-auto">
-        <slot name="conversation" />
-      </div>
-    </div>
-
+  <!-- Slides Panel - standalone column -->
+  <div
+    ref="slidesPanel"
+    class="flex-shrink-0 border-l border-gray-200 bg-gray-50 overflow-y-auto relative h-full"
+    :style="{ width: isMobile ? '100%' : `${panelWidth}px` }"
+  >
     <!-- Resize Handle (Desktop only) -->
     <div
       v-if="!isMobile"
       ref="resizeHandle"
-      class="w-1 bg-gray-200 hover:bg-gray-300 cursor-col-resize"
+      class="absolute left-0 top-0 bottom-0 w-1 bg-gray-200 hover:bg-primary-400 cursor-col-resize z-10"
       @mousedown="startResize"
     />
 
-    <!-- Right Panel: Slide Content -->
-    <div
-      ref="rightPanel"
-      :class="[
-        'flex-shrink-0 border-l border-gray-200 bg-gray-50 overflow-y-auto relative',
-        isMobile ? (mobileActiveTab === 'slides' ? 'w-full' : 'hidden') : ''
-      ]"
-      :style="{ width: isMobile ? '100%' : `${rightPanelWidth}%` }"
-    >
-      <div class="p-6 pb-24">
-        <!-- Close Split View Button -->
-        <button
-          class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-          title="Close split view"
-          @click="$emit('close-split-view')"
-        >
-          <Icon name="i-heroicons-x-mark" size="16" />
-        </button>
+    <div class="p-6 pb-24">
+      <!-- Close Button -->
+      <button
+        class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors p-1"
+        title="Close slides"
+        @click="$emit('close-split-view')"
+      >
+        <Icon name="i-heroicons-x-mark" size="20" />
+      </button>
         <!-- Slide Navigation Header -->
         <div class="mb-4 flex items-center justify-between">
           <h3 class="text-lg font-semibold text-gray-800">
@@ -181,35 +165,6 @@
           </TransitionGroup>
         </div>
       </div>
-    </div>
-
-    <!-- Mobile Tab Switcher -->
-    <div v-if="isMobile" class="fixed bottom-16 left-0 right-0 bg-white border-t p-2">
-      <div class="flex">
-        <button
-          :class="[
-            'flex-1 py-2 px-4 text-sm font-medium rounded-l',
-            mobileActiveTab === 'chat'
-              ? 'bg-primary-500 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          ]"
-          @click="mobileActiveTab = 'chat'"
-        >
-          Chat
-        </button>
-        <button
-          :class="[
-            'flex-1 py-2 px-4 text-sm font-medium rounded-r',
-            mobileActiveTab === 'slides'
-              ? 'bg-primary-500 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          ]"
-          @click="mobileActiveTab = 'slides'"
-        >
-          Slides
-        </button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -247,8 +202,7 @@ const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view'
 
 // Responsive state
 const isMobile = ref(false);
-const rightPanelWidth = ref(40);
-const mobileActiveTab = ref<'slides' | 'chat'>('chat');
+const panelWidth = ref(480); // Default width in pixels
 
 // Slide navigation
 const currentSlideIndex = ref(props.initialSlideIndex || 0);
@@ -259,7 +213,7 @@ const selectedOptions = ref<Record<string, any>>({});
 const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: string }>>({});
 
 // Refs
-const rightPanel = ref<HTMLElement>();
+const slidesPanel = ref<HTMLElement>();
 const resizeHandle = ref<HTMLElement>();
 
 // Track newly added slides for animation
@@ -391,14 +345,15 @@ function startResize(e: MouseEvent) {
 function handleResize(e: MouseEvent) {
   if (!isResizing) return;
 
-  const container = rightPanel.value?.parentElement;
+  const container = slidesPanel.value?.parentElement;
   if (!container) return;
 
   const containerRect = container.getBoundingClientRect();
-  const newWidth = 100 - ((e.clientX - containerRect.left) / containerRect.width) * 100;
+  // Calculate width from right edge
+  const newWidth = containerRect.right - e.clientX;
 
-  // Constrain between 25% and 65%
-  rightPanelWidth.value = Math.min(Math.max(newWidth, 25), 65);
+  // Constrain between 320px and 800px
+  panelWidth.value = Math.min(Math.max(newWidth, 320), 800);
 }
 
 function stopResize() {

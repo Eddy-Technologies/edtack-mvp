@@ -1,5 +1,5 @@
 <template>
-  <aside class="h-full flex flex-col border-r bg-white max-w-[900px]">
+  <aside class="h-full flex flex-col border-r bg-white max-w-[900px] overflow-visible">
     <!-- Header -->
     <div class="p-4 flex items-center justify-between">
       <img
@@ -33,7 +33,6 @@
           </ULink>
         </div>
       </div>
-      <!--    TODO  <div v-if="meStore.isLoggedIn" class="px-3"> -->
       <div class="px-3">
         <div class="border-t border-black">
           <ULink
@@ -121,6 +120,16 @@
         </div>
       </div>
     </div>
+
+    <!-- User Profile Section - Bottom -->
+    <div class="p-3 border-t border-gray-200 overflow-visible">
+      <div class="flex justify-center overflow-visible">
+        <AuthenticationWidget
+          variant="sidebar"
+          :collapsed="isMini"
+        />
+      </div>
+    </div>
   </aside>
 </template>
 
@@ -129,6 +138,7 @@ import { useRouter } from 'vue-router';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import WaveSurfer from 'wavesurfer.js';
 import Avatar from '~/components/avatar/Avatar.vue';
+import AuthenticationWidget from '~/components/AuthenticationWidget.vue';
 import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useMeStore } from '~/stores/me';
