@@ -48,11 +48,22 @@
           <button
             v-for="thread in chatThreads"
             :key="thread.id"
-            class="flex flex-col items-start w-full px-2 py-2 rounded-lg hover:bg-gray-200/50 text-left transition-colors"
+            :class="[
+              'flex items-center justify-between w-full px-2 py-2 rounded-lg text-left transition-colors',
+              thread.id === props.activeThreadId ? 'bg-stone-200' : 'hover:bg-gray-200/50'
+            ]"
             @click="openThread(thread.id, thread.subject)"
           >
-            <span class="text-sm text-gray-900 truncate w-full">{{ thread.title || 'Untitled' }}</span>
-            <span v-if="thread.subject" class="text-xs text-gray-500">{{ constantCaseToTitleCase(thread.subject) }}</span>
+            <div class="flex flex-col items-start min-w-0 flex-1">
+              <span class="text-sm text-gray-900 truncate w-full">{{ thread.title || 'Untitled' }}</span>
+              <!-- Connection status for active thread -->
+              <div v-if="thread.id === props.activeThreadId" class="flex items-center gap-1 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="connectionDotClass" />
+                <span class="text-xs" :class="connectionTextClass">{{ connectionText }}</span>
+              </div>
+              <!-- Subject for inactive threads -->
+              <span v-else-if="thread.subject" class="text-xs text-gray-500">{{ constantCaseToTitleCase(thread.subject) }}</span>
+            </div>
           </button>
         </div>
 
@@ -153,6 +164,55 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  activeThreadId: {
+    type: String,
+    default: '',
+  },
+  isConnected: {
+    type: Boolean,
+    default: false,
+  },
+  isConnecting: {
+    type: Boolean,
+    default: false,
+  },
+  hasError: {
+    type: Boolean,
+    default: false,
+  },
+  isWaitingForResponse: {
+    type: Boolean,
+    default: false,
+  },
+  responsePhase: {
+    type: String,
+    default: '',
+  },
+});
+
+// Connection status computed properties
+const connectionDotClass = computed(() => {
+  if (props.isWaitingForResponse) return 'bg-blue-500 animate-pulse';
+  if (props.isConnected) return 'bg-green-500';
+  if (props.isConnecting) return 'bg-yellow-500 animate-pulse';
+  if (props.hasError) return 'bg-red-500';
+  return 'bg-gray-400';
+});
+
+const connectionText = computed(() => {
+  if (props.isWaitingForResponse) return props.responsePhase || 'Thinking...';
+  if (props.isConnected) return 'Connected';
+  if (props.isConnecting) return 'Connecting...';
+  if (props.hasError) return 'Error';
+  return 'Offline';
+});
+
+const connectionTextClass = computed(() => {
+  if (props.isWaitingForResponse) return 'text-blue-600';
+  if (props.isConnected) return 'text-green-600';
+  if (props.isConnecting) return 'text-yellow-600';
+  if (props.hasError) return 'text-red-600';
+  return 'text-gray-500';
 });
 
 // State for audio player collapsed state

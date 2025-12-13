@@ -20,6 +20,12 @@
           :collapsed="collapsed"
           :sidebar-width="collapsed ? 80 : 400"
           :is-mobile="isMobile"
+          :active-thread-id="threadId"
+          :is-connected="chatContentRef?.wsChat?.isConnected || false"
+          :is-connecting="chatContentRef?.wsChat?.isConnecting || false"
+          :has-error="!!chatContentRef?.wsChat?.error"
+          :is-waiting-for-response="chatContentRef?.wsChat?.isWaitingForResponse || chatContentRef?.isWaitingForResponse || false"
+          :response-phase="chatContentRef?.wsChat?.responsePhase || ''"
           @toggle-sidebar="toggleSidebar"
           @new-chat="handleNewChat"
         />

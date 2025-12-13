@@ -1,14 +1,7 @@
 <template>
   <div class="flex flex-col h-full bg-white overflow-hidden">
-    <!-- Connection Status Bar -->
-    <ConnectionStatusBar
-      :ws-chat="wsChat"
-      :is-waiting-for-response="isWaitingForResponse"
-      :queue-length="messageQueue.length"
-    />
-
     <!-- Messages Stream -->
-    <div ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-24 pb-32 space-y-8">
+    <div ref="scrollArea" class="flex-1 overflow-y-auto pt-8 py-6 px-24 pb-32 space-y-8">
       <div
         v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
@@ -41,7 +34,6 @@ import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
-import ConnectionStatusBar from '@/components/chat/ConnectionStatusBar.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
