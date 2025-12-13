@@ -46,6 +46,7 @@ export default defineEventHandler(async (event) => {
     if (existingEvent) {
       return { received: true, message: 'Event already processed' };
     }
+
     let errorMsg: string | undefined;
     // Process the event based on type - only store events we actually handle
     try {
@@ -146,12 +147,123 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
   console.log(`[StripeWebhook] Handling checkout.session.completed event`);
   const session = event.data.object as Stripe.Checkout.Session;
 
-  if (!session.customer || !session.payment_intent) {
-    console.log(`[StripeWebhook] Checkout session missing customer or payment_intent`);
+  if (!session.payment_intent) {
+    console.log(`[StripeWebhook] Checkout session missing payment_intent`);
     return;
   }
 
-  // Find user directly by payment_customer_id (much faster and more reliable)
+  // PRIORITY 1: Handle parent-approved orders FIRST (doesn't require user lookup by payment_customer_id)
+  // This uses order_id from metadata, not the Stripe customer ID
+  if (session.metadata?.order_id) {
+    const orderId = session.metadata.order_id;
+    const childUserInfoId = session.metadata.child_user_info_id;
+    const parentUserInfoId = session.metadata.parent_user_info_id;
+
+    console.log(`[StripeWebhook] Processing parent-approved order: ${orderId}, parent: ${parentUserInfoId}, child: ${childUserInfoId}`);
+
+    // Get current order to append notes
+    const { data: currentOrder } = await supabase
+      .from('orders')
+      .select('notes, total_amount_cents, order_number')
+      .eq('id', orderId)
+      .single();
+
+    if (!currentOrder) {
+      console.error(`[StripeWebhook] Order not found: ${orderId}`);
+      throw createError({
+        statusCode: 404,
+        statusMessage: `Order not found: ${orderId}`
+      });
+    }
+
+    // Update existing order to paid status
+    const { error: updateOrderError } = await supabase
+      .from('orders')
+      .update({
+        status_code: ORDER_STATUS.PAID,
+        payment_method: 'parent_approved_stripe',
+        stripe_balance_transaction_id: session.payment_intent,
+        paid_at: new Date().toISOString(),
+        notes: `${currentOrder.notes || ''} - Parent payment completed via Stripe`
+      })
+      .eq('id', orderId);
+
+    if (updateOrderError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Failed to update order ${orderId} to paid status`
+      });
+    }
+
+    // Update order items to paid status
+    const { error: updateItemsError } = await supabase
+      .from('order_items')
+      .update({
+        status_code: ORDER_STATUS.PAID
+      })
+      .eq('order_id', orderId);
+
+    if (updateItemsError) {
+      console.error('Failed to update order items status:', updateItemsError);
+    }
+
+    if (childUserInfoId) {
+      // Get child's current credits
+      const { data: childCredits } = await supabase
+        .from('user_credits')
+        .select('credit, reserved_credit')
+        .eq('user_info_id', childUserInfoId)
+        .single();
+
+      // Now deduct the reserved credits and remove from reserved
+      const { error: deductError } = await supabase
+        .from('user_credits')
+        .update({
+          credit: (childCredits?.credit || 0) - currentOrder.total_amount_cents,
+          reserved_credit: (childCredits?.reserved_credit || 0) - currentOrder.total_amount_cents
+        })
+        .eq('user_info_id', childUserInfoId);
+
+      if (deductError) {
+        console.error('Failed to deduct credits after parent payment:', deductError);
+      }
+
+      // Create credit transaction record
+      const { error: transactionError } = await supabase
+        .from('credit_transactions')
+        .insert({
+          user_info_id: childUserInfoId,
+          transaction_type: OPERATION_TYPE.PURCHASE,
+          amount: -currentOrder.total_amount_cents, // Negative for deduction
+          currency: 'SGD',
+          description: `Purchase: ${currentOrder.order_number} (Parent approved)`,
+          is_internal: true,
+          stripe_payment_intent_id: session.payment_intent,
+          stripe_checkout_session_id: session.id,
+          metadata: JSON.stringify({
+            order_id: orderId,
+            order_number: currentOrder.order_number,
+            parent_approved: true,
+            parent_user_info_id: parentUserInfoId
+          })
+        });
+
+      if (transactionError) {
+        console.error('Failed to create credit transaction:', transactionError);
+      }
+    }
+
+    console.log(`[StripeWebhook] Parent approved purchase completed for order ${orderId}: ${session.amount_total} cents`);
+    return; // Done processing parent-approved order
+  }
+
+  // PRIORITY 2: For other checkout types (credit top-up, direct purchase), we need user lookup
+  if (!session.customer) {
+    console.log(`[StripeWebhook] Checkout session missing customer (not a parent-approved order)`);
+    return;
+  }
+
+  // Find user directly by payment_customer_id
   const { data: userInfo, error } = await supabase
     .from('user_infos')
     .select('id')
@@ -168,18 +280,16 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
   // Get operation codes
   const operationCodes = await getOperationTypes(supabase);
 
-  // Check if this is a credit purchase (based on metadata or line items)
-  if (session.metadata?.operation_type === OPERATION_TYPE.CREDIT_TOPUP || session.mode === 'payment') {
-    // Add credits to user's internal balance
-    const { error: creditUpdateError } = await supabase
+  // Check if this is a credit top-up purchase (only for explicit credit purchases)
+  if (session.metadata?.operation_type === OPERATION_TYPE.CREDIT_TOPUP) {
+    // Get current credits first
+    const { data: currentCredits, error: fetchError } = await supabase
       .from('user_credits')
-      .update({
-        credit: supabase.raw(`credit + ${session.amount_total}`)
-      })
-      .eq('user_info_id', userInfo.id);
+      .select('credit')
+      .eq('user_info_id', userInfo.id)
+      .single();
 
-    if (creditUpdateError) {
-      console.error('Failed to update internal credits:', creditUpdateError);
+    if (fetchError || !currentCredits) {
       // Try to create the record if it doesn't exist
       const { error: insertError } = await supabase
         .from('user_credits')
@@ -189,6 +299,21 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
         });
 
       if (insertError) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: `Failed to add credits to user ${userInfo.id}`
+        });
+      }
+    } else {
+      // Update with calculated value
+      const { error: creditUpdateError } = await supabase
+        .from('user_credits')
+        .update({
+          credit: (currentCredits.credit || 0) + session.amount_total
+        })
+        .eq('user_info_id', userInfo.id);
+
+      if (creditUpdateError) {
         throw createError({
           statusCode: 500,
           statusMessage: `Failed to add credits to user ${userInfo.id}`
@@ -224,91 +349,8 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     console.log(`[StripeWebhook] Added ${session.amount_total} cents to internal credits for user ${userInfo.id}, type: ${operationCodes.credit_topup}`);
   }
 
-  // Check if this is a parent-approved credit purchase
-  if (session.metadata?.order_id) {
-    const orderId = session.metadata.order_id;
-    const childUserInfoId = session.metadata.child_user_info_id;
-
-    // Update existing order to paid status
-    const { error: updateOrderError } = await supabase
-      .from('orders')
-      .update({
-        status_code: ORDER_STATUS.PAID,
-        payment_method: 'parent_approved_stripe',
-        stripe_balance_transaction_id: session.payment_intent,
-        paid_at: new Date().toISOString(),
-        notes: supabase.raw(`notes || ' - Parent payment completed via Stripe'`)
-      })
-      .eq('id', orderId);
-
-    if (updateOrderError) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: `Failed to update order ${orderId} to paid status`
-      });
-    }
-
-    // Update order items to paid status
-    const { error: updateItemsError } = await supabase
-      .from('order_items')
-      .update({
-        status_code: ORDER_STATUS.PAID
-      })
-      .eq('order_id', orderId);
-
-    if (updateItemsError) {
-      console.error('Failed to update order items status:', updateItemsError);
-    }
-
-    // Get order total for credit deduction
-    const { data: order } = await supabase
-      .from('orders')
-      .select('total_amount_cents, order_number')
-      .eq('id', orderId)
-      .single();
-
-    if (order && childUserInfoId) {
-      // Now deduct the reserved credits and remove from reserved
-      const { error: deductError } = await supabase
-        .from('user_credits')
-        .update({
-          credit: supabase.raw(`credit - ${order.total_amount_cents}`),
-          reserved_credit: supabase.raw(`reserved_credit - ${order.total_amount_cents}`)
-        })
-        .eq('user_info_id', childUserInfoId);
-
-      if (deductError) {
-        console.error('Failed to deduct credits after parent payment:', deductError);
-      }
-
-      // Create credit transaction record
-      const { error: transactionError } = await supabase
-        .from('credit_transactions')
-        .insert({
-          user_info_id: childUserInfoId,
-          transaction_type: OPERATION_TYPE.PURCHASE,
-          amount: -order.total_amount_cents, // Negative for deduction
-          currency: 'SGD',
-          description: `Purchase: ${order.order_number} (Parent approved)`,
-          is_internal: true,
-          stripe_payment_intent_id: session.payment_intent,
-          stripe_checkout_session_id: session.id,
-          metadata: JSON.stringify({
-            order_id: orderId,
-            order_number: order.order_number,
-            parent_approved: true,
-            parent_user_info_id: session.metadata.parent_user_info_id
-          })
-        });
-
-      if (transactionError) {
-        console.error('Failed to create credit transaction:', transactionError);
-      }
-    }
-
-    console.log(`[StripeWebhook] Parent approved purchase completed for order ${orderId}: ${session.amount_total} cents`);
-  // Check if this is a direct product purchase (not parent-approved)
-  } else if (session.metadata?.user_info_id && session.metadata?.operation_type === OPERATION_TYPE.PURCHASE) {
+  // Check if this is a direct product purchase (not parent-approved, which is handled above)
+  if (session.metadata?.user_info_id && session.metadata?.operation_type === OPERATION_TYPE.PURCHASE) {
     console.log(`[StripeWebhook] Processing direct purchase for user ${userInfo.id}, amount: ${session.amount_total} cents`);
 
     // This is a direct purchase (use_credits = false)
@@ -376,6 +418,13 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     }
 
     if (pendingOrder) {
+      // Get current order notes
+      const { data: orderWithNotes } = await supabase
+        .from('orders')
+        .select('notes')
+        .eq('id', pendingOrder.id)
+        .single();
+
       // Update order to paid
       const { error: updateError } = await supabase
         .from('orders')
@@ -383,7 +432,7 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
           status_code: ORDER_STATUS.PAID,
           stripe_balance_transaction_id: session.payment_intent,
           paid_at: new Date().toISOString(),
-          notes: supabase.raw(`notes || ' - Direct payment completed via Stripe'`)
+          notes: `${orderWithNotes?.notes || ''} - Direct payment completed via Stripe`
         })
         .eq('id', pendingOrder.id);
 

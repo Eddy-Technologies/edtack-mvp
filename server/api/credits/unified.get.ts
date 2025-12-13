@@ -29,10 +29,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get user's internal credit balance
+    // Get user's internal credit balance (including reserved credits)
     let { data: userCredits } = await supabase
       .from('user_credits')
-      .select('credit, updated_at')
+      .select('credit, reserved_credit, updated_at')
       .eq('user_info_id', userInfo.id)
       .single();
 
@@ -42,9 +42,10 @@ export default defineEventHandler(async (event) => {
         .from('user_credits')
         .insert({
           user_info_id: userInfo.id,
-          credit: 0
+          credit: 0,
+          reserved_credit: 0
         })
-        .select('credit, updated_at')
+        .select('credit, reserved_credit, updated_at')
         .single();
 
       if (insertError) {
@@ -101,12 +102,16 @@ export default defineEventHandler(async (event) => {
             );
 
             if (isChild) {
+              const childCredit = memberUserInfo.user_credits?.[0]?.credit || 0;
+              const childReserved = memberUserInfo.user_credits?.[0]?.reserved_credit || 0;
               childrenMap.set(member.user_info_id, {
                 userInfoId: member.user_info_id,
                 email: memberUserInfo.email,
                 firstName: memberUserInfo.first_name,
                 lastName: memberUserInfo.last_name,
-                balance: memberUserInfo.user_credits?.[0]?.credit || 0,
+                balance: childCredit - childReserved, // Available balance
+                reservedCredits: childReserved,
+                totalCredits: childCredit,
                 currency: 'SGD',
                 updatedAt: memberUserInfo.user_credits?.[0]?.updated_at
               });
@@ -143,10 +148,13 @@ export default defineEventHandler(async (event) => {
         return child;
       }));
 
+      const userReserved = userCredits.reserved_credit || 0;
       return {
         user: {
           email: user.email,
-          balance: userCredits.credit,
+          balance: userCredits.credit - userReserved, // Available balance
+          reservedCredits: userReserved,
+          totalCredits: userCredits.credit,
           currency: 'SGD',
           updatedAt: userCredits.updated_at
         },
@@ -154,10 +162,13 @@ export default defineEventHandler(async (event) => {
         fetchedAt: new Date().toISOString()
       };
     } else {
+      const userReserved = userCredits.reserved_credit || 0;
       return {
         user: {
           email: user.email,
-          balance: userCredits.credit,
+          balance: userCredits.credit - userReserved, // Available balance
+          reservedCredits: userReserved,
+          totalCredits: userCredits.credit,
           currency: 'SGD',
           updatedAt: userCredits.updated_at
         },
