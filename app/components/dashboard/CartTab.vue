@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard-cart">
-    <div class="cart-container">
+  <div class="h-full overflow-y-auto">
+    <div class="p-5 sm:p-6 max-w-4xl mx-auto min-h-full">
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center justify-between">
@@ -49,56 +49,75 @@
               <div
                 v-for="item in sortedCart"
                 :key="item.id"
-                class="flex items-center space-x-4 p-4 border border-gray-200 rounded-xl hover:bg-stone-100 transition-colors"
+                class="flex flex-col sm:flex-row gap-4 p-4 bg-white border border-gray-100 rounded-xl hover:border-primary/30 hover:shadow-sm transition-all"
               >
-                <img
-                  :src="item.image"
-                  :alt="item.name"
-                  class="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                >
-
-                <div class="flex-1 min-w-0">
-                  <h3 class="text-lg font-medium text-gray-900 truncate">{{ item.name }}</h3>
-                  <p class="text-sm text-gray-600 truncate">{{ item.description }}</p>
-                  <div class="flex items-center space-x-2 mt-1">
-                    <span class="text-lg font-semibold text-primary">S${{ (item.price).toFixed(2) }}</span>
-                    <span class="text-sm text-gray-500">each</span>
+                <!-- Product Image -->
+                <div class="relative w-full sm:w-24 h-32 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                  <img
+                    v-if="item.image && !imageErrors[item.id]"
+                    :src="item.image"
+                    :alt="item.name"
+                    class="w-full h-full object-cover"
+                    @error="imageErrors[item.id] = true"
+                  >
+                  <!-- Placeholder when no image -->
+                  <div
+                    v-else
+                    class="w-full h-full flex items-center justify-center p-2"
+                  >
+                    <span class="text-gray-400 text-center text-xs font-medium line-clamp-3">{{ item.name }}</span>
                   </div>
-                  <div v-if="item.addedAt" class="flex items-center space-x-1 mt-1">
-                    <UIcon name="i-lucide-calendar" class="text-gray-400" size="12" />
-                    <span class="text-xs text-gray-500">Added {{ formatDate(item.addedAt) }}</span>
+                  <!-- Category Badge -->
+                  <span
+                    v-if="item.category"
+                    class="absolute bottom-1 left-1 bg-white/90 text-gray-700 text-xs px-1.5 py-0.5 rounded-full"
+                  >
+                    {{ item.category }}
+                  </span>
+                </div>
+
+                <!-- Product Info -->
+                <div class="flex-1 min-w-0 flex flex-col justify-between">
+                  <h3 class="font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
+                  <div class="flex items-center gap-2 mt-2">
+                    <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
+                    <span class="text-sm text-gray-400">each</span>
                   </div>
                 </div>
 
-                <div class="flex items-center space-x-3">
+                <!-- Actions -->
+                <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-0 border-gray-100">
                   <!-- Quantity Controls -->
-                  <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
-                    <Button
-                      icon="i-lucide-minus"
-                      class="p-2 hover:bg-gray-200 rounded"
-                      @clicked="updateQuantity(item, -1)"
-                    />
-                    <span class="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">{{ item.quantity }}</span>
-                    <Button
-                      icon="i-lucide-plus"
-                      class="p-2 hover:bg-gray-200 rounded"
-                      @clicked="updateQuantity(item, 1)"
-                    />
+                  <div class="flex items-center gap-2 bg-gray-50 rounded-lg p-1">
+                    <button
+                      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-200 transition-colors"
+                      @click="updateQuantity(item, -1)"
+                    >
+                      <UIcon name="i-lucide-minus" size="16" class="text-gray-600" />
+                    </button>
+                    <span class="w-8 text-center font-semibold text-gray-900">{{ item.quantity }}</span>
+                    <button
+                      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-200 transition-colors"
+                      @click="updateQuantity(item, 1)"
+                    >
+                      <UIcon name="i-lucide-plus" size="16" class="text-gray-600" />
+                    </button>
                   </div>
 
                   <!-- Item Total -->
-                  <div class="text-right min-w-[4rem]">
-                    <div class="text-lg font-semibold text-gray-900">
+                  <div class="text-right">
+                    <div class="text-lg font-bold text-gray-900">
                       S${{ (item.price * item.quantity).toFixed(2) }}
                     </div>
                   </div>
 
                   <!-- Remove Button -->
-                  <Button
-                    icon="i-lucide-trash-2"
-                    variant="secondary"
-                    @clicked="removeItem(item)"
-                  />
+                  <button
+                    class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    @click="removeItem(item)"
+                  >
+                    <UIcon name="i-lucide-trash-2" size="18" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -266,6 +285,7 @@ const { isParent } = storeToRefs(meStore);
 
 // Reactive state - default to credits for children, card for parents
 const paymentMethod = ref<'credits' | 'card'>('credits');
+const imageErrors = ref<Record<string, boolean>>({});
 const isProcessingCheckout = ref(false);
 const showProcessingModal = ref(false);
 const processingMessage = ref('');
@@ -429,18 +449,3 @@ const processCheckout = async () => {
   }
 };
 </script>
-
-<style scoped>
-.dashboard-cart {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.cart-container {
-  padding: 20px;
-  min-height: 100%;
-  width: 100%;
-  max-width: 4xl;
-  margin: 0 auto;
-}
-</style>
