@@ -69,7 +69,7 @@
     >
       <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
       <UIcon v-else name="i-lucide-credit-card" size="20" />
-      <span>{{ isLoading ? 'Processing...' : `Top Up $${selectedAmount || 0}` }}</span>
+      <span>{{ isLoading ? 'Processing...' : `Top Up $${selectedAmount || 0} (${(selectedAmount || 0) * 100} credits)` }}</span>
     </button>
 
     <!-- Payment Methods Info -->

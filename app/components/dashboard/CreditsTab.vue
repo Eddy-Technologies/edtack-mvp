@@ -28,7 +28,7 @@
             <UIcon name="i-lucide-lightbulb" class="text-amber-600" size="20" />
           </div>
           <div class="flex-1">
-            <h3 class="text-sm font-semibold text-amber-800 mb-1.5">How Credits Work</h3>
+            <h3 class="text-sm font-semibold text-amber-800 mb-1.5">How Credits Work ($1 = 100 credits)</h3>
             <p class="text-sm text-amber-700 leading-relaxed">
               This is a internal credit system which parents/teachers can pledge to distribute to their children/students. Think of credits as a point system.
               After students have accumulated credits, they can use the credits to check out their items from the shop, orders will be then be sent to parents to pay through stripe payment.

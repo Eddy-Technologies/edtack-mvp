@@ -121,7 +121,7 @@
         </div>
 
         <div>
-          <h4 class="font-medium text-gray-800 mb-3">How Credits Work</h4>
+          <h4 class="font-medium text-gray-800 mb-3">How Credits Work ($1 = 100 credits)</h4>
           <div class="grid md:grid-cols-3 gap-4">
             <div class="bg-blue-50 rounded-lg p-4 text-center">
               <div class="text-2xl mb-2">💰</div>

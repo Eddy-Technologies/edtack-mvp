@@ -71,8 +71,8 @@ export default defineEventHandler(async (event) => {
         p_from_user_info_id: senderInfo.id,
         p_to_user_info_id: toUserInfoId,
         p_amount: amountInCents,
-        p_description_from: `Transfer ${(amountInCents / 100).toFixed(2)} SGD to child`,
-        p_description_to: `Received ${(amountInCents / 100).toFixed(2)} SGD from parent`,
+        p_description_from: `Transfer ${amountInCents} credits to child`,
+        p_description_to: `Received ${amountInCents} credits from parent`,
         p_metadata_from: {
           transfer_type: 'parent_to_child',
           recipient_user_info_id: toUserInfoId,
