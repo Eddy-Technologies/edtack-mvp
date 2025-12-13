@@ -6,6 +6,20 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const query = getQuery(event);
+    const config = useRuntimeConfig();
+    const supabaseUrl = config.public.supabaseUrl;
+
+    // Helper function to resolve image URL
+    const resolveImageUrl = (imageUrl: string | null): string => {
+      if (!imageUrl) return '';
+      if (imageUrl.startsWith('products/')) {
+        return `${supabaseUrl}/storage/v1/object/public/${imageUrl}`;
+      }
+      if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        return imageUrl;
+      }
+      return '';
+    };
 
     const { limit = 50, offset = 0 } = query;
 
@@ -94,7 +108,7 @@ export default defineEventHandler(async (event) => {
           id: item.product?.id,
           name: item.product?.name,
           description: item.product?.description,
-          imageUrl: item.product?.image_url,
+          imageUrl: resolveImageUrl(item.product?.image_url),
           category: item.product?.category
         }
       })) || [],
