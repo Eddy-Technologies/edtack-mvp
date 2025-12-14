@@ -17,7 +17,7 @@
           </div>
           <button
             class="text-gray-400 hover:text-gray-600 transition-colors"
-            @click="$emit('close')"
+            @click="handleClose"
           >
             <UIcon name="i-lucide-x" size="24" />
           </button>
@@ -82,11 +82,11 @@
             <div class="grid grid-cols-3 gap-4 mb-6">
               <div class="text-center p-4 bg-white rounded-lg">
                 <p class="text-sm text-gray-600 mb-1">Latest Attempt</p>
-                <div class="text-3xl font-bold" :class="(quizResults.latestPercentage ?? quizResults.percentage ?? 0) >= quizResults.requiredScore ? 'text-green-600' : 'text-orange-600'">
-                  {{ quizResults.latestPercentage ?? quizResults.percentage ?? 0 }}%
+                <div class="text-3xl font-bold" :class="(quizResults.latestPercentage ?? 0) >= quizResults.requiredScore ? 'text-green-600' : 'text-orange-600'">
+                  {{ quizResults.latestPercentage ?? 0 }}%
                 </div>
                 <p class="text-xs text-gray-500 mt-1">
-                  {{ quizResults.latestScore ?? quizResults.score ?? 0 }} / {{ quizResults.latestTotalScore ?? quizResults.totalScore ?? 0 }}
+                  {{ quizResults.latestScore ?? 0 }} / {{ quizResults.latestTotalScore ?? 0 }}
                 </p>
               </div>
 
@@ -458,14 +458,8 @@ const loadQuestions = async () => {
     });
 
     if (response.success) {
-      // Transform database field names to match QuizQuestion component expectations
-      questions.value = (response.questions || []).map((q: any) => ({
-        ...q,
-        question_type: q.type, // type → question_type
-        content: q.question, // question → content
-        options: q.question_options, // question_options → options
-        answer: q.question_correct_answers, // question_correct_answers → answer
-      }));
+      // BE now returns data in the expected shape
+      questions.value = response.questions || [];
     } else {
       throw new Error('Failed to load questions');
     }
@@ -501,7 +495,7 @@ const submitQuiz = async () => {
       showResults.value = true;
 
       // Emit event to refresh subjects list
-      emit('quiz-submitted', response.score, response.totalScore);
+      emit('quiz-submitted', response.latestScore, response.latestTotalScore);
     } else {
       throw new Error('Failed to submit quiz');
     }
@@ -511,6 +505,14 @@ const submitQuiz = async () => {
   } finally {
     isSubmitting.value = false;
   }
+};
+
+const handleClose = () => {
+  if (isSubmitting.value) {
+    alert('Quiz is being marked. Please wait for the results.');
+    return;
+  }
+  emit('close');
 };
 
 const handleReattempt = () => {
