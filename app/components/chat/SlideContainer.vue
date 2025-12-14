@@ -68,7 +68,7 @@
         />
 
         <!-- Question Options for MCQ slides -->
-        <div v-if="currentSlide.type === 'question' && currentSlide.options" class="mt-4">
+        <div v-if="currentSlide.type === 'question' && currentSlide.question_type === 'mcq' && currentSlide.options?.length" class="mt-4">
           <div class="space-y-2">
             <div
               v-for="(option, index) in currentSlide.options"
@@ -117,6 +117,239 @@
                     : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
                       ? 'text-amber-800'
                       : 'text-red-800'
+                ]"
+              >
+                {{ answeredQuestions[currentSlide.id]?.feedback }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPEN Question Input -->
+        <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'open'" class="mt-4">
+          <!-- Show saved answer if exists -->
+          <div v-if="currentSlide.userAnswer?.text || currentSlide.markingResult" class="space-y-3">
+            <!-- Saved Answer Display -->
+            <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+              <p class="text-sm font-medium text-gray-600 mb-1">Your Answer:</p>
+              <p class="text-gray-800 whitespace-pre-wrap">{{ currentSlide.userAnswer?.text }}</p>
+            </div>
+
+            <!-- Marking Feedback -->
+            <div
+              v-if="currentSlide.markingResult"
+              :class="[
+                'p-3 rounded-lg',
+                currentSlide.markingResult.status === 'correct'
+                  ? 'bg-green-50 border border-green-200'
+                  : currentSlide.markingResult.status === 'partially_correct'
+                    ? 'bg-amber-50 border border-amber-200'
+                    : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <span
+                  :class="[
+                    'px-2 py-1 rounded-full text-xs font-semibold',
+                    currentSlide.markingResult.status === 'correct'
+                      ? 'bg-green-200 text-green-800'
+                      : currentSlide.markingResult.status === 'partially_correct'
+                        ? 'bg-amber-200 text-amber-800'
+                        : 'bg-red-200 text-red-800'
+                  ]"
+                >
+                  {{ currentSlide.markingResult.status === 'correct' ? 'Correct' :
+                    currentSlide.markingResult.status === 'partially_correct' ? 'Partially Correct' : 'Incorrect' }}
+                </span>
+                <span class="text-sm text-gray-600">
+                  Score: {{ currentSlide.markingResult.score.awarded }}/{{ currentSlide.markingResult.score.total }}
+                </span>
+              </div>
+              <p v-if="currentSlide.markingResult.feedback?.positive" class="text-sm text-green-700 mb-1">
+                <strong>+</strong> {{ currentSlide.markingResult.feedback.positive }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.gaps" class="text-sm text-amber-700 mb-1">
+                <strong>Gaps:</strong> {{ currentSlide.markingResult.feedback.gaps }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.improvement" class="text-sm text-blue-700">
+                <strong>Tip:</strong> {{ currentSlide.markingResult.feedback.improvement }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Input for new answer -->
+          <div v-else class="space-y-3">
+            <textarea
+              v-model="textAnswers[currentSlide.id]"
+              maxlength="500"
+              class="w-full p-3 border-2 border-gray-200 rounded-lg resize-y min-h-24 focus:border-primary-500 focus:outline-none transition-colors"
+              placeholder="Enter your answer here..."
+              rows="4"
+              :disabled="isSubmitting[currentSlide.id]"
+            />
+            <div class="flex justify-center">
+              <button
+                v-if="textAnswers[currentSlide.id]?.trim()"
+                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                :disabled="isSubmitting[currentSlide.id]"
+                @click="submitOpenAnswer(currentSlide)"
+              >
+                <span v-if="isSubmitting[currentSlide.id]" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                {{ isSubmitting[currentSlide.id] ? 'Marking...' : 'Submit Answer' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILL Question Input -->
+        <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'fill'" class="mt-4">
+          <!-- Show saved answer if exists -->
+          <div v-if="currentSlide.userAnswer?.text || currentSlide.userAnswer?.texts || currentSlide.markingResult" class="space-y-3">
+            <!-- Saved Answers Display -->
+            <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+              <p class="text-sm font-medium text-gray-600 mb-1">Your Answer(s):</p>
+              <div v-if="currentSlide.userAnswer?.texts" class="space-y-1">
+                <p v-for="(ans, idx) in currentSlide.userAnswer.texts" :key="idx" class="text-gray-800">
+                  {{ idx + 1 }}. {{ ans }}
+                </p>
+              </div>
+              <p v-else class="text-gray-800">{{ currentSlide.userAnswer?.text }}</p>
+            </div>
+
+            <!-- Marking Feedback (same as OPEN) -->
+            <div
+              v-if="currentSlide.markingResult"
+              :class="[
+                'p-3 rounded-lg',
+                currentSlide.markingResult.status === 'correct'
+                  ? 'bg-green-50 border border-green-200'
+                  : currentSlide.markingResult.status === 'partially_correct'
+                    ? 'bg-amber-50 border border-amber-200'
+                    : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <span
+                  :class="[
+                    'px-2 py-1 rounded-full text-xs font-semibold',
+                    currentSlide.markingResult.status === 'correct'
+                      ? 'bg-green-200 text-green-800'
+                      : currentSlide.markingResult.status === 'partially_correct'
+                        ? 'bg-amber-200 text-amber-800'
+                        : 'bg-red-200 text-red-800'
+                  ]"
+                >
+                  {{ currentSlide.markingResult.status === 'correct' ? 'Correct' :
+                    currentSlide.markingResult.status === 'partially_correct' ? 'Partially Correct' : 'Incorrect' }}
+                </span>
+                <span class="text-sm text-gray-600">
+                  Score: {{ currentSlide.markingResult.score.awarded }}/{{ currentSlide.markingResult.score.total }}
+                </span>
+              </div>
+              <p v-if="currentSlide.markingResult.feedback?.positive" class="text-sm text-green-700 mb-1">
+                <strong>+</strong> {{ currentSlide.markingResult.feedback.positive }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.gaps" class="text-sm text-amber-700 mb-1">
+                <strong>Gaps:</strong> {{ currentSlide.markingResult.feedback.gaps }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.improvement" class="text-sm text-blue-700">
+                <strong>Tip:</strong> {{ currentSlide.markingResult.feedback.improvement }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Input for new answer -->
+          <div v-else class="space-y-3">
+            <!-- Single blank -->
+            <div v-if="!currentSlide.answer || currentSlide.answer.length <= 1">
+              <input
+                v-model="textAnswers[currentSlide.id]"
+                maxlength="500"
+                type="text"
+                class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                placeholder="Fill in the blank..."
+                :disabled="isSubmitting[currentSlide.id]"
+              >
+            </div>
+            <!-- Multiple blanks -->
+            <div v-else class="space-y-2">
+              <div v-for="(answer, index) in currentSlide.answer" :key="answer.id || index" class="flex items-center gap-2">
+                <span class="font-medium text-gray-600 w-6">{{ index + 1 }}.</span>
+                <input
+                  v-model="getFillAnswerArray(currentSlide.id, currentSlide.answer.length)[index]"
+                  type="text"
+                  class="flex-1 p-2 border-2 border-gray-200 rounded focus:border-primary-500 focus:outline-none transition-colors"
+                  :placeholder="`Answer ${index + 1}...`"
+                  :disabled="isSubmitting[currentSlide.id]"
+                >
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <button
+                v-if="hasFillAnswer(currentSlide)"
+                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                :disabled="isSubmitting[currentSlide.id]"
+                @click="submitFillAnswer(currentSlide)"
+              >
+                <span v-if="isSubmitting[currentSlide.id]" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                {{ isSubmitting[currentSlide.id] ? 'Marking...' : 'Submit Answer' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOOLEAN Question Input -->
+        <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'boolean'" class="mt-4">
+          <div class="flex gap-4">
+            <button
+              class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
+              :class="{
+                'bg-green-50 border-green-500 text-green-700': booleanAnswers[currentSlide.id] === true,
+                'hover:bg-green-50 hover:border-green-300 border-gray-200': booleanAnswers[currentSlide.id] !== true
+              }"
+              @click="selectBoolean(currentSlide.id, true)"
+            >
+              True
+            </button>
+            <button
+              class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
+              :class="{
+                'bg-red-50 border-red-500 text-red-700': booleanAnswers[currentSlide.id] === false,
+                'hover:bg-red-50 hover:border-red-300 border-gray-200': booleanAnswers[currentSlide.id] !== false
+              }"
+              @click="selectBoolean(currentSlide.id, false)"
+            >
+              False
+            </button>
+          </div>
+
+          <!-- Check Answer Button -->
+          <div class="mt-4 flex justify-center">
+            <button
+              v-if="booleanAnswers[currentSlide.id] !== undefined && !answeredQuestions[currentSlide.id]"
+              class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              @click="checkBooleanAnswer(currentSlide)"
+            >
+              Check Answer
+            </button>
+          </div>
+
+          <!-- Answer Feedback -->
+          <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+            <div
+              :class="[
+                'p-3 rounded-lg',
+                answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                  ? 'bg-green-50 border border-green-200'
+                  : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <p
+                :class="[
+                  'text-sm font-semibold',
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                    ? 'text-green-800'
+                    : 'text-red-800'
                 ]"
               >
                 {{ answeredQuestions[currentSlide.id]?.feedback }}
@@ -176,6 +409,26 @@ import { convertHighlights, convertImages } from '~/utils/markdownUtils';
 
 const toast = useToast();
 
+interface MarkingResult {
+  status: 'correct' | 'partially_correct' | 'incorrect';
+  score: { awarded: number; total: number };
+  feedback: {
+    positive: string;
+    gaps: string;
+    improvement: string;
+  };
+  key_concepts_assessed?: string[];
+  marking_rationale?: string;
+  markedAt?: string;
+}
+
+interface UserAnswer {
+  text?: string;
+  texts?: string[];
+  boolean?: boolean;
+  submittedAt?: string;
+}
+
 interface SlideData {
   id: string;
   part_label: string;
@@ -190,15 +443,18 @@ interface SlideData {
   }>;
   answer: any[];
   explanation?: string;
+  userAnswer?: UserAnswer;
+  markingResult?: MarkingResult;
 }
 
 const props = defineProps<{
   slides: SlideData[];
   initialSlideIndex?: number;
   showThumbnails?: boolean;
+  messageId?: string | null;
 }>();
 
-const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view']);
+const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view', 'answer-submitted']);
 
 // Responsive state
 const isMobile = ref(false);
@@ -211,6 +467,12 @@ const showExplanation = ref(false);
 // Question and answer state
 const selectedOptions = ref<Record<string, any>>({});
 const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: string }>>({});
+
+// Text answer state for OPEN/FILL/BOOLEAN questions
+const textAnswers = ref<Record<string, string>>({});
+const fillAnswers = ref<Record<string, string[]>>({});
+const booleanAnswers = ref<Record<string, boolean | undefined>>({});
+const isSubmitting = ref<Record<string, boolean>>({});
 
 // Refs
 const slidesPanel = ref<HTMLElement>();
@@ -295,6 +557,14 @@ watchEffect(async () => {
 
 // Methods
 function previousSlide() {
+  if (isSubmitting.value[currentSlide.value?.id]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Your answer is being marked. Please wait before navigating.',
+      color: 'warning'
+    });
+    return;
+  }
   if (currentSlideIndex.value > 0) {
     currentSlideIndex.value--;
     showExplanation.value = false;
@@ -303,6 +573,14 @@ function previousSlide() {
 }
 
 function nextSlide() {
+  if (isSubmitting.value[currentSlide.value?.id]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Your answer is being marked. Please wait before navigating.',
+      color: 'warning'
+    });
+    return;
+  }
   if (currentSlideIndex.value < totalSlides.value - 1) {
     currentSlideIndex.value++;
     showExplanation.value = false;
@@ -311,6 +589,14 @@ function nextSlide() {
 }
 
 function jumpToSlide(index: number) {
+  if (isSubmitting.value[currentSlide.value?.id]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Your answer is being marked. Please wait before navigating.',
+      color: 'warning'
+    });
+    return;
+  }
   currentSlideIndex.value = index;
   showExplanation.value = false;
   emit('slide-changed', index);
@@ -357,6 +643,181 @@ function checkAnswer(slide: SlideData) {
   }
 }
 
+// Helper to get/initialize fill answers array
+function getFillAnswerArray(slideId: string, length: number): string[] {
+  if (!fillAnswers.value[slideId]) {
+    fillAnswers.value[slideId] = new Array(length).fill('');
+  }
+  return fillAnswers.value[slideId];
+}
+
+// Check if fill answer is complete
+function hasFillAnswer(slide: SlideData): boolean {
+  if (!slide.answer || slide.answer.length <= 1) {
+    return !!textAnswers.value[slide.id]?.trim();
+  }
+  const answers = fillAnswers.value[slide.id];
+  return answers && answers.some((a) => a.trim().length > 0);
+}
+
+// Submit OPEN question answer
+async function submitOpenAnswer(slide: SlideData) {
+  const answer = textAnswers.value[slide.id]?.trim();
+  if (!answer || !props.messageId) {
+    if (!props.messageId) {
+      toast.add({
+        title: 'Error',
+        description: 'Cannot submit answer: message context not available.',
+        color: 'red'
+      });
+    }
+    return;
+  }
+
+  isSubmitting.value[slide.id] = true;
+
+  try {
+    const response = await $fetch<{ success: boolean; result: MarkingResult }>('/api/chat/slide/mark', {
+      method: 'POST',
+      body: {
+        messageId: props.messageId,
+        slideId: slide.id,
+        question: {
+          id: slide.id,
+          question_type: slide.question_type,
+          title: slide.title,
+          content: slide.content,
+          answer: slide.answer,
+          explanation: slide.explanation
+        },
+        userAnswer: answer
+      }
+    });
+
+    if (response.success) {
+      // Update local slide state
+      slide.userAnswer = { text: answer, submittedAt: new Date().toISOString() };
+      slide.markingResult = response.result;
+      showExplanation.value = true;
+
+      emit('answer-submitted', {
+        slideId: slide.id,
+        answer,
+        result: response.result
+      });
+    }
+  } catch (error) {
+    console.error('Error submitting answer:', error);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to mark your answer. Please try again.',
+      color: 'red'
+    });
+  } finally {
+    isSubmitting.value[slide.id] = false;
+  }
+}
+
+// Submit FILL question answer
+async function submitFillAnswer(slide: SlideData) {
+  let userAnswer: string | string[];
+
+  if (!slide.answer || slide.answer.length <= 1) {
+    userAnswer = textAnswers.value[slide.id]?.trim();
+  } else {
+    userAnswer = fillAnswers.value[slide.id]?.map((a) => a.trim()).filter((a) => a.length > 0);
+  }
+
+  if (!userAnswer || (Array.isArray(userAnswer) && userAnswer.length === 0) || !props.messageId) {
+    if (!props.messageId) {
+      toast.add({
+        title: 'Error',
+        description: 'Cannot submit answer: message context not available.',
+        color: 'red'
+      });
+    }
+    return;
+  }
+
+  isSubmitting.value[slide.id] = true;
+
+  try {
+    const response = await $fetch<{ success: boolean; result: MarkingResult }>('/api/chat/slide/mark', {
+      method: 'POST',
+      body: {
+        messageId: props.messageId,
+        slideId: slide.id,
+        question: {
+          id: slide.id,
+          question_type: slide.question_type,
+          title: slide.title,
+          content: slide.content,
+          answer: slide.answer,
+          explanation: slide.explanation
+        },
+        userAnswer
+      }
+    });
+
+    if (response.success) {
+      // Update local slide state
+      slide.userAnswer = {
+        text: typeof userAnswer === 'string' ? userAnswer : undefined,
+        texts: Array.isArray(userAnswer) ? userAnswer : undefined,
+        submittedAt: new Date().toISOString()
+      };
+      slide.markingResult = response.result;
+      showExplanation.value = true;
+
+      emit('answer-submitted', {
+        slideId: slide.id,
+        answer: userAnswer,
+        result: response.result
+      });
+    }
+  } catch (error) {
+    console.error('Error submitting answer:', error);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to mark your answer. Please try again.',
+      color: 'red'
+    });
+  } finally {
+    isSubmitting.value[slide.id] = false;
+  }
+}
+
+// Select boolean answer
+function selectBoolean(slideId: string, value: boolean) {
+  booleanAnswers.value[slideId] = value;
+
+  // Clear previous answer to allow retry (same pattern as MCQ selectOption)
+  if (answeredQuestions.value[slideId]) {
+    answeredQuestions.value[slideId] = undefined as any;
+  }
+}
+
+// Check BOOLEAN question answer (local check like MCQ - no API call needed)
+function checkBooleanAnswer(slide: SlideData) {
+  const selectedBoolean = booleanAnswers.value[slide.id];
+  if (selectedBoolean === undefined) return;
+
+  // Check answer locally against correct answer from JSON
+  const correctAnswer = slide.answer?.[0]?.answer_boolean;
+  const markingStatus = (selectedBoolean === correctAnswer) ? 'CORRECT' : 'INCORRECT';
+
+  // Update answeredQuestions state (same pattern as MCQ)
+  answeredQuestions.value[slide.id] = {
+    markingStatus,
+    feedback: markingStatus === 'CORRECT' ? '✅ Correct!' : '❌ Incorrect. Try again!'
+  };
+
+  // Show explanation if available
+  if (slide.explanation) {
+    showExplanation.value = true;
+  }
+}
+
 // Resize functionality
 let isResizing = false;
 
@@ -399,10 +860,25 @@ function handleKeyPress(e: KeyboardEvent) {
   if (e.key === 'Escape') emit('close-split-view');
 }
 
+// Check if any submission is in progress
+const isAnySubmitting = computed(() => {
+  return Object.values(isSubmitting.value).some((v) => v);
+});
+
+// Warn user before leaving page during submission
+function handleBeforeUnload(e: BeforeUnloadEvent) {
+  if (isAnySubmitting.value) {
+    e.preventDefault();
+    e.returnValue = 'Your answer is being marked. Are you sure you want to leave?';
+    return e.returnValue;
+  }
+}
+
 onMounted(() => {
   checkMobile();
   window.addEventListener('resize', checkMobile);
   document.addEventListener('keydown', handleKeyPress);
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
 onUnmounted(() => {
@@ -410,5 +886,11 @@ onUnmounted(() => {
   document.removeEventListener('mousemove', handleResize);
   document.removeEventListener('mouseup', stopResize);
   document.removeEventListener('keydown', handleKeyPress);
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+// Expose state for parent component navigation guards
+defineExpose({
+  isAnySubmitting
 });
 </script>

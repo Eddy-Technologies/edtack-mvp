@@ -51,7 +51,7 @@ const props = defineProps<ChatContentProps>();
 // Component events
 const emit = defineEmits<{
   (e: 'responseReceived'): void;
-  (e: 'openSlides', slides: any[]): void;
+  (e: 'openSlides', slides: any[], messageId?: string): void;
 }>();
 
 // Use global thread state instead of local state
@@ -213,8 +213,8 @@ onMounted(() => {
         const latestMessage = newMessages[newMessages.length - 1];
         if (latestMessage?.slides && Array.isArray(latestMessage.slides) && latestMessage.slides.length > 0) {
           console.log('Auto-opening slides for new message:', latestMessage.slides);
-          // Emit to parent to open slides panel
-          emit('openSlides', latestMessage.slides);
+          // Emit to parent to open slides panel with messageId for marking persistence
+          emit('openSlides', latestMessage.slides, latestMessage.id);
 
           // Scroll to the message with slides
           nextTick(() => {
@@ -356,8 +356,8 @@ const handleSlideBatch = (batchMessage: any) => {
       estimatedTimeRemaining: null,
     };
 
-    // Emit to parent to open slides panel
-    emit('openSlides', [...slides]);
+    // Emit to parent to open slides panel with messageId for marking persistence
+    emit('openSlides', [...slides], newMessageId);
 
     isWaitingForResponse.value = true;
 
@@ -393,8 +393,8 @@ const handleSlideBatch = (batchMessage: any) => {
     streamingProgress.value.estimatedTimeRemaining = remaining;
   }
 
-  // Emit updated slides to parent
-  emit('openSlides', [...existingMessage.slides]);
+  // Emit updated slides to parent with messageId for marking persistence
+  emit('openSlides', [...existingMessage.slides], activeStreamingMessage.value?.id);
 
   // Trigger reactivity
   messageStream.value = [...messageStream.value];
@@ -658,8 +658,8 @@ const handleSend = async (text: string) => {
 };
 
 const handleOpenSplitView = (slides: any[], messageId?: string) => {
-  // Emit to parent to open slides panel
-  emit('openSlides', slides);
+  // Emit to parent to open slides panel with messageId for marking persistence
+  emit('openSlides', slides, messageId);
   nextTick(() => {
     if (typeof messageId === 'string') {
       // Scroll to the specific message that contains the slides

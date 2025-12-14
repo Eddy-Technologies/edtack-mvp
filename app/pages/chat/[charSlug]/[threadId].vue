@@ -136,7 +136,9 @@
         <!-- Slides Column (conditional) -->
         <SlideContainer
           v-if="showSlides"
+          ref="slideContainerRef"
           :slides="selectedSlides"
+          :message-id="selectedMessageId"
           :show-thumbnails="true"
           @close-split-view="handleCloseSlides"
         />
@@ -178,10 +180,12 @@ const showContentTransitions = ref(false);
 const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
 const chatInputRef = ref<any>(null);
+const slideContainerRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
 
 // Slide state management (lifted from ChatContent)
 const selectedSlides = ref<any[]>([]);
+const selectedMessageId = ref<string | null>(null);
 const showSlides = computed(() => selectedSlides.value.length > 0);
 
 const router = useRouter();
@@ -220,8 +224,14 @@ onBeforeRouteLeave(() => {
 });
 
 const preventNavigation = () => {
+  // Check if waiting for chat response
   if (chatContentRef.value?.wsChat?.isWaitingForResponse || chatContentRef.value?.isWaitingForResponse) {
     const confirmed = confirm('You are currently waiting for a response. Are you sure you want to leave?');
+    return confirmed;
+  }
+  // Check if slide answer is being marked
+  if (slideContainerRef.value?.isAnySubmitting) {
+    const confirmed = confirm('Your answer is being marked. Are you sure you want to leave?');
     return confirmed;
   }
   return true;
@@ -254,6 +264,7 @@ watch(threadId, async (newThreadId, oldThreadId) => {
   if (newThreadId !== oldThreadId) {
     // Close slides panel when navigating to a different thread
     selectedSlides.value = [];
+    selectedMessageId.value = null;
 
     console.log('ThreadId changed from', oldThreadId, 'to', newThreadId);
 
@@ -293,6 +304,7 @@ watch(threadId, async (newThreadId, oldThreadId) => {
 const handleCharacterSelection = async (character) => {
   // Close slides panel when changing character
   selectedSlides.value = [];
+  selectedMessageId.value = null;
 
   // Update character store
   await selectCharacterBySlug(character.slug);
@@ -320,6 +332,7 @@ const handleNewChat = () => {
 
   // Close slides panel
   selectedSlides.value = [];
+  selectedMessageId.value = null;
 
   // Clear chat content if available
   if (chatContentRef.value && chatContentRef.value.clearChat) {
@@ -365,12 +378,14 @@ const handleResponseReceived = () => {
 };
 
 // Slide event handlers
-const handleOpenSlides = (slides: any[]) => {
+const handleOpenSlides = (slides: any[], messageId?: string) => {
   selectedSlides.value = slides;
+  selectedMessageId.value = messageId || null;
 };
 
 const handleCloseSlides = () => {
   selectedSlides.value = [];
+  selectedMessageId.value = null;
 };
 
 const handleStudyPromptInjection = async () => {
