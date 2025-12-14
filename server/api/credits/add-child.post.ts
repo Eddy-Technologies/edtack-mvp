@@ -1,6 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { requireAuth } from '~~/server/utils/auth';
-import { GROUP_MEMBER_STATUS, GROUP_TYPE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   const stripe = await getStripe();
@@ -57,7 +56,7 @@ export default defineEventHandler(async (event) => {
       .from('groups')
       .select('id, name')
       .eq('created_by', parentUserInfo.id)
-      .eq('group_type', GROUP_TYPE.FAMILY)
+      .eq('group_type', 'family')
       .single();
 
     if (existingGroup) {
@@ -68,7 +67,7 @@ export default defineEventHandler(async (event) => {
         .from('groups')
         .insert({
           name: `${parentUserInfo.first_name || 'Family'}'s Family`,
-          group_type: GROUP_TYPE.FAMILY,
+          group_type: 'family',
           created_by: parentUserInfo.id
         })
         .select()
@@ -90,7 +89,7 @@ export default defineEventHandler(async (event) => {
         .insert({
           group_id: groupId,
           user_info_id: parentUserInfo.id,
-          status: GROUP_MEMBER_STATUS.ACTIVE,
+          status: 'active',
           is_creator: true
         });
 
@@ -108,12 +107,12 @@ export default defineEventHandler(async (event) => {
       .single();
 
     if (existingMember) {
-      if (existingMember.status === GROUP_MEMBER_STATUS.ACTIVE) {
+      if (existingMember.status === 'active') {
         throw createError({
           statusCode: 409,
           statusMessage: 'Child is already in your family group'
         });
-      } else if (existingMember.status === GROUP_MEMBER_STATUS.PENDING) {
+      } else if (existingMember.status === 'pending') {
         throw createError({
           statusCode: 409,
           statusMessage: 'An invitation is already pending for this child'
@@ -127,7 +126,7 @@ export default defineEventHandler(async (event) => {
       .insert({
         group_id: groupId,
         user_info_id: child.id,
-        status: GROUP_MEMBER_STATUS.ACTIVE,
+        status: 'active',
         invited_by: parentUserInfo.id,
         is_creator: false
       });

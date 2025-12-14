@@ -1,5 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { TASK_STATUS, GROUP_MEMBER_STATUS } from '~~/shared/constants';
+import { TASK_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('user_info_id', parentInfo.id)
-      .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
+      .eq('status', 'active');
 
     if (groupError) {
       console.error('Failed to fetch groups:', groupError);
@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
     for (const groupMember of sharedGroups || []) {
       if (groupMember.groups.created_by === parentInfo.id) {
         const hasChild = groupMember.groups.group_members.some(
-          (member) => member.user_info_id === childId && member.status === GROUP_MEMBER_STATUS.ACTIVE
+          (member) => member.user_info_id === childId && member.status === 'active'
         );
         if (hasChild) {
           targetGroup = groupMember.groups;

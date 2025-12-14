@@ -1,7 +1,7 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { serverSupabaseUser } from '#supabase/server';
 import { createStripeCustomer } from '~~/server/utils/stripe';
-import { USER_ROLE } from '~~/shared/constants';
+import { USER_ROLE } from '~/constants/User';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);

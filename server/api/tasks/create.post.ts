@@ -1,5 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { TASK_STATUS, GROUP_MEMBER_STATUS } from '~~/shared/constants';
+import { TASK_STATUS } from '~~/shared/constants';
 import { getUserInfo } from '~~/server/utils/auth';
 import { codeService } from '~~/server/services/codeService';
 import { CODE_CATEGORIES } from '~/stores/codes';
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('user_info_id', creatorInfo.id)
-      .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
+      .eq('status', 'active');
 
     if (relationError) {
       console.error('Failed to fetch group relationships:', relationError);
@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     groupRelation?.forEach((creatorGroup) => {
       if (creatorGroup.groups.created_by === creatorInfo.id) {
         const hasAssignee = creatorGroup.groups.group_members.some(
-          (member) => member.user_info_id === assigneeUserInfoId && member.status === GROUP_MEMBER_STATUS.ACTIVE
+          (member) => member.user_info_id === assigneeUserInfoId && member.status === 'active'
         );
         if (hasAssignee) {
           canAssignTask = true;

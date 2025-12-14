@@ -1,6 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { ORDER_STATUS, GROUP_MEMBER_STATUS } from '~~/shared/constants';
+import { ORDER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('user_info_id', parentInfo.id)
-      .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
+      .eq('status', 'active');
 
     if (relationError) {
       console.error('Failed to fetch group relationships:', relationError);
@@ -92,7 +92,7 @@ export default defineEventHandler(async (event) => {
     groupRelation?.forEach((parentGroup) => {
       if (parentGroup.groups.created_by === parentInfo.id) {
         const hasChild = parentGroup.groups.group_members.some(
-          (member) => member.user_info_id === order.user_info_id && member.status === GROUP_MEMBER_STATUS.ACTIVE
+          (member) => member.user_info_id === order.user_info_id && member.status === 'active'
         );
         if (hasChild) {
           hasPermission = true;

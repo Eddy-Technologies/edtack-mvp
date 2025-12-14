@@ -379,12 +379,12 @@ import OverviewHeader from './overview/OverviewHeader.vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
-import { ORDER_STATUS, TASK_STATUS, GROUP_MEMBER_STATUS, USER_ROLE } from '~~/shared/constants/codes';
+import { ORDER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
 
 const user = useMeStore();
 
 // Check if user is parent
-const isParent = computed(() => user.user_role === USER_ROLE.PARENT);
+const isParent = computed(() => user.user_role === 'PARENT');
 
 // Family members data
 const familyMembers = ref<any[]>([]);
@@ -418,7 +418,7 @@ onMounted(async () => {
 
       if (familyResult.status === 'fulfilled' && familyResult.value.success) {
         familyMembers.value =
-          familyResult.value.familyMembers?.filter((member: any) => member.status === GROUP_MEMBER_STATUS.ACTIVE) || [];
+          familyResult.value.familyMembers?.filter((member: any) => member.status === 'active') || [];
       }
       if (ordersResult.status === 'fulfilled' && ordersResult.value.success) {
         pendingOrders.value = ordersResult.value.orders || [];

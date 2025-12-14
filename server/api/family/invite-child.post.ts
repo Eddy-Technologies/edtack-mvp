@@ -1,5 +1,4 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { GROUP_MEMBER_STATUS, GROUP_TYPE, USER_ROLE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -38,7 +37,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (parentInfo.user_roles[0].roles.role_name !== USER_ROLE.PARENT) {
+    if (parentInfo.user_roles[0].roles.role_name !== 'PARENT') {
       throw createError({
         statusCode: 403,
         statusMessage: 'Only parents can send invites'
@@ -58,7 +57,7 @@ export default defineEventHandler(async (event) => {
       .from('groups')
       .select('id')
       .eq('created_by', parentInfo.id)
-      .eq('group_type', GROUP_TYPE.FAMILY)
+      .eq('group_type', 'family')
       .single();
 
     if (existingGroup) {
@@ -70,7 +69,7 @@ export default defineEventHandler(async (event) => {
         .insert({
           name: `${parentInfo.first_name}'s Family`,
           description: 'Family group for managing children and credits',
-          group_type: GROUP_TYPE.FAMILY,
+          group_type: 'family',
           created_by: parentInfo.id
         })
         .select('id')
@@ -91,7 +90,7 @@ export default defineEventHandler(async (event) => {
         .insert({
           group_id: familyGroupId,
           user_info_id: parentInfo.id,
-          status: GROUP_MEMBER_STATUS.ACTIVE,
+          status: 'active',
           is_creator: true,
           invited_by: parentInfo.id
         });
@@ -109,7 +108,7 @@ export default defineEventHandler(async (event) => {
       if (existingMembership) {
         throw createError({
           statusCode: 400,
-          statusMessage: existingMembership.status === GROUP_MEMBER_STATUS.PENDING ?
+          statusMessage: existingMembership.status === 'pending' ?
             'An invitation is already pending for this user.' :
             'This user is already a member of your family group.'
         });
@@ -121,7 +120,7 @@ export default defineEventHandler(async (event) => {
         .insert({
           group_id: familyGroupId,
           user_info_id: existingUser.id,
-          status: GROUP_MEMBER_STATUS.PENDING,
+          status: 'pending',
           invited_by: parentInfo.id,
           invited_at: new Date().toISOString()
         })
@@ -144,7 +143,7 @@ export default defineEventHandler(async (event) => {
           memberEmail: email,
           parentName: parentInfo.first_name,
           sentAt: new Date().toISOString(),
-          status: GROUP_MEMBER_STATUS.PENDING
+          status: 'pending'
         }
       };
     } else {

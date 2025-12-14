@@ -1,6 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
-import { GROUP_MEMBER_STATUS, USER_ROLE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -14,7 +13,7 @@ export default defineEventHandler(async (event) => {
       .from('group_members')
       .select('*, groups(*, group_members(*, user:user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)))))')
       .eq('user_info_id', userInfo.id)
-      .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
+      .eq('status', 'active');
 
     if (groupError) {
       console.error('Failed to fetch group members:', groupError);
@@ -30,7 +29,7 @@ export default defineEventHandler(async (event) => {
     // TODO: create a map of all children to avoid duplicates
     groupMembers.forEach((member) => {
       member.groups.group_members.forEach((member) => {
-        if (member.user && member.user.user_roles.some((role) => role.roles?.role_name === USER_ROLE.STUDENT)) {
+        if (member.user && member.user.user_roles.some((role) => role.roles?.role_name === 'STUDENT')) {
           if (!childrenMap.has(member.user_info_id)) {
             childrenMap.set(member.user_info_id, {
               id: member.user_info_id,

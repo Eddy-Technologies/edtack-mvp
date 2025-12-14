@@ -1,6 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
-import { GROUP_MEMBER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -25,7 +24,7 @@ export default defineEventHandler(async (event) => {
       .from('group_members')
       .select('*')
       .in('user_info_id', [toUserInfoId, senderInfo.id])
-      .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
+      .eq('status', 'active');
 
     if (relationError) {
       console.error('Failed to fetch group relationships:', relationError);
