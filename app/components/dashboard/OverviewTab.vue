@@ -479,9 +479,9 @@ onMounted(async () => {
 
       // Load completed tasks count
       try {
-        const completedTasksResponse = await $fetch('/api/tasks/threads', {
+        const completedTasksResponse = await $fetch('/api/tasks/user-tasks', {
           query: {
-            status: 'COMPLETED',
+            status: 'CLOSED',
             limit: 1
           }
         });
@@ -494,17 +494,17 @@ onMounted(async () => {
 
       // Load recent tasks (recent completed tasks)
       try {
-        const recentTasksResponse = await $fetch('/api/tasks/threads', {
+        const recentTasksResponse = await $fetch('/api/tasks/user-tasks', {
           query: {
-            status: 'COMPLETED',
+            status: 'CLOSED',
             limit: 3,
             sortBy: 'created_at',
             sortOrder: 'desc'
           }
         });
         if (recentTasksResponse.success) {
-          // All task threads from this endpoint are assigned to this student
-          recentTasks.value = recentTasksResponse.threads || [];
+          // All tasks from this endpoint are assigned to this student
+          recentTasks.value = recentTasksResponse.tasks || [];
         }
       } catch (recentError) {
         console.error('Failed to load recent tasks:', recentError);
