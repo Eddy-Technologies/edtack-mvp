@@ -18,7 +18,7 @@ import { computed } from 'vue';
 import { useMeStore } from '../../../stores/me';
 import UserAvatar from '~/components/common/UserAvatar.vue';
 import { getDisplayFullName } from '~/utils/avatarUtils';
-import { USER_ROLE } from '~/constants/User';
+import { USER_ROLE } from '~~/shared/constants';
 
 const user = useMeStore();
 

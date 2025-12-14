@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { requireAuth } from '~~/server/utils/auth';
+import { GROUP_MEMBER_STATUS, USER_ROLE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -32,7 +33,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const isParent = userInfo.user_roles.some((role) => role.roles.role_name === 'PARENT');
+    const isParent = userInfo.user_roles.some((role) => role.roles.role_name === USER_ROLE.PARENT);
     if (!isParent) {
       throw createError({
         statusCode: 403,
@@ -50,7 +51,7 @@ export default defineEventHandler(async (event) => {
         groups(created_by)
       `)
       .eq('id', invitationId)
-      .eq('status', 'pending')
+      .eq('status', GROUP_MEMBER_STATUS.PENDING)
       .single();
 
     if (inviteError || !invitation) {

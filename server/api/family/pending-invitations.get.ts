@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
+import { GROUP_MEMBER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -28,7 +29,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('user_info_id', userInfo.id)
-      .eq('status', 'pending')
+      .eq('status', GROUP_MEMBER_STATUS.PENDING)
       .order('invited_at', { ascending: false });
 
     if (invitationsError) {

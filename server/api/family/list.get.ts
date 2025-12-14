@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { GROUP_MEMBER_STATUS, GROUP_TYPE, USER_ROLE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -28,7 +29,7 @@ export default defineEventHandler(async (event) => {
     }
 
     let familyMembers = [];
-    const isParent = userInfo.user_roles.some((role) => role.roles.role_name === 'PARENT');
+    const isParent = userInfo.user_roles.some((role) => role.roles.role_name === USER_ROLE.PARENT);
 
     // For non-parent users (students), first check if they have pending invitations
     if (!isParent) {
@@ -37,7 +38,7 @@ export default defineEventHandler(async (event) => {
         .select(`*, 
           groups(*)`)
         .eq('user_info_id', userInfo.id)
-        .eq('status', 'pending');
+        .eq('status', GROUP_MEMBER_STATUS.PENDING);
 
       if (pendingError) {
         console.error('Failed to fetch pending invitations:', pendingError);
@@ -50,12 +51,12 @@ export default defineEventHandler(async (event) => {
       // If student has pending invitations, return only those
       if (pendingMemberships && pendingMemberships.length > 0) {
         const pendingInvites = pendingMemberships
-          .filter((membership) => membership.groups.group_type === 'family')
+          .filter((membership) => membership.groups.group_type === GROUP_TYPE.FAMILY)
           .map((membership) => ({
             id: membership.id,
             group_id: membership.group_id,
             group_name: membership.groups.group_name,
-            status: 'pending',
+            status: GROUP_MEMBER_STATUS.PENDING,
             invited_at: membership.invited_at,
             type: 'invitation'
           }));
@@ -78,7 +79,7 @@ export default defineEventHandler(async (event) => {
         members:group_members!group_id(*,
           user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)), user_credits(*))))`)
       .eq('user_info_id', userInfo.id)
-      .in('status', ['active', 'pending']);
+      .in('status', [GROUP_MEMBER_STATUS.ACTIVE, GROUP_MEMBER_STATUS.PENDING]);
 
     if (groupsError) {
       console.error('Failed to fetch groups:', groupsError);
@@ -93,7 +94,7 @@ export default defineEventHandler(async (event) => {
 
     userGroups?.forEach((userGroup) => {
       // Only process family groups
-      if (userGroup.groups.group_type !== 'family') return;
+      if (userGroup.groups.group_type !== GROUP_TYPE.FAMILY) return;
 
       userGroup.groups.members.forEach((member) => {
         // Skip self

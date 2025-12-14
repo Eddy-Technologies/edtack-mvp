@@ -351,6 +351,7 @@ import RemoveMemberModal from './RemoveMemberModal.vue';
 import TransferCreditsModal from './TransferCreditsModal.vue';
 import Button from '~/components/common/Button.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
+import { GROUP_MEMBER_STATUS } from '~~/shared/constants';
 
 // Use me store for user role
 const meStore = useMeStore();
@@ -376,7 +377,7 @@ const isTransferLoading = ref(false);
 
 // Computed properties
 const activeMembers = computed(() => {
-  return familyMembers.value.filter((member) => member.status === 'active');
+  return familyMembers.value.filter((member) => member.status === GROUP_MEMBER_STATUS.ACTIVE);
 });
 
 const totalCredits = computed(() => {
@@ -402,8 +403,8 @@ const loadFamily = async () => {
       } else {
         // Normal flow - separate active members from pending invitations
         const allMembers = response.familyMembers || [];
-        familyMembers.value = allMembers.filter((member: any) => member.status === 'active');
-        pendingInvitations.value = allMembers.filter((member: any) => member.status === 'pending');
+        familyMembers.value = allMembers.filter((member: any) => member.status === GROUP_MEMBER_STATUS.ACTIVE);
+        pendingInvitations.value = allMembers.filter((member: any) => member.status === GROUP_MEMBER_STATUS.PENDING);
 
         // Removed isParent assignment - using store instead
         totalTasks.value = response.totalTasks || 0;

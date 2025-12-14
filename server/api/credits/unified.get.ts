@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { requireAuth } from '~~/server/utils/auth';
+import { GROUP_MEMBER_STATUS, GROUP_TYPE, USER_ROLE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -59,7 +60,7 @@ export default defineEventHandler(async (event) => {
 
     // Check if user is a parent by role
     const isParent = userInfo.user_roles?.some((userRole) =>
-      userRole.roles.role_name === 'PARENT'
+      userRole.roles.role_name === USER_ROLE.PARENT
     );
 
     let hasChildren = false;
@@ -74,7 +75,7 @@ export default defineEventHandler(async (event) => {
           members:group_members!group_id(*,
             user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)))))`)
         .eq('user_info_id', userInfo.id)
-        .eq('status', 'active');
+        .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
 
       if (groupsError) {
         console.error('Failed to fetch family groups:', groupsError);
@@ -84,7 +85,7 @@ export default defineEventHandler(async (event) => {
 
         userGroups?.forEach((userGroup) => {
           // Only process family groups
-          if (userGroup.groups.group_type !== 'family') return;
+          if (userGroup.groups.group_type !== GROUP_TYPE.FAMILY) return;
 
           userGroup.groups.members.forEach((member) => {
             // Skip self
@@ -94,11 +95,11 @@ export default defineEventHandler(async (event) => {
             if (childrenMap.has(member.user_info_id)) return;
 
             // Only include active members who are students
-            if (member.status !== 'active') return;
+            if (member.status !== GROUP_MEMBER_STATUS.ACTIVE) return;
 
             const memberUserInfo = member.user_infos;
             const isChild = memberUserInfo.user_roles?.some((userRole) =>
-              userRole.roles.role_name === 'STUDENT'
+              userRole.roles.role_name === USER_ROLE.STUDENT
             );
 
             if (isChild) {

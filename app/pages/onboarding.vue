@@ -150,7 +150,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { USER_ROLE } from '~/constants/User';
+import { USER_ROLE } from '~~/shared/constants';
 import Button from '~/components/common/Button.vue';
 import AppIcon from '~/components/AppIcon.vue';
 import { useMeStore } from '~/stores/me';

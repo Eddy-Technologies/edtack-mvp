@@ -1,6 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { SignUpReq } from '~~/app/composables/useAuth';
-import { USER_ROLE } from '~~/app/constants/User';
+import { USER_ROLE } from '~~/shared/constants';
 import { validateEmail, validatePassword } from '~~/shared/utils/validation';
 import { createStripeCustomer } from '~~/server/utils/stripe';
 

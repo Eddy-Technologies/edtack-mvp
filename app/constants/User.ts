@@ -1,5 +1,0 @@
-export enum USER_ROLE {
-  PARENT = 'PARENT',
-  STUDENT = 'STUDENT',
-  TEACHER = 'TEACHER'
-}

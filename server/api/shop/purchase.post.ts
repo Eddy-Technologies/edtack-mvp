@@ -1,6 +1,6 @@
 import { getStripe } from '~~/server/utils/stripe';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { ORDER_STATUS, OPERATION_TYPE } from '~~/shared/constants';
+import { ORDER_STATUS, OPERATION_TYPE, GROUP_MEMBER_STATUS } from '~~/shared/constants';
 
 // Generate order number function
 function generateOrderNumber(): string {
@@ -121,7 +121,7 @@ export default defineEventHandler(async (event) => {
           )
         `)
         .eq('user_info_id', userInfo.id)
-        .eq('status', 'active');
+        .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
 
       // Determine if user is a parent (no parents found) or child (has parents)
       const hasParents = groupCheck?.some((groupMember) =>
@@ -283,7 +283,7 @@ export default defineEventHandler(async (event) => {
           )
         `)
         .eq('user_info_id', userInfo.id)
-        .eq('status', 'active');
+        .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
 
       if (parentError) {
         console.error('Failed to fetch parent notifications:', parentError);

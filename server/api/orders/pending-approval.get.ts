@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { requireAuth } from '~~/server/utils/auth';
+import { GROUP_MEMBER_STATUS, USER_ROLE } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -48,10 +49,10 @@ export default defineEventHandler(async (event) => {
 
     // Check if user is a parent or student
     const isParent = userInfo.user_roles?.some((userRole) =>
-      userRole.roles.role_name === 'PARENT'
+      userRole.roles.role_name === USER_ROLE.PARENT
     );
     const isStudent = userInfo.user_roles?.some((userRole) =>
-      userRole.roles.role_name === 'STUDENT'
+      userRole.roles.role_name === USER_ROLE.STUDENT
     );
 
     let targetUserIds = [];
@@ -74,7 +75,7 @@ export default defineEventHandler(async (event) => {
           )
         `)
         .eq('user_info_id', userInfo.id)
-        .eq('status', 'active');
+        .eq('status', GROUP_MEMBER_STATUS.ACTIVE);
 
       if (groupError) {
         console.error('Failed to fetch group members:', groupError);
@@ -89,7 +90,7 @@ export default defineEventHandler(async (event) => {
       groupMembers?.forEach((groupMember) => {
         if (groupMember.groups.created_by === userInfo.id) {
           groupMember.groups.group_members.forEach((member) => {
-            if (member.user_info_id !== userInfo.id && member.status === 'active') {
+            if (member.user_info_id !== userInfo.id && member.status === GROUP_MEMBER_STATUS.ACTIVE) {
               childUserIds.push(member.user_info_id);
             }
           });

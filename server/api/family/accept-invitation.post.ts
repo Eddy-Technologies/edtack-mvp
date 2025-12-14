@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { GROUP_MEMBER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -56,7 +57,7 @@ export default defineEventHandler(async (event) => {
       `)
       .eq('group_id', groupId)
       .eq('user_info_id', userInfo.id)
-      .eq('status', 'pending')
+      .eq('status', GROUP_MEMBER_STATUS.PENDING)
       .single();
 
     if (inviteError || !invitation) {
@@ -70,7 +71,7 @@ export default defineEventHandler(async (event) => {
     const { error: updateError } = await supabase
       .from('group_members')
       .update({
-        status: 'active',
+        status: GROUP_MEMBER_STATUS.ACTIVE,
         joined_at: new Date().toISOString()
       })
       .eq('id', invitation.id);

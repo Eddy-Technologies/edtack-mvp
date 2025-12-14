@@ -195,7 +195,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { validateEmail, validatePassword } from '~~/shared/utils';
-import { USER_ROLE } from '~/constants/User';
+import { USER_ROLE } from '~~/shared/constants';
 import Button from '~/components/common/Button.vue';
 import LoginHero from '~/components/login/LoginHero.vue';
 import { useAuth } from '~/composables/useAuth';

@@ -1,5 +1,21 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { ORDER_STATUS, OPERATION_TYPE, TASK_STATUS, MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
+import {
+  ORDER_STATUS,
+  OPERATION_TYPE,
+  TASK_STATUS,
+  MARKING_STATUS,
+  QUESTION_TYPE,
+  GROUP_MEMBER_STATUS,
+  GROUP_TYPE,
+  USER_ROLE,
+  MESSAGE_STATUS,
+  ENTITY_STATUS,
+  TRANSFER_TYPE,
+  FEEDBACK_TYPE,
+  STRIPE_MODE,
+  STUDY_TYPE,
+  GENERATION_INTENT_TYPE
+} from '~~/shared/constants';
 import { CODE_CATEGORIES } from '~~/app/stores/codes';
 
 export interface Code {
@@ -131,3 +147,33 @@ export const isValidMarkingStatus = (status: string): status is MARKING_STATUS =
 
 export const isValidQuestionType = (type: string): type is QUESTION_TYPE =>
   Object.values(QUESTION_TYPE).includes(type as QUESTION_TYPE);
+
+export const isValidGroupMemberStatus = (status: string): status is GROUP_MEMBER_STATUS =>
+  Object.values(GROUP_MEMBER_STATUS).includes(status as GROUP_MEMBER_STATUS);
+
+export const isValidGroupType = (type: string): type is GROUP_TYPE =>
+  Object.values(GROUP_TYPE).includes(type as GROUP_TYPE);
+
+export const isValidUserRole = (role: string): role is USER_ROLE =>
+  Object.values(USER_ROLE).includes(role as USER_ROLE);
+
+export const isValidMessageStatus = (status: string): status is MESSAGE_STATUS =>
+  Object.values(MESSAGE_STATUS).includes(status as MESSAGE_STATUS);
+
+export const isValidEntityStatus = (status: string): status is ENTITY_STATUS =>
+  Object.values(ENTITY_STATUS).includes(status as ENTITY_STATUS);
+
+export const isValidTransferType = (type: string): type is TRANSFER_TYPE =>
+  Object.values(TRANSFER_TYPE).includes(type as TRANSFER_TYPE);
+
+export const isValidFeedbackType = (type: string): type is FEEDBACK_TYPE =>
+  Object.values(FEEDBACK_TYPE).includes(type as FEEDBACK_TYPE);
+
+export const isValidStripeMode = (mode: string): mode is STRIPE_MODE =>
+  Object.values(STRIPE_MODE).includes(mode as STRIPE_MODE);
+
+export const isValidStudyType = (type: string): type is STUDY_TYPE =>
+  Object.values(STUDY_TYPE).includes(type as STUDY_TYPE);
+
+export const isValidGenerationIntentType = (type: string): type is GENERATION_INTENT_TYPE =>
+  Object.values(GENERATION_INTENT_TYPE).includes(type as GENERATION_INTENT_TYPE);

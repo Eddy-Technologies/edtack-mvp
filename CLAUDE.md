@@ -130,11 +130,81 @@ This is a Nuxt 3 application with:
 
 ## System Codes
 
-System codes are shared CONSTANT_CASE enums (e.g., `CORRECT`, `PENDING`) used across BE/FE for type safety.
+System codes are shared enums used across BE/FE for type safety. **All enum names AND values must be UPPERCASE.**
 
-**Adding new codes:**
-1. Add enum to `shared/constants/codes.ts`
-2. Add type guard to `server/services/codeService.ts`
-3. Add seed data to `supabase/seeds/all_seeds.sql`
-4. Add to `app/stores/codes.ts` CODE_CATEGORIES
-5. Optional: Add CHECK constraint to table schema
+### Existing Enums
+| Enum | Location | Purpose |
+|------|----------|---------|
+| `ORDER_STATUS` | shared/constants/codes.ts | Order lifecycle states |
+| `ORDER_FULFILLMENT` | shared/constants/codes.ts | Fulfillment states |
+| `OPERATION_TYPE` | shared/constants/codes.ts | Credit transaction types |
+| `TASK_STATUS` | shared/constants/codes.ts | Task states |
+| `LESSON_GENERATION_TYPE` | shared/constants/codes.ts | Quiz/lesson generation modes |
+| `MARKING_STATUS` | shared/constants/codes.ts | Answer marking results |
+| `QUESTION_TYPE` | shared/constants/codes.ts | Question formats |
+| `GROUP_MEMBER_STATUS` | shared/constants/codes.ts | Group membership states |
+| `GROUP_TYPE` | shared/constants/codes.ts | Group types |
+| `USER_ROLE` | shared/constants/codes.ts | User roles |
+| `MESSAGE_STATUS` | shared/constants/codes.ts | Chat message states |
+| `ENTITY_STATUS` | shared/constants/codes.ts | Generic active/inactive |
+| `TRANSFER_TYPE` | shared/constants/codes.ts | Credit transfer types |
+| `FEEDBACK_TYPE` | shared/constants/codes.ts | User feedback types |
+| `STRIPE_MODE` | shared/constants/codes.ts | Stripe payment modes |
+| `STUDY_TYPE` | shared/constants/codes.ts | Study session types |
+| `GENERATION_INTENT_TYPE` | shared/constants/codes.ts | AI generation intents |
+
+### Adding New Enums
+
+**Step 1: Add enum to `shared/constants/codes.ts`**
+```typescript
+// All values MUST be UPPERCASE
+export enum MY_NEW_STATUS {
+  ACTIVE = 'ACTIVE',
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED'
+}
+```
+
+**Step 2: Add type guard to `server/services/codeService.ts`**
+```typescript
+export const isValidMyNewStatus = (status: string): status is MY_NEW_STATUS =>
+  Object.values(MY_NEW_STATUS).includes(status as MY_NEW_STATUS);
+```
+
+**Step 3: Add seed data to `supabase/seeds/all_seeds.sql`**
+```sql
+-- MY_NEW_STATUS codes
+INSERT INTO codes (category, code, name, sort_order) VALUES
+('MY_NEW_STATUS', 'ACTIVE', 'Active', 1),
+('MY_NEW_STATUS', 'PENDING', 'Pending', 2),
+('MY_NEW_STATUS', 'COMPLETED', 'Completed', 3)
+ON CONFLICT (category, code) DO UPDATE SET name = EXCLUDED.name, sort_order = EXCLUDED.sort_order;
+```
+
+**Step 4: Add to `app/stores/codes.ts` CODE_CATEGORIES**
+```typescript
+export const CODE_CATEGORIES = {
+  // ... existing categories
+  MY_NEW_STATUS: 'MY_NEW_STATUS',
+} as const;
+```
+
+**Step 5 (Optional): Add CHECK constraint to table schema**
+```sql
+ALTER TABLE my_table ADD CONSTRAINT my_table_status_check
+  CHECK (status IN ('ACTIVE', 'PENDING', 'COMPLETED'));
+```
+
+### Usage in Code
+```typescript
+// Import from shared constants
+import { MY_NEW_STATUS } from '~~/shared/constants';
+
+// Use enum values
+const status = MY_NEW_STATUS.ACTIVE;
+
+// Type guard validation
+if (isValidMyNewStatus(inputStatus)) {
+  // inputStatus is now typed as MY_NEW_STATUS
+}
+```
