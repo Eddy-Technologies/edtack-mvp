@@ -318,23 +318,23 @@
               <div
                 :class="[
                   'w-10 h-10 rounded-xl flex items-center justify-center',
-                  task.status === 'completed' ? 'bg-emerald-50' : 'bg-blue-50'
+                  task.status === 'CLOSED' ? 'bg-emerald-50' : 'bg-blue-50'
                 ]"
               >
                 <UIcon
-                  :name="task.status === 'completed' ? 'i-lucide-check' : 'i-lucide-clock'"
-                  :class="task.status === 'completed' ? 'text-emerald-600' : 'text-blue-600'"
+                  :name="task.status === 'CLOSED' ? 'i-lucide-check' : 'i-lucide-clock'"
+                  :class="task.status === 'CLOSED' ? 'text-emerald-600' : 'text-blue-600'"
                   size="18"
                 />
               </div>
               <div>
-                <h4 class="font-medium text-gray-900">{{ task.title }}</h4>
-                <p class="text-sm text-gray-500">{{ task.description }}</p>
+                <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
+                <p class="text-sm text-gray-500">{{ task.chapters?.map((c: any) => c.display_name).join(', ') || task.subject }}</p>
               </div>
             </div>
             <div class="text-right">
               <p class="font-medium text-emerald-600">+{{ task.credit }} credits</p>
-              <p class="text-xs text-gray-400">{{ formatDate(task.created_at) }}</p>
+              <p class="text-xs text-gray-400">{{ formatDate(task.createdAt) }}</p>
             </div>
           </div>
         </div>
@@ -379,6 +379,7 @@ import OverviewHeader from './overview/OverviewHeader.vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
+import { ORDER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
 
 const user = useMeStore();
 
@@ -404,110 +405,52 @@ const myPendingTasks = ref<any[]>([]);
 onMounted(async () => {
   try {
     if (isParent.value) {
-      // Load family members for parent
-      const response = await $fetch('/api/family/list');
-      if (response.success) {
-        familyMembers.value = response.familyMembers?.filter((member: any) => member.status === 'active') || [];
-      }
+      // Load all parent data in parallel
+      const [familyResult, ordersResult, tasksResult] = await Promise.allSettled([
+        $fetch('/api/family/list'),
+        $fetch('/api/orders/pending-approval', {
+          query: { status: ORDER_STATUS.PENDING_PARENT_APPROVAL, limit: 5 }
+        }),
+        $fetch('/api/tasks/user-tasks', {
+          query: { status: TASK_STATUS.OPEN, limit: 5 }
+        })
+      ]);
 
-      // Load pending order requests (only pending_parent_approval)
-      try {
-        const ordersResponse = await $fetch('/api/orders/pending-approval', {
-          query: {
-            status: 'pending_parent_approval',
-            limit: 5
-          }
-        });
-        if (ordersResponse.success) {
-          pendingOrders.value = ordersResponse.orders || [];
-        }
-      } catch (ordersError) {
-        console.error('Failed to load pending orders:', ordersError);
+      if (familyResult.status === 'fulfilled' && familyResult.value.success) {
+        familyMembers.value =
+          familyResult.value.familyMembers?.filter((member: any) => member.status === 'active') || [];
       }
-
-      // Load pending tasks (assigned to children, with status pending)
-      try {
-        const tasksResponse = await $fetch('/api/tasks/user-tasks', {
-          query: {
-            status: 'OPEN',
-            limit: 5
-          }
-        });
-        if (tasksResponse.success) {
-          // All user tasks from this endpoint are created by the parent
-          pendingTasks.value = tasksResponse.tasks || [];
-        }
-      } catch (tasksError) {
-        console.error('Failed to load pending tasks:', tasksError);
+      if (ordersResult.status === 'fulfilled' && ordersResult.value.success) {
+        pendingOrders.value = ordersResult.value.orders || [];
+      }
+      if (tasksResult.status === 'fulfilled' && tasksResult.value.success) {
+        pendingTasks.value = tasksResult.value.tasks || [];
       }
     } else {
-      // Load student's personal data
-      // Load credits
-      const creditsResponse = await $fetch('/api/credits/unified');
-      userCredits.value = creditsResponse.user.balance || 0;
+      // Load all student data in parallel (4 calls instead of 5 - combined completed count and recent tasks)
+      const [creditsResult, ordersResult, tasksResult, completedResult] = await Promise.allSettled([
+        $fetch('/api/credits/unified'),
+        $fetch('/api/orders/pending-approval', { query: { limit: 5 } }),
+        $fetch('/api/tasks/user-tasks', { query: { status: TASK_STATUS.OPEN, limit: 5 } }),
+        $fetch('/api/tasks/user-tasks', {
+          query: { status: TASK_STATUS.CLOSED, limit: 3, sortBy: 'created_at', sortOrder: 'desc' }
+        })
+      ]);
 
-      // Load student's pending orders
-      try {
-        const ordersResponse = await $fetch('/api/orders/pending-approval', {
-          query: {
-            limit: 5
-          }
-        });
-        if (ordersResponse.success) {
-          myPendingOrders.value = ordersResponse.orders || [];
-        }
-      } catch (ordersError) {
-        console.error('Failed to load my pending orders:', ordersError);
+      if (creditsResult.status === 'fulfilled') {
+        userCredits.value = creditsResult.value.user?.balance || 0;
       }
-
-      // Load student's pending tasks
-      try {
-        const tasksResponse = await $fetch('/api/tasks/user-tasks', {
-          query: {
-            status: 'OPEN',
-            limit: 5
-          }
-        });
-        if (tasksResponse.success) {
-          // All task threads from this endpoint are assigned to this student
-          myPendingTasks.value = tasksResponse.tasks || [];
-          activeTasks.value = myPendingTasks.value.length;
-        }
-      } catch (tasksError) {
-        console.error('Failed to load my pending tasks:', tasksError);
+      if (ordersResult.status === 'fulfilled' && ordersResult.value.success) {
+        myPendingOrders.value = ordersResult.value.orders || [];
       }
-
-      // Load completed tasks count
-      try {
-        const completedTasksResponse = await $fetch('/api/tasks/user-tasks', {
-          query: {
-            status: 'CLOSED',
-            limit: 1
-          }
-        });
-        if (completedTasksResponse.success) {
-          completedTasks.value = completedTasksResponse.pagination?.totalCount || 0;
-        }
-      } catch (completedError) {
-        console.error('Failed to load completed tasks count:', completedError);
+      if (tasksResult.status === 'fulfilled' && tasksResult.value.success) {
+        myPendingTasks.value = tasksResult.value.tasks || [];
+        activeTasks.value = myPendingTasks.value.length;
       }
-
-      // Load recent tasks (recent completed tasks)
-      try {
-        const recentTasksResponse = await $fetch('/api/tasks/user-tasks', {
-          query: {
-            status: 'CLOSED',
-            limit: 3,
-            sortBy: 'created_at',
-            sortOrder: 'desc'
-          }
-        });
-        if (recentTasksResponse.success) {
-          // All tasks from this endpoint are assigned to this student
-          recentTasks.value = recentTasksResponse.tasks || [];
-        }
-      } catch (recentError) {
-        console.error('Failed to load recent tasks:', recentError);
+      if (completedResult.status === 'fulfilled' && completedResult.value.success) {
+        // Use single response for both count and recent tasks
+        completedTasks.value = completedResult.value.pagination?.totalCount || 0;
+        recentTasks.value = completedResult.value.tasks || [];
       }
     }
   } catch (error) {
