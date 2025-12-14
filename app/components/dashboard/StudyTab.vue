@@ -431,54 +431,72 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
 };
 
 const checkQuizExistence = async (chapters: any[]) => {
+  // Collect all userTasksChapterIds
+  const allIds: string[] = [];
   for (const chapter of chapters) {
     if (chapter.user_tasks_chapters?.length > 0) {
-      // Check ALL task-chapter assignments, not just the first one
       for (const taskChapter of chapter.user_tasks_chapters) {
-        const userTasksChapterId = taskChapter.id;
-        if (userTasksChapterId) {
-          try {
-            const checkResponse = await $fetch('/api/quiz/check-existing', {
-              method: 'GET',
-              query: {
-                userTasksChapterId: userTasksChapterId,
-              },
-            });
-            quizExists[userTasksChapterId] = checkResponse.exists;
-
-            // Fetch quiz metadata (scores, completion, credits, etc.)
-            if (checkResponse.exists) {
-              const resultsResponse = await $fetch(`/api/quiz/${userTasksChapterId}/results`, {
-                method: 'GET',
-              });
-
-              quizCompleted[userTasksChapterId] = resultsResponse.isCompleted || false;
-              quizMetadata[userTasksChapterId] = {
-                isCompleted: resultsResponse.isCompleted,
-                bestScore: resultsResponse.bestScore,
-                bestPercentage: resultsResponse.bestPercentage,
-                latestScore: resultsResponse.latestScore,
-                latestPercentage: resultsResponse.latestPercentage,
-                creditDisbursed: resultsResponse.creditDisbursed,
-                creditReward: resultsResponse.creditReward,
-                attemptCount: resultsResponse.attemptCount,
-              };
-            } else {
-              quizCompleted[userTasksChapterId] = false;
-              quizMetadata[userTasksChapterId] = {
-                isCompleted: false,
-              };
-            }
-          } catch (err) {
-            console.error(`Error checking quiz for task-chapter ${userTasksChapterId}:`, err);
-            quizExists[userTasksChapterId] = false;
-            quizCompleted[userTasksChapterId] = false;
-            quizMetadata[userTasksChapterId] = {
-              isCompleted: false,
-            };
-          }
+        if (taskChapter.id) {
+          allIds.push(taskChapter.id);
         }
       }
+    }
+  }
+
+  if (allIds.length === 0) return;
+
+  try {
+    // Single batch call to check all quiz existence
+    const batchResponse = await $fetch('/api/quiz/check-existing-batch', {
+      method: 'POST',
+      body: { userTasksChapterIds: allIds },
+    });
+
+    // Process batch results
+    const existingIds: string[] = [];
+    for (const id of allIds) {
+      const result = batchResponse.results[id];
+      quizExists[id] = result?.exists || false;
+      if (result?.exists) {
+        existingIds.push(id);
+      } else {
+        quizCompleted[id] = false;
+        quizMetadata[id] = { isCompleted: false };
+      }
+    }
+
+    // Fetch metadata for quizzes that exist (parallel calls)
+    await Promise.all(
+      existingIds.map(async (id) => {
+        try {
+          const resultsResponse = await $fetch(`/api/quiz/${id}/results`, {
+            method: 'GET',
+          });
+          quizCompleted[id] = resultsResponse.isCompleted || false;
+          quizMetadata[id] = {
+            isCompleted: resultsResponse.isCompleted,
+            bestScore: resultsResponse.bestScore,
+            bestPercentage: resultsResponse.bestPercentage,
+            latestScore: resultsResponse.latestScore,
+            latestPercentage: resultsResponse.latestPercentage,
+            creditDisbursed: resultsResponse.creditDisbursed,
+            creditReward: resultsResponse.creditReward,
+            attemptCount: resultsResponse.attemptCount,
+          };
+        } catch (err) {
+          console.error(`Error fetching quiz results for ${id}:`, err);
+          quizCompleted[id] = false;
+          quizMetadata[id] = { isCompleted: false };
+        }
+      })
+    );
+  } catch (err) {
+    console.error('Error checking quiz existence batch:', err);
+    // Mark all as non-existent on error
+    for (const id of allIds) {
+      quizExists[id] = false;
+      quizCompleted[id] = false;
+      quizMetadata[id] = { isCompleted: false };
     }
   }
 };
@@ -490,15 +508,8 @@ const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: stri
     // Set loading state
     quizButtonLoading[userTasksChapterId] = true;
 
-    // Check if quiz already exists for this task-chapter
-    const checkResponse = await $fetch('/api/quiz/check-existing', {
-      method: 'GET',
-      query: {
-        userTasksChapterId: userTasksChapterId,
-      },
-    });
-
-    if (checkResponse.exists) {
+    // Use cached quiz existence from batch check
+    if (quizExists[userTasksChapterId]) {
       // Quiz already exists - open modal in attempt mode
       selectedUserTasksChapterId.value = userTasksChapterId;
       selectedChapterDisplayName.value = chapter.display_name;
