@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Username & Password Section -->
-    <div class="bg-white rounded-xl shadow-sm border">
+    <div class="bg-white rounded-xl border border-gray-200">
       <div class="p-6 border-b">
         <h2 class="text-2xl font-bold text-gray-900">Account Settings</h2>
       </div>
@@ -45,13 +45,11 @@
       :is-open="showEmailModal"
       :current-email="userInfo.email"
       @close="showEmailModal = false"
-      @email-updated="handleEmailUpdated"
     />
 
     <ChangePasswordModal
       :is-open="showPasswordModal"
       @close="showPasswordModal = false"
-      @password-updated="handlePasswordUpdated"
     />
   </div>
 </template>
@@ -103,14 +101,4 @@ const getProviderDisplayName = (provider: string) => {
       return provider.charAt(0).toUpperCase() + provider.slice(1);
   }
 };
-
-// // Event handlers
-// const handleEmailUpdated = (newEmail: string) => {
-//   // The email will be updated when Supabase auth state changes
-//   // No need to manually update since userInfo is computed from user.value
-// };
-
-// const handlePasswordUpdated = () => {
-//   // Password updated successfully
-// };
 </script>

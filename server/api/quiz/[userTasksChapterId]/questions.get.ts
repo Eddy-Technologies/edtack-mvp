@@ -32,6 +32,7 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
 
     // Fetch questions linked to this task-chapter via junction table
+    // Only select fields that are actually used by the frontend
     const { data: questionLinks, error: linkError } = await supabase
       .from('user_tasks_chapters_questions')
       .select(`
@@ -39,34 +40,22 @@ export default defineEventHandler(async (event) => {
         display_order,
         questions!inner(
           id,
-          chapter_id,
-          parent_question_id,
-          subquestion_order,
-          part_label,
           type,
           title,
           question,
           explanation,
-          question_image_url,
-          explanation_image_url,
-          source_timestamp,
-          source_name,
-          created_at,
-          updated_at,
+          part_label,
           question_options(
             id,
-            question_id,
             option_text,
             image_url
           ),
           question_correct_answers(
             id,
-            question_id,
             option_id,
             answer_text,
             answer_boolean,
             answer_draw_file,
-            image_url,
             order_index
           )
         )
@@ -82,8 +71,17 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Transform the data structure for frontend consumption
-    const questions = questionLinks?.map((link) => link.questions) || [];
+    // Transform to FE-expected shape (renamed fields)
+    const questions = (questionLinks || []).map((link) => ({
+      id: link.questions.id,
+      question_type: link.questions.type,
+      title: link.questions.title,
+      content: link.questions.question,
+      explanation: link.questions.explanation,
+      part_label: link.questions.part_label,
+      options: link.questions.question_options,
+      answer: link.questions.question_correct_answers,
+    }));
 
     console.log('[questions] Found', questions.length, 'questions for task-chapter:', userTasksChapterId);
 

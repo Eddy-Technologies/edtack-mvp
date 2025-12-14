@@ -1,11 +1,11 @@
 <template>
   <div class="w-full flex px-4" :class="block.isUser ? 'justify-end' : 'justify-center'">
     <div
-      class="flex flex-col gap-3 p-3 rounded-lg select-none"
+      class="flex flex-col gap-3 p-3 rounded-xl select-none"
       :class="[
         block.isUser
-          ? 'bg-green-100 text-gray-800 rounded-bl-none text-left max-w-[75%] w-auto items-center'
-          : 'text-gray-800 text-left rounded-br-none hover:bg-yellow-50 max-w-[1000px] w-full box-border',
+          ? 'bg-stone-100 text-gray-900 text-left max-w-[75%] w-auto items-center'
+          : 'text-gray-900 text-left max-w-[1000px] w-full box-border',
       ]"
     >
       <img

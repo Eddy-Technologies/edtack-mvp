@@ -1,72 +1,7 @@
 <template>
   <div class="flex flex-col h-full bg-white overflow-hidden">
-    <!-- Token Count Display and Connection Status -->
-    <div
-      class="bg-gray-100 text-gray-700 text-sm p-2 text-center border-b border-gray-300 flex justify-between items-center px-4"
-    >
-      <div class="flex items-center gap-3">
-        <!-- Connection status -->
-        <span v-if="useWebSocket && wsChat" class="flex items-center gap-1">
-          <span
-            class="w-2 h-2 rounded-full"
-            :class="connectionStatusClass"
-          />
-          <span class="text-xs" :class="connectionStatusTextClass">
-            {{ connectionStatusText }}
-          </span>
-        </span>
-
-        <!-- Queue indicator -->
-        <span v-if="messageQueue.length > 0" class="flex items-center gap-1 text-xs text-yellow-600">
-          <Icon name="i-heroicons-queue-list" class="w-3 h-3" />
-          {{ messageQueue.length }} message{{ messageQueue.length > 1 ? 's' : '' }} queued
-        </span>
-      </div>
-
-      <div class="flex-1" />
-    </div>
-
-    <!-- Split Screen Mode -->
-    <SlideContainer
-      v-if="viewMode === 'split' && selectedSlides.length > 0"
-      :slides="selectedSlides"
-      :initial-slide-index="0"
-      :show-thumbnails="true"
-      @slide-changed="handleSlideChanged"
-      @close-split-view="handleCloseSplitView"
-    >
-      <template #conversation>
-        <div class="py-6 px-8 space-y-8">
-          <div
-            v-for="(unit, index) in flattenedPlaybackUnits"
-            :key="index"
-            :ref="(el) => setMessageRef(el, unit.props.messageId)"
-            :data-message-id="unit.props.messageId"
-          >
-            <component
-              :is="unit.component"
-              v-bind="unit.props"
-              :start-playback="currentPlaybackIndex === index"
-              @finish="handleFinish"
-              @open-split-view="(slides) => handleOpenSplitView(slides, unit.props.messageId)"
-              @slide-changed="handleSlideChanged"
-            />
-          </div>
-
-          <!-- Loading indicator when waiting for WebSocket response -->
-          <LoadingIndicator
-            v-if="wsChat?.isWaitingForResponse || isWaitingForResponse"
-            :character="character"
-            :is-loading="true"
-          />
-
-          <div ref="bottomAnchor" />
-        </div>
-      </template>
-    </SlideContainer>
-
-    <!-- Stream Mode (Original) -->
-    <div v-if="viewMode === 'stream'" ref="scrollArea" class="flex-1 overflow-y-auto py-6 px-24 space-y-8">
+    <!-- Messages Stream -->
+    <div ref="scrollArea" class="flex-1 overflow-y-auto pt-8 py-6 px-24 pb-32 space-y-8">
       <div
         v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
@@ -79,7 +14,6 @@
           :start-playback="currentPlaybackIndex === index"
           @finish="handleFinish"
           @open-split-view="(slides) => handleOpenSplitView(slides, unit.props.messageId)"
-          @slide-changed="handleSlideChanged"
         />
       </div>
 
@@ -100,7 +34,6 @@ import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
-import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useWebSocketChat } from '~/composables/useWebSocketChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
@@ -118,6 +51,7 @@ const props = defineProps<ChatContentProps>();
 // Component events
 const emit = defineEmits<{
   (e: 'responseReceived'): void;
+  (e: 'openSlides', slides: any[], messageId?: string): void;
 }>();
 
 // Use global thread state instead of local state
@@ -128,11 +62,6 @@ const bottomAnchor = ref<HTMLElement | null>(null);
 const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
 const tokenCount = ref(0);
-
-// Split view state
-const viewMode = ref<'stream' | 'split'>('stream');
-const currentSlideIndex = ref(0);
-const selectedSlides = ref<any[]>([]);
 
 // Streaming state management
 const activeStreamingMessage = ref<{
@@ -164,51 +93,7 @@ if (import.meta.client) {
   tokenCount.value = parseInt(localStorage.getItem('tokenUsage') || '0', 10);
 }
 
-// const { getLessonBundle } = useLesson();
 const meStore = useMeStore();
-
-// Connection status computed properties
-const connectionStatusClass = computed(() => {
-  if (!wsChat.value) return 'bg-gray-400';
-
-  if (wsChat.value.isConnected) {
-    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
-      return 'bg-blue-500 animate-pulse';
-    }
-    return 'bg-green-500';
-  }
-  if (wsChat.value.isConnecting) return 'bg-yellow-500 animate-pulse';
-  if (wsChat.value.error) return 'bg-red-500';
-  return 'bg-gray-400';
-});
-
-const connectionStatusText = computed(() => {
-  if (!wsChat.value) return 'Not initialized';
-
-  if (wsChat.value.isConnected) {
-    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
-      return wsChat.value.responsePhase || 'Waiting for response...';
-    }
-    return 'Connected';
-  }
-  if (wsChat.value.isConnecting) return 'Connecting...';
-  if (wsChat.value.error) return 'Connection failed';
-  return 'Disconnected';
-});
-
-const connectionStatusTextClass = computed(() => {
-  if (!wsChat.value) return 'text-gray-500';
-
-  if (wsChat.value.isConnected) {
-    if (wsChat.value.isWaitingForResponse || isWaitingForResponse.value) {
-      return 'text-blue-600';
-    }
-    return 'text-green-600';
-  }
-  if (wsChat.value.isConnecting) return 'text-yellow-600';
-  if (wsChat.value.error) return 'text-red-600';
-  return 'text-gray-500';
-});
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
@@ -318,7 +203,7 @@ onMounted(() => {
     }
   );
 
-  // Watch for new slides being added to messageStream
+  // Watch for new slides being added to messageStream - emit to parent
   watch(
     () => messageStream.value,
     (newMessages, oldMessages) => {
@@ -327,14 +212,12 @@ onMounted(() => {
         // Check the latest message for slides
         const latestMessage = newMessages[newMessages.length - 1];
         if (latestMessage?.slides && Array.isArray(latestMessage.slides) && latestMessage.slides.length > 0) {
-          console.log('Auto-opening split view for new slides:', latestMessage.slides);
-          // Auto-open split view with the new slides
-          selectedSlides.value = latestMessage.slides;
-          viewMode.value = 'split';
+          console.log('Auto-opening slides for new message:', latestMessage.slides);
+          // Emit to parent to open slides panel with messageId for marking persistence
+          emit('openSlides', latestMessage.slides, latestMessage.id);
 
-          // Scroll to the message with slides (will be implemented)
+          // Scroll to the message with slides
           nextTick(() => {
-            // For now, find the message index and scroll to it
             scrollToMessage(latestMessage.id);
           });
         }
@@ -473,9 +356,8 @@ const handleSlideBatch = (batchMessage: any) => {
       estimatedTimeRemaining: null,
     };
 
-    // Auto-open split view on first batch
-    selectedSlides.value = [...slides];
-    viewMode.value = 'split';
+    // Emit to parent to open slides panel with messageId for marking persistence
+    emit('openSlides', [...slides], newMessageId);
 
     isWaitingForResponse.value = true;
 
@@ -511,10 +393,8 @@ const handleSlideBatch = (batchMessage: any) => {
     streamingProgress.value.estimatedTimeRemaining = remaining;
   }
 
-  // Update split view slides if currently viewing
-  if (viewMode.value === 'split') {
-    selectedSlides.value = [...existingMessage.slides];
-  }
+  // Emit updated slides to parent with messageId for marking persistence
+  emit('openSlides', [...existingMessage.slides], activeStreamingMessage.value?.id);
 
   // Trigger reactivity
   messageStream.value = [...messageStream.value];
@@ -739,22 +619,6 @@ function handleFinish() {
 const handleSend = async (text: string) => {
   if (!text.trim()) return;
 
-  // Development: Inject mock playback data when "mock_playback" is typed
-  if (text.trim() === 'mock_playback') {
-    console.log('Injecting mock playback data...');
-    const { default: mockPlaybackData } = await import('~/mockPlaybackData');
-    console.log('Mock playback data loaded:', mockPlaybackData);
-    messageStream.value = mockPlaybackData;
-
-    console.log('MessageStream after setting:', messageStream.value);
-
-    isPlayingAllowed.value = true;
-
-    // The watcher will automatically detect slides and open split view
-    // No need to manually trigger split view here
-    return;
-  }
-
   isPlayingAllowed.value = false;
   await nextTick();
   bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -793,14 +657,9 @@ const handleSend = async (text: string) => {
   }
 };
 
-const handleSlideChanged = (index: number) => {
-  currentSlideIndex.value = index;
-};
-
 const handleOpenSplitView = (slides: any[], messageId?: string) => {
-  // Store the selected slides and switch to split view
-  selectedSlides.value = slides;
-  viewMode.value = 'split';
+  // Emit to parent to open slides panel with messageId for marking persistence
+  emit('openSlides', slides, messageId);
   nextTick(() => {
     if (typeof messageId === 'string') {
       // Scroll to the specific message that contains the slides
@@ -809,15 +668,6 @@ const handleOpenSplitView = (slides: any[], messageId?: string) => {
       // Fallback to bottom scroll if no index provided
       bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
     }
-  });
-};
-
-const handleCloseSplitView = () => {
-  // Close split view and return to stream view
-  viewMode.value = 'stream';
-  selectedSlides.value = [];
-  nextTick(() => {
-    bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
   });
 };
 
@@ -852,22 +702,14 @@ const scrollToMessage = (messageId: string) => {
 const clearChat = () => {
   messageStream.value = [];
   currentPlaybackIndex.value = 0;
-  currentSlideIndex.value = 0;
   isPlayingAllowed.value = false;
   isWaitingForResponse.value = false;
   messageQueue.value = [];
-  selectedSlides.value = [];
   messageRefs.value = {};
 
   // Clear streaming state
   activeStreamingMessage.value = null;
   streamingProgress.value = null;
-
-  // Reset to stream view (default)
-  viewMode.value = 'stream';
-  if (import.meta.client) {
-    localStorage.removeItem('chatViewMode');
-  }
 
   // Disconnect current WebSocket
   if (wsChat.value) {

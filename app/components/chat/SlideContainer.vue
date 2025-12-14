@@ -1,225 +1,433 @@
 <template>
-  <div class="flex h-full">
-    <!-- Left Panel: Conversation -->
-    <div
-      :class="[
-        'flex-1 flex flex-col overflow-hidden',
-        isMobile ? (mobileActiveTab === 'chat' ? 'w-full' : 'hidden') : ''
-      ]"
-    >
-      <div class="flex-1 overflow-y-auto">
-        <slot name="conversation" />
-      </div>
-    </div>
-
+  <!-- Slides Panel - standalone column -->
+  <div
+    ref="slidesPanel"
+    class="flex-shrink-0 border-l border-gray-200 bg-gray-50 overflow-y-auto relative h-full"
+    :style="{ width: isMobile ? '100%' : `${panelWidth}px` }"
+  >
     <!-- Resize Handle (Desktop only) -->
     <div
       v-if="!isMobile"
       ref="resizeHandle"
-      class="w-1 bg-gray-200 hover:bg-gray-300 cursor-col-resize"
+      class="absolute left-0 top-0 bottom-0 w-1 bg-gray-200 hover:bg-primary-400 cursor-col-resize z-10"
       @mousedown="startResize"
     />
 
-    <!-- Right Panel: Slide Content -->
-    <div
-      ref="rightPanel"
-      :class="[
-        'flex-shrink-0 border-l border-gray-200 bg-gray-50 overflow-y-auto relative',
-        isMobile ? (mobileActiveTab === 'slides' ? 'w-full' : 'hidden') : ''
-      ]"
-      :style="{ width: isMobile ? '100%' : `${rightPanelWidth}%` }"
-    >
-      <div class="p-6 pb-24">
-        <!-- Close Split View Button -->
-        <button
-          class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-          title="Close split view"
-          @click="$emit('close-split-view')"
-        >
-          <Icon name="i-heroicons-x-mark" size="16" />
-        </button>
-        <!-- Slide Navigation Header -->
-        <div class="mb-4 flex items-center justify-between">
-          <h3 class="text-lg font-semibold text-gray-800">
-            {{ currentSlide?.part_label || 'Slide' }}
-          </h3>
-          <div class="flex items-center gap-2">
-            <button
-              v-if="currentSlideIndex > 0"
-              class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
-              :disabled="currentSlideIndex === 0"
-              @click="previousSlide"
-            >
-              ←
-            </button>
-            <span class="text-sm text-gray-600">
-              {{ currentSlideIndex + 1 }} / {{ totalSlides }}
-            </span>
-            <button
-              v-if="currentSlideIndex < totalSlides - 1"
-              class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
-              :disabled="currentSlideIndex === totalSlides - 1"
-              @click="nextSlide"
-            >
-              →
-            </button>
-          </div>
-        </div>
-
-        <!-- Current Slide Display -->
-        <div v-if="currentSlide" class="bg-white rounded-lg p-4 shadow-sm">
-          <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
-            {{ currentSlide.title }}
-          </h2>
-          <MDCRenderer
-            v-if="slideMarkdownBody"
-            :body="slideMarkdownBody"
-            tag="div"
-            class="prose prose-md max-w-none text-lg"
-          />
-          <div
-            v-else-if="currentSlide.content"
-            class="text-lg max-w-none"
-            v-html="processedSlideContent"
-          />
-
-          <!-- Question Options for MCQ slides -->
-          <div v-if="currentSlide.type === 'question' && currentSlide.options" class="mt-4">
-            <div class="space-y-2">
-              <div
-                v-for="(option, index) in currentSlide.options"
-                :key="option.id"
-                :class="[
-                  'p-3 border rounded-lg cursor-pointer transition-all',
-                  selectedOptions[currentSlide.id]?.id === option.id
-                    ? 'border-primary-500 bg-primary-50'
-                    : 'border-gray-200 hover:bg-gray-50'
-                ]"
-                @click="selectOption(option)"
-              >
-                <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
-                {{ option.option_text }}
-              </div>
-            </div>
-
-            <!-- Check Answer Button for Questions -->
-            <div class="mt-4 flex justify-center">
-              <button
-                v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
-                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-                @click="checkAnswer(currentSlide)"
-              >
-                Check Answer
-              </button>
-            </div>
-
-            <!-- Answer Feedback -->
-            <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
-              <div
-                :class="[
-                  'p-3 rounded-lg',
-                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
-                    ? 'bg-green-50 border border-green-200'
-                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
-                      ? 'bg-amber-50 border border-amber-200'
-                      : 'bg-red-50 border border-red-200'
-                ]"
-              >
-                <p
-                  :class="[
-                    'text-sm font-semibold',
-                    answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
-                      ? 'text-green-800'
-                      : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
-                        ? 'text-amber-800'
-                        : 'text-red-800'
-                  ]"
-                >
-                  {{ answeredQuestions[currentSlide.id]?.feedback }}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Explanation (shown after answer) -->
-          <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
-            <p class="text-sm text-primary-800">
-              <strong>Explanation:</strong> {{ currentSlide.explanation }}
-            </p>
-          </div>
-        </div>
-
-        <!-- Slide Thumbnail Overview -->
-        <div v-if="showThumbnails" class="mt-6">
-          <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
-          <TransitionGroup
-            name="slide-list"
-            tag="div"
-            class="grid grid-cols-2 gap-2"
+    <div class="p-6 pb-24">
+      <!-- Close Button -->
+      <button
+        class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors p-1"
+        title="Close slides"
+        @click="$emit('close-split-view')"
+      >
+        <Icon name="i-heroicons-x-mark" size="20" />
+      </button>
+      <!-- Slide Navigation Header -->
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ currentSlide?.part_label || 'Slide' }}
+        </h3>
+        <div class="flex items-center gap-2">
+          <button
+            v-if="currentSlideIndex > 0"
+            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
+            :disabled="currentSlideIndex === 0"
+            @click="previousSlide"
           >
-            <div
-              v-for="(slide, index) in slides"
-              :key="slide.id"
-              :class="[
-                'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
-                index === currentSlideIndex
-                  ? 'border-primary-500 bg-primary-50 scale-105'
-                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-              ]"
-              @click="jumpToSlide(index)"
-            >
-              <div class="font-medium">{{ slide.part_label }}</div>
-              <div class="text-gray-600 truncate">{{ slide.title }}</div>
-              <!-- NEW: Badge for newly added slides -->
-              <span
-                v-if="isSlideNew(index)"
-                class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
-              >
-                NEW
-              </span>
-            </div>
-          </TransitionGroup>
+            ←
+          </button>
+          <span class="text-sm text-gray-600">
+            {{ currentSlideIndex + 1 }} / {{ totalSlides }}
+          </span>
+          <button
+            v-if="currentSlideIndex < totalSlides - 1"
+            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
+            :disabled="currentSlideIndex === totalSlides - 1"
+            @click="nextSlide"
+          >
+            →
+          </button>
         </div>
       </div>
-    </div>
 
-    <!-- Mobile Tab Switcher -->
-    <div v-if="isMobile" class="fixed bottom-16 left-0 right-0 bg-white border-t p-2">
-      <div class="flex">
-        <button
-          :class="[
-            'flex-1 py-2 px-4 text-sm font-medium rounded-l',
-            mobileActiveTab === 'chat'
-              ? 'bg-primary-500 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          ]"
-          @click="mobileActiveTab = 'chat'"
+      <!-- Current Slide Display -->
+      <div v-if="currentSlide" class="bg-white rounded-lg p-4 shadow-sm">
+        <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
+          {{ currentSlide.title }}
+        </h2>
+        <MDCRenderer
+          v-if="slideMarkdownBody"
+          :body="slideMarkdownBody"
+          tag="div"
+          class="prose prose-md max-w-none text-lg"
+        />
+        <div
+          v-else-if="currentSlide.content"
+          class="text-lg max-w-none"
+          v-html="processedSlideContent"
+        />
+
+        <!-- Question Options for MCQ slides -->
+        <div v-if="currentSlide.type === 'question' && currentSlide.question_type === 'mcq' && currentSlide.options?.length" class="mt-4">
+          <div class="space-y-2">
+            <div
+              v-for="(option, index) in currentSlide.options"
+              :key="option.id"
+              :class="[
+                'p-3 border rounded-lg cursor-pointer transition-all',
+                selectedOptions[currentSlide.id]?.id === option.id
+                  ? 'border-primary-500 bg-primary-50'
+                  : 'border-gray-200 hover:bg-gray-50'
+              ]"
+              @click="selectOption(option)"
+            >
+              <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
+              {{ option.option_text }}
+            </div>
+          </div>
+
+          <!-- Check Answer Button for Questions -->
+          <div class="mt-4 flex justify-center">
+            <button
+              v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
+              class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              @click="checkAnswer(currentSlide)"
+            >
+              Check Answer
+            </button>
+          </div>
+
+          <!-- Answer Feedback -->
+          <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+            <div
+              :class="[
+                'p-3 rounded-lg',
+                answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                  ? 'bg-green-50 border border-green-200'
+                  : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                    ? 'bg-amber-50 border border-amber-200'
+                    : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <p
+                :class="[
+                  'text-sm font-semibold',
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                    ? 'text-green-800'
+                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                      ? 'text-amber-800'
+                      : 'text-red-800'
+                ]"
+              >
+                {{ answeredQuestions[currentSlide.id]?.feedback }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPEN Question Input -->
+        <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'open'" class="mt-4">
+          <!-- Show saved answer if exists -->
+          <div v-if="currentSlide.userAnswer?.text || currentSlide.markingResult" class="space-y-3">
+            <!-- Saved Answer Display -->
+            <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+              <p class="text-sm font-medium text-gray-600 mb-1">Your Answer:</p>
+              <p class="text-gray-800 whitespace-pre-wrap">{{ currentSlide.userAnswer?.text }}</p>
+            </div>
+
+            <!-- Marking Feedback -->
+            <div
+              v-if="currentSlide.markingResult"
+              :class="[
+                'p-3 rounded-lg',
+                currentSlide.markingResult.status === 'correct'
+                  ? 'bg-green-50 border border-green-200'
+                  : currentSlide.markingResult.status === 'partially_correct'
+                    ? 'bg-amber-50 border border-amber-200'
+                    : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <span
+                  :class="[
+                    'px-2 py-1 rounded-full text-xs font-semibold',
+                    currentSlide.markingResult.status === 'correct'
+                      ? 'bg-green-200 text-green-800'
+                      : currentSlide.markingResult.status === 'partially_correct'
+                        ? 'bg-amber-200 text-amber-800'
+                        : 'bg-red-200 text-red-800'
+                  ]"
+                >
+                  {{ currentSlide.markingResult.status === 'correct' ? 'Correct' :
+                    currentSlide.markingResult.status === 'partially_correct' ? 'Partially Correct' : 'Incorrect' }}
+                </span>
+                <span class="text-sm text-gray-600">
+                  Score: {{ currentSlide.markingResult.score.awarded }}/{{ currentSlide.markingResult.score.total }}
+                </span>
+              </div>
+              <p v-if="currentSlide.markingResult.feedback?.positive" class="text-sm text-green-700 mb-1">
+                <strong>+</strong> {{ currentSlide.markingResult.feedback.positive }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.gaps" class="text-sm text-amber-700 mb-1">
+                <strong>Gaps:</strong> {{ currentSlide.markingResult.feedback.gaps }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.improvement" class="text-sm text-blue-700">
+                <strong>Tip:</strong> {{ currentSlide.markingResult.feedback.improvement }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Input for new answer -->
+          <div v-else class="space-y-3">
+            <textarea
+              v-model="textAnswers[currentSlide.id]"
+              maxlength="500"
+              class="w-full p-3 border-2 border-gray-200 rounded-lg resize-y min-h-24 focus:border-primary-500 focus:outline-none transition-colors"
+              placeholder="Enter your answer here..."
+              rows="4"
+              :disabled="isSubmitting[currentSlide.id]"
+            />
+            <div class="flex justify-center">
+              <button
+                v-if="textAnswers[currentSlide.id]?.trim()"
+                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                :disabled="isSubmitting[currentSlide.id]"
+                @click="submitOpenAnswer(currentSlide)"
+              >
+                <span v-if="isSubmitting[currentSlide.id]" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                {{ isSubmitting[currentSlide.id] ? 'Marking...' : 'Submit Answer' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILL Question Input -->
+        <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'fill'" class="mt-4">
+          <!-- Show saved answer if exists -->
+          <div v-if="currentSlide.userAnswer?.text || currentSlide.userAnswer?.texts || currentSlide.markingResult" class="space-y-3">
+            <!-- Saved Answers Display -->
+            <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+              <p class="text-sm font-medium text-gray-600 mb-1">Your Answer(s):</p>
+              <div v-if="currentSlide.userAnswer?.texts" class="space-y-1">
+                <p v-for="(ans, idx) in currentSlide.userAnswer.texts" :key="idx" class="text-gray-800">
+                  {{ idx + 1 }}. {{ ans }}
+                </p>
+              </div>
+              <p v-else class="text-gray-800">{{ currentSlide.userAnswer?.text }}</p>
+            </div>
+
+            <!-- Marking Feedback (same as OPEN) -->
+            <div
+              v-if="currentSlide.markingResult"
+              :class="[
+                'p-3 rounded-lg',
+                currentSlide.markingResult.status === 'correct'
+                  ? 'bg-green-50 border border-green-200'
+                  : currentSlide.markingResult.status === 'partially_correct'
+                    ? 'bg-amber-50 border border-amber-200'
+                    : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <span
+                  :class="[
+                    'px-2 py-1 rounded-full text-xs font-semibold',
+                    currentSlide.markingResult.status === 'correct'
+                      ? 'bg-green-200 text-green-800'
+                      : currentSlide.markingResult.status === 'partially_correct'
+                        ? 'bg-amber-200 text-amber-800'
+                        : 'bg-red-200 text-red-800'
+                  ]"
+                >
+                  {{ currentSlide.markingResult.status === 'correct' ? 'Correct' :
+                    currentSlide.markingResult.status === 'partially_correct' ? 'Partially Correct' : 'Incorrect' }}
+                </span>
+                <span class="text-sm text-gray-600">
+                  Score: {{ currentSlide.markingResult.score.awarded }}/{{ currentSlide.markingResult.score.total }}
+                </span>
+              </div>
+              <p v-if="currentSlide.markingResult.feedback?.positive" class="text-sm text-green-700 mb-1">
+                <strong>+</strong> {{ currentSlide.markingResult.feedback.positive }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.gaps" class="text-sm text-amber-700 mb-1">
+                <strong>Gaps:</strong> {{ currentSlide.markingResult.feedback.gaps }}
+              </p>
+              <p v-if="currentSlide.markingResult.feedback?.improvement" class="text-sm text-blue-700">
+                <strong>Tip:</strong> {{ currentSlide.markingResult.feedback.improvement }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Input for new answer -->
+          <div v-else class="space-y-3">
+            <!-- Single blank -->
+            <div v-if="!currentSlide.answer || currentSlide.answer.length <= 1">
+              <input
+                v-model="textAnswers[currentSlide.id]"
+                maxlength="500"
+                type="text"
+                class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none transition-colors"
+                placeholder="Fill in the blank..."
+                :disabled="isSubmitting[currentSlide.id]"
+              >
+            </div>
+            <!-- Multiple blanks -->
+            <div v-else class="space-y-2">
+              <div v-for="(answer, index) in currentSlide.answer" :key="answer.id || index" class="flex items-center gap-2">
+                <span class="font-medium text-gray-600 w-6">{{ index + 1 }}.</span>
+                <input
+                  v-model="getFillAnswerArray(currentSlide.id, currentSlide.answer.length)[index]"
+                  type="text"
+                  class="flex-1 p-2 border-2 border-gray-200 rounded focus:border-primary-500 focus:outline-none transition-colors"
+                  :placeholder="`Answer ${index + 1}...`"
+                  :disabled="isSubmitting[currentSlide.id]"
+                >
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <button
+                v-if="hasFillAnswer(currentSlide)"
+                class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                :disabled="isSubmitting[currentSlide.id]"
+                @click="submitFillAnswer(currentSlide)"
+              >
+                <span v-if="isSubmitting[currentSlide.id]" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                {{ isSubmitting[currentSlide.id] ? 'Marking...' : 'Submit Answer' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOOLEAN Question Input -->
+        <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'boolean'" class="mt-4">
+          <div class="flex gap-4">
+            <button
+              class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
+              :class="{
+                'bg-green-50 border-green-500 text-green-700': booleanAnswers[currentSlide.id] === true,
+                'hover:bg-green-50 hover:border-green-300 border-gray-200': booleanAnswers[currentSlide.id] !== true
+              }"
+              @click="selectBoolean(currentSlide.id, true)"
+            >
+              True
+            </button>
+            <button
+              class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
+              :class="{
+                'bg-red-50 border-red-500 text-red-700': booleanAnswers[currentSlide.id] === false,
+                'hover:bg-red-50 hover:border-red-300 border-gray-200': booleanAnswers[currentSlide.id] !== false
+              }"
+              @click="selectBoolean(currentSlide.id, false)"
+            >
+              False
+            </button>
+          </div>
+
+          <!-- Check Answer Button -->
+          <div class="mt-4 flex justify-center">
+            <button
+              v-if="booleanAnswers[currentSlide.id] !== undefined && !answeredQuestions[currentSlide.id]"
+              class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              @click="checkBooleanAnswer(currentSlide)"
+            >
+              Check Answer
+            </button>
+          </div>
+
+          <!-- Answer Feedback -->
+          <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+            <div
+              :class="[
+                'p-3 rounded-lg',
+                answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                  ? 'bg-green-50 border border-green-200'
+                  : 'bg-red-50 border border-red-200'
+              ]"
+            >
+              <p
+                :class="[
+                  'text-sm font-semibold',
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                    ? 'text-green-800'
+                    : 'text-red-800'
+                ]"
+              >
+                {{ answeredQuestions[currentSlide.id]?.feedback }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explanation (shown after answer) -->
+        <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+          <p class="text-sm text-primary-800">
+            <strong>Explanation:</strong> {{ currentSlide.explanation }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide Thumbnail Overview -->
+      <div v-if="showThumbnails" class="mt-6">
+        <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
+        <TransitionGroup
+          name="slide-list"
+          tag="div"
+          class="grid grid-cols-2 gap-2"
         >
-          Chat
-        </button>
-        <button
-          :class="[
-            'flex-1 py-2 px-4 text-sm font-medium rounded-r',
-            mobileActiveTab === 'slides'
-              ? 'bg-primary-500 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          ]"
-          @click="mobileActiveTab = 'slides'"
-        >
-          Slides
-        </button>
+          <div
+            v-for="(slide, index) in slides"
+            :key="slide.id"
+            :class="[
+              'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
+              index === currentSlideIndex
+                ? 'border-primary-500 bg-primary-50 scale-105'
+                : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+            ]"
+            @click="jumpToSlide(index)"
+          >
+            <div class="font-medium">{{ slide.part_label }}</div>
+            <div class="text-gray-600 truncate">{{ slide.title }}</div>
+            <!-- NEW: Badge for newly added slides -->
+            <span
+              v-if="isSlideNew(index)"
+              class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
+            >
+              NEW
+            </span>
+          </div>
+        </TransitionGroup>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect, watch } from 'vue';
 import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import { useToast } from '#imports';
 import { convertHighlights, convertImages } from '~/utils/markdownUtils';
 
 const toast = useToast();
+
+interface MarkingResult {
+  status: 'correct' | 'partially_correct' | 'incorrect';
+  score: { awarded: number; total: number };
+  feedback: {
+    positive: string;
+    gaps: string;
+    improvement: string;
+  };
+  key_concepts_assessed?: string[];
+  marking_rationale?: string;
+  markedAt?: string;
+}
+
+interface UserAnswer {
+  text?: string;
+  texts?: string[];
+  boolean?: boolean;
+  submittedAt?: string;
+}
 
 interface SlideData {
   id: string;
@@ -235,20 +443,22 @@ interface SlideData {
   }>;
   answer: any[];
   explanation?: string;
+  userAnswer?: UserAnswer;
+  markingResult?: MarkingResult;
 }
 
 const props = defineProps<{
   slides: SlideData[];
   initialSlideIndex?: number;
   showThumbnails?: boolean;
+  messageId?: string | null;
 }>();
 
-const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view']);
+const emit = defineEmits(['slide-changed', 'option-selected', 'close-split-view', 'answer-submitted']);
 
 // Responsive state
 const isMobile = ref(false);
-const rightPanelWidth = ref(40);
-const mobileActiveTab = ref<'slides' | 'chat'>('chat');
+const panelWidth = ref(480); // Default width in pixels
 
 // Slide navigation
 const currentSlideIndex = ref(props.initialSlideIndex || 0);
@@ -258,14 +468,36 @@ const showExplanation = ref(false);
 const selectedOptions = ref<Record<string, any>>({});
 const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: string }>>({});
 
+// Text answer state for OPEN/FILL/BOOLEAN questions
+const textAnswers = ref<Record<string, string>>({});
+const fillAnswers = ref<Record<string, string[]>>({});
+const booleanAnswers = ref<Record<string, boolean | undefined>>({});
+const isSubmitting = ref<Record<string, boolean>>({});
+
 // Refs
-const rightPanel = ref<HTMLElement>();
+const slidesPanel = ref<HTMLElement>();
 const resizeHandle = ref<HTMLElement>();
 
 // Track newly added slides for animation
 const newSlideIndices = ref<Set<number>>(new Set());
+let previousSlidesId: string | null = null;
 
-watch(() => props.slides.length, (newLength, oldLength) => {
+watch(() => props.slides, (newSlides, oldSlides) => {
+  // Detect if this is a completely different slides array (different message)
+  const newSlidesId = newSlides?.[0]?.id || null;
+  const isNewArray = previousSlidesId !== null && newSlidesId !== previousSlidesId;
+
+  if (isNewArray) {
+    // Clear all badges when switching to different slides array
+    newSlideIndices.value.clear();
+    previousSlidesId = newSlidesId;
+    return;
+  }
+
+  // Same array, check for new slides added
+  const oldLength = oldSlides?.length || 0;
+  const newLength = newSlides?.length || 0;
+
   if (newLength > oldLength) {
     // Mark new slides
     for (let i = oldLength; i < newLength; i++) {
@@ -278,6 +510,15 @@ watch(() => props.slides.length, (newLength, oldLength) => {
         newSlideIndices.value.delete(i);
       }
     }, 3000);
+  }
+
+  previousSlidesId = newSlidesId;
+}, { deep: false });
+
+// Reset slide index when slides array changes to a different set
+watch(() => props.slides?.[0]?.id, (newFirstId, oldFirstId) => {
+  if (newFirstId && oldFirstId && newFirstId !== oldFirstId) {
+    currentSlideIndex.value = 0;
   }
 });
 
@@ -316,6 +557,14 @@ watchEffect(async () => {
 
 // Methods
 function previousSlide() {
+  if (isSubmitting.value[currentSlide.value?.id]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Your answer is being marked. Please wait before navigating.',
+      color: 'warning'
+    });
+    return;
+  }
   if (currentSlideIndex.value > 0) {
     currentSlideIndex.value--;
     showExplanation.value = false;
@@ -324,6 +573,14 @@ function previousSlide() {
 }
 
 function nextSlide() {
+  if (isSubmitting.value[currentSlide.value?.id]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Your answer is being marked. Please wait before navigating.',
+      color: 'warning'
+    });
+    return;
+  }
   if (currentSlideIndex.value < totalSlides.value - 1) {
     currentSlideIndex.value++;
     showExplanation.value = false;
@@ -332,6 +589,14 @@ function nextSlide() {
 }
 
 function jumpToSlide(index: number) {
+  if (isSubmitting.value[currentSlide.value?.id]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Your answer is being marked. Please wait before navigating.',
+      color: 'warning'
+    });
+    return;
+  }
   currentSlideIndex.value = index;
   showExplanation.value = false;
   emit('slide-changed', index);
@@ -378,6 +643,181 @@ function checkAnswer(slide: SlideData) {
   }
 }
 
+// Helper to get/initialize fill answers array
+function getFillAnswerArray(slideId: string, length: number): string[] {
+  if (!fillAnswers.value[slideId]) {
+    fillAnswers.value[slideId] = new Array(length).fill('');
+  }
+  return fillAnswers.value[slideId];
+}
+
+// Check if fill answer is complete
+function hasFillAnswer(slide: SlideData): boolean {
+  if (!slide.answer || slide.answer.length <= 1) {
+    return !!textAnswers.value[slide.id]?.trim();
+  }
+  const answers = fillAnswers.value[slide.id];
+  return answers && answers.some((a) => a.trim().length > 0);
+}
+
+// Submit OPEN question answer
+async function submitOpenAnswer(slide: SlideData) {
+  const answer = textAnswers.value[slide.id]?.trim();
+  if (!answer || !props.messageId) {
+    if (!props.messageId) {
+      toast.add({
+        title: 'Error',
+        description: 'Cannot submit answer: message context not available.',
+        color: 'red'
+      });
+    }
+    return;
+  }
+
+  isSubmitting.value[slide.id] = true;
+
+  try {
+    const response = await $fetch<{ success: boolean; result: MarkingResult }>('/api/chat/slide/mark', {
+      method: 'POST',
+      body: {
+        messageId: props.messageId,
+        slideId: slide.id,
+        question: {
+          id: slide.id,
+          question_type: slide.question_type,
+          title: slide.title,
+          content: slide.content,
+          answer: slide.answer,
+          explanation: slide.explanation
+        },
+        userAnswer: answer
+      }
+    });
+
+    if (response.success) {
+      // Update local slide state
+      slide.userAnswer = { text: answer, submittedAt: new Date().toISOString() };
+      slide.markingResult = response.result;
+      showExplanation.value = true;
+
+      emit('answer-submitted', {
+        slideId: slide.id,
+        answer,
+        result: response.result
+      });
+    }
+  } catch (error) {
+    console.error('Error submitting answer:', error);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to mark your answer. Please try again.',
+      color: 'red'
+    });
+  } finally {
+    isSubmitting.value[slide.id] = false;
+  }
+}
+
+// Submit FILL question answer
+async function submitFillAnswer(slide: SlideData) {
+  let userAnswer: string | string[];
+
+  if (!slide.answer || slide.answer.length <= 1) {
+    userAnswer = textAnswers.value[slide.id]?.trim();
+  } else {
+    userAnswer = fillAnswers.value[slide.id]?.map((a) => a.trim()).filter((a) => a.length > 0);
+  }
+
+  if (!userAnswer || (Array.isArray(userAnswer) && userAnswer.length === 0) || !props.messageId) {
+    if (!props.messageId) {
+      toast.add({
+        title: 'Error',
+        description: 'Cannot submit answer: message context not available.',
+        color: 'red'
+      });
+    }
+    return;
+  }
+
+  isSubmitting.value[slide.id] = true;
+
+  try {
+    const response = await $fetch<{ success: boolean; result: MarkingResult }>('/api/chat/slide/mark', {
+      method: 'POST',
+      body: {
+        messageId: props.messageId,
+        slideId: slide.id,
+        question: {
+          id: slide.id,
+          question_type: slide.question_type,
+          title: slide.title,
+          content: slide.content,
+          answer: slide.answer,
+          explanation: slide.explanation
+        },
+        userAnswer
+      }
+    });
+
+    if (response.success) {
+      // Update local slide state
+      slide.userAnswer = {
+        text: typeof userAnswer === 'string' ? userAnswer : undefined,
+        texts: Array.isArray(userAnswer) ? userAnswer : undefined,
+        submittedAt: new Date().toISOString()
+      };
+      slide.markingResult = response.result;
+      showExplanation.value = true;
+
+      emit('answer-submitted', {
+        slideId: slide.id,
+        answer: userAnswer,
+        result: response.result
+      });
+    }
+  } catch (error) {
+    console.error('Error submitting answer:', error);
+    toast.add({
+      title: 'Error',
+      description: 'Failed to mark your answer. Please try again.',
+      color: 'red'
+    });
+  } finally {
+    isSubmitting.value[slide.id] = false;
+  }
+}
+
+// Select boolean answer
+function selectBoolean(slideId: string, value: boolean) {
+  booleanAnswers.value[slideId] = value;
+
+  // Clear previous answer to allow retry (same pattern as MCQ selectOption)
+  if (answeredQuestions.value[slideId]) {
+    answeredQuestions.value[slideId] = undefined as any;
+  }
+}
+
+// Check BOOLEAN question answer (local check like MCQ - no API call needed)
+function checkBooleanAnswer(slide: SlideData) {
+  const selectedBoolean = booleanAnswers.value[slide.id];
+  if (selectedBoolean === undefined) return;
+
+  // Check answer locally against correct answer from JSON
+  const correctAnswer = slide.answer?.[0]?.answer_boolean;
+  const markingStatus = (selectedBoolean === correctAnswer) ? 'CORRECT' : 'INCORRECT';
+
+  // Update answeredQuestions state (same pattern as MCQ)
+  answeredQuestions.value[slide.id] = {
+    markingStatus,
+    feedback: markingStatus === 'CORRECT' ? '✅ Correct!' : '❌ Incorrect. Try again!'
+  };
+
+  // Show explanation if available
+  if (slide.explanation) {
+    showExplanation.value = true;
+  }
+}
+
 // Resize functionality
 let isResizing = false;
 
@@ -391,14 +831,15 @@ function startResize(e: MouseEvent) {
 function handleResize(e: MouseEvent) {
   if (!isResizing) return;
 
-  const container = rightPanel.value?.parentElement;
+  const container = slidesPanel.value?.parentElement;
   if (!container) return;
 
   const containerRect = container.getBoundingClientRect();
-  const newWidth = 100 - ((e.clientX - containerRect.left) / containerRect.width) * 100;
+  // Calculate width from right edge
+  const newWidth = containerRect.right - e.clientX;
 
-  // Constrain between 25% and 65%
-  rightPanelWidth.value = Math.min(Math.max(newWidth, 25), 65);
+  // Constrain between 320px and 800px
+  panelWidth.value = Math.min(Math.max(newWidth, 320), 800);
 }
 
 function stopResize() {
@@ -419,10 +860,25 @@ function handleKeyPress(e: KeyboardEvent) {
   if (e.key === 'Escape') emit('close-split-view');
 }
 
+// Check if any submission is in progress
+const isAnySubmitting = computed(() => {
+  return Object.values(isSubmitting.value).some((v) => v);
+});
+
+// Warn user before leaving page during submission
+function handleBeforeUnload(e: BeforeUnloadEvent) {
+  if (isAnySubmitting.value) {
+    e.preventDefault();
+    e.returnValue = 'Your answer is being marked. Are you sure you want to leave?';
+    return e.returnValue;
+  }
+}
+
 onMounted(() => {
   checkMobile();
   window.addEventListener('resize', checkMobile);
   document.addEventListener('keydown', handleKeyPress);
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
 onUnmounted(() => {
@@ -430,5 +886,11 @@ onUnmounted(() => {
   document.removeEventListener('mousemove', handleResize);
   document.removeEventListener('mouseup', stopResize);
   document.removeEventListener('keydown', handleKeyPress);
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+// Expose state for parent component navigation guards
+defineExpose({
+  isAnySubmitting
 });
 </script>

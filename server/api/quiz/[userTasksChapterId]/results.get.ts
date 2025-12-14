@@ -18,6 +18,15 @@
 
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import {
+  calculateAttemptScores,
+  formatAttemptsForResponse,
+} from '~~/server/services/quizScoringService';
+import {
+  fetchAllAttempts,
+  fetchLatestAttemptResults,
+} from '~~/server/services/quizPersistenceService';
+import { getQuizCreditTransaction } from '~~/server/services/creditService';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -55,18 +64,11 @@ export default defineEventHandler(async (event) => {
       .eq('id', userTasksChapterId)
       .single();
 
-    if (chapterError) {
+    if (chapterError || !chapterData) {
       console.error('[results] Error fetching chapter data:', chapterError);
       throw createError({
-        statusCode: 500,
-        message: 'Failed to fetch quiz data',
-      });
-    }
-
-    if (!chapterData) {
-      throw createError({
-        statusCode: 404,
-        message: 'Quiz not found',
+        statusCode: chapterError ? 500 : 404,
+        message: chapterError ? 'Failed to fetch quiz data' : 'Quiz not found',
       });
     }
 
@@ -124,49 +126,16 @@ export default defineEventHandler(async (event) => {
 
     const questionIds = questions.map((q) => q.id);
 
-    // Fetch ALL attempts for this quiz to calculate best and latest scores
-    const { data: allAttempts, error: allAttemptsError } = await supabase
-      .from('user_question_attempts')
-      .select('attempt_number, submitted_at, score, max_score')
-      .in('question_id', questionIds)
-      .eq('user_info_id', userInfo.id);
+    // Fetch all attempts and calculate scores using services
+    const allAttempts = await fetchAllAttempts(supabase, questionIds, userInfo.id);
+    const attemptScores = calculateAttemptScores(allAttempts);
+    const attempts = formatAttemptsForResponse(attemptScores);
 
-    if (allAttemptsError) {
-      console.error('[results] Error fetching all attempts:', allAttemptsError);
-      throw createError({
-        statusCode: 500,
-        message: 'Failed to fetch attempt history',
-      });
-    }
-
-    // Group by attempt_number and calculate totals
-    const attemptScores: Record<number, { score: number; totalScore: number; submittedAt: string }> = {};
-
-    allAttempts?.forEach((att) => {
-      if (!attemptScores[att.attempt_number]) {
-        attemptScores[att.attempt_number] = {
-          score: 0,
-          totalScore: 0,
-          submittedAt: att.submitted_at
-        };
-      }
-      attemptScores[att.attempt_number].score += att.score;
-      attemptScores[att.attempt_number].totalScore += att.max_score;
-    });
-
-    // Calculate percentages for each attempt
-    const attempts = Object.entries(attemptScores).map(([attemptNum, data]) => ({
-      attemptNumber: parseInt(attemptNum),
-      score: data.score,
-      totalScore: data.totalScore,
-      percentage: data.totalScore > 0 ? Math.round((data.score / data.totalScore) * 100) : 0,
-      submittedAt: data.submittedAt
-    })).sort((a, b) => a.attemptNumber - b.attemptNumber);
-
-    // Find best and latest
+    // Find latest attempt
     const latestAttempt = attempts.length > 0 ? attempts[attempts.length - 1] : null;
+    const latestAttemptNumber = latestAttempt?.attemptNumber || 1;
 
-    // Use stored best score from user_tasks_chapters (should match calculated best)
+    // Use stored best score from user_tasks_chapters
     const bestScore = chapterData.score || 0;
     const bestTotalScore = chapterData.total_score || 0;
     const bestPercentage = bestTotalScore > 0 ? Math.round((bestScore / bestTotalScore) * 100) : 0;
@@ -179,42 +148,27 @@ export default defineEventHandler(async (event) => {
     const passedThreshold = bestPercentage >= requiredScore;
     const attemptCount = attempts.length;
 
-    // Check if credits were earned (look for transaction)
-    const { data: transactions, error: txError } = await supabase
-      .from('credit_transactions')
-      .select('amount')
-      .eq('metadata->>userTasksChapterId', userTasksChapterId)
-      .eq('metadata->>source', 'quiz_completion')
-      .limit(1);
-
-    const creditEarned = (!txError && transactions && transactions.length > 0) ?
-      transactions[0].amount :
-      0;
-
+    // Check if credits were earned using credit service
+    const creditEarned = await getQuizCreditTransaction(supabase, userTasksChapterId);
     const creditDisbursed = creditEarned > 0;
     const creditReward = chapterData.user_tasks.credit || 0;
 
-    // Fetch actual attempt results from database for LATEST attempt only
-    const results = [];
-    const latestAttemptNumber = latestAttempt?.attemptNumber || 1;
+    // OPTIMIZED: Fetch all attempt results in a single batch query (replaces N+1 loop)
+    console.log('[results] Fetching latest attempt (#' + latestAttemptNumber + ') with batch query');
 
-    console.log('[results] Looking for latest attempt (#' + latestAttemptNumber + ') with user_info_id:', userInfo.id);
+    const attemptsByQuestion = await fetchLatestAttemptResults(
+      supabase,
+      questionIds,
+      userInfo.id,
+      latestAttemptNumber
+    );
 
-    for (let index = 0; index < questions.length; index++) {
-      const question = questions[index];
+    // Build results from batch query data
+    const results = questions.map((question, index) => {
+      const attemptData = attemptsByQuestion.get(question.id);
 
-      // Fetch LATEST attempt for this question
-      const { data: attemptData, error: attemptError } = await supabase
-        .from('user_question_attempts')
-        .select(`*, user_question_answers(*)`)
-        .eq('question_id', question.id)
-        .eq('user_info_id', userInfo.id)
-        .eq('attempt_number', latestAttemptNumber)
-        .single();
-
-      if (attemptError) {
-        // If no attempt found, create placeholder result
-        results.push({
+      if (!attemptData) {
+        return {
           questionIndex: index,
           questionId: question.id,
           questionType: question.type,
@@ -222,37 +176,26 @@ export default defineEventHandler(async (event) => {
           pointsEarned: 0,
           pointsPossible: 1,
           userAnswers: [],
-        });
-        continue;
+        };
       }
 
-      // Build user answers array based on question type
-      const userAnswers = attemptData.user_question_answers || [];
+      const userAnswers = (attemptData.user_question_answers || [])
+        .sort((a: any, b: any) => a.order_index - b.order_index);
 
-      // Read from individual columns
-      const feedbackPositive = attemptData.feedback_positive || null;
-      const feedbackGaps = attemptData.feedback_gaps || null;
-      const feedbackImprovement = attemptData.feedback_improvement || null;
-      const markingStatus = attemptData.marking_status || null;
-      const pointsPossible = attemptData.max_score || 1;
-      const keyConcepts = attemptData.key_concepts_assessed || null;
-      const markingRationale = attemptData.marking_rationale || null;
-
-      results.push({
+      return {
         questionIndex: index,
         questionId: question.id,
         questionType: question.type,
-        feedbackPositive,
-        feedbackGaps,
-        feedbackImprovement,
-        markingStatus,
-        keyConcepts,
-        markingRationale,
+        feedbackPositive: attemptData.feedback_positive || null,
+        feedbackGaps: attemptData.feedback_gaps || null,
+        feedbackImprovement: attemptData.feedback_improvement || null,
+        markingStatus: attemptData.marking_status || null,
+        keyConcepts: attemptData.key_concepts_assessed || null,
         pointsEarned: attemptData.score || 0,
-        pointsPossible,
-        userAnswers: userAnswers.sort((a: any, b: any) => a.order_index - b.order_index),
-      });
-    }
+        pointsPossible: attemptData.max_score || 1,
+        userAnswers,
+      };
+    });
 
     return {
       success: true,
@@ -265,10 +208,6 @@ export default defineEventHandler(async (event) => {
       bestScore,
       bestTotalScore,
       bestPercentage,
-      // Legacy fields (keep for backward compatibility, use best score)
-      score: bestScore,
-      totalScore: bestTotalScore,
-      percentage: bestPercentage,
       // Threshold and credits
       requiredScore,
       passedThreshold,
@@ -285,12 +224,10 @@ export default defineEventHandler(async (event) => {
   } catch (error: any) {
     console.error('[results] Error:', error);
 
-    // If it's already a createError, rethrow it
     if (error.statusCode) {
       throw error;
     }
 
-    // Otherwise create a generic error
     throw createError({
       statusCode: 500,
       message: error.message || 'Failed to fetch quiz results',

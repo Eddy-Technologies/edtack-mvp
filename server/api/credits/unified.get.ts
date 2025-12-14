@@ -29,10 +29,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get user's internal credit balance
+    // Get user's internal credit balance (including reserved credits)
     let { data: userCredits } = await supabase
       .from('user_credits')
-      .select('credit, updated_at')
+      .select('credit, reserved_credit, updated_at')
       .eq('user_info_id', userInfo.id)
       .single();
 
@@ -42,9 +42,10 @@ export default defineEventHandler(async (event) => {
         .from('user_credits')
         .insert({
           user_info_id: userInfo.id,
-          credit: 0
+          credit: 0,
+          reserved_credit: 0
         })
-        .select('credit, updated_at')
+        .select('credit, reserved_credit, updated_at')
         .single();
 
       if (insertError) {
@@ -65,13 +66,13 @@ export default defineEventHandler(async (event) => {
     let childrenData = [];
 
     if (isParent) {
-      // Get children data from family groups (consistent with family list API)
+      // Get children data from family groups
       const { data: userGroups, error: groupsError } = await supabase
         .from('group_members')
-        .select(`*, 
-          groups(group_type, 
+        .select(`*,
+          groups(group_type,
           members:group_members!group_id(*,
-            user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)), user_credits(*))))`)
+            user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)))))`)
         .eq('user_info_id', userInfo.id)
         .eq('status', 'active');
 
@@ -106,9 +107,7 @@ export default defineEventHandler(async (event) => {
                 email: memberUserInfo.email,
                 firstName: memberUserInfo.first_name,
                 lastName: memberUserInfo.last_name,
-                balance: memberUserInfo.user_credits?.[0]?.credit || 0,
-                currency: 'SGD',
-                updatedAt: memberUserInfo.user_credits?.[0]?.updated_at
+                currency: 'SGD'
               });
             }
           });
@@ -116,54 +115,52 @@ export default defineEventHandler(async (event) => {
 
         childrenData = Array.from(childrenMap.values());
         hasChildren = childrenData.length > 0;
+
+        // Fetch credits directly for all children to ensure we get the latest data
+        // (the nested join may not return updated credits reliably)
+        if (hasChildren) {
+          const childUserInfoIds = childrenData.map((c) => c.userInfoId);
+          const { data: childCredits } = await supabase
+            .from('user_credits')
+            .select('user_info_id, credit, reserved_credit, updated_at')
+            .in('user_info_id', childUserInfoIds);
+
+          if (childCredits) {
+            const creditsMap = new Map(childCredits.map((c) => [c.user_info_id, c]));
+            childrenData = childrenData.map((child) => {
+              const credits = creditsMap.get(child.userInfoId);
+              return {
+                ...child,
+                balance: (credits?.credit || 0) - (credits?.reserved_credit || 0),
+                reservedCredits: credits?.reserved_credit || 0,
+                totalCredits: credits?.credit || 0,
+                updatedAt: credits?.updated_at
+              };
+            });
+          }
+        }
       }
     }
 
+    // Build response
+    const userReserved = userCredits.reserved_credit || 0;
+    const response = {
+      user: {
+        email: user.email,
+        balance: userCredits.credit - userReserved,
+        reservedCredits: userReserved,
+        totalCredits: userCredits.credit,
+        currency: 'SGD',
+        updatedAt: userCredits.updated_at
+      },
+      fetchedAt: new Date().toISOString()
+    };
+
     if (hasChildren) {
-      // Ensure all children have credit records, create if missing
-      const updatedChildrenData = await Promise.all(childrenData.map(async (child) => {
-        // If child doesn't have credit record, create one
-        if (child.balance === undefined || child.balance === null) {
-          const { data: newChildCredit } = await supabase
-            .from('user_credits')
-            .insert({
-              user_info_id: child.userInfoId,
-              credit: 0
-            })
-            .select('credit, updated_at')
-            .single();
-
-          return {
-            ...child,
-            balance: newChildCredit?.credit || 0,
-            updatedAt: newChildCredit?.updated_at
-          };
-        }
-
-        return child;
-      }));
-
-      return {
-        user: {
-          email: user.email,
-          balance: userCredits.credit,
-          currency: 'SGD',
-          updatedAt: userCredits.updated_at
-        },
-        children: updatedChildrenData,
-        fetchedAt: new Date().toISOString()
-      };
-    } else {
-      return {
-        user: {
-          email: user.email,
-          balance: userCredits.credit,
-          currency: 'SGD',
-          updatedAt: userCredits.updated_at
-        },
-        fetchedAt: new Date().toISOString()
-      };
+      return { ...response, children: childrenData };
     }
+
+    return response;
   } catch (error) {
     console.error('Failed to get unified credit data:', error);
 

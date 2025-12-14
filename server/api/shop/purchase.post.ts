@@ -267,7 +267,7 @@ export default defineEventHandler(async (event) => {
 
     // Find all parents for notification (only for child credit purchases)
     let parentNotifications = null;
-    if (use_credits && orderStatus === 'pending_parent_approval') {
+    if (use_credits && orderStatus === ORDER_STATUS.PENDING_PARENT_APPROVAL) {
       // Get parents from groups where user is a member
       const { data: groupParents, error: parentError } = await supabase
         .from('group_members')

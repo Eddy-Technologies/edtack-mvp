@@ -4,7 +4,22 @@ import { getUserInfo } from '~~/server/utils/auth';
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
+    const config = useRuntimeConfig();
+    const supabaseUrl = config.public.supabaseUrl;
+
     const query = getQuery(event);
+
+    // Helper function to resolve image URL (same as shop products API)
+    const resolveImageUrl = (imageUrl: string | null): string => {
+      if (!imageUrl) return '';
+      if (imageUrl.startsWith('products/')) {
+        return `${supabaseUrl}/storage/v1/object/public/${imageUrl}`;
+      }
+      if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        return imageUrl;
+      }
+      return '';
+    };
 
     const { limit = 50, offset = 0 } = query;
 
@@ -74,7 +89,7 @@ export default defineEventHandler(async (event) => {
             originalPrice: originalPrice ? originalPrice / 100 : null,
             originalPriceCents: originalPrice,
             currency: product.currency || 'SGD',
-            image: product.image_url || '/placeholder-product.jpg',
+            image: resolveImageUrl(product.image_url),
             category: product.category,
             stockCount: product.stock_count || 0,
             inStock: (product.stock_count || 0) > 0,

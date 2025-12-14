@@ -4,7 +4,7 @@
       <h2 class="text-2xl font-bold text-gray-900 mb-4">My Orders</h2>
 
       <!-- Order Tabs -->
-      <div class="flex space-x-1 mb-6 bg-gray-100 rounded-lg p-1">
+      <div class="flex space-x-1 mb-6 bg-stone-100 rounded-xl p-1">
         <button
           :class="['flex-1 px-4 py-2 rounded text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
           @click="orderTab = 'current'"
@@ -23,10 +23,7 @@
     <!-- Current Orders -->
     <div v-if="orderTab === 'current'">
       <!-- Loading State -->
-      <div v-if="isLoadingOrders" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-        <p class="text-gray-600">Loading orders...</p>
-      </div>
+      <DashboardSkeleton v-if="isLoadingOrders" variant="list" :count="4" />
 
       <!-- Error State -->
       <div v-else-if="ordersError" class="text-center py-12">
@@ -40,7 +37,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!isLoadingOrders && currentOrders.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoadingOrders && currentOrders.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-file-text" size="64" />
         </div>
@@ -55,7 +52,7 @@
       </div>
 
       <div v-else class="grid gap-6">
-        <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
+        <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
@@ -74,6 +71,7 @@
             </div>
             <div class="text-right">
               <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
+              <p class="text-xs text-gray-500">({{ Math.round(order.totalAmountSGD * 100) }} credits)</p>
             </div>
           </div>
 
@@ -107,10 +105,7 @@
     <!-- Past Orders -->
     <div v-if="orderTab === 'past'">
       <!-- Loading State -->
-      <div v-if="isLoadingOrders" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-        <p class="text-gray-600">Loading orders...</p>
-      </div>
+      <DashboardSkeleton v-if="isLoadingOrders" variant="list" :count="4" />
 
       <!-- Error State -->
       <div v-else-if="ordersError" class="text-center py-12">
@@ -124,7 +119,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!isLoadingOrders && pastOrders.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoadingOrders && pastOrders.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-file-text" size="64" />
         </div>
@@ -138,7 +133,7 @@
       </div>
 
       <div v-else class="grid gap-6">
-        <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-lg shadow-sm border p-6">
+        <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
               <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
@@ -157,6 +152,7 @@
             </div>
             <div class="text-right">
               <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
+              <p class="text-xs text-gray-500">({{ Math.round(order.totalAmountSGD * 100) }} credits)</p>
             </div>
           </div>
 
@@ -186,6 +182,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
+import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import { ORDER_STATUS } from '~~/shared/constants';
 
 // Order tab state
@@ -208,7 +205,7 @@ const orderStatusCodes = ref({
 // Orders data from database
 const currentOrders = ref<any[]>([]);
 const pastOrders = ref<any[]>([]);
-const isLoadingOrders = ref(false);
+const isLoadingOrders = ref(true);
 const ordersError = ref<string | null>(null);
 
 // Load orders from API

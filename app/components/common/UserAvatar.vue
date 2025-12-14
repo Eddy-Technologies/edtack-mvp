@@ -16,7 +16,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useMeStore } from '../../stores/me';
 
 interface Props {
-  size?: 'default' | 'large';
+  size?: 'small' | 'default' | 'large';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,6 +36,8 @@ onMounted(() => {
 // Size classes based on the size prop
 const sizeClasses = computed(() => {
   switch (props.size) {
+    case 'small':
+      return 'w-8 h-8 text-xs';
     case 'large':
       return 'w-24 h-24 text-2xl';
     case 'default':

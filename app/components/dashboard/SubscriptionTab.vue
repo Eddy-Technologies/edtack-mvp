@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Current Plan -->
-    <div class="bg-white rounded-xl shadow-sm border">
+    <div class="bg-white rounded-xl border border-gray-200">
       <div class="p-6 border-b">
         <div class="flex items-center justify-between">
           <h2 class="text-2xl font-bold text-gray-900">My Subscription</h2>
@@ -16,22 +16,7 @@
       </div>
       <div class="p-6">
         <!-- Loading State -->
-        <div v-if="loading && !subscription" class="animate-pulse">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <div class="w-16 h-16 bg-gray-200 rounded-xl" />
-              <div>
-                <div class="h-6 bg-gray-200 rounded w-32 mb-2" />
-                <div class="h-4 bg-gray-200 rounded w-48 mb-2" />
-                <div class="h-4 bg-gray-200 rounded w-24" />
-              </div>
-            </div>
-            <div class="text-right">
-              <div class="h-8 bg-gray-200 rounded w-20 mb-2" />
-              <div class="h-4 bg-gray-200 rounded w-16" />
-            </div>
-          </div>
-        </div>
+        <DashboardSkeleton v-if="loading && !subscription" variant="list" :count="1" />
 
         <!-- No Customer State -->
         <div v-else-if="stripeCustomerState === STRIPE_CUSTOMER.NOT_EXISTENT" class="text-center py-8">
@@ -122,7 +107,7 @@
     <!-- Manage Billing Card (only show for active subscriptions or customers with no active subscription) -->
     <div
       v-if="stripeCustomerState === STRIPE_CUSTOMER.WITH_ACTIVE_SUBSCRIPTION"
-      class="bg-white rounded-xl shadow-sm border"
+      class="bg-white rounded-xl border border-gray-200"
     >
       <div class="p-6">
         <div class="flex items-start space-x-4">
@@ -181,6 +166,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
+import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import SubscriptionModal from '../subscription/SubscriptionModal.vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useStripe } from '#imports';

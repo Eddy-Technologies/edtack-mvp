@@ -56,6 +56,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
       stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
       stripePricingTableId: process.env.NUXT_PUBLIC_STRIPE_PRICING_TABLE_ID,
       baseUrl: process.env.NUXT_PUBLIC_BASE_URL,

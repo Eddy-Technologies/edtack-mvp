@@ -13,7 +13,7 @@
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="bg-white p-4 rounded-xl shadow-sm border">
+    <div class="bg-white p-4 rounded-xl border border-gray-200">
       <div class="flex flex-col md:flex-row gap-4">
         <div class="flex-1">
           <input
@@ -48,7 +48,7 @@
           v-for="note in starredNotes"
           :key="`starred-${note.id}`"
           :style="{ backgroundColor: note.backgroundColor }"
-          class="h-64 p-4 rounded-lg border shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col"
+          class="h-64 p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow transition-shadow cursor-pointer flex flex-col"
           @click="openViewModal(note)"
         >
           <div class="flex items-start justify-between mb-2">
@@ -64,10 +64,10 @@
               <!-- Dropdown Menu -->
               <div
                 v-if="activeNoteMenu === note.id"
-                class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+                class="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-sm border border-gray-200 py-1 z-20 min-w-32"
               >
                 <button
-                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-stone-100 flex items-center gap-2"
                   @click.stop="archiveNote(note)"
                 >
                   <UIcon name="i-lucide-archive" size="16" />
@@ -118,7 +118,7 @@
           v-for="note in filteredNotes"
           :key="note.id"
           :style="{ backgroundColor: note.backgroundColor }"
-          class="h-64 p-4 rounded-lg border shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col"
+          class="h-64 p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow transition-shadow cursor-pointer flex flex-col"
           @click="openViewModal(note)"
         >
           <div class="flex items-start justify-between mb-2">
@@ -134,10 +134,10 @@
               <!-- Dropdown Menu -->
               <div
                 v-if="activeNoteMenu === note.id"
-                class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+                class="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-sm border border-gray-200 py-1 z-20 min-w-32"
               >
                 <button
-                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-stone-100 flex items-center gap-2"
                   @click.stop="archiveNote(note)"
                 >
                   <UIcon name="i-lucide-archive" size="16" />
@@ -194,7 +194,7 @@
           v-for="note in archivedNotes"
           :key="`archived-${note.id}`"
           :style="{ backgroundColor: note.backgroundColor }"
-          class="h-64 p-4 rounded-lg border shadow hover:shadow-md transition-shadow cursor-pointer flex flex-col opacity-75"
+          class="h-64 p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow transition-shadow cursor-pointer flex flex-col opacity-75"
           @click="openViewModal(note)"
         >
           <div class="flex items-start justify-between mb-2">
@@ -212,10 +212,10 @@
               <!-- Dropdown Menu -->
               <div
                 v-if="activeNoteMenu === note.id"
-                class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border py-1 z-20 min-w-32"
+                class="absolute right-0 top-full mt-1 bg-white rounded-xl shadow-sm border border-gray-200 py-1 z-20 min-w-32"
               >
                 <button
-                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  class="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-stone-100 flex items-center gap-2"
                   @click.stop="unarchiveNote(note)"
                 >
                   <div class="flex items-center justify-center w-4 h-4">
@@ -544,15 +544,6 @@ const toggleStar = async (note: Note) => {
     // Optionally show user feedback
   }
 };
-
-// const openChatWithNote = (note: Note) => {
-//   // Navigate to chat with note context
-//   const chatContext = `Here's my note titled "${note.title}" from ${note.subject}:\n\n${note.content}\n\nPlease help me understand this better or answer any questions I have about this topic.`;
-
-//   // For now, we'll just console.log the context - in a real app, this would navigate to chat
-//   console.log('Chat context:', chatContext);
-//   alert('Chat integration would open here with the note context');
-// };
 
 // Create sample note
 const createSampleNote = (): Note => ({

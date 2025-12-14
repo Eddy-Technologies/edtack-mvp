@@ -4,14 +4,11 @@
       <!-- Header -->
       <div class="flex items-center justify-between p-6 border-b">
         <h2 class="text-xl font-bold text-gray-900">Change Password</h2>
-        <button
+        <Button
           class="text-gray-400 hover:text-gray-600 transition-colors"
+          icon="i-lucide-x"
           @click="closeModal"
-        >
-          <div class="flex items-center justify-center w-6 h-6">
-            <UIcon name="i-lucide-x" size="24" />
-          </div>
-        </button>
+        />
       </div>
 
       <!-- Content -->
@@ -49,6 +46,7 @@
               :class="{ 'border-red-300': errorMessage }"
             >
             <p v-if="errorMessage" class="mt-1 text-sm text-red-600">{{ errorMessage }}</p>
+            <p v-else-if="isSameAsCurrentPassword" class="mt-1 text-sm text-red-600">New password must be different from current password</p>
           </div>
 
           <!-- Logout Warning -->
@@ -111,6 +109,7 @@ import { ref, computed } from 'vue';
 import { validatePassword } from '~~/shared/utils';
 import { useToast } from '#imports';
 import { useAuth } from '~/composables/useAuth';
+import Button from '~/components/common/Button.vue';
 
 interface Props {
   isOpen: boolean;
@@ -141,12 +140,17 @@ const isPasswordValid = computed(() => {
   return validation.isValid;
 });
 
+const isSameAsCurrentPassword = computed(() => {
+  return currentPassword.value && newPassword.value && newPassword.value === currentPassword.value;
+});
+
 const isFormValid = computed(() => {
   return currentPassword.value &&
     newPassword.value &&
     confirmPassword.value &&
     isPasswordValid.value &&
-    newPassword.value === confirmPassword.value;
+    newPassword.value === confirmPassword.value &&
+    !isSameAsCurrentPassword.value;
 });
 
 const closeModal = () => {

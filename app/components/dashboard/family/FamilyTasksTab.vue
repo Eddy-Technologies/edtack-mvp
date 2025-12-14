@@ -1,10 +1,7 @@
 <template>
   <div>
     <!-- Loading State -->
-    <div v-if="isLoading" class="text-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-      <p class="text-gray-600">Loading tasks...</p>
-    </div>
+    <DashboardSkeleton v-if="isLoading" variant="list" :count="4" />
 
     <!-- Error State -->
     <div v-else-if="error" class="text-center py-12">
@@ -32,7 +29,7 @@
       </div>
 
       <!-- Filters and Stats -->
-      <div class="bg-white rounded-lg border p-4">
+      <div class="bg-white rounded-xl border border-gray-200 p-4">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <!-- Sort Dropdown -->
           <div class="flex items-center space-x-2">
@@ -94,7 +91,7 @@
       />
 
       <!-- Empty State -->
-      <div v-if="!isLoading && tasks.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-if="!isLoading && tasks.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-clipboard-list" size="64" />
         </div>
@@ -141,6 +138,7 @@ import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
 import TaskInfoCard from '~/components/dashboard/tasks/TaskInfoCard.vue';
+import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 
 // Use stores
 const meStore = useMeStore();

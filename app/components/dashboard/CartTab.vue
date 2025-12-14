@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard-cart">
-    <div class="cart-container">
+  <div class="h-full overflow-y-auto">
+    <div class="p-5 sm:p-6 max-w-4xl mx-auto min-h-full">
       <!-- Header -->
       <div class="mb-8">
         <div class="flex items-center justify-between">
@@ -24,7 +24,7 @@
       </div>
 
       <!-- Empty Cart State -->
-      <div v-if="cart.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-if="cart.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-shopping-cart" size="64" />
         </div>
@@ -41,7 +41,7 @@
       <!-- Cart Items -->
       <div v-else class="space-y-6">
         <!-- Cart Items List -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Items in Your Cart</h2>
 
@@ -49,56 +49,79 @@
               <div
                 v-for="item in sortedCart"
                 :key="item.id"
-                class="flex items-center space-x-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                class="flex flex-col sm:flex-row gap-4 p-4 bg-white border border-gray-100 rounded-xl hover:border-primary/30 hover:shadow-sm transition-all"
               >
-                <img
-                  :src="item.image"
-                  :alt="item.name"
-                  class="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                >
-
-                <div class="flex-1 min-w-0">
-                  <h3 class="text-lg font-medium text-gray-900 truncate">{{ item.name }}</h3>
-                  <p class="text-sm text-gray-600 truncate">{{ item.description }}</p>
-                  <div class="flex items-center space-x-2 mt-1">
-                    <span class="text-lg font-semibold text-primary">S${{ (item.price).toFixed(2) }}</span>
-                    <span class="text-sm text-gray-500">each</span>
+                <!-- Product Image -->
+                <div class="relative w-full sm:w-24 h-32 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                  <img
+                    v-if="item.image && !imageErrors[item.id]"
+                    :src="item.image"
+                    :alt="item.name"
+                    class="w-full h-full object-cover"
+                    @error="imageErrors[item.id] = true"
+                  >
+                  <!-- Placeholder when no image -->
+                  <div
+                    v-else
+                    class="w-full h-full flex items-center justify-center p-2"
+                  >
+                    <span class="text-gray-400 text-center text-xs font-medium line-clamp-3">{{ item.name }}</span>
                   </div>
-                  <div v-if="item.addedAt" class="flex items-center space-x-1 mt-1">
-                    <UIcon name="i-lucide-calendar" class="text-gray-400" size="12" />
-                    <span class="text-xs text-gray-500">Added {{ formatDate(item.addedAt) }}</span>
+                  <!-- Category Badge -->
+                  <span
+                    v-if="item.category"
+                    class="absolute bottom-1 left-1 bg-white/90 text-gray-700 text-xs px-1.5 py-0.5 rounded-full"
+                  >
+                    {{ item.category }}
+                  </span>
+                </div>
+
+                <!-- Product Info -->
+                <div class="flex-1 min-w-0 flex flex-col justify-between">
+                  <h3 class="font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
+                  <div class="flex items-center gap-2 mt-2">
+                    <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
+                    <span class="text-sm text-gray-500">({{ Math.round(item.price * 100) }} credits)</span>
+                    <span class="text-sm text-gray-400">each</span>
                   </div>
                 </div>
 
-                <div class="flex items-center space-x-3">
+                <!-- Actions -->
+                <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-0 border-gray-100">
                   <!-- Quantity Controls -->
-                  <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
-                    <Button
-                      icon="i-lucide-minus"
-                      class="p-2 hover:bg-gray-200 rounded"
-                      @clicked="updateQuantity(item, -1)"
-                    />
-                    <span class="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">{{ item.quantity }}</span>
-                    <Button
-                      icon="i-lucide-plus"
-                      class="p-2 hover:bg-gray-200 rounded"
-                      @clicked="updateQuantity(item, 1)"
-                    />
+                  <div class="flex items-center gap-2 bg-gray-50 rounded-lg p-1">
+                    <button
+                      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-200 transition-colors"
+                      @click="updateQuantity(item, -1)"
+                    >
+                      <UIcon name="i-lucide-minus" size="16" class="text-gray-600" />
+                    </button>
+                    <span class="w-8 text-center font-semibold text-gray-900">{{ item.quantity }}</span>
+                    <button
+                      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-200 transition-colors"
+                      @click="updateQuantity(item, 1)"
+                    >
+                      <UIcon name="i-lucide-plus" size="16" class="text-gray-600" />
+                    </button>
                   </div>
 
                   <!-- Item Total -->
-                  <div class="text-right min-w-[4rem]">
-                    <div class="text-lg font-semibold text-gray-900">
+                  <div class="text-right">
+                    <div class="text-lg font-bold text-gray-900">
                       S${{ (item.price * item.quantity).toFixed(2) }}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      ({{ Math.round(item.price * item.quantity * 100) }} credits)
                     </div>
                   </div>
 
                   <!-- Remove Button -->
-                  <Button
-                    icon="i-lucide-trash-2"
-                    variant="secondary"
-                    @clicked="removeItem(item)"
-                  />
+                  <button
+                    class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    @click="removeItem(item)"
+                  >
+                    <UIcon name="i-lucide-trash-2" size="18" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -106,14 +129,14 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
 
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Items ({{ totalItems }})</span>
-                <span class="text-gray-900">S${{ subtotal.toFixed(2) }}</span>
+                <span class="text-gray-900">S${{ subtotal.toFixed(2) }} <span class="text-gray-500">({{ Math.round(subtotal * 100) }} credits)</span></span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Shipping</span>
@@ -122,7 +145,10 @@
               <div class="border-t pt-3">
                 <div class="flex justify-between text-lg font-semibold">
                   <span class="text-gray-900">Total</span>
-                  <span class="text-gray-900">S${{ total.toFixed(2) }}</span>
+                  <div class="text-right">
+                    <span class="text-gray-900">S${{ total.toFixed(2) }}</span>
+                    <span class="text-sm text-gray-500 block">({{ Math.round(total * 100) }} credits)</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,13 +156,13 @@
         </div>
 
         <!-- Payment Method Selection -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Method</h2>
 
             <div class="space-y-3">
               <!-- Pay with Credits Option (Children only) -->
-              <label v-if="!isParent" class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+              <label v-if="!isParent" class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -161,7 +187,7 @@
               </label>
 
               <!-- Pay with Card Option (Parents always, Children as alternative) -->
-              <label class="flex items-start space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+              <label class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -183,7 +209,7 @@
         </div>
 
         <!-- Checkout Actions -->
-        <div class="bg-white rounded-lg shadow-sm border">
+        <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-6">
             <div class="flex flex-col sm:flex-row gap-4">
               <Button
@@ -205,7 +231,7 @@
             </div>
 
             <!-- Payment Method Info -->
-            <div v-if="paymentMethod && !isLoading" class="mt-4 p-3 bg-gray-50 rounded-lg">
+            <div v-if="paymentMethod && !isLoading" class="mt-4 p-3 bg-stone-50 rounded-xl">
               <div v-if="paymentMethod === 'credits'" class="text-sm text-gray-700">
                 <UIcon name="i-lucide-info" class="inline mr-1" size="16" />
                 Your parent will be notified to approve and complete this purchase with their credit card.
@@ -217,7 +243,7 @@
             </div>
 
             <!-- Insufficient Credits Warning -->
-            <div v-if="paymentMethod === 'credits' && !hasEnoughCredits" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div v-if="paymentMethod === 'credits' && !hasEnoughCredits" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl">
               <div class="text-sm text-red-700">
                 <UIcon name="i-lucide-alert-triangle" class="inline mr-1" size="16" />
                 Insufficient credits. You need {{ totalCents - balance }} more credits.
@@ -229,7 +255,7 @@
 
       <!-- Processing Modal -->
       <div v-if="showProcessingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md mx-4">
+        <div class="bg-white rounded-xl p-6 max-w-md mx-4">
           <div class="text-center">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
             <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ processingMessage }}</h3>
@@ -266,6 +292,7 @@ const { isParent } = storeToRefs(meStore);
 
 // Reactive state - default to credits for children, card for parents
 const paymentMethod = ref<'credits' | 'card'>('credits');
+const imageErrors = ref<Record<string, boolean>>({});
 const isProcessingCheckout = ref(false);
 const showProcessingModal = ref(false);
 const processingMessage = ref('');
@@ -347,18 +374,6 @@ const goToShop = () => {
   router.push('/dashboard?tab=shop');
 };
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 1) return 'today';
-  if (diffDays === 2) return 'yesterday';
-  if (diffDays <= 7) return `${diffDays - 1} days ago`;
-  return date.toLocaleDateString();
-};
-
 // Fetch credit data when cart loads
 onMounted(async () => {
   await fetchCredits();
@@ -429,18 +444,3 @@ const processCheckout = async () => {
   }
 };
 </script>
-
-<style scoped>
-.dashboard-cart {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.cart-container {
-  padding: 20px;
-  min-height: 100%;
-  width: 100%;
-  max-width: 4xl;
-  margin: 0 auto;
-}
-</style>

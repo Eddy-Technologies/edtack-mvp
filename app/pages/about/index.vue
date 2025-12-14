@@ -1,34 +1,32 @@
 <template>
-  <div class="flex h-screen bg-slate-50">
+  <div class="flex h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50/50">
     <!-- Sidebar Navigation -->
-    <div class="w-72 bg-white border-r border-slate-200 flex flex-col">
+    <div class="w-72 bg-white border-r border-slate-200/60 flex flex-col shadow-sm">
       <!-- Header -->
-      <div class="px-6 py-6 border-b border-slate-200">
-        <div class="flex items-center space-x-3">
-          <NuxtLink to="/" class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-br from-secondary to-secondary-700 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">E</span>
-            </div>
-            <div>
-              <h1 class="text-lg font-semibold text-slate-900">StudyWithEddy</h1>
-              <p class="text-xs text-slate-500">About</p>
-            </div>
-          </NuxtLink>
-        </div>
+      <div class="px-6 py-5 border-b border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50">
+        <NuxtLink to="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-xl shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
+            <span class="text-white font-bold text-base">E</span>
+          </div>
+          <div>
+            <h1 class="text-lg font-heading font-semibold text-slate-900">StudyWithEddy</h1>
+            <p class="text-xs text-slate-400 font-medium tracking-wide">About</p>
+          </div>
+        </NuxtLink>
       </div>
 
       <!-- Navigation -->
-      <nav class="flex-1 px-6 py-6 space-y-2">
-        <div class="space-y-1">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Information</p>
+      <nav class="flex-1 px-4 py-6 overflow-y-auto">
+        <div class="space-y-1.5">
+          <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest px-3 py-2">Information</p>
 
           <div v-for="tab in tabs" :key="tab.id">
             <div
               :class="[
-                'group flex items-center px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
+                'group flex items-center px-4 py-3 text-sm font-medium rounded-2xl cursor-pointer transition-all duration-300',
                 activeTab === tab.id
-                  ? 'bg-secondary-50 text-secondary-700 shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-white text-secondary-700 shadow-sm ring-1 ring-slate-100'
+                  : 'text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900'
               ]"
               @click="switchTab(tab.id)"
             >
@@ -42,10 +40,10 @@
             <!-- Parent User Guides Item -->
             <div
               :class="[
-                'group flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-xl cursor-pointer transition-all duration-200',
+                'group flex items-center justify-between px-4 py-3 text-sm font-medium rounded-2xl cursor-pointer transition-all duration-300',
                 activeTab === 'user-guides' || isUserGuidesOpen
-                  ? 'bg-secondary-50 text-secondary-700 shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-white text-secondary-700 shadow-sm ring-1 ring-slate-100'
+                  : 'text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900'
               ]"
               @click="toggleUserGuides"
             >
@@ -56,7 +54,7 @@
               <UIcon
                 name="i-lucide-chevron-down"
                 :class="[
-                  'w-4 h-4 transition-transform duration-200',
+                  'w-4 h-4 transition-transform duration-300',
                   isUserGuidesOpen ? 'rotate-180' : ''
                 ]"
               />
@@ -64,7 +62,7 @@
 
             <!-- Submenu with smooth animation -->
             <Transition
-              enter-active-class="transition-all duration-200 ease-out"
+              enter-active-class="transition-all duration-300 ease-out"
               enter-from-class="opacity-0 max-h-0"
               enter-to-class="opacity-100 max-h-96"
               leave-active-class="transition-all duration-200 ease-in"
@@ -72,20 +70,19 @@
               leave-to-class="opacity-0 max-h-0"
             >
               <div v-if="isUserGuidesOpen" class="overflow-hidden">
-                <div class="ml-6 mt-1 space-y-1 border-l border-slate-200 pl-4">
+                <div class="ml-5 mt-2 space-y-1 pl-4 border-l-2 border-slate-100">
                   <div
                     v-for="guide in userGuides"
                     :key="guide.id"
                     :class="[
-                      'flex items-center px-3 py-2 text-sm rounded-lg cursor-pointer transition-all duration-200',
+                      'flex items-center px-3 py-2.5 text-sm rounded-xl cursor-pointer transition-all duration-200',
                       activeTab === 'user-guides' && activeGuide === guide.id
-                        ? 'bg-secondary-50 text-secondary-700 font-medium'
-                        : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                        ? 'bg-secondary-50/80 text-secondary-700 font-medium'
+                        : 'text-slate-500 hover:bg-white/80 hover:text-slate-700'
                     ]"
                     @click="switchToGuide(guide.id)"
                   >
-                    <div class="w-1.5 h-1.5 bg-slate-300 rounded-full mr-3" />
-                    <UIcon :name="guide.icon" class="w-4 h-4 mr-2" />
+                    <UIcon :name="guide.icon" class="w-4 h-4 mr-2.5" />
                     <span>{{ guide.name }}</span>
                   </div>
                 </div>
@@ -96,10 +93,9 @@
       </nav>
 
       <!-- Bottom Actions -->
-      <div class="px-6 pb-6 space-y-4">
-        <!-- Back to Chat Button -->
+      <div class="px-4 pb-6 pt-4">
         <Button
-          class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-secondary rounded-xl hover:bg-secondary-700 transition-colors shadow-sm"
+          class="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl hover:from-secondary-600 hover:to-secondary-700 transition-all duration-300 shadow-lg shadow-secondary-500/20 hover:shadow-xl hover:shadow-secondary-500/30 hover:-translate-y-0.5"
           icon="i-lucide-message-circle"
           @clicked="router.push('/')"
         >
@@ -111,8 +107,8 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main class="flex-1 p-8 overflow-auto">
-        <div class="max-w-7xl mx-auto">
+      <main class="flex-1 px-8 py-10 overflow-auto">
+        <div class="max-w-5xl mx-auto">
           <!-- Tab Content -->
           <AboutTab v-if="activeTab === 'about'" />
           <UserGuidesTab v-if="activeTab === 'user-guides'" :active-guide="activeGuide" />
@@ -134,7 +130,6 @@ import AboutTab from '~/components/about/AboutTab.vue';
 import UserGuidesTab from '~/components/about/UserGuidesTab.vue';
 import FAQTab from '~/components/about/FAQTab.vue';
 import FeedbackTab from '~/components/about/FeedbackTab.vue';
-// import SubscriptionTab from '~/components/about/SubscriptionTab.vue';
 import TeamTab from '~/components/about/TeamTab.vue';
 
 const router = useRouter();

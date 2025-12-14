@@ -54,7 +54,10 @@
             </div>
             <div class="flex justify-between">
               <span class="text-gray-600">Total Amount:</span>
-              <span class="font-medium text-gray-900">S${{ (successData.details.amount / 100).toFixed(2) }}</span>
+              <div class="text-right">
+                <span class="font-medium text-gray-900">S${{ (successData.details.amount / 100).toFixed(2) }}</span>
+                <span class="text-sm text-gray-500 block">({{ successData.details.amount }} credits)</span>
+              </div>
             </div>
             <div class="flex justify-between">
               <span class="text-gray-600">Payment Method:</span>
@@ -70,7 +73,10 @@
             </div>
             <div class="flex justify-between">
               <span class="text-gray-600">Amount Paid:</span>
-              <span class="font-medium text-gray-900">S${{ (successData.details.amount / 100).toFixed(2) }}</span>
+              <div class="text-right">
+                <span class="font-medium text-gray-900">S${{ (successData.details.amount / 100).toFixed(2) }}</span>
+                <span class="text-sm text-gray-500 block">({{ successData.details.amount }} credits)</span>
+              </div>
             </div>
           </div>
 

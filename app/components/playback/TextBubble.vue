@@ -13,8 +13,8 @@
     <div v-if="isUser" class="flex flex-col items-end max-w-[80%]">
       <div
         :class="[
-          'whitespace-pre-wrap transition-all duration-300 ease-out',
-          'bg-green-100 p-2 rounded-xl'
+          'whitespace-pre-wrap transition-all duration-200 ease-out',
+          'bg-stone-100 p-3 rounded-xl'
         ]"
       >
         <MDCRenderer
@@ -44,7 +44,7 @@
 
     <!-- For non-user messages: text + actions -->
     <div v-else class="flex flex-col">
-      <div class="p-3 rounded-lg bg-white">
+      <div class="p-3 rounded-xl">
         <MDCRenderer
           v-if="mdcBody"
           :body="mdcBody"

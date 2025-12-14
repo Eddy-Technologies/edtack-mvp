@@ -1,6 +1,6 @@
 <template>
   <UButton
-    :color="color"
+    :color="buttonColor"
     :size="buttonSize"
     :disabled="isDisabled"
     :class="computedClass"
@@ -39,7 +39,7 @@ const props = defineProps<{
   route?: string;
   color?: ButtonColor;
   size?: ButtonSize;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'danger' | 'info';
   extraClasses?: string; // Additional Tailwind classes (supports extra-classes in kebab-case)
   bold?: boolean;
   rounded?: boolean;
@@ -52,6 +52,15 @@ const props = defineProps<{
 
 const buttonSize = computed(() => {
   return props.size || 'md'; // Default to 'md' if not specified
+});
+
+// Determine UButton color based on variant to prevent default green color
+const buttonColor = computed(() => {
+  if (props.color) return props.color;
+  if (props.variant === 'danger') return 'red';
+  if (props.variant === 'info') return 'gray';
+  if (props.variant === 'secondary') return 'primary';
+  return 'primary'; // Default for 'primary' variant
 });
 
 const emit = defineEmits(['clicked']);
@@ -87,6 +96,8 @@ const computedClass = computed(() => {
   // Variant styles
   if (props.variant === 'primary') classes.push(`${sizeClasses} bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors`);
   if (props.variant === 'secondary') classes.push(`${sizeClasses} bg-white text-primary border border-primary rounded-lg hover:bg-primary-50 transition-colors`);
+  if (props.variant === 'danger') classes.push(`${sizeClasses} bg-white text-red-600 border border-red-600 rounded-lg hover:bg-red-50 transition-colors`);
+  if (props.variant === 'info') classes.push(`${sizeClasses} bg-white text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors`);
 
   // Disabled or loading state
   if (props.disabled || props.loading) {

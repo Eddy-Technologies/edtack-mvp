@@ -1,11 +1,8 @@
 <template>
-  <div class="dashboard-wishlist">
-    <div class="wishlist-container">
+  <div class="h-full overflow-y-auto">
+    <div class="p-5 sm:p-6 max-w-6xl mx-auto min-h-full">
       <!-- Loading State -->
-      <div v-if="isLoading" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-        <p class="text-gray-600">Loading your wishlist...</p>
-      </div>
+      <DashboardSkeleton v-if="isLoading" variant="grid" :count="8" />
 
       <!-- Error State -->
       <div v-else-if="error" class="text-center py-12">
@@ -21,7 +18,7 @@
       </div>
 
       <!-- Empty Wishlist State -->
-      <div v-else-if="!isLoading && wishlistItems.length === 0" class="text-center py-16 bg-gray-50 rounded-lg">
+      <div v-else-if="!isLoading && wishlistItems.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-heart" size="64" />
         </div>
@@ -53,79 +50,73 @@
         </div>
 
         <!-- Items Grid -->
-        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div class="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           <div
             v-for="item in wishlistItems"
             :key="item.id"
-            class="bg-white rounded-lg shadow-sm border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 p-4"
+            class="group bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-200 overflow-hidden"
           >
-            <div class="relative mb-4">
+            <!-- Product Image -->
+            <div class="relative aspect-square bg-gray-100">
               <img
+                v-if="item.product.image && !imageErrors[item.id]"
                 :src="item.product.image"
                 :alt="item.product.name"
-                class="w-full h-48 object-cover rounded-lg"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                @error="imageErrors[item.id] = true"
               >
+              <!-- Placeholder when no image -->
+              <div
+                v-else
+                class="w-full h-full flex items-center justify-center p-4"
+              >
+                <span class="text-gray-400 text-center text-sm font-medium line-clamp-3">{{ item.product.name }}</span>
+              </div>
               <!-- Remove Heart -->
               <button
-                class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+                class="absolute top-2 right-2 p-1.5 bg-white/90 rounded-full shadow-sm hover:bg-white hover:shadow-md transition-all"
                 @click="removeFromWishlist(item.product.id)"
               >
                 <UIcon
                   name="i-lucide-heart"
-                  class="w-5 h-5 text-red-500 fill-current"
-                  size="20"
+                  class="text-red-500"
+                  style="fill: currentColor"
+                  size="16"
                 />
               </button>
               <!-- Sale Badge -->
-              <span v-if="item.product.hasDiscount" class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+              <span v-if="item.product.hasDiscount" class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
                 -{{ item.product.discountPercentage }}%
+              </span>
+              <!-- Category Badge -->
+              <span class="absolute bottom-2 left-2 bg-white/90 text-gray-700 text-xs px-2 py-0.5 rounded-full">
+                {{ item.product.category }}
               </span>
               <!-- Stock Status -->
               <span
                 v-if="!item.product.inStock"
-                class="absolute bottom-2 left-2 bg-gray-800 text-white text-xs px-2 py-1 rounded-full"
+                class="absolute bottom-2 right-2 bg-gray-800 text-white text-xs px-2 py-0.5 rounded-full"
               >
                 Out of Stock
               </span>
-              <!-- Category Badge -->
-              <span class="absolute bottom-2 right-2 bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">
-                {{ item.product.category }}
-              </span>
             </div>
 
-            <div class="space-y-2">
-              <h3 class="font-semibold text-gray-900 line-clamp-2">{{ item.product.name }}</h3>
-              <p class="text-sm text-gray-600 line-clamp-2">{{ item.product.description }}</p>
+            <!-- Product Info -->
+            <div class="p-3">
+              <h3 class="font-medium text-gray-900 text-sm line-clamp-2 mb-2 min-h-[2.5rem]">{{ item.product.name }}</h3>
 
-              <!-- Price -->
-              <div class="flex items-center space-x-2">
-                <span class="text-lg font-bold text-primary">S${{ item.product.price.toFixed(2) }}</span>
-                <span v-if="item.product.originalPrice" class="text-sm text-gray-500 line-through">
-                  S${{ item.product.originalPrice.toFixed(2) }}
-                </span>
-              </div>
-
-              <!-- Added Date -->
-              <p class="text-xs text-gray-500">
-                Added {{ formatDate(item.addedAt) }}
-              </p>
-
-              <!-- Actions -->
-              <div class="flex space-x-2 pt-2">
-                <Button
-                  variant="primary"
-                  text="Add to Cart"
-                  size="sm"
-                  extra-classes="flex-1"
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-lg font-bold text-primary">S${{ item.product.price.toFixed(2) }}</span>
+                  <span class="text-xs text-gray-500 block">({{ Math.round(item.product.price * 100) }} credits)</span>
+                </div>
+                <button
+                  class="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   :disabled="!item.product.inStock"
-                  @clicked="addToCart(item.product)"
-                />
-                <Button
-                  variant="secondary-gray"
-                  icon="i-lucide-trash-2"
-                  size="sm"
-                  @clicked="removeFromWishlist(item.product.id)"
-                />
+                  @click="addToCart(item.product)"
+                >
+                  <UIcon name="i-lucide-plus" size="16" />
+                </button>
               </div>
             </div>
           </div>
@@ -165,6 +156,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
+import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 
 const router = useRouter();
 const toast = useToast();
@@ -179,6 +171,7 @@ const wishlistItems = ref<any[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 const addedToCartMessage = ref<string | null>(null);
+const imageErrors = ref<Record<string, boolean>>({});
 const pagination = ref({
   total: 0,
   limit: 20,
@@ -317,43 +310,8 @@ const nextPage = () => {
   }
 };
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 1) return 'today';
-  if (diffDays === 2) return 'yesterday';
-  if (diffDays <= 7) return `${diffDays - 1} days ago`;
-  if (diffDays <= 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  return date.toLocaleDateString();
-};
-
 // Load wishlist on mount
 onMounted(() => {
   loadWishlist();
 });
 </script>
-
-<style scoped>
-.dashboard-wishlist {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.wishlist-container {
-  padding: 20px;
-  min-height: 100%;
-  width: 100%;
-  max-width: 6xl;
-  margin: 0 auto;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>
