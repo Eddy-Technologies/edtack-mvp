@@ -173,6 +173,8 @@ const fetchSuccessData = async () => {
       // Clear cart if this was a purchase
       if (response.type === 'purchase') {
         clearCart();
+        // Notify sidebar to update orders badge
+        window.dispatchEvent(new CustomEvent('ordersUpdated'));
       }
     } else {
       // Handle subscription returns or direct visits
