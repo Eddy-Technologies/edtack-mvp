@@ -94,9 +94,9 @@
 
           <!-- Transaction ID -->
           <div v-if="successData.details.sessionId" class="pt-3 border-t">
-            <div class="flex justify-between">
+            <div class="flex flex-col gap-1">
               <span class="text-gray-600">Transaction ID:</span>
-              <span class="font-mono text-sm text-gray-900">{{ successData.details.sessionId }}</span>
+              <span class="font-mono text-sm text-gray-900 break-all">{{ successData.details.sessionId }}</span>
             </div>
           </div>
         </div>
