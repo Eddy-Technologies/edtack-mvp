@@ -35,7 +35,10 @@
             class="appearance-none w-4 h-4 rounded border-2 border-current grid place-content-center relative before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-blue-500 before:scale-0 checked:before:scale-100 transition-transform"
             @change="selectMCQOption(option.id)"
           >
-          <div v-if="option.option_text" class="flex-1">{{ option.option_text }}</div>
+          <div v-if="option.option_text" class="flex-1">
+            <span v-if="containsMath(option.option_text)" v-html="renderInlineMath(option.option_text)" />
+            <span v-else>{{ option.option_text }}</span>
+          </div>
           <img
             v-if="option.imageUrl"
             :src="option.imageUrl"
@@ -194,6 +197,7 @@ import Button from '~/components/common/Button.vue';
 import MessageActions from '~/components/chat/MessageActions.vue';
 import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 import { convertHighlights, convertImages, stripImages } from '~/utils/markdownUtils';
+import { renderInlineMath, containsMath } from '~/utils/mathUtils';
 
 const props = defineProps<{
   question: QuizQuestion;

@@ -138,6 +138,18 @@ module.exports = {
             'pre': {
               marginBottom: '1rem',
             },
+            // KaTeX math styles
+            '.katex': {
+              fontSize: '1.1em',
+            },
+            '.katex-display': {
+              margin: '1rem 0',
+              overflowX: 'auto',
+              overflowY: 'hidden',
+            },
+            '.katex-display > .katex': {
+              textAlign: 'center',
+            },
           },
         },
       },

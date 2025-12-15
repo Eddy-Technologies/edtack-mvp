@@ -16,6 +16,26 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
   ],
 
+  mdc: {
+    remarkPlugins: {
+      'remark-math': {
+        src: 'remark-math',
+        options: {
+          singleDollarTextMath: true,
+        },
+      },
+    },
+    rehypePlugins: {
+      'rehype-katex': {
+        src: 'rehype-katex',
+        options: {
+          throwOnError: false,
+          strict: false,
+        },
+      },
+    },
+  },
+
   ui: {
     colorMode: false
   },
@@ -48,6 +68,13 @@ export default defineNuxtConfig({
         {
           async: true,
           src: 'https://js.stripe.com/v3/pricing-table.js',
+        },
+      ],
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css',
+          crossorigin: 'anonymous',
         },
       ],
     },
