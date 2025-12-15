@@ -213,8 +213,9 @@
                       </span>
                     </div>
                     <div class="text-xs text-gray-500 flex items-center gap-2">
-                      <span v-if="taskChapter.user_tasks?.credit > 0">{{ taskChapter.user_tasks.credit }} credits</span>
-                      <span v-if="taskChapter.user_tasks?.required_score">· {{ taskChapter.user_tasks.required_score }}% required</span>
+                      <!-- Only show credits for OPEN tasks -->
+                      <span v-if="taskChapter.user_tasks?.status !== 'CLOSED' && taskChapter.user_tasks?.credit > 0">{{ taskChapter.user_tasks.credit }} credits</span>
+                      <span v-if="taskChapter.user_tasks?.status !== 'CLOSED' && taskChapter.user_tasks?.required_score">· {{ taskChapter.user_tasks.required_score }}% required</span>
                       <template v-if="quizMetadata[taskChapter.id]?.isCompleted">
                         <span>· Best: {{ quizMetadata[taskChapter.id]?.bestPercentage || 0 }}%</span>
                         <span>· {{ quizMetadata[taskChapter.id]?.attemptCount || 0 }} attempts</span>
@@ -326,17 +327,23 @@ const selectedSubjectData = computed(() => {
   return subjects.value.find((s) => s.name === selectedSubject.value) || null;
 });
 
-// Helper: Get quiz count for a subject
+// Helper: Get quiz count for a subject (only OPEN tasks)
 const getQuizCount = (subject: Subject) => {
   return subject.chapters.reduce((total, chapter) => {
-    return total + (chapter.user_tasks_chapters?.length || 0);
+    // Only count quizzes from OPEN tasks
+    const openQuizzes = chapter.user_tasks_chapters?.filter(
+      (tc: any) => tc.user_tasks?.status !== 'CLOSED'
+    ) || [];
+    return total + openQuizzes.length;
   }, 0);
 };
 
-// Helper: Get total credits available for a subject
+// Helper: Get total credits available for a subject (only OPEN tasks)
 const getSubjectCredits = (subject: Subject) => {
   return subject.chapters.reduce((total, chapter) => {
     const chapterCredits = chapter.user_tasks_chapters?.reduce((sum: number, tc: any) => {
+      // Only count credits from OPEN tasks
+      if (tc.user_tasks?.status === 'CLOSED') return sum;
       return sum + (tc.user_tasks?.credit || 0);
     }, 0) || 0;
     return total + chapterCredits;

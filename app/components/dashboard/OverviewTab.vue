@@ -196,17 +196,6 @@
             </div>
           </div>
         </div>
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-violet-50 rounded-lg">
-              <UIcon name="i-lucide-check-circle" class="text-violet-600" size="20" />
-            </div>
-            <div>
-              <p class="text-2xl font-bold text-gray-900">{{ completedTasks }}</p>
-              <p class="text-xs text-gray-500">Completed Tasks</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Token Usage Summary -->
@@ -290,56 +279,6 @@
         </div>
       </div>
 
-      <!-- Recent Tasks -->
-      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-lg">
-                <UIcon name="i-lucide-check-circle" class="text-emerald-600" size="16" />
-              </div>
-              <h3 class="text-base font-semibold text-gray-900">Recent Tasks</h3>
-            </div>
-            <NuxtLink to="/dashboard?tab=family&subtab=tasks">
-              <Button variant="secondary" text="View All" size="sm" />
-            </NuxtLink>
-          </div>
-        </div>
-        <div v-if="recentTasks.length === 0" class="text-center py-16 px-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-2xl mb-6">
-            <UIcon name="i-lucide-clipboard-list" class="text-gray-400" size="32" />
-          </div>
-          <h3 class="text-lg font-semibold text-gray-900 mb-2">No tasks yet</h3>
-          <p class="text-gray-500 max-w-sm mx-auto">Check with your family to get started!</p>
-        </div>
-        <div v-else class="divide-y divide-gray-100">
-          <div v-for="task in recentTasks" :key="task.id" class="flex items-center justify-between p-5 hover:bg-gray-50/50 transition-colors">
-            <div class="flex items-center gap-4">
-              <div
-                :class="[
-                  'w-10 h-10 rounded-xl flex items-center justify-center',
-                  task.status === 'CLOSED' ? 'bg-emerald-50' : 'bg-blue-50'
-                ]"
-              >
-                <UIcon
-                  :name="task.status === 'CLOSED' ? 'i-lucide-check' : 'i-lucide-clock'"
-                  :class="task.status === 'CLOSED' ? 'text-emerald-600' : 'text-blue-600'"
-                  size="18"
-                />
-              </div>
-              <div>
-                <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
-                <p class="text-sm text-gray-500">{{ task.chapters?.map((c: any) => c.display_name).join(', ') || task.subject }}</p>
-              </div>
-            </div>
-            <div class="text-right">
-              <p class="font-medium text-emerald-600">+{{ task.credit }} credits</p>
-              <p class="text-xs text-gray-400">{{ formatDate(task.createdAt) }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Quick Actions -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <NuxtLink to="/dashboard?tab=shop" class="block">
@@ -390,8 +329,6 @@ const isParent = computed(() => user.user_role === 'PARENT');
 const familyMembers = ref<any[]>([]);
 const userCredits = ref(0);
 const activeTasks = ref(0);
-const completedTasks = ref(0);
-const recentTasks = ref<any[]>([]);
 
 // Pending orders and tasks for parent view
 const pendingOrders = ref<any[]>([]);
@@ -427,14 +364,11 @@ onMounted(async () => {
         pendingTasks.value = tasksResult.value.tasks || [];
       }
     } else {
-      // Load all student data in parallel (4 calls instead of 5 - combined completed count and recent tasks)
-      const [creditsResult, ordersResult, tasksResult, completedResult] = await Promise.allSettled([
+      // Load all student data in parallel
+      const [creditsResult, ordersResult, tasksResult] = await Promise.allSettled([
         $fetch('/api/credits/unified'),
         $fetch('/api/orders/pending-approval', { query: { limit: 5 } }),
-        $fetch('/api/tasks/user-tasks', { query: { status: TASK_STATUS.OPEN, limit: 5 } }),
-        $fetch('/api/tasks/user-tasks', {
-          query: { status: TASK_STATUS.CLOSED, limit: 3, sortBy: 'created_at', sortOrder: 'desc' }
-        })
+        $fetch('/api/tasks/user-tasks', { query: { status: TASK_STATUS.OPEN, limit: 5 } })
       ]);
 
       if (creditsResult.status === 'fulfilled') {
@@ -446,11 +380,6 @@ onMounted(async () => {
       if (tasksResult.status === 'fulfilled' && tasksResult.value.success) {
         myPendingTasks.value = tasksResult.value.tasks || [];
         activeTasks.value = myPendingTasks.value.length;
-      }
-      if (completedResult.status === 'fulfilled' && completedResult.value.success) {
-        // Use single response for both count and recent tasks
-        completedTasks.value = completedResult.value.pagination?.totalCount || 0;
-        recentTasks.value = completedResult.value.tasks || [];
       }
     }
   } catch (error) {
