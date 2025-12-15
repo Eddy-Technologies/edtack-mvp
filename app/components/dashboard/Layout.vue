@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen bg-stone-50">
     <!-- Modern Sidebar -->
-    <div class="w-72 bg-white border-r border-gray-200 flex flex-col">
+    <div class="w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
       <!-- Header -->
       <div class="px-6 py-6 border-b border-gray-200">
         <div class="flex items-center space-x-3">
@@ -18,7 +18,7 @@
       </div>
 
       <!-- Navigation -->
-      <nav class="flex-1 px-6 py-6 space-y-2">
+      <nav class="flex-1 px-6 py-6 space-y-2 overflow-y-auto">
         <div class="space-y-1">
           <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 py-2">Main</p>
 

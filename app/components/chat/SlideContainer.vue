@@ -82,7 +82,8 @@
               @click="selectOption(option)"
             >
               <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
-              {{ option.option_text }}
+              <span v-if="containsMath(option.option_text)" v-html="renderInlineMath(option.option_text)" />
+              <span v-else>{{ option.option_text }}</span>
             </div>
           </div>
 
@@ -406,6 +407,7 @@ import { ref, computed, onMounted, onUnmounted, watchEffect, watch } from 'vue';
 import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import { useToast } from '#imports';
 import { convertHighlights, convertImages } from '~/utils/markdownUtils';
+import { renderInlineMath, containsMath } from '~/utils/mathUtils';
 
 const toast = useToast();
 
