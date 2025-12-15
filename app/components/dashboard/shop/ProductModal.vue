@@ -65,8 +65,7 @@
 
         <!-- Price -->
         <div>
-          <span class="text-2xl font-bold text-primary">S${{ product.price.toFixed(2) }}</span>
-          <span class="text-sm text-gray-500 ml-2">({{ Math.round(product.price * 100) }} credits)</span>
+          <span class="text-2xl font-bold text-primary">{{ Math.round(product.price * 100) }} credits</span>
         </div>
 
         <!-- Quantity Selector -->
@@ -93,7 +92,7 @@
         <!-- Add to Cart Button -->
         <Button
           variant="primary"
-          :text="`Add to Cart - S$${(product.price * quantity).toFixed(2)} (${Math.round(product.price * quantity * 100)} credits)`"
+          :text="`Add to Cart - ${Math.round(product.price * quantity * 100)} credits`"
           size="lg"
           extra-classes="w-full"
           :disabled="isProcessing"

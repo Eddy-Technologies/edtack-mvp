@@ -114,9 +114,9 @@
                   <p class="text-sm text-gray-600">Qty: {{ item.quantity }}</p>
                 </div>
                 <div class="text-right flex-shrink-0">
-                  <p class="font-semibold text-primary">S${{ item.totalPriceSGD }}</p>
-                  <p class="text-xs text-gray-500">({{ Math.round(item.totalPriceSGD * 100) }} credits)</p>
-                  <p class="text-xs text-gray-400">S${{ item.unitPriceSGD }} each</p>
+                  <p class="font-semibold text-primary">{{ Math.round(item.totalPriceSGD * 100) }} credits</p>
+                  <p class="text-xs text-gray-500">(S${{ item.totalPriceSGD }})</p>
+                  <p class="text-xs text-gray-400">{{ Math.round(item.unitPriceSGD * 100) }} credits each</p>
                 </div>
               </div>
             </div>
@@ -125,8 +125,8 @@
             <div class="flex justify-between items-center py-3 border-t border-gray-200 mb-6">
               <span class="text-lg font-medium text-gray-900">Total Amount</span>
               <div class="text-right">
-                <span class="text-xl font-bold text-primary">S${{ order.totalAmountSGD }}</span>
-                <span class="text-sm text-gray-500 block">({{ Math.round(order.totalAmountSGD * 100) }} credits)</span>
+                <span class="text-xl font-bold text-primary">{{ Math.round(order.totalAmountSGD * 100) }} credits</span>
+                <span class="text-sm text-gray-500 block">(S${{ order.totalAmountSGD }})</span>
               </div>
             </div>
 
@@ -195,8 +195,8 @@
               <div class="flex justify-between">
                 <span class="text-gray-600">Total Amount:</span>
                 <div class="text-right">
-                  <span class="font-bold text-primary">S${{ selectedOrder.totalAmountSGD }}</span>
-                  <span class="text-sm text-gray-500 block">({{ Math.round(selectedOrder.totalAmountSGD * 100) }} credits)</span>
+                  <span class="font-bold text-primary">{{ Math.round(selectedOrder.totalAmountSGD * 100) }} credits</span>
+                  <span class="text-sm text-gray-500 block">(S${{ selectedOrder.totalAmountSGD }})</span>
                 </div>
               </div>
             </div>
@@ -225,9 +225,9 @@
                   <p class="text-sm text-gray-500">Qty: {{ item.quantity }}</p>
                 </div>
                 <div class="text-right flex-shrink-0">
-                  <p class="font-semibold text-primary">S${{ item.totalPriceSGD }}</p>
-                  <p class="text-xs text-gray-500">({{ Math.round(item.totalPriceSGD * 100) }} credits)</p>
-                  <p class="text-xs text-gray-400">S${{ item.unitPriceSGD }} each</p>
+                  <p class="font-semibold text-primary">{{ Math.round(item.totalPriceSGD * 100) }} credits</p>
+                  <p class="text-xs text-gray-500">(S${{ item.totalPriceSGD }})</p>
+                  <p class="text-xs text-gray-400">{{ Math.round(item.unitPriceSGD * 100) }} credits each</p>
                 </div>
               </div>
             </div>

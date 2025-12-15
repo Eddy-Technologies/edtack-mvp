@@ -112,8 +112,7 @@
 
           <div class="flex items-center justify-between">
             <div>
-              <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
-              <span class="text-xs text-gray-500 block">({{ Math.round(item.price * 100) }} credits)</span>
+              <span class="text-lg font-bold text-primary">{{ Math.round(item.price * 100) }} credits</span>
             </div>
             <button
               class="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"

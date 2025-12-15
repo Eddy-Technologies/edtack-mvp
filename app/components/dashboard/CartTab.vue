@@ -80,8 +80,8 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-between">
                   <h3 class="font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
                   <div class="flex items-center gap-2 mt-2">
-                    <span class="text-lg font-bold text-primary">S${{ item.price.toFixed(2) }}</span>
-                    <span class="text-sm text-gray-500">({{ Math.round(item.price * 100) }} credits)</span>
+                    <span class="text-lg font-bold text-primary">{{ Math.round(item.price * 100) }} credits</span>
+                    <span class="text-sm text-gray-500">(S${{ item.price.toFixed(2) }})</span>
                     <span class="text-sm text-gray-400">each</span>
                   </div>
                 </div>
@@ -107,11 +107,11 @@
 
                   <!-- Item Total -->
                   <div class="text-right">
-                    <div class="text-lg font-bold text-gray-900">
-                      S${{ (item.price * item.quantity).toFixed(2) }}
+                    <div class="text-lg font-bold text-primary">
+                      {{ Math.round(item.price * item.quantity * 100) }} credits
                     </div>
                     <div class="text-xs text-gray-500">
-                      ({{ Math.round(item.price * item.quantity * 100) }} credits)
+                      (S${{ (item.price * item.quantity).toFixed(2) }})
                     </div>
                   </div>
 
@@ -136,7 +136,7 @@
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Items ({{ totalItems }})</span>
-                <span class="text-gray-900">S${{ subtotal.toFixed(2) }} <span class="text-gray-500">({{ Math.round(subtotal * 100) }} credits)</span></span>
+                <span class="text-gray-900 font-medium">{{ Math.round(subtotal * 100) }} credits <span class="text-gray-500">(S${{ subtotal.toFixed(2) }})</span></span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Shipping</span>
@@ -146,8 +146,8 @@
                 <div class="flex justify-between text-lg font-semibold">
                   <span class="text-gray-900">Total</span>
                   <div class="text-right">
-                    <span class="text-gray-900">S${{ total.toFixed(2) }}</span>
-                    <span class="text-sm text-gray-500 block">({{ Math.round(total * 100) }} credits)</span>
+                    <span class="text-primary text-2xl font-bold">{{ Math.round(total * 100) }} credits</span>
+                    <span class="text-sm text-gray-500 block">(S${{ total.toFixed(2) }})</span>
                   </div>
                 </div>
               </div>
