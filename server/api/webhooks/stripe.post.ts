@@ -263,17 +263,40 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     return;
   }
 
-  // Find user directly by payment_customer_id
-  const { data: userInfo, error } = await supabase
+  // Try to find user by payment_customer_id first, fallback to metadata user_info_id
+  let userInfo: { id: string } | null = null;
+
+  const { data: userByCustomerId } = await supabase
     .from('user_infos')
     .select('id')
     .eq('payment_customer_id', session.customer)
     .single();
 
-  if (error || !userInfo) {
+  if (userByCustomerId) {
+    userInfo = userByCustomerId;
+  } else if (session.metadata?.user_info_id) {
+    // Fallback: find user by metadata user_info_id
+    const { data: userByMetadata } = await supabase
+      .from('user_infos')
+      .select('id')
+      .eq('id', session.metadata.user_info_id)
+      .single();
+
+    if (userByMetadata) {
+      userInfo = userByMetadata;
+      // Also update payment_customer_id for future lookups
+      await supabase
+        .from('user_infos')
+        .update({ payment_customer_id: session.customer })
+        .eq('id', userByMetadata.id);
+      console.log(`[StripeWebhook] Updated payment_customer_id for user ${userByMetadata.id}`);
+    }
+  }
+
+  if (!userInfo) {
     throw createError({
       statusCode: 404,
-      statusMessage: `User not found for payment_customer_id ${session.customer}`
+      statusMessage: `User not found for customer ${session.customer} or metadata ${session.metadata?.user_info_id}`
     });
   }
 
