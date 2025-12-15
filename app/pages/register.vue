@@ -139,13 +139,14 @@
               </div>
 
               <!-- Student-specific fields -->
-              <!-- Student Level (Required) -->
               <USelect
                 v-if="userRole === USER_ROLE.STUDENT"
                 v-model="studentLevel"
                 :disabled="isLoading"
                 placeholder="Select your level"
                 :options="levelOptions"
+                size="xl"
+                :ui="{ rounded: 'rounded-xl' }"
               />
 
               <USelect
@@ -154,7 +155,28 @@
                 :disabled="isLoading"
                 placeholder="Select your syllabus"
                 :options="syllabusOptions"
+                size="xl"
+                :ui="{ rounded: 'rounded-xl' }"
               />
+
+              <!-- Optional student fields -->
+              <input
+                v-if="userRole === USER_ROLE.STUDENT"
+                v-model="school"
+                type="text"
+                placeholder="School (optional)"
+                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                :disabled="isLoading"
+              >
+
+              <input
+                v-if="userRole === USER_ROLE.STUDENT"
+                v-model="dateOfBirth"
+                type="date"
+                placeholder="Birthday (optional)"
+                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                :disabled="isLoading"
+              >
 
               <!-- Terms and Conditions -->
               <div class="flex items-start space-x-3 text-left">
@@ -223,6 +245,8 @@ const email = ref('');
 const userRole = ref(''); // 'parent' or 'student'
 const studentLevel = ref(''); // Required for students
 const syllabusType = ref(''); // Required for students
+const dateOfBirth = ref(''); // Optional for students
+const school = ref(''); // Optional for students
 const acceptTerms = ref(false);
 
 const isLoading = ref(false);
@@ -311,6 +335,8 @@ const handleRegister = async () => {
       userRole: userRole.value,
       studentLevel: studentLevel.value,
       syllabusType: syllabusType.value,
+      dateOfBirth: dateOfBirth.value || undefined,
+      school: school.value.trim() || undefined,
       acceptTerms: acceptTerms.value,
     });
     console.log('Email registration successful:', response);

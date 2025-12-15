@@ -9,7 +9,9 @@ export interface SignUpReq {
   userRole: string;
   studentLevel?: string;
   syllabusType?: string;
-  acceptTerms: boolean; // Optional, can be used for terms acceptance
+  dateOfBirth?: string;
+  school?: string;
+  acceptTerms: boolean;
 }
 
 export const useAuth = () => {
