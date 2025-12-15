@@ -67,57 +67,59 @@
             ]"
           >
             <!-- Centered layout: Single container with carousel and input -->
-            <div v-if="isChatCentered" class="absolute top-[15%] left-0 right-0 flex justify-center px-4">
-              <div class="w-full max-w-4xl flex flex-col gap-6">
-                <!-- Character Carousel - fixed height -->
-                <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                  <div class="px-6 py-4 border-b border-gray-100">
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
-                        <div class="flex items-center gap-2 mt-1">
-                          <p class="text-sm text-gray-600">
-                            <span v-if="selectedCharacter">
-                              Currently:
-                              <span class="font-medium text-gray-800">{{
-                                selectedCharacter.name
-                              }}</span>
-                              <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
-                            </span>
-                            <span v-else>Select a character to start chatting</span>
-                          </p>
+            <div v-if="isChatCentered" class="absolute inset-0 overflow-y-auto">
+              <div class="min-h-full flex flex-col items-center justify-start pt-[15%] pb-8 px-4">
+                <div class="w-full max-w-4xl flex flex-col gap-6">
+                  <!-- Character Carousel - fixed height -->
+                  <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100">
+                      <div class="flex items-center justify-between">
+                        <div>
+                          <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
+                          <div class="flex items-center gap-2 mt-1">
+                            <p class="text-sm text-gray-600">
+                              <span v-if="selectedCharacter">
+                                Currently:
+                                <span class="font-medium text-gray-800">{{
+                                  selectedCharacter.name
+                                }}</span>
+                                <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
+                              </span>
+                              <span v-else>Select a character to start chatting</span>
+                            </p>
+                          </div>
                         </div>
+                        <UTooltip
+                          :ui="{ base: 'h-auto px-2 py-1 text-xs font-normal', width: 'max-w-[200px]' }"
+                          :popper="{ placement: 'bottom-end' }"
+                        >
+                          <template #text>
+                            <span class="whitespace-normal">Click on a character to select your subject focus, then start typing below.</span>
+                          </template>
+                          <div class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-help transition-colors">
+                            <UIcon name="i-lucide-help-circle" class="w-5 h-5 text-gray-500" />
+                          </div>
+                        </UTooltip>
                       </div>
-                      <UTooltip
-                        :ui="{ base: 'h-auto px-2 py-1 text-xs font-normal', width: 'max-w-[200px]' }"
-                        :popper="{ placement: 'bottom-end' }"
-                      >
-                        <template #text>
-                          <span class="whitespace-normal">Click on a character to select your subject focus, then start typing below.</span>
-                        </template>
-                        <div class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-help transition-colors">
-                          <UIcon name="i-lucide-help-circle" class="w-5 h-5 text-gray-500" />
-                        </div>
-                      </UTooltip>
+                    </div>
+                    <div class="p-4">
+                      <CharacterCarousel
+                        v-model="currentCharacter"
+                        :initial-character-slug="charSlug"
+                        :go-to-chat-on-click="true"
+                        @select="handleCharacterSelection"
+                      />
                     </div>
                   </div>
-                  <div class="p-4">
-                    <CharacterCarousel
-                      v-model="currentCharacter"
-                      :initial-character-slug="charSlug"
-                      :go-to-chat-on-click="true"
-                      @select="handleCharacterSelection"
-                    />
-                  </div>
-                </div>
 
-                <!-- ChatInput - expands downward -->
-                <ChatInput
-                  ref="chatInputRef"
-                  :show-suggestions="!hasStartedChat && isNewChat"
-                  :subject="selectedCharacter?.subject || 'GENERAL'"
-                  @send="handleChatSend"
-                />
+                  <!-- ChatInput - expands downward -->
+                  <ChatInput
+                    ref="chatInputRef"
+                    :show-suggestions="!hasStartedChat && isNewChat"
+                    :subject="selectedCharacter?.subject || 'GENERAL'"
+                    @send="handleChatSend"
+                  />
+                </div>
               </div>
             </div>
 
