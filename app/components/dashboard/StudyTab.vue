@@ -184,6 +184,7 @@
                   v-for="taskChapter in chapter.user_tasks_chapters"
                   :key="taskChapter.id"
                   class="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-100"
+                  :class="taskChapter.user_tasks?.status === 'CLOSED' ? 'opacity-60' : ''"
                 >
                   <!-- Quiz Info -->
                   <div class="space-y-1">
@@ -193,7 +194,13 @@
                       </span>
                       <!-- Status Pills -->
                       <span
-                        v-if="quizMetadata[taskChapter.id]?.creditDisbursed"
+                        v-if="taskChapter.user_tasks?.status === 'CLOSED'"
+                        class="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600"
+                      >
+                        Closed
+                      </span>
+                      <span
+                        v-else-if="quizMetadata[taskChapter.id]?.creditDisbursed"
                         class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-700"
                       >
                         Earned
@@ -217,6 +224,7 @@
 
                   <!-- Quiz Action Buttons -->
                   <div class="flex gap-2">
+                    <!-- Review button - always available if quiz completed -->
                     <UButton
                       v-if="quizMetadata[taskChapter.id]?.isCompleted"
                       size="sm"
@@ -227,7 +235,9 @@
                     >
                       Review
                     </UButton>
+                    <!-- Generate/Attempt/Reattempt - only for OPEN tasks -->
                     <UButton
+                      v-if="taskChapter.user_tasks?.status !== 'CLOSED'"
                       size="sm"
                       :color="quizMetadata[taskChapter.id]?.isCompleted ? 'primary' : 'blue'"
                       :loading="quizButtonLoading[taskChapter.id]"
@@ -520,7 +530,8 @@ const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: stri
       console.log('Generating quiz for task-chapter:', userTasksChapterId);
 
       // Generate prompt using useStudy composable
-      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
+      const numQuestions = taskChapter.user_tasks?.questions_per_quiz || 10;
+      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz', numQuestions);
 
       const generateResponse = await $fetch('/api/quiz/generate', {
         method: 'POST',
@@ -531,7 +542,7 @@ const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: stri
           subjectName: subjectName,
           userLevel: meStore.level_type || '',
           syllabusType: meStore.syllabus_type || '',
-          numQuestions: 10,
+          numQuestions,
           userTasksChapterId: userTasksChapterId,
         },
       });
