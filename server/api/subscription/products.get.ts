@@ -6,11 +6,14 @@ export default defineEventHandler(async () => {
   try {
     const stripe = getStripe();
 
-    // Get all prices for the products
-    // Currently only offering two products: EDDY_FREE and EDDY_PRO_MONTHLY
+    // Get all prices for the products (monthly and yearly)
     const prices = await stripe.prices.list({
       active: true,
-      lookup_keys: [STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY, STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY],
+      lookup_keys: [
+        STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY,
+        STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY,
+        STRIPE_LOOKUP_KEYS.EDDY_PRO_YEARLY,
+      ],
       expand: ['data.product'],
     });
 
