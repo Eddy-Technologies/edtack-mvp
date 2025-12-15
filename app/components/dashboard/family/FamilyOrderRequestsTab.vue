@@ -323,6 +323,8 @@ const approveOrder = async (orderId: string) => {
         // Order completed with credits
         alert('Order approved and completed successfully!');
         await loadPendingOrders(); // Refresh the list
+        window.dispatchEvent(new CustomEvent('orderRequestsUpdated'));
+        window.dispatchEvent(new CustomEvent('ordersUpdated'));
       }
     } else {
       throw new Error(response.message || 'Failed to approve order');
@@ -353,6 +355,8 @@ const rejectOrder = async (orderId: string) => {
     if (response.success) {
       alert('Order request rejected. Child credits have been released.');
       await loadPendingOrders(); // Refresh the list
+      window.dispatchEvent(new CustomEvent('orderRequestsUpdated'));
+      window.dispatchEvent(new CustomEvent('ordersUpdated'));
     } else {
       throw new Error(response.message || 'Failed to reject order');
     }

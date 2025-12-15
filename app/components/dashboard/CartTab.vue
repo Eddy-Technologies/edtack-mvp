@@ -416,6 +416,10 @@ const processCheckout = async () => {
 
         // Clear cart after successful request
         emit('clear-cart');
+
+        // Notify sidebar to update orders and order requests badges
+        window.dispatchEvent(new CustomEvent('ordersUpdated'));
+        window.dispatchEvent(new CustomEvent('orderRequestsUpdated'));
       } else {
         // Card flow - redirect to Stripe
         if (purchaseResponse.stripeCheckoutUrl) {

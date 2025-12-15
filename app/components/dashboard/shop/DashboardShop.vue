@@ -270,6 +270,8 @@ const toggleWishlist = async (item: any) => {
       });
       wishlist.value.push(item);
     }
+    // Notify sidebar to update badge
+    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
   } catch (error) {
     console.error('Failed to update wishlist:', error);
     toast.add({

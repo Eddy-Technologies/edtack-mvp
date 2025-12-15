@@ -69,6 +69,13 @@
                 <div class="flex items-center space-x-3">
                   <UIcon :name="item.icon" class="w-5 h-5" />
                   <span>{{ item.name }}</span>
+                  <!-- Badge for Family nav item showing pending order requests -->
+                  <span
+                    v-if="item.name === 'Family' && pendingOrderRequestCount > 0"
+                    class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                  >
+                    {{ pendingOrderRequestCount }}
+                  </span>
                 </div>
                 <UIcon
                   name="i-lucide-chevron-down"
@@ -111,6 +118,27 @@
                         class="bg-primary text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
                       >
                         {{ cartItemCount }}
+                      </span>
+                      <!-- Badge for order requests in submenu -->
+                      <span
+                        v-if="child.name === 'Order Requests' && pendingOrderRequestCount > 0"
+                        class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                      >
+                        {{ pendingOrderRequestCount }}
+                      </span>
+                      <!-- Badge for wishlist in submenu -->
+                      <span
+                        v-if="child.name === 'Wishlist' && wishlistCount > 0"
+                        class="bg-pink-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                      >
+                        {{ wishlistCount }}
+                      </span>
+                      <!-- Badge for orders in submenu -->
+                      <span
+                        v-if="child.name === 'Orders' && currentOrdersCount > 0"
+                        class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                      >
+                        {{ currentOrdersCount }}
                       </span>
                     </div>
                   </div>
@@ -221,6 +249,67 @@ const openSubmenus = ref<string[]>([]);
 
 // Get cart count from localStorage
 const cartItemCount = ref(0);
+
+// Get pending order request count
+const pendingOrderRequestCount = ref(0);
+
+const updatePendingOrderCount = async () => {
+  // Only fetch for parents
+  if (userStore.user_role?.toLowerCase() !== 'parent') {
+    pendingOrderRequestCount.value = 0;
+    return;
+  }
+
+  try {
+    const response = await $fetch('/api/orders/pending-approval', {
+      query: {
+        status: 'PENDING_PARENT_APPROVAL',
+        limit: 1,
+        offset: 0
+      }
+    });
+    pendingOrderRequestCount.value = response?.pagination?.total || 0;
+  } catch (error) {
+    console.error('Failed to fetch pending order count:', error);
+    pendingOrderRequestCount.value = 0;
+  }
+};
+
+// Get current orders count
+const currentOrdersCount = ref(0);
+
+const updateCurrentOrdersCount = async () => {
+  try {
+    const response = await $fetch('/api/orders/current', {
+      query: {
+        limit: 1,
+        offset: 0
+      }
+    });
+    currentOrdersCount.value = response?.pagination?.total || 0;
+  } catch (error) {
+    console.error('Failed to fetch current orders count:', error);
+    currentOrdersCount.value = 0;
+  }
+};
+
+// Get wishlist count
+const wishlistCount = ref(0);
+
+const updateWishlistCount = async () => {
+  try {
+    const response = await $fetch('/api/wishlist/list', {
+      query: {
+        limit: 1,
+        offset: 0
+      }
+    });
+    wishlistCount.value = response?.pagination?.total || 0;
+  } catch (error) {
+    console.error('Failed to fetch wishlist count:', error);
+    wishlistCount.value = 0;
+  }
+};
 
 const updateCartCount = () => {
   if (typeof window !== 'undefined') {
@@ -435,10 +524,22 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('storage', updateCartCount);
     window.addEventListener('cartUpdated', updateCartCount);
+    window.addEventListener('orderRequestsUpdated', updatePendingOrderCount);
+    window.addEventListener('wishlistUpdated', updateWishlistCount);
+    window.addEventListener('ordersUpdated', updateCurrentOrdersCount);
   }
 
   // Load credit balance for sidebar
   fetchCredits();
+
+  // Load pending order request count for parents
+  updatePendingOrderCount();
+
+  // Load current orders count
+  updateCurrentOrdersCount();
+
+  // Load wishlist count
+  updateWishlistCount();
 });
 
 // Add cleanup for event listeners
@@ -446,6 +547,9 @@ onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('storage', updateCartCount);
     window.removeEventListener('cartUpdated', updateCartCount);
+    window.removeEventListener('orderRequestsUpdated', updatePendingOrderCount);
+    window.removeEventListener('wishlistUpdated', updateWishlistCount);
+    window.removeEventListener('ordersUpdated', updateCurrentOrdersCount);
   }
 });
 </script>

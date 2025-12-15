@@ -219,6 +219,9 @@ const removeFromWishlist = async (productId: string) => {
         (item) => item.product.id !== productId
       );
 
+      // Notify sidebar to update badge
+      window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+
       // Show success message briefly
       console.log(response.message);
     } else {
@@ -284,6 +287,10 @@ const clearAllItems = async () => {
 
     // Clear local state
     wishlistItems.value = [];
+
+    // Notify sidebar to update badge
+    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+
     console.log('All items removed from wishlist');
   } catch (err: any) {
     console.error('Failed to clear wishlist:', err);
