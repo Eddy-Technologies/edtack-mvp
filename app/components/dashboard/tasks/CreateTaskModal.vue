@@ -4,7 +4,7 @@
       <div class="p-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-semibold text-gray-900">Create New Task</h2>
+          <h2 class="text-xl font-bold text-gray-900">Create New Task</h2>
           <button
             class="text-gray-400 hover:text-gray-600 transition-colors"
             @click="$emit('close')"
@@ -215,6 +215,24 @@
             <p class="text-sm text-gray-500 mt-1">Minimum score percentage (0-100) required to earn credit</p>
           </div>
 
+          <!-- Number of Questions -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Number of Questions *
+            </label>
+            <input
+              v-model.number="form.questionsPerQuiz"
+              type="number"
+              min="1"
+              max="50"
+              step="1"
+              required
+              placeholder="10"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <p class="text-sm text-gray-500 mt-1">Number of questions per quiz (1-50)</p>
+          </div>
+
           <!-- Error Message -->
           <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-3">
             <p class="text-red-600 text-sm">{{ error }}</p>
@@ -266,6 +284,7 @@ const getInitialForm = () => {
     lessonGenerationType: LESSON_GENERATION_TYPE.QUIZ, // Default to QUIZ
     creditsPerQuiz: null as number | null,
     requiredScore: 80,
+    questionsPerQuiz: 10,
   };
 };
 
@@ -420,6 +439,11 @@ const createTask = async () => {
 
     if (!form.value.creditsPerQuiz || form.value.creditsPerQuiz < 1) {
       error.value = 'Credits per quiz must be at least 1';
+      return;
+    }
+
+    if (!form.value.questionsPerQuiz || form.value.questionsPerQuiz < 1 || form.value.questionsPerQuiz > 50) {
+      error.value = 'Number of questions must be between 1 and 50';
       return;
     }
 
