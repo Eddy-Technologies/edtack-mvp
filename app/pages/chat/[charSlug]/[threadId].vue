@@ -68,7 +68,7 @@
           >
             <!-- Centered layout: Single container with carousel and input -->
             <div v-if="isChatCentered" class="absolute inset-0 overflow-y-auto">
-              <div class="min-h-full flex flex-col items-center justify-start pt-[15%] pb-8 px-4">
+              <div class="min-h-full flex flex-col items-center justify-start pt-[15vh] pb-8 px-4">
                 <div class="w-full max-w-4xl flex flex-col gap-6">
                   <!-- Character Carousel - fixed height -->
                   <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
