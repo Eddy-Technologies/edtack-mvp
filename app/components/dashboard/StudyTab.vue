@@ -11,18 +11,6 @@
     <!-- Filters -->
     <div class="bg-white rounded-xl border border-gray-200 p-4">
       <div class="flex flex-wrap items-end gap-4">
-        <!-- Level Type Filter -->
-        <div class="flex-1 min-w-[140px]">
-          <label class="block text-xs font-medium text-gray-500 mb-1">Level</label>
-          <USelect
-            v-model="filters.levelType"
-            :options="[{ label: 'All levels', value: '' }, ...levelTypeOptions]"
-            placeholder="All levels"
-            size="sm"
-            @update:model-value="fetchSubjects"
-          />
-        </div>
-
         <!-- Syllabus Type Filter -->
         <div class="flex-1 min-w-[140px]">
           <label class="block text-xs font-medium text-gray-500 mb-1">Syllabus</label>
@@ -58,7 +46,7 @@
 
         <!-- Clear Button -->
         <button
-          v-if="filters.levelType || filters.syllabusType || filters.subject || filters.hasCreditsOnly"
+          v-if="filters.syllabusType || filters.subject || filters.hasCreditsOnly"
           class="text-sm text-gray-500 hover:text-gray-700 h-[34px]"
           @click="clearFilters"
         >
@@ -358,29 +346,25 @@ const quizModalMode = ref<'attempt' | 'review'>('attempt'); // Track modal mode
 
 // Filters
 const filters = reactive({
-  levelType: '',
   syllabusType: '',
   subject: '',
   hasCreditsOnly: false
 });
 
 // Filter options (will be populated from data)
-const levelTypeOptions = ref<Array<{ label: string; value: string }>>([]);
 const syllabusTypeOptions = ref<Array<{ label: string; value: string }>>([]);
 const subjectOptions = ref<Array<{ label: string; value: string }>>([]);
 
 // Methods
 const fetchFilterOptions = async () => {
   try {
-    // Fetch all filter options in parallel
-    const [levelsResponse, syllabusResponse, subjectsResponse] = await Promise.all([
-      $fetch('/api/options/levels'),
+    // Fetch filter options in parallel
+    const [syllabusResponse, subjectsResponse] = await Promise.all([
       $fetch('/api/options/syllabus'),
       $fetch('/api/options/subjects')
     ]);
 
     // Set filter options
-    levelTypeOptions.value = levelsResponse.levels || [];
     syllabusTypeOptions.value = syllabusResponse.syllabus || [];
     subjectOptions.value = subjectsResponse.subjects || [];
   } catch (err: any) {
@@ -395,7 +379,6 @@ const fetchSubjects = async () => {
     error.value = null;
 
     const queryParams = new URLSearchParams();
-    if (filters.levelType) queryParams.append('level_type', filters.levelType);
     if (filters.syllabusType) queryParams.append('syllabus_type', filters.syllabusType);
     if (filters.subject) queryParams.append('subject', filters.subject);
     if (filters.hasCreditsOnly) queryParams.append('has_credits', 'true');
@@ -629,7 +612,6 @@ const selectSubject = async (subjectName: string) => {
 };
 
 const clearFilters = () => {
-  filters.levelType = '';
   filters.syllabusType = '';
   filters.subject = '';
   filters.hasCreditsOnly = false;
@@ -679,10 +661,7 @@ onMounted(async () => {
   // Fetch filter options from database tables
   await fetchFilterOptions();
 
-  // Set user's default syllabus if available, level can implement in future
-  // if (meStore.level_type) {
-  //   filters.levelType = meStore.level_type;
-  // }
+  // Set user's default syllabus if available
   if (meStore.syllabus_type) {
     filters.syllabusType = meStore.syllabus_type;
   }

@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
   try {
     // Get query parameters for filtering
     const query = getQuery(event);
-    const levelType = query.level_type as string;
     const syllabusType = query.syllabus_type as string;
     const subjectFilter = query.subject as string;
     const hasCreditsOnly = query.has_credits === 'true';
@@ -82,21 +81,12 @@ export default defineEventHandler(async (event) => {
     subjectsQuery = subjectsQuery.neq('chapters.user_tasks_chapters.user_tasks.status', TASK_STATUS.EXPIRED);
 
     // Apply filters
-    if (levelType) {
-      subjectsQuery = subjectsQuery.eq('curriculum_subjects.level_type', levelType);
-    }
     if (syllabusType) {
       subjectsQuery = subjectsQuery.eq('curriculum_subjects.syllabus_type', syllabusType);
     }
     if (subjectFilter) {
       subjectsQuery = subjectsQuery.eq('name', subjectFilter);
     }
-    if (hasCreditsOnly) {
-      subjectsQuery = subjectsQuery
-        .not('chapters.user_tasks_chapters', 'is', null);
-      // Role-based filter already applied above, no need to duplicate assignee filter
-    }
-
     const { data: subjectsData, error: subjectsError } = await subjectsQuery;
 
     if (subjectsError) {
@@ -107,9 +97,22 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Post-filter for subjects with credits > 0
+    // Note: PostgREST .gt() doesn't work on deeply nested relationships
+    let subjects = subjectsData || [];
+    if (hasCreditsOnly) {
+      subjects = subjects.filter((subject: any) => {
+        return subject.chapters?.some((chapter: any) =>
+          chapter.user_tasks_chapters?.some((utc: any) =>
+            utc.user_tasks?.credit > 0
+          )
+        );
+      });
+    }
+
     return {
       success: true,
-      subjects: subjectsData,
+      subjects,
     };
   } catch (error: any) {
     console.error('Error in study subjects endpoint:', error);
