@@ -1,7 +1,18 @@
 <template>
   <!-- Sidebar variant - minimalistic like Claude UI -->
   <div v-if="variant === 'sidebar'" class="w-full">
-    <div v-if="user.isLoggedIn" ref="menuContainer" class="relative">
+    <!-- Loading state while initializing -->
+    <div v-if="user.isInitializing" class="p-2">
+      <div class="animate-pulse flex items-center gap-3 p-2">
+        <div class="w-8 h-8 bg-gray-200 rounded-full" />
+        <div class="flex-1 space-y-2">
+          <div class="h-3 bg-gray-200 rounded w-3/4" />
+          <div class="h-2 bg-gray-200 rounded w-1/2" />
+        </div>
+      </div>
+    </div>
+
+    <div v-else-if="user.isLoggedIn" ref="menuContainer" class="relative">
       <!-- Trigger: Avatar + Name + Plan -->
       <button
         ref="triggerButton"
@@ -11,10 +22,10 @@
         <UserAvatar size="small" />
         <div v-if="!collapsed" class="flex-1 text-left min-w-0">
           <div class="text-sm font-medium text-gray-900 truncate">
-            {{ user.userDisplayName }}
+            {{ user.userDisplayFullName }}
           </div>
           <div class="text-xs text-gray-500">
-            Free
+            {{ tierDisplayName }}
           </div>
         </div>
         <Icon
@@ -203,6 +214,7 @@ import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
+import { useTokenUsage } from '~/composables/useTokenUsage';
 
 interface Props {
   variant?: 'topbar' | 'sidebar';
@@ -225,6 +237,7 @@ const dropdownPosition = ref({ bottom: 0, left: 0, width: 0 });
 
 const { signOut } = useAuth();
 const user = useMeStore();
+const { tierDisplayName, fetchTokenUsage } = useTokenUsage();
 
 // Toggle menu and calculate position for fixed dropdown
 const toggleMenu = () => {
@@ -287,6 +300,9 @@ const onClickOutside = (e: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', onClickOutside);
+  if (user.isLoggedIn) {
+    fetchTokenUsage();
+  }
 });
 
 onBeforeUnmount(() => {
