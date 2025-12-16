@@ -12,6 +12,12 @@ const __dirname = path.dirname(__filename);
 // Load environment variables
 config({ path: path.resolve(__dirname, '../../.env') });
 
+// Usage: node upload-assets.js [url] [key]
+// If args provided, use them. Otherwise fall back to .env
+const args = process.argv.slice(2);
+const SUPABASE_URL = args[0] || process.env.NUXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_KEY = args[1] || process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY;
+
 // Product images mapping
 const PRODUCT_FILES = ['a.png', 'b.png', 'c.png', 'd.png', 'e.png', 'f.png', 'g.png', 'h.png'];
 
@@ -72,11 +78,13 @@ async function uploadFiles(supabase, bucketName, files, baseDir) {
 }
 
 async function uploadAssets() {
-  const supabaseUrl = process.env.NUXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = SUPABASE_URL;
+  const supabaseKey = SUPABASE_KEY;
+
+  console.log('Using Supabase URL:', supabaseUrl);
 
   if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Missing Supabase credentials. Set NUXT_PUBLIC_SUPABASE_URL and NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY');
+    throw new Error('Missing Supabase credentials. Pass as args: node upload-assets.js <url> <key>');
   }
 
   const supabase = createClient(supabaseUrl, supabaseKey);

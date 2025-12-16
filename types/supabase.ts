@@ -151,6 +151,18 @@ export type Database = {
         };
         Relationships: [];
       };
+      checkpoint_migrations: {
+        Row: {
+          v: number;
+        };
+        Insert: {
+          v: number;
+        };
+        Update: {
+          v?: number;
+        };
+        Relationships: [];
+      };
       checkpoint_writes: {
         Row: {
           blob: string | null;
@@ -1245,6 +1257,7 @@ export type Database = {
           payment_customer_id: string | null;
           postal_code: string | null;
           profile_picture_url: string | null;
+          school: string | null;
           syllabus_type: string | null;
           updated_at: string | null;
           user_id: string | null;
@@ -1266,6 +1279,7 @@ export type Database = {
           payment_customer_id?: string | null;
           postal_code?: string | null;
           profile_picture_url?: string | null;
+          school?: string | null;
           syllabus_type?: string | null;
           updated_at?: string | null;
           user_id?: string | null;
@@ -1287,6 +1301,7 @@ export type Database = {
           payment_customer_id?: string | null;
           postal_code?: string | null;
           profile_picture_url?: string | null;
+          school?: string | null;
           syllabus_type?: string | null;
           updated_at?: string | null;
           user_id?: string | null;
@@ -1723,10 +1738,10 @@ export type Database = {
     };
     Functions: {
       rollup_token_usage: {
-        Args: Record<PropertyKey, never>;
+        Args: never;
         Returns: {
-          processed: number;
           errors: number;
+          processed: number;
         }[];
       };
       transfer_credits_atomic: {
@@ -1743,6 +1758,7 @@ export type Database = {
       };
       update_user_info_with_relations: {
         Args: {
+          p_date_of_birth?: string;
           p_email: string;
           p_first_name: string;
           p_is_active: boolean;
@@ -1751,6 +1767,7 @@ export type Database = {
           p_onboarding_completed: boolean;
           p_payment_customer_id: string;
           p_role_name: string;
+          p_school?: string;
           p_syllabus_type?: string;
           p_user_id: string;
           p_user_info_id: string;

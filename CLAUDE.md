@@ -86,15 +86,14 @@ node supabase/scripts/init-admin.js
 
 ### Upload Assets to Dev/Prod
 ```bash
-# Dev
-NUXT_PUBLIC_SUPABASE_URL=https://qfzqwbwwzqmacnhtihov.supabase.co \
-NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
+# Local (uses .env)
 node supabase/scripts/upload-assets.js
 
+# Dev
+node supabase/scripts/upload-assets.js https://qfzqwbwwzqmacnhtihov.supabase.co <dev-service-role-key>
+
 # Prod
-NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
-NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
-node supabase/scripts/upload-assets.js
+node supabase/scripts/upload-assets.js https://yxbebpfjblokjxvroebw.supabase.co <prod-service-role-key>
 ```
 
 ### Test Users
