@@ -19,33 +19,33 @@
       <div
         class="group flex ease-in-out"
         :class="isTransitioning ? 'transition-transform duration-500' : ''"
-        :style="{ transform: `translateX(${containerWidth / 2 - (VISIBLE_BUFFER + 0.5) * cardWidth}px)` }"
+        :style="{ transform: `translateX(${containerWidth / 2 - (adjustedIndex + 0.5) * cardWidth}px)` }"
       >
         <div
-          v-for="card in visibleCards"
-          :key="card.position"
+          v-for="(avatar, index) in infiniteAvatars"
+          :key="`${avatar.id}-${Math.floor(index / allAvatars.length)}`"
           class="flex-shrink-0 px-4 transition-all duration-500 ease-in-out"
           :class="[
-            card.position === currentIndex ? 'scale-100' : 'scale-95',
-            card.position === currentIndex
+            index === adjustedIndex ? 'scale-100' : 'scale-95',
+            index === adjustedIndex
               ? 'opacity-100'
               : 'opacity-80 blur-[1px] hover:opacity-100 hover:blur-0',
           ]"
           :style="{ width: cardWidth + 'px' }"
         >
-          <div class="cursor-pointer" @click="selectAvatar(card)">
+          <div class="cursor-pointer" @click="selectAvatar(avatar, index)">
             <div
               class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[320px] flex flex-col"
               :class="{
                 'ring-4 ring-primary-500 ring-opacity-75':
-                  card.slug === props.initialCharacterSlug,
+                  avatar.slug === props.initialCharacterSlug,
               }"
             >
               <!-- Blurred background with gradient to primary -->
               <div
                 class="absolute inset-0"
                 :style="{
-                  backgroundImage: `url(${card.image})`,
+                  backgroundImage: `url(${avatar.image})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
@@ -60,8 +60,8 @@
               <!-- Image container - top 70% -->
               <div class="relative z-10 flex-grow overflow-hidden" style="height: 90%">
                 <img
-                  :src="card.image"
-                  :alt="card.name"
+                  :src="avatar.image"
+                  :alt="avatar.name"
                   class="w-full h-full object-cover"
                   :style="{
                     objectPosition: 'top',
@@ -77,17 +77,17 @@
               >
                 <div class="flex items-center gap-2 mb-1">
                   <h5 class="text-white text-base font-semibold drop-shadow-lg">
-                    {{ card.name }}
+                    {{ avatar.name }}
                   </h5>
                   <span
-                    v-if="card.slug === props.initialCharacterSlug"
+                    v-if="avatar.slug === props.initialCharacterSlug"
                     class="px-2 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full shadow-lg"
                   >
                     Selected
                   </span>
                 </div>
                 <p class="text-white/90 text-sm drop-shadow-md">
-                  {{ constantCaseToTitleCase(card.subject) }}
+                  {{ constantCaseToTitleCase(avatar.subject) }}
                 </p>
               </div>
             </div>
@@ -138,7 +138,7 @@ const emit = defineEmits(['update:modelValue', 'select']);
 
 const router = useRouter();
 
-const currentIndex = ref(0); // Current position (can grow unbounded for infinite scroll)
+const currentIndex = ref(2); // Start from center (index 2 out of 8 cards)
 const cardWidth = ref(280);
 const isTransitioning = ref(false);
 const carouselContainerRef = ref(null);
@@ -150,26 +150,15 @@ const loading = ref(false);
 
 const { fetchCharacters } = useCharacters();
 
-// Number of cards visible on each side of center
-const VISIBLE_BUFFER = 4;
-
-// Create sliding window of visible cards around current position
-const visibleCards = computed(() => {
+// Create infinite scroll array by duplicating cards
+const infiniteAvatars = computed(() => {
   const avatars = allAvatars.value;
-  if (avatars.length === 0) return [];
+  return [...avatars, ...avatars, ...avatars]; // Triple the array for seamless scroll
+});
 
-  const cards = [];
-  // Generate cards from (currentIndex - buffer) to (currentIndex + buffer)
-  for (let i = -VISIBLE_BUFFER; i <= VISIBLE_BUFFER; i++) {
-    const position = currentIndex.value + i;
-    // Use modular arithmetic to cycle through characters
-    const avatarIndex = ((position % avatars.length) + avatars.length) % avatars.length;
-    cards.push({
-      ...avatars[avatarIndex],
-      position, // Absolute position for transform calculation and key
-    });
-  }
-  return cards;
+// Adjust current index to account for the duplicated arrays
+const adjustedIndex = computed(() => {
+  return currentIndex.value + allAvatars.value.length; // Start from middle array
 });
 
 // Load characters from API
@@ -187,13 +176,20 @@ const loadCharacters = async () => {
       personality_prompt: char.personality_prompt,
     }));
 
-    // If initialCharacterSlug is provided, find its index and center on it
-    if (props.initialCharacterSlug && allAvatars.value.length > 0) {
-      const characterIndex = allAvatars.value.findIndex(
-        (char) => char.slug === props.initialCharacterSlug
-      );
-      if (characterIndex !== -1) {
-        currentIndex.value = characterIndex;
+    // Set initial character index if we have characters
+    if (allAvatars.value.length > 0) {
+      // If initialCharacterSlug is provided, find its index and center on it
+      if (props.initialCharacterSlug) {
+        const characterIndex = allAvatars.value.findIndex(
+          (char) => char.slug === props.initialCharacterSlug
+        );
+        if (characterIndex !== -1) {
+          currentIndex.value = characterIndex;
+        } else {
+          currentIndex.value = Math.min(currentIndex.value, allAvatars.value.length - 1);
+        }
+      } else {
+        currentIndex.value = Math.min(currentIndex.value, allAvatars.value.length - 1);
       }
     }
   } catch (error) {
@@ -204,28 +200,47 @@ const loadCharacters = async () => {
   }
 };
 
-const selectAvatar = (card) => {
-  // Use the card's position directly (for smooth centering)
-  currentIndex.value = card.position;
+const selectAvatar = (avatar, index) => {
+  // Convert infinite array index back to original array index
+  currentIndex.value = index % allAvatars.value.length;
 
-  // Emit select event
-  emit('select', card);
-  emit('update:modelValue', card);
+  // Emit select event (like the modal does)
+  emit('select', avatar);
+  emit('update:modelValue', avatar);
+  console.log('Selected avatar:', avatar);
 
   // Navigate to chat using character slug
-  if (props.goToChatOnClick && card.slug) {
-    router.replace(`/chat/${card.slug}/new`);
+  if (props.goToChatOnClick && avatar.slug) {
+    router.replace(`/chat/${avatar.slug}/new`);
   }
 };
 
 const nextCard = () => {
   isTransitioning.value = true;
   currentIndex.value++;
+
+  // Check if we've reached the end of the middle array
+  if (currentIndex.value >= allAvatars.value.length) {
+    // Allow the transition to complete, then reset to beginning
+    setTimeout(() => {
+      isTransitioning.value = false;
+      currentIndex.value = 0;
+    }, 500);
+  }
 };
 
 const previousCard = () => {
   isTransitioning.value = true;
   currentIndex.value--;
+
+  // Check if we've gone below the beginning of the middle array
+  if (currentIndex.value < 0) {
+    // Allow the transition to complete, then reset to end
+    setTimeout(() => {
+      isTransitioning.value = false;
+      currentIndex.value = allAvatars.value.length - 1;
+    }, 500);
+  }
 };
 
 // Handle keyboard navigation
@@ -260,8 +275,7 @@ onMounted(async () => {
 
   // Initialize selected avatar to match current index
   if (props.modelValue === null && allAvatars.value.length > 0) {
-    const avatarIndex = ((currentIndex.value % allAvatars.value.length) + allAvatars.value.length) % allAvatars.value.length;
-    emit('update:modelValue', allAvatars.value[avatarIndex]);
+    emit('update:modelValue', allAvatars.value[currentIndex.value]);
   }
 });
 
