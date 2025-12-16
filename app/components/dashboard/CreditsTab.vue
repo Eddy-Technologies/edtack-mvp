@@ -48,9 +48,9 @@
         <CreditBalance />
 
         <!-- Action Cards Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div v-if="isParent" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <TopUpSection />
-          <TransferSection v-if="isParent" />
+          <TransferSection />
         </div>
       </div>
 
