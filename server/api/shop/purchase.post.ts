@@ -198,7 +198,7 @@ export default defineEventHandler(async (event) => {
           quantity: item.quantity
         })),
         mode: 'payment',
-        customer_email: userInfo.email || user.email,
+        customer: userInfo.payment_customer_id,
         success_url: `${baseUrl}/shop/order-success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${baseUrl}/dashboard?tab=cart`,
         metadata: {
