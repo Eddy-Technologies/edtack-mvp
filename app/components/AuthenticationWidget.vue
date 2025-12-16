@@ -11,10 +11,10 @@
         <UserAvatar size="small" />
         <div v-if="!collapsed" class="flex-1 text-left min-w-0">
           <div class="text-sm font-medium text-gray-900 truncate">
-            {{ user.userDisplayName }}
+            {{ user.userDisplayFullName }}
           </div>
           <div class="text-xs text-gray-500">
-            Free
+            {{ tierDisplayName }}
           </div>
         </div>
         <Icon
@@ -203,6 +203,7 @@ import { useAuth } from '~/composables/useAuth';
 import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
+import { useTokenUsage } from '~/composables/useTokenUsage';
 
 interface Props {
   variant?: 'topbar' | 'sidebar';
@@ -225,6 +226,7 @@ const dropdownPosition = ref({ bottom: 0, left: 0, width: 0 });
 
 const { signOut } = useAuth();
 const user = useMeStore();
+const { tierDisplayName, fetchTokenUsage } = useTokenUsage();
 
 // Toggle menu and calculate position for fixed dropdown
 const toggleMenu = () => {
@@ -287,6 +289,9 @@ const onClickOutside = (e: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', onClickOutside);
+  if (user.isLoggedIn) {
+    fetchTokenUsage();
+  }
 });
 
 onBeforeUnmount(() => {

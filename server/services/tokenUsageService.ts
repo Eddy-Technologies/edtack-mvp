@@ -108,7 +108,7 @@ export async function getTokenUsageSummary(
       tokenLimit: 0,
       usagePercentage: 0,
       billingCycle: { start: '', end: '' },
-      subscription: { tierDisplayName: 'No Active Subscription' },
+      subscription: { tierDisplayName: 'Free' },
       warnings: { isApproachingLimit: false, isLimitExceeded: false }
     };
   }
