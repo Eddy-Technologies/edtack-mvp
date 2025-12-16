@@ -2,13 +2,8 @@
   <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6" @click="closeModal">
     <div class="bg-white rounded-lg shadow-xl max-w-md w-full" @click.stop>
       <!-- Header -->
-      <div class="flex items-center justify-between p-6 border-b">
+      <div class="p-6 border-b">
         <h2 class="text-xl font-bold text-gray-900">Change Password</h2>
-        <Button
-          class="text-gray-400 hover:text-gray-600 transition-colors"
-          icon="i-lucide-x"
-          @click="closeModal"
-        />
       </div>
 
       <!-- Content -->
@@ -109,7 +104,6 @@ import { ref, computed } from 'vue';
 import { validatePassword } from '~~/shared/utils';
 import { useToast } from '#imports';
 import { useAuth } from '~/composables/useAuth';
-import Button from '~/components/common/Button.vue';
 
 interface Props {
   isOpen: boolean;

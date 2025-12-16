@@ -45,8 +45,44 @@
 
     <!-- Products Display -->
     <div v-else-if="sortedProducts.length > 0" class="space-y-8">
+      <!-- Billing Interval Toggle -->
+      <div class="flex justify-center">
+        <div class="inline-flex items-center bg-gray-100 rounded-full p-1">
+          <button
+            :class="[
+              'px-6 py-2 rounded-full text-sm font-medium transition-all duration-200',
+              billingInterval === 'month'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            ]"
+            @click="billingInterval = 'month'"
+          >
+            Monthly
+          </button>
+          <button
+            :class="[
+              'px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2',
+              billingInterval === 'year'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            ]"
+            @click="billingInterval = 'year'"
+          >
+            Yearly
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Save 17%
+            </span>
+          </button>
+        </div>
+      </div>
+
       <!-- Products Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+      <div
+        :class="[
+          'grid gap-6 max-w-6xl mx-auto',
+          sortedProducts.length === 1 ? 'grid-cols-1 max-w-md' : 'grid-cols-1 md:grid-cols-2'
+        ]"
+      >
         <div
           v-for="product in sortedProducts"
           :key="product.id"
@@ -71,12 +107,21 @@
 
             <!-- Pricing Display -->
             <div class="mb-8">
-              <div class="flex items-end text-center mb-2">
+              <!-- Original price (crossed out) for yearly -->
+              <div v-if="product.interval === 'year' && getMonthlyPrice(product)" class="mb-1">
+                <span class="text-lg text-gray-400 line-through uppercase">
+                  {{ product.currency }} {{ getMonthlyPrice(product) * 12 / 100 }}
+                </span>
+              </div>
+              <div class="flex items-baseline flex-wrap gap-1 mb-2">
                 <span class="text-5xl font-bold text-gray-900 uppercase">
                   {{ product.currency }} {{ product.amount / 100 }}
                 </span>
-                <span class="text-gray-600 ml-2 text-lg">
+                <span class="text-gray-600 text-lg">
                   per {{ product.interval === 'month' ? 'month' : 'year' }}
+                </span>
+                <span v-if="product.interval === 'year' && getMonthlyPrice(product)" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 uppercase">
+                  Save {{ (getMonthlyPrice(product) * 12 - product.amount) / 100 }} {{ product.currency }}
                 </span>
               </div>
 
@@ -130,19 +175,35 @@ import { STRIPE_LOOKUP_KEYS } from '~~/shared/constants';
 const products = ref<GetProductResponse[]>();
 const loading = ref(false);
 const error = ref<string | null>(null);
+const billingInterval = ref<'month' | 'year'>('month');
 
 // Stripe composable
 const { getProducts } = useStripe();
 
 // Computed
 const sortedProducts = computed(() => {
-  // Sort products: Free, Pro, Max
-  const order = [STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY, STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY];
-  return products.value?.slice().sort((a, b) => {
+  if (!products.value) return [];
+
+  // Filter by billing interval
+  const filtered = products.value.filter((p) => {
+    // Free plan only shows on monthly (no yearly equivalent displayed)
+    if (p.priceLookupKey === STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY) {
+      return billingInterval.value === 'month';
+    }
+    // For PRO plans, match the billing interval
+    return p.interval === billingInterval.value;
+  });
+
+  // Sort products: Free, Pro
+  const order = billingInterval.value === 'month' ?
+      [STRIPE_LOOKUP_KEYS.EDDY_FREE_MONTHLY, STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY] :
+      [STRIPE_LOOKUP_KEYS.EDDY_PRO_YEARLY];
+
+  return filtered.sort((a, b) => {
     const aIndex = order.indexOf(a.priceLookupKey);
     const bIndex = order.indexOf(b.priceLookupKey);
     return aIndex - bIndex;
-  }) || [];
+  });
 });
 
 // Methods
@@ -161,7 +222,16 @@ const fetchPlans = async () => {
 };
 
 const isPopular = (lookupKey: string): boolean => {
-  return lookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY;
+  return lookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY || lookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_YEARLY;
+};
+
+const getMonthlyPrice = (yearlyProduct: GetProductResponse): number | null => {
+  // Find the monthly equivalent for a yearly product
+  if (yearlyProduct.priceLookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_YEARLY) {
+    const monthly = products.value?.find((p) => p.priceLookupKey === STRIPE_LOOKUP_KEYS.EDDY_PRO_MONTHLY);
+    return monthly?.amount ?? null;
+  }
+  return null;
 };
 
 const selectPlan = async (product: GetProductResponse) => {

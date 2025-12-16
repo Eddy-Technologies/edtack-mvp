@@ -184,6 +184,7 @@
                   v-for="taskChapter in chapter.user_tasks_chapters"
                   :key="taskChapter.id"
                   class="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-100"
+                  :class="taskChapter.user_tasks?.status === 'CLOSED' ? 'opacity-60' : ''"
                 >
                   <!-- Quiz Info -->
                   <div class="space-y-1">
@@ -193,7 +194,13 @@
                       </span>
                       <!-- Status Pills -->
                       <span
-                        v-if="quizMetadata[taskChapter.id]?.creditDisbursed"
+                        v-if="taskChapter.user_tasks?.status === 'CLOSED'"
+                        class="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600"
+                      >
+                        Closed
+                      </span>
+                      <span
+                        v-else-if="quizMetadata[taskChapter.id]?.creditDisbursed"
                         class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-700"
                       >
                         Earned
@@ -206,8 +213,9 @@
                       </span>
                     </div>
                     <div class="text-xs text-gray-500 flex items-center gap-2">
-                      <span v-if="taskChapter.user_tasks?.credit > 0">{{ taskChapter.user_tasks.credit }} credits</span>
-                      <span v-if="taskChapter.user_tasks?.required_score">· {{ taskChapter.user_tasks.required_score }}% required</span>
+                      <!-- Only show credits for OPEN tasks -->
+                      <span v-if="taskChapter.user_tasks?.status !== 'CLOSED' && taskChapter.user_tasks?.credit > 0">{{ taskChapter.user_tasks.credit }} credits</span>
+                      <span v-if="taskChapter.user_tasks?.status !== 'CLOSED' && taskChapter.user_tasks?.required_score">· {{ taskChapter.user_tasks.required_score }}% required</span>
                       <template v-if="quizMetadata[taskChapter.id]?.isCompleted">
                         <span>· Best: {{ quizMetadata[taskChapter.id]?.bestPercentage || 0 }}%</span>
                         <span>· {{ quizMetadata[taskChapter.id]?.attemptCount || 0 }} attempts</span>
@@ -217,6 +225,7 @@
 
                   <!-- Quiz Action Buttons -->
                   <div class="flex gap-2">
+                    <!-- Review button - always available if quiz completed -->
                     <UButton
                       v-if="quizMetadata[taskChapter.id]?.isCompleted"
                       size="sm"
@@ -227,7 +236,9 @@
                     >
                       Review
                     </UButton>
+                    <!-- Generate/Attempt/Reattempt - only for OPEN tasks -->
                     <UButton
+                      v-if="taskChapter.user_tasks?.status !== 'CLOSED'"
                       size="sm"
                       :color="quizMetadata[taskChapter.id]?.isCompleted ? 'primary' : 'blue'"
                       :loading="quizButtonLoading[taskChapter.id]"
@@ -316,17 +327,23 @@ const selectedSubjectData = computed(() => {
   return subjects.value.find((s) => s.name === selectedSubject.value) || null;
 });
 
-// Helper: Get quiz count for a subject
+// Helper: Get quiz count for a subject (only OPEN tasks)
 const getQuizCount = (subject: Subject) => {
   return subject.chapters.reduce((total, chapter) => {
-    return total + (chapter.user_tasks_chapters?.length || 0);
+    // Only count quizzes from OPEN tasks
+    const openQuizzes = chapter.user_tasks_chapters?.filter(
+      (tc: any) => tc.user_tasks?.status !== 'CLOSED'
+    ) || [];
+    return total + openQuizzes.length;
   }, 0);
 };
 
-// Helper: Get total credits available for a subject
+// Helper: Get total credits available for a subject (only OPEN tasks)
 const getSubjectCredits = (subject: Subject) => {
   return subject.chapters.reduce((total, chapter) => {
     const chapterCredits = chapter.user_tasks_chapters?.reduce((sum: number, tc: any) => {
+      // Only count credits from OPEN tasks
+      if (tc.user_tasks?.status === 'CLOSED') return sum;
       return sum + (tc.user_tasks?.credit || 0);
     }, 0) || 0;
     return total + chapterCredits;
@@ -520,7 +537,8 @@ const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: stri
       console.log('Generating quiz for task-chapter:', userTasksChapterId);
 
       // Generate prompt using useStudy composable
-      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz');
+      const numQuestions = taskChapter.user_tasks?.questions_per_quiz || 10;
+      const studyResult = generateStudyPrompt(chapter.display_name, subjectName, 'quiz', numQuestions);
 
       const generateResponse = await $fetch('/api/quiz/generate', {
         method: 'POST',
@@ -531,7 +549,7 @@ const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: stri
           subjectName: subjectName,
           userLevel: meStore.level_type || '',
           syllabusType: meStore.syllabus_type || '',
-          numQuestions: 10,
+          numQuestions,
           userTasksChapterId: userTasksChapterId,
         },
       });

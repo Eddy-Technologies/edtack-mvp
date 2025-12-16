@@ -70,6 +70,20 @@ export default defineEventHandler(async (event) => {
           message: 'Quiz already generated for this task. Please use the existing quiz.',
         });
       }
+
+      // Check if associated task is OPEN
+      const { data: chapterData } = await supabase
+        .from('user_tasks_chapters')
+        .select('user_tasks!inner(status)')
+        .eq('id', userTasksChapterId)
+        .single();
+
+      if (chapterData?.user_tasks?.status !== 'OPEN') {
+        throw createError({
+          statusCode: 400,
+          message: 'Cannot generate quiz for a closed or expired task',
+        });
+      }
     }
 
     // Call Python backend to generate quiz

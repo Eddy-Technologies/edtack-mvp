@@ -11,6 +11,7 @@ CREATE TABLE user_infos (
   country_code VARCHAR(2) DEFAULT 'SG',
   postal_code VARCHAR(10) DEFAULT NULL,
   date_of_birth DATE DEFAULT NULL,
+  school VARCHAR(255) DEFAULT NULL,
   level_type VARCHAR(50) REFERENCES level_types(level_type) ON DELETE CASCADE,
   syllabus_type VARCHAR(50) REFERENCES syllabus_types(syllabus_type) ON DELETE CASCADE,
   profile_picture_url VARCHAR(255) DEFAULT NULL,
@@ -52,7 +53,9 @@ CREATE OR REPLACE FUNCTION public.update_user_info_with_relations(
   p_role_name TEXT,
   p_email TEXT,
   p_level_type TEXT DEFAULT NULL,
-  p_syllabus_type TEXT DEFAULT NULL
+  p_syllabus_type TEXT DEFAULT NULL,
+  p_date_of_birth DATE DEFAULT NULL,
+  p_school TEXT DEFAULT NULL
 ) RETURNS JSONB
 LANGUAGE plpgsql SECURITY DEFINER
 AS $$
@@ -67,7 +70,7 @@ BEGIN
   -- Insert or update user_infos record
   INSERT INTO public.user_infos (
     id, email, user_id, first_name, last_name, level_type, syllabus_type,
-    payment_customer_id, is_active, onboarding_completed, created_at, updated_at
+    date_of_birth, school, payment_customer_id, is_active, onboarding_completed, created_at, updated_at
   ) VALUES (
     p_user_info_id,
     p_email,
@@ -76,6 +79,8 @@ BEGIN
     p_last_name,
     p_level_type,
     p_syllabus_type,
+    p_date_of_birth,
+    p_school,
     p_payment_customer_id,
     p_is_active,
     p_onboarding_completed,
@@ -88,6 +93,8 @@ BEGIN
     last_name = EXCLUDED.last_name,
     level_type = EXCLUDED.level_type,
     syllabus_type = EXCLUDED.syllabus_type,
+    date_of_birth = EXCLUDED.date_of_birth,
+    school = EXCLUDED.school,
     payment_customer_id = EXCLUDED.payment_customer_id,
     is_active = EXCLUDED.is_active,
     onboarding_completed = EXCLUDED.onboarding_completed,

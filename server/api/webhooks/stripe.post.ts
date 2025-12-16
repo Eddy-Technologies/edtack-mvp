@@ -257,23 +257,116 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     return; // Done processing parent-approved order
   }
 
-  // PRIORITY 2: For other checkout types (credit top-up, direct purchase), we need user lookup
+  // PRIORITY 2: Handle direct product purchases - CREATE order (not update)
+  if (session.metadata?.user_info_id && session.metadata?.operation_type === OPERATION_TYPE.PURCHASE && session.metadata?.cart_items) {
+    console.log(`[StripeWebhook] Processing direct purchase for user ${session.metadata.user_info_id}, amount: ${session.amount_total} cents`);
+
+    // Parse cart items from metadata
+    let cartItems;
+    try {
+      cartItems = JSON.parse(session.metadata.cart_items);
+    } catch (e) {
+      console.error('[StripeWebhook] Failed to parse cart_items from metadata:', e);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Invalid cart items in session metadata'
+      });
+    }
+
+    // Generate order number
+    const now = new Date();
+    const yearMonth = now.getFullYear().toString() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    const timestamp = now.getTime().toString().slice(-6);
+    const orderNumber = `ORD-${yearMonth}-${timestamp}`;
+
+    // Create order with PAID status
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .insert({
+        order_number: orderNumber,
+        user_info_id: session.metadata.user_info_id,
+        status_code: ORDER_STATUS.PAID,
+        total_amount_cents: session.amount_total,
+        currency: 'SGD',
+        payment_method: 'stripe_checkout',
+        stripe_balance_transaction_id: session.payment_intent,
+        paid_at: new Date().toISOString(),
+        notes: `Direct purchase - ${cartItems.length} item${cartItems.length > 1 ? 's' : ''} - Payment completed via Stripe`
+      })
+      .select()
+      .single();
+
+    if (orderError) {
+      console.error('[StripeWebhook] Failed to create order:', orderError);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to create order'
+      });
+    }
+
+    // Create order items with PAID status
+    const orderItemsData = cartItems.map((item: any) => ({
+      order_id: order.id,
+      product_id: item.product_id,
+      quantity: item.quantity,
+      unit_price_cents: item.price_cents,
+      total_price_cents: item.subtotal_cents,
+      status_code: ORDER_STATUS.PAID
+    }));
+
+    const { error: itemsError } = await supabase
+      .from('order_items')
+      .insert(orderItemsData);
+
+    if (itemsError) {
+      console.error('[StripeWebhook] Failed to create order items:', itemsError);
+      // Don't throw - order was created, items are secondary
+    }
+
+    console.log(`[StripeWebhook] Direct purchase completed - created order ${orderNumber}: ${session.amount_total} cents`);
+    return; // Done processing direct purchase
+  }
+
+  // PRIORITY 3: For credit top-up, we need customer lookup
   if (!session.customer) {
-    console.log(`[StripeWebhook] Checkout session missing customer (not a parent-approved order)`);
+    console.log(`[StripeWebhook] Checkout session missing customer (not a parent-approved order or direct purchase)`);
     return;
   }
 
-  // Find user directly by payment_customer_id
-  const { data: userInfo, error } = await supabase
+  // Try to find user by payment_customer_id first, fallback to metadata user_info_id
+  let userInfo: { id: string } | null = null;
+
+  const { data: userByCustomerId } = await supabase
     .from('user_infos')
     .select('id')
     .eq('payment_customer_id', session.customer)
     .single();
 
-  if (error || !userInfo) {
+  if (userByCustomerId) {
+    userInfo = userByCustomerId;
+  } else if (session.metadata?.user_info_id) {
+    // Fallback: find user by metadata user_info_id
+    const { data: userByMetadata } = await supabase
+      .from('user_infos')
+      .select('id')
+      .eq('id', session.metadata.user_info_id)
+      .single();
+
+    if (userByMetadata) {
+      userInfo = userByMetadata;
+      // Also update payment_customer_id for future lookups
+      await supabase
+        .from('user_infos')
+        .update({ payment_customer_id: session.customer })
+        .eq('id', userByMetadata.id);
+      console.log(`[StripeWebhook] Updated payment_customer_id for user ${userByMetadata.id}`);
+    }
+  }
+
+  if (!userInfo) {
     throw createError({
       statusCode: 404,
-      statusMessage: `User not found for payment_customer_id ${session.customer}`
+      statusMessage: `User not found for customer ${session.customer} or metadata ${session.metadata?.user_info_id}`
     });
   }
 
@@ -347,120 +440,6 @@ async function handleCheckoutCompleted(supabase: SupabaseClient, event: Stripe.E
     }
 
     console.log(`[StripeWebhook] Added ${session.amount_total} cents to internal credits for user ${userInfo.id}, type: ${operationCodes.credit_topup}`);
-  }
-
-  // Check if this is a direct product purchase (not parent-approved, which is handled above)
-  if (session.metadata?.user_info_id && session.metadata?.operation_type === OPERATION_TYPE.PURCHASE) {
-    console.log(`[StripeWebhook] Processing direct purchase for user ${userInfo.id}, amount: ${session.amount_total} cents`);
-
-    // This is a direct purchase (use_credits = false)
-    // Find the pending order by user and amount with multiple fallback strategies
-    let pendingOrder = null;
-
-    // Strategy 1: Match by user_info_id and amount from metadata
-    if (session.metadata?.user_info_id) {
-      const { data: order1 } = await supabase
-        .from('orders')
-        .select('id, order_number, status_code')
-        .eq('user_info_id', session.metadata.user_info_id)
-        .eq('status_code', ORDER_STATUS.PENDING_PAYMENT)
-        .eq('total_amount_cents', session.amount_total)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (order1) {
-        pendingOrder = order1;
-        console.log(`[StripeWebhook] Found order using metadata user_info_id: ${order1.order_number}`);
-      }
-    }
-
-    // Strategy 2: Match by customer and amount (fallback)
-    if (!pendingOrder) {
-      const { data: order2 } = await supabase
-        .from('orders')
-        .select('id, order_number, status_code')
-        .eq('user_info_id', userInfo.id)
-        .eq('status_code', ORDER_STATUS.PENDING_PAYMENT)
-        .eq('total_amount_cents', session.amount_total)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (order2) {
-        pendingOrder = order2;
-        console.log(`[StripeWebhook] Found order using customer matching: ${order2.order_number}`);
-      }
-    }
-
-    // Strategy 3: Find most recent pending order for this user (last resort)
-    if (!pendingOrder) {
-      const { data: order3 } = await supabase
-        .from('orders')
-        .select('id, order_number, status_code, total_amount_cents')
-        .eq('user_info_id', userInfo.id)
-        .eq('status_code', ORDER_STATUS.PENDING_PAYMENT)
-        .order('created_at', { ascending: false })
-        .limit(5); // Get up to 5 recent orders to find a match
-
-      if (order3 && order3.length > 0) {
-        // Try to find exact amount match within recent orders
-        const exactMatch = order3.find((order) => order.total_amount_cents === session.amount_total);
-        if (exactMatch) {
-          pendingOrder = exactMatch;
-          console.log(`[StripeWebhook] Found order using recent orders exact match: ${exactMatch.order_number}`);
-        } else {
-          // If no exact match, log the discrepancy but don't use an order
-          console.warn(`[StripeWebhook] No exact amount match found. Session amount: ${session.amount_total}, Recent orders:`,
-            order3.map((o) => ({ number: o.order_number, amount: o.total_amount_cents })));
-        }
-      }
-    }
-
-    if (pendingOrder) {
-      // Get current order notes
-      const { data: orderWithNotes } = await supabase
-        .from('orders')
-        .select('notes')
-        .eq('id', pendingOrder.id)
-        .single();
-
-      // Update order to paid
-      const { error: updateError } = await supabase
-        .from('orders')
-        .update({
-          status_code: ORDER_STATUS.PAID,
-          stripe_balance_transaction_id: session.payment_intent,
-          paid_at: new Date().toISOString(),
-          notes: `${orderWithNotes?.notes || ''} - Direct payment completed via Stripe`
-        })
-        .eq('id', pendingOrder.id);
-
-      if (updateError) {
-        console.error('Failed to update direct purchase order:', updateError);
-        throw createError({
-          statusCode: 500,
-          statusMessage: `Failed to update order ${pendingOrder.order_number}`
-        });
-      }
-
-      // Update order items
-      const { error: updateItemsError } = await supabase
-        .from('order_items')
-        .update({
-          status_code: ORDER_STATUS.PAID
-        })
-        .eq('order_id', pendingOrder.id);
-
-      if (updateItemsError) {
-        console.error('Failed to update order items for direct purchase:', updateItemsError);
-      }
-
-      console.log(`[StripeWebhook] Direct purchase completed for order ${pendingOrder.order_number}: ${session.amount_total} cents`);
-    } else {
-      console.error(`[StripeWebhook] No matching pending order found for session ${session.id}, user ${userInfo.id}, amount ${session.amount_total}`);
-      // Don't throw error here as payment is still successful, just log the issue
-    }
   }
 }
 

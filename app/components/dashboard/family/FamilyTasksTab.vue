@@ -28,6 +28,9 @@
         />
       </div>
 
+      <!-- Instructions -->
+      <TaskInstructions :is-parent="isParent" />
+
       <!-- Filters and Stats -->
       <div class="bg-white rounded-xl border border-gray-200 p-4">
         <div class="flex flex-wrap items-center justify-between gap-4">
@@ -138,6 +141,7 @@ import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
 import TaskInfoCard from '~/components/dashboard/tasks/TaskInfoCard.vue';
+import TaskInstructions from '~/components/dashboard/tasks/TaskInstructions.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 
 // Use stores

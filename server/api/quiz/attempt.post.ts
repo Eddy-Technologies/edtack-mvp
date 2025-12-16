@@ -61,6 +61,7 @@ export default defineEventHandler(async (event) => {
         user_task_id,
         user_tasks!inner(
           id,
+          status,
           required_score,
           credit,
           creator_user_info_id
@@ -74,6 +75,14 @@ export default defineEventHandler(async (event) => {
       throw createError({
         statusCode: chapterError ? 500 : 404,
         message: chapterError ? 'Failed to fetch quiz data' : 'Quiz not found',
+      });
+    }
+
+    // Check if task is still OPEN
+    if (chapterData.user_tasks.status && chapterData.user_tasks.status !== 'OPEN') {
+      throw createError({
+        statusCode: 400,
+        message: 'Cannot submit quiz attempt for a closed or expired task. You can still review past attempts.',
       });
     }
 

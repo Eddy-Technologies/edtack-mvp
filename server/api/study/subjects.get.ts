@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
+import { TASK_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
@@ -12,6 +13,15 @@ export default defineEventHandler(async (event) => {
     const syllabusType = query.syllabus_type as string;
     const subjectFilter = query.subject as string;
     const hasCreditsOnly = query.has_credits === 'true';
+
+    // Get user's role to determine task filtering
+    const { data: roleData } = await supabase
+      .from('user_infos')
+      .select('user_roles!inner(roles!inner(role_name))')
+      .eq('id', userInfo.id)
+      .single();
+
+    const isParent = roleData?.user_roles?.roles?.role_name === 'PARENT';
 
     // Build the base query
     let subjectsQuery = supabase
@@ -45,10 +55,13 @@ export default defineEventHandler(async (event) => {
             completed_at,
             user_tasks!inner(
               id,
+              name,
+              creator_user_info_id,
               assignee_user_info_id,
               status,
               credit,
               required_score,
+              questions_per_quiz,
               lesson_generation_type
             )
           )
@@ -56,6 +69,17 @@ export default defineEventHandler(async (event) => {
       `)
       .eq('is_active', true)
       .order('display_name');
+
+    // Apply role-based filtering for tasks
+    // Parents see tasks they created, Students see tasks assigned to them
+    if (isParent) {
+      subjectsQuery = subjectsQuery.eq('chapters.user_tasks_chapters.user_tasks.creator_user_info_id', userInfo.id);
+    } else {
+      subjectsQuery = subjectsQuery.eq('chapters.user_tasks_chapters.user_tasks.assignee_user_info_id', userInfo.id);
+    }
+
+    // Exclude EXPIRED tasks from Study Tab
+    subjectsQuery = subjectsQuery.neq('chapters.user_tasks_chapters.user_tasks.status', TASK_STATUS.EXPIRED);
 
     // Apply filters
     if (levelType) {
@@ -69,8 +93,8 @@ export default defineEventHandler(async (event) => {
     }
     if (hasCreditsOnly) {
       subjectsQuery = subjectsQuery
-        .not('chapters.user_tasks_chapters', 'is', null)
-        .eq('chapters.user_tasks_chapters.user_tasks.assignee_user_info_id', userInfo.id);
+        .not('chapters.user_tasks_chapters', 'is', null);
+      // Role-based filter already applied above, no need to duplicate assignee filter
     }
 
     const { data: subjectsData, error: subjectsError } = await subjectsQuery;

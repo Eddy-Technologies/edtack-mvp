@@ -37,25 +37,33 @@ supabase start   # Start local Supabase
 pnpm db:reset    # Reset DB + create users + upload assets
 ```
 
+### Apply Migration Locally (Without Wiping Data)
+```bash
+# Run a single migration file directly
+psql postgresql://postgres:postgres@localhost:54322/postgres -f supabase/migrations/XXXX_migration.sql
+
+# Or run inline SQL
+psql postgresql://postgres:postgres@localhost:54322/postgres -c "SELECT * FROM some_function();"
+```
+
+Use this when you want to test a migration without resetting all data. For full reset, use `supabase db reset`.
+
 ### Making Schema Changes
 ```bash
-# 1. Edit schema source file
+# 1. Edit schema source file AND corresponding migration file
 vim supabase/schemas/user_infos.sql
+vim supabase/migrations/XXXX_user_infos.sql
 
-# 2. Reset local to apply changes
-supabase db reset
-
-# 3. Generate migration from diff
-supabase db diff -f add_new_column
-
-# 4. Push to dev
+# 2. Push to dev (always do this after schema changes)
 supabase link --project-ref qfzqwbwwzqmacnhtihov
 supabase db push
 
-# 5. Push to prod (when ready)
+# 3. Push to prod (when ready)
 supabase link --project-ref yxbebpfjblokjxvroebw
 supabase db push
 ```
+
+**Important:** Always edit both the schema source file AND the migration file together. Then run `supabase db push` to apply changes to dev.
 
 ### Reset Remote Database (Destructive)
 ```bash

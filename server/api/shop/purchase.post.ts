@@ -103,7 +103,6 @@ export default defineEventHandler(async (event) => {
     let orderStatus;
     let paymentMethod;
     const paidAt = null;
-    let stripeCheckoutUrl = null;
 
     if (use_credits) {
       // Check if user is a parent or child
@@ -180,8 +179,8 @@ export default defineEventHandler(async (event) => {
       }
     } else {
       // FLOW 2: Direct Credit Card Purchase
+      // Don't create order here - order will be created by webhook after successful payment
 
-      // Create Stripe checkout session
       const baseUrl = useRuntimeConfig().public.baseUrl;
 
       const session = await stripe.checkout.sessions.create({
@@ -201,21 +200,30 @@ export default defineEventHandler(async (event) => {
         mode: 'payment',
         customer_email: userInfo.email || user.email,
         success_url: `${baseUrl}/shop/order-success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/dashboard?tab=cart&cancelled=true`,
+        cancel_url: `${baseUrl}/dashboard?tab=cart`,
         metadata: {
           user_info_id: userInfo.id,
           operation_type: OPERATION_TYPE.PURCHASE,
-          total_items: orderItems.length.toString(),
-          total_quantity: items.reduce((sum, item) => sum + item.quantity, 0).toString()
+          cart_items: JSON.stringify(orderItems) // Pass cart items for webhook to create order
         }
       });
 
-      orderStatus = ORDER_STATUS.PENDING_PAYMENT;
-      paymentMethod = 'stripe_checkout';
-      stripeCheckoutUrl = session.url;
+      // Return checkout URL only - no order created yet
+      return {
+        success: true,
+        stripeCheckoutUrl: session.url,
+        message: 'Redirecting to payment...',
+        details: {
+          items: orderItems,
+          totalItems: orderItems.length,
+          totalQuantity: items.reduce((sum, item) => sum + item.quantity, 0),
+          totalCostCents,
+          totalCostSGD: (totalCostCents / 100).toFixed(2)
+        }
+      };
     }
 
-    // Create order record with appropriate status
+    // FLOW 1 continues: Create order for child credit purchase (needs parent approval)
     const orderNumber = generateOrderNumber();
     const { data: order, error: orderError } = await supabase
       .from('orders')
@@ -226,11 +234,8 @@ export default defineEventHandler(async (event) => {
         total_amount_cents: totalCostCents,
         currency: 'SGD',
         payment_method: paymentMethod,
-        stripe_balance_transaction_id: stripeCheckoutUrl ? null : null, // Will be updated by webhook
         paid_at: paidAt,
-        notes: use_credits ?
-          `Credit purchase pending parent approval - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}` :
-          `Direct purchase - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''} - External fulfillment`
+        notes: `Credit purchase pending parent approval - ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`
       })
       .select()
       .single();
@@ -243,14 +248,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Create order items with appropriate status
+    // Create order items
     const orderItemsData = orderItems.map((item) => ({
       order_id: order.id,
       product_id: item.product_id,
       quantity: item.quantity,
       unit_price_cents: item.price_cents,
       total_price_cents: item.subtotal_cents,
-      status_code: orderStatus // Match order status
+      status_code: orderStatus
     }));
 
     const { error: itemsError } = await supabase
@@ -265,59 +270,50 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Find all parents for notification (only for child credit purchases)
-    let parentNotifications = null;
-    if (use_credits && orderStatus === ORDER_STATUS.PENDING_PARENT_APPROVAL) {
-      // Get parents from groups where user is a member
-      const { data: groupParents, error: parentError } = await supabase
-        .from('group_members')
-        .select(`
-          groups!inner(
-            created_by,
-            creator:user_infos!groups_created_by_fkey(
-              id,
-              email,
-              first_name,
-              last_name
-            )
+    // Find all parents for notification
+    const { data: groupParents, error: parentError } = await supabase
+      .from('group_members')
+      .select(`
+        groups!inner(
+          created_by,
+          creator:user_infos!groups_created_by_fkey(
+            id,
+            email,
+            first_name,
+            last_name
           )
-        `)
-        .eq('user_info_id', userInfo.id)
-        .eq('status', 'active');
+        )
+      `)
+      .eq('user_info_id', userInfo.id)
+      .eq('status', 'active');
 
-      if (parentError) {
-        console.error('Failed to fetch parent notifications:', parentError);
-      }
-
-      // Extract unique parents (group creators)
-      const parentMap = new Map();
-      groupParents?.forEach((groupMember) => {
-        const parent = groupMember.groups.creator;
-        if (parent && parent.id !== userInfo.id) {
-          parentMap.set(parent.id, {
-            userInfoId: parent.id,
-            email: parent.email,
-            name: `${parent.first_name} ${parent.last_name}`.trim()
-          });
-        }
-      });
-
-      parentNotifications = Array.from(parentMap.values());
-      console.log(`[Purchase] Notifying ${parentNotifications.length} parents about credit purchase approval needed for order ${order.order_number}`);
+    if (parentError) {
+      console.error('Failed to fetch parent notifications:', parentError);
     }
+
+    // Extract unique parents (group creators)
+    const parentMap = new Map();
+    groupParents?.forEach((groupMember) => {
+      const parent = groupMember.groups.creator;
+      if (parent && parent.id !== userInfo.id) {
+        parentMap.set(parent.id, {
+          userInfoId: parent.id,
+          email: parent.email,
+          name: `${parent.first_name} ${parent.last_name}`.trim()
+        });
+      }
+    });
+
+    const parentNotifications = Array.from(parentMap.values());
+    console.log(`[Purchase] Notifying ${parentNotifications.length} parents about credit purchase approval needed for order ${order.order_number}`);
 
     return {
       success: true,
       orderId: order.id,
       orderNumber: order.order_number,
       status: orderStatus,
-      requiresParentApproval: use_credits, // Only children can use credits, so this is always for parent approval
-      stripeCheckoutUrl: stripeCheckoutUrl,
-      message: use_credits ?
-        `Order created! Waiting for parent approval.` :
-        stripeCheckoutUrl ?
-          `Redirecting to payment...` :
-          `Successfully purchased ${orderItems.length} item${orderItems.length > 1 ? 's' : ''}`,
+      requiresParentApproval: true,
+      message: 'Order created! Waiting for parent approval.',
       details: {
         orderNumber: order.order_number,
         items: orderItems,

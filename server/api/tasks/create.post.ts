@@ -10,6 +10,7 @@ export interface CreateTaskReq {
   lessonGenerationType: string;
   creditsPerQuiz: number;
   requiredScore: number;
+  questionsPerQuiz: number;
   chapters: string[];
 }
 
@@ -18,7 +19,7 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body: CreateTaskReq = await readBody(event);
 
-    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, requiredScore, chapters } = body;
+    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, requiredScore, questionsPerQuiz, chapters } = body;
 
     // Validate required fields
     if (!assigneeUserInfoId || !subject || !lessonGenerationType || creditsPerQuiz === undefined || !chapters?.length) {
@@ -90,6 +91,13 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'requiredScore must be between 0 and 100'
       });
     }
+
+    if (questionsPerQuiz !== undefined && (questionsPerQuiz < 1 || questionsPerQuiz > 50)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'questionsPerQuiz must be between 1 and 50'
+      });
+    }
     const { data: subjectData } = await supabase
       .from('subjects')
       .select(`*`)
@@ -110,7 +118,7 @@ export default defineEventHandler(async (event) => {
         subject,
         lesson_generation_type: lessonGenerationType,
         credit: creditsPerQuiz,
-        questions_per_quiz: 10, // Default to 10 questions
+        questions_per_quiz: questionsPerQuiz || 10,
         required_score: requiredScore || 0,
         due_date: null,
         status: TASK_STATUS.OPEN,

@@ -85,6 +85,8 @@ export default defineEventHandler(async (event) => {
         p_last_name: lastName,
         p_level_type: body.studentLevel || null,
         p_syllabus_type: body.syllabusType || null,
+        p_date_of_birth: body.dateOfBirth || null,
+        p_school: body.school || null,
         p_payment_customer_id: stripeCustomerId,
         p_is_active: true,
         p_onboarding_completed: true,
