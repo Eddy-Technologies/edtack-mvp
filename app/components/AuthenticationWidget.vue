@@ -1,7 +1,18 @@
 <template>
   <!-- Sidebar variant - minimalistic like Claude UI -->
   <div v-if="variant === 'sidebar'" class="w-full">
-    <div v-if="user.isLoggedIn" ref="menuContainer" class="relative">
+    <!-- Loading state while initializing -->
+    <div v-if="user.isInitializing" class="p-2">
+      <div class="animate-pulse flex items-center gap-3 p-2">
+        <div class="w-8 h-8 bg-gray-200 rounded-full" />
+        <div class="flex-1 space-y-2">
+          <div class="h-3 bg-gray-200 rounded w-3/4" />
+          <div class="h-2 bg-gray-200 rounded w-1/2" />
+        </div>
+      </div>
+    </div>
+
+    <div v-else-if="user.isLoggedIn" ref="menuContainer" class="relative">
       <!-- Trigger: Avatar + Name + Plan -->
       <button
         ref="triggerButton"
