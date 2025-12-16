@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="carouselContainerRef"
-    class="flex-1 flex items-center justify-center relative overflow-hidden py-6 min-h-[220px]"
-  >
+  <div class="flex-1 flex items-center justify-center relative overflow-hidden py-6 min-h-[220px]">
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center items-center py-12">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
@@ -19,7 +16,7 @@
       <div
         class="group flex ease-in-out"
         :class="isTransitioning ? 'transition-transform duration-500' : ''"
-        :style="{ transform: `translateX(${containerWidth / 2 - (adjustedIndex + 0.5) * cardWidth}px)` }"
+        :style="{ transform: `translateX(calc(50% - ${(adjustedIndex + 0.5) * cardWidth}px))` }"
       >
         <div
           v-for="(avatar, index) in infiniteAvatars"
@@ -141,8 +138,6 @@ const router = useRouter();
 const currentIndex = ref(2); // Start from center (index 2 out of 8 cards)
 const cardWidth = ref(280);
 const isTransitioning = ref(false);
-const carouselContainerRef = ref(null);
-const containerWidth = ref(0);
 
 // Backend data fetching
 const allAvatars = ref([]);
@@ -252,23 +247,9 @@ const handleKeydown = (event) => {
   }
 };
 
-// ResizeObserver to track container width
-let resizeObserver = null;
-
 // Add/remove event listeners
 onMounted(async () => {
   document.addEventListener('keydown', handleKeydown);
-
-  // Set up ResizeObserver to track container width changes
-  if (carouselContainerRef.value) {
-    containerWidth.value = carouselContainerRef.value.offsetWidth;
-    resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        containerWidth.value = entry.contentRect.width;
-      }
-    });
-    resizeObserver.observe(carouselContainerRef.value);
-  }
 
   // Load characters from backend
   await loadCharacters();
@@ -281,8 +262,5 @@ onMounted(async () => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown);
-  if (resizeObserver) {
-    resizeObserver.disconnect();
-  }
 });
 </script>
