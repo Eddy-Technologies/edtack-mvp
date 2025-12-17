@@ -13,7 +13,18 @@ export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const userInfo = await getUserInfo(event);
-    const { thread_id, content, isUser, type, uuid } = await readBody<PostMessageReq>(event);
+    const body = await readBody<PostMessageReq>(event);
+
+    // Debug: Log what server received
+    console.log('[message.post] Received:', {
+      thread_id: body.thread_id,
+      uuid: body.uuid,
+      type: body.type,
+      contentType: typeof body.content,
+      contentLength: typeof body.content === 'string' ? body.content.length : JSON.stringify(body.content).length,
+    });
+
+    const { thread_id, content, isUser, type, uuid } = body;
     if (!thread_id || !content) {
       throw createError({ statusCode: 400, statusMessage: 'thread_id and content are required' });
     }
@@ -31,15 +42,17 @@ export default defineEventHandler(async (event) => {
       .single();
 
     if (error) {
+      console.error('[message.post] Supabase error:', error);
       throw createError({
         statusCode: 500,
         statusMessage: `Failed to send message: ${error.message}`,
       });
     }
 
+    console.log('[message.post] Successfully saved message:', uuid);
     return { success: true, data };
   } catch (err: any) {
-    console.error('Send message API error:', err);
+    console.error('[message.post] API error:', err);
     if (err.statusCode) throw err;
     throw createError({ statusCode: 500, statusMessage: 'Failed to send message' });
   }

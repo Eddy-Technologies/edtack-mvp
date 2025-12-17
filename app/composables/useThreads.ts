@@ -100,12 +100,25 @@ export function useThreads() {
 
   // Add message to current thread (handles all message types)
   const addMessage = async ({ thread_id, content, type, isUser, uuid }: PostMessageReq) => {
+    console.log('[addMessage] Called with:', { thread_id, type, isUser, uuid });
+
     const body: PostMessageReq = { thread_id, content, type, isUser, uuid };
+
+    try {
+      // Debug: Check what we're sending
+      const bodyString = JSON.stringify(body);
+      console.log('[addMessage] Request body size:', bodyString.length, 'bytes');
+    } catch (err) {
+      console.error('[addMessage] Failed to stringify body:', err);
+      throw err;
+    }
 
     const response = await $fetch('/api/chat/message', {
       method: 'POST',
       body: JSON.stringify(body),
     });
+
+    console.log('[addMessage] Response:', response.success);
 
     if (!response.success || !response.data) {
       throw new Error('Failed to send message');

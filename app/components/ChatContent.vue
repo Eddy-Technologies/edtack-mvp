@@ -432,13 +432,44 @@ const handleStreamingComplete = (completionMessage: any) => {
 
     // Retry wrapper for transient failures (SSL errors, network issues)
     const saveWithRetry = async (obj: typeof addMessageObj, retries = 3) => {
+      // Debug: Log what we're trying to save
+      console.log('[saveWithRetry] Attempting to save message:', {
+        thread_id: obj.thread_id,
+        uuid: obj.uuid,
+        type: obj.type,
+        contentKeys: obj.content ? Object.keys(obj.content) : null,
+        slidesCount: obj.content?.slides?.length || 0,
+      });
+
+      // Debug: Test JSON serialization before sending
+      try {
+        const serialized = JSON.stringify(obj.content);
+        console.log('[saveWithRetry] Content size:', serialized.length, 'bytes');
+      } catch (serializeErr) {
+        console.error('[saveWithRetry] JSON serialization failed:', serializeErr);
+        console.error('[saveWithRetry] Content that failed:', obj.content);
+        // Try to identify problematic fields
+        if (obj.content && typeof obj.content === 'object') {
+          for (const [key, value] of Object.entries(obj.content)) {
+            try {
+              JSON.stringify(value);
+            } catch {
+              console.error(`[saveWithRetry] Field "${key}" is not serializable:`, typeof value, value);
+            }
+          }
+        }
+        return; // Don't retry if serialization fails
+      }
+
       for (let i = 0; i < retries; i++) {
         try {
           await addMessage(obj);
+          console.log('[saveWithRetry] Successfully saved message');
           return;
         } catch (err) {
+          console.error(`[saveWithRetry] Attempt ${i + 1} failed:`, err);
           if (i === retries - 1) {
-            console.error('Failed to save message after retries:', err);
+            console.error('[saveWithRetry] All retries exhausted');
           } else {
             await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
           }
