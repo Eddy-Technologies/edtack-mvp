@@ -5,10 +5,11 @@
  * - userTasksChapterIds: string[] - Array of user task-chapter assignment identifiers
  *
  * Returns:
- * - results: { [id]: { exists: boolean, questionCount: number } }
+ * - results: { [id]: { exists: boolean, questionCount: number, status: string, generationStartedAt: string | null } }
  */
 
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -37,11 +38,20 @@ export default defineEventHandler(async (event) => {
     // Get Supabase client
     const supabase = await getSupabaseClient(event);
 
-    // Query all linked questions in one call using IN clause
-    const { data: linkedQuestions, error } = await supabase
-      .from('user_tasks_chapters_questions')
-      .select('user_tasks_chapters_id')
-      .in('user_tasks_chapters_id', userTasksChapterIds);
+    // Run both queries in parallel for efficiency
+    const [questionsResult, chaptersResult] = await Promise.all([
+      supabase
+        .from('user_tasks_chapters_questions')
+        .select('user_tasks_chapters_id')
+        .in('user_tasks_chapters_id', userTasksChapterIds),
+      supabase
+        .from('user_tasks_chapters')
+        .select('id, status, generation_started_at')
+        .in('id', userTasksChapterIds),
+    ]);
+
+    const { data: linkedQuestions, error } = questionsResult;
+    const { data: chaptersData, error: chaptersError } = chaptersResult;
 
     if (error) {
       console.error('[check-existing-batch] Error querying linked questions:', error);
@@ -49,6 +59,23 @@ export default defineEventHandler(async (event) => {
         statusCode: 500,
         message: 'Failed to check existing quizzes',
       });
+    }
+
+    if (chaptersError) {
+      console.error('[check-existing-batch] Error querying chapter status:', chaptersError);
+      throw createError({
+        statusCode: 500,
+        message: 'Failed to check chapter status',
+      });
+    }
+
+    // Build status map
+    const statusMap: Record<string, { status: string; generationStartedAt: string | null }> = {};
+    for (const chapter of chaptersData || []) {
+      statusMap[chapter.id] = {
+        status: chapter.status,
+        generationStartedAt: chapter.generation_started_at,
+      };
     }
 
     // Count questions per user_tasks_chapters_id
@@ -59,12 +86,17 @@ export default defineEventHandler(async (event) => {
     }
 
     // Build results for all requested IDs
-    const results: Record<string, { exists: boolean; questionCount: number }> = {};
+    const results: Record<
+      string,
+      { exists: boolean; questionCount: number; status: string; generationStartedAt: string | null }
+    > = {};
     for (const id of userTasksChapterIds) {
       const questionCount = countMap[id] || 0;
       results[id] = {
         exists: questionCount > 0,
         questionCount,
+        status: statusMap[id]?.status || TASK_CHAPTER_STATUS.OPEN,
+        generationStartedAt: statusMap[id]?.generationStartedAt || null,
       };
     }
 

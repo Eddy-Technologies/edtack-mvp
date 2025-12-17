@@ -1608,6 +1608,7 @@ export type Database = {
           chapter_name: string;
           completed_at: string | null;
           created_at: string | null;
+          generation_started_at: string | null;
           id: string;
           score: number | null;
           status: string;
@@ -1619,6 +1620,7 @@ export type Database = {
           chapter_name: string;
           completed_at?: string | null;
           created_at?: string | null;
+          generation_started_at?: string | null;
           id?: string;
           score?: number | null;
           status?: string;
@@ -1630,6 +1632,7 @@ export type Database = {
           chapter_name?: string;
           completed_at?: string | null;
           created_at?: string | null;
+          generation_started_at?: string | null;
           id?: string;
           score?: number | null;
           status?: string;

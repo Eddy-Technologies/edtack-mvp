@@ -28,6 +28,14 @@ export enum TASK_STATUS {
   EXPIRED = 'EXPIRED' // Task has reached its end date or been automatically expired
 }
 
+// Task chapter statuses for user_tasks_chapters (per-chapter within a task)
+export enum TASK_CHAPTER_STATUS {
+  OPEN = 'OPEN', // Chapter quiz not yet started or completed
+  GENERATING = 'GENERATING', // Quiz is being generated
+  COMPLETED = 'COMPLETED', // Quiz has been completed at least once
+  EXPIRED = 'EXPIRED' // Parent task expired
+}
+
 export enum ORDER_FULFILLMENT {
   PENDING_FULFILLMENT = 'PENDING_FULFILLMENT',
   PROCESSING = 'PROCESSING',
@@ -63,6 +71,7 @@ export enum QUESTION_TYPE {
 export type OrderStatus = keyof typeof ORDER_STATUS;
 export type OperationType = keyof typeof OPERATION_TYPE;
 export type TaskStatus = keyof typeof TASK_STATUS;
+export type TaskChapterStatus = keyof typeof TASK_CHAPTER_STATUS;
 export type OrderFulfillment = keyof typeof ORDER_FULFILLMENT;
 export type LessonGenerationType = keyof typeof LESSON_GENERATION_TYPE;
 export type MarkingStatus = keyof typeof MARKING_STATUS;

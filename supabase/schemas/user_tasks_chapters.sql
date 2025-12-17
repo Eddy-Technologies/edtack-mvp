@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS user_tasks_chapters (
   score INTEGER,
   total_score INTEGER,
   completed_at TIMESTAMPTZ,
+  generation_started_at TIMESTAMPTZ,
 
   -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS user_tasks_chapters (
   CONSTRAINT unique_task_chapter UNIQUE(user_task_id, chapter_name),
 
   -- Ensure valid status values
-  CONSTRAINT chk_user_tasks_chapters_status CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED'))
+  CONSTRAINT chk_user_tasks_chapters_status CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED', 'GENERATING'))
 );
 
 -- Performance indexes for common query patterns

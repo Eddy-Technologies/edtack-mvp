@@ -229,13 +229,15 @@
                       v-if="taskChapter.user_tasks?.status !== 'CLOSED'"
                       size="sm"
                       :color="quizMetadata[taskChapter.id]?.isCompleted ? 'primary' : 'blue'"
-                      :loading="quizButtonLoading[taskChapter.id]"
+                      :loading="quizButtonLoading[taskChapter.id] || generatingStatus[taskChapter.id]"
                       @click="handleQuizClick(taskChapter, chapter, selectedSubjectData.subject_name)"
                     >
                       {{
-                        quizMetadata[taskChapter.id]?.isCompleted
-                          ? 'Reattempt'
-                          : (quizExists[taskChapter.id] ? 'Attempt' : 'Generate')
+                        generatingStatus[taskChapter.id]
+                          ? 'Generating...'
+                          : quizMetadata[taskChapter.id]?.isCompleted
+                            ? 'Reattempt'
+                            : (quizExists[taskChapter.id] ? 'Attempt' : 'Generate')
                       }}
                     </UButton>
                   </div>
@@ -272,12 +274,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, reactive } from 'vue';
+import { ref, computed, onMounted, onUnmounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
 import { useTokenUsage } from '~/composables/useTokenUsage';
+import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 
@@ -308,6 +311,8 @@ const quizButtonLoading = reactive<Record<string, boolean>>({});
 const quizExists = reactive<Record<string, boolean>>({});
 const quizCompleted = reactive<Record<string, boolean>>({});
 const quizMetadata = reactive<Record<string, any>>({}); // Store quiz metadata by taskChapterId
+const generatingStatus = reactive<Record<string, boolean>>({}); // Track which chapters are generating
+const pollingIntervals = reactive<Record<string, ReturnType<typeof setInterval>>>({}); // Polling intervals
 
 // Computed: Get currently selected subject object
 const selectedSubjectData = computed(() => {
@@ -430,6 +435,47 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
   }
 };
 
+// Polling functions for quiz generation status
+const startPolling = (userTasksChapterId: string) => {
+  // Don't start duplicate polling
+  if (pollingIntervals[userTasksChapterId]) return;
+
+  console.log('[StudyTab] Starting polling for:', userTasksChapterId);
+
+  pollingIntervals[userTasksChapterId] = setInterval(async () => {
+    try {
+      const response = await $fetch<{ status: string; hasQuiz: boolean }>(`/api/quiz/${userTasksChapterId}/status`);
+
+      if (response.status !== TASK_CHAPTER_STATUS.GENERATING) {
+        stopPolling(userTasksChapterId);
+        generatingStatus[userTasksChapterId] = false;
+
+        if (response.hasQuiz) {
+          quizExists[userTasksChapterId] = true;
+          toast.add({
+            title: 'Quiz Ready!',
+            description: 'Your quiz has been generated and is ready to attempt.',
+            color: 'green',
+            timeout: 5000,
+          });
+        }
+      }
+    } catch (err) {
+      console.error('[StudyTab] Polling error:', err);
+    }
+  }, 3000); // Poll every 3 seconds
+};
+
+const stopPolling = (userTasksChapterId: string) => {
+  const interval = pollingIntervals[userTasksChapterId];
+  if (interval) {
+    console.log('[StudyTab] Stopping polling for:', userTasksChapterId);
+    clearInterval(interval);
+    // Use Reflect.deleteProperty instead of delete for dynamic keys
+    Reflect.deleteProperty(pollingIntervals, userTasksChapterId);
+  }
+};
+
 const checkQuizExistence = async (chapters: any[]) => {
   // Collect all userTasksChapterIds
   const allIds: string[] = [];
@@ -457,6 +503,15 @@ const checkQuizExistence = async (chapters: any[]) => {
     for (const id of allIds) {
       const result = batchResponse.results[id];
       quizExists[id] = result?.exists || false;
+
+      // Check for GENERATING status and start polling
+      if (result?.status === TASK_CHAPTER_STATUS.GENERATING) {
+        generatingStatus[id] = true;
+        startPolling(id);
+      } else {
+        generatingStatus[id] = false;
+      }
+
       if (result?.exists) {
         existingIds.push(id);
       } else {
@@ -503,6 +558,17 @@ const checkQuizExistence = async (chapters: any[]) => {
 
 const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: string) => {
   const userTasksChapterId = taskChapter.id;
+
+  // Check if already generating
+  if (generatingStatus[userTasksChapterId]) {
+    toast.add({
+      title: 'Please wait',
+      description: 'Quiz is being generated...',
+      color: 'blue',
+      timeout: 3000,
+    });
+    return;
+  }
 
   try {
     // Set loading state
@@ -668,5 +734,10 @@ onMounted(async () => {
 
   // Fetch subjects with applied filters
   await fetchSubjects();
+});
+
+// Cleanup polling intervals on unmount
+onUnmounted(() => {
+  Object.keys(pollingIntervals).forEach(stopPolling);
 });
 </script>
