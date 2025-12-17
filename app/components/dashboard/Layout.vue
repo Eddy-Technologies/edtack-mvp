@@ -186,28 +186,16 @@
       <!-- Bottom Actions -->
       <div class="px-6 pb-6 space-y-4">
         <!-- User Profile -->
-        <ClientOnly>
-          <div class="flex items-center space-x-3 p-3 bg-stone-100 rounded-xl">
-            <UserAvatar />
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-gray-900 truncate">{{ userName }}</p>
-              <p class="text-xs text-gray-500 truncate">{{ userEmail }}</p>
-              <span class="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium rounded-full" :class="accountTypeBadgeClass">
-                {{ accountTypeLabel }}
-              </span>
-            </div>
+        <div class="flex items-center space-x-3 p-3 bg-stone-100 rounded-xl">
+          <UserAvatar />
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">{{ userName }}</p>
+            <p class="text-xs text-gray-500 truncate">{{ userEmail }}</p>
+            <span class="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium rounded-full" :class="accountTypeBadgeClass">
+              {{ accountTypeLabel }}
+            </span>
           </div>
-          <template #fallback>
-            <div class="flex items-center space-x-3 p-3 bg-stone-100 rounded-xl animate-pulse">
-              <div class="w-10 h-10 bg-gray-200 rounded-full" />
-              <div class="flex-1 min-w-0 space-y-2">
-                <div class="h-4 bg-gray-200 rounded w-3/4" />
-                <div class="h-3 bg-gray-200 rounded w-1/2" />
-                <div class="h-5 bg-gray-200 rounded w-16 mt-1" />
-              </div>
-            </div>
-          </template>
-        </ClientOnly>
+        </div>
 
         <!-- Back to Chat Button -->
         <Button
