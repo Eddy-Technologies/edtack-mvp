@@ -30,6 +30,9 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const isAvatarPlaying = ref(false);
 
+// Promise coalescing - prevents duplicate concurrent fetches
+let pendingFetch: Promise<Character[]> | null = null;
+
 export const useCharacters = () => {
   const supabase = useSupabaseClient();
 
@@ -51,6 +54,25 @@ export const useCharacters = () => {
 
   // API Methods
   const fetchCharacters = async (includeInactive: boolean = false): Promise<Character[]> => {
+    // Return cached if already loaded (and not requesting inactive)
+    if (!includeInactive && characters.value.length > 0) {
+      return characters.value;
+    }
+
+    // Return pending promise if fetch already in progress (prevents duplicate calls)
+    if (pendingFetch && !includeInactive) {
+      return pendingFetch;
+    }
+
+    pendingFetch = _doFetchCharacters(includeInactive);
+    try {
+      return await pendingFetch;
+    } finally {
+      pendingFetch = null;
+    }
+  };
+
+  const _doFetchCharacters = async (includeInactive: boolean): Promise<Character[]> => {
     loading.value = true;
     error.value = null;
 

@@ -17,8 +17,12 @@ export default defineNuxtPlugin(async () => {
     console.log('Auth state changed:', event, session);
 
     if (event === 'SIGNED_IN' && session) {
-      console.log('User signed in:', session.user);
-      fetchAndSetMe();
+      // Skip if initialize() already loaded the user (prevents duplicate fetch)
+      const meStore = useMeStore();
+      if (!meStore.id) {
+        console.log('User signed in:', session.user);
+        fetchAndSetMe();
+      }
     } else if (event === 'SIGNED_OUT') {
       console.log('User signed out from auth state change');
       resetMe();

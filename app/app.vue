@@ -78,8 +78,8 @@ onMounted(async () => {
   const MIN_DISPLAY_TIME = 300; // milliseconds
 
   try {
-    // Initialize meStore (fetches user data if authenticated)
-    await meStore.initialize();
+    // Wait for meStore initialization (plugin handles actual init)
+    await meStore.waitForInitialization();
 
     // Wait for codesStore to load (may already be loading via codes.client.ts plugin)
     if (!codesStore.isLoaded) {

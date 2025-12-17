@@ -8,6 +8,9 @@ interface MeState extends GetMeRes {
   isInitialized: boolean;
 }
 
+// Initialization promise - allows middleware/components to wait for init completion
+let initializationPromise: Promise<void> | null = null;
+
 export const useMeStore = defineStore('me', {
   state: (): MeState => ({
     id: '',
@@ -21,8 +24,6 @@ export const useMeStore = defineStore('me', {
     onboarding_completed: false,
     payment_customer_id: undefined,
     is_active: false,
-    created_at: '',
-    updated_at: '',
     auth_provider: '',
     isInitialized: false,
     syllabus_type: undefined
@@ -34,12 +35,26 @@ export const useMeStore = defineStore('me', {
     },
     resetMe() {
       this.$reset();
+      initializationPromise = null; // Clear on logout so next login re-initializes
     },
     setInitialized(value: boolean = true) {
       this.isInitialized = value;
     },
     async initialize() {
-      this.setInitialized(false);
+      // Return existing promise if already initializing (prevents duplicate calls)
+      if (initializationPromise) {
+        return initializationPromise;
+      }
+
+      // Return immediately if already initialized
+      if (this.isInitialized) {
+        return Promise.resolve();
+      }
+
+      initializationPromise = this._doInitialize();
+      return initializationPromise;
+    },
+    async _doInitialize() {
       try {
         const supabase = useSupabaseClient();
         const { data: { user } } = await supabase.auth.getUser();
@@ -51,8 +66,19 @@ export const useMeStore = defineStore('me', {
       } catch (error) {
         console.error('Error during authentication initialization:', error);
         // Still mark as initialized to prevent infinite loading
+      } finally {
+        this.isInitialized = true;
       }
-      this.setInitialized(true);
+    },
+    async waitForInitialization() {
+      if (this.isInitialized) return;
+      // If initialize() hasn't been called yet, call it now
+      // This handles the race condition where middleware runs before the plugin
+      if (!initializationPromise) {
+        await this.initialize();
+      } else {
+        await initializationPromise;
+      }
     },
     fetchAndSetMe: async function () {
       const { fetchMe } = useMe();
