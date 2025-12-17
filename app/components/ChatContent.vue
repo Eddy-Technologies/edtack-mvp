@@ -421,7 +421,7 @@ const handleStreamingComplete = (completionMessage: any) => {
     // Trigger final update
     messageStream.value = [...messageStream.value];
 
-    // Add to global thread state
+    // Add to global thread state with retry logic
     const addMessageObj = {
       thread_id: props.threadId,
       content: streamingMessage,
@@ -429,7 +429,24 @@ const handleStreamingComplete = (completionMessage: any) => {
       isUser: false,
       uuid: streamingMessage.id
     };
-    addMessage(addMessageObj);
+
+    // Retry wrapper for transient failures (SSL errors, network issues)
+    const saveWithRetry = async (obj: typeof addMessageObj, retries = 3) => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          await addMessage(obj);
+          return;
+        } catch (err) {
+          if (i === retries - 1) {
+            console.error('Failed to save message after retries:', err);
+          } else {
+            await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
+          }
+        }
+      }
+    };
+
+    saveWithRetry(addMessageObj);
   }
 
   // Clear streaming state

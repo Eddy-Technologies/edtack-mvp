@@ -20,13 +20,13 @@ export default defineEventHandler(async (event) => {
 
     const { data, error } = await supabase
       .from('thread_messages')
-      .insert({
+      .upsert({
         id: uuid,
         thread_id,
         sender: isUser ? userInfo.id : null,
         content,
         type: type ? type : isUser ? 'text' : 'json'
-      })
+      }, { onConflict: 'id' })
       .select('*')
       .single();
 
