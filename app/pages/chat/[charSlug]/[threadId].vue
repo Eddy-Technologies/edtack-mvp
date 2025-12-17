@@ -188,9 +188,9 @@ definePageMeta({
 const isLoading = ref(true);
 const isCreatingThread = ref(false);
 const collapsed = ref(true);
-const isMobile = ref(false);
+const isMobile = ref(true);
 const currentCharacter = ref(null);
-const showContentTransitions = ref(false);
+const showContentTransitions = ref(true);
 const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
 const chatInputRef = ref<any>(null);
@@ -263,9 +263,6 @@ onMounted(async () => {
   if (meStore.isLoggedIn && !hasStartedChat.value) {
     collapsed.value = true;
   }
-
-  // Content transitions can start immediately since global loading is handled in app.vue
-  showContentTransitions.value = true;
 
   // Handle study prompt injection from query parameters
   if (isNewChat.value && route.query.study_prompt) {

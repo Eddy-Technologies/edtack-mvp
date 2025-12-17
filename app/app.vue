@@ -8,13 +8,6 @@
 
     <NuxtRouteAnnouncer />
     <NuxtLoadingIndicator />
-    <noscript><iframe
-      src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT"
-      height="0"
-      width="0"
-      style="display: none; visibility: hidden"
-      ></iframe
-      ></noscript>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -55,6 +48,13 @@ useHead({
  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
  })(window,document,'script','dataLayer','GTM-57GKW4FT');`,
       type: 'text/javascript',
+    },
+  ],
+  noscript: [
+    // Google Tag Manager (noscript fallback)
+    {
+      innerHTML: '<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57GKW4FT" height="0" width="0" style="display:none;visibility:hidden;"></iframe>',
+      tagPosition: 'bodyOpen',
     },
   ],
   meta: [

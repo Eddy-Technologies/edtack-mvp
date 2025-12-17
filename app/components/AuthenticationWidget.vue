@@ -1,129 +1,143 @@
 <template>
   <!-- Sidebar variant - minimalistic like Claude UI -->
   <div v-if="variant === 'sidebar'" class="w-full">
-    <!-- Loading state while initializing -->
-    <div v-if="user.isInitializing" class="p-2">
-      <div class="animate-pulse flex items-center gap-3 p-2">
-        <div class="w-8 h-8 bg-gray-200 rounded-full" />
-        <div class="flex-1 space-y-2">
-          <div class="h-3 bg-gray-200 rounded w-3/4" />
-          <div class="h-2 bg-gray-200 rounded w-1/2" />
+    <ClientOnly>
+      <!-- Loading state while initializing -->
+      <div v-if="user.isInitializing" class="p-2">
+        <div class="animate-pulse flex items-center gap-3 p-2">
+          <div class="w-8 h-8 bg-gray-200 rounded-full" />
+          <div class="flex-1 space-y-2">
+            <div class="h-3 bg-gray-200 rounded w-3/4" />
+            <div class="h-2 bg-gray-200 rounded w-1/2" />
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-else-if="user.isLoggedIn" ref="menuContainer" class="relative">
-      <!-- Trigger: Avatar + Name + Plan -->
-      <button
-        ref="triggerButton"
-        class="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
-        @click="toggleMenu"
-      >
-        <UserAvatar size="small" />
-        <div v-if="!collapsed" class="flex-1 text-left min-w-0">
-          <div class="text-sm font-medium text-gray-900 truncate">
-            {{ user.userDisplayFullName }}
-          </div>
-          <div class="text-xs text-gray-500">
-            {{ tierDisplayName }}
-          </div>
-        </div>
-        <Icon
-          v-if="!collapsed"
-          :name="menuOpen ? 'i-heroicons-chevron-down' : 'i-heroicons-chevron-up'"
-          class="w-4 h-4 text-gray-400 flex-shrink-0"
-        />
-      </button>
-
-      <!-- Dropdown Menu - opens upward -->
-      <Transition
-        enter-active-class="transition duration-100 ease-out"
-        enter-from-class="transform scale-95 opacity-0"
-        enter-to-class="transform scale-100 opacity-100"
-        leave-active-class="transition duration-75 ease-in"
-        leave-from-class="transform scale-100 opacity-100"
-        leave-to-class="transform scale-95 opacity-0"
-      >
-        <div
-          v-if="menuOpen"
-          class="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] overflow-hidden"
-          :style="{ bottom: `${dropdownPosition.bottom}px`, left: `${dropdownPosition.left}px`, width: `${dropdownPosition.width}px` }"
+      <div v-else-if="user.isLoggedIn" ref="menuContainer" class="relative">
+        <!-- Trigger: Avatar + Name + Plan -->
+        <button
+          ref="triggerButton"
+          class="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          @click="toggleMenu"
         >
-          <div class="py-1">
-            <button
-              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-              @click="routeTo('/dashboard?tab=overview')"
-            >
-              <Icon name="i-heroicons-user" class="w-4 h-4" />
-              Profile
-            </button>
-            <button
-              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-              @click="routeTo('/dashboard?tab=settings')"
-            >
-              <Icon name="i-heroicons-cog-6-tooth" class="w-4 h-4" />
-              Settings
-            </button>
-            <button
-              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-              @click="routeTo('/dashboard?tab=study')"
-            >
-              <Icon name="i-heroicons-book-open" class="w-4 h-4" />
-              Study
-            </button>
-            <button
-              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-              @click="routeTo('/about?tab=user-guides')"
-            >
-              <Icon name="i-heroicons-document-text" class="w-4 h-4" />
-              User Guide
-            </button>
+          <UserAvatar size="small" />
+          <div v-if="!collapsed" class="flex-1 text-left min-w-0">
+            <div class="text-sm font-medium text-gray-900 truncate">
+              {{ user.userDisplayFullName }}
+            </div>
+            <div class="text-xs text-gray-500">
+              {{ tierDisplayName }}
+            </div>
           </div>
+          <Icon
+            v-if="!collapsed"
+            :name="menuOpen ? 'i-heroicons-chevron-down' : 'i-heroicons-chevron-up'"
+            class="w-4 h-4 text-gray-400 flex-shrink-0"
+          />
+        </button>
 
-          <div class="border-t border-gray-100" />
+        <!-- Dropdown Menu - opens upward -->
+        <Transition
+          enter-active-class="transition duration-100 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-75 ease-in"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
+        >
+          <div
+            v-if="menuOpen"
+            class="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] overflow-hidden"
+            :style="{ bottom: `${dropdownPosition.bottom}px`, left: `${dropdownPosition.left}px`, width: `${dropdownPosition.width}px` }"
+          >
+            <div class="py-1">
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                @click="routeTo('/dashboard?tab=overview')"
+              >
+                <Icon name="i-heroicons-user" class="w-4 h-4" />
+                Profile
+              </button>
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                @click="routeTo('/dashboard?tab=settings')"
+              >
+                <Icon name="i-heroicons-cog-6-tooth" class="w-4 h-4" />
+                Settings
+              </button>
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                @click="routeTo('/dashboard?tab=study')"
+              >
+                <Icon name="i-heroicons-book-open" class="w-4 h-4" />
+                Study
+              </button>
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                @click="routeTo('/about?tab=user-guides')"
+              >
+                <Icon name="i-heroicons-document-text" class="w-4 h-4" />
+                User Guide
+              </button>
+            </div>
 
-          <div class="py-1">
-            <button
-              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-              @click="routeTo('/dashboard?tab=subscription')"
-            >
-              <Icon name="i-heroicons-sparkles" class="w-4 h-4" />
-              Upgrade Plan
-            </button>
+            <div class="border-t border-gray-100" />
+
+            <div class="py-1">
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                @click="routeTo('/dashboard?tab=subscription')"
+              >
+                <Icon name="i-heroicons-sparkles" class="w-4 h-4" />
+                Upgrade Plan
+              </button>
+            </div>
+
+            <div class="border-t border-gray-100" />
+
+            <div class="py-1">
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                @click="handleLogout"
+              >
+                <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-4 h-4" />
+                Logout
+              </button>
+            </div>
           </div>
+        </Transition>
+      </div>
 
-          <div class="border-t border-gray-100" />
+      <!-- Not logged in - sidebar variant -->
+      <div v-else class="flex flex-col gap-2 p-2">
+        <Button
+          variant="primary"
+          text="Login"
+          size="sm"
+          class="w-full"
+          @click="login"
+        />
+        <Button
+          variant="secondary"
+          text="Register"
+          size="sm"
+          class="w-full"
+          @click="register"
+        />
+      </div>
 
-          <div class="py-1">
-            <button
-              class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50"
-              @click="handleLogout"
-            >
-              <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-4 h-4" />
-              Logout
-            </button>
+      <template #fallback>
+        <div class="p-2">
+          <div class="animate-pulse flex items-center gap-3 p-2">
+            <div class="w-8 h-8 bg-gray-200 rounded-full" />
+            <div class="flex-1 space-y-2">
+              <div class="h-3 bg-gray-200 rounded w-3/4" />
+              <div class="h-2 bg-gray-200 rounded w-1/2" />
+            </div>
           </div>
         </div>
-      </Transition>
-    </div>
-
-    <!-- Not logged in - sidebar variant -->
-    <div v-else class="flex flex-col gap-2 p-2">
-      <Button
-        variant="primary"
-        text="Login"
-        size="sm"
-        class="w-full"
-        @click="login"
-      />
-      <Button
-        variant="secondary"
-        text="Register"
-        size="sm"
-        class="w-full"
-        @click="register"
-      />
-    </div>
+      </template>
+    </ClientOnly>
   </div>
 
   <!-- Topbar variant - original design -->
