@@ -176,6 +176,8 @@
                 placeholder="Birthday (optional)"
                 class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
                 :disabled="isLoading"
+                min="1900-01-01"
+                @blur="enforceDobMin"
               >
 
               <!-- Terms and Conditions -->
@@ -251,6 +253,13 @@ const acceptTerms = ref(false);
 
 const isLoading = ref(false);
 const errorMessage = ref('');
+
+// Enforce DOB minimum (1900-01-01) on blur
+const enforceDobMin = () => {
+  if (dateOfBirth.value && dateOfBirth.value < '1900-01-01') {
+    dateOfBirth.value = '1900-01-01';
+  }
+};
 
 // Fetch options on component mount
 onMounted(async () => {

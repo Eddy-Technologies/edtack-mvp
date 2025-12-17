@@ -104,6 +104,8 @@
                 placeholder="Birthday (optional)"
                 class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
                 :disabled="isLoading"
+                min="1900-01-01"
+                @blur="enforceDobMin"
               >
 
               <!-- Name fields if not already filled (from OAuth) -->
@@ -199,6 +201,13 @@ const lastName = ref('');
 const levelOptions = ref([]);
 const syllabusOptions = ref([]);
 const optionsLoading = ref(false);
+
+// Enforce DOB minimum (1900-01-01) on blur
+const enforceDobMin = () => {
+  if (dateOfBirth.value && dateOfBirth.value < '1900-01-01') {
+    dateOfBirth.value = '1900-01-01';
+  }
+};
 
 // Form validation
 const canComplete = computed(() => {
