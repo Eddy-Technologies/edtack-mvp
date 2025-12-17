@@ -202,7 +202,6 @@ const selectAvatar = (avatar, index) => {
   // Emit select event (like the modal does)
   emit('select', avatar);
   emit('update:modelValue', avatar);
-  console.log('Selected avatar:', avatar);
 
   // Navigate to chat using character slug
   if (props.goToChatOnClick && avatar.slug) {

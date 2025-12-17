@@ -170,8 +170,7 @@ const handleLogin = async () => {
 
   try {
     // Only email login is supported
-    const response = await signIn(loginInput.value.trim(), password.value);
-    console.log('Email login successful:', response);
+    await signIn(loginInput.value.trim(), password.value);
     toast.add({
       title: 'Login successful',
       description: 'Welcome back!',
@@ -182,7 +181,6 @@ const handleLogin = async () => {
     const redirectTo = route.query.redirect as string || '/dashboard';
     router.push(redirectTo);
   } catch (error: any) {
-    console.log('Login failed:', error.message);
     // Use error message from server if available, cannot use error.message directly
     errorMessage.value = error.data.message || 'Login failed. Please try again.';
   } finally {
@@ -195,7 +193,6 @@ const handleGoogleLogin = async () => {
     isLoading.value = true;
     errorMessage.value = '';
 
-    console.log('Initiating Google login...');
     await signInWithGoogle();
 
     // User will be redirected to Google, then back to /auth/callback

@@ -336,7 +336,7 @@ const handleRegister = async () => {
 
   try {
     // Only email registration is supported
-    const response = await signUp({
+    await signUp({
       email: email.value.trim(),
       password: password.value,
       firstName: firstName.value.trim(),
@@ -348,7 +348,6 @@ const handleRegister = async () => {
       school: school.value.trim() || undefined,
       acceptTerms: acceptTerms.value,
     });
-    console.log('Email registration successful:', response);
     const successMessage = 'Registration successful! Please check your email to confirm your account.';
     toast.add({
       title: 'Registration Successful',

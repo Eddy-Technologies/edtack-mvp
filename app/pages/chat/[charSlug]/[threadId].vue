@@ -268,8 +268,6 @@ watch(threadId, async (newThreadId, oldThreadId) => {
     selectedSlides.value = [];
     selectedMessageId.value = null;
 
-    console.log('ThreadId changed from', oldThreadId, 'to', newThreadId);
-
     // If switching to existing thread, load messages
     if (newThreadId && newThreadId !== 'new') {
       isLoading.value = true;

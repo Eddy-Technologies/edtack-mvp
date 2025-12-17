@@ -17,7 +17,6 @@ export default defineNuxtRouteMiddleware(async () => {
       .select('user_roles(role_name)')
       .eq('user_id', user.value.id)
       .single();
-    console.log('Admin check data:', data);
 
     if (!data || data.user_roles[0]?.role_name !== 'ADMIN') {
       throw createError({

@@ -111,8 +111,7 @@ const closeFeedbackModal = () => {
   feedbackType.value = null;
 };
 
-const handleFeedbackSubmitted = (feedbackData: any) => {
-  console.log('Feedback submitted:', feedbackData);
+const handleFeedbackSubmitted = (_feedbackData: any) => {
   // Feedback will be handled by the modal component
 };
 </script>

@@ -97,14 +97,8 @@ const meStore = useMeStore();
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
-  console.log('Initializing chat with props:', {
-    threadId: props.threadId,
-    character: props.character?.name,
-  });
-
   // Skip if 'new' thread ID (invalid)
   if (!props.threadId || props.threadId === 'new') {
-    console.log('Skipping initialization - invalid thread ID');
     return;
   }
 
@@ -112,12 +106,10 @@ const initializeChat = async () => {
 
   // If we already have this thread initialized and connected, skip re-initialization
   if (currentThreadId.value === props.threadId && wsChat.value?.isConnected) {
-    console.log('Chat already initialized for this thread:', props.threadId);
     return;
   }
 
   if (!meStore.isInitialized) {
-    console.log('Store not initialized yet, retrying...');
     setTimeout(initializeChat, 500);
     return;
   }
@@ -144,13 +136,10 @@ const initializeChat = async () => {
     return { text: content, isUser: true, id };
   });
 
-  console.log('Using thread ID:', props.threadId);
-
   // Track the current thread ID to prevent unnecessary re-initialization
   currentThreadId.value = props.threadId;
 
   if (useWebSocket.value && props.threadId) {
-    console.log('🚀 Initializing WebSocket chat with thread ID:', props.threadId);
     wsChat.value = useWebSocketChat(props.threadId);
 
     // Connect and wait for connection
@@ -158,14 +147,11 @@ const initializeChat = async () => {
 
     try {
       await wsChat.value?.waitForConnection();
-      console.log('🔌 WebSocket connected successfully');
 
       // Check for pending message
       const pendingMessage = getPendingMessage();
 
       if (pendingMessage) {
-        // Regular pending message
-        console.log('Found pending message, sending:', pendingMessage);
         clearPendingMessage();
 
         // Send immediately since we're already connected
@@ -212,7 +198,6 @@ onMounted(() => {
         // Check the latest message for slides
         const latestMessage = newMessages[newMessages.length - 1];
         if (latestMessage?.slides && Array.isArray(latestMessage.slides) && latestMessage.slides.length > 0) {
-          console.log('Auto-opening slides for new message:', latestMessage.slides);
           // Emit to parent to open slides panel with messageId for marking persistence
           emit('openSlides', latestMessage.slides, latestMessage.id);
 
@@ -290,7 +275,6 @@ const updateMessageStatus = (messageId: string, status: 'queued' | 'sending' | '
 // Process queued messages when WebSocket connects
 const processMessageQueue = () => {
   if (wsChat.value?.isConnected && messageQueue.value.length > 0) {
-    console.log('Processing queued messages:', messageQueue.value.length);
     const messages = [...messageQueue.value];
     messageQueue.value = [];
 
@@ -325,7 +309,7 @@ const handleSlideBatch = (batchMessage: any) => {
     return;
   }
 
-  const { slides, batch_size, total_slides_so_far } = batch;
+  const { slides, total_slides_so_far } = batch;
 
   // Case 1: First batch - initialize streaming message
   if (!activeStreamingMessage.value) {
@@ -379,7 +363,6 @@ const handleSlideBatch = (batchMessage: any) => {
   }
 
   // Case 2: Subsequent batches - append to existing message
-  console.log(`Batch received: ${batch_size} slides (total: ${total_slides_so_far})`);
 
   const messageIndex = activeStreamingMessage.value.messageIndex;
   const existingMessage = messageStream.value[messageIndex];
@@ -554,7 +537,6 @@ const handleWebSocketMessage = (message: any) => {
 
 // Flatten the entire messageStream into an ordered array of playback units
 const flattenedPlaybackUnits = computed(() => {
-  console.log('Flattening message stream into playback units:', messageStream.value);
   const units: any[] = [];
   messageStream.value.forEach((block, blockIndex) => {
     // Add text messages
@@ -661,7 +643,6 @@ const handleSend = async (text: string) => {
     }
   } else {
     // Queue the message for later sending (fallback)
-    console.log('WebSocket not connected, queuing message:', text);
     messageQueue.value.push({ text, messageId: messageUuid });
   }
 };
@@ -695,13 +676,11 @@ const scrollToMessage = (messageId: string) => {
   const element = messageRefs.value[messageId];
 
   if (element) {
-    console.log('Scrolling to message at index:', messageId);
     element.scrollIntoView({
       behavior: 'smooth',
       block: 'center'
     });
   } else {
-    console.warn('Message element not found for index:', messageId);
     // Fallback to bottom scroll
     bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
   }
