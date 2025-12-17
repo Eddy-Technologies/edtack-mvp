@@ -313,6 +313,14 @@ const processMessageQueue = () => {
 const handleSlideBatch = (batchMessage: any) => {
   const { batch } = batchMessage;
 
+  // Debug: Log batch receipt with state
+  console.log('[handleSlideBatch] Received:', {
+    batchSize: batch?.slides?.length,
+    totalSoFar: batch?.total_slides_so_far,
+    hasActiveStreaming: !!activeStreamingMessage.value,
+    activeStreamingId: activeStreamingMessage.value?.id,
+  });
+
   if (!batch || !batch.slides || !Array.isArray(batch.slides)) {
     console.warn('Invalid batch message:', batchMessage);
     return;
@@ -322,7 +330,7 @@ const handleSlideBatch = (batchMessage: any) => {
 
   // Case 1: First batch - initialize streaming message
   if (!activeStreamingMessage.value) {
-    console.log('First batch received, initializing streaming message');
+    console.log('[handleSlideBatch] First batch - initializing activeStreamingMessage');
 
     // Detect content type from first slide
     const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
@@ -505,6 +513,14 @@ const markLastUserMessageSent = () => {
 
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
+  // Debug: Log all incoming messages
+  console.log('[WS] Received message:', {
+    status: message.status,
+    type: message.type,
+    hasActiveStreaming: !!activeStreamingMessage.value,
+    activeStreamingIndex: activeStreamingMessage.value?.messageIndex,
+  });
+
   // Any valid response means our message was received - mark as sent and notify parent
   if (message.status && !['heartbeat', 'status_update'].includes(message.status)) {
     markLastUserMessageSent();
@@ -519,12 +535,19 @@ const handleWebSocketMessage = (message: any) => {
 
   // Handle streaming completion
   if (message.status === 'completed' && activeStreamingMessage.value) {
+    console.log('[WS] Calling handleStreamingComplete');
     handleStreamingComplete(message);
     return;
   }
 
+  // Debug: Log when completed arrives but activeStreamingMessage is null
+  if (message.status === 'completed' && !activeStreamingMessage.value) {
+    console.warn('[WS] completed received but activeStreamingMessage is null!');
+  }
+
   // Display summary message from user_message status
   if (message.status === 'user_message') {
+    console.log('[WS] Processing user_message');
     // NOTE: Save only the message text, ignore slides array
     // The slides were already saved via handleStreamingComplete()
     const newUuid = crypto.randomUUID();
