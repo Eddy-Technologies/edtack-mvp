@@ -44,6 +44,17 @@
         <div class="flex-1 flex flex-col h-full relative">
           <!-- Chat Content Area - takes remaining space -->
           <div class="flex-1 overflow-hidden relative">
+            <!-- Loading state during thread creation -->
+            <div
+              v-if="isCreatingThread"
+              class="absolute inset-0 flex items-center justify-center bg-white/95 backdrop-blur-sm z-10"
+            >
+              <div class="flex flex-col items-center gap-3">
+                <UIcon name="i-heroicons-arrow-path" class="w-8 h-8 animate-spin text-primary" />
+                <span class="text-gray-500">Starting chat...</span>
+              </div>
+            </div>
+
             <ChatContent
               v-if="!isLoading"
               ref="chatContentRef"
@@ -175,6 +186,7 @@ definePageMeta({
 });
 
 const isLoading = ref(true);
+const isCreatingThread = ref(false);
 const collapsed = ref(true);
 const isMobile = ref(false);
 const currentCharacter = ref(null);
@@ -193,7 +205,7 @@ const showSlides = computed(() => selectedSlides.value.length > 0);
 const router = useRouter();
 const route = useRoute();
 const meStore = useMeStore();
-const { fetchThread, createThread, reset, setPendingMessage } = useThreads();
+const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread } = useThreads();
 
 const {
   selectedCharacter,
@@ -270,24 +282,33 @@ watch(threadId, async (newThreadId, oldThreadId) => {
 
     // If switching to existing thread, load messages
     if (newThreadId && newThreadId !== 'new') {
-      isLoading.value = true;
+      // Check if we have cached thread from createThread (skip redundant fetch)
+      const cachedThread = consumeCreatedThread();
 
-      try {
-        const response = await fetchThread(newThreadId);
-        if (!response) return;
-        const { thread } = response;
-        // Store thread data for use in ChatContent
-        threadData.value = thread || null;
-      } catch (err) {
-        console.error('Error loading thread:', err);
+      if (cachedThread && cachedThread.id === newThreadId) {
+        // Use cached data, skip fetch
+        threadData.value = cachedThread;
+      } else {
+        // Normal fetch for existing threads
+        isLoading.value = true;
+
+        try {
+          const response = await fetchThread(newThreadId);
+          if (!response) return;
+          const { thread } = response;
+          // Store thread data for use in ChatContent
+          threadData.value = thread || null;
+        } catch (err) {
+          console.error('Error loading thread:', err);
+        }
+
+        isLoading.value = false;
       }
 
       // Set character based on route slug
       if (charSlug.value && charSlug.value !== selectedCharacter.value?.slug) {
         await selectCharacterBySlug(charSlug.value);
       }
-
-      isLoading.value = false;
     } else if (newThreadId === 'new') {
       // Reset for new chat
       reset();
@@ -349,6 +370,7 @@ const handleChatSend = async (text: string) => {
 
   // If new chat, generate thread ID and update URL
   if (threadId.value === 'new') {
+    isCreatingThread.value = true;
     setPendingMessage(text);
 
     try {
@@ -361,7 +383,10 @@ const handleChatSend = async (text: string) => {
       await router.replace(`/chat/${charSlug.value}/${newThreadUuid}`);
     } catch (err) {
       console.error('Thread creation error', err);
+    } finally {
+      isCreatingThread.value = false;
     }
+    return;
   }
 
   // Existing chat - send directly

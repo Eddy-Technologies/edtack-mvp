@@ -13,6 +13,7 @@ const isLoadingThreads = ref(false);
 const isLoadingThread = ref(false);
 const error = ref<string | null>(null);
 const pendingMessage = ref<string | null>(null);
+const createdThreadCache = ref<Thread | null>(null);
 
 export function useThreads() {
   const meStore = useMeStore();
@@ -90,6 +91,9 @@ export function useThreads() {
       threads.value.unshift(newThread);
       messageHistory.value = [];
 
+      // Cache for use after navigation (avoids redundant fetchThread)
+      createdThreadCache.value = newThread;
+
       return newThread;
     } catch (err) {
       console.error('Thread creation error:', err);
@@ -149,6 +153,13 @@ export function useThreads() {
     }
   };
 
+  // Consume cached thread (returns and clears cache)
+  const consumeCreatedThread = (): Thread | null => {
+    const thread = createdThreadCache.value;
+    createdThreadCache.value = null;
+    return thread;
+  };
+
   return {
     // State
     threads: readonly(threads),
@@ -168,5 +179,8 @@ export function useThreads() {
     setPendingMessage,
     getPendingMessage,
     clearPendingMessage,
+
+    // Thread cache (for optimized new chat flow)
+    consumeCreatedThread,
   };
 }
