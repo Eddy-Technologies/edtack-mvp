@@ -309,6 +309,13 @@ const processMessageQueue = () => {
   }
 };
 
+// Async save helper - fire and forget, no blocking UI
+const saveMessageAsync = (obj: { thread_id: string; content: any; type: string; isUser: boolean; uuid: string }) => {
+  addMessage(obj).catch((err) => {
+    console.error('[saveMessageAsync] Failed:', err);
+  });
+};
+
 // Handle slide batch streaming
 const handleSlideBatch = (batchMessage: any) => {
   const { batch } = batchMessage;
@@ -369,6 +376,15 @@ const handleSlideBatch = (batchMessage: any) => {
 
     isWaitingForResponse.value = true;
 
+    // SAVE immediately (incremental save pattern)
+    saveMessageAsync({
+      thread_id: props.threadId,
+      content: newMessage,
+      type: 'json',
+      isUser: false,
+      uuid: newMessageId
+    });
+
     return;
   }
 
@@ -406,6 +422,15 @@ const handleSlideBatch = (batchMessage: any) => {
 
   // Trigger reactivity
   messageStream.value = [...messageStream.value];
+
+  // SAVE updated message (upsert - incremental save pattern)
+  saveMessageAsync({
+    thread_id: props.threadId,
+    content: existingMessage,
+    type: 'json',
+    isUser: false,
+    uuid: existingMessage.id
+  });
 };
 
 // Handle streaming completion
@@ -415,77 +440,28 @@ const handleStreamingComplete = (completionMessage: any) => {
     return;
   }
 
-  console.log('Streaming completed');
+  console.log('[handleStreamingComplete] Streaming completed');
 
   const messageIndex = activeStreamingMessage.value.messageIndex;
   const streamingMessage = messageStream.value[messageIndex];
 
   if (streamingMessage) {
     // Update message to final state
-    streamingMessage.status = 'user_message';
+    streamingMessage.status = 'completed';
     streamingMessage.isStreaming = false;
     streamingMessage.message = completionMessage.message || streamingMessage.message;
 
     // Trigger final update
     messageStream.value = [...messageStream.value];
 
-    // Add to global thread state with retry logic
-    const addMessageObj = {
+    // Final save with updated status (slides already saved incrementally)
+    saveMessageAsync({
       thread_id: props.threadId,
       content: streamingMessage,
       type: 'json',
       isUser: false,
       uuid: streamingMessage.id
-    };
-
-    // Retry wrapper for transient failures (SSL errors, network issues)
-    const saveWithRetry = async (obj: typeof addMessageObj, retries = 3) => {
-      // Debug: Log what we're trying to save
-      console.log('[saveWithRetry] Attempting to save message:', {
-        thread_id: obj.thread_id,
-        uuid: obj.uuid,
-        type: obj.type,
-        contentKeys: obj.content ? Object.keys(obj.content) : null,
-        slidesCount: obj.content?.slides?.length || 0,
-      });
-
-      // Debug: Test JSON serialization before sending
-      try {
-        const serialized = JSON.stringify(obj.content);
-        console.log('[saveWithRetry] Content size:', serialized.length, 'bytes');
-      } catch (serializeErr) {
-        console.error('[saveWithRetry] JSON serialization failed:', serializeErr);
-        console.error('[saveWithRetry] Content that failed:', obj.content);
-        // Try to identify problematic fields
-        if (obj.content && typeof obj.content === 'object') {
-          for (const [key, value] of Object.entries(obj.content)) {
-            try {
-              JSON.stringify(value);
-            } catch {
-              console.error(`[saveWithRetry] Field "${key}" is not serializable:`, typeof value, value);
-            }
-          }
-        }
-        return; // Don't retry if serialization fails
-      }
-
-      for (let i = 0; i < retries; i++) {
-        try {
-          await addMessage(obj);
-          console.log('[saveWithRetry] Successfully saved message');
-          return;
-        } catch (err) {
-          console.error(`[saveWithRetry] Attempt ${i + 1} failed:`, err);
-          if (i === retries - 1) {
-            console.error('[saveWithRetry] All retries exhausted');
-          } else {
-            await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
-          }
-        }
-      }
-    };
-
-    saveWithRetry(addMessageObj);
+    });
   }
 
   // Clear streaming state
