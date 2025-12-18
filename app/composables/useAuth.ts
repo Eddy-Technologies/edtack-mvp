@@ -34,7 +34,7 @@ export const useAuth = () => {
       body: { email: email_val, password: password_val }
     });
     console.log('Sign in response:', data);
-    await fetchAndSetMe(); // Wait for user data before allowing navigation
+    fetchAndSetMe();
     return data;
   };
 
