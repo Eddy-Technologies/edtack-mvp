@@ -9,7 +9,7 @@
     <div
       v-if="!isMobile"
       ref="resizeHandle"
-      class="absolute left-0 top-0 bottom-0 w-1 bg-gray-200 hover:bg-primary-400 cursor-col-resize z-10"
+      class="sticky left-0 top-0 h-screen w-1 bg-gray-200 hover:bg-primary-400 cursor-col-resize z-10 float-left -ml-0"
       @mousedown="startResize"
     />
 
@@ -840,8 +840,8 @@ function handleResize(e: MouseEvent) {
   // Calculate width from right edge
   const newWidth = containerRect.right - e.clientX;
 
-  // Constrain between 320px and 800px
-  panelWidth.value = Math.min(Math.max(newWidth, 320), 800);
+  // Constrain between 320px and 1200px
+  panelWidth.value = Math.min(Math.max(newWidth, 320), 1200);
 }
 
 function stopResize() {
