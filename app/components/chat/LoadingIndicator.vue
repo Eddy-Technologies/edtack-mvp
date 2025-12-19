@@ -1,38 +1,51 @@
 <template>
-  <div class="flex items-center gap-3 p-3 bg-stone-50 rounded-xl border border-gray-200">
-    <!-- Animated character icon or dots -->
-    <div class="flex items-center gap-2">
-      <!-- Character-specific icon if available -->
-      <div v-if="character?.slug === 'eddy'" class="text-xl animate-pulse">
-        🦁
+  <div class="flex items-center justify-between gap-3 p-3 bg-stone-50 rounded-xl border border-gray-200">
+    <div class="flex items-center gap-3">
+      <!-- Animated character icon or dots -->
+      <div class="flex items-center gap-2">
+        <!-- Character-specific icon if available -->
+        <div v-if="character?.slug === 'eddy'" class="text-xl animate-pulse">
+          🦁
+        </div>
+        <div v-else-if="character?.slug === 'mia'" class="text-xl animate-pulse">
+          🦊
+        </div>
+        <div v-else class="flex space-x-1">
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms" />
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms" />
+          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms" />
+        </div>
       </div>
-      <div v-else-if="character?.slug === 'mia'" class="text-xl animate-pulse">
-        🦊
-      </div>
-      <div v-else class="flex space-x-1">
-        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms" />
-        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms" />
-        <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms" />
-      </div>
+
+      <!-- Dynamic loading message -->
+      <span class="text-gray-600 text-sm">
+        {{ currentMessage }}
+      </span>
     </div>
 
-    <!-- Dynamic loading message -->
-    <span class="text-gray-600 text-sm">
-      {{ currentMessage }}
-    </span>
+    <!-- Cancel button -->
+    <button
+      class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+      @click="$emit('cancel')"
+    >
+      <UIcon name="i-lucide-stop-circle" class="w-4 h-4" />
+      <span>Stop</span>
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
 
-interface Props {
+const props = defineProps<{
   character?: any;
   isLoading: boolean;
   customMessages?: string[];
-}
+}>();
 
-const props = defineProps<Props>();
+defineEmits<{
+  (e: 'cancel'): void;
+}>();
 
 // Character-specific loading messages
 const loadingMessages = computed(() => {

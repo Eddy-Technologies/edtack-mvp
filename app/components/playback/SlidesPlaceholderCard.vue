@@ -23,10 +23,21 @@
           </div>
         </div>
 
-        <!-- Right side: Action indicator -->
-        <div class="flex items-center gap-2 text-primary-600">
-          <span class="text-sm font-medium hidden sm:block">View Slides</span>
-          <Icon name="i-heroicons-arrow-right" class="w-5 h-5" />
+        <!-- Right side: Action indicator and stop button -->
+        <div class="flex items-center gap-3">
+          <!-- Stop button when streaming -->
+          <button
+            v-if="isStreaming"
+            class="flex items-center gap-1 px-2 py-1 text-xs text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+            @click.stop="$emit('cancel')"
+          >
+            <UIcon name="i-lucide-stop-circle" class="w-4 h-4" />
+            <span class="hidden sm:inline">Stop</span>
+          </button>
+          <div class="flex items-center gap-2 text-primary-600">
+            <span class="text-sm font-medium hidden sm:block">View Slides</span>
+            <Icon name="i-heroicons-arrow-right" class="w-5 h-5" />
+          </div>
         </div>
       </div>
     </button>
@@ -60,7 +71,7 @@ const props = defineProps<{
   isStreaming?: boolean;
 }>();
 
-const emit = defineEmits(['finish', 'open-split-view']);
+const emit = defineEmits(['finish', 'open-split-view', 'cancel']);
 
 // Computed properties
 const slidesPreviewText = computed(() => {

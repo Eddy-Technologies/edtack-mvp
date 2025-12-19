@@ -14,14 +14,16 @@
           :start-playback="currentPlaybackIndex === index"
           @finish="handleFinish"
           @open-split-view="(slides) => handleOpenSplitView(slides, unit.props.messageId)"
+          @cancel="handleCancelRequest"
         />
       </div>
 
-      <!-- Loading indicator when waiting for WebSocket response -->
+      <!-- Loading indicator when waiting for response -->
       <LoadingIndicator
         v-if="chatIsWaitingForResponse"
         :character="character"
         :is-loading="true"
+        @cancel="handleCancelRequest"
       />
 
       <div ref="bottomAnchor" />
@@ -654,6 +656,14 @@ const handleSend = async (text: string) => {
   } else {
     // Queue the message for later sending (fallback)
     messageQueue.value.push({ text, messageId: messageUuid });
+  }
+};
+
+// Handle cancel/stop request
+const handleCancelRequest = async () => {
+  if (chat.value?.cancelRequest) {
+    await chat.value.cancelRequest();
+    isWaitingForResponse.value = false;
   }
 };
 
