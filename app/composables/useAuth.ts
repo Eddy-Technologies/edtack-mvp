@@ -16,7 +16,7 @@ export interface SignUpReq {
 
 export const useAuth = () => {
   const supabase = useSupabaseClient();
-  const { fetchAndSetMe, resetMe } = useMeStore();
+  const { resetMe } = useMeStore();
   const baseUrl = useRuntimeConfig().public.baseUrl;
 
   const signUp = async (input: SignUpReq) => {
@@ -34,7 +34,6 @@ export const useAuth = () => {
       body: { email: email_val, password: password_val }
     });
     console.log('Sign in response:', data);
-    fetchAndSetMe();
     return data;
   };
 

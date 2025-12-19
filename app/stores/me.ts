@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
-import { useMe } from '~/composables/useMe';
 import { generateInitials, getDisplayFullName } from '~/utils/avatarUtils';
 import type { GetMeRes } from '~~/server/api/me.get';
 import { useSupabaseClient } from '#imports';
 
 interface MeState extends GetMeRes {
   isInitialized: boolean;
+  isLoading: boolean;
 }
 
 export const useMeStore = defineStore('me', {
@@ -25,6 +25,7 @@ export const useMeStore = defineStore('me', {
     updated_at: '',
     auth_provider: '',
     isInitialized: false,
+    isLoading: false,
     syllabus_type: undefined
   }),
 
@@ -39,35 +40,35 @@ export const useMeStore = defineStore('me', {
       this.isInitialized = value;
     },
     async initialize() {
-      this.setInitialized(false);
+      if (this.isInitialized) return;
+
       try {
         const supabase = useSupabaseClient();
         const { data: { user } } = await supabase.auth.getUser();
 
         if (user) {
-          // User is authenticated, fetch their profile
-          await this.fetchAndSetMe();
+          await this.refreshMe();
         }
       } catch (error) {
         console.error('Error during authentication initialization:', error);
-        // Still mark as initialized to prevent infinite loading
+      } finally {
+        this.isInitialized = true;
       }
-      this.setInitialized(true);
     },
-    fetchAndSetMe: async function () {
-      const { fetchMe } = useMe();
-      const { data, error } = await fetchMe();
-      if (error) {
+    async refreshMe() {
+      if (this.isLoading) return;
+
+      this.isLoading = true;
+      try {
+        const data = await $fetch<GetMeRes>('/api/me');
+        this.$patch(data);
+        return data;
+      } catch (error) {
         console.error('Error fetching user profile:', error);
-        return;
+        return null;
+      } finally {
+        this.isLoading = false;
       }
-      if (!data) {
-        console.warn('No user profile data found');
-        return;
-      }
-      console.log('Fetched user profile:', data);
-      this.setMe(data);
-      return data;
     },
   },
   getters: {

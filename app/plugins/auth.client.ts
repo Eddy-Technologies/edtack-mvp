@@ -6,7 +6,7 @@ import { useMeStore } from '~/stores/me';
 export default defineNuxtPlugin(async () => {
   console.log('Auth client plugin initialized');
   const supabase = useSupabaseClient();
-  const { fetchAndSetMe, resetMe, initialize } = useMeStore();
+  const { refreshMe, resetMe, initialize } = useMeStore();
   const router = useRouter();
 
   // Initialize authentication state
@@ -18,14 +18,14 @@ export default defineNuxtPlugin(async () => {
 
     if (event === 'SIGNED_IN' && session) {
       console.log('User signed in:', session.user);
-      fetchAndSetMe();
+      refreshMe();
     } else if (event === 'SIGNED_OUT') {
       console.log('User signed out from auth state change');
       resetMe();
       router.push('/login');
     } else if (event === 'USER_UPDATED' && session) {
       console.log('User profile updated');
-      fetchAndSetMe();
+      refreshMe();
     }
     // Note: INITIAL_SESSION is now handled by the initialize() call above
   });
