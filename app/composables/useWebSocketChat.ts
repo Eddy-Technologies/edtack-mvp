@@ -63,9 +63,11 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
 
     try {
       const wsUrl = buildWsUrl(currentAuthToken);
+      console.log('[WebSocket] Connecting to:', wsUrl.replace(/token=[^&]+/, 'token=***'));
       ws.value = new WebSocket(wsUrl);
 
       ws.value.onopen = () => {
+        console.log('[WebSocket] Connected successfully');
         isConnected.value = true;
         isConnecting.value = false;
         reconnectAttempts = 0;
@@ -114,7 +116,8 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
         }
       };
 
-      ws.value.onerror = () => {
+      ws.value.onerror = (event) => {
+        console.error('[WebSocket] Connection error:', event);
         error.value = 'Connection error occurred';
         if (connectionRejecter) {
           connectionRejecter(new Error('Connection error occurred'));

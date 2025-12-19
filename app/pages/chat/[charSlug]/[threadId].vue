@@ -21,11 +21,11 @@
           :sidebar-width="collapsed ? 80 : 400"
           :is-mobile="isMobile"
           :active-thread-id="threadId"
-          :is-connected="chatContentRef?.wsChat?.isConnected || false"
-          :is-connecting="chatContentRef?.wsChat?.isConnecting || false"
-          :has-error="!!chatContentRef?.wsChat?.error"
-          :is-waiting-for-response="chatContentRef?.wsChat?.isWaitingForResponse || chatContentRef?.isWaitingForResponse || false"
-          :response-phase="chatContentRef?.wsChat?.responsePhase || ''"
+          :is-connected="connectionStatus.isConnected"
+          :is-connecting="connectionStatus.isConnecting"
+          :has-error="connectionStatus.hasError"
+          :is-waiting-for-response="connectionStatus.isWaitingForResponse"
+          :response-phase="connectionStatus.responsePhase"
           @toggle-sidebar="toggleSidebar"
           @new-chat="handleNewChat"
         />
@@ -197,6 +197,15 @@ const chatInputRef = ref<any>(null);
 const slideContainerRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
 
+// Connection status state (reactive tracking from child component)
+const connectionStatus = ref({
+  isConnected: false,
+  isConnecting: false,
+  hasError: false,
+  isWaitingForResponse: false,
+  responsePhase: '',
+});
+
 // Slide state management (lifted from ChatContent)
 const selectedSlides = ref<any[]>([]);
 const selectedMessageId = ref<string | null>(null);
@@ -239,7 +248,7 @@ onBeforeRouteLeave(() => {
 
 const preventNavigation = () => {
   // Check if waiting for chat response
-  if (chatContentRef.value?.wsChat?.isWaitingForResponse || chatContentRef.value?.isWaitingForResponse) {
+  if (connectionStatus.value.isWaitingForResponse) {
     const confirmed = confirm('You are currently waiting for a response. Are you sure you want to leave?');
     return confirmed;
   }
@@ -267,6 +276,57 @@ onMounted(async () => {
   // Handle study prompt injection from query parameters
   if (isNewChat.value && route.query.study_prompt) {
     await handleStudyPromptInjection();
+  }
+});
+
+// Connection status polling interval
+let connectionStatusInterval: ReturnType<typeof setInterval> | null = null;
+
+// Watch for connection status changes from ChatContent
+watch(
+  () => chatContentRef.value,
+  (chatContent: any) => {
+    // Clear previous interval if exists
+    if (connectionStatusInterval) {
+      clearInterval(connectionStatusInterval);
+      connectionStatusInterval = null;
+    }
+
+    if (chatContent) {
+      // Set up interval to poll connection status from child
+      // Note: Exposed computed refs need .value access when read via template refs
+      const updateConnectionStatus = () => {
+        // Handle both ref and plain value access patterns
+        const getValue = (prop: any) => {
+          if (prop === null || prop === undefined) return prop;
+          return typeof prop === 'object' && 'value' in prop ? prop.value : prop;
+        };
+        const newStatus = {
+          isConnected: getValue(chatContent.chatIsConnected) || false,
+          isConnecting: getValue(chatContent.chatIsConnecting) || false,
+          hasError: !!getValue(chatContent.chatError),
+          isWaitingForResponse: getValue(chatContent.chatIsWaitingForResponse) || false,
+          responsePhase: getValue(chatContent.chatResponsePhase) || '',
+        };
+        // Only update if changed to avoid unnecessary reactivity
+        if (JSON.stringify(connectionStatus.value) !== JSON.stringify(newStatus)) {
+          connectionStatus.value = newStatus;
+        }
+      };
+      // Initial update
+      updateConnectionStatus();
+      // Watch for changes via interval
+      connectionStatusInterval = setInterval(updateConnectionStatus, 100);
+    }
+  },
+  { immediate: true }
+);
+
+// Clean up interval on unmount
+onBeforeUnmount(() => {
+  if (connectionStatusInterval) {
+    clearInterval(connectionStatusInterval);
+    connectionStatusInterval = null;
   }
 });
 

@@ -19,7 +19,7 @@
 
       <!-- Loading indicator when waiting for WebSocket response -->
       <LoadingIndicator
-        v-if="chat?.isWaitingForResponse || isWaitingForResponse"
+        v-if="chatIsWaitingForResponse"
         :character="character"
         :is-loading="true"
       />
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
+import { ref, shallowRef, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
@@ -82,9 +82,18 @@ const streamingProgress = ref<{
 const messageRefs = ref<Record<string, HTMLElement>>({});
 
 // Chat integration (supports both WebSocket and SSE modes via env config)
-const chat = ref<ReturnType<typeof useChat> | null>(null);
+// CRITICAL: Must use shallowRef here. Using ref() causes Vue to auto-unwrap nested refs,
+// so chat.value?.isConnected returns a boolean instead of a Ref, breaking .value access.
+const chat = shallowRef<ReturnType<typeof useChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
+
+// Computed properties for connection status (exposed to parent)
+const chatIsConnected = computed(() => chat.value?.isConnected.value || false);
+const chatIsConnecting = computed(() => chat.value?.isConnecting.value || false);
+const chatError = computed(() => chat.value?.error.value || null);
+const chatResponsePhase = computed(() => chat.value?.responsePhase.value || '');
+const chatIsWaitingForResponse = computed(() => chat.value?.isWaitingForResponse.value || isWaitingForResponse.value);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
 const messageQueue = ref<{ text: string; messageId: string }[]>([]); // Queue for messages waiting to be sent
 
@@ -104,7 +113,7 @@ const initializeChat = async () => {
   const userId = meStore.user_info_id || meStore.id;
 
   // If we already have this thread initialized and connected, skip re-initialization
-  if (currentThreadId.value === props.threadId && chat.value?.isConnected) {
+  if (currentThreadId.value === props.threadId && chat.value?.isConnected.value) {
     return;
   }
 
@@ -146,7 +155,7 @@ const initializeChat = async () => {
     await chat.value?.connect();
 
     try {
-      await chat.value?.waitForConnection();
+      await chat.value?.waitForConnection(10000);
 
       // Check for pending message
       const pendingMessage = getPendingMessage();
@@ -159,9 +168,8 @@ const initializeChat = async () => {
           handleSend(pendingMessage);
         });
       }
-    } catch (error) {
-      console.error('Failed to connect chat:', error);
-      // Handle connection failure gracefully
+    } catch {
+      // Connection might still succeed after timeout - don't block the UI
     }
   }
 };
@@ -181,7 +189,7 @@ onMounted(() => {
 
   // Single watcher for connection state - process queue when connected
   watch(
-    () => chat.value?.isConnected,
+    () => chat.value?.isConnected.value,
     (connected) => {
       if (connected) {
         processMessageQueue();
@@ -230,7 +238,7 @@ onMounted(() => {
 
 // Send message directly to WebSocket
 const sendMessage = async (text: string) => {
-  if (!chat.value?.isConnected || !text.trim()) {
+  if (!chat.value?.isConnected.value || !text.trim()) {
     console.warn('Cannot send message: WebSocket not connected or empty text');
     return false;
   }
@@ -274,7 +282,7 @@ const updateMessageStatus = (messageId: string, status: 'queued' | 'sending' | '
 
 // Process queued messages when WebSocket connects
 const processMessageQueue = () => {
-  if (chat.value?.isConnected && messageQueue.value.length > 0) {
+  if (chat.value?.isConnected.value && messageQueue.value.length > 0) {
     const messages = [...messageQueue.value];
     messageQueue.value = [];
 
@@ -625,13 +633,13 @@ const handleSend = async (text: string) => {
   addMessage(addMessageObj);
 
   // Determine initial status based on connection state
-  const initialStatus = chat.value?.isConnected ? 'sending' : 'queued';
+  const isConnectedNow = chat.value?.isConnected.value;
+  const initialStatus = isConnectedNow ? 'sending' : 'queued';
   messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
 
   // Since we connect immediately in initializeChat, just try to send
-  if (chat.value?.isConnected) {
-    const success = sendMessage(text);
-    if (!success) {
+  if (isConnectedNow) {
+    if (!sendMessage(text)) {
       // Handle send failure - update message status
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {
@@ -716,6 +724,12 @@ defineExpose({
   clearChat,
   chat,
   isWaitingForResponse,
+  // Connection status computed properties for parent
+  chatIsConnected,
+  chatIsConnecting,
+  chatError,
+  chatResponsePhase,
+  chatIsWaitingForResponse,
 });
 
 onUnmounted(() => {
