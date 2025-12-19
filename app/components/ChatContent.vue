@@ -97,6 +97,7 @@ const chatError = computed(() => chat.value?.error.value || null);
 const chatResponsePhase = computed(() => chat.value?.responsePhase.value || '');
 const chatIsWaitingForResponse = computed(() => chat.value?.isWaitingForResponse.value || isWaitingForResponse.value);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
+const isInitializing = ref(false); // Prevent concurrent initialization
 const messageQueue = ref<{ text: string; messageId: string }[]>([]); // Queue for messages waiting to be sent
 
 if (import.meta.client) {
@@ -113,12 +114,18 @@ const initializeChat = async () => {
     return;
   }
 
-  const userId = meStore.user_info_id || meStore.id;
-
-  // If we already have this thread initialized and connected, skip re-initialization
-  if (currentThreadId.value === props.threadId && chat.value?.isConnected.value) {
+  // Prevent concurrent initialization - this is critical to avoid spam
+  if (isInitializing.value) {
     return;
   }
+
+  // If we already have this thread initialized and connected/connecting, skip re-initialization
+  if (currentThreadId.value === props.threadId &&
+    (chat.value?.isConnected.value || chat.value?.isConnecting.value)) {
+    return;
+  }
+
+  const userId = meStore.user_info_id || meStore.id;
 
   // Wait for profile to load
   if (!meStore.user_role && meStore.isLoading) {
@@ -137,6 +144,12 @@ const initializeChat = async () => {
     return;
   }
 
+  // Mark as initializing to prevent concurrent calls
+  isInitializing.value = true;
+
+  // Track the current thread ID early to prevent re-entry
+  currentThreadId.value = props.threadId;
+
   // Always treat as new chat since we have no history
   isFirstMessage.value = true;
 
@@ -148,8 +161,11 @@ const initializeChat = async () => {
     return { text: content, isUser: true, id };
   });
 
-  // Track the current thread ID to prevent unnecessary re-initialization
-  currentThreadId.value = props.threadId;
+  // Disconnect old chat if exists before creating new one
+  if (chat.value) {
+    chat.value.disconnect();
+    chat.value = null;
+  }
 
   if (props.threadId) {
     // useChat automatically selects WebSocket or SSE mode based on env config
@@ -174,7 +190,12 @@ const initializeChat = async () => {
       }
     } catch {
       // Connection might still succeed after timeout - don't block the UI
+    } finally {
+      // Always reset initializing flag
+      isInitializing.value = false;
     }
+  } else {
+    isInitializing.value = false;
   }
 };
 
@@ -730,6 +751,7 @@ const clearChat = () => {
   // Reset flags
   isFirstMessage.value = true;
   currentThreadId.value = '';
+  isInitializing.value = false;
 };
 
 // Expose methods and state to parent component
