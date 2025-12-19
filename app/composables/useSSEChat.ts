@@ -10,6 +10,7 @@ export type UseSSEChatOptions = ChatOptions;
 export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   const config = useRuntimeConfig();
   const isConnected = ref(false);
+  const isConnecting = ref(false); // SSE doesn't have a connecting phase, always false
   const isStreaming = ref(false);
   const response = ref<ChatResponse[]>([]);
   const error = ref<string | null>(null);
@@ -195,7 +196,9 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         timestamp: data.timestamp,
       };
       response.value.push(responseData);
+      return;
     }
+
   };
 
   /**
@@ -424,6 +427,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     getStatus,
     response,
     isConnected,
+    isConnecting,
     isStreaming,
     isWaitingForResponse,
     error,

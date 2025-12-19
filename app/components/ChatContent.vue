@@ -175,11 +175,13 @@ const initializeChat = async () => {
 };
 
 onMounted(() => {
-  // Single watcher for WebSocket responses
+  // Single watcher for chat responses (WebSocket and SSE)
+  // Note: Must watch response.value (the array), not response (the Ref),
+  // otherwise .length check fails since Refs don't have a length property
   watch(
-    () => chat.value?.response,
+    () => chat.value?.response.value,
     (newMessages) => {
-      if (newMessages && newMessages?.length > 0) {
+      if (newMessages && newMessages.length > 0) {
         const lastMessage = newMessages[newMessages.length - 1];
         handleWebSocketMessage(lastMessage);
       }
