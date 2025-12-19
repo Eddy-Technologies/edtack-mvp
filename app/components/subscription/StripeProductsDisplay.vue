@@ -244,9 +244,10 @@ const selectPlan = async (product: GetProductResponse) => {
 
   try {
     const meStore = useMeStore();
+    const supabaseUser = useSupabaseUser();
 
     // 1. Check if user is logged in
-    if (!meStore.isLoggedIn) {
+    if (!supabaseUser.value) {
       // 2. If not logged in, redirect to login
       await navigateTo('/login');
       return;

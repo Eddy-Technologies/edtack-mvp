@@ -1,12 +1,10 @@
 import { defineNuxtRouteMiddleware, navigateTo } from '#app';
-import { useSupabaseClient } from '#imports';
 
-export default defineNuxtRouteMiddleware(async () => {
-  const supabase = useSupabaseClient();
-  const { data: { user } } = await supabase.auth.getUser();
+export default defineNuxtRouteMiddleware(() => {
+  const user = useSupabaseUser();
 
   // If user is already authenticated, redirect them away from auth pages
-  if (user) {
+  if (user.value) {
     return navigateTo('/dashboard');
   }
 });

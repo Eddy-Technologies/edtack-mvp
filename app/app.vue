@@ -26,12 +26,10 @@ import { ref, onMounted, watch } from 'vue';
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
 import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
-import { useMeStore } from '~/stores/me';
 import { useCodesStore } from '~/stores/codes';
 
 // Loading state - always show initially, hide when stores are ready
 const showAppLoading = ref(true);
-const meStore = useMeStore();
 const codesStore = useCodesStore();
 
 const agreedToCookiesScriptConsent = useScriptTriggerConsent();
@@ -78,22 +76,6 @@ onMounted(async () => {
   const MIN_DISPLAY_TIME = 300; // milliseconds
 
   try {
-    // Wait for meStore to be initialized (handled by auth.client.ts plugin)
-    if (!meStore.isInitialized) {
-      await new Promise<void>((resolve) => {
-        const unwatch = watch(
-          () => meStore.isInitialized,
-          (isInit) => {
-            if (isInit) {
-              unwatch();
-              resolve();
-            }
-          },
-          { immediate: true }
-        );
-      });
-    }
-
     // Wait for codesStore to load (may already be loading via codes.client.ts plugin)
     if (!codesStore.isLoaded) {
       if (codesStore.isLoading) {

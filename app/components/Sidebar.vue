@@ -147,7 +147,6 @@ import Avatar from '~/components/avatar/Avatar.vue';
 import AuthenticationWidget from '~/components/AuthenticationWidget.vue';
 import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
-import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
@@ -219,7 +218,7 @@ const connectionTextClass = computed(() => {
 const isAudioPlayerCollapsed = ref(false);
 
 const router = useRouter();
-const meStore = useMeStore();
+const supabaseUser = useSupabaseUser();
 const { threads: chatThreads, isLoadingThreads, fetchThreads } = useThreads();
 
 const { isAvatarPlaying, getCharacterBySubject } = useCharacters();
@@ -254,7 +253,7 @@ let wavesurfer: WaveSurfer | null = null;
 onMounted(() => {
   // Initialize audio store after mounting
   // Fetch threads on mount
-  if (meStore.isLoggedIn) {
+  if (supabaseUser.value) {
     fetchThreads();
   }
   const audioStore = useAudioStore();

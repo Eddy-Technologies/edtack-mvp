@@ -128,16 +128,29 @@ import { useMeStore } from '~/stores/me';
 
 // Check admin access
 const userStore = useMeStore();
+const supabaseUser = useSupabaseUser();
 const router = useRouter();
 const route = useRoute();
 
-// Initialize user store and check admin access
+// Check admin access after profile loads
 onMounted(async () => {
-  if (!userStore.isInitialized) {
-    await userStore.initialize();
+  // Wait for profile to load if user is authenticated
+  if (supabaseUser.value && !userStore.user_role) {
+    await new Promise<void>((resolve) => {
+      const unwatch = watch(
+        () => userStore.user_role,
+        (role) => {
+          if (role) {
+            unwatch();
+            resolve();
+          }
+        },
+        { immediate: true }
+      );
+    });
   }
 
-  // Redirect non-admin users after store is initialized
+  // Redirect non-admin users after store is loaded
   if (userStore.user_role !== 'ADMIN') {
     console.log('Non-admin user detected, redirecting to dashboard');
     router.push('/dashboard');

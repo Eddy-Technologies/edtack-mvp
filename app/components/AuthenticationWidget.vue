@@ -3,7 +3,7 @@
   <div v-if="variant === 'sidebar'" class="w-full">
     <ClientOnly>
       <!-- Loading state while initializing -->
-      <div v-if="user.isInitializing" class="p-2">
+      <div v-if="meStore.isLoading && !meStore.user_role" class="p-2">
         <div class="animate-pulse flex items-center gap-3 p-2">
           <div class="w-8 h-8 bg-gray-200 rounded-full" />
           <div class="flex-1 space-y-2">
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div v-else-if="user.isLoggedIn" ref="menuContainer" class="relative">
+      <div v-else-if="isLoggedIn" ref="menuContainer" class="relative">
         <!-- Trigger: Avatar + Name + Plan -->
         <button
           ref="triggerButton"
@@ -23,7 +23,7 @@
           <UserAvatar size="small" />
           <div v-if="!collapsed" class="flex-1 text-left min-w-0">
             <div class="text-sm font-medium text-gray-900 truncate">
-              {{ user.userDisplayFullName }}
+              {{ meStore.userDisplayFullName }}
             </div>
             <div class="text-xs text-gray-500">
               {{ tierDisplayName }}
@@ -142,7 +142,7 @@
 
   <!-- Topbar variant - original design -->
   <div v-else class="flex gap-4 items-center">
-    <div v-if="user.isLoggedIn" ref="menuContainer" class="relative">
+    <div v-if="isLoggedIn" ref="menuContainer" class="relative">
       <UserAvatar @click="menuOpen = !menuOpen" />
       <!-- Dropdown Menu -->
       <div
@@ -250,8 +250,12 @@ const triggerButton = ref<HTMLElement | null>(null);
 const dropdownPosition = ref({ bottom: 0, left: 0, width: 0 });
 
 const { signOut } = useAuth();
-const user = useMeStore();
+const meStore = useMeStore();
+const supabaseUser = useSupabaseUser();
 const { tierDisplayName, fetchTokenUsage } = useTokenUsage();
+
+// Auth state from Supabase, profile data from store
+const isLoggedIn = computed(() => !!supabaseUser.value);
 
 // Toggle menu and calculate position for fixed dropdown
 const toggleMenu = () => {
@@ -314,7 +318,7 @@ const onClickOutside = (e: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', onClickOutside);
-  if (user.isLoggedIn) {
+  if (isLoggedIn.value) {
     fetchTokenUsage();
   }
 });

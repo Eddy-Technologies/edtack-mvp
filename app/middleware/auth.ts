@@ -1,49 +1,41 @@
 import { defineNuxtRouteMiddleware, navigateTo } from '#app';
-import { useSupabaseClient } from '#imports';
-import type { Database } from '~~/types/supabase';
+import { useMeStore } from '~/stores/me';
 
 export default defineNuxtRouteMiddleware(async (to, _from) => {
-  const supabase = useSupabaseClient<Database>();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = useSupabaseUser();
+  const meStore = useMeStore();
 
-  // Check if user is authenticated
-  if (!user) {
-    console.log(
-      `[Auth Middleware] User not authenticated. Redirecting to login from ${to.path}`
-    );
-
-    // Prevent redirect loop if already on login page
+  // Not authenticated
+  if (!user.value) {
     if (to.path !== '/login') {
       return navigateTo(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
     }
     return;
   }
 
-  // If already on onboarding page, allow access
-  if (to.path === '/onboarding') {
-    console.log(
-      `[Auth Middleware] User on onboarding page. Access granted.`
-    );
+  // Only fetch profile on client (SSR doesn't have auth cookies for API calls)
+  if (import.meta.client && !meStore.user_role) {
+    await meStore.refreshMe();
+  }
+
+  // On SSR, allow page to render - client will handle redirect
+  if (import.meta.server) {
     return;
   }
 
-  // Check if user has completed onboarding
-  const { data: userInfo } = await supabase
-    .from('user_infos')
-    .select('onboarding_completed')
-    .eq('user_id', user.id)
-    .single();
+  // Client-side checks below
+  if (to.path === '/onboarding') {
+    if (meStore.onboarding_completed) {
+      return navigateTo('/dashboard');
+    }
+    return;
+  }
 
-  // If user doesn't exist or hasn't completed onboarding, redirect to onboarding
-  if (!userInfo || !userInfo.onboarding_completed) {
-    console.log(
-      `[Auth Middleware] User not onboarded. Redirecting to onboarding from ${to.path}`
-    );
+  if (!meStore.user_role) {
     return navigateTo('/onboarding');
   }
 
-  // If user is authenticated and onboarded, allow access
-  console.log(
-    `[Auth Middleware] User authenticated and onboarded: ${user?.email}. Access to ${to.path} granted.`
-  );
+  if (!meStore.onboarding_completed) {
+    return navigateTo('/onboarding');
+  }
 });

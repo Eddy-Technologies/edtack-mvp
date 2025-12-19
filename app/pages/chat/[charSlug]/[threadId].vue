@@ -168,7 +168,6 @@ import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
 import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import SlideContainer from '@/components/chat/SlideContainer.vue';
-import { useMeStore } from '~/stores/me';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
@@ -213,7 +212,7 @@ const showSlides = computed(() => selectedSlides.value.length > 0);
 
 const router = useRouter();
 const route = useRoute();
-const meStore = useMeStore();
+const supabaseUser = useSupabaseUser();
 const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread } = useThreads();
 
 const {
@@ -269,7 +268,7 @@ onMounted(async () => {
   window.addEventListener('resize', handleResize);
 
   // Set sidebar collapsed if user is logged in but hasn't started chatting
-  if (meStore.isLoggedIn && !hasStartedChat.value) {
+  if (supabaseUser.value && !hasStartedChat.value) {
     collapsed.value = true;
   }
 

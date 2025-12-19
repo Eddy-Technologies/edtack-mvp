@@ -104,6 +104,7 @@ if (import.meta.client) {
 }
 
 const meStore = useMeStore();
+const supabaseUser = useSupabaseUser();
 
 // Initialize chat - simplified approach
 const initializeChat = async () => {
@@ -119,7 +120,8 @@ const initializeChat = async () => {
     return;
   }
 
-  if (!meStore.isInitialized) {
+  // Wait for profile to load
+  if (!meStore.user_role && meStore.isLoading) {
     setTimeout(initializeChat, 500);
     return;
   }
@@ -226,13 +228,13 @@ onMounted(() => {
   // Initialize when all prerequisites are met
   watch(
     () => ({
-      loggedIn: meStore.isLoggedIn,
-      initialized: meStore.isInitialized,
+      user: supabaseUser.value,
+      profileLoaded: !!meStore.user_role,
       threadId: props.threadId,
       character: props.character,
     }),
     (state) => {
-      if (state.loggedIn && state.initialized && state.threadId && state.character) {
+      if (state.user && state.profileLoaded && state.threadId && state.character) {
         initializeChat();
       }
     },

@@ -223,17 +223,20 @@ const canComplete = computed(() => {
 // Initialize form with user data
 onMounted(async () => {
   try {
-    if (me && me.onboarding_completed) {
-      router.push('/dashboard');
-      return;
-    }
-
     optionsLoading.value = true;
+
+    // Fetch profile and options in parallel
     const [levelsResponse, syllabusResponse] = await Promise.all([
       $fetch('/api/options/levels'),
       $fetch('/api/options/syllabus'),
-      me.fetchAndSetMe()
+      me.refreshMe()
     ]);
+
+    // Check AFTER refreshMe - redirect if already onboarded
+    if (me.onboarding_completed) {
+      router.push('/dashboard');
+      return;
+    }
 
     levelOptions.value = levelsResponse.levels || [];
     syllabusOptions.value = syllabusResponse.syllabus || [];
@@ -298,7 +301,7 @@ const completeOnboarding = async () => {
       color: 'green'
     });
 
-    await me.fetchAndSetMe();
+    await me.refreshMe();
     router.push('/dashboard');
   } catch (error: any) {
     console.error('Onboarding failed:', error);
