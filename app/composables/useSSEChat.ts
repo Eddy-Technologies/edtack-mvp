@@ -1,5 +1,6 @@
 import { ref, onUnmounted } from 'vue';
 import type { ChatResponse, ChatOptions, ChatUserInfo } from './chat.types';
+import { getSupabaseAccessToken } from './useChat';
 
 export type UseSSEChatOptions = ChatOptions;
 
@@ -201,13 +202,14 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   };
 
   /**
-   * Start a streaming chat session
+   * Internal implementation of startChat with retry support
    */
-  const startChat = async (
+  const startChatInternal = async (
     initialMessage: string,
-    userInfo?: ChatUserInfo
+    userInfo?: ChatUserInfo,
+    isRetry: boolean = false
   ): Promise<boolean> => {
-    if (isStreaming.value) {
+    if (isStreaming.value && !isRetry) {
       console.warn('Already streaming');
       return false;
     }
@@ -234,6 +236,15 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       });
 
       if (fetchResponse.status === 401) {
+        // Try refreshing token once
+        if (!isRetry && config.public.chatAuthEnabled) {
+          const freshToken = await getSupabaseAccessToken();
+          if (freshToken) {
+            currentAuthToken = freshToken;
+            // Retry with fresh token
+            return startChatInternal(initialMessage, userInfo, true);
+          }
+        }
         error.value = 'Authentication failed';
         isWaitingForResponse.value = false;
         isStreaming.value = false;
@@ -306,6 +317,16 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       isStreaming.value = false;
       return false;
     }
+  };
+
+  /**
+   * Start a streaming chat session (public wrapper)
+   */
+  const startChat = async (
+    initialMessage: string,
+    userInfo?: ChatUserInfo
+  ): Promise<boolean> => {
+    return startChatInternal(initialMessage, userInfo, false);
   };
 
   /**

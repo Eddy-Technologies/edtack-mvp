@@ -9,14 +9,23 @@ export interface UseChatOptions {
 }
 
 /**
- * Get the current Supabase access token for authentication
+ * Get a fresh Supabase access token for authentication.
+ * Uses refreshSession() to ensure the token is valid, since getSession()
+ * only returns the cached token which may be expired.
  */
 export async function getSupabaseAccessToken(): Promise<string | null> {
   const supabase = useSupabaseClient();
 
   try {
-    const { data: { session } } = await supabase.auth.getSession();
-    return session?.access_token || null;
+    // refreshSession() ensures we get a valid token, unlike getSession() which
+    // just returns the cached token from localStorage (potentially expired)
+    const { data, error } = await supabase.auth.refreshSession();
+    if (error) {
+      // If refresh fails (e.g., refresh token expired), fall back to cached session
+      const { data: { session } } = await supabase.auth.getSession();
+      return session?.access_token || null;
+    }
+    return data.session?.access_token || null;
   } catch (error) {
     console.error('Failed to get Supabase access token:', error);
     return null;
