@@ -136,16 +136,23 @@ export function scoreBooleanQuestion(
   return { markingStatus, pointsEarned, pointsPossible, userAnswers };
 }
 
+export interface ScoringOptions {
+  authToken?: string;
+}
+
 /**
  * Score an open-ended question (OPEN, FILL, DRAW) using the marking API
  */
 export async function scoreOpenEndedQuestion(
   questionData: QuestionData,
-  userAnswer: UserAnswer
+  userAnswer: UserAnswer,
+  options: ScoringOptions = {}
 ): Promise<QuestionResult> {
   const answerContent = userAnswer?.answer || userAnswer?.answers || userAnswer?.drawingFile;
 
-  const markingResponse = await markQuestion(questionData, answerContent, {});
+  const markingResponse = await markQuestion(questionData, answerContent, {
+    authToken: options.authToken,
+  });
   const markingResult = markingResponse.result;
 
   // Build userAnswers array based on question type
@@ -188,7 +195,8 @@ export async function scoreOpenEndedQuestion(
 export async function scoreQuestion(
   questionData: QuestionData,
   userAnswer: UserAnswer,
-  questionIndex: number
+  questionIndex: number,
+  options: ScoringOptions = {}
 ): Promise<QuestionResult> {
   switch (questionData.type) {
     case QUESTION_TYPE.MCQ: {
@@ -230,7 +238,7 @@ export async function scoreQuestion(
     case QUESTION_TYPE.OPEN:
     case QUESTION_TYPE.FILL:
     case QUESTION_TYPE.DRAW: {
-      const result = await scoreOpenEndedQuestion(questionData, userAnswer);
+      const result = await scoreOpenEndedQuestion(questionData, userAnswer, options);
       return { ...result, questionIndex };
     }
 
@@ -258,7 +266,8 @@ export async function scoreQuestion(
  */
 export async function scoreAllQuestions(
   questions: Array<{ questions: QuestionData }>,
-  answers: Record<number, UserAnswer>
+  answers: Record<number, UserAnswer>,
+  options: ScoringOptions = {}
 ): Promise<{ results: QuestionResult[]; earnedScore: number; totalScore: number }> {
   const results: QuestionResult[] = [];
   let earnedScore = 0;
@@ -268,7 +277,7 @@ export async function scoreAllQuestions(
     const questionData = questions[i].questions;
     const userAnswer = answers[i];
 
-    const result = await scoreQuestion(questionData, userAnswer, i);
+    const result = await scoreQuestion(questionData, userAnswer, i, options);
     results.push(result);
 
     earnedScore += result.pointsEarned;

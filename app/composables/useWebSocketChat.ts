@@ -1,52 +1,28 @@
 import { ref, onUnmounted } from 'vue';
+import type { ChatMessage, ChatResponse, ChatOptions, ChatUserInfo } from './chat.types';
 
-export enum GenerationIntentType {
-  STANDARD_RESPONSE = 'standard_response',
-  LESSON = 'lesson',
-  QUIZ = 'quiz'
-}
+export type UseWebSocketChatOptions = ChatOptions;
 
-interface WebSocketMessage {
-  type: 'start' | 'continue' | 'user_response' | 'cancel' | 'task_generation';
-  payload?: string;
-  user_info?: {
-    subject?: string;
-    level?: string;
-    country?: string;
-  };
-}
-
-interface WebSocketResponse {
-  status: string;
-  message?: string; // New field for structured responses
-  generation_intent_type?: 'standard_response' | 'lesson' | 'quiz'; // New field for response types
-  error?: string;
-  is_complete?: boolean; // For partial responses
-  timestamp?: number; // For heartbeat
-  data?: any; // For additional data
-
-  // Streaming support
-  type?: 'slide_batch_ready';
-  batch?: {
-    slides: any[];
-    batch_size: number;
-    total_slides_so_far: number;
-  };
-
-  [key: string]: any;
-}
-
-export function useWebSocketChat(threadId: string) {
+export function useWebSocketChat(threadId: string, options: UseWebSocketChatOptions = {}) {
   const config = useRuntimeConfig();
   const ws = ref<WebSocket | null>(null);
   const isConnected = ref(false);
   const isConnecting = ref(false);
-  const response = ref<WebSocketResponse[]>([]);
+  const response = ref<ChatResponse[]>([]);
   const error = ref<string | null>(null);
   const isWaitingForResponse = ref(false);
   const responsePhase = ref<string>('');
 
-  const wsUrl = `${config.public.chatWsUrl}/api/v1/ws/chat/${threadId}`;
+  // Build WebSocket URL with optional auth token
+  const buildWsUrl = (token?: string) => {
+    const baseUrl = `${config.public.chatWsUrl}/api/v1/ws/chat/${threadId}`;
+    if (token && config.public.chatAuthEnabled) {
+      return `${baseUrl}?token=${encodeURIComponent(token)}`;
+    }
+    return baseUrl;
+  };
+
+  let currentAuthToken = options.authToken;
 
   let reconnectTimeout: NodeJS.Timeout | null = null;
   let reconnectAttempts = 0;
@@ -64,8 +40,17 @@ export function useWebSocketChat(threadId: string) {
     }
   };
 
-  const connect = () => {
+  const setAuthToken = (token: string) => {
+    currentAuthToken = token;
+  };
+
+  const connect = (token?: string) => {
     if (isConnecting.value || isConnected.value) return;
+
+    // Update token if provided
+    if (token) {
+      currentAuthToken = token;
+    }
 
     isConnecting.value = true;
     error.value = null;
@@ -77,6 +62,7 @@ export function useWebSocketChat(threadId: string) {
     });
 
     try {
+      const wsUrl = buildWsUrl(currentAuthToken);
       ws.value = new WebSocket(wsUrl);
 
       ws.value.onopen = () => {
@@ -92,7 +78,7 @@ export function useWebSocketChat(threadId: string) {
 
       ws.value.onmessage = (event) => {
         try {
-          const data: WebSocketResponse = JSON.parse(event.data);
+          const data: ChatResponse = JSON.parse(event.data);
 
           // Handle different message types
           if (data.status === 'heartbeat') {
@@ -190,7 +176,7 @@ export function useWebSocketChat(threadId: string) {
     reconnectAttempts = maxReconnectAttempts; // Prevent auto-reconnect on manual disconnect
   };
 
-  const sendMessage = (message: WebSocketMessage) => {
+  const sendMessage = (message: ChatMessage) => {
     if (!ws.value || ws.value.readyState !== WebSocket.OPEN) {
       error.value = 'WebSocket is not connected';
       return false;
@@ -205,7 +191,7 @@ export function useWebSocketChat(threadId: string) {
     }
   };
 
-  const startChat = (initialMessage: string, userInfo?: WebSocketMessage['user_info']) => {
+  const startChat = (initialMessage: string, userInfo?: ChatUserInfo) => {
     const success = sendMessage({
       type: 'start',
       payload: initialMessage,
@@ -227,7 +213,7 @@ export function useWebSocketChat(threadId: string) {
     return success;
   };
 
-  const sendUserResponse = (response: string, userInfo?: WebSocketMessage['user_info']) => {
+  const sendUserResponse = (response: string, userInfo?: ChatUserInfo) => {
     const success = sendMessage({
       type: 'user_response',
       payload: response,
@@ -275,6 +261,7 @@ export function useWebSocketChat(threadId: string) {
   return {
     connect,
     disconnect,
+    setAuthToken,
     waitForConnection,
     startChat,
     continueChat,

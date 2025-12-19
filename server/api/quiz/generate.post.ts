@@ -17,7 +17,7 @@
  */
 
 import { getUserInfo } from '~~/server/utils/auth';
-import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { getSupabaseClient, getSupabaseAccessToken } from '~~/server/utils/authConfig';
 import { persistGeneratedQuestions, linkQuestionsToChapter } from '~~/server/services/quizPersistenceService';
 import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 
@@ -100,6 +100,9 @@ export default defineEventHandler(async (event) => {
       console.log('[generate] Set status to GENERATING for:', userTasksChapterId);
     }
 
+    // Get auth token for Python backend
+    const authToken = await getSupabaseAccessToken(event);
+
     // Call Python backend to generate quiz
     const quizResponse = await generateQuiz({
       prompt,
@@ -109,6 +112,7 @@ export default defineEventHandler(async (event) => {
       userLevel: userLevel || 'unknown',
       syllabusType: syllabusType || 'unknown',
       numQuestions,
+      authToken: authToken || undefined,
     });
 
     if (!quizResponse.success || !quizResponse.questions || quizResponse.questions.length === 0) {

@@ -1,5 +1,5 @@
 import { getUserInfo } from '../../../utils/auth';
-import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { getSupabaseClient, getSupabaseAccessToken } from '~~/server/utils/authConfig';
 import { markQuestion } from '~~/server/utils/markingApi';
 
 interface MarkSlideRequest {
@@ -93,6 +93,9 @@ export default defineEventHandler(async (event) => {
       question_options: []
     };
 
+    // Get auth token for Python backend
+    const authToken = await getSupabaseAccessToken(event);
+
     // Call marking API
     const markingResponse = await markQuestion(
       questionForMarking,
@@ -100,7 +103,8 @@ export default defineEventHandler(async (event) => {
       {
         subject: userInfo.syllabus_type || 'general',
         level: userInfo.level_type || 'secondary',
-        country: 'singapore'
+        country: 'singapore',
+        authToken: authToken || undefined,
       }
     );
 

@@ -19,7 +19,7 @@
 
       <!-- Loading indicator when waiting for WebSocket response -->
       <LoadingIndicator
-        v-if="wsChat?.isWaitingForResponse || isWaitingForResponse"
+        v-if="chat?.isWaitingForResponse || isWaitingForResponse"
         :character="character"
         :is-loading="true"
       />
@@ -34,7 +34,7 @@ import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
-import { useWebSocketChat } from '~/composables/useWebSocketChat';
+import { useChat } from '~/composables/useChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
 
@@ -81,9 +81,8 @@ const streamingProgress = ref<{
 // Message refs for scrolling
 const messageRefs = ref<Record<string, HTMLElement>>({});
 
-// WebSocket integration
-const useWebSocket = ref(true); // WebSocket-only mode
-const wsChat = ref<ReturnType<typeof useWebSocketChat> | null>(null);
+// Chat integration (supports both WebSocket and SSE modes via env config)
+const chat = ref<ReturnType<typeof useChat> | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
@@ -105,7 +104,7 @@ const initializeChat = async () => {
   const userId = meStore.user_info_id || meStore.id;
 
   // If we already have this thread initialized and connected, skip re-initialization
-  if (currentThreadId.value === props.threadId && wsChat.value?.isConnected) {
+  if (currentThreadId.value === props.threadId && chat.value?.isConnected) {
     return;
   }
 
@@ -139,14 +138,15 @@ const initializeChat = async () => {
   // Track the current thread ID to prevent unnecessary re-initialization
   currentThreadId.value = props.threadId;
 
-  if (useWebSocket.value && props.threadId) {
-    wsChat.value = useWebSocketChat(props.threadId);
+  if (props.threadId) {
+    // useChat automatically selects WebSocket or SSE mode based on env config
+    chat.value = useChat(props.threadId);
 
-    // Connect and wait for connection
-    wsChat.value?.connect();
+    // Connect and wait for connection (handles auth token automatically)
+    await chat.value?.connect();
 
     try {
-      await wsChat.value?.waitForConnection();
+      await chat.value?.waitForConnection();
 
       // Check for pending message
       const pendingMessage = getPendingMessage();
@@ -160,7 +160,7 @@ const initializeChat = async () => {
         });
       }
     } catch (error) {
-      console.error('Failed to connect WebSocket:', error);
+      console.error('Failed to connect chat:', error);
       // Handle connection failure gracefully
     }
   }
@@ -169,7 +169,7 @@ const initializeChat = async () => {
 onMounted(() => {
   // Single watcher for WebSocket responses
   watch(
-    () => wsChat.value?.response,
+    () => chat.value?.response,
     (newMessages) => {
       if (newMessages && newMessages?.length > 0) {
         const lastMessage = newMessages[newMessages.length - 1];
@@ -181,7 +181,7 @@ onMounted(() => {
 
   // Single watcher for connection state - process queue when connected
   watch(
-    () => wsChat.value?.isConnected,
+    () => chat.value?.isConnected,
     (connected) => {
       if (connected) {
         processMessageQueue();
@@ -230,7 +230,7 @@ onMounted(() => {
 
 // Send message directly to WebSocket
 const sendMessage = async (text: string) => {
-  if (!wsChat.value?.isConnected || !text.trim()) {
+  if (!chat.value?.isConnected || !text.trim()) {
     console.warn('Cannot send message: WebSocket not connected or empty text');
     return false;
   }
@@ -248,10 +248,10 @@ const sendMessage = async (text: string) => {
 
   let success: boolean;
   if (isFirstMessage.value) {
-    success = wsChat.value.startChat(text, userInfo);
+    success = chat.value.startChat(text, userInfo);
     isFirstMessage.value = false;
   } else {
-    success = wsChat.value.sendUserResponse(text, userInfo);
+    success = chat.value.sendUserResponse(text, userInfo);
   }
 
   if (success) {
@@ -274,7 +274,7 @@ const updateMessageStatus = (messageId: string, status: 'queued' | 'sending' | '
 
 // Process queued messages when WebSocket connects
 const processMessageQueue = () => {
-  if (wsChat.value?.isConnected && messageQueue.value.length > 0) {
+  if (chat.value?.isConnected && messageQueue.value.length > 0) {
     const messages = [...messageQueue.value];
     messageQueue.value = [];
 
@@ -625,11 +625,11 @@ const handleSend = async (text: string) => {
   addMessage(addMessageObj);
 
   // Determine initial status based on connection state
-  const initialStatus = wsChat.value?.isConnected ? 'sending' : 'queued';
+  const initialStatus = chat.value?.isConnected ? 'sending' : 'queued';
   messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
 
   // Since we connect immediately in initializeChat, just try to send
-  if (wsChat.value?.isConnected) {
+  if (chat.value?.isConnected) {
     const success = sendMessage(text);
     if (!success) {
       // Handle send failure - update message status
@@ -700,9 +700,9 @@ const clearChat = () => {
   streamingProgress.value = null;
 
   // Disconnect current WebSocket
-  if (wsChat.value) {
-    wsChat.value.disconnect();
-    wsChat.value = null;
+  if (chat.value) {
+    chat.value.disconnect();
+    chat.value = null;
   }
 
   // Reset flags
@@ -714,13 +714,13 @@ const clearChat = () => {
 defineExpose({
   handleSend,
   clearChat,
-  wsChat,
+  chat,
   isWaitingForResponse,
 });
 
 onUnmounted(() => {
-  if (wsChat.value) {
-    wsChat.value.disconnect();
+  if (chat.value) {
+    chat.value.disconnect();
   }
   clearChat();
 });

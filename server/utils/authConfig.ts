@@ -26,3 +26,18 @@ export function getPrivilegedSupabaseClient(event: H3Event) {
 export async function getSupabaseClient(event: H3Event) {
   return await serverSupabaseClient<Database>(event);
 }
+
+/**
+ * Get the user's access token from the Supabase session
+ * Used for passing authentication to external APIs (Python backend)
+ */
+export async function getSupabaseAccessToken(event: H3Event): Promise<string | null> {
+  try {
+    const client = await serverSupabaseClient<Database>(event);
+    const { data: { session } } = await client.auth.getSession();
+    return session?.access_token || null;
+  } catch (error) {
+    console.error('[AuthConfig] Failed to get access token:', error);
+    return null;
+  }
+}

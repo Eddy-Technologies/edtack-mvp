@@ -16,7 +16,7 @@
  */
 
 import { getUserInfo } from '~~/server/utils/auth';
-import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { getSupabaseClient, getSupabaseAccessToken } from '~~/server/utils/authConfig';
 import {
   scoreAllQuestions,
   calculateAttemptScores,
@@ -141,8 +141,15 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // Get auth token for Python backend (used for open-ended question scoring)
+    const authToken = await getSupabaseAccessToken(event);
+
     // Score all questions using scoring service
-    const { results, earnedScore, totalScore } = await scoreAllQuestions(questionLinks, answers);
+    const { results, earnedScore, totalScore } = await scoreAllQuestions(
+      questionLinks,
+      answers,
+      { authToken: authToken || undefined }
+    );
 
     console.log('[attempt] Quiz scored:', { earnedScore, totalScore, userId: userInfo.id });
 

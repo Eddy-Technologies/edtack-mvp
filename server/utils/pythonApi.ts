@@ -18,6 +18,7 @@ export interface GenerateQuizParams {
   userLevel: string;
   syllabusType: string;
   numQuestions: number;
+  authToken?: string; // Optional auth token for Python backend
 }
 
 export interface GenerateQuizResponse {
@@ -59,6 +60,7 @@ export interface PythonTaskGenerationResponse {
 export async function generateQuiz(params: GenerateQuizParams): Promise<GenerateQuizResponse> {
   const config = useRuntimeConfig();
   const pythonApiUrl = config.public.pythonApiUrl;
+  const chatAuthEnabled = config.public.chatAuthEnabled;
 
   // Generate unique thread ID for this quiz generation
   const threadId = crypto.randomUUID();
@@ -66,6 +68,7 @@ export async function generateQuiz(params: GenerateQuizParams): Promise<Generate
   console.log('[pythonApi] Generating quiz with params:', params);
   console.log('[pythonApi] Python API URL:', pythonApiUrl);
   console.log('[pythonApi] Thread ID:', threadId);
+  console.log('[pythonApi] Auth enabled:', chatAuthEnabled);
 
   try {
     // Format request body for Python backend
@@ -82,10 +85,17 @@ export async function generateQuiz(params: GenerateQuizParams): Promise<Generate
 
     console.log('[pythonApi] Request body:', JSON.stringify(requestBody, null, 2));
 
+    // Build headers with optional auth
+    const headers: Record<string, string> = {};
+    if (chatAuthEnabled && params.authToken) {
+      headers['Authorization'] = `Bearer ${params.authToken}`;
+    }
+
     // Call Python backend API with explicit type
     const response = await $fetch<PythonTaskGenerationResponse>(`${pythonApiUrl}/api/v1/task/${threadId}`, {
       method: 'POST',
       body: requestBody,
+      headers,
       timeout: 60000 * 5, // TODO: revise 5 minute timeout
     });
 

@@ -91,6 +91,10 @@ export default defineNuxtConfig({
       chatResponseTimeout: parseInt(process.env.NUXT_PUBLIC_CHAT_RESPONSE_TIMEOUT || '60000'),
       chatWsUrl: process.env.NUXT_PUBLIC_CHAT_WS_URL,
       pythonApiUrl: process.env.NUXT_PUBLIC_PYTHON_API_URL,
+      // Chat mode: 'websocket' or 'sse' - controls whether to use WebSocket or SSE+API for chat
+      chatMode: process.env.NUXT_PUBLIC_CHAT_MODE || 'websocket',
+      // Chat auth: whether the RAG backend requires authentication (matches AUTH_ENABLED on backend)
+      chatAuthEnabled: process.env.NUXT_PUBLIC_CHAT_AUTH_ENABLED === 'true',
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
