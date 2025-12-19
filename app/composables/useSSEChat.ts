@@ -198,7 +198,6 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       response.value.push(responseData);
       return;
     }
-
   };
 
   /**
