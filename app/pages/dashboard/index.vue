@@ -5,7 +5,7 @@
   >
     <OverviewTab v-if="currentTab === 'overview'" />
     <StudyTab v-else-if="currentTab === 'study'" />
-    <SubscriptionTab v-else-if="currentTab === 'subscription'" />
+    <SubscriptionTab v-else-if="currentTab === 'subscription' && subscriptionPlans" />
     <SettingsTab v-else-if="currentTab === 'settings'" />
     <ShopTab
       v-else-if="currentTab === 'shop'"
@@ -44,6 +44,7 @@ import OverviewTab from '~/components/dashboard/OverviewTab.vue';
 import StudyTab from '~/components/dashboard/StudyTab.vue';
 import SubscriptionTab from '~/components/dashboard/SubscriptionTab.vue';
 import ShopTab from '~/components/dashboard/ShopTab.vue';
+import { useFeatureFlags } from '~/composables/useFeatureFlags';
 import WishlistTab from '~/components/dashboard/WishlistTab.vue';
 import CartTab from '~/components/dashboard/CartTab.vue';
 import FamilyTab from '~/components/dashboard/FamilyTab.vue';
@@ -62,6 +63,9 @@ definePageMeta({
 
 // Get authentication state
 const user = useMeStore();
+
+// Get feature flags
+const { subscriptionPlans } = useFeatureFlags();
 
 // Cart state management
 const cart = ref<any[]>([]);

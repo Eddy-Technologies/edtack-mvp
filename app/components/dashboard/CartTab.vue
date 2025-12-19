@@ -187,7 +187,7 @@
               </label>
 
               <!-- Pay with Card Option (Parents always, Children as alternative) -->
-              <label class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
+              <label v-if="subscriptionPlans" class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -271,6 +271,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
+import { useFeatureFlags } from '~/composables/useFeatureFlags';
 
 const props = defineProps<{
   cart: Array<any>;
@@ -289,6 +290,9 @@ const { formattedBalance, balance, fetchCredits, isLoading } = useCredit();
 // Use me store for user role
 const meStore = useMeStore();
 const { isParent } = storeToRefs(meStore);
+
+// Feature flags
+const { subscriptionPlans } = useFeatureFlags();
 
 // Reactive state - default to credits for children, card for parents
 const paymentMethod = ref<'credits' | 'card'>('credits');

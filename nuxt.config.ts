@@ -95,6 +95,10 @@ export default defineNuxtConfig({
       chatMode: process.env.NUXT_PUBLIC_CHAT_MODE || 'websocket',
       // Chat auth: whether the RAG backend requires authentication (matches AUTH_ENABLED on backend)
       chatAuthEnabled: process.env.NUXT_PUBLIC_CHAT_AUTH_ENABLED === 'true',
+      // Feature flags - control feature availability per environment
+      features: {
+        subscriptionPlans: process.env.NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS === 'true',
+      },
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,

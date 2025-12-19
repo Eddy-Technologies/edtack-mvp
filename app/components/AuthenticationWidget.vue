@@ -81,17 +81,19 @@
               </button>
             </div>
 
-            <div class="border-t border-gray-100" />
+            <template v-if="subscriptionPlans">
+              <div class="border-t border-gray-100" />
 
-            <div class="py-1">
-              <button
-                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                @click="routeTo('/dashboard?tab=subscription')"
-              >
-                <Icon name="i-heroicons-sparkles" class="w-4 h-4" />
-                Upgrade Plan
-              </button>
-            </div>
+              <div class="py-1">
+                <button
+                  class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  @click="routeTo('/dashboard?tab=subscription')"
+                >
+                  <Icon name="i-heroicons-sparkles" class="w-4 h-4" />
+                  Upgrade Plan
+                </button>
+              </div>
+            </template>
 
             <div class="border-t border-gray-100" />
 
@@ -191,14 +193,16 @@
         >
           User Guide
         </button>
-        <div class="border-t my-1" />
+        <template v-if="subscriptionPlans">
+          <div class="border-t my-1" />
 
-        <button
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-          @click="routeTo('/dashboard?tab=subscription')"
-        >
-          Upgrade Plan
-        </button>
+          <button
+            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+            @click="routeTo('/dashboard?tab=subscription')"
+          >
+            Upgrade Plan
+          </button>
+        </template>
         <div class="border-t my-1" />
         <button
           class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
@@ -229,6 +233,7 @@ import { useToast } from '#imports';
 import Button from '~/components/common/Button.vue';
 import { useMeStore } from '~/stores/me';
 import { useTokenUsage } from '~/composables/useTokenUsage';
+import { useFeatureFlags } from '~/composables/useFeatureFlags';
 
 interface Props {
   variant?: 'topbar' | 'sidebar';
@@ -253,6 +258,7 @@ const { signOut } = useAuth();
 const meStore = useMeStore();
 const supabaseUser = useSupabaseUser();
 const { tierDisplayName, fetchTokenUsage } = useTokenUsage();
+const { subscriptionPlans } = useFeatureFlags();
 
 // Auth state from Supabase, profile data from store
 const isLoggedIn = computed(() => !!supabaseUser.value);

@@ -227,6 +227,7 @@ import Button from '../common/Button.vue';
 import UserAvatar from '~/components/common/UserAvatar.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useMeStore } from '~/stores/me';
+import { useFeatureFlags } from '~/composables/useFeatureFlags';
 
 interface NavigationItem {
   name: string;
@@ -331,6 +332,9 @@ const updateCartCount = () => {
 const { signOut } = useAuth();
 const isLoggingOut = ref(false);
 
+// Get feature flags
+const { subscriptionPlans } = useFeatureFlags();
+
 // Get credit balance for sidebar display
 const { formattedBalance, fetchCredits } = useCredit();
 
@@ -360,7 +364,7 @@ const hasActiveChild = (item: NavigationItem) => {
   return item.children.some((child) => isActiveRoute(child.route));
 };
 
-const navigationItems: NavigationItem[] = [
+const allNavigationItems: NavigationItem[] = [
   {
     name: 'Overview',
     route: '/dashboard?tab=overview',
@@ -429,6 +433,16 @@ const navigationItems: NavigationItem[] = [
     icon: 'i-lucide-credit-card'
   }
 ];
+
+// Filter navigation items based on feature flags
+const navigationItems = computed(() => {
+  return allNavigationItems.filter((item) => {
+    if (item.name === 'Subscription') {
+      return subscriptionPlans.value;
+    }
+    return true;
+  });
+});
 
 const settingsItems: NavigationItem[] = [
   {
@@ -510,7 +524,7 @@ const logout = async () => {
 
 onMounted(() => {
   // Auto-expand sections with active children
-  for (const item of navigationItems) {
+  for (const item of navigationItems.value) {
     if (item.children) {
       const hasActive = item.children.some((child) => isActiveRoute(child.route));
       if (hasActive && !openSubmenus.value.includes(item.name)) {

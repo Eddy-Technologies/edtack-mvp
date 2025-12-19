@@ -145,3 +145,34 @@ System codes are shared CONSTANT_CASE enums (e.g., `CORRECT`, `PENDING`) used ac
 3. Add seed data to `supabase/seeds/all_seeds.sql`
 4. Add to `app/stores/codes.ts` CODE_CATEGORIES
 5. Optional: Add CHECK constraint to table schema
+
+## Feature Flags
+
+Feature flags control UI visibility per environment (dev vs prod) using environment variables.
+
+### Current Flags
+| Flag | Description | Dev | Prod |
+|------|-------------|-----|------|
+| `subscriptionPlans` | Subscription UI, upgrade plan buttons, credit card payment | `true` | `false` |
+
+### Usage
+```typescript
+const { subscriptionPlans } = useFeatureFlags();
+
+// In template
+<SubscriptionTab v-if="subscriptionPlans" />
+```
+
+### Adding New Flags
+1. Add to `nuxt.config.ts` under `runtimeConfig.public.features`
+2. Add convenience getter to `app/composables/useFeatureFlags.ts`
+3. Add env var to `.env` and `.env.example`
+
+### Environment Variables
+```bash
+# Development (.env) - enable features
+NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS=true
+
+# Production - don't set (defaults to false) or set explicitly
+# NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS=false
+```
