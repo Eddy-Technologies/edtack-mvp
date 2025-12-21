@@ -344,6 +344,7 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       if (cachedThread && cachedThread.id === newThreadId) {
         // Use cached data, skip fetch
         threadData.value = cachedThread;
+        isLoading.value = false;
       } else {
         // Normal fetch for existing threads
         isLoading.value = true;
