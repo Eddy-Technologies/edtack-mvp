@@ -191,7 +191,11 @@
           <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-gray-900 truncate">{{ userName }}</p>
             <p class="text-xs text-gray-500 truncate">{{ userEmail }}</p>
-            <span class="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium rounded-full" :class="accountTypeBadgeClass">
+            <span
+              v-if="userStore.user_role"
+              class="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium rounded-full"
+              :class="accountTypeBadgeClass"
+            >
               {{ accountTypeLabel }}
             </span>
           </div>
