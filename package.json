@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "prepare": "husky",
-    "db:reset": "supabase db reset && node supabase/scripts/init-admin.js && node supabase/scripts/upload-assets.js",
+    "db:reset": "supabase db reset --workdir ${SUPABASE_WORKDIR:-.} && node supabase/scripts/init-admin.js && node supabase/scripts/upload-assets.js",
     "db:types": "supabase gen types typescript --local > types/supabase.ts"
   },
   "dependencies": {
