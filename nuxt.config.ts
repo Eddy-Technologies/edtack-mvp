@@ -94,7 +94,8 @@ export default defineNuxtConfig({
       // Chat mode: 'websocket' or 'sse' - controls whether to use WebSocket or SSE+API for chat
       chatMode: process.env.NUXT_PUBLIC_CHAT_MODE || 'websocket',
       // Chat auth: whether the RAG backend requires authentication (matches AUTH_ENABLED on backend)
-      chatAuthEnabled: process.env.NUXT_PUBLIC_CHAT_AUTH_ENABLED === 'true',
+      // Default to true - only disable explicitly with 'false' for local dev without auth
+      chatAuthEnabled: process.env.NUXT_PUBLIC_CHAT_AUTH_ENABLED !== 'false',
       // Feature flags - control feature availability per environment
       features: {
         subscriptionPlans: process.env.NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS === 'true',
