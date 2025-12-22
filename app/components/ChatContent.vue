@@ -36,9 +36,10 @@ import { ref, shallowRef, computed, nextTick, onMounted, onUnmounted, watch } fr
 import TextBubble from '@/components/playback/TextBubble.vue';
 import SlidesPlaceholderCard from '@/components/playback/SlidesPlaceholderCard.vue';
 import LoadingIndicator from '@/components/chat/LoadingIndicator.vue';
-import { useChat } from '~/composables/useChat';
+import { useChat, type UseChatReturn } from '~/composables/useChat';
 import { useMeStore } from '~/stores/me';
 import { useThreads } from '~/composables/useThreads';
+import { useMessageQueueStore } from '~/stores/messageQueue';
 
 // Props interface - simplified
 interface ChatContentProps {
@@ -86,7 +87,7 @@ const messageRefs = ref<Record<string, HTMLElement>>({});
 // Chat integration (supports both WebSocket and SSE modes via env config)
 // CRITICAL: Must use shallowRef here. Using ref() causes Vue to auto-unwrap nested refs,
 // so chat.value?.isConnected returns a boolean instead of a Ref, breaking .value access.
-const chat = shallowRef<ReturnType<typeof useChat> | null>(null);
+const chat = shallowRef<UseChatReturn | null>(null);
 const isFirstMessage = ref(true);
 const isWaitingForResponse = ref(false);
 
@@ -107,6 +108,9 @@ if (import.meta.client) {
 const meStore = useMeStore();
 const supabaseUser = useSupabaseUser();
 
+// Global message queue store for background processing
+const messageQueueStore = useMessageQueueStore();
+
 // Initialize chat - simplified approach
 const initializeChat = async () => {
   // Skip if 'new' thread ID (invalid)
@@ -123,6 +127,17 @@ const initializeChat = async () => {
   if (currentThreadId.value === props.threadId &&
     (chat.value?.isConnected.value || chat.value?.isConnecting.value)) {
     return;
+  }
+
+  // Check if thread was processing in background (user returning to active thread)
+  const storedState = messageQueueStore.getThreadState(props.threadId);
+  if (storedState?.status === 'processing') {
+    console.log('[ChatContent] Thread was processing in background, checking for cached messages');
+    // Cached messages will be loaded from the store
+    const cachedMessages = messageQueueStore.getCachedMessages(props.threadId);
+    if (cachedMessages.length > 0) {
+      console.log(`[ChatContent] Found ${cachedMessages.length} cached messages from background processing`);
+    }
   }
 
   const userId = meStore.user_info_id || meStore.id;
@@ -283,14 +298,15 @@ const sendMessage = async (text: string) => {
 
   let success: boolean;
   if (isFirstMessage.value) {
-    success = chat.value.startChat(text, userInfo);
+    success = await chat.value.startChat(text, userInfo);
     isFirstMessage.value = false;
   } else {
-    success = chat.value.sendUserResponse(text, userInfo);
+    success = await chat.value.sendUserResponse(text, userInfo);
   }
 
   if (success) {
     isWaitingForResponse.value = true;
+    // Note: useChat handles thread state updates internally
   }
 
   return success;
@@ -346,6 +362,9 @@ const handleSlideBatch = (batchMessage: any) => {
 
   const { slides, total_slides_so_far } = batch;
 
+  // Update thread state to indicate we have partial slides (for background processing UI)
+  messageQueueStore.setThreadState(props.threadId, { hasPartialSlides: true });
+
   // Case 1: First batch - initialize streaming message
   if (!activeStreamingMessage.value) {
     // Detect content type from first slide
@@ -353,6 +372,8 @@ const handleSlideBatch = (batchMessage: any) => {
 
     // Create the streaming message structure
     const newMessageId = crypto.randomUUID();
+    // Track this UUID locally for deduplication with Realtime
+    messageQueueStore.trackLocalMessage(newMessageId);
     const newMessage = {
       status: 'streaming',
       slides: [...slides],
@@ -475,6 +496,13 @@ const handleStreamingComplete = (completionMessage: any) => {
   streamingProgress.value = null;
   isWaitingForResponse.value = false;
 
+  // Update global thread state to completed
+  messageQueueStore.setThreadState(props.threadId, {
+    status: 'completed',
+    hasPartialSlides: false,
+    responsePhase: '',
+  });
+
   // Scroll to ensure content is visible
   nextTick(() => {
     bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
@@ -518,6 +546,8 @@ const handleWebSocketMessage = (message: any) => {
     // NOTE: Save only the message text, ignore slides array
     // The slides were already saved via handleStreamingComplete()
     const newUuid = crypto.randomUUID();
+    // Track this UUID locally for deduplication with Realtime
+    messageQueueStore.trackLocalMessage(newUuid);
 
     // Create clean message object WITHOUT slides for database
     const cleanMessage = {
@@ -566,6 +596,15 @@ const handleWebSocketMessage = (message: any) => {
     }
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
+
+    // Update global thread state
+    const status = message.status === 'cancelled' ? 'cancelled' : message.status === 'error' ? 'error' : 'completed';
+    messageQueueStore.setThreadState(props.threadId, {
+      status,
+      hasPartialSlides: false,
+      responsePhase: '',
+      error: message.error,
+    });
     return;
   }
 };
@@ -650,6 +689,9 @@ const handleSend = async (text: string) => {
   bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
 
   const messageUuid = crypto.randomUUID();
+  // Track this UUID locally for deduplication with Realtime
+  messageQueueStore.trackLocalMessage(messageUuid);
+
   const addMessageObj = {
     thread_id: props.threadId,
     content: text,
@@ -742,7 +784,13 @@ const clearChat = () => {
   activeStreamingMessage.value = null;
   streamingProgress.value = null;
 
-  // Disconnect current WebSocket
+  // Clear thread state from global store
+  if (currentThreadId.value) {
+    messageQueueStore.clearThreadState(currentThreadId.value);
+    messageQueueStore.clearMessageCache(currentThreadId.value);
+  }
+
+  // Disconnect current WebSocket (only on explicit clear, not on navigation)
   if (chat.value) {
     chat.value.disconnect();
     chat.value = null;
@@ -769,9 +817,24 @@ defineExpose({
 });
 
 onUnmounted(() => {
-  if (chat.value) {
-    chat.value.disconnect();
+  // NOTE: We intentionally do NOT disconnect the chat connection here.
+  // The connection stays alive in the global pool for background processing.
+  // When the user navigates away, chat can continue in the background.
+  // The connection will be cleaned up by the pool's idle timeout.
+
+  // Update thread state if processing
+  if (props.threadId && messageQueueStore.isProcessing(props.threadId)) {
+    console.log('[ChatContent] Navigating away while processing - connection stays in pool');
   }
-  clearChat();
+
+  // Clear local component state only (not the global connection)
+  messageStream.value = [];
+  currentPlaybackIndex.value = 0;
+  isPlayingAllowed.value = false;
+  isWaitingForResponse.value = false;
+  messageQueue.value = [];
+  messageRefs.value = {};
+  activeStreamingMessage.value = null;
+  streamingProgress.value = null;
 });
 </script>

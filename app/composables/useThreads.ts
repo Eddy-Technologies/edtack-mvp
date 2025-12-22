@@ -1,5 +1,6 @@
 import { ref, computed, readonly } from 'vue';
 import { useMeStore } from '~/stores/me';
+import { useMessageQueueStore } from '~/stores/messageQueue';
 import type { PostMessageReq } from '~~/server/api/chat/message.post';
 import type { Database } from '~~/types/supabase';
 
@@ -56,14 +57,59 @@ export function useThreads() {
   // Fetch specific thread with messageHistory
   const fetchThread = async (threadId: string) => {
     try {
+      // Check cache first for messages received in background
+      const messageQueueStore = useMessageQueueStore();
+      const cachedMessages = messageQueueStore.getCachedMessages(threadId);
+
       const { threadData, success } = await $fetch(`/api/chat/thread/${threadId}`, { method: 'GET' });
 
       if (!success) {
         throw new Error('Thread not found');
       }
 
-      messageHistory.value = threadData?.thread_messages || [];
-      return { thread: threadData, messageHistory: threadData?.thread_messages || [] };
+      const dbMessages = threadData?.thread_messages || [];
+
+      // Check for late responses if thread was in error state (e.g., from timeout)
+      // Find the last user message to use as reference point
+      const userMessages = dbMessages.filter((m: Message) => m.is_user);
+      const lastUserMessage = userMessages.length > 0 ?
+          userMessages.reduce((latest: Message, msg: Message) => {
+            const msgTime = new Date(msg.created_at).getTime();
+            const latestTime = new Date(latest.created_at).getTime();
+            return msgTime > latestTime ? msg : latest;
+          }) :
+        null;
+
+      const lastUserMessageTime = lastUserMessage ?
+          new Date(lastUserMessage.created_at).getTime() :
+        undefined;
+
+      // This will recover the state if DB has responses that arrived after timeout
+      messageQueueStore.checkForLateResponses(threadId, dbMessages, lastUserMessageTime);
+
+      // Merge DB messages with any cached messages from background processing
+      // Cached messages are newer and may not be in DB yet
+      if (cachedMessages.length > 0) {
+        const dbMessageIds = new Set(dbMessages.map((m: Message) => m.id));
+        const newCachedMessages = cachedMessages.filter((m) => !dbMessageIds.has(m.id));
+
+        // Convert cached messages to the Message type format
+        const convertedCached = newCachedMessages.map((cached) => ({
+          id: cached.id,
+          thread_id: threadId,
+          content: cached.content,
+          type: cached.type,
+          is_user: cached.isUser,
+          sender: cached.isUser ? 'user' : null,
+          created_at: new Date(cached.createdAt).toISOString(),
+        }));
+
+        messageHistory.value = [...dbMessages, ...convertedCached];
+      } else {
+        messageHistory.value = dbMessages;
+      }
+
+      return { thread: threadData, messageHistory: messageHistory.value };
     } catch (err) {
       console.error('Error loading thread:', err);
       reset();
@@ -105,6 +151,12 @@ export function useThreads() {
   // Add message to current thread (handles all message types)
   const addMessage = async ({ thread_id, content, type, isUser, uuid }: PostMessageReq) => {
     const body: PostMessageReq = { thread_id, content, type, isUser, uuid };
+
+    // Track the UUID in the message queue store for deduplication with Realtime
+    if (uuid) {
+      const messageQueueStore = useMessageQueueStore();
+      messageQueueStore.trackLocalMessage(uuid);
+    }
 
     const response = await $fetch('/api/chat/message', {
       method: 'POST',

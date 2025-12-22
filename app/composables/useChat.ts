@@ -1,6 +1,10 @@
+import { computed, type MaybeRef, toValue } from 'vue';
 import { useWebSocketChat, type UseWebSocketChatOptions } from './useWebSocketChat';
 import { useSSEChat, type UseSSEChatOptions } from './useSSEChat';
 import { useSupabaseClient } from '#imports';
+import { useMessageQueueStore, type ThreadStatus, type QueuedMessage } from '~/stores/messageQueue';
+import { useGlobalRealtimeSync } from '~/composables/useRealtimeSync';
+import type { ChatUserInfo, ChatResponse } from '~/composables/chat.types';
 
 export type ChatMode = 'websocket' | 'sse';
 
@@ -33,24 +37,28 @@ export async function getSupabaseAccessToken(): Promise<string | null> {
 }
 
 /**
- * Unified chat composable that switches between WebSocket and SSE based on config
- *
- * Usage:
- * ```ts
- * const chat = useChat(threadId);
- * await chat.connect();
- * chat.startChat('Hello!', { subject: 'math', level: 'secondary' });
- * ```
- *
- * The mode is controlled by NUXT_PUBLIC_CHAT_MODE env variable:
- * - 'websocket' (default): Uses WebSocket for bidirectional real-time chat
- * - 'sse': Uses SSE (Server-Sent Events) + REST API for streaming responses
- *
- * Authentication is controlled by NUXT_PUBLIC_CHAT_AUTH_ENABLED:
- * - 'true': Includes Supabase access token in requests
- * - 'false': No authentication (for local development)
+ * Helper composable to get auth headers for Python API calls
+ * Used by pythonApi.ts and markingApi.ts
  */
-export function useChat(threadId: string, options: UseChatOptions = {}) {
+export async function getPythonApiAuthHeaders(): Promise<Record<string, string>> {
+  const config = useRuntimeConfig();
+  const headers: Record<string, string> = {};
+
+  if (config.public.chatAuthEnabled) {
+    const token = await getSupabaseAccessToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
+
+  return headers;
+}
+
+/**
+ * Raw chat connection - internal use only.
+ * Use `useChat` for component-level chat with background processing support.
+ */
+export function useChatConnection(threadId: string, options: UseChatOptions = {}) {
   const config = useRuntimeConfig();
   const chatMode = (config.public.chatMode as ChatMode) || 'websocket';
   const authEnabled = config.public.chatAuthEnabled;
@@ -108,20 +116,317 @@ export function useChat(threadId: string, options: UseChatOptions = {}) {
   };
 }
 
-/**
- * Helper composable to get auth headers for Python API calls
- * Used by pythonApi.ts and markingApi.ts
- */
-export async function getPythonApiAuthHeaders(): Promise<Record<string, string>> {
-  const config = useRuntimeConfig();
-  const headers: Record<string, string> = {};
+// ============================================================================
+// Main useChat interface - uses global store for background processing support
+// ============================================================================
 
-  if (config.public.chatAuthEnabled) {
-    const token = await getSupabaseAccessToken();
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+export interface UseChatReturn {
+  // Connection state (all computed/reactive)
+  isConnected: { readonly value: boolean };
+  isConnecting: { readonly value: boolean };
+  isProcessing: { readonly value: boolean };
+  isWaitingForResponse: { readonly value: boolean };
+
+  // Thread state (all computed/reactive)
+  threadStatus: { readonly value: ThreadStatus };
+  responsePhase: { readonly value: string };
+  hasPartialSlides: { readonly value: boolean };
+  error: { readonly value: string | null };
+
+  // Messages (computed/reactive)
+  cachedMessages: { readonly value: any[] };
+  response: { readonly value: ChatResponse[] };
+
+  // Actions
+  connect: () => Promise<boolean>;
+  disconnect: () => void;
+  startChat: (message: string, userInfo?: ChatUserInfo) => Promise<boolean>;
+  continueChat: () => Promise<boolean>;
+  sendUserResponse: (response: string, userInfo?: ChatUserInfo) => Promise<boolean>;
+  cancelRequest: () => boolean;
+  clearMessages: () => void;
+  waitForConnection: (timeout?: number) => Promise<void>;
+}
+
+/**
+ * Main chat composable with background processing and cross-device sync.
+ *
+ * Features:
+ * - Connections persist when navigating away (background processing)
+ * - Cross-device sync via Supabase Realtime
+ * - localStorage persistence for page refresh survival
+ * - UUID-based deduplication
+ *
+ * Usage:
+ * ```ts
+ * const chat = useChat(threadId);
+ * await chat.connect();
+ * chat.startChat('Hello!', { subject: 'math', level: 'secondary' });
+ * ```
+ */
+export function useChat(threadId: MaybeRef<string>): UseChatReturn {
+  const store = useMessageQueueStore();
+  const realtimeSync = useGlobalRealtimeSync();
+
+  // Initialize store if not already
+  store.init();
+
+  // Resolve threadId (support both ref and string)
+  const resolvedThreadId = computed(() => toValue(threadId));
+
+  // Thread state from store (reactive)
+  const threadState = computed(() => store.getThreadState(resolvedThreadId.value));
+  const threadStatus = computed<ThreadStatus>(() => threadState.value?.status || 'idle');
+  const responsePhase = computed(() => threadState.value?.responsePhase || '');
+  const hasPartialSlides = computed(() => threadState.value?.hasPartialSlides || false);
+  const error = computed(() => threadState.value?.error || null);
+
+  // Connection state (reactive - derived from pooled connection)
+  const pooledConnection = computed(() => store.getConnection(resolvedThreadId.value));
+
+  const isConnected = computed(() => {
+    const conn = pooledConnection.value;
+    return conn?.chat.isConnected.value || false;
+  });
+
+  const isConnecting = computed(() => {
+    const conn = pooledConnection.value;
+    return conn?.chat.isConnecting?.value || false;
+  });
+
+  const isWaitingForResponse = computed(() => {
+    const conn = pooledConnection.value;
+    return conn?.chat.isWaitingForResponse?.value || false;
+  });
+
+  // Processing state (derived from thread status)
+  const isProcessing = computed(() => store.isProcessing(resolvedThreadId.value));
+
+  // Cached messages from store
+  const cachedMessages = computed(() => store.getCachedMessages(resolvedThreadId.value));
+
+  // Response array (reactive - from pooled connection)
+  const response = computed(() => {
+    const conn = pooledConnection.value;
+    return conn?.chat.response.value || [];
+  });
+
+  /**
+   * Connect to chat (creates or reuses pooled connection)
+   */
+  async function connect(): Promise<boolean> {
+    const tid = resolvedThreadId.value;
+
+    const success = await store.connect(tid);
+
+    if (success) {
+      // Subscribe to Realtime for cross-device sync
+      realtimeSync.subscribeToThread(tid);
+
+      // Replay any pending messages
+      await store.replayPendingMessages(tid);
     }
+
+    return success;
   }
 
-  return headers;
+  /**
+   * Disconnect from chat (closes pooled connection)
+   */
+  function disconnect(): void {
+    const tid = resolvedThreadId.value;
+    store.closeConnection(tid);
+    realtimeSync.unsubscribeFromThread(tid);
+  }
+
+  /**
+   * Wait for connection to be established
+   */
+  async function waitForConnection(timeout: number = 5000): Promise<void> {
+    const tid = resolvedThreadId.value;
+    const conn = store.getConnection(tid);
+
+    if (!conn) {
+      throw new Error('No connection attempt in progress');
+    }
+
+    return conn.chat.waitForConnection(timeout);
+  }
+
+  /**
+   * Start a new chat conversation
+   */
+  async function startChat(message: string, userInfo?: ChatUserInfo): Promise<boolean> {
+    const tid = resolvedThreadId.value;
+    const conn = store.getConnection(tid);
+
+    if (!conn || !conn.chat.isConnected.value) {
+      const connected = await connect();
+      if (!connected) return false;
+    }
+
+    const currentConn = store.getConnection(tid);
+    if (!currentConn) return false;
+
+    // Generate UUID for deduplication
+    const uuid = crypto.randomUUID();
+    store.trackLocalMessage(uuid);
+
+    // Enqueue message for retry support
+    const queuedMessage: QueuedMessage = {
+      uuid,
+      threadId: tid,
+      content: message,
+      type: 'text',
+      isUser: true,
+      status: 'sending',
+      retryCount: 0,
+      createdAt: Date.now(),
+    };
+    store.enqueuePendingMessage(queuedMessage);
+
+    // Set processing state (isWaitingForResponse computed from this)
+    store.setThreadState(tid, { status: 'processing' });
+
+    // Send via WebSocket/SSE
+    const success = currentConn.chat.startChat(message, userInfo);
+
+    if (success) {
+      store.updatePendingMessage(tid, uuid, { status: 'sent' });
+    } else {
+      store.updatePendingMessage(tid, uuid, { status: 'failed' });
+      store.setThreadState(tid, { status: 'error' });
+    }
+
+    return success;
+  }
+
+  /**
+   * Continue chat conversation
+   */
+  async function continueChat(): Promise<boolean> {
+    const tid = resolvedThreadId.value;
+    const conn = store.getConnection(tid);
+
+    if (!conn || !conn.chat.isConnected.value) {
+      const connected = await connect();
+      if (!connected) return false;
+    }
+
+    const currentConn = store.getConnection(tid);
+    if (!currentConn) return false;
+
+    store.setThreadState(tid, { status: 'processing' });
+    return currentConn.chat.continueChat();
+  }
+
+  /**
+   * Send user response (for follow-up messages)
+   */
+  async function sendUserResponse(responseText: string, userInfo?: ChatUserInfo): Promise<boolean> {
+    const tid = resolvedThreadId.value;
+    const conn = store.getConnection(tid);
+
+    if (!conn || !conn.chat.isConnected.value) {
+      const connected = await connect();
+      if (!connected) return false;
+    }
+
+    const currentConn = store.getConnection(tid);
+    if (!currentConn) return false;
+
+    // Generate UUID for deduplication
+    const uuid = crypto.randomUUID();
+    store.trackLocalMessage(uuid);
+
+    // Enqueue message
+    const queuedMessage: QueuedMessage = {
+      uuid,
+      threadId: tid,
+      content: responseText,
+      type: 'text',
+      isUser: true,
+      status: 'sending',
+      retryCount: 0,
+      createdAt: Date.now(),
+    };
+    store.enqueuePendingMessage(queuedMessage);
+
+    store.setThreadState(tid, { status: 'processing' });
+
+    const success = currentConn.chat.sendUserResponse(responseText, userInfo);
+
+    if (success) {
+      store.updatePendingMessage(tid, uuid, { status: 'sent' });
+    } else {
+      store.updatePendingMessage(tid, uuid, { status: 'failed' });
+      store.setThreadState(tid, { status: 'error' });
+    }
+
+    return success;
+  }
+
+  /**
+   * Cancel current request
+   */
+  function cancelRequest(): boolean {
+    const tid = resolvedThreadId.value;
+    const conn = store.getConnection(tid);
+
+    if (!conn) return false;
+
+    const success = conn.chat.cancelRequest();
+
+    if (success) {
+      store.setThreadState(tid, {
+        status: 'cancelled',
+        responsePhase: '',
+      });
+    }
+
+    return success;
+  }
+
+  /**
+   * Clear messages
+   */
+  function clearMessages(): void {
+    const tid = resolvedThreadId.value;
+    const conn = store.getConnection(tid);
+
+    if (conn) {
+      conn.chat.clearMessages();
+    }
+
+    store.clearMessageCache(tid);
+    // response is computed from connection, will update reactively
+  }
+
+  return {
+    // Connection state
+    isConnected,
+    isConnecting,
+    isProcessing,
+    isWaitingForResponse,
+
+    // Thread state
+    threadStatus,
+    responsePhase,
+    hasPartialSlides,
+    error,
+
+    // Messages
+    cachedMessages,
+    response,
+
+    // Actions
+    connect,
+    disconnect,
+    startChat,
+    continueChat,
+    sendUserResponse,
+    cancelRequest,
+    clearMessages,
+    waitForConnection,
+  };
 }
