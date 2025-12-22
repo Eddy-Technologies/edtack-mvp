@@ -61,7 +61,12 @@
                 <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="connectionDotClass" />
                 <span class="text-xs" :class="connectionTextClass">{{ connectionText }}</span>
               </div>
-              <!-- Subject for inactive threads -->
+              <!-- Background status for inactive threads (processing, error, ready) -->
+              <div v-else-if="getThreadBackgroundStatus(thread.id)" class="flex items-center gap-1 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="getThreadBackgroundStatus(thread.id)?.dotClass" />
+                <span class="text-xs" :class="getThreadBackgroundStatus(thread.id)?.textClass">{{ getThreadBackgroundStatus(thread.id)?.text }}</span>
+              </div>
+              <!-- Subject for inactive threads without special status -->
               <span v-else-if="thread.subject" class="text-xs text-gray-500">{{ constantCaseToTitleCase(thread.subject) }}</span>
             </div>
           </button>
@@ -148,6 +153,7 @@ import AuthenticationWidget from '~/components/AuthenticationWidget.vue';
 import { useAudioStore } from '~/stores/audio';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
+import { useMessageQueueStore } from '~/stores/messageQueue';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 
 const emit = defineEmits([
@@ -220,6 +226,26 @@ const isAudioPlayerCollapsed = ref(false);
 const router = useRouter();
 const supabaseUser = useSupabaseUser();
 const { threads: chatThreads, isLoadingThreads, fetchThreads } = useThreads();
+const messageQueueStore = useMessageQueueStore();
+
+// Get background thread status (for non-active threads)
+const getThreadBackgroundStatus = (threadId: string) => {
+  if (threadId === props.activeThreadId) return null; // Active thread uses props
+  const state = messageQueueStore.getThreadState(threadId);
+  if (!state) return null;
+
+  // Only show indicators for actionable states
+  if (state.status === 'processing') {
+    return { status: 'processing', text: state.responsePhase || 'Processing...', dotClass: 'bg-blue-500 animate-pulse', textClass: 'text-blue-600' };
+  }
+  if (state.status === 'error') {
+    return { status: 'error', text: 'Error', dotClass: 'bg-red-500', textClass: 'text-red-600' };
+  }
+  if (state.status === 'completed' && state.hasPartialSlides) {
+    return { status: 'completed', text: 'Ready', dotClass: 'bg-green-500', textClass: 'text-green-600' };
+  }
+  return null;
+};
 
 const { isAvatarPlaying, getCharacterBySubject } = useCharacters();
 const routeTo = (path) => router.push(path);
