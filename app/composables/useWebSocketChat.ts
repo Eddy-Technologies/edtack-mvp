@@ -1,7 +1,13 @@
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, getCurrentInstance } from 'vue';
 import type { ChatMessage, ChatResponse, ChatOptions, ChatUserInfo } from './chat.types';
 
-export type UseWebSocketChatOptions = ChatOptions;
+export interface UseWebSocketChatOptions extends ChatOptions {
+  /**
+   * If true (default), automatically disconnect when the component unmounts.
+   * Set to false when using in a Pinia store to prevent lifecycle interference.
+   */
+  autoCleanup?: boolean;
+}
 
 export function useWebSocketChat(threadId: string, options: UseWebSocketChatOptions = {}) {
   const config = useRuntimeConfig();
@@ -45,7 +51,9 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
   };
 
   const connect = (token?: string) => {
-    if (isConnecting.value || isConnected.value) return;
+    if (isConnecting.value || isConnected.value) {
+      return;
+    }
 
     // Update token if provided
     if (token) {
@@ -140,7 +148,6 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
         if (reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++;
           const delay = reconnectDelay * Math.pow(2, reconnectAttempts - 1);
-
           reconnectTimeout = setTimeout(() => {
             connect();
           }, delay);
@@ -257,9 +264,14 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
     return Promise.race([connectionPromise, timeoutPromise]);
   };
 
-  onUnmounted(() => {
-    disconnect();
-  });
+  // Only register cleanup hook if autoCleanup is enabled (default) AND we're in a component context.
+  // When used in a Pinia store, autoCleanup should be false to prevent lifecycle interference.
+  const autoCleanup = options.autoCleanup !== false;
+  if (autoCleanup && getCurrentInstance()) {
+    onUnmounted(() => {
+      disconnect();
+    });
+  }
 
   return {
     connect,

@@ -1,8 +1,14 @@
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, getCurrentInstance } from 'vue';
 import type { ChatResponse, ChatOptions, ChatUserInfo } from './chat.types';
 import { getSupabaseAccessToken } from './useChat';
 
-export type UseSSEChatOptions = ChatOptions;
+export interface UseSSEChatOptions extends ChatOptions {
+  /**
+   * If true (default), automatically disconnect when the component unmounts.
+   * Set to false when using in a Pinia store to prevent lifecycle interference.
+   */
+  autoCleanup?: boolean;
+}
 
 /**
  * SSE-based chat composable for streaming chat responses
@@ -430,9 +436,14 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     return true;
   };
 
-  onUnmounted(() => {
-    disconnect();
-  });
+  // Only register cleanup hook if autoCleanup is enabled (default) AND we're in a component context.
+  // When used in a Pinia store, autoCleanup should be false to prevent lifecycle interference.
+  const autoCleanup = options.autoCleanup !== false;
+  if (autoCleanup && getCurrentInstance()) {
+    onUnmounted(() => {
+      disconnect();
+    });
+  }
 
   return {
     connect,

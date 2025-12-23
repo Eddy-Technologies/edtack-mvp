@@ -37,6 +37,11 @@ const PROCESSING_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes processing timeout (fo
 const GRACE_PERIOD_MS = 10 * 60 * 1000; // 10 minutes grace period after timeout for late responses
 const CANCEL_WAIT_MS = 2 * 60 * 1000; // 2 minutes to wait for cancel response
 
+// Store connections OUTSIDE Pinia state to avoid ref unwrapping issues
+// Pinia's reactivity unwraps refs, which breaks the WebSocket chat refs
+const connectionPool: Record<string, PooledConnection> = {};
+const pendingConnectionPromises: Record<string, Promise<boolean>> = {};
+
 export const useMessageQueueStore = defineStore('messageQueue', {
   state: () => ({
     // Thread states (memory cache, backed by localStorage)
@@ -45,17 +50,17 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     // Message cache per thread (memory cache)
     messageCache: {} as Record<string, CachedMessage[]>,
 
-    // Connection pool
-    connections: new Map<string, PooledConnection>(),
+    // Trigger for connection reactivity (increment to force re-render)
+    connectionVersion: 0,
 
-    // Track locally-sent message UUIDs for deduplication
+    // Track locally-sent message UUIDs for deduplication (non-reactive, internal use)
     localMessageIds: new Set<string>(),
 
-    // Processing timeout timers per thread
-    processingTimeouts: new Map<string, ReturnType<typeof setTimeout>>(),
+    // Processing timeout timers per thread (non-reactive, internal use)
+    processingTimeouts: {} as Record<string, ReturnType<typeof setTimeout>>,
 
-    // Grace period cancel check timers per thread
-    graceCheckTimeouts: new Map<string, ReturnType<typeof setTimeout>>(),
+    // Grace period cancel check timers per thread (non-reactive, internal use)
+    graceCheckTimeouts: {} as Record<string, ReturnType<typeof setTimeout>>,
 
     // Initialization flag
     initialized: false,
@@ -76,11 +81,20 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     },
 
     getConnection: (state) => (threadId: string): PooledConnection | undefined => {
-      return state.connections.get(threadId);
+      // Access connectionVersion to ensure reactivity when connections change
+      void state.connectionVersion;
+      return connectionPool[threadId];
     },
 
     activeConnectionCount: (state): number => {
-      return state.connections.size;
+      void state.connectionVersion;
+      return Object.keys(connectionPool).length;
+    },
+
+    // Expose connectionPool for direct access in components
+    connections: (state) => {
+      void state.connectionVersion;
+      return connectionPool;
     },
   },
 
@@ -141,10 +155,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       // Clear existing timeout if moving to end state
       if (endStates.includes(newStatus)) {
-        const existingTimeout = this.processingTimeouts.get(threadId);
+        const existingTimeout = this.processingTimeouts[threadId];
         if (existingTimeout) {
           clearTimeout(existingTimeout);
-          this.processingTimeouts.delete(threadId);
+          Reflect.deleteProperty(this.processingTimeouts, threadId);
         }
         return;
       }
@@ -152,7 +166,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       // Start timeout when entering 'processing' (not when already processing)
       if (newStatus === 'processing' && oldStatus !== 'processing') {
         // Clear any existing timeout first
-        const existingTimeout = this.processingTimeouts.get(threadId);
+        const existingTimeout = this.processingTimeouts[threadId];
         if (existingTimeout) {
           clearTimeout(existingTimeout);
         }
@@ -162,7 +176,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
           this.handleProcessingTimeout(threadId);
         }, PROCESSING_TIMEOUT_MS);
 
-        this.processingTimeouts.set(threadId, timeoutId);
+        this.processingTimeouts[threadId] = timeoutId;
       }
     },
 
@@ -187,20 +201,20 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       });
 
       // Clean up timeout reference
-      this.processingTimeouts.delete(threadId);
+      Reflect.deleteProperty(this.processingTimeouts, threadId);
 
       // Schedule cancel health check after grace period
       const graceCheckId = setTimeout(() => {
         this.sendCancelHealthCheck(threadId);
       }, GRACE_PERIOD_MS);
-      this.graceCheckTimeouts.set(threadId, graceCheckId);
+      this.graceCheckTimeouts[threadId] = graceCheckId;
     },
 
     /**
      * Reset processing timeout (call on any activity like slide batches)
      */
     resetProcessingTimeout(threadId: string) {
-      const existingTimeout = this.processingTimeouts.get(threadId);
+      const existingTimeout = this.processingTimeouts[threadId];
       if (existingTimeout) {
         clearTimeout(existingTimeout);
 
@@ -208,7 +222,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
           this.handleProcessingTimeout(threadId);
         }, PROCESSING_TIMEOUT_MS);
 
-        this.processingTimeouts.set(threadId, newTimeoutId);
+        this.processingTimeouts[threadId] = newTimeoutId;
       }
     },
 
@@ -221,14 +235,14 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       // Already recovered or cleaned up
       if (!state || state.status !== 'error') {
-        this.graceCheckTimeouts.delete(threadId);
+        Reflect.deleteProperty(this.graceCheckTimeouts, threadId);
         return;
       }
 
-      const conn = this.connections.get(threadId);
+      const conn = connectionPool[threadId];
       if (!conn) {
         // Connection already cleaned up
-        this.graceCheckTimeouts.delete(threadId);
+        Reflect.deleteProperty(this.graceCheckTimeouts, threadId);
         return;
       }
 
@@ -257,7 +271,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         }
 
         // Clean up grace check timer reference
-        this.graceCheckTimeouts.delete(threadId);
+        Reflect.deleteProperty(this.graceCheckTimeouts, threadId);
       }, CANCEL_WAIT_MS);
     },
 
@@ -265,10 +279,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Clear grace check timeout for a thread (call when state recovers)
      */
     clearGraceCheckTimeout(threadId: string) {
-      const existingTimeout = this.graceCheckTimeouts.get(threadId);
+      const existingTimeout = this.graceCheckTimeouts[threadId];
       if (existingTimeout) {
         clearTimeout(existingTimeout);
-        this.graceCheckTimeouts.delete(threadId);
+        Reflect.deleteProperty(this.graceCheckTimeouts, threadId);
       }
     },
 
@@ -350,18 +364,19 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      */
     async getOrCreateConnection(threadId: string): Promise<PooledConnection> {
       // Check if connection exists
-      let conn = this.connections.get(threadId);
+      let conn = connectionPool[threadId];
       if (conn) {
         conn.lastActivity = Date.now();
         return conn;
       }
 
       // Enforce connection limit
-      if (this.connections.size >= MAX_CONNECTIONS) {
+      const connectionCount = Object.keys(connectionPool).length;
+      if (connectionCount >= MAX_CONNECTIONS) {
         this.cleanupIdleConnections();
 
         // If still at limit, remove oldest
-        if (this.connections.size >= MAX_CONNECTIONS) {
+        if (Object.keys(connectionPool).length >= MAX_CONNECTIONS) {
           const oldest = this.findOldestConnection();
           if (oldest) {
             await this.closeConnection(oldest);
@@ -382,7 +397,9 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         lastActivity: Date.now(),
       };
 
-      this.connections.set(threadId, conn);
+      // Store in external pool (not Pinia state) to preserve refs
+      connectionPool[threadId] = conn;
+      this.connectionVersion++; // Trigger reactivity
 
       // Set up message handler
       this.setupMessageHandler(threadId, chat);
@@ -486,16 +503,53 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Connect to chat for a thread
      */
     async connect(threadId: string): Promise<boolean> {
+      console.log('[MessageQueue] connect() called for threadId:', threadId);
+
+      // Check if already connected
+      const existingConn = connectionPool[threadId];
+      if (existingConn?.chat.isConnected.value) {
+        console.log('[MessageQueue] Already connected, reusing existing connection');
+        return true;
+      }
+
+      // Check if connection is already in progress - return existing promise
+      if (pendingConnectionPromises[threadId]) {
+        console.log('[MessageQueue] Connection already in progress, waiting...');
+        return pendingConnectionPromises[threadId];
+      }
+
+      // Create a new connection promise
+      const connectionPromise = this.doConnect(threadId);
+      pendingConnectionPromises[threadId] = connectionPromise;
+
+      try {
+        return await connectionPromise;
+      } finally {
+        // Clean up pending connection reference
+        Reflect.deleteProperty(pendingConnectionPromises, threadId);
+      }
+    },
+
+    /**
+     * Internal connect implementation
+     */
+    async doConnect(threadId: string): Promise<boolean> {
       try {
         this.setThreadState(threadId, { status: 'connecting' });
 
+        console.log('[MessageQueue] Getting or creating connection...');
         const conn = await this.getOrCreateConnection(threadId);
+        console.log('[MessageQueue] Connection obtained, mode:', conn.mode);
 
         // Connect (useChatConnection handles auth token fetching internally)
+        console.log('[MessageQueue] Calling conn.chat.connect()...');
         await conn.chat.connect();
+        console.log('[MessageQueue] conn.chat.connect() completed');
 
         // Wait for connection
+        console.log('[MessageQueue] Waiting for connection (5s timeout)...');
         await conn.chat.waitForConnection(5000);
+        console.log('[MessageQueue] Connection established successfully');
 
         this.setThreadState(threadId, { status: 'idle' });
         return true;
@@ -513,10 +567,11 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Disconnect from a thread
      */
     async closeConnection(threadId: string) {
-      const conn = this.connections.get(threadId);
+      const conn = connectionPool[threadId];
       if (conn) {
         conn.chat.disconnect();
-        this.connections.delete(threadId);
+        Reflect.deleteProperty(connectionPool, threadId);
+        this.connectionVersion++; // Trigger reactivity
       }
     },
 
@@ -525,7 +580,8 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      */
     cleanupIdleConnections() {
       const now = Date.now();
-      for (const [threadId, conn] of this.connections.entries()) {
+      let hasDeleted = false;
+      for (const [threadId, conn] of Object.entries(connectionPool)) {
         const state = this.threadStates[threadId];
 
         // Don't close connections for threads that are processing
@@ -543,8 +599,12 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
         if (now - conn.lastActivity > CONNECTION_IDLE_TIMEOUT_MS) {
           conn.chat.disconnect();
-          this.connections.delete(threadId);
+          Reflect.deleteProperty(connectionPool, threadId);
+          hasDeleted = true;
         }
+      }
+      if (hasDeleted) {
+        this.connectionVersion++; // Trigger reactivity
       }
     },
 
@@ -556,7 +616,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       let oldestTime = Infinity;
       const now = Date.now();
 
-      for (const [threadId, conn] of this.connections.entries()) {
+      for (const [threadId, conn] of Object.entries(connectionPool)) {
         const state = this.threadStates[threadId];
 
         // Skip connections that are processing
@@ -614,7 +674,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      */
     async replayPendingMessages(threadId: string) {
       const pending = this.getPendingMessages(threadId);
-      const conn = this.connections.get(threadId);
+      const conn = connectionPool[threadId];
 
       if (!conn || !pending.length) return;
 

@@ -118,14 +118,27 @@ const initializeChat = async () => {
     return;
   }
 
+  console.log('[ChatContent] initializeChat called for threadId:', props.threadId);
+
   // Prevent concurrent initialization - this is critical to avoid spam
   if (isInitializing.value) {
+    console.log('[ChatContent] Already initializing, skipping');
     return;
   }
 
   // If we already have this thread initialized and connected/connecting, skip re-initialization
-  if (currentThreadId.value === props.threadId &&
-    (chat.value?.isConnected.value || chat.value?.isConnecting.value)) {
+  const alreadyConnected = chat.value?.isConnected.value;
+  const alreadyConnecting = chat.value?.isConnecting.value;
+  if (currentThreadId.value === props.threadId && (alreadyConnected || alreadyConnecting)) {
+    console.log('[ChatContent] Already connected/connecting to this thread, skipping. connected:', alreadyConnected, 'connecting:', alreadyConnecting);
+    return;
+  }
+
+  // Also check store-level connection status
+  const storeConnection = messageQueueStore.getConnection(props.threadId);
+  if (storeConnection?.chat.isConnected.value) {
+    currentThreadId.value = props.threadId;
+    chat.value = useChat(props.threadId);
     return;
   }
 
@@ -183,14 +196,12 @@ const initializeChat = async () => {
   }
 
   if (props.threadId) {
-    // useChat automatically selects WebSocket or SSE mode based on env config
-    chat.value = useChat(props.threadId);
-
-    // Connect and wait for connection (handles auth token automatically)
-    await chat.value?.connect();
-
+    // Use useChat which manages the store connection internally
+    // This ensures the connection is stored in the pool and accessible via getConnection
     try {
-      await chat.value?.waitForConnection(10000);
+      chat.value = useChat(props.threadId);
+      await chat.value.connect();
+      await chat.value.waitForConnection(10000);
 
       // Check for pending message
       const pendingMessage = getPendingMessage();
@@ -203,7 +214,8 @@ const initializeChat = async () => {
           handleSend(pendingMessage);
         });
       }
-    } catch {
+    } catch (err) {
+      console.error('[ChatContent] Connection failed:', err);
       // Connection might still succeed after timeout - don't block the UI
     } finally {
       // Always reset initializing flag
@@ -262,15 +274,16 @@ onMounted(() => {
   );
 
   // Initialize when all prerequisites are met
+  // Watch for boolean presence (not object reference) to avoid re-triggering on token refresh
   watch(
     () => ({
-      user: supabaseUser.value,
+      hasUser: !!supabaseUser.value, // Boolean to avoid triggering on token refresh
       profileLoaded: !!meStore.user_role,
       threadId: props.threadId,
-      character: props.character,
+      character: props.character?.id, // Watch ID, not full object
     }),
     (state) => {
-      if (state.user && state.profileLoaded && state.threadId && state.character) {
+      if (state.hasUser && state.profileLoaded && state.threadId && state.character) {
         initializeChat();
       }
     },
@@ -280,8 +293,8 @@ onMounted(() => {
 
 // Send message directly to WebSocket
 const sendMessage = async (text: string) => {
-  if (!chat.value?.isConnected.value || !text.trim()) {
-    console.warn('Cannot send message: WebSocket not connected or empty text');
+  const isConnected = chat.value?.isConnected.value;
+  if (!isConnected || !text.trim()) {
     return false;
   }
 
@@ -702,13 +715,15 @@ const handleSend = async (text: string) => {
   addMessage(addMessageObj);
 
   // Determine initial status based on connection state
-  const isConnectedNow = chat.value?.isConnected.value;
+  const isConnectedNow = chat.value?.isConnected.value || false;
+
   const initialStatus = isConnectedNow ? 'sending' : 'queued';
   messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
 
   // Since we connect immediately in initializeChat, just try to send
   if (isConnectedNow) {
-    if (!sendMessage(text)) {
+    const sendResult = await sendMessage(text);
+    if (!sendResult) {
       // Handle send failure - update message status
       const lastIdx = messageStream.value.length - 1;
       messageStream.value[lastIdx] = {

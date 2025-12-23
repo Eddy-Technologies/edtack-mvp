@@ -65,8 +65,10 @@ export function useChatConnection(threadId: string, options: UseChatOptions = {}
 
   // Create the appropriate chat instance based on mode
   if (chatMode === 'sse') {
+    // Disable autoCleanup since connections are managed by the Pinia store's connection pool
     const sseOptions: UseSSEChatOptions = {
       authToken: options.authToken,
+      autoCleanup: false,
     };
     const sseChat = useSSEChat(threadId, sseOptions);
 
@@ -91,8 +93,10 @@ export function useChatConnection(threadId: string, options: UseChatOptions = {}
   }
 
   // Default: WebSocket mode
+  // Disable autoCleanup since connections are managed by the Pinia store's connection pool
   const wsOptions: UseWebSocketChatOptions = {
     authToken: options.authToken,
+    autoCleanup: false,
   };
   const wsChat = useWebSocketChat(threadId, wsOptions);
 
@@ -182,7 +186,12 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
   const error = computed(() => threadState.value?.error || null);
 
   // Connection state (reactive - derived from pooled connection)
-  const pooledConnection = computed(() => store.getConnection(resolvedThreadId.value));
+  // NOTE: Access store properties directly (not $state) for proper Pinia reactivity
+  const pooledConnection = computed(() => {
+    // Access connectionVersion to establish reactive dependency
+    void store.connectionVersion;
+    return store.connections[resolvedThreadId.value];
+  });
 
   const isConnected = computed(() => {
     const conn = pooledConnection.value;
@@ -207,7 +216,9 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
 
   // Response array (reactive - from pooled connection)
   const response = computed(() => {
-    const conn = pooledConnection.value;
+    // Also access connectionVersion for reactivity
+    void store.connectionVersion;
+    const conn = store.connections[resolvedThreadId.value];
     return conn?.chat.response.value || [];
   });
 
@@ -258,11 +269,13 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function startChat(message: string, userInfo?: ChatUserInfo): Promise<boolean> {
     const tid = resolvedThreadId.value;
-    const conn = store.getConnection(tid);
 
+    const conn = store.getConnection(tid);
     if (!conn || !conn.chat.isConnected.value) {
       const connected = await connect();
-      if (!connected) return false;
+      if (!connected) {
+        return false;
+      }
     }
 
     const currentConn = store.getConnection(tid);
