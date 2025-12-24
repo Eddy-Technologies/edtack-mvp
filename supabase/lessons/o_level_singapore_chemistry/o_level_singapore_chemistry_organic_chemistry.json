@@ -356,7 +356,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Alkanes",
-    "content": "## Question 1: Properties of Alkanes\n\nWhich statement about alkanes is **correct**?\n\nA) Alkanes contain carbon-carbon double bonds\n\nB) Alkanes are more reactive than alkenes\n\nC) Alkanes have the general formula CₙH₂ₙ₊₂\n\nD) Alkanes are soluble in water",
+    "content": "## Question 1: Properties of Alkanes\n\nWhich statement about alkanes is **correct**?",
     "speech_to_text_content": "Which statement about alkanes is correct? Option A: Alkanes contain carbon-carbon double bonds. Option B: Alkanes are more reactive than alkenes. Option C: Alkanes have the general formula CnH2n plus 2. Option D: Alkanes are soluble in water.",
     "answer": [
       {
@@ -416,7 +416,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Alkene Reactions",
-    "content": "## Question 2: Addition Reactions of Alkenes\n\nWhen bromine is added to ethene at room temperature, what observable change occurs?\n\nA) The bromine solution remains brown\n\nB) The brown bromine solution decolorizes to form a colorless liquid\n\nC) A black sooty precipitate forms\n\nD) The solution becomes hot and releases a gas",
+    "content": "## Question 2: Addition Reactions of Alkenes\n\nWhen bromine is added to ethene at room temperature, what observable change occurs?",
     "speech_to_text_content": "When bromine is added to ethene at room temperature, what observable change occurs? Option A: The bromine solution remains brown. Option B: The brown bromine solution decolorizes to form a colorless liquid. Option C: A black sooty precipitate forms. Option D: The solution becomes hot and releases a gas.",
     "answer": [
       {
@@ -476,7 +476,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Cracking",
-    "content": "## Question 3: Purpose of Cracking in Petroleum Refining\n\nWhy is cracking an important process in crude oil refining?\n\nA) It removes impurities from crude oil\n\nB) It converts long-chain alkanes into short-chain alkenes and alkanes that are more useful\n\nC) It increases the boiling point of crude oil fractions\n\nD) It produces natural gas from crude oil",
+    "content": "## Question 3: Purpose of Cracking in Petroleum Refining\n\nWhy is cracking an important process in crude oil refining?",
     "speech_to_text_content": "Why is cracking an important process in crude oil refining? Option A: It removes impurities from crude oil. Option B: It converts long-chain alkanes into short-chain alkenes and alkanes that are more useful. Option C: It increases the boiling point of crude oil fractions. Option D: It produces natural gas from crude oil.",
     "answer": [
       {
@@ -536,7 +536,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Isomers",
-    "content": "## Question 4: Comparing Isomers\n\nButane and methylpropane are isomers with the molecular formula C₄H₁₀. Which statement is **correct**?\n\nA) Butane has a lower boiling point than methylpropane\n\nB) Butane has a higher boiling point than methylpropane\n\nC) Both have identical boiling points\n\nD) They have different chemical properties but the same physical properties",
+    "content": "## Question 4: Comparing Isomers\n\nButane and methylpropane are isomers with the molecular formula C₄H₁₀. Which statement is **correct**?",
     "speech_to_text_content": "Butane and methylpropane are isomers with the molecular formula C4H10. Which statement is correct? Option A: Butane has a lower boiling point than methylpropane. Option B: Butane has a higher boiling point than methylpropane. Option C: Both have identical boiling points. Option D: They have different chemical properties but the same physical properties.",
     "answer": [
       {
@@ -596,7 +596,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Polymers",
-    "content": "## Question 5: Types of Polymerization\n\nWhat is the main difference between addition polymerization and condensation polymerization?\n\nA) Addition polymerization uses alkenes while condensation uses alkanes\n\nB) Addition polymerization produces no byproduct while condensation releases small molecules like water\n\nC) Addition polymerization requires high temperature while condensation requires low temperature\n\nD) Addition polymerization produces plastics while condensation produces natural fibers",
+    "content": "## Question 5: Types of Polymerization\n\nWhat is the main difference between addition polymerization and condensation polymerization?",
     "speech_to_text_content": "What is the main difference between addition polymerization and condensation polymerization? Option A: Addition polymerization uses alkenes while condensation uses alkanes. Option B: Addition polymerization produces no byproduct while condensation releases small molecules like water. Option C: Addition polymerization requires high temperature while condensation requires low temperature. Option D: Addition polymerization produces plastics while condensation produces natural fibers.",
     "answer": [
       {

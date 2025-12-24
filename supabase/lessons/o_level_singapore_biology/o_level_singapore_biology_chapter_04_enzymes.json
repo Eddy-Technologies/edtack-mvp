@@ -327,7 +327,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "What is the primary function of an enzyme?",
-    "content": "## Question 1: Understanding Enzyme Function\n\nWhich of the following best describes the primary function of an enzyme?\n\nA) To provide energy for chemical reactions\n\nB) To speed up chemical reactions by lowering the activation energy\n\nC) To permanently change the products of a reaction\n\nD) To be consumed in the chemical reaction it catalyzes",
+    "content": "## Question 1: Understanding Enzyme Function\n\nWhich of the following best describes the primary function of an enzyme?",
     "speech_to_text_content": "What is the primary function of an enzyme? A) To provide energy for chemical reactions. B) To speed up chemical reactions by lowering the activation energy. C) To permanently change the products of a reaction. D) To be consumed in the chemical reaction it catalyzes.",
     "answer": [
       {
@@ -343,22 +343,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt-a",
-        "option_text": "A) To provide energy for chemical reactions",
+        "option_text": "To provide energy for chemical reactions",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt-b",
-        "option_text": "B) To speed up chemical reactions by lowering the activation energy",
+        "option_text": "To speed up chemical reactions by lowering the activation energy",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt-c",
-        "option_text": "C) To permanently change the products of a reaction",
+        "option_text": "To permanently change the products of a reaction",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt-d",
-        "option_text": "D) To be consumed in the chemical reaction it catalyzes",
+        "option_text": "To be consumed in the chemical reaction it catalyzes",
         "imageUrl": null
       }
     ],
@@ -387,7 +387,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "What determines enzyme specificity?",
-    "content": "## Question 2: Understanding Enzyme Specificity\n\nWhich factor MOST directly determines the specificity of an enzyme (i.e., which substrate it can act on)?\n\nA) The temperature at which the enzyme works\n\nB) The pH of the enzyme's environment\n\nC) The three-dimensional shape of the enzyme's active site\n\nD) The amount of enzyme present in the cell",
+    "content": "## Question 2: Understanding Enzyme Specificity\n\nWhich factor MOST directly determines the specificity of an enzyme (i.e., which substrate it can act on)?",
     "speech_to_text_content": "What determines enzyme specificity? Which factor most directly determines the specificity of an enzyme? A) The temperature at which the enzyme works. B) The pH of the enzyme's environment. C) The three-dimensional shape of the enzyme's active site. D) The amount of enzyme present in the cell.",
     "answer": [
       {
@@ -403,22 +403,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-a",
-        "option_text": "A) The temperature at which the enzyme works",
+        "option_text": "The temperature at which the enzyme works",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-b",
-        "option_text": "B) The pH of the enzyme's environment",
+        "option_text": "The pH of the enzyme's environment",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-c",
-        "option_text": "C) The three-dimensional shape of the enzyme's active site",
+        "option_text": "The three-dimensional shape of the enzyme's active site",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-d",
-        "option_text": "D) The amount of enzyme present in the cell",
+        "option_text": "The amount of enzyme present in the cell",
         "imageUrl": null
       }
     ],
@@ -447,7 +447,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Effect of temperature on human enzymes",
-    "content": "## Question 3: Temperature Effects on Enzyme Activity\n\nWhat happens to the activity of a human enzyme when the temperature is increased from 37°C to 50°C?\n\nA) The enzyme activity increases because molecular motion increases\n\nB) The enzyme activity decreases because the enzyme becomes denatured\n\nC) The enzyme activity remains the same because enzymes are not affected by temperature\n\nD) The enzyme activity increases indefinitely as temperature continues to increase",
+    "content": "## Question 3: Temperature Effects on Enzyme Activity\n\nWhat happens to the activity of a human enzyme when the temperature is increased from 37°C to 50°C?",
     "speech_to_text_content": "What happens to the activity of a human enzyme when the temperature is increased from 37°C to 50°C? A) The enzyme activity increases because molecular motion increases. B) The enzyme activity decreases because the enzyme becomes denatured. C) The enzyme activity remains the same because enzymes are not affected by temperature. D) The enzyme activity increases indefinitely as temperature continues to increase.",
     "answer": [
       {
@@ -463,22 +463,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt-a",
-        "option_text": "A) The enzyme activity increases because molecular motion increases",
+        "option_text": "The enzyme activity increases because molecular motion increases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt-b",
-        "option_text": "B) The enzyme activity decreases because the enzyme becomes denatured",
+        "option_text": "The enzyme activity decreases because the enzyme becomes denatured",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt-c",
-        "option_text": "C) The enzyme activity remains the same because enzymes are not affected by temperature",
+        "option_text": "The enzyme activity remains the same because enzymes are not affected by temperature",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt-d",
-        "option_text": "D) The enzyme activity increases indefinitely as temperature continues to increase",
+        "option_text": "The enzyme activity increases indefinitely as temperature continues to increase",
         "imageUrl": null
       }
     ],
@@ -507,7 +507,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Effect of pH on enzyme activity",
-    "content": "## Question 4: pH Effects on Enzyme Activity\n\nPepsin is a digestive enzyme that works in the stomach. Which statement correctly describes why pepsin functions at pH 1.5-2.0 while most other human enzymes work at pH 6-8?\n\nA) Pepsin is stronger than other enzymes and can work in any pH\n\nB) Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments\n\nC) The stomach is the only place where enzymes are needed in the body\n\nD) Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH",
+    "content": "## Question 4: pH Effects on Enzyme Activity\n\nPepsin is a digestive enzyme that works in the stomach. Which statement correctly describes why pepsin functions at pH 1.5-2.0 while most other human enzymes work at pH 6-8?",
     "speech_to_text_content": "Pepsin is a digestive enzyme that works in the stomach. Which statement correctly describes why pepsin functions at pH 1.5-2.0 while most other human enzymes work at pH 6-8? A) Pepsin is stronger than other enzymes and can work in any pH. B) Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments. C) The stomach is the only place where enzymes are needed in the body. D) Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH.",
     "answer": [
       {
@@ -523,22 +523,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-a",
-        "option_text": "A) Pepsin is stronger than other enzymes and can work in any pH",
+        "option_text": "Pepsin is stronger than other enzymes and can work in any pH",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
-        "option_text": "B) Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments",
+        "option_text": "Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-c",
-        "option_text": "C) The stomach is the only place where enzymes are needed in the body",
+        "option_text": "The stomach is the only place where enzymes are needed in the body",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-d",
-        "option_text": "D) Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH",
+        "option_text": "Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH",
         "imageUrl": null
       }
     ],
@@ -567,7 +567,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Enzyme concentration and reaction rate",
-    "content": "## Question 5: Enzyme Concentration Effects\n\nIn an experiment, a scientist keeps the substrate concentration constant while increasing the enzyme concentration. What will happen to the reaction rate?\n\nA) The reaction rate will decrease because the enzyme and substrate will compete with each other\n\nB) The reaction rate will increase proportionally until the substrate becomes the limiting factor\n\nC) The reaction rate will remain constant regardless of enzyme concentration\n\nD) The reaction rate will increase exponentially without any limit",
+    "content": "## Question 5: Enzyme Concentration Effects\n\nIn an experiment, a scientist keeps the substrate concentration constant while increasing the enzyme concentration. What will happen to the reaction rate?",
     "speech_to_text_content": "In an experiment, a scientist keeps the substrate concentration constant while increasing the enzyme concentration. What will happen to the reaction rate? A) The reaction rate will decrease because the enzyme and substrate will compete with each other. B) The reaction rate will increase proportionally until the substrate becomes the limiting factor. C) The reaction rate will remain constant regardless of enzyme concentration. D) The reaction rate will increase exponentially without any limit.",
     "answer": [
       {
@@ -583,22 +583,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt-a",
-        "option_text": "A) The reaction rate will decrease because the enzyme and substrate will compete with each other",
+        "option_text": "The reaction rate will decrease because the enzyme and substrate will compete with each other",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt-b",
-        "option_text": "B) The reaction rate will increase proportionally until the substrate becomes the limiting factor",
+        "option_text": "The reaction rate will increase proportionally until the substrate becomes the limiting factor",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt-c",
-        "option_text": "C) The reaction rate will remain constant regardless of enzyme concentration",
+        "option_text": "The reaction rate will remain constant regardless of enzyme concentration",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt-d",
-        "option_text": "D) The reaction rate will increase exponentially without any limit",
+        "option_text": "The reaction rate will increase exponentially without any limit",
         "imageUrl": null
       }
     ],
@@ -627,7 +627,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Enzyme denaturation and reversibility",
-    "content": "## Question 6: Enzyme Denaturation\n\nWhich of the following statements correctly describes enzyme denaturation?\n\nA) Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme\n\nB) Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape\n\nC) Denaturation only occurs at very high temperatures above 100°C\n\nD) Denaturation cannot be caused by pH changes, only by temperature",
+    "content": "## Question 6: Enzyme Denaturation\n\nWhich of the following statements correctly describes enzyme denaturation?",
     "speech_to_text_content": "Which of the following statements correctly describes enzyme denaturation? A) Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme. B) Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape. C) Denaturation only occurs at very high temperatures above 100°C. D) Denaturation cannot be caused by pH changes, only by temperature.",
     "answer": [
       {
@@ -643,22 +643,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-a",
-        "option_text": "A) Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme",
+        "option_text": "Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-b",
-        "option_text": "B) Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape",
+        "option_text": "Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-c",
-        "option_text": "C) Denaturation only occurs at very high temperatures above 100°C",
+        "option_text": "Denaturation only occurs at very high temperatures above 100°C",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-d",
-        "option_text": "D) Denaturation cannot be caused by pH changes, only by temperature",
+        "option_text": "Denaturation cannot be caused by pH changes, only by temperature",
         "imageUrl": null
       }
     ],

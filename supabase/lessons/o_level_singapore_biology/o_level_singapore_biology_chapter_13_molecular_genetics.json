@@ -269,7 +269,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: DNA and Genes",
-    "content": "## Check Your Understanding: DNA and Genes\n\nWhich of the following best describes the relationship between DNA, genes, and chromosomes?\n\nA) DNA is made up of genes, and genes are made up of chromosomes\n\nB) Chromosomes are made up of DNA, and genes are sequences of nucleotides within DNA\n\nC) Genes are made up of chromosomes, and chromosomes contain DNA\n\nD) DNA contains chromosomes, which contain genes made of proteins",
+    "content": "## Check Your Understanding: DNA and Genes\n\nWhich of the following best describes the relationship between DNA, genes, and chromosomes?",
     "speech_to_text_content": "Which of the following best describes the relationship between DNA, genes, and chromosomes? Option A: DNA is made up of genes, and genes are made up of chromosomes. Option B: Chromosomes are made up of DNA, and genes are sequences of nucleotides within DNA. Option C: Genes are made up of chromosomes, and chromosomes contain DNA. Option D: DNA contains chromosomes, which contain genes made of proteins.",
     "answer": [
       {
@@ -285,22 +285,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440010-opt-a",
-        "option_text": "A) DNA is made up of genes, and genes are made up of chromosomes",
+        "option_text": "DNA is made up of genes, and genes are made up of chromosomes",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440010-opt-b",
-        "option_text": "B) Chromosomes are made up of DNA, and genes are sequences of nucleotides within DNA",
+        "option_text": "Chromosomes are made up of DNA, and genes are sequences of nucleotides within DNA",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440010-opt-c",
-        "option_text": "C) Genes are made up of chromosomes, and chromosomes contain DNA",
+        "option_text": "Genes are made up of chromosomes, and chromosomes contain DNA",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440010-opt-d",
-        "option_text": "D) DNA contains chromosomes, which contain genes made of proteins",
+        "option_text": "DNA contains chromosomes, which contain genes made of proteins",
         "imageUrl": null
       }
     ],
@@ -329,7 +329,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Complementary Base Pairing",
-    "content": "## Check Your Understanding: Complementary Base Pairing\n\nIf one strand of DNA has the sequence: 5'-ATGC-3'\n\nWhat would be the complementary sequence on the opposite strand?\n\nA) 5'-ATGC-3'\n\nB) 3'-TACG-5'\n\nC) 5'-CGAT-3'\n\nD) 3'-ATGC-5'",
+    "content": "## Check Your Understanding: Complementary Base Pairing\n\nIf one strand of DNA has the sequence: 5'-ATGC-3'\n\nWhat would be the complementary sequence on the opposite strand?",
     "speech_to_text_content": "If one strand of DNA has the sequence five prime ATGC three prime, what would be the complementary sequence on the opposite strand? Option A: five prime ATGC three prime. Option B: three prime TACG five prime. Option C: five prime CGAT three prime. Option D: three prime ATGC five prime.",
     "answer": [
       {
@@ -345,22 +345,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-a",
-        "option_text": "A) 5'-ATGC-3'",
+        "option_text": "5'-ATGC-3'",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-b",
-        "option_text": "B) 3'-TACG-5'",
+        "option_text": "3'-TACG-5'",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-c",
-        "option_text": "C) 5'-CGAT-3'",
+        "option_text": "5'-CGAT-3'",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-d",
-        "option_text": "D) 3'-ATGC-5'",
+        "option_text": "3'-ATGC-5'",
         "imageUrl": null
       }
     ],
@@ -476,7 +476,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Genetic Engineering Tools",
-    "content": "## Check Your Understanding: Genetic Engineering Tools\n\nWhich of the following best describes the function of DNA ligase in genetic engineering?\n\nA) It cuts DNA at specific recognition sequences to create sticky ends\n\nB) It joins DNA fragments together by forming covalent bonds between nucleotides\n\nC) It carries foreign genes into bacterial cells\n\nD) It replicates plasmid DNA so it can be copied many times",
+    "content": "## Check Your Understanding: Genetic Engineering Tools\n\nWhich of the following best describes the function of DNA ligase in genetic engineering?",
     "speech_to_text_content": "Which of the following best describes the function of DNA ligase in genetic engineering? Option A: It cuts DNA at specific recognition sequences to create sticky ends. Option B: It joins DNA fragments together by forming covalent bonds between nucleotides. Option C: It carries foreign genes into bacterial cells. Option D: It replicates plasmid DNA so it can be copied many times.",
     "answer": [
       {
@@ -492,22 +492,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-a",
-        "option_text": "A) It cuts DNA at specific recognition sequences to create sticky ends",
+        "option_text": "It cuts DNA at specific recognition sequences to create sticky ends",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
-        "option_text": "B) It joins DNA fragments together by forming covalent bonds between nucleotides",
+        "option_text": "It joins DNA fragments together by forming covalent bonds between nucleotides",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-c",
-        "option_text": "C) It carries foreign genes into bacterial cells",
+        "option_text": "It carries foreign genes into bacterial cells",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-d",
-        "option_text": "D) It replicates plasmid DNA so it can be copied many times",
+        "option_text": "It replicates plasmid DNA so it can be copied many times",
         "imageUrl": null
       }
     ],
@@ -623,7 +623,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Benefits vs. Concerns",
-    "content": "## Check Your Understanding: Benefits vs. Concerns\n\nWhich of the following is a POTENTIAL BENEFIT of using genetically engineered crops in agriculture, but NOT a concern?\n\nA) Reduced need for pesticide spraying\n\nB) Gene flow to wild plant populations\n\nC) Enhanced nutritional content in crops\n\nD) Corporate control of seed patents",
+    "content": "## Check Your Understanding: Benefits vs. Concerns\n\nWhich of the following is a POTENTIAL BENEFIT of using genetically engineered crops in agriculture, but NOT a concern?",
     "speech_to_text_content": "Which of the following is a potential benefit of using genetically engineered crops in agriculture, but not a concern? Option A: Reduced need for pesticide spraying. Option B: Gene flow to wild plant populations. Option C: Enhanced nutritional content in crops. Option D: Corporate control of seed patents.",
     "answer": [
       {
@@ -639,22 +639,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-a",
-        "option_text": "A) Reduced need for pesticide spraying",
+        "option_text": "Reduced need for pesticide spraying",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-b",
-        "option_text": "B) Gene flow to wild plant populations",
+        "option_text": "Gene flow to wild plant populations",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-c",
-        "option_text": "C) Enhanced nutritional content in crops",
+        "option_text": "Enhanced nutritional content in crops",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-d",
-        "option_text": "D) Corporate control of seed patents",
+        "option_text": "Corporate control of seed patents",
         "imageUrl": null
       }
     ],

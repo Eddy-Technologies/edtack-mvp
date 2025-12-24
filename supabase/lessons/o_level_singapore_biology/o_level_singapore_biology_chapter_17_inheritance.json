@@ -153,7 +153,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Monohybrid Inheritance",
-    "content": "## Practice Question 1\n\nIn a monohybrid cross between two heterozygous organisms (Aa × Aa), what is the expected genotype ratio in the F1 generation?\n\nA) 1 AA : 1 Aa : 1 aa\nB) 1 AA : 2 Aa : 1 aa\nC) 3 AA : 1 aa\nD) All Aa",
+    "content": "## Practice Question 1\n\nIn a monohybrid cross between two heterozygous organisms (Aa × Aa), what is the expected genotype ratio in the F1 generation?",
     "speech_to_text_content": "In a monohybrid cross between two heterozygous organisms, Aa times Aa, what is the expected genotype ratio in the F1 generation?",
     "answer": [
       {
@@ -300,7 +300,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Sex-Linked Inheritance",
-    "content": "## Practice Question 2\n\nA man with normal color vision (X^C Y) and a woman who is a carrier for color blindness (X^C X^c) have children. What is the probability that their son will be color blind?\n\nA) 0% (no chance)\nB) 25%\nC) 50%\nD) 100% (certain)",
+    "content": "## Practice Question 2\n\nA man with normal color vision (X^C Y) and a woman who is a carrier for color blindness (X^C X^c) have children. What is the probability that their son will be color blind?",
     "speech_to_text_content": "A man with normal color vision and a woman who is a carrier for color blindness have children. What is the probability that their son will be color blind?",
     "answer": [
       {
@@ -447,7 +447,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Natural Selection and Evolution",
-    "content": "## Practice Question 3\n\nIn a population of beetles, some are green (camouflaged in grass) and some are brown (visible to predators). If predators hunt preferentially in grassy areas, what will happen to the allele frequencies over many generations?\n\nA) Brown alleles will increase in frequency\nB) Green alleles will increase in frequency\nC) Both alleles will remain at equal frequency\nD) All beetles will become extinct",
+    "content": "## Practice Question 3\n\nIn a population of beetles, some are green (camouflaged in grass) and some are brown (visible to predators). If predators hunt preferentially in grassy areas, what will happen to the allele frequencies over many generations?",
     "speech_to_text_content": "In a population of beetles, some are green camouflaged in grass and some are brown visible to predators. If predators hunt preferentially in grassy areas, what will happen to the allele frequencies over many generations?",
     "answer": [
       {
@@ -633,7 +633,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Genetics Applications",
-    "content": "## Practice Question 4\n\nA farmer wants to develop a wheat variety that is both disease-resistant and high-yielding. She has two varieties available: Variety A is disease-resistant but low-yielding, and Variety B is high-yielding but susceptible to disease. Using selective breeding, what should she do?\n\nA) Plant only Variety A to ensure disease resistance\nB) Plant only Variety B to maximize yield\nC) Cross Variety A with Variety B, then select offspring that show both traits and breed them together over multiple generations\nD) Use genetic engineering to combine all genes from both varieties",
+    "content": "## Practice Question 4\n\nA farmer wants to develop a wheat variety that is both disease-resistant and high-yielding. She has two varieties available: Variety A is disease-resistant but low-yielding, and Variety B is high-yielding but susceptible to disease. Using selective breeding, what should she do?",
     "speech_to_text_content": "A farmer wants to develop a wheat variety that is both disease-resistant and high-yielding. She has two varieties: Variety A is disease-resistant but low-yielding, and Variety B is high-yielding but susceptible to disease. Using selective breeding, what should she do?",
     "answer": [
       {
@@ -722,7 +722,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Comprehensive Assessment: Inheritance and Evolution",
-    "content": "## Final Assessment Question\n\nWhich of the following best explains why genetic variation in a population is essential for evolution through natural selection?\n\nA) Variation allows organisms to change their genotype during their lifetime in response to environmental pressures\n\nB) Variation provides different phenotypes that natural selection can act upon, favoring advantageous traits that increase in frequency over generations\n\nC) Variation ensures that all organisms in a population are identical, making them equally fit for any environment\n\nD) Variation prevents mutations from occurring, which would otherwise harm the population",
+    "content": "## Final Assessment Question\n\nWhich of the following best explains why genetic variation in a population is essential for evolution through natural selection?",
     "speech_to_text_content": "Which of the following best explains why genetic variation in a population is essential for evolution through natural selection?",
     "answer": [
       {

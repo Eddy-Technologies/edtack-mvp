@@ -385,7 +385,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Reaction Rate Graphs",
-    "content": "## Question 1: Reading Reaction Rate Graphs\n\nA student measures the volume of gas produced when magnesium reacts with hydrochloric acid. The graph below shows the results:\n\n```\nGas Volume (cm³)\n     ↑\n 100 │     ╱╱╱╱\n     │    ╱╱╱╱\n  80 │   ╱╱╱╱\n     │  ╱╱╱╱\n  60 │ ╱╱╱╱\n     │╱╱╱╱\n  40 │╱╱╱\n     │\n  20 │\n     │\n   0 └─────────────→ Time (s)\n     0  10  20  30  40  50\n```\n\nWhich statement about this reaction is **correct**?\n\nA) The reaction rate is constant throughout the reaction\n\nB) The reaction stops at 30 seconds because the gradient becomes zero\n\nC) The steeper gradient at the start shows the reaction is speeding up\n\nD) The total volume of gas produced is determined by the time taken",
+    "content": "## Question 1: Reading Reaction Rate Graphs\n\nA student measures the volume of gas produced when magnesium reacts with hydrochloric acid. The graph below shows the results:\n\n```\nGas Volume (cm³)\n     ↑\n 100 │     ╱╱╱╱\n     │    ╱╱╱╱\n  80 │   ╱╱╱╱\n     │  ╱╱╱╱\n  60 │ ╱╱╱╱\n     │╱╱╱╱\n  40 │╱╱╱\n     │\n  20 │\n     │\n   0 └─────────────→ Time (s)\n     0  10  20  30  40  50\n```\n\nWhich statement about this reaction is **correct**?",
     "speech_to_text_content": "A student measures the volume of gas produced when magnesium reacts with hydrochloric acid. The graph shows gas volume on the y-axis and time on the x-axis. The line starts steep and gradually becomes less steep, becoming flat at 30 seconds when 100 cubic centimeters have been produced. Which statement about this reaction is correct? A) The reaction rate is constant throughout the reaction. B) The reaction stops at 30 seconds because the gradient becomes zero. C) The steeper gradient at the start shows the reaction is speeding up. D) The total volume of gas produced is determined by the time taken.",
     "answer": [
       {
@@ -401,22 +401,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
-        "option_text": "A) The reaction rate is constant throughout the reaction",
+        "option_text": "The reaction rate is constant throughout the reaction",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
-        "option_text": "B) The reaction stops at 30 seconds because the gradient becomes zero",
+        "option_text": "The reaction stops at 30 seconds because the gradient becomes zero",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
-        "option_text": "C) The steeper gradient at the start shows the reaction is speeding up",
+        "option_text": "The steeper gradient at the start shows the reaction is speeding up",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
-        "option_text": "D) The total volume of gas produced is determined by the time taken",
+        "option_text": "The total volume of gas produced is determined by the time taken",
         "imageUrl": null
       }
     ],
@@ -445,7 +445,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Collision Theory and Effective Collisions",
-    "content": "## Question 2: Understanding Effective Collisions\n\nWhich of the following best explains why not all collisions between reactant particles result in a chemical reaction?\n\nA) The particles are moving in opposite directions\n\nB) The collision energy must be equal to or greater than the activation energy\n\nC) There are too many particles in the reaction mixture\n\nD) The particles must be from different reactants",
+    "content": "## Question 2: Understanding Effective Collisions\n\nWhich of the following best explains why not all collisions between reactant particles result in a chemical reaction?",
     "speech_to_text_content": "Which of the following best explains why not all collisions between reactant particles result in a chemical reaction? A) The particles are moving in opposite directions. B) The collision energy must be equal to or greater than the activation energy. C) There are too many particles in the reaction mixture. D) The particles must be from different reactants.",
     "answer": [
       {
@@ -461,22 +461,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
-        "option_text": "A) The particles are moving in opposite directions",
+        "option_text": "The particles are moving in opposite directions",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
-        "option_text": "B) The collision energy must be equal to or greater than the activation energy",
+        "option_text": "The collision energy must be equal to or greater than the activation energy",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
-        "option_text": "C) There are too many particles in the reaction mixture",
+        "option_text": "There are too many particles in the reaction mixture",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
-        "option_text": "D) The particles must be from different reactants",
+        "option_text": "The particles must be from different reactants",
         "imageUrl": null
       }
     ],
@@ -505,7 +505,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Factors Affecting Reaction Rate",
-    "content": "## Question 3: Comparing Different Reaction Conditions\n\nThe reaction Mg + 2HCl → MgCl₂ + H₂ is carried out under different conditions. Which pair of changes would have the MOST significant effect on increasing the reaction rate?\n\nA) Increasing concentration of HCl by 10% and crushing the Mg into smaller pieces\n\nB) Increasing temperature by 20°C and adding an iron catalyst\n\nC) Increasing the volume of the reaction vessel and using Mg powder instead of ribbon\n\nD) Decreasing the pressure and using a more dilute HCl solution",
+    "content": "## Question 3: Comparing Different Reaction Conditions\n\nThe reaction Mg + 2HCl → MgCl₂ + H₂ is carried out under different conditions. Which pair of changes would have the MOST significant effect on increasing the reaction rate?",
     "speech_to_text_content": "The reaction of magnesium with hydrochloric acid is carried out under different conditions. Which pair of changes would have the most significant effect on increasing the reaction rate? A) Increasing concentration of HCl by 10 percent and crushing the magnesium into smaller pieces. B) Increasing temperature by 20 degrees Celsius and adding an iron catalyst. C) Increasing the volume of the reaction vessel and using magnesium powder instead of ribbon. D) Decreasing the pressure and using a more dilute HCl solution.",
     "answer": [
       {
@@ -521,22 +521,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
-        "option_text": "A) Increasing concentration of HCl by 10% and crushing the Mg into smaller pieces",
+        "option_text": "Increasing concentration of HCl by 10% and crushing the Mg into smaller pieces",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
-        "option_text": "B) Increasing temperature by 20°C and adding an iron catalyst",
+        "option_text": "Increasing temperature by 20°C and adding an iron catalyst",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
-        "option_text": "C) Increasing the volume of the reaction vessel and using Mg powder instead of ribbon",
+        "option_text": "Increasing the volume of the reaction vessel and using Mg powder instead of ribbon",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
-        "option_text": "D) Decreasing the pressure and using a more dilute HCl solution",
+        "option_text": "Decreasing the pressure and using a more dilute HCl solution",
         "imageUrl": null
       }
     ],
@@ -565,7 +565,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Catalysts and Activation Energy",
-    "content": "## Question 4: How Catalysts Work\n\nA student investigates the decomposition of hydrogen peroxide with and without a catalyst. The diagram shows the activation energy pathways:\n\n```\nEnergy\n   ↑     ╱╲ Without catalyst\n   |    ╱  ╲  (High Ea)\n   |   ╱    ╲\n   |  ╱      ╲___\n   | ╱╱╲ With catalyst\n   |╱  ╲ (Lower Ea)\n   |____╲____\n   └──────────────→ Reaction Progress\n```\n\nBased on this diagram and collision theory, which statement is **correct**?\n\nA) The catalyst increases the total energy released by the reaction\n\nB) The catalyst allows more particles to have sufficient energy to react\n\nC) The catalyst increases the energy of the reactant particles\n\nD) The catalyst is consumed during the reaction and must be replaced",
+    "content": "## Question 4: How Catalysts Work\n\nA student investigates the decomposition of hydrogen peroxide with and without a catalyst. The diagram shows the activation energy pathways:\n\n```\nEnergy\n   ↑     ╱╲ Without catalyst\n   |    ╱  ╲  (High Ea)\n   |   ╱    ╲\n   |  ╱      ╲___\n   | ╱╱╲ With catalyst\n   |╱  ╲ (Lower Ea)\n   |____╲____\n   └──────────────→ Reaction Progress\n```\n\nBased on this diagram and collision theory, which statement is **correct**?",
     "speech_to_text_content": "A student investigates the decomposition of hydrogen peroxide with and without a catalyst. The diagram shows activation energy pathways. Without catalyst, the activation energy is high. With catalyst, the activation energy is lower. Based on this diagram and collision theory, which statement is correct? A) The catalyst increases the total energy released by the reaction. B) The catalyst allows more particles to have sufficient energy to react. C) The catalyst increases the energy of the reactant particles. D) The catalyst is consumed during the reaction and must be replaced.",
     "answer": [
       {
@@ -581,22 +581,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt1",
-        "option_text": "A) The catalyst increases the total energy released by the reaction",
+        "option_text": "The catalyst increases the total energy released by the reaction",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt2",
-        "option_text": "B) The catalyst allows more particles to have sufficient energy to react",
+        "option_text": "The catalyst allows more particles to have sufficient energy to react",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt3",
-        "option_text": "C) The catalyst increases the energy of the reactant particles",
+        "option_text": "The catalyst increases the energy of the reactant particles",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt4",
-        "option_text": "D) The catalyst is consumed during the reaction and must be replaced",
+        "option_text": "The catalyst is consumed during the reaction and must be replaced",
         "imageUrl": null
       }
     ],
@@ -625,7 +625,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Enzymes and Temperature Sensitivity",
-    "content": "## Question 5: Enzyme Behavior at Different Temperatures\n\nA student measures the activity of an enzyme at different temperatures:\n\n| Temperature (°C) | Enzyme Activity (%) |\n|------------------|--------------------|\n| 10               | 20                 |\n| 25               | 95                 |\n| 37               | 100                |\n| 50               | 60                 |\n| 65               | 5                  |\n\nBased on this data, which statement is **correct**?\n\nA) The enzyme becomes more active as temperature increases\n\nB) The optimum temperature for this enzyme is 37°C\n\nC) At 65°C, the enzyme is dormant and can be reactivated by cooling\n\nD) The enzyme denatures at 50°C but can still function at 65°C",
+    "content": "## Question 5: Enzyme Behavior at Different Temperatures\n\nA student measures the activity of an enzyme at different temperatures:\n\n| Temperature (°C) | Enzyme Activity (%) |\n|------------------|--------------------|\n| 10               | 20                 |\n| 25               | 95                 |\n| 37               | 100                |\n| 50               | 60                 |\n| 65               | 5                  |\n\nBased on this data, which statement is **correct**?",
     "speech_to_text_content": "A student measures the activity of an enzyme at different temperatures. At 10 degrees Celsius, activity is 20 percent. At 25 degrees Celsius, activity is 95 percent. At 37 degrees Celsius, activity is 100 percent. At 50 degrees Celsius, activity is 60 percent. At 65 degrees Celsius, activity is 5 percent. Based on this data, which statement is correct? A) The enzyme becomes more active as temperature increases. B) The optimum temperature for this enzyme is 37 degrees Celsius. C) At 65 degrees Celsius, the enzyme is dormant and can be reactivated by cooling. D) The enzyme denatures at 50 degrees Celsius but can still function at 65 degrees Celsius.",
     "answer": [
       {
@@ -641,22 +641,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt1",
-        "option_text": "A) The enzyme becomes more active as temperature increases",
+        "option_text": "The enzyme becomes more active as temperature increases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt2",
-        "option_text": "B) The optimum temperature for this enzyme is 37°C",
+        "option_text": "The optimum temperature for this enzyme is 37°C",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt3",
-        "option_text": "C) At 65°C, the enzyme is dormant and can be reactivated by cooling",
+        "option_text": "At 65°C, the enzyme is dormant and can be reactivated by cooling",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt4",
-        "option_text": "D) The enzyme denatures at 50°C but can still function at 65°C",
+        "option_text": "The enzyme denatures at 50°C but can still function at 65°C",
         "imageUrl": null
       }
     ],
@@ -685,7 +685,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Designing Experiments to Test Reaction Rate Factors",
-    "content": "## Question 6: Experimental Design for Testing Factors\n\nA student wants to investigate how the concentration of hydrochloric acid affects the rate of reaction with magnesium. Which of the following experimental procedures would be MOST APPROPRIATE?\n\nA) Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete\n\nB) Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H₂ gas produced at regular time intervals\n\nC) Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced\n\nD) Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel",
+    "content": "## Question 6: Experimental Design for Testing Factors\n\nA student wants to investigate how the concentration of hydrochloric acid affects the rate of reaction with magnesium. Which of the following experimental procedures would be MOST APPROPRIATE?",
     "speech_to_text_content": "A student wants to investigate how the concentration of hydrochloric acid affects the rate of reaction with magnesium. Which of the following experimental procedures would be most appropriate? A) Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete. B) Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H2 gas produced at regular time intervals. C) Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced. D) Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel.",
     "answer": [
       {
@@ -701,22 +701,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt1",
-        "option_text": "A) Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete",
+        "option_text": "Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt2",
-        "option_text": "B) Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H₂ gas produced at regular time intervals",
+        "option_text": "Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H₂ gas produced at regular time intervals",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt3",
-        "option_text": "C) Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced",
+        "option_text": "Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt4",
-        "option_text": "D) Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel",
+        "option_text": "Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel",
         "imageUrl": null
       }
     ],

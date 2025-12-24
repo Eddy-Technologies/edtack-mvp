@@ -211,7 +211,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Gas Collection Methods",
-    "content": "## Question 1: Selecting the Right Gas Collection Method\n\nA chemist produces hydrogen gas (H₂) in a reaction. The hydrogen is slightly soluble in water and has a relative molecular mass of 2.\n\nWhich method should be used to collect the hydrogen gas?\n\nA) Downward delivery\nB) Upward delivery\nC) Water displacement\nD) Heating with concentrated sulfuric acid",
+    "content": "## Question 1: Selecting the Right Gas Collection Method\n\nA chemist produces hydrogen gas (H₂) in a reaction. The hydrogen is slightly soluble in water and has a relative molecular mass of 2.\n\nWhich method should be used to collect the hydrogen gas?",
     "speech_to_text_content": "A chemist produces hydrogen gas in a reaction. The hydrogen is slightly soluble in water and has a relative molecular mass of 2. Which method should be used to collect the hydrogen gas? Option A: Downward delivery. Option B: Upward delivery. Option C: Water displacement. Option D: Heating with concentrated sulfuric acid.",
     "answer": [
       {
@@ -590,7 +590,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Separation Methods",
-    "content": "## Question 2: Choosing the Right Separation Method\n\nA student has a mixture of sand and salt. The student wants to separate these two solids.\n\nWhich separation method would be most suitable?\n\nA) Magnetic separation\nB) Sieving\nC) Adding water, filtering, then evaporating the filtrate\nD) Sublimation",
+    "content": "## Question 2: Choosing the Right Separation Method\n\nA student has a mixture of sand and salt. The student wants to separate these two solids.\n\nWhich separation method would be most suitable?",
     "speech_to_text_content": "A student has a mixture of sand and salt. The student wants to separate these two solids. Which separation method would be most suitable? Option A: Magnetic separation. Option B: Sieving. Option C: Adding water, filtering, then evaporating the filtrate. Option D: Sublimation.",
     "answer": [
       {
@@ -650,7 +650,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Rf Values in Chromatography",
-    "content": "## Question 3: Understanding Rf Values\n\nA student performs paper chromatography on a mixture. The results show:\n- Distance from baseline to band A: 4 cm\n- Distance from baseline to solvent front: 10 cm\n\nWhat is the Rf value for band A?\n\nA) 0.4\nB) 0.6\nC) 1.4\nD) 4",
+    "content": "## Question 3: Understanding Rf Values\n\nA student performs paper chromatography on a mixture. The results show:\n- Distance from baseline to band A: 4 cm\n- Distance from baseline to solvent front: 10 cm\n\nWhat is the Rf value for band A?",
     "speech_to_text_content": "A student performs paper chromatography on a mixture. The results show distance from baseline to band A is 4 centimetres and distance from baseline to solvent front is 10 centimetres. What is the Rf value for band A? Option A: 0.4. Option B: 0.6. Option C: 1.4. Option D: 4.",
     "answer": [
       {
@@ -710,7 +710,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Check Your Understanding: Purity and Melting Points",
-    "content": "## Question 4: Determining Purity from Melting Point Data\n\nA student measures the melting point of a sample of naphthalene (a white solid).\n\nReference melting point for pure naphthalene: 80°C\nMeasured melting point: 75-80°C\n\nWhat can the student conclude?\n\nA) The sample is definitely pure\nB) The sample contains some impurities\nC) The sample is definitely impure\nD) The melting point data is inconclusive",
+    "content": "## Question 4: Determining Purity from Melting Point Data\n\nA student measures the melting point of a sample of naphthalene (a white solid).\n\nReference melting point for pure naphthalene: 80°C\nMeasured melting point: 75-80°C\n\nWhat can the student conclude?",
     "speech_to_text_content": "A student measures the melting point of a sample of naphthalene. Reference melting point for pure naphthalene is 80 degrees Celsius. Measured melting point is 75 to 80 degrees Celsius. What can the student conclude? Option A: The sample is definitely pure. Option B: The sample contains some impurities. Option C: The sample is definitely impure. Option D: The melting point data is inconclusive.",
     "answer": [
       {

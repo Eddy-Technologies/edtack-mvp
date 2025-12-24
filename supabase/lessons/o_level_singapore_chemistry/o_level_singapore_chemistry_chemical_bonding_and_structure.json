@@ -501,7 +501,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Ionic Bonding",
-    "content": "## Question 1: Ionic Bonding\n\nWhich of the following describes how an ionic bond forms between sodium and chlorine?\n\nA) Sodium and chlorine share electrons equally\n\nB) Sodium transfers one electron to chlorine, and opposite charges attract\n\nC) Chlorine transfers electrons to sodium\n\nD) Both sodium and chlorine lose electrons to form a neutral compound",
+    "content": "## Question 1: Ionic Bonding\n\nWhich of the following describes how an ionic bond forms between sodium and chlorine?",
     "speech_to_text_content": "Which of the following describes how an ionic bond forms between sodium and chlorine? Option A: Sodium and chlorine share electrons equally. Option B: Sodium transfers one electron to chlorine, and opposite charges attract. Option C: Chlorine transfers electrons to sodium. Option D: Both sodium and chlorine lose electrons to form a neutral compound.",
     "answer": [
       {
@@ -517,22 +517,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt-a",
-        "option_text": "A) Sodium and chlorine share electrons equally",
+        "option_text": "Sodium and chlorine share electrons equally",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt-b",
-        "option_text": "B) Sodium transfers one electron to chlorine, and opposite charges attract",
+        "option_text": "Sodium transfers one electron to chlorine, and opposite charges attract",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt-c",
-        "option_text": "C) Chlorine transfers electrons to sodium",
+        "option_text": "Chlorine transfers electrons to sodium",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt-d",
-        "option_text": "D) Both sodium and chlorine lose electrons to form a neutral compound",
+        "option_text": "Both sodium and chlorine lose electrons to form a neutral compound",
         "imageUrl": null
       }
     ],
@@ -561,7 +561,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Covalent Bonding",
-    "content": "## Question 2: Covalent Bonding\n\nWhich statement correctly describes covalent bonding in oxygen gas (O₂)?\n\nA) Each oxygen atom loses 2 electrons to achieve a stable configuration\n\nB) The two oxygen atoms share 2 pairs of electrons, forming a double bond\n\nC) One oxygen atom transfers electrons to the other oxygen atom\n\nD) Each oxygen atom shares 4 electrons with the other oxygen atom",
+    "content": "## Question 2: Covalent Bonding\n\nWhich statement correctly describes covalent bonding in oxygen gas (O₂)?",
     "speech_to_text_content": "Which statement correctly describes covalent bonding in oxygen gas? Option A: Each oxygen atom loses 2 electrons to achieve a stable configuration. Option B: The two oxygen atoms share 2 pairs of electrons, forming a double bond. Option C: One oxygen atom transfers electrons to the other oxygen atom. Option D: Each oxygen atom shares 4 electrons with the other oxygen atom.",
     "answer": [
       {
@@ -577,22 +577,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-a",
-        "option_text": "A) Each oxygen atom loses 2 electrons to achieve a stable configuration",
+        "option_text": "Each oxygen atom loses 2 electrons to achieve a stable configuration",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-b",
-        "option_text": "B) The two oxygen atoms share 2 pairs of electrons, forming a double bond",
+        "option_text": "The two oxygen atoms share 2 pairs of electrons, forming a double bond",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-c",
-        "option_text": "C) One oxygen atom transfers electrons to the other oxygen atom",
+        "option_text": "One oxygen atom transfers electrons to the other oxygen atom",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019-opt-d",
-        "option_text": "D) Each oxygen atom shares 4 electrons with the other oxygen atom",
+        "option_text": "Each oxygen atom shares 4 electrons with the other oxygen atom",
         "imageUrl": null
       }
     ],
@@ -621,7 +621,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Metallic Bonding",
-    "content": "## Question 3: Metallic Bonding and Metal Properties\n\nWhich property of metals can be explained by the presence of delocalised electrons in the metallic structure?\n\nA) Metals are hard because atoms are packed tightly together\n\nB) Metals conduct electricity because delocalised electrons can move freely throughout the structure\n\nC) Metals have high melting points because they form covalent bonds\n\nD) Metals are brittle because the lattice structure breaks easily",
+    "content": "## Question 3: Metallic Bonding and Metal Properties\n\nWhich property of metals can be explained by the presence of delocalised electrons in the metallic structure?",
     "speech_to_text_content": "Which property of metals can be explained by the presence of delocalised electrons in the metallic structure? Option A: Metals are hard because atoms are packed tightly together. Option B: Metals conduct electricity because delocalised electrons can move freely throughout the structure. Option C: Metals have high melting points because they form covalent bonds. Option D: Metals are brittle because the lattice structure breaks easily.",
     "answer": [
       {
@@ -637,22 +637,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440020-opt-a",
-        "option_text": "A) Metals are hard because atoms are packed tightly together",
+        "option_text": "Metals are hard because atoms are packed tightly together",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020-opt-b",
-        "option_text": "B) Metals conduct electricity because delocalised electrons can move freely throughout the structure",
+        "option_text": "Metals conduct electricity because delocalised electrons can move freely throughout the structure",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020-opt-c",
-        "option_text": "C) Metals have high melting points because they form covalent bonds",
+        "option_text": "Metals have high melting points because they form covalent bonds",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020-opt-d",
-        "option_text": "D) Metals are brittle because the lattice structure breaks easily",
+        "option_text": "Metals are brittle because the lattice structure breaks easily",
         "imageUrl": null
       }
     ],
@@ -681,7 +681,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Structure and Properties",
-    "content": "## Question 4: Relating Structure to Physical Properties\n\nWhich of the following substances would you expect to have a HIGH melting point and conduct electricity ONLY when molten or dissolved in water?\n\nA) Methane (CH₄) - a simple molecular substance\n\nB) Sodium chloride (NaCl) - an ionic compound\n\nC) Diamond (C) - a giant covalent substance\n\nD) Copper (Cu) - a metal",
+    "content": "## Question 4: Relating Structure to Physical Properties\n\nWhich of the following substances would you expect to have a HIGH melting point and conduct electricity ONLY when molten or dissolved in water?",
     "speech_to_text_content": "Which of the following substances would you expect to have a high melting point and conduct electricity only when molten or dissolved in water? Option A: Methane, a simple molecular substance. Option B: Sodium chloride, an ionic compound. Option C: Diamond, a giant covalent substance. Option D: Copper, a metal.",
     "answer": [
       {
@@ -697,22 +697,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440021-opt-a",
-        "option_text": "A) Methane (CH₄) - a simple molecular substance",
+        "option_text": "Methane (CH₄) - a simple molecular substance",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021-opt-b",
-        "option_text": "B) Sodium chloride (NaCl) - an ionic compound",
+        "option_text": "Sodium chloride (NaCl) - an ionic compound",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021-opt-c",
-        "option_text": "C) Diamond (C) - a giant covalent substance",
+        "option_text": "Diamond (C) - a giant covalent substance",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021-opt-d",
-        "option_text": "D) Copper (Cu) - a metal",
+        "option_text": "Copper (Cu) - a metal",
         "imageUrl": null
       }
     ],
@@ -741,7 +741,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Elements, Compounds, and Mixtures",
-    "content": "## Question 5: Classifying Substances\n\nWhich of the following is a COMPOUND?\n\nA) Oxygen gas (O₂)\n\nB) Water (H₂O)\n\nC) Nitrogen gas (N₂)\n\nD) Copper (Cu)",
+    "content": "## Question 5: Classifying Substances\n\nWhich of the following is a COMPOUND?",
     "speech_to_text_content": "Which of the following is a compound? Option A: Oxygen gas. Option B: Water. Option C: Nitrogen gas. Option D: Copper.",
     "answer": [
       {
@@ -757,22 +757,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440022-opt-a",
-        "option_text": "A) Oxygen gas (O₂)",
+        "option_text": "Oxygen gas (O₂)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440022-opt-b",
-        "option_text": "B) Water (H₂O)",
+        "option_text": "Water (H₂O)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440022-opt-c",
-        "option_text": "C) Nitrogen gas (N₂)",
+        "option_text": "Nitrogen gas (N₂)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440022-opt-d",
-        "option_text": "D) Copper (Cu)",
+        "option_text": "Copper (Cu)",
         "imageUrl": null
       }
     ],
@@ -801,7 +801,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Diamond vs Graphite",
-    "content": "## Question 6: Allotropes of Carbon\n\nWhy does graphite conduct electricity while diamond does not, even though both are made of pure carbon?\n\nA) Graphite has a lower melting point than diamond\n\nB) Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding\n\nC) Diamond is harder than graphite\n\nD) Graphite is a mixture while diamond is a pure element",
+    "content": "## Question 6: Allotropes of Carbon\n\nWhy does graphite conduct electricity while diamond does not, even though both are made of pure carbon?",
     "speech_to_text_content": "Why does graphite conduct electricity while diamond does not, even though both are made of pure carbon? Option A: Graphite has a lower melting point than diamond. Option B: Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding. Option C: Diamond is harder than graphite. Option D: Graphite is a mixture while diamond is a pure element.",
     "answer": [
       {
@@ -817,22 +817,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440023-opt-a",
-        "option_text": "A) Graphite has a lower melting point than diamond",
+        "option_text": "Graphite has a lower melting point than diamond",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440023-opt-b",
-        "option_text": "B) Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding",
+        "option_text": "Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440023-opt-c",
-        "option_text": "C) Diamond is harder than graphite",
+        "option_text": "Diamond is harder than graphite",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440023-opt-d",
-        "option_text": "D) Graphite is a mixture while diamond is a pure element",
+        "option_text": "Graphite is a mixture while diamond is a pure element",
         "imageUrl": null
       }
     ],

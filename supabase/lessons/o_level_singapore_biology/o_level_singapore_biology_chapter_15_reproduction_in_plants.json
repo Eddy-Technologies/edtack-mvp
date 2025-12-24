@@ -327,7 +327,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Identifying Flower Parts - Multiple Choice",
-    "content": "## Question: Flower Structure\n\nWhich of the following is the correct pairing of flower part and its function?\n\nA) ::yellow[Sepal] - attracts insects through bright colors\nB) ::yellow[Anther] - receives pollen grains during pollination\nC) ::yellow[Stigma] - receives pollen grains during pollination\nD) ::yellow[Filament] - produces pollen grains",
+    "content": "## Question: Flower Structure\n\nWhich of the following is the correct pairing of flower part and its function?",
     "speech_to_text_content": "Which of the following is the correct pairing of flower part and its function? Option A: Sepal attracts insects through bright colors. Option B: Anther receives pollen grains during pollination. Option C: Stigma receives pollen grains during pollination. Option D: Filament produces pollen grains.",
     "answer": [
       {
@@ -343,22 +343,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440012a",
-        "option_text": "A) Sepal attracts insects through bright colors",
+        "option_text": "Sepal attracts insects through bright colors",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012b",
-        "option_text": "B) Anther receives pollen grains during pollination",
+        "option_text": "Anther receives pollen grains during pollination",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012c",
-        "option_text": "C) Stigma receives pollen grains during pollination",
+        "option_text": "Stigma receives pollen grains during pollination",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012d",
-        "option_text": "D) Filament produces pollen grains",
+        "option_text": "Filament produces pollen grains",
         "imageUrl": null
       }
     ],
@@ -387,7 +387,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Comparing Pollination Types - Multiple Choice",
-    "content": "## Question: Pollination Characteristics\n\nWhich statement correctly describes the difference between insect-pollinated and wind-pollinated flowers?\n\nA) Insect-pollinated flowers have feathery stigmas; wind-pollinated flowers have sticky stigmas\nB) Insect-pollinated flowers produce abundant smooth pollen; wind-pollinated flowers produce moderate sticky pollen\nC) Insect-pollinated flowers have bright petals and nectar; wind-pollinated flowers have small or absent petals and no nectar\nD) Insect-pollinated flowers have long pendulous stamens; wind-pollinated flowers have short sturdy stamens",
+    "content": "## Question: Pollination Characteristics\n\nWhich statement correctly describes the difference between insect-pollinated and wind-pollinated flowers?",
     "speech_to_text_content": "Which statement correctly describes the difference between insect-pollinated and wind-pollinated flowers? Option A: Insect-pollinated flowers have feathery stigmas; wind-pollinated flowers have sticky stigmas. Option B: Insect-pollinated flowers produce abundant smooth pollen; wind-pollinated flowers produce moderate sticky pollen. Option C: Insect-pollinated flowers have bright petals and nectar; wind-pollinated flowers have small or absent petals and no nectar. Option D: Insect-pollinated flowers have long pendulous stamens; wind-pollinated flowers have short sturdy stamens.",
     "answer": [
       {
@@ -403,22 +403,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440013a",
-        "option_text": "A) Insect-pollinated flowers have feathery stigmas; wind-pollinated flowers have sticky stigmas",
+        "option_text": "Insect-pollinated flowers have feathery stigmas; wind-pollinated flowers have sticky stigmas",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013b",
-        "option_text": "B) Insect-pollinated flowers produce abundant smooth pollen; wind-pollinated flowers produce moderate sticky pollen",
+        "option_text": "Insect-pollinated flowers produce abundant smooth pollen; wind-pollinated flowers produce moderate sticky pollen",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013c",
-        "option_text": "C) Insect-pollinated flowers have bright petals and nectar; wind-pollinated flowers have small or absent petals and no nectar",
+        "option_text": "Insect-pollinated flowers have bright petals and nectar; wind-pollinated flowers have small or absent petals and no nectar",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013d",
-        "option_text": "D) Insect-pollinated flowers have long pendulous stamens; wind-pollinated flowers have short sturdy stamens",
+        "option_text": "Insect-pollinated flowers have long pendulous stamens; wind-pollinated flowers have short sturdy stamens",
         "imageUrl": null
       }
     ],
@@ -447,7 +447,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Self-Pollination vs Cross-Pollination",
-    "content": "## Question: Types of Pollination\n\nA student observes two flowers on the same plant. One flower has male and female parts that mature at the same time and are positioned close together. The other flower has male parts that mature before the female parts.\n\nWhich statement best explains the pollination outcomes?\n\nA) Both flowers will undergo self-pollination because they are on the same plant\nB) The first flower is more likely to self-pollinate; the second flower is more likely to cross-pollinate\nC) The first flower will cross-pollinate; the second flower will self-pollinate\nD) Both flowers will undergo cross-pollination because they are exposed to wind",
+    "content": "## Question: Types of Pollination\n\nA student observes two flowers on the same plant. One flower has male and female parts that mature at the same time and are positioned close together. The other flower has male parts that mature before the female parts.\n\nWhich statement best explains the pollination outcomes?",
     "speech_to_text_content": "A student observes two flowers on the same plant. One flower has male and female parts that mature at the same time and are positioned close together. The other flower has male parts that mature before the female parts. Which statement best explains the pollination outcomes? Option A: Both flowers will undergo self-pollination because they are on the same plant. Option B: The first flower is more likely to self-pollinate; the second flower is more likely to cross-pollinate. Option C: The first flower will cross-pollinate; the second flower will self-pollinate. Option D: Both flowers will undergo cross-pollination because they are exposed to wind.",
     "answer": [
       {
@@ -463,22 +463,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014a",
-        "option_text": "A) Both flowers will undergo self-pollination because they are on the same plant",
+        "option_text": "Both flowers will undergo self-pollination because they are on the same plant",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014b",
-        "option_text": "B) The first flower is more likely to self-pollinate; the second flower is more likely to cross-pollinate",
+        "option_text": "The first flower is more likely to self-pollinate; the second flower is more likely to cross-pollinate",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014c",
-        "option_text": "C) The first flower will cross-pollinate; the second flower will self-pollinate",
+        "option_text": "The first flower will cross-pollinate; the second flower will self-pollinate",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014d",
-        "option_text": "D) Both flowers will undergo cross-pollination because they are exposed to wind",
+        "option_text": "Both flowers will undergo cross-pollination because they are exposed to wind",
         "imageUrl": null
       }
     ],
@@ -507,7 +507,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Fertilization and Seed Development",
-    "content": "## Question: Post-Fertilization Changes\n\nAfter fertilization occurs in a flower, which of the following sequences correctly describes what happens to the flower parts?\n\nA) Ovule → seed, Ovary → fruit, Petals and stamens remain on the plant\nB) Ovule → seed, Ovary → fruit, Petals and stamens wither and drop off\nC) Zygote → ovule, Ovary → seed, Petals become brighter to protect seeds\nD) Stigma → seed, Style → fruit, Petals remain to protect developing seeds",
+    "content": "## Question: Post-Fertilization Changes\n\nAfter fertilization occurs in a flower, which of the following sequences correctly describes what happens to the flower parts?",
     "speech_to_text_content": "After fertilization occurs in a flower, which of the following sequences correctly describes what happens to the flower parts? Option A: Ovule becomes seed, Ovary becomes fruit, Petals and stamens remain on the plant. Option B: Ovule becomes seed, Ovary becomes fruit, Petals and stamens wither and drop off. Option C: Zygote becomes ovule, Ovary becomes seed, Petals become brighter to protect seeds. Option D: Stigma becomes seed, Style becomes fruit, Petals remain to protect developing seeds.",
     "answer": [
       {
@@ -523,22 +523,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015a",
-        "option_text": "A) Ovule → seed, Ovary → fruit, Petals and stamens remain on the plant",
+        "option_text": "Ovule → seed, Ovary → fruit, Petals and stamens remain on the plant",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015b",
-        "option_text": "B) Ovule → seed, Ovary → fruit, Petals and stamens wither and drop off",
+        "option_text": "Ovule → seed, Ovary → fruit, Petals and stamens wither and drop off",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015c",
-        "option_text": "C) Zygote → ovule, Ovary → seed, Petals become brighter to protect seeds",
+        "option_text": "Zygote → ovule, Ovary → seed, Petals become brighter to protect seeds",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015d",
-        "option_text": "D) Stigma → seed, Style → fruit, Petals remain to protect developing seeds",
+        "option_text": "Stigma → seed, Style → fruit, Petals remain to protect developing seeds",
         "imageUrl": null
       }
     ],

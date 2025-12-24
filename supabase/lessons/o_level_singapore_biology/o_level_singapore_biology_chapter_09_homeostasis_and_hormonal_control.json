@@ -124,7 +124,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Temperature Regulation - Check Your Understanding",
-    "content": "## Question 1: Temperature Control\n\nWhich of the following best explains why ::yellow[**sweating**] cools the body?\n\nA) Sweat contains cold chemicals that lower body temperature\nB) The production of sweat uses energy, cooling the body\nC) Water in sweat evaporates, removing heat energy from the body\nD) Sweat causes blood vessels to dilate, increasing heat loss",
+    "content": "## Question 1: Temperature Control\n\nWhich of the following best explains why ::yellow[**sweating**] cools the body?",
     "speech_to_text_content": "Which of the following best explains why sweating cools the body? A) Sweat contains cold chemicals that lower body temperature. B) The production of sweat uses energy, cooling the body. C) Water in sweat evaporates, removing heat energy from the body. D) Sweat causes blood vessels to dilate, increasing heat loss.",
     "answer": [
       {
@@ -140,22 +140,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440005-opt-a",
-        "option_text": "A) Sweat contains cold chemicals that lower body temperature",
+        "option_text": "Sweat contains cold chemicals that lower body temperature",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440005-opt-b",
-        "option_text": "B) The production of sweat uses energy, cooling the body",
+        "option_text": "The production of sweat uses energy, cooling the body",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440005-opt-c",
-        "option_text": "C) Water in sweat evaporates, removing heat energy from the body",
+        "option_text": "Water in sweat evaporates, removing heat energy from the body",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440005-opt-d",
-        "option_text": "D) Sweat causes blood vessels to dilate, increasing heat loss",
+        "option_text": "Sweat causes blood vessels to dilate, increasing heat loss",
         "imageUrl": null
       }
     ],
@@ -242,7 +242,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Blood Glucose Regulation - Understanding Insulin and Glucagon",
-    "content": "## Question 2: Hormone Function\n\nA student eats a large bowl of rice for lunch. Which of the following best describes what happens to blood glucose and insulin levels?\n\nA) Blood glucose decreases; insulin levels decrease\nB) Blood glucose increases; insulin levels increase\nC) Blood glucose increases; insulin levels decrease\nD) Blood glucose decreases; insulin levels increase",
+    "content": "## Question 2: Hormone Function\n\nA student eats a large bowl of rice for lunch. Which of the following best describes what happens to blood glucose and insulin levels?",
     "speech_to_text_content": "A student eats a large bowl of rice for lunch. Which of the following best describes what happens to blood glucose and insulin levels? A) Blood glucose decreases; insulin levels decrease. B) Blood glucose increases; insulin levels increase. C) Blood glucose increases; insulin levels decrease. D) Blood glucose decreases; insulin levels increase.",
     "answer": [
       {
@@ -258,22 +258,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt-a",
-        "option_text": "A) Blood glucose decreases; insulin levels decrease",
+        "option_text": "Blood glucose decreases; insulin levels decrease",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt-b",
-        "option_text": "B) Blood glucose increases; insulin levels increase",
+        "option_text": "Blood glucose increases; insulin levels increase",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt-c",
-        "option_text": "C) Blood glucose increases; insulin levels decrease",
+        "option_text": "Blood glucose increases; insulin levels decrease",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt-d",
-        "option_text": "D) Blood glucose decreases; insulin levels increase",
+        "option_text": "Blood glucose decreases; insulin levels increase",
         "imageUrl": null
       }
     ],
@@ -360,7 +360,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Diabetes Types - Understanding the Differences",
-    "content": "## Question 3: Type 1 vs. Type 2 Diabetes\n\nA 45-year-old man who is overweight and sedentary is diagnosed with diabetes. His fasting blood glucose is 150 mg/dL, but his pancreas is still producing some insulin. Which type of diabetes is he most likely to have?\n\nA) Type 1 diabetes, because he has high blood glucose\nB) Type 2 diabetes, because he is overweight and has risk factors\nC) Type 1 diabetes, because his pancreas is still producing insulin\nD) Type 2 diabetes, because he is over 40 years old",
+    "content": "## Question 3: Type 1 vs. Type 2 Diabetes\n\nA 45-year-old man who is overweight and sedentary is diagnosed with diabetes. His fasting blood glucose is 150 mg/dL, but his pancreas is still producing some insulin. Which type of diabetes is he most likely to have?",
     "speech_to_text_content": "A 45-year-old man who is overweight and sedentary is diagnosed with diabetes. His fasting blood glucose is 150 milligrams per deciliter, but his pancreas is still producing some insulin. Which type of diabetes is he most likely to have? A) Type 1 diabetes because he has high blood glucose. B) Type 2 diabetes because he is overweight and has risk factors. C) Type 1 diabetes because his pancreas is still producing insulin. D) Type 2 diabetes because he is over 40 years old.",
     "answer": [
       {
@@ -376,22 +376,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-a",
-        "option_text": "A) Type 1 diabetes, because he has high blood glucose",
+        "option_text": "Type 1 diabetes, because he has high blood glucose",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-b",
-        "option_text": "B) Type 2 diabetes, because he is overweight and has risk factors",
+        "option_text": "Type 2 diabetes, because he is overweight and has risk factors",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-c",
-        "option_text": "C) Type 1 diabetes, because his pancreas is still producing insulin",
+        "option_text": "Type 1 diabetes, because his pancreas is still producing insulin",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt-d",
-        "option_text": "D) Type 2 diabetes, because he is over 40 years old",
+        "option_text": "Type 2 diabetes, because he is over 40 years old",
         "imageUrl": null
       }
     ],
@@ -449,7 +449,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "ADH and Water Balance - Understanding Osmoregulation",
-    "content": "## Question 4: ADH and Water Regulation\n\nA person exercises intensely in hot weather and loses a lot of water through sweating. Which of the following correctly describes what happens to ADH and urine production?\n\nA) ADH levels decrease; more dilute urine is produced\nB) ADH levels increase; more concentrated urine is produced\nC) ADH levels decrease; more concentrated urine is produced\nD) ADH levels increase; more dilute urine is produced",
+    "content": "## Question 4: ADH and Water Regulation\n\nA person exercises intensely in hot weather and loses a lot of water through sweating. Which of the following correctly describes what happens to ADH and urine production?",
     "speech_to_text_content": "A person exercises intensely in hot weather and loses a lot of water through sweating and becomes dehydrated. Which of the following correctly describes what happens to ADH and urine production? A) ADH levels decrease; more dilute urine is produced. B) ADH levels increase; more concentrated urine is produced. C) ADH levels decrease; more concentrated urine is produced. D) ADH levels increase; more dilute urine is produced.",
     "answer": [
       {
@@ -465,22 +465,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-a",
-        "option_text": "A) ADH levels decrease; more dilute urine is produced",
+        "option_text": "ADH levels decrease; more dilute urine is produced",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-b",
-        "option_text": "B) ADH levels increase; more concentrated urine is produced",
+        "option_text": "ADH levels increase; more concentrated urine is produced",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-c",
-        "option_text": "C) ADH levels decrease; more concentrated urine is produced",
+        "option_text": "ADH levels decrease; more concentrated urine is produced",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt-d",
-        "option_text": "D) ADH levels increase; more dilute urine is produced",
+        "option_text": "ADH levels increase; more dilute urine is produced",
         "imageUrl": null
       }
     ],
@@ -538,7 +538,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Nervous vs. Hormonal System - Comparing Control Systems",
-    "content": "## Question 5: System Comparison\n\nWhich of the following best explains why the hormonal system is better suited for maintaining blood glucose homeostasis than the nervous system?\n\nA) The hormonal system responds faster than the nervous system\nB) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments\nC) The nervous system is only found in the brain, not throughout the body\nD) The hormonal system controls all body functions, while the nervous system controls none",
+    "content": "## Question 5: System Comparison\n\nWhich of the following best explains why the hormonal system is better suited for maintaining blood glucose homeostasis than the nervous system?",
     "speech_to_text_content": "Which of the following best explains why the hormonal system is better suited for maintaining blood glucose homeostasis than the nervous system? A) The hormonal system responds faster than the nervous system. B) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments. C) The nervous system is only found in the brain, not throughout the body. D) The hormonal system controls all body functions, while the nervous system controls none.",
     "answer": [
       {
@@ -554,22 +554,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-a",
-        "option_text": "A) The hormonal system responds faster than the nervous system",
+        "option_text": "The hormonal system responds faster than the nervous system",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
-        "option_text": "B) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments",
+        "option_text": "The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-c",
-        "option_text": "C) The nervous system is only found in the brain, not throughout the body",
+        "option_text": "The nervous system is only found in the brain, not throughout the body",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt-d",
-        "option_text": "D) The hormonal system controls all body functions, while the nervous system controls none",
+        "option_text": "The hormonal system controls all body functions, while the nervous system controls none",
         "imageUrl": null
       }
     ],
@@ -627,7 +627,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Comprehensive Assessment - Homeostasis Mechanisms",
-    "content": "## Question 6: Integrating Multiple Concepts\n\nA student becomes ill with a fever. Her body temperature rises to 39°C. Which of the following best explains the sequence of events that occurs?\n\nA) Thermoreceptors detect high temperature → hypothalamus signals → vasoconstriction and shivering → temperature decreases\nB) Thermoreceptors detect high temperature → hypothalamus signals → vasodilation and sweating → temperature decreases\nC) Insulin levels increase → blood glucose decreases → thermoreceptors detect change → temperature decreases\nD) ADH levels decrease → more water is lost → blood becomes concentrated → temperature increases",
+    "content": "## Question 6: Integrating Multiple Concepts\n\nA student becomes ill with a fever. Her body temperature rises to 39°C. Which of the following best explains the sequence of events that occurs?",
     "speech_to_text_content": "A student becomes ill with a fever. Her body temperature rises to 39 degrees Celsius. Which of the following best explains the sequence of events that occurs? A) Thermoreceptors detect high temperature, hypothalamus signals, vasoconstriction and shivering occur, temperature decreases. B) Thermoreceptors detect high temperature, hypothalamus signals, vasodilation and sweating occur, temperature decreases. C) Insulin levels increase, blood glucose decreases, thermoreceptors detect change, temperature decreases. D) ADH levels decrease, more water is lost, blood becomes concentrated, temperature increases.",
     "answer": [
       {
@@ -643,22 +643,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-a",
-        "option_text": "A) Thermoreceptors detect high temperature → hypothalamus signals → vasoconstriction and shivering → temperature decreases",
+        "option_text": "Thermoreceptors detect high temperature → hypothalamus signals → vasoconstriction and shivering → temperature decreases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-b",
-        "option_text": "B) Thermoreceptors detect high temperature → hypothalamus signals → vasodilation and sweating → temperature decreases",
+        "option_text": "Thermoreceptors detect high temperature → hypothalamus signals → vasodilation and sweating → temperature decreases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-c",
-        "option_text": "C) Insulin levels increase → blood glucose decreases → thermoreceptors detect change → temperature decreases",
+        "option_text": "Insulin levels increase → blood glucose decreases → thermoreceptors detect change → temperature decreases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt-d",
-        "option_text": "D) ADH levels decrease → more water is lost → blood becomes concentrated → temperature increases",
+        "option_text": "ADH levels decrease → more water is lost → blood becomes concentrated → temperature increases",
         "imageUrl": null
       }
     ],

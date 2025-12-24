@@ -298,7 +298,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Structure and Function - Alveoli Adaptations",
-    "content": "## Question 1: Alveolar Adaptations\n\nWhich of the following is NOT an adaptation of the alveolus for efficient gas exchange?\n\nA) One cell thick wall  \nB) Approximately 300 million alveoli in each lung  \nC) Surrounded by capillaries  \nD) Lined with thick epithelial tissue for protection",
+    "content": "## Question 1: Alveolar Adaptations\n\nWhich of the following is NOT an adaptation of the alveolus for efficient gas exchange?",
     "speech_to_text_content": "Question 1. Which of the following is NOT an adaptation of the alveolus for efficient gas exchange? A) One cell thick wall. B) Approximately 300 million alveoli in each lung. C) Surrounded by capillaries. D) Lined with thick epithelial tissue for protection.",
     "answer": [
       {
@@ -314,22 +314,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt1",
-        "option_text": "A) One cell thick wall",
+        "option_text": "One cell thick wall",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt2",
-        "option_text": "B) Approximately 300 million alveoli in each lung",
+        "option_text": "Approximately 300 million alveoli in each lung",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt3",
-        "option_text": "C) Surrounded by capillaries",
+        "option_text": "Surrounded by capillaries",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440011-opt4",
-        "option_text": "D) Lined with thick epithelial tissue for protection",
+        "option_text": "Lined with thick epithelial tissue for protection",
         "imageUrl": null
       }
     ],
@@ -358,7 +358,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Breathing Mechanism - Pressure and Volume",
-    "content": "## Question 2: Inspiration Process\n\nDuring inspiration (breathing in), which of the following occurs?\n\nA) Diaphragm contracts and moves upward; thoracic volume decreases  \nB) Diaphragm relaxes and moves downward; thoracic volume increases  \nC) Diaphragm contracts and moves downward; thoracic volume increases  \nD) External intercostal muscles relax; ribs move downward",
+    "content": "## Question 2: Inspiration Process\n\nDuring inspiration (breathing in), which of the following occurs?",
     "speech_to_text_content": "Question 2. During inspiration or breathing in, which of the following occurs? A) Diaphragm contracts and moves upward; thoracic volume decreases. B) Diaphragm relaxes and moves downward; thoracic volume increases. C) Diaphragm contracts and moves downward; thoracic volume increases. D) External intercostal muscles relax; ribs move downward.",
     "answer": [
       {
@@ -374,22 +374,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt1",
-        "option_text": "A) Diaphragm contracts and moves upward; thoracic volume decreases",
+        "option_text": "Diaphragm contracts and moves upward; thoracic volume decreases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt2",
-        "option_text": "B) Diaphragm relaxes and moves downward; thoracic volume increases",
+        "option_text": "Diaphragm relaxes and moves downward; thoracic volume increases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt3",
-        "option_text": "C) Diaphragm contracts and moves downward; thoracic volume increases",
+        "option_text": "Diaphragm contracts and moves downward; thoracic volume increases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt4",
-        "option_text": "D) External intercostal muscles relax; ribs move downward",
+        "option_text": "External intercostal muscles relax; ribs move downward",
         "imageUrl": null
       }
     ],
@@ -418,7 +418,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Aerobic vs. Anaerobic Respiration",
-    "content": "## Question 3: Respiration Comparison\n\nWhich statement correctly compares aerobic and anaerobic respiration?\n\nA) Both require oxygen and produce the same amount of ATP  \nB) Aerobic respiration requires oxygen and produces more ATP; anaerobic respiration does not require oxygen but produces lactic acid  \nC) Anaerobic respiration is more efficient and produces more energy than aerobic respiration  \nD) Both occur in the mitochondria and produce carbon dioxide",
+    "content": "## Question 3: Respiration Comparison\n\nWhich statement correctly compares aerobic and anaerobic respiration?",
     "speech_to_text_content": "Question 3. Which statement correctly compares aerobic and anaerobic respiration? A) Both require oxygen and produce the same amount of ATP. B) Aerobic respiration requires oxygen and produces more ATP; anaerobic respiration does not require oxygen but produces lactic acid. C) Anaerobic respiration is more efficient and produces more energy than aerobic respiration. D) Both occur in the mitochondria and produce carbon dioxide.",
     "answer": [
       {
@@ -434,22 +434,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt1",
-        "option_text": "A) Both require oxygen and produce the same amount of ATP",
+        "option_text": "Both require oxygen and produce the same amount of ATP",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt2",
-        "option_text": "B) Aerobic respiration requires oxygen and produces more ATP; anaerobic respiration does not require oxygen but produces lactic acid",
+        "option_text": "Aerobic respiration requires oxygen and produces more ATP; anaerobic respiration does not require oxygen but produces lactic acid",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt3",
-        "option_text": "C) Anaerobic respiration is more efficient and produces more energy than aerobic respiration",
+        "option_text": "Anaerobic respiration is more efficient and produces more energy than aerobic respiration",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt4",
-        "option_text": "D) Both occur in the mitochondria and produce carbon dioxide",
+        "option_text": "Both occur in the mitochondria and produce carbon dioxide",
         "imageUrl": null
       }
     ],
@@ -478,7 +478,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Smoking Effects - Tar Damage",
-    "content": "## Question 4: Effects of Tar in Tobacco Smoke\n\nWhich of the following best explains why tar in tobacco smoke damages the respiratory system's ability to clear particles?\n\nA) Tar increases mucus production, causing excessive buildup  \nB) Tar paralyzes or kills ciliated cells, preventing the mucociliary escalator from functioning  \nC) Tar reduces oxygen absorption in the alveoli  \nD) Tar thickens the diaphragm, reducing breathing efficiency",
+    "content": "## Question 4: Effects of Tar in Tobacco Smoke\n\nWhich of the following best explains why tar in tobacco smoke damages the respiratory system's ability to clear particles?",
     "speech_to_text_content": "Question 4. Which of the following best explains why tar in tobacco smoke damages the respiratory system's ability to clear particles? A) Tar increases mucus production, causing excessive buildup. B) Tar paralyzes or kills ciliated cells, preventing the mucociliary escalator from functioning. C) Tar reduces oxygen absorption in the alveoli. D) Tar thickens the diaphragm, reducing breathing efficiency.",
     "answer": [
       {
@@ -494,22 +494,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
-        "option_text": "A) Tar increases mucus production, causing excessive buildup",
+        "option_text": "Tar increases mucus production, causing excessive buildup",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
-        "option_text": "B) Tar paralyzes or kills ciliated cells, preventing the mucociliary escalator from functioning",
+        "option_text": "Tar paralyzes or kills ciliated cells, preventing the mucociliary escalator from functioning",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
-        "option_text": "C) Tar reduces oxygen absorption in the alveoli",
+        "option_text": "Tar reduces oxygen absorption in the alveoli",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
-        "option_text": "D) Tar thickens the diaphragm, reducing breathing efficiency",
+        "option_text": "Tar thickens the diaphragm, reducing breathing efficiency",
         "imageUrl": null
       }
     ],
@@ -538,7 +538,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Oxygen Debt and Exercise Recovery",
-    "content": "## Question 5: Oxygen Debt Explanation\n\nWhy do you continue to breathe rapidly and deeply for several minutes after finishing an intense sprint?\n\nA) Your body is cooling down from the heat generated by exercise  \nB) Your lungs need to expand back to their normal size  \nC) Your body is repaying an oxygen debt by converting lactic acid back to glucose  \nD) Your heart needs extra oxygen to return to normal heart rate",
+    "content": "## Question 5: Oxygen Debt Explanation\n\nWhy do you continue to breathe rapidly and deeply for several minutes after finishing an intense sprint?",
     "speech_to_text_content": "Question 5. Why do you continue to breathe rapidly and deeply for several minutes after finishing an intense sprint? A) Your body is cooling down from the heat generated by exercise. B) Your lungs need to expand back to their normal size. C) Your body is repaying an oxygen debt by converting lactic acid back to glucose. D) Your heart needs extra oxygen to return to normal heart rate.",
     "answer": [
       {
@@ -554,22 +554,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
-        "option_text": "A) Your body is cooling down from the heat generated by exercise",
+        "option_text": "Your body is cooling down from the heat generated by exercise",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
-        "option_text": "B) Your lungs need to expand back to their normal size",
+        "option_text": "Your lungs need to expand back to their normal size",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
-        "option_text": "C) Your body is repaying an oxygen debt by converting lactic acid back to glucose",
+        "option_text": "Your body is repaying an oxygen debt by converting lactic acid back to glucose",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
-        "option_text": "D) Your heart needs extra oxygen to return to normal heart rate",
+        "option_text": "Your heart needs extra oxygen to return to normal heart rate",
         "imageUrl": null
       }
     ],

@@ -559,7 +559,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Knowledge: Carbohydrates",
-    "content": "## Question: Identifying Carbohydrates\n\nWhich of the following is the correct chemical formula for glucose, a monosaccharide?\n\nA) C₆H₁₂O₆\nB) C₁₂H₂₂O₁₁\nC) (CH₂O)ₙ where n = 6\nD) C₅₇H₁₁₀O₆",
+    "content": "## Question: Identifying Carbohydrates\n\nWhich of the following is the correct chemical formula for glucose, a monosaccharide?",
     "speech_to_text_content": "Which of the following is the correct chemical formula for glucose, a monosaccharide? Option A is C6H12O6. Option B is C12H22O11. Option C is CH2O to the power of n where n equals 6. Option D is C57H110O6.",
     "answer": [
       {
@@ -575,22 +575,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440211",
-        "option_text": "A) C₆H₁₂O₆",
+        "option_text": "C₆H₁₂O₆",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440212",
-        "option_text": "B) C₁₂H₂₂O₁₁",
+        "option_text": "C₁₂H₂₂O₁₁",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440213",
-        "option_text": "C) (CH₂O)ₙ where n = 6",
+        "option_text": "(CH₂O)ₙ where n = 6",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440214",
-        "option_text": "D) C₅₇H₁₁₀O₆",
+        "option_text": "C₅₇H₁₁₀O₆",
         "imageUrl": null
       }
     ],
@@ -619,7 +619,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Knowledge: Protein Functions",
-    "content": "## Question: Protein Functions\n\nWhich of the following proteins is an enzyme that breaks down starch in the mouth?\n\nA) Hemoglobin\nB) Amylase\nC) Collagen\nD) Insulin",
+    "content": "## Question: Protein Functions\n\nWhich of the following proteins is an enzyme that breaks down starch in the mouth?",
     "speech_to_text_content": "Which of the following proteins is an enzyme that breaks down starch in the mouth? Option A is Hemoglobin. Option B is Amylase. Option C is Collagen. Option D is Insulin.",
     "answer": [
       {
@@ -635,22 +635,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440311",
-        "option_text": "A) Hemoglobin",
+        "option_text": "Hemoglobin",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440312",
-        "option_text": "B) Amylase",
+        "option_text": "Amylase",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440313",
-        "option_text": "C) Collagen",
+        "option_text": "Collagen",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440314",
-        "option_text": "D) Insulin",
+        "option_text": "Insulin",
         "imageUrl": null
       }
     ],
@@ -679,7 +679,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Knowledge: Food Tests",
-    "content": "## Question: Identifying Molecules in Food\n\nA student performs the iodine test on several food samples. Which food would show a blue-black color, indicating the presence of starch?\n\nA) Apple juice\nB) Milk\nC) Potato\nD) Olive oil",
+    "content": "## Question: Identifying Molecules in Food\n\nA student performs the iodine test on several food samples. Which food would show a blue-black color, indicating the presence of starch?",
     "speech_to_text_content": "A student performs the iodine test on several food samples. Which food would show a blue-black color, indicating the presence of starch? Option A is Apple juice. Option B is Milk. Option C is Potato. Option D is Olive oil.",
     "answer": [
       {
@@ -695,22 +695,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440411",
-        "option_text": "A) Apple juice",
+        "option_text": "Apple juice",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440412",
-        "option_text": "B) Milk",
+        "option_text": "Milk",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440413",
-        "option_text": "C) Potato",
+        "option_text": "Potato",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440414",
-        "option_text": "D) Olive oil",
+        "option_text": "Olive oil",
         "imageUrl": null
       }
     ],
@@ -739,7 +739,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Knowledge: Enzyme Specificity",
-    "content": "## Question: Understanding Enzyme Specificity\n\nWhich statement best explains enzyme specificity using the lock and key hypothesis?\n\nA) All enzymes can catalyze any reaction because they have the same active site\nB) Each enzyme has a uniquely shaped active site that fits only its specific substrate, like a key fitting into a lock\nC) Enzymes are not specific; they work on any substrate that is present\nD) Enzyme specificity depends only on the temperature of the reaction",
+    "content": "## Question: Understanding Enzyme Specificity\n\nWhich statement best explains enzyme specificity using the lock and key hypothesis?",
     "speech_to_text_content": "Which statement best explains enzyme specificity using the lock and key hypothesis? Option A: All enzymes can catalyze any reaction because they have the same active site. Option B: Each enzyme has a uniquely shaped active site that fits only its specific substrate, like a key fitting into a lock. Option C: Enzymes are not specific; they work on any substrate that is present. Option D: Enzyme specificity depends only on the temperature of the reaction.",
     "answer": [
       {
@@ -755,22 +755,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440511",
-        "option_text": "A) All enzymes can catalyze any reaction because they have the same active site",
+        "option_text": "All enzymes can catalyze any reaction because they have the same active site",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440512",
-        "option_text": "B) Each enzyme has a uniquely shaped active site that fits only its specific substrate, like a key fitting into a lock",
+        "option_text": "Each enzyme has a uniquely shaped active site that fits only its specific substrate, like a key fitting into a lock",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440513",
-        "option_text": "C) Enzymes are not specific; they work on any substrate that is present",
+        "option_text": "Enzymes are not specific; they work on any substrate that is present",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440514",
-        "option_text": "D) Enzyme specificity depends only on the temperature of the reaction",
+        "option_text": "Enzyme specificity depends only on the temperature of the reaction",
         "imageUrl": null
       }
     ],
@@ -799,7 +799,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Knowledge: Temperature and Enzyme Activity",
-    "content": "## Question: Effect of Temperature on Enzymes\n\nA student investigates how temperature affects enzyme activity. At 37°C, the enzyme shows maximum activity. What would happen to enzyme activity if the temperature increased to 50°C?\n\nA) Activity would increase because higher temperature always increases reaction rates\nB) Activity would decrease because the enzyme would begin to denature\nC) Activity would remain the same because the enzyme is not affected by temperature\nD) Activity would increase then decrease in a cyclical pattern",
+    "content": "## Question: Effect of Temperature on Enzymes\n\nA student investigates how temperature affects enzyme activity. At 37°C, the enzyme shows maximum activity. What would happen to enzyme activity if the temperature increased to 50°C?",
     "speech_to_text_content": "A student investigates how temperature affects enzyme activity. At 37 degrees Celsius, the enzyme shows maximum activity. What would happen to enzyme activity if the temperature increased to 50 degrees Celsius? Option A: Activity would increase because higher temperature always increases reaction rates. Option B: Activity would decrease because the enzyme would begin to denature. Option C: Activity would remain the same because the enzyme is not affected by temperature. Option D: Activity would increase then decrease in a cyclical pattern.",
     "answer": [
       {
@@ -815,22 +815,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440611",
-        "option_text": "A) Activity would increase because higher temperature always increases reaction rates",
+        "option_text": "Activity would increase because higher temperature always increases reaction rates",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440612",
-        "option_text": "B) Activity would decrease because the enzyme would begin to denature",
+        "option_text": "Activity would decrease because the enzyme would begin to denature",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440613",
-        "option_text": "C) Activity would remain the same because the enzyme is not affected by temperature",
+        "option_text": "Activity would remain the same because the enzyme is not affected by temperature",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440614",
-        "option_text": "D) Activity would increase then decrease in a cyclical pattern",
+        "option_text": "Activity would increase then decrease in a cyclical pattern",
         "imageUrl": null
       }
     ],

@@ -182,7 +182,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Nerve Impulses and Synaptic Transmission",
-    "content": "## Question: Nerve Impulse Speed and Synaptic Transmission\n\nWhich statement correctly explains why myelinated neurons transmit nerve impulses faster than unmyelinated neurons?\n\nA) Myelinated neurons have more mitochondria in their axon terminals\n\nB) The myelin sheath insulates the axon, causing the impulse to jump between Nodes of Ranvier rather than travel continuously along the entire axon membrane\n\nC) Myelinated neurons have larger synaptic vesicles that release more neurotransmitter\n\nD) The myelin sheath increases the number of receptors on the postsynaptic membrane",
+    "content": "## Question: Nerve Impulse Speed and Synaptic Transmission\n\nWhich statement correctly explains why myelinated neurons transmit nerve impulses faster than unmyelinated neurons?",
     "speech_to_text_content": "Question: Nerve Impulse Speed and Synaptic Transmission. Which statement correctly explains why myelinated neurons transmit nerve impulses faster than unmyelinated neurons? Option A: Myelinated neurons have more mitochondria in their axon terminals. Option B: The myelin sheath insulates the axon, causing the impulse to jump between Nodes of Ranvier rather than travel continuously along the entire axon membrane. Option C: Myelinated neurons have larger synaptic vesicles that release more neurotransmitter. Option D: The myelin sheath increases the number of receptors on the postsynaptic membrane.",
     "answer": [
       {
@@ -198,22 +198,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440007-opt1",
-        "option_text": "A) Myelinated neurons have more mitochondria in their axon terminals",
+        "option_text": "Myelinated neurons have more mitochondria in their axon terminals",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440007-opt2",
-        "option_text": "B) The myelin sheath insulates the axon, causing the impulse to jump between Nodes of Ranvier rather than travel continuously along the entire axon membrane",
+        "option_text": "The myelin sheath insulates the axon, causing the impulse to jump between Nodes of Ranvier rather than travel continuously along the entire axon membrane",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440007-opt3",
-        "option_text": "C) Myelinated neurons have larger synaptic vesicles that release more neurotransmitter",
+        "option_text": "Myelinated neurons have larger synaptic vesicles that release more neurotransmitter",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440007-opt4",
-        "option_text": "D) The myelin sheath increases the number of receptors on the postsynaptic membrane",
+        "option_text": "The myelin sheath increases the number of receptors on the postsynaptic membrane",
         "imageUrl": null
       }
     ],
@@ -242,7 +242,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Reflex Arc Components and Pathway",
-    "content": "## Question: The Reflex Arc\n\nA student touches a hot plate and immediately pulls their hand away. Which sequence correctly shows the order of structures involved in this reflex arc?\n\nA) Receptor → Motor Neuron → Sensory Neuron → Relay Neuron → Effector\n\nB) Receptor → Sensory Neuron → Relay Neuron → Motor Neuron → Effector\n\nC) Effector → Motor Neuron → Relay Neuron → Sensory Neuron → Receptor\n\nD) Receptor → Relay Neuron → Sensory Neuron → Motor Neuron → Effector",
+    "content": "## Question: The Reflex Arc\n\nA student touches a hot plate and immediately pulls their hand away. Which sequence correctly shows the order of structures involved in this reflex arc?",
     "speech_to_text_content": "Question: The Reflex Arc. A student touches a hot plate and immediately pulls their hand away. Which sequence correctly shows the order of structures involved in this reflex arc? Option A: Receptor, Motor Neuron, Sensory Neuron, Relay Neuron, Effector. Option B: Receptor, Sensory Neuron, Relay Neuron, Motor Neuron, Effector. Option C: Effector, Motor Neuron, Relay Neuron, Sensory Neuron, Receptor. Option D: Receptor, Relay Neuron, Sensory Neuron, Motor Neuron, Effector.",
     "answer": [
       {
@@ -258,22 +258,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt1",
-        "option_text": "A) Receptor → Motor Neuron → Sensory Neuron → Relay Neuron → Effector",
+        "option_text": "Receptor → Motor Neuron → Sensory Neuron → Relay Neuron → Effector",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt2",
-        "option_text": "B) Receptor → Sensory Neuron → Relay Neuron → Motor Neuron → Effector",
+        "option_text": "Receptor → Sensory Neuron → Relay Neuron → Motor Neuron → Effector",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt3",
-        "option_text": "C) Effector → Motor Neuron → Relay Neuron → Sensory Neuron → Receptor",
+        "option_text": "Effector → Motor Neuron → Relay Neuron → Sensory Neuron → Receptor",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440008-opt4",
-        "option_text": "D) Receptor → Relay Neuron → Sensory Neuron → Motor Neuron → Effector",
+        "option_text": "Receptor → Relay Neuron → Sensory Neuron → Motor Neuron → Effector",
         "imageUrl": null
       }
     ],
@@ -447,7 +447,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Accommodation and Lens Changes",
-    "content": "## Question: Accommodation Mechanism\n\nWhen a person looks at a book held 20 cm away from their eyes, which of the following statements correctly describes the changes that occur in the eye?\n\nA) The ciliary muscles relax, the suspensory ligaments tighten, and the lens becomes thinner\n\nB) The ciliary muscles contract, the suspensory ligaments relax, and the lens becomes thicker\n\nC) The ciliary muscles contract, the suspensory ligaments tighten, and the lens becomes flatter\n\nD) The ciliary muscles relax, the suspensory ligaments relax, and the lens becomes thicker",
+    "content": "## Question: Accommodation Mechanism\n\nWhen a person looks at a book held 20 cm away from their eyes, which of the following statements correctly describes the changes that occur in the eye?",
     "speech_to_text_content": "Question: Understanding Accommodation and Lens Changes. When a person looks at a book held 20 centimeters away from their eyes, which of the following statements correctly describes the changes that occur in the eye? Option A: The ciliary muscles relax, the suspensory ligaments tighten, and the lens becomes thinner. Option B: The ciliary muscles contract, the suspensory ligaments relax, and the lens becomes thicker. Option C: The ciliary muscles contract, the suspensory ligaments tighten, and the lens becomes flatter. Option D: The ciliary muscles relax, the suspensory ligaments relax, and the lens becomes thicker.",
     "answer": [
       {
@@ -463,22 +463,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
-        "option_text": "A) The ciliary muscles relax, the suspensory ligaments tighten, and the lens becomes thinner",
+        "option_text": "The ciliary muscles relax, the suspensory ligaments tighten, and the lens becomes thinner",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
-        "option_text": "B) The ciliary muscles contract, the suspensory ligaments relax, and the lens becomes thicker",
+        "option_text": "The ciliary muscles contract, the suspensory ligaments relax, and the lens becomes thicker",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
-        "option_text": "C) The ciliary muscles contract, the suspensory ligaments tighten, and the lens becomes flatter",
+        "option_text": "The ciliary muscles contract, the suspensory ligaments tighten, and the lens becomes flatter",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
-        "option_text": "D) The ciliary muscles relax, the suspensory ligaments relax, and the lens becomes thicker",
+        "option_text": "The ciliary muscles relax, the suspensory ligaments relax, and the lens becomes thicker",
         "imageUrl": null
       }
     ],
@@ -507,7 +507,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Eye Defects and Correction",
-    "content": "## Question: Myopia and Its Correction\n\nA student has myopia (short-sightedness). Which statement correctly explains the problem and its correction?\n\nA) Light focuses behind the retina; a convex lens is used to focus light onto the retina\n\nB) Light focuses in front of the retina; a concave lens is used to spread light rays before they enter the eye\n\nC) Light focuses in front of the retina; a convex lens is used to concentrate light rays before they enter the eye\n\nD) The lens is too thin; a cylindrical lens is used to correct the uneven focusing",
+    "content": "## Question: Myopia and Its Correction\n\nA student has myopia (short-sightedness). Which statement correctly explains the problem and its correction?",
     "speech_to_text_content": "Question: Eye Defects and Correction. A student has myopia, or short-sightedness. Which statement correctly explains the problem and its correction? Option A: Light focuses behind the retina; a convex lens is used to focus light onto the retina. Option B: Light focuses in front of the retina; a concave lens is used to spread light rays before they enter the eye. Option C: Light focuses in front of the retina; a convex lens is used to concentrate light rays before they enter the eye. Option D: The lens is too thin; a cylindrical lens is used to correct the uneven focusing.",
     "answer": [
       {
@@ -523,22 +523,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
-        "option_text": "A) Light focuses behind the retina; a convex lens is used to focus light onto the retina",
+        "option_text": "Light focuses behind the retina; a convex lens is used to focus light onto the retina",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
-        "option_text": "B) Light focuses in front of the retina; a concave lens is used to spread light rays before they enter the eye",
+        "option_text": "Light focuses in front of the retina; a concave lens is used to spread light rays before they enter the eye",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
-        "option_text": "C) Light focuses in front of the retina; a convex lens is used to concentrate light rays before they enter the eye",
+        "option_text": "Light focuses in front of the retina; a convex lens is used to concentrate light rays before they enter the eye",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
-        "option_text": "D) The lens is too thin; a cylindrical lens is used to correct the uneven focusing",
+        "option_text": "The lens is too thin; a cylindrical lens is used to correct the uneven focusing",
         "imageUrl": null
       }
     ],
@@ -645,7 +645,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Eye Structure and Function",
-    "content": "## Question: Roles of Eye Components\n\nWhich pair of statements correctly describes the functions of two eye structures?\n\nA) The cornea accounts for 70% of the eye's focusing power and the lens accounts for 30%; the lens changes shape to fine-tune focus\n\nB) The cornea accounts for 30% of the eye's focusing power and the lens accounts for 70%; the cornea changes shape to fine-tune focus\n\nC) Both the cornea and lens are rigid and do not change shape; the iris controls light entry\n\nD) The cornea is rigid and provides 100% of the focusing power; the lens is flexible but has no focusing function",
+    "content": "## Question: Roles of Eye Components\n\nWhich pair of statements correctly describes the functions of two eye structures?",
     "speech_to_text_content": "Question: Eye Structure and Function. Which pair of statements correctly describes the functions of two eye structures? Option A: The cornea accounts for 70 percent of the eye's focusing power and the lens accounts for 30 percent; the lens changes shape to fine-tune focus. Option B: The cornea accounts for 30 percent of the eye's focusing power and the lens accounts for 70 percent; the cornea changes shape to fine-tune focus. Option C: Both the cornea and lens are rigid and do not change shape; the iris controls light entry. Option D: The cornea is rigid and provides 100 percent of the focusing power; the lens is flexible but has no focusing function.",
     "answer": [
       {
@@ -661,22 +661,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt1",
-        "option_text": "A) The cornea accounts for 70% of the eye's focusing power and the lens accounts for 30%; the lens changes shape to fine-tune focus",
+        "option_text": "The cornea accounts for 70% of the eye's focusing power and the lens accounts for 30%; the lens changes shape to fine-tune focus",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt2",
-        "option_text": "B) The cornea accounts for 30% of the eye's focusing power and the lens accounts for 70%; the cornea changes shape to fine-tune focus",
+        "option_text": "The cornea accounts for 30% of the eye's focusing power and the lens accounts for 70%; the cornea changes shape to fine-tune focus",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt3",
-        "option_text": "C) Both the cornea and lens are rigid and do not change shape; the iris controls light entry",
+        "option_text": "Both the cornea and lens are rigid and do not change shape; the iris controls light entry",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018-opt4",
-        "option_text": "D) The cornea is rigid and provides 100% of the focusing power; the lens is flexible but has no focusing function",
+        "option_text": "The cornea is rigid and provides 100% of the focusing power; the lens is flexible but has no focusing function",
         "imageUrl": null
       }
     ],

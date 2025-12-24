@@ -327,7 +327,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Infectious vs Non-Infectious Diseases",
-    "content": "## Question: Distinguishing Disease Types\n\nWhich of the following is an example of an ::red[infectious disease] that ::green[CAN spread] from person to person?\n\nA) Diabetes mellitus\nB) Heart disease\nC) Influenza\nD) Cancer",
+    "content": "## Question: Distinguishing Disease Types\n\nWhich of the following is an example of an ::red[infectious disease] that ::green[CAN spread] from person to person?",
     "speech_to_text_content": "Which of the following is an example of an infectious disease that can spread from person to person? A) Diabetes mellitus, B) Heart disease, C) Influenza, D) Cancer",
     "answer": [
       {
@@ -343,22 +343,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt1",
-        "option_text": "A) Diabetes mellitus",
+        "option_text": "Diabetes mellitus",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt2",
-        "option_text": "B) Heart disease",
+        "option_text": "Heart disease",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt3",
-        "option_text": "C) Influenza",
+        "option_text": "Influenza",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440012-opt4",
-        "option_text": "D) Cancer",
+        "option_text": "Cancer",
         "imageUrl": null
       }
     ],
@@ -387,7 +387,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Pathogen Characteristics",
-    "content": "## Question: Virus vs Bacteria Structures\n\nWhich statement correctly describes a key difference between viruses and bacteria?\n\nA) Viruses have a cell wall; bacteria do not\nB) Bacteria have a nucleus; viruses do not\nC) Viruses can reproduce independently outside host cells; bacteria cannot\nD) Bacteria have DNA but no nucleus; viruses have genetic material but no cell wall",
+    "content": "## Question: Virus vs Bacteria Structures\n\nWhich statement correctly describes a key difference between viruses and bacteria?",
     "speech_to_text_content": "Which statement correctly describes a key difference between viruses and bacteria? A) Viruses have a cell wall; bacteria do not, B) Bacteria have a nucleus; viruses do not, C) Viruses can reproduce independently outside host cells; bacteria cannot, D) Bacteria have DNA but no nucleus; viruses have genetic material but no cell wall",
     "answer": [
       {
@@ -403,22 +403,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt1",
-        "option_text": "A) Viruses have a cell wall; bacteria do not",
+        "option_text": "Viruses have a cell wall; bacteria do not",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt2",
-        "option_text": "B) Bacteria have a nucleus; viruses do not",
+        "option_text": "Bacteria have a nucleus; viruses do not",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt3",
-        "option_text": "C) Viruses can reproduce independently outside host cells; bacteria cannot",
+        "option_text": "Viruses can reproduce independently outside host cells; bacteria cannot",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440013-opt4",
-        "option_text": "D) Bacteria have DNA but no nucleus; viruses have genetic material but no cell wall",
+        "option_text": "Bacteria have DNA but no nucleus; viruses have genetic material but no cell wall",
         "imageUrl": null
       }
     ],
@@ -447,7 +447,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Disease Transmission Routes",
-    "content": "## Question: How Malaria Spreads\n\nMalaria is transmitted to humans through mosquito bites. The mosquito is infected with the Plasmodium parasite and transmits it when feeding on human blood. What type of disease transmission is this?\n\nA) Droplet transmission\nB) Airborne transmission\nC) Vector-borne transmission\nD) Fomite transmission",
+    "content": "## Question: How Malaria Spreads\n\nMalaria is transmitted to humans through mosquito bites. The mosquito is infected with the Plasmodium parasite and transmits it when feeding on human blood. What type of disease transmission is this?",
     "speech_to_text_content": "Malaria is transmitted to humans through mosquito bites. The mosquito is infected with the Plasmodium parasite and transmits it when feeding on human blood. What type of disease transmission is this? A) Droplet transmission, B) Airborne transmission, C) Vector-borne transmission, D) Fomite transmission",
     "answer": [
       {
@@ -463,22 +463,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
-        "option_text": "A) Droplet transmission",
+        "option_text": "Droplet transmission",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
-        "option_text": "B) Airborne transmission",
+        "option_text": "Airborne transmission",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
-        "option_text": "C) Vector-borne transmission",
+        "option_text": "Vector-borne transmission",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
-        "option_text": "D) Fomite transmission",
+        "option_text": "Fomite transmission",
         "imageUrl": null
       }
     ],
@@ -507,7 +507,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: How Vaccines Work",
-    "content": "## Question: Understanding Vaccine Mechanism\n\nA vaccine contains an agent that resembles a pathogen. How does a vaccine prevent disease?\n\nA) The vaccine kills all pathogens in the body immediately\nB) The vaccine stimulates white blood cells to produce antibodies before the real pathogen invades\nC) The vaccine physically blocks pathogens from entering the body\nD) The vaccine destroys the pathogen's genetic material",
+    "content": "## Question: Understanding Vaccine Mechanism\n\nA vaccine contains an agent that resembles a pathogen. How does a vaccine prevent disease?",
     "speech_to_text_content": "A vaccine contains an agent that resembles a pathogen. How does a vaccine prevent disease? A) The vaccine kills all pathogens in the body immediately, B) The vaccine stimulates white blood cells to produce antibodies before the real pathogen invades, C) The vaccine physically blocks pathogens from entering the body, D) The vaccine destroys the pathogen's genetic material",
     "answer": [
       {
@@ -523,22 +523,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
-        "option_text": "A) The vaccine kills all pathogens in the body immediately",
+        "option_text": "The vaccine kills all pathogens in the body immediately",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
-        "option_text": "B) The vaccine stimulates white blood cells to produce antibodies before the real pathogen invades",
+        "option_text": "The vaccine stimulates white blood cells to produce antibodies before the real pathogen invades",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
-        "option_text": "C) The vaccine physically blocks pathogens from entering the body",
+        "option_text": "The vaccine physically blocks pathogens from entering the body",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
-        "option_text": "D) The vaccine destroys the pathogen's genetic material",
+        "option_text": "The vaccine destroys the pathogen's genetic material",
         "imageUrl": null
       }
     ],
@@ -567,7 +567,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Antibiotics vs Viruses",
-    "content": "## Question: Why Antibiotics Don't Work on Viruses\n\nA patient with a cold (caused by a virus) asks their doctor for antibiotics. Why are antibiotics ineffective against viral infections?\n\nA) Viruses have cell walls that protect them from antibiotics\nB) Viruses reproduce so quickly that antibiotics cannot keep up\nC) Viruses lack cell walls and ribosomes that antibiotics target\nD) Antibiotics are too weak to penetrate viral genetic material",
+    "content": "## Question: Why Antibiotics Don't Work on Viruses\n\nA patient with a cold (caused by a virus) asks their doctor for antibiotics. Why are antibiotics ineffective against viral infections?",
     "speech_to_text_content": "A patient with a cold caused by a virus asks their doctor for antibiotics. Why are antibiotics ineffective against viral infections? A) Viruses have cell walls that protect them from antibiotics, B) Viruses reproduce so quickly that antibiotics cannot keep up, C) Viruses lack cell walls and ribosomes that antibiotics target, D) Antibiotics are too weak to penetrate viral genetic material",
     "answer": [
       {
@@ -583,22 +583,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
-        "option_text": "A) Viruses have cell walls that protect them from antibiotics",
+        "option_text": "Viruses have cell walls that protect them from antibiotics",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
-        "option_text": "B) Viruses reproduce so quickly that antibiotics cannot keep up",
+        "option_text": "Viruses reproduce so quickly that antibiotics cannot keep up",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
-        "option_text": "C) Viruses lack cell walls and ribosomes that antibiotics target",
+        "option_text": "Viruses lack cell walls and ribosomes that antibiotics target",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
-        "option_text": "D) Antibiotics are too weak to penetrate viral genetic material",
+        "option_text": "Antibiotics are too weak to penetrate viral genetic material",
         "imageUrl": null
       }
     ],
@@ -627,7 +627,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Antibiotic Resistance",
-    "content": "## Question: How Antibiotic Resistance Develops\n\nIn a bacterial population exposed to antibiotics, most bacteria die but a few survive and multiply. Over time, the population becomes resistant. Why does this happen?\n\nA) The antibiotics mutate the surviving bacteria to become stronger\nB) The surviving bacteria have genes that allow them to resist antibiotics, and these genes spread in the population\nC) The bacteria learn to avoid the antibiotic by changing their behavior\nD) The antibiotic becomes less effective over time as it breaks down",
+    "content": "## Question: How Antibiotic Resistance Develops\n\nIn a bacterial population exposed to antibiotics, most bacteria die but a few survive and multiply. Over time, the population becomes resistant. Why does this happen?",
     "speech_to_text_content": "In a bacterial population exposed to antibiotics, most bacteria die but a few survive and multiply. Over time, the population becomes resistant. Why does this happen? A) The antibiotics mutate the surviving bacteria to become stronger, B) The surviving bacteria have genes that allow them to resist antibiotics, and these genes spread in the population, C) The bacteria learn to avoid the antibiotic by changing their behavior, D) The antibiotic becomes less effective over time as it breaks down",
     "answer": [
       {
@@ -643,22 +643,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt1",
-        "option_text": "A) The antibiotics mutate the surviving bacteria to become stronger",
+        "option_text": "The antibiotics mutate the surviving bacteria to become stronger",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt2",
-        "option_text": "B) The surviving bacteria have genes that allow them to resist antibiotics, and these genes spread in the population",
+        "option_text": "The surviving bacteria have genes that allow them to resist antibiotics, and these genes spread in the population",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt3",
-        "option_text": "C) The bacteria learn to avoid the antibiotic by changing their behavior",
+        "option_text": "The bacteria learn to avoid the antibiotic by changing their behavior",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017-opt4",
-        "option_text": "D) The antibiotic becomes less effective over time as it breaks down",
+        "option_text": "The antibiotic becomes less effective over time as it breaks down",
         "imageUrl": null
       }
     ],

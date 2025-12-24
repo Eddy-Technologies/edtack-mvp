@@ -443,7 +443,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Diffusion: Concentration Gradients",
-    "content": "## Question 1\n\nWhich of the following BEST describes why diffusion occurs in living organisms?\n\nA) Particles move from areas of low concentration to areas of high concentration to balance the system\n\nB) Particles have kinetic energy and move randomly, resulting in net movement from high to low concentration\n\nC) The cell membrane actively pumps particles from low to high concentration\n\nD) Water molecules move to equalize the water potential across the membrane",
+    "content": "## Question 1\n\nWhich of the following BEST describes why diffusion occurs in living organisms?",
     "speech_to_text_content": "Question 1: Which of the following best describes why diffusion occurs in living organisms? Option A: Particles move from areas of low concentration to areas of high concentration to balance the system. Option B: Particles have kinetic energy and move randomly, resulting in net movement from high to low concentration. Option C: The cell membrane actively pumps particles from low to high concentration. Option D: Water molecules move to equalize the water potential across the membrane.",
     "answer": [
       {
@@ -503,7 +503,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Factors Affecting Diffusion Rate",
-    "content": "## Question 2\n\nA student observes that root hair cells have long, thin projections. Which of the following BEST explains the biological significance of this adaptation?\n\nA) The projections increase the surface area for mineral ion absorption by diffusion and active transport\n\nB) The projections decrease the diffusion distance, allowing faster nutrient uptake\n\nC) The projections contain chloroplasts for photosynthesis\n\nD) The projections prevent water loss from the plant",
+    "content": "## Question 2\n\nA student observes that root hair cells have long, thin projections. Which of the following BEST explains the biological significance of this adaptation?",
     "speech_to_text_content": "Question 2: A student observes that root hair cells have long thin projections. Which of the following best explains the biological significance of this adaptation? Option A: The projections increase the surface area for mineral ion absorption by diffusion and active transport. Option B: The projections decrease the diffusion distance, allowing faster nutrient uptake. Option C: The projections contain chloroplasts for photosynthesis. Option D: The projections prevent water loss from the plant.",
     "answer": [
       {
@@ -563,7 +563,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Osmosis and Plant Cell Responses",
-    "content": "## Question 3\n\nA plant cell is placed in distilled water. Which of the following sequences of events will occur?\n\nA) Water enters the cell by osmosis → cell becomes turgid → turgor pressure supports the plant\n\nB) Water leaves the cell by osmosis → cell becomes plasmolyzed → plant wilts\n\nC) Solutes diffuse out of the cell → water follows by osmosis → cell shrinks\n\nD) The cell membrane actively pumps water into the vacuole → cell becomes rigid",
+    "content": "## Question 3\n\nA plant cell is placed in distilled water. Which of the following sequences of events will occur?",
     "speech_to_text_content": "Question 3: A plant cell is placed in distilled water. Which of the following sequences of events will occur? Option A: Water enters the cell by osmosis, cell becomes turgid, turgor pressure supports the plant. Option B: Water leaves the cell by osmosis, cell becomes plasmolyzed, plant wilts. Option C: Solutes diffuse out of the cell, water follows by osmosis, cell shrinks. Option D: The cell membrane actively pumps water into the vacuole, cell becomes rigid.",
     "answer": [
       {
@@ -623,7 +623,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Active Transport: Energy-Dependent Movement",
-    "content": "## Question 4\n\nRoot hair cells absorb mineral ions from soil solution using active transport. Which of the following statements is TRUE about this process?\n\nA) Mineral ions move down the concentration gradient without requiring energy\n\nB) Mineral ions move against the concentration gradient using ATP energy from mitochondria\n\nC) Mineral ions are absorbed only when the soil solution has a higher mineral concentration than the root cell\n\nD) The process does not require carrier proteins in the cell membrane",
+    "content": "## Question 4\n\nRoot hair cells absorb mineral ions from soil solution using active transport. Which of the following statements is TRUE about this process?",
     "speech_to_text_content": "Question 4: Root hair cells absorb mineral ions from soil solution using active transport. Which of the following statements is true about this process? Option A: Mineral ions move down the concentration gradient without requiring energy. Option B: Mineral ions move against the concentration gradient using ATP energy from mitochondria. Option C: Mineral ions are absorbed only when the soil solution has a higher mineral concentration than the root cell. Option D: The process does not require carrier proteins in the cell membrane.",
     "answer": [
       {
@@ -683,7 +683,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Osmosis in Animal Cells: Hemolysis and Crenation",
-    "content": "## Question 5\n\nRed blood cells are placed in distilled water. What will happen to the cells and why?\n\nA) Cells will shrivel because water leaves by osmosis in the hypotonic solution\n\nB) Cells will swell and burst (hemolysis) because water enters by osmosis in the hypotonic solution\n\nC) Cells will remain unchanged because they have a cell membrane that prevents osmosis\n\nD) Cells will become crenated because the salt concentration outside is too high",
+    "content": "## Question 5\n\nRed blood cells are placed in distilled water. What will happen to the cells and why?",
     "speech_to_text_content": "Question 5: Red blood cells are placed in distilled water. What will happen to the cells and why? Option A: Cells will shrivel because water leaves by osmosis in the hypotonic solution. Option B: Cells will swell and burst (hemolysis) because water enters by osmosis in the hypotonic solution. Option C: Cells will remain unchanged because they have a cell membrane that prevents osmosis. Option D: Cells will become crenated because the salt concentration outside is too high.",
     "answer": [
       {
@@ -743,7 +743,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Comparing Transport Processes",
-    "content": "## Question 6\n\nWhich of the following statements CORRECTLY compares diffusion and active transport?\n\nA) Both diffusion and active transport move substances against the concentration gradient and require ATP energy\n\nB) Diffusion is passive and moves substances down the concentration gradient, while active transport is active and moves substances against the concentration gradient\n\nC) Active transport is faster than diffusion because it does not require carrier proteins\n\nD) Both processes require a partially permeable membrane and move water molecules only",
+    "content": "## Question 6\n\nWhich of the following statements CORRECTLY compares diffusion and active transport?",
     "speech_to_text_content": "Question 6: Which of the following statements correctly compares diffusion and active transport? Option A: Both diffusion and active transport move substances against the concentration gradient and require ATP energy. Option B: Diffusion is passive and moves substances down the concentration gradient, while active transport is active and moves substances against the concentration gradient. Option C: Active transport is faster than diffusion because it does not require carrier proteins. Option D: Both processes require a partially permeable membrane and move water molecules only.",
     "answer": [
       {

@@ -588,7 +588,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Quiz: Understanding Acid Properties",
-    "content": "## Question: Identifying Acids\n\nWhich of the following statements correctly describes the properties of an acid?\n\nA) An acid is a substance that produces hydroxide ions (OH⁻) when dissolved in water\n\nB) An acid is a substance that dissociates in water to produce hydrogen ions (H⁺)\n\nC) An acid is a substance that always turns universal indicator green\n\nD) An acid is a substance that has a pH greater than 7",
+    "content": "## Question: Identifying Acids\n\nWhich of the following statements correctly describes the properties of an acid?",
     "speech_to_text_content": "Which of the following statements correctly describes the properties of an acid? Option A: An acid is a substance that produces hydroxide ions when dissolved in water. Option B: An acid is a substance that dissociates in water to produce hydrogen ions. Option C: An acid is a substance that always turns universal indicator green. Option D: An acid is a substance that has a pH greater than 7.",
     "answer": [
       {
@@ -648,7 +648,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Quiz: Strength vs Concentration",
-    "content": "## Question: Distinguishing Strength from Concentration\n\nA student has two solutions:\n- Solution A: Dilute hydrochloric acid (HCl)\n- Solution B: Concentrated ethanoic acid (CH₃COOH)\n\nWhich statement is correct?\n\nA) Solution A is more corrosive because it is a strong acid\n\nB) Solution B is more corrosive because it is more concentrated\n\nC) Both solutions are equally corrosive because they are both acids\n\nD) Solution A is weaker because it is diluted",
+    "content": "## Question: Distinguishing Strength from Concentration\n\nA student has two solutions:\n- Solution A: Dilute hydrochloric acid (HCl)\n- Solution B: Concentrated ethanoic acid (CH₃COOH)\n\nWhich statement is correct?",
     "speech_to_text_content": "A student has two solutions: Solution A is dilute hydrochloric acid, and Solution B is concentrated ethanoic acid. Which statement is correct? Option A: Solution A is more corrosive because it is a strong acid. Option B: Solution B is more corrosive because it is more concentrated. Option C: Both solutions are equally corrosive because they are both acids. Option D: Solution A is weaker because it is diluted.",
     "answer": [
       {
@@ -708,7 +708,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Quiz: Reactions of Acids",
-    "content": "## Question: Predicting Acid Reactions\n\nWhich equation correctly represents the reaction between dilute hydrochloric acid and calcium carbonate?\n\nA) HCl + CaCO₃ → CaCl + CO₂ + H₂O\n\nB) 2HCl + CaCO₃ → CaCl₂ + CO₂ + H₂O\n\nC) 2HCl + Ca(CO₃)₂ → CaCl₂ + CO₂ + H₂O\n\nD) HCl + CaCO₃ → CaCl₂ + CO + H₂O",
+    "content": "## Question: Predicting Acid Reactions\n\nWhich equation correctly represents the reaction between dilute hydrochloric acid and calcium carbonate?",
     "speech_to_text_content": "Which equation correctly represents the reaction between dilute hydrochloric acid and calcium carbonate? Option A: HCl plus CaCO3 produces CaCl plus CO2 plus H2O. Option B: 2HCl plus CaCO3 produces CaCl2 plus CO2 plus H2O. Option C: 2HCl plus Ca(CO3)2 produces CaCl2 plus CO2 plus H2O. Option D: HCl plus CaCO3 produces CaCl2 plus CO plus H2O.",
     "answer": [
       {
@@ -768,7 +768,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Quiz: Solubility Rules",
-    "content": "## Question: Predicting Salt Solubility\n\nWhich of the following salts is INSOLUBLE in water?\n\nA) Sodium chloride (NaCl)\n\nB) Potassium nitrate (KNO₃)\n\nC) Barium sulfate (BaSO₄)\n\nD) Calcium chloride (CaCl₂)",
+    "content": "## Question: Predicting Salt Solubility\n\nWhich of the following salts is INSOLUBLE in water?",
     "speech_to_text_content": "Which of the following salts is insoluble in water? Option A: Sodium chloride. Option B: Potassium nitrate. Option C: Barium sulfate. Option D: Calcium chloride.",
     "answer": [
       {
@@ -828,7 +828,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Quiz: The Haber Process",
-    "content": "## Question: Understanding the Haber Process Equilibrium\n\nIn the Haber Process, the reaction is:\n\n$$N_2(g) + 3H_2(g) ⇌ 2NH_3(g)$$\n\nWhy is a high pressure used in the industrial process?\n\nA) High pressure decreases the rate of reaction, allowing more ammonia to form\n\nB) High pressure increases the yield of ammonia because there are fewer gas molecules on the product side\n\nC) High pressure is only used to cool the system\n\nD) High pressure has no effect on the reaction but is used for safety reasons",
+    "content": "## Question: Understanding the Haber Process Equilibrium\n\nIn the Haber Process, the reaction is:\n\n$$N_2(g) + 3H_2(g) ⇌ 2NH_3(g)$$\n\nWhy is a high pressure used in the industrial process?",
     "speech_to_text_content": "In the Haber Process, the reaction is nitrogen gas plus three hydrogen gas molecules reversibly produces two ammonia molecules. Why is a high pressure used in the industrial process? Option A: High pressure decreases the rate of reaction, allowing more ammonia to form. Option B: High pressure increases the yield of ammonia because there are fewer gas molecules on the product side. Option C: High pressure is only used to cool the system. Option D: High pressure has no effect on the reaction but is used for safety reasons.",
     "answer": [
       {

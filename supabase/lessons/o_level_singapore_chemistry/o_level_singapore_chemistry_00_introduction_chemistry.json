@@ -472,7 +472,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Choosing Apparatus for Volume Measurement",
-    "content": "## Practice Question 1\n\nA student needs to measure exactly 25 mL of a solution for a chemical reaction. Which apparatus would be MOST suitable for this measurement?\n\nA) Measuring cylinder\nB) Pipette\nC) Burette\nD) Volumetric flask",
+    "content": "## Practice Question 1\n\nA student needs to measure exactly 25 mL of a solution for a chemical reaction. Which apparatus would be MOST suitable for this measurement?",
     "speech_to_text_content": "A student needs to measure exactly 25 mL of a solution for a chemical reaction. Which apparatus would be most suitable for this measurement? Options are: A) Measuring cylinder, B) Pipette, C) Burette, or D) Volumetric flask.",
     "answer": [
       {
@@ -488,22 +488,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440017a",
-        "option_text": "A) Measuring cylinder",
+        "option_text": "Measuring cylinder",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017b",
-        "option_text": "B) Pipette",
+        "option_text": "Pipette",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017c",
-        "option_text": "C) Burette",
+        "option_text": "Burette",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017d",
-        "option_text": "D) Volumetric flask",
+        "option_text": "Volumetric flask",
         "imageUrl": null
       }
     ],
@@ -532,7 +532,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Collecting Chlorine Gas",
-    "content": "## Practice Question 2\n\nChlorine gas (Cl₂) is produced in a laboratory experiment. The relative molecular mass of chlorine is 71. Which method should be used to collect this gas?\n\nA) Water displacement\nB) Downward delivery\nC) Upward delivery\nD) Gas syringe only",
+    "content": "## Practice Question 2\n\nChlorine gas (Cl₂) is produced in a laboratory experiment. The relative molecular mass of chlorine is 71. Which method should be used to collect this gas?",
     "speech_to_text_content": "Chlorine gas is produced in a laboratory experiment. The relative molecular mass of chlorine is 71. Which method should be used to collect this gas? Options are: A) Water displacement, B) Downward delivery, C) Upward delivery, or D) Gas syringe only.",
     "answer": [
       {
@@ -548,22 +548,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440018a",
-        "option_text": "A) Water displacement",
+        "option_text": "Water displacement",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018b",
-        "option_text": "B) Downward delivery",
+        "option_text": "Downward delivery",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018c",
-        "option_text": "C) Upward delivery",
+        "option_text": "Upward delivery",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018d",
-        "option_text": "D) Gas syringe only",
+        "option_text": "Gas syringe only",
         "imageUrl": null
       }
     ],
@@ -592,7 +592,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Separating a Salt and Sand Mixture",
-    "content": "## Practice Question 3\n\nA student has a mixture of salt and sand. Which sequence of steps would successfully separate both components?\n\nA) Sieve the mixture, then filter the result\nB) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate\nC) Heat the mixture to sublime the salt\nD) Use a separating funnel to separate the components",
+    "content": "## Practice Question 3\n\nA student has a mixture of salt and sand. Which sequence of steps would successfully separate both components?",
     "speech_to_text_content": "A student has a mixture of salt and sand. Which sequence of steps would successfully separate both components? Options are: A) Sieve the mixture then filter the result, B) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate, C) Heat the mixture to sublime the salt, or D) Use a separating funnel to separate the components.",
     "answer": [
       {
@@ -608,22 +608,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440019a",
-        "option_text": "A) Sieve the mixture, then filter the result",
+        "option_text": "Sieve the mixture, then filter the result",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019b",
-        "option_text": "B) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate",
+        "option_text": "Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019c",
-        "option_text": "C) Heat the mixture to sublime the salt",
+        "option_text": "Heat the mixture to sublime the salt",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019d",
-        "option_text": "D) Use a separating funnel to separate the components",
+        "option_text": "Use a separating funnel to separate the components",
         "imageUrl": null
       }
     ],
@@ -652,7 +652,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Separating Two Miscible Liquids",
-    "content": "## Practice Question 4\n\nA student has a mixture of two miscible liquids with boiling points of 78°C and 95°C. Why would simple distillation NOT be suitable for this separation?\n\nA) The boiling point difference is too large\nB) The boiling point difference is too small (only 17°C)\nC) Miscible liquids cannot be separated by any distillation method\nD) The apparatus is not available",
+    "content": "## Practice Question 4\n\nA student has a mixture of two miscible liquids with boiling points of 78°C and 95°C. Why would simple distillation NOT be suitable for this separation?",
     "speech_to_text_content": "A student has a mixture of two miscible liquids with boiling points of 78 degrees Celsius and 95 degrees Celsius. Why would simple distillation not be suitable for this separation? Options are: A) The boiling point difference is too large, B) The boiling point difference is too small (only 17 degrees Celsius), C) Miscible liquids cannot be separated by any distillation method, or D) The apparatus is not available.",
     "answer": [
       {
@@ -668,22 +668,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440020a",
-        "option_text": "A) The boiling point difference is too large",
+        "option_text": "The boiling point difference is too large",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020b",
-        "option_text": "B) The boiling point difference is too small (only 17°C)",
+        "option_text": "The boiling point difference is too small (only 17°C)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020c",
-        "option_text": "C) Miscible liquids cannot be separated by any distillation method",
+        "option_text": "Miscible liquids cannot be separated by any distillation method",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020d",
-        "option_text": "D) The apparatus is not available",
+        "option_text": "The apparatus is not available",
         "imageUrl": null
       }
     ],
@@ -712,7 +712,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Interpreting Melting Point Data for Purity",
-    "content": "## Practice Question 5\n\nA student measures the melting point of a white solid and finds it melts gradually between 118°C and 125°C. The reference melting point for the pure substance is 122°C. What can be concluded?\n\nA) The substance is pure because the melting point is close to the reference value\nB) The substance is impure because it melts over a range of temperatures\nC) The substance is pure but the measurement was inaccurate\nD) The substance has been contaminated with water",
+    "content": "## Practice Question 5\n\nA student measures the melting point of a white solid and finds it melts gradually between 118°C and 125°C. The reference melting point for the pure substance is 122°C. What can be concluded?",
     "speech_to_text_content": "A student measures the melting point of a white solid and finds it melts gradually between 118 degrees Celsius and 125 degrees Celsius. The reference melting point for the pure substance is 122 degrees Celsius. What can be concluded? Options are: A) The substance is pure because the melting point is close to the reference value, B) The substance is impure because it melts over a range of temperatures, C) The substance is pure but the measurement was inaccurate, or D) The substance has been contaminated with water.",
     "answer": [
       {
@@ -728,22 +728,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440021a",
-        "option_text": "A) The substance is pure because the melting point is close to the reference value",
+        "option_text": "The substance is pure because the melting point is close to the reference value",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021b",
-        "option_text": "B) The substance is impure because it melts over a range of temperatures",
+        "option_text": "The substance is impure because it melts over a range of temperatures",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021c",
-        "option_text": "C) The substance is pure but the measurement was inaccurate",
+        "option_text": "The substance is pure but the measurement was inaccurate",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021d",
-        "option_text": "D) The substance has been contaminated with water",
+        "option_text": "The substance has been contaminated with water",
         "imageUrl": null
       }
     ],

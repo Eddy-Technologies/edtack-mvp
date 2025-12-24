@@ -385,7 +385,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Asexual Reproduction",
-    "content": "## Question 1: Asexual Reproduction Definition\n\nWhich of the following BEST describes asexual reproduction?\n\nA) A process involving two parents that produces genetically identical offspring\n\nB) A process involving one parent that produces genetically identical offspring\n\nC) A process involving two parents that produces genetically different offspring\n\nD) A process involving one parent that produces genetically different offspring",
+    "content": "## Question 1: Asexual Reproduction Definition\n\nWhich of the following BEST describes asexual reproduction?",
     "speech_to_text_content": "Which of the following best describes asexual reproduction? A process involving two parents that produces genetically identical offspring, a process involving one parent that produces genetically identical offspring, a process involving two parents that produces genetically different offspring, or a process involving one parent that produces genetically different offspring?",
     "answer": [
       {
@@ -401,22 +401,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440014a",
-        "option_text": "A) A process involving two parents that produces genetically identical offspring",
+        "option_text": "A process involving two parents that produces genetically identical offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014b",
-        "option_text": "B) A process involving one parent that produces genetically identical offspring",
+        "option_text": "A process involving one parent that produces genetically identical offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014c",
-        "option_text": "C) A process involving two parents that produces genetically different offspring",
+        "option_text": "A process involving two parents that produces genetically different offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440014d",
-        "option_text": "D) A process involving one parent that produces genetically different offspring",
+        "option_text": "A process involving one parent that produces genetically different offspring",
         "imageUrl": null
       }
     ],
@@ -445,7 +445,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "The Role of Mitosis",
-    "content": "## Question 2: Functions of Mitosis\n\nWhich of the following is NOT a function of mitosis?\n\nA) Growth and development of multicellular organisms\n\nB) Repair and replacement of damaged cells\n\nC) Asexual reproduction in plants and animals\n\nD) Production of gametes (sex cells) for sexual reproduction",
+    "content": "## Question 2: Functions of Mitosis\n\nWhich of the following is NOT a function of mitosis?",
     "speech_to_text_content": "Which of the following is NOT a function of mitosis? Growth and development of multicellular organisms, repair and replacement of damaged cells, asexual reproduction in plants and animals, or production of gametes for sexual reproduction?",
     "answer": [
       {
@@ -461,22 +461,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440015a",
-        "option_text": "A) Growth and development of multicellular organisms",
+        "option_text": "Growth and development of multicellular organisms",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015b",
-        "option_text": "B) Repair and replacement of damaged cells",
+        "option_text": "Repair and replacement of damaged cells",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015c",
-        "option_text": "C) Asexual reproduction in plants and animals",
+        "option_text": "Asexual reproduction in plants and animals",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440015d",
-        "option_text": "D) Production of gametes (sex cells) for sexual reproduction",
+        "option_text": "Production of gametes (sex cells) for sexual reproduction",
         "imageUrl": null
       }
     ],
@@ -505,7 +505,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Plant Vegetative Propagation Methods",
-    "content": "## Question 3: Identifying Plant Propagation Methods\n\nA strawberry plant produces long horizontal stems that grow above the soil. Along these stems, small buds develop roots when they touch the ground and eventually become independent plants. What is this method of reproduction called?\n\nA) Stem tuber propagation\n\nB) Rhizome propagation\n\nC) Runner (stolon) propagation\n\nD) Bulb propagation",
+    "content": "## Question 3: Identifying Plant Propagation Methods\n\nA strawberry plant produces long horizontal stems that grow above the soil. Along these stems, small buds develop roots when they touch the ground and eventually become independent plants. What is this method of reproduction called?",
     "speech_to_text_content": "A strawberry plant produces long horizontal stems that grow above the soil. Along these stems, small buds develop roots when they touch the ground and eventually become independent plants. What is this method of reproduction called? Stem tuber propagation, rhizome propagation, runner or stolon propagation, or bulb propagation?",
     "answer": [
       {
@@ -521,22 +521,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440016a",
-        "option_text": "A) Stem tuber propagation",
+        "option_text": "Stem tuber propagation",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016b",
-        "option_text": "B) Rhizome propagation",
+        "option_text": "Rhizome propagation",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016c",
-        "option_text": "C) Runner (stolon) propagation",
+        "option_text": "Runner (stolon) propagation",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440016d",
-        "option_text": "D) Bulb propagation",
+        "option_text": "Bulb propagation",
         "imageUrl": null
       }
     ],
@@ -565,7 +565,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Sexual Reproduction Definition",
-    "content": "## Question 4: Sexual Reproduction\n\nWhich statement CORRECTLY describes sexual reproduction?\n\nA) It requires only one parent and produces genetically identical offspring\n\nB) It requires two parents and produces genetically identical offspring\n\nC) It requires two parents and produces genetically different offspring\n\nD) It requires one parent and produces genetically different offspring",
+    "content": "## Question 4: Sexual Reproduction\n\nWhich statement CORRECTLY describes sexual reproduction?",
     "speech_to_text_content": "Which statement correctly describes sexual reproduction? It requires only one parent and produces genetically identical offspring, it requires two parents and produces genetically identical offspring, it requires two parents and produces genetically different offspring, or it requires one parent and produces genetically different offspring?",
     "answer": [
       {
@@ -581,22 +581,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440017a",
-        "option_text": "A) It requires only one parent and produces genetically identical offspring",
+        "option_text": "It requires only one parent and produces genetically identical offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017b",
-        "option_text": "B) It requires two parents and produces genetically identical offspring",
+        "option_text": "It requires two parents and produces genetically identical offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017c",
-        "option_text": "C) It requires two parents and produces genetically different offspring",
+        "option_text": "It requires two parents and produces genetically different offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440017d",
-        "option_text": "D) It requires one parent and produces genetically different offspring",
+        "option_text": "It requires one parent and produces genetically different offspring",
         "imageUrl": null
       }
     ],
@@ -625,7 +625,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Diploid and Haploid Cells",
-    "content": "## Question 5: Understanding Chromosome Numbers\n\nA human body cell contains 46 chromosomes. How many chromosomes would be found in a human sperm cell?\n\nA) 23 chromosomes (haploid)\n\nB) 46 chromosomes (diploid)\n\nC) 92 chromosomes (diploid)\n\nD) 11.5 chromosomes (half-diploid)",
+    "content": "## Question 5: Understanding Chromosome Numbers\n\nA human body cell contains 46 chromosomes. How many chromosomes would be found in a human sperm cell?",
     "speech_to_text_content": "A human body cell contains 46 chromosomes. How many chromosomes would be found in a human sperm cell? 23 chromosomes haploid, 46 chromosomes diploid, 92 chromosomes diploid, or 11.5 chromosomes half-diploid?",
     "answer": [
       {
@@ -641,22 +641,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440018a",
-        "option_text": "A) 23 chromosomes (haploid)",
+        "option_text": "23 chromosomes (haploid)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018b",
-        "option_text": "B) 46 chromosomes (diploid)",
+        "option_text": "46 chromosomes (diploid)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018c",
-        "option_text": "C) 92 chromosomes (diploid)",
+        "option_text": "92 chromosomes (diploid)",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440018d",
-        "option_text": "D) 11.5 chromosomes (half-diploid)",
+        "option_text": "11.5 chromosomes (half-diploid)",
         "imageUrl": null
       }
     ],
@@ -685,7 +685,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Meiosis and Gamete Formation",
-    "content": "## Question 6: The Purpose of Meiosis\n\nWhich of the following BEST explains why meiosis is essential for sexual reproduction?\n\nA) It produces four identical cells needed for rapid reproduction\n\nB) It reduces chromosome number by half, preventing chromosome doubling in offspring\n\nC) It increases chromosome number to strengthen offspring\n\nD) It replaces damaged cells in tissues and organs",
+    "content": "## Question 6: The Purpose of Meiosis\n\nWhich of the following BEST explains why meiosis is essential for sexual reproduction?",
     "speech_to_text_content": "Which of the following best explains why meiosis is essential for sexual reproduction? It produces four identical cells needed for rapid reproduction, it reduces chromosome number by half preventing chromosome doubling in offspring, it increases chromosome number to strengthen offspring, or it replaces damaged cells in tissues and organs?",
     "answer": [
       {
@@ -701,22 +701,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440019a",
-        "option_text": "A) It produces four identical cells needed for rapid reproduction",
+        "option_text": "It produces four identical cells needed for rapid reproduction",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019b",
-        "option_text": "B) It reduces chromosome number by half, preventing chromosome doubling in offspring",
+        "option_text": "It reduces chromosome number by half, preventing chromosome doubling in offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019c",
-        "option_text": "C) It increases chromosome number to strengthen offspring",
+        "option_text": "It increases chromosome number to strengthen offspring",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440019d",
-        "option_text": "D) It replaces damaged cells in tissues and organs",
+        "option_text": "It replaces damaged cells in tissues and organs",
         "imageUrl": null
       }
     ],
@@ -745,7 +745,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Genetic Variation in Sexual Reproduction",
-    "content": "## Question 7: Advantages of Sexual Reproduction\n\nWhy is genetic variation produced by sexual reproduction considered an evolutionary advantage?\n\nA) It allows organisms to reproduce faster than asexually reproducing organisms\n\nB) It enables populations to adapt to environmental changes and survive diseases\n\nC) It reduces the energy required for reproduction\n\nD) It eliminates the need for finding mates",
+    "content": "## Question 7: Advantages of Sexual Reproduction\n\nWhy is genetic variation produced by sexual reproduction considered an evolutionary advantage?",
     "speech_to_text_content": "Why is genetic variation produced by sexual reproduction considered an evolutionary advantage? It allows organisms to reproduce faster than asexually reproducing organisms, it enables populations to adapt to environmental changes and survive diseases, it reduces the energy required for reproduction, or it eliminates the need for finding mates?",
     "answer": [
       {
@@ -761,22 +761,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440020a",
-        "option_text": "A) It allows organisms to reproduce faster than asexually reproducing organisms",
+        "option_text": "It allows organisms to reproduce faster than asexually reproducing organisms",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020b",
-        "option_text": "B) It enables populations to adapt to environmental changes and survive diseases",
+        "option_text": "It enables populations to adapt to environmental changes and survive diseases",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020c",
-        "option_text": "C) It reduces the energy required for reproduction",
+        "option_text": "It reduces the energy required for reproduction",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020d",
-        "option_text": "D) It eliminates the need for finding mates",
+        "option_text": "It eliminates the need for finding mates",
         "imageUrl": null
       }
     ],
@@ -805,7 +805,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Comparing Mitosis and Meiosis",
-    "content": "## Question 8: Mitosis vs Meiosis\n\nWhich of the following statements CORRECTLY compares mitosis and meiosis?\n\nA) Both mitosis and meiosis produce genetically identical cells\n\nB) Mitosis maintains chromosome number while meiosis reduces it by half\n\nC) Mitosis is used for sexual reproduction while meiosis is used for asexual reproduction\n\nD) Both mitosis and meiosis produce four identical daughter cells",
+    "content": "## Question 8: Mitosis vs Meiosis\n\nWhich of the following statements CORRECTLY compares mitosis and meiosis?",
     "speech_to_text_content": "Which of the following statements correctly compares mitosis and meiosis? Both mitosis and meiosis produce genetically identical cells, mitosis maintains chromosome number while meiosis reduces it by half, mitosis is used for sexual reproduction while meiosis is used for asexual reproduction, or both mitosis and meiosis produce four identical daughter cells?",
     "answer": [
       {
@@ -821,22 +821,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440021a",
-        "option_text": "A) Both mitosis and meiosis produce genetically identical cells",
+        "option_text": "Both mitosis and meiosis produce genetically identical cells",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021b",
-        "option_text": "B) Mitosis maintains chromosome number while meiosis reduces it by half",
+        "option_text": "Mitosis maintains chromosome number while meiosis reduces it by half",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021c",
-        "option_text": "C) Mitosis is used for sexual reproduction while meiosis is used for asexual reproduction",
+        "option_text": "Mitosis is used for sexual reproduction while meiosis is used for asexual reproduction",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440021d",
-        "option_text": "D) Both mitosis and meiosis produce four identical daughter cells",
+        "option_text": "Both mitosis and meiosis produce four identical daughter cells",
         "imageUrl": null
       }
     ],
@@ -865,7 +865,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Homologous Chromosomes",
-    "content": "## Question 9: Understanding Homologous Chromosomes\n\nWhich statement BEST explains what homologous chromosomes are?\n\nA) Identical copies of the same chromosome found in the nucleus\n\nB) Pairs of chromosomes with the same genes at the same positions, one from each parent\n\nC) Chromosomes that have undergone crossing over during meiosis\n\nD) Chromosomes found only in gametes, not in body cells",
+    "content": "## Question 9: Understanding Homologous Chromosomes\n\nWhich statement BEST explains what homologous chromosomes are?",
     "speech_to_text_content": "Which statement best explains what homologous chromosomes are? Identical copies of the same chromosome found in the nucleus, pairs of chromosomes with the same genes at the same positions one from each parent, chromosomes that have undergone crossing over during meiosis, or chromosomes found only in gametes not in body cells?",
     "answer": [
       {
@@ -881,22 +881,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440022a",
-        "option_text": "A) Identical copies of the same chromosome found in the nucleus",
+        "option_text": "Identical copies of the same chromosome found in the nucleus",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440022b",
-        "option_text": "B) Pairs of chromosomes with the same genes at the same positions, one from each parent",
+        "option_text": "Pairs of chromosomes with the same genes at the same positions, one from each parent",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440022c",
-        "option_text": "C) Chromosomes that have undergone crossing over during meiosis",
+        "option_text": "Chromosomes that have undergone crossing over during meiosis",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440022d",
-        "option_text": "D) Chromosomes found only in gametes, not in body cells",
+        "option_text": "Chromosomes found only in gametes, not in body cells",
         "imageUrl": null
       }
     ],
@@ -925,7 +925,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Fertilization and Development",
-    "content": "## Question 10: Fertilization Process\n\nWhat is the immediate result of fertilization in sexual reproduction?\n\nA) Formation of two haploid cells\n\nB) Production of four genetically identical cells\n\nC) Formation of a diploid zygote containing genetic information from both parents\n\nD) Separation of homologous chromosomes",
+    "content": "## Question 10: Fertilization Process\n\nWhat is the immediate result of fertilization in sexual reproduction?",
     "speech_to_text_content": "What is the immediate result of fertilization in sexual reproduction? Formation of two haploid cells, production of four genetically identical cells, formation of a diploid zygote containing genetic information from both parents, or separation of homologous chromosomes?",
     "answer": [
       {
@@ -941,22 +941,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440023a",
-        "option_text": "A) Formation of two haploid cells",
+        "option_text": "Formation of two haploid cells",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440023b",
-        "option_text": "B) Production of four genetically identical cells",
+        "option_text": "Production of four genetically identical cells",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440023c",
-        "option_text": "C) Formation of a diploid zygote containing genetic information from both parents",
+        "option_text": "Formation of a diploid zygote containing genetic information from both parents",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440023d",
-        "option_text": "D) Separation of homologous chromosomes",
+        "option_text": "Separation of homologous chromosomes",
         "imageUrl": null
       }
     ],

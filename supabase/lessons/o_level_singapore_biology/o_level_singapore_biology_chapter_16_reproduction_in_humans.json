@@ -559,7 +559,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Male Reproductive System - Function Identification",
-    "content": "## Question: Function of the Scrotum\n\nWhich of the following best describes the primary function of the scrotum?\n\nA) To produce testosterone and sperm\nB) To maintain testes at 2°C cooler than body temperature\nC) To transport sperm from testes to urethra\nD) To produce seminal fluid for sperm survival",
+    "content": "## Question: Function of the Scrotum\n\nWhich of the following best describes the primary function of the scrotum?",
     "speech_to_text_content": "Which of the following best describes the primary function of the scrotum? A) To produce testosterone and sperm. B) To maintain testes at 2 degrees Celsius cooler than body temperature. C) To transport sperm from testes to urethra. D) To produce seminal fluid for sperm survival.",
     "answer": [
       {
@@ -619,7 +619,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Female Reproductive System - Menstrual Cycle Phases",
-    "content": "## Question: Menstrual Cycle Fertile Window\n\nDuring which phase of the menstrual cycle is the female most fertile?\n\nA) Menstruation (days 1-5) when progesterone is low\nB) Follicular phase (days 6-13) when endometrium is rebuilding\nC) Ovulation (days 10-15) when estrogen peaks and egg is released\nD) Luteal phase (days 15-28) when progesterone is high",
+    "content": "## Question: Menstrual Cycle Fertile Window\n\nDuring which phase of the menstrual cycle is the female most fertile?",
     "speech_to_text_content": "During which phase of the menstrual cycle is the female most fertile? A) Menstruation days 1-5 when progesterone is low. B) Follicular phase days 6-13 when endometrium is rebuilding. C) Ovulation days 10-15 when estrogen peaks and egg is released. D) Luteal phase days 15-28 when progesterone is high.",
     "answer": [
       {
@@ -679,7 +679,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Gametes - Sperm and Egg Comparison",
-    "content": "## Question: Differences Between Sperm and Egg\n\nWhich statement correctly describes a key difference between sperm and egg cells?\n\nA) Sperm are larger and contain more nutrients than eggs\nB) Eggs are produced continuously from puberty, while sperm are produced in limited quantities\nC) Sperm are self-propelled by their tails, while eggs move passively through the oviduct\nD) Both sperm and eggs contain either X or Y chromosomes",
+    "content": "## Question: Differences Between Sperm and Egg\n\nWhich statement correctly describes a key difference between sperm and egg cells?",
     "speech_to_text_content": "Which statement correctly describes a key difference between sperm and egg cells? A) Sperm are larger and contain more nutrients than eggs. B) Eggs are produced continuously from puberty, while sperm are produced in limited quantities. C) Sperm are self-propelled by their tails, while eggs move passively through the oviduct. D) Both sperm and eggs contain either X or Y chromosomes.",
     "answer": [
       {
@@ -739,7 +739,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Placental Functions - Multiple Roles",
-    "content": "## Question: Placental Gas Exchange\n\nWhich statement correctly describes gas exchange across the placenta?\n\nA) Oxygen moves from fetal blood to maternal blood, while CO₂ moves from maternal blood to fetal blood\nB) Oxygen moves from maternal blood to fetal blood, while CO₂ moves from fetal blood to maternal blood\nC) Both oxygen and CO₂ move from maternal blood to fetal blood\nD) The placenta produces oxygen for the fetus since fetal lungs are non-functional",
+    "content": "## Question: Placental Gas Exchange\n\nWhich statement correctly describes gas exchange across the placenta?",
     "speech_to_text_content": "Which statement correctly describes gas exchange across the placenta? A) Oxygen moves from fetal blood to maternal blood, while CO2 moves from maternal blood to fetal blood. B) Oxygen moves from maternal blood to fetal blood, while CO2 moves from fetal blood to maternal blood. C) Both oxygen and CO2 move from maternal blood to fetal blood. D) The placenta produces oxygen for the fetus since fetal lungs are non-functional.",
     "answer": [
       {
@@ -799,7 +799,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "HIV Transmission - Prevention Methods",
-    "content": "## Question: HIV Transmission Routes\n\nWhich of the following is NOT a method of HIV transmission?\n\nA) Unprotected sexual intercourse with an HIV-positive partner\nB) Sharing injection needles with an HIV-positive person\nC) Sharing food and drinks with an HIV-positive person\nD) Mother-to-child transmission during pregnancy or breastfeeding",
+    "content": "## Question: HIV Transmission Routes\n\nWhich of the following is NOT a method of HIV transmission?",
     "speech_to_text_content": "Which of the following is NOT a method of HIV transmission? A) Unprotected sexual intercourse with an HIV-positive person. B) Sharing injection needles with an HIV-positive person. C) Sharing food and drinks with an HIV-positive person. D) Mother-to-child transmission during pregnancy or breastfeeding.",
     "answer": [
       {

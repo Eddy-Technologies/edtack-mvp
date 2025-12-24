@@ -269,7 +269,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "✅ Test Your Knowledge: Kinetic Particle Theory",
-    "content": "## Question: States of Matter and Particle Behaviour\n\nWhich of the following statements about the kinetic particle theory is **correct**?\n\nA) Particles in solids vibrate in place with strong attractive forces, while particles in gases are far apart with weak attractive forces.\n\nB) Particles in liquids have the highest kinetic energy of all three states of matter.\n\nC) Diffusion occurs fastest in solids because particles are tightly packed together.\n\nD) When a substance is heated during a state change, the temperature increases continuously.",
+    "content": "## Question: States of Matter and Particle Behaviour\n\nWhich of the following statements about the kinetic particle theory is **correct**?",
     "speech_to_text_content": "Which of the following statements about the kinetic particle theory is correct? Option A: Particles in solids vibrate in place with strong attractive forces, while particles in gases are far apart with weak attractive forces. Option B: Particles in liquids have the highest kinetic energy of all three states of matter. Option C: Diffusion occurs fastest in solids because particles are tightly packed together. Option D: When a substance is heated during a state change, the temperature increases continuously.",
     "explanation": "The correct answer is **A**. According to the kinetic particle theory: In solids, particles vibrate about fixed positions and experience strong attractive forces that keep them in an orderly arrangement. In gases, particles are very spaced apart with very weak attractive forces between them. This is a complete and accurate description of the differences between these two states.\n\n**Why the other options are incorrect:**\n- **Option B** is wrong because gases have the highest kinetic energy, not liquids. Gas particles move fastest and most randomly.\n- **Option C** is wrong because diffusion is slowest in solids (particles can't move freely), not fastest. Diffusion is fastest in gases.\n- **Option D** is wrong because during a state change (melting, boiling, etc.), the temperature remains constant while energy is used to overcome intermolecular forces. Temperature only increases before or after the state change.\n\nThis question tests understanding of how particle arrangement, movement, and forces differ across the three states of matter.",
     "answer": [
@@ -286,22 +286,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440010opt1",
-        "option_text": "A) Particles in solids vibrate in place with strong attractive forces, while particles in gases are far apart with weak attractive forces.",
+        "option_text": "Particles in solids vibrate in place with strong attractive forces, while particles in gases are far apart with weak attractive forces.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440010opt2",
-        "option_text": "B) Particles in liquids have the highest kinetic energy of all three states of matter.",
+        "option_text": "Particles in liquids have the highest kinetic energy of all three states of matter.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440010opt3",
-        "option_text": "C) Diffusion occurs fastest in solids because particles are tightly packed together.",
+        "option_text": "Diffusion occurs fastest in solids because particles are tightly packed together.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440010opt4",
-        "option_text": "D) When a substance is heated during a state change, the temperature increases continuously.",
+        "option_text": "When a substance is heated during a state change, the temperature increases continuously.",
         "imageUrl": null
       }
     ],
@@ -600,7 +600,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "✅ Understanding Isotopes and Atomic Structure",
-    "content": "## Question: Isotopes and Their Properties\n\nWhich statement correctly compares two isotopes of the same element?\n\nA) Isotopes of the same element have different proton numbers but the same neutron numbers.\n\nB) Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore different chemical properties.\n\nC) Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore the same chemical properties.\n\nD) Isotopes are atoms of different elements with the same nucleon number.",
+    "content": "## Question: Isotopes and Their Properties\n\nWhich statement correctly compares two isotopes of the same element?",
     "speech_to_text_content": "Which statement correctly compares two isotopes of the same element? Option A: Isotopes of the same element have different proton numbers but the same neutron numbers. Option B: Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore different chemical properties. Option C: Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore the same chemical properties. Option D: Isotopes are atoms of different elements with the same nucleon number.",
     "explanation": "The correct answer is **C**. \n\n**Why C is correct:**\n- Isotopes are atoms of the **same element** with the **same proton number** (this is what makes them the same element)\n- Isotopes have **different numbers of neutrons** (this is what makes them different isotopes)\n- Isotopes have the **same chemical properties** because chemical properties depend on the number of electrons (which equals the number of protons in neutral atoms), not on the number of neutrons\n- The different numbers of neutrons cause different **physical properties** (like density, melting point, boiling point) but not chemical properties\n\n**Why the other options are incorrect:**\n\n- **Option A** is completely wrong. If isotopes had different proton numbers, they would be different elements, not isotopes of the same element. Proton number defines the element.\n\n- **Option B** is partially correct about the structure (same protons, different neutrons) but wrong about the properties. Isotopes have the SAME chemical properties, not different ones. The different number of neutrons affects physical properties, not chemical properties.\n\n- **Option D** is wrong on multiple counts. Isotopes are atoms of the **same element**, not different elements. Also, isotopes can have different nucleon numbers, not the same.\n\n**Key concept being tested:**\nUnderstanding the definition of isotopes and recognizing that chemical properties depend on electron configuration (determined by proton number), not on neutron number.\n\n**From the chapter:** \"Isotopes are atoms of the same element with the same proton number but different nucleon numbers. They have the same chemical properties, but different physical properties as they have the same amount of protons but different amounts of neutrons.\"",
     "answer": [
@@ -617,22 +617,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440020opt1",
-        "option_text": "A) Isotopes of the same element have different proton numbers but the same neutron numbers.",
+        "option_text": "Isotopes of the same element have different proton numbers but the same neutron numbers.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020opt2",
-        "option_text": "B) Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore different chemical properties.",
+        "option_text": "Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore different chemical properties.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020opt3",
-        "option_text": "C) Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore the same chemical properties.",
+        "option_text": "Isotopes of the same element have the same number of protons but different numbers of neutrons, and therefore the same chemical properties.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440020opt4",
-        "option_text": "D) Isotopes are atoms of different elements with the same nucleon number.",
+        "option_text": "Isotopes are atoms of different elements with the same nucleon number.",
         "imageUrl": null
       }
     ],
@@ -806,7 +806,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "✅ Comprehensive Chapter Test",
-    "content": "## Question: Integrating Multiple Concepts\n\nChlorine exists as two main isotopes: Chlorine-35 and Chlorine-37. In nature, 75% is Chlorine-35 and 25% is Chlorine-37. Both isotopes have 17 protons.\n\nWhich of the following statements is CORRECT?\n\nA) Chlorine-35 and Chlorine-37 have different numbers of protons, which is why they are different isotopes.\n\nB) The atomic mass of chlorine on the periodic table is 35 because Chlorine-35 is the most abundant isotope.\n\nC) Chlorine-35 and Chlorine-37 have the same chemical properties because they have the same number of electrons in neutral atoms.\n\nD) Chlorine-35 has 18 neutrons and Chlorine-37 has 20 neutrons, and this difference causes them to have different chemical properties.",
+    "content": "## Question: Integrating Multiple Concepts\n\nChlorine exists as two main isotopes: Chlorine-35 and Chlorine-37. In nature, 75% is Chlorine-35 and 25% is Chlorine-37. Both isotopes have 17 protons.\n\nWhich of the following statements is CORRECT?",
     "speech_to_text_content": "Chlorine exists as two main isotopes: Chlorine-35 and Chlorine-37. In nature, seventy-five percent is Chlorine-35 and twenty-five percent is Chlorine-37. Both isotopes have seventeen protons. Which of the following statements is correct? Option A: Chlorine-35 and Chlorine-37 have different numbers of protons, which is why they are different isotopes. Option B: The atomic mass of chlorine on the periodic table is thirty-five because Chlorine-35 is the most abundant isotope. Option C: Chlorine-35 and Chlorine-37 have the same chemical properties because they have the same number of electrons in neutral atoms. Option D: Chlorine-35 has eighteen neutrons and Chlorine-37 has twenty neutrons, and this difference causes them to have different chemical properties.",
     "explanation": "The correct answer is **C**.\n\n**Why C is correct:**\n- Both Chlorine-35 and Chlorine-37 have 17 protons (same atomic number)\n- In neutral atoms, number of electrons = number of protons = 17 electrons\n- Chemical properties depend on electron configuration, not on neutron number\n- Therefore, both isotopes have the same chemical properties\n- This is a key characteristic of isotopes: same element, same chemical properties, different physical properties\n\n**Why the other options are incorrect:**\n\n- **Option A** is completely wrong. Isotopes of the same element have the SAME number of protons. If they had different numbers of protons, they would be different elements, not isotopes. The difference in isotopes is the number of neutrons, not protons.\n\n- **Option B** is partially correct in method but wrong in conclusion. The atomic mass of chlorine on the periodic table is actually 35.5, not 35. This is because it's a weighted average of both isotopes: (75 × 35 + 25 × 37) / 100 = 35.5. While Chlorine-35 is more abundant, the presence of Chlorine-37 pulls the average up to 35.5.\n\n- **Option D** is correct about the neutron numbers (Cl-35 has 18 neutrons: 35 - 17 = 18; Cl-37 has 20 neutrons: 37 - 17 = 20) but wrong about the consequence. The different number of neutrons causes different PHYSICAL properties (like density, boiling point), NOT different chemical properties. Chemical properties depend on electrons, not neutrons.\n\n**Verification of neutron calculations:**\n- Chlorine-35: Nucleon number - Proton number = 35 - 17 = 18 neutrons ✓\n- Chlorine-37: Nucleon number - Proton number = 37 - 17 = 20 neutrons ✓\n\n**Key concepts tested:**\n- Understanding what defines an isotope (same proton number, different neutron number)\n- Recognizing that chemical properties depend on electrons, not neutrons\n- Understanding that atomic mass on the periodic table is a weighted average\n- Calculating neutron numbers from nucleon and proton numbers\n- Distinguishing between chemical and physical properties\n\n**From the chapter:** \"Isotopes are atoms of the same element with the same proton number but different nucleon numbers. They have the same chemical properties, but different physical properties as they have the same amount of protons but different amounts of neutrons.\"",
     "answer": [
@@ -823,22 +823,22 @@
     "options": [
       {
         "id": "550e8400-e29b-41d4-a716-446655440025opt1",
-        "option_text": "A) Chlorine-35 and Chlorine-37 have different numbers of protons, which is why they are different isotopes.",
+        "option_text": "Chlorine-35 and Chlorine-37 have different numbers of protons, which is why they are different isotopes.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440025opt2",
-        "option_text": "B) The atomic mass of chlorine on the periodic table is 35 because Chlorine-35 is the most abundant isotope.",
+        "option_text": "The atomic mass of chlorine on the periodic table is 35 because Chlorine-35 is the most abundant isotope.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440025opt3",
-        "option_text": "C) Chlorine-35 and Chlorine-37 have the same chemical properties because they have the same number of electrons in neutral atoms.",
+        "option_text": "Chlorine-35 and Chlorine-37 have the same chemical properties because they have the same number of electrons in neutral atoms.",
         "imageUrl": null
       },
       {
         "id": "550e8400-e29b-41d4-a716-446655440025opt4",
-        "option_text": "D) Chlorine-35 has 18 neutrons and Chlorine-37 has 20 neutrons, and this difference causes them to have different chemical properties.",
+        "option_text": "Chlorine-35 has 18 neutrons and Chlorine-37 has 20 neutrons, and this difference causes them to have different chemical properties.",
         "imageUrl": null
       }
     ],

@@ -124,7 +124,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Classifying Reactions: Exothermic or Endothermic?",
-    "content": "Which of the following is an **exothermic reaction**?\n\nA) Melting of ice\nB) Combustion of natural gas\nC) Thermal decomposition of calcium carbonate\nD) Dissolving ammonium chloride in water",
+    "content": "Which of the following is an **exothermic reaction**?",
     "speech_to_text_content": "Which of the following is an exothermic reaction? A) Melting of ice, B) Combustion of natural gas, C) Thermal decomposition of calcium carbonate, D) Dissolving ammonium chloride in water",
     "answer": [
       {
@@ -140,22 +140,22 @@
     "options": [
       {
         "id": "opt-a-uuid-1234-5678-90ab-cdef12345676",
-        "option_text": "A) Melting of ice",
+        "option_text": "Melting of ice",
         "imageUrl": null
       },
       {
         "id": "opt-b-uuid-1234-5678-90ab-cdef12345679",
-        "option_text": "B) Combustion of natural gas",
+        "option_text": "Combustion of natural gas",
         "imageUrl": null
       },
       {
         "id": "opt-c-uuid-1234-5678-90ab-cdef12345677",
-        "option_text": "C) Thermal decomposition of calcium carbonate",
+        "option_text": "Thermal decomposition of calcium carbonate",
         "imageUrl": null
       },
       {
         "id": "opt-d-uuid-1234-5678-90ab-cdef12345678",
-        "option_text": "D) Dissolving ammonium chloride in water",
+        "option_text": "Dissolving ammonium chloride in water",
         "imageUrl": null
       }
     ],
@@ -397,7 +397,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Interpreting Energy Profile Diagrams",
-    "content": "The energy profile diagram below shows a reaction pathway. Which statement is **correct**?\n\n**[Imagine a diagram showing: Reactants at energy level 100 kJ, peak at 250 kJ, products at 150 kJ]**\n\nA) The reaction is exothermic with ΔH = +150 kJ\nB) The reaction is exothermic with ΔH = -50 kJ\nC) The reaction is endothermic with ΔH = +50 kJ\nD) The activation energy is 50 kJ",
+    "content": "The energy profile diagram below shows a reaction pathway. Which statement is **correct**?\n\n**[Imagine a diagram showing: Reactants at energy level 100 kJ, peak at 250 kJ, products at 150 kJ]**",
     "speech_to_text_content": "An energy profile diagram shows reactants at 100 kilojoules, a peak at 250 kilojoules, and products at 150 kilojoules. Which statement is correct? A) The reaction is exothermic with delta H equals positive 150 kilojoules. B) The reaction is exothermic with delta H equals negative 50 kilojoules. C) The reaction is endothermic with delta H equals positive 50 kilojoules. D) The activation energy is 50 kilojoules.",
     "answer": [
       {
@@ -413,22 +413,22 @@
     "options": [
       {
         "id": "opt3-a-uuid-1234-5678-90ab-cdef12345679",
-        "option_text": "A) The reaction is exothermic with ΔH = +150 kJ",
+        "option_text": "The reaction is exothermic with ΔH = +150 kJ",
         "imageUrl": null
       },
       {
         "id": "opt3-b-uuid-1234-5678-90ab-cdef12345682",
-        "option_text": "B) The reaction is exothermic with ΔH = -50 kJ",
+        "option_text": "The reaction is exothermic with ΔH = -50 kJ",
         "imageUrl": null
       },
       {
         "id": "opt3-c-uuid-1234-5678-90ab-cdef12345683",
-        "option_text": "C) The reaction is endothermic with ΔH = +50 kJ",
+        "option_text": "The reaction is endothermic with ΔH = +50 kJ",
         "imageUrl": null
       },
       {
         "id": "opt3-d-uuid-1234-5678-90ab-cdef12345684",
-        "option_text": "D) The activation energy is 50 kJ",
+        "option_text": "The activation energy is 50 kJ",
         "imageUrl": null
       }
     ],
@@ -554,7 +554,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Catalysts",
-    "content": "Which statement about catalysts is **correct**?\n\nA) A catalyst increases the energy released by a reaction\nB) A catalyst lowers the activation energy and is consumed in the reaction\nC) A catalyst lowers the activation energy without changing the overall energy change (ΔH)\nD) A catalyst changes the products of a reaction",
+    "content": "Which statement about catalysts is **correct**?",
     "speech_to_text_content": "Which statement about catalysts is correct? A) A catalyst increases the energy released by a reaction. B) A catalyst lowers the activation energy and is consumed in the reaction. C) A catalyst lowers the activation energy without changing the overall energy change. D) A catalyst changes the products of a reaction.",
     "answer": [
       {
@@ -570,22 +570,22 @@
     "options": [
       {
         "id": "opt5-a-uuid-1234-5678-90ab-cdef12345684",
-        "option_text": "A) A catalyst increases the energy released by a reaction",
+        "option_text": "A catalyst increases the energy released by a reaction",
         "imageUrl": null
       },
       {
         "id": "opt5-b-uuid-1234-5678-90ab-cdef12345685",
-        "option_text": "B) A catalyst lowers the activation energy and is consumed in the reaction",
+        "option_text": "A catalyst lowers the activation energy and is consumed in the reaction",
         "imageUrl": null
       },
       {
         "id": "opt5-c-uuid-1234-5678-90ab-cdef12345687",
-        "option_text": "C) A catalyst lowers the activation energy without changing the overall energy change (ΔH)",
+        "option_text": "A catalyst lowers the activation energy without changing the overall energy change (ΔH)",
         "imageUrl": null
       },
       {
         "id": "opt5-d-uuid-1234-5678-90ab-cdef12345688",
-        "option_text": "D) A catalyst changes the products of a reaction",
+        "option_text": "A catalyst changes the products of a reaction",
         "imageUrl": null
       }
     ],
@@ -643,7 +643,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Comprehensive Review Question",
-    "content": "Consider the reaction: **C + O₂ → CO₂** (ΔH = -393 kJ)\n\nWhich of the following statements is **correct**?\n\nA) The reaction is endothermic because carbon and oxygen must be heated to react\nB) The reaction is exothermic because more energy is released forming CO₂ bonds than absorbed breaking C and O₂ bonds\nC) The reaction is endothermic because the activation energy is positive\nD) The reaction is exothermic because the activation energy is negative",
+    "content": "Consider the reaction: **C + O₂ → CO₂** (ΔH = -393 kJ)\n\nWhich of the following statements is **correct**?",
     "speech_to_text_content": "Consider the reaction: C plus O2 forming CO2, delta H equals negative 393 kilojoules. Which statement is correct? A) The reaction is endothermic because carbon and oxygen must be heated to react. B) The reaction is exothermic because more energy is released forming CO2 bonds than absorbed breaking C and O2 bonds. C) The reaction is endothermic because the activation energy is positive. D) The reaction is exothermic because the activation energy is negative.",
     "answer": [
       {
@@ -659,22 +659,22 @@
     "options": [
       {
         "id": "opt6-a-uuid-1234-5678-90ab-cdef12345688",
-        "option_text": "A) The reaction is endothermic because carbon and oxygen must be heated to react",
+        "option_text": "The reaction is endothermic because carbon and oxygen must be heated to react",
         "imageUrl": null
       },
       {
         "id": "opt6-b-uuid-1234-5678-90ab-cdef12345690",
-        "option_text": "B) The reaction is exothermic because more energy is released forming CO₂ bonds than absorbed breaking C and O₂ bonds",
+        "option_text": "The reaction is exothermic because more energy is released forming CO₂ bonds than absorbed breaking C and O₂ bonds",
         "imageUrl": null
       },
       {
         "id": "opt6-c-uuid-1234-5678-90ab-cdef12345691",
-        "option_text": "C) The reaction is endothermic because the activation energy is positive",
+        "option_text": "The reaction is endothermic because the activation energy is positive",
         "imageUrl": null
       },
       {
         "id": "opt6-d-uuid-1234-5678-90ab-cdef12345692",
-        "option_text": "D) The reaction is exothermic because the activation energy is negative",
+        "option_text": "The reaction is exothermic because the activation energy is negative",
         "imageUrl": null
       }
     ],

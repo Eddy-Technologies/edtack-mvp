@@ -385,7 +385,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Understanding Excretion - Definition Question",
-    "content": "## Question 1: What is the main purpose of excretion?\n\nA) To break down large molecules into smaller ones\nB) To remove metabolic waste products and toxic substances from the body\nC) To provide energy for cellular activities\nD) To transport nutrients throughout the body",
+    "content": "## Question 1: What is the main purpose of excretion?",
     "speech_to_text_content": "What is the main purpose of excretion? Option A: To break down large molecules into smaller ones. Option B: To remove metabolic waste products and toxic substances from the body. Option C: To provide energy for cellular activities. Option D: To transport nutrients throughout the body.",
     "answer": [
       {
@@ -445,7 +445,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Kidney Structure - Function Matching",
-    "content": "## Question 2: Which of the following correctly matches a kidney structure with its function?\n\nA) Renal artery carries filtered blood away from the kidney\nB) Ureter carries urine from the kidney to the bladder\nC) Renal vein carries waste-containing blood into the kidney\nD) Renal capsule produces urine",
+    "content": "## Question 2: Which of the following correctly matches a kidney structure with its function?",
     "speech_to_text_content": "Which of the following correctly matches a kidney structure with its function? Option A: Renal artery carries filtered blood away from the kidney. Option B: Ureter carries urine from the kidney to the bladder. Option C: Renal vein carries waste-containing blood into the kidney. Option D: Renal capsule produces urine.",
     "answer": [
       {
@@ -505,7 +505,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Ultrafiltration - Process Understanding",
-    "content": "## Question 3: Why is ultrafiltration described as a NON-SELECTIVE process?\n\nA) Because it selects only useful molecules to filter\nB) Because it filters molecules based purely on SIZE, not usefulness\nC) Because it requires energy from ATP\nD) Because it only occurs in the proximal convoluted tubule",
+    "content": "## Question 3: Why is ultrafiltration described as a NON-SELECTIVE process?",
     "speech_to_text_content": "Why is ultrafiltration described as a non-selective process? Option A: Because it selects only useful molecules to filter. Option B: Because it filters molecules based purely on size, not usefulness. Option C: Because it requires energy from ATP. Option D: Because it only occurs in the proximal convoluted tubule.",
     "answer": [
       {
@@ -565,7 +565,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Selective Reabsorption - Substance Recovery",
-    "content": "## Question 4: Which of the following substances is normally COMPLETELY reabsorbed in the proximal convoluted tubule?\n\nA) Urea\nB) Glucose\nC) Water\nD) Excess salts",
+    "content": "## Question 4: Which of the following substances is normally COMPLETELY reabsorbed in the proximal convoluted tubule?",
     "speech_to_text_content": "Which of the following substances is normally completely reabsorbed in the proximal convoluted tubule? Option A: Urea. Option B: Glucose. Option C: Water. Option D: Excess salts.",
     "answer": [
       {
@@ -625,7 +625,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Osmoregulation - ADH Function",
-    "content": "## Question 5: When blood becomes too concentrated, what happens to ADH levels and water reabsorption?\n\nA) ADH levels decrease and water reabsorption decreases\nB) ADH levels increase and water reabsorption increases\nC) ADH levels increase and water reabsorption decreases\nD) ADH levels remain unchanged and water reabsorption increases",
+    "content": "## Question 5: When blood becomes too concentrated, what happens to ADH levels and water reabsorption?",
     "speech_to_text_content": "When blood becomes too concentrated, what happens to ADH levels and water reabsorption? Option A: ADH levels decrease and water reabsorption decreases. Option B: ADH levels increase and water reabsorption increases. Option C: ADH levels increase and water reabsorption decreases. Option D: ADH levels remain unchanged and water reabsorption increases.",
     "answer": [
       {
@@ -685,7 +685,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Kidney Failure - Types and Characteristics",
-    "content": "## Question 6: Which statement correctly distinguishes between acute and chronic kidney failure?\n\nA) Acute kidney failure develops slowly; chronic kidney failure develops suddenly\nB) Acute kidney failure is sudden and often reversible; chronic kidney failure is gradual and usually irreversible\nC) Acute kidney failure affects only elderly patients; chronic kidney failure affects young patients\nD) Acute kidney failure can be cured; chronic kidney failure cannot be treated",
+    "content": "## Question 6: Which statement correctly distinguishes between acute and chronic kidney failure?",
     "speech_to_text_content": "Which statement correctly distinguishes between acute and chronic kidney failure? Option A: Acute kidney failure develops slowly; chronic kidney failure develops suddenly. Option B: Acute kidney failure is sudden and often reversible; chronic kidney failure is gradual and usually irreversible. Option C: Acute kidney failure affects only elderly patients; chronic kidney failure affects young patients. Option D: Acute kidney failure can be cured; chronic kidney failure cannot be treated.",
     "answer": [
       {
@@ -745,7 +745,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Dialysis - Treatment Methods Comparison",
-    "content": "## Question 7: Which of the following is an advantage of peritoneal dialysis compared to hemodialysis?\n\nA) It is more effective at removing waste products\nB) It can be done at home with more flexible scheduling\nC) It has a lower risk of infection\nD) It requires less patient training and compliance",
+    "content": "## Question 7: Which of the following is an advantage of peritoneal dialysis compared to hemodialysis?",
     "speech_to_text_content": "Which of the following is an advantage of peritoneal dialysis compared to hemodialysis? Option A: It is more effective at removing waste products. Option B: It can be done at home with more flexible scheduling. Option C: It has a lower risk of infection. Option D: It requires less patient training and compliance.",
     "answer": [
       {
@@ -805,7 +805,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Kidney Transplant - Rejection and Prevention",
-    "content": "## Question 8: Why must kidney transplant patients take immunosuppressive drugs for the rest of their lives?\n\nA) To provide energy for the transplanted kidney to function\nB) To prevent the immune system from recognizing and attacking the transplanted kidney\nC) To improve the filtering ability of the transplanted kidney\nD) To replace the hormones that the transplanted kidney cannot produce",
+    "content": "## Question 8: Why must kidney transplant patients take immunosuppressive drugs for the rest of their lives?",
     "speech_to_text_content": "Why must kidney transplant patients take immunosuppressive drugs for the rest of their lives? Option A: To provide energy for the transplanted kidney to function. Option B: To prevent the immune system from recognizing and attacking the transplanted kidney. Option C: To improve the filtering ability of the transplanted kidney. Option D: To replace the hormones that the transplanted kidney cannot produce.",
     "answer": [
       {
