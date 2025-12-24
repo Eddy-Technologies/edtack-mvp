@@ -164,6 +164,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch, computed, nextTick } from 'vue';
 import { useRouter, useRoute, onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
+import { useToast } from '#imports';
 import Sidebar from '@/components/Sidebar.vue';
 import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
@@ -171,6 +172,7 @@ import CharacterCarousel from '@/components/CharacterCarousel.vue';
 import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
+import { useMessageQueueStore } from '~/stores/messageQueue';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import type { _height } from '#tailwind-config/theme';
 
@@ -215,6 +217,8 @@ const showSlides = computed(() => selectedSlides.value.length > 0);
 const router = useRouter();
 const route = useRoute();
 const supabaseUser = useSupabaseUser();
+const toast = useToast();
+const messageQueueStore = useMessageQueueStore();
 const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread, isLoadingThread } = useThreads();
 
 const {
@@ -248,16 +252,28 @@ onBeforeRouteLeave(() => {
 });
 
 const preventNavigation = () => {
-  // Check if waiting for chat response
-  if (connectionStatus.value.isWaitingForResponse) {
-    const confirmed = confirm('You are currently waiting for a response. Are you sure you want to leave?');
-    return confirmed;
-  }
-  // Check if slide answer is being marked
+  // Check if slide answer is being marked (this truly can't continue in background)
   if (slideContainerRef.value?.isAnySubmitting) {
     const confirmed = confirm('Your answer is being marked. Are you sure you want to leave?');
     return confirmed;
   }
+
+  // Check if chat is processing - show toast but allow navigation (continues in background)
+  const currentThreadId = threadId.value;
+  if (currentThreadId && currentThreadId !== 'new') {
+    const threadState = messageQueueStore.getThreadState(currentThreadId);
+    if (threadState?.status === 'processing' || connectionStatus.value.isWaitingForResponse) {
+      // Show toast notification - chat will continue in background
+      toast.add({
+        title: 'Chat continuing in background',
+        description: 'You can return to see the response when ready.',
+        icon: 'i-heroicons-information-circle',
+        color: 'blue',
+        timeout: 4000,
+      });
+    }
+  }
+
   return true;
 };
 

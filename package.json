@@ -12,8 +12,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "prepare": "husky",
-    "db:reset": "supabase db reset && node supabase/scripts/init-admin.js && node supabase/scripts/upload-assets.js && node supabase/scripts/import-lessons.js",
-    "db:types": "supabase gen types typescript --local > types/supabase.ts"
+    "db:reset": "supabase db reset --workdir ${SUPABASE_WORKDIR:-.} && node supabase/scripts/init-admin.js && node supabase/scripts/upload-assets.js && node supabase/scripts/import-lessons.js",
+    "db:types": "supabase gen types typescript --local --workdir ${SUPABASE_WORKDIR:-.} > types/supabase.ts"
   },
   "dependencies": {
     "@iconify-json/simple-icons": "^1.2.29",

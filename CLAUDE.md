@@ -33,8 +33,15 @@ This project uses **pnpm** as the package manager.
 
 ### Local Development
 ```bash
-supabase start   # Start local Supabase
-pnpm db:reset    # Reset DB + create users + upload assets + import lessons
+# Start Supabase from the database directory (path from SUPABASE_WORKDIR in .env)
+cd $SUPABASE_WORKDIR && supabase start
+
+# Reset DB (requires SUPABASE_WORKDIR - npm scripts don't load .env automatically)
+# Pass the env var explicitly, using the value from your .env file
+SUPABASE_WORKDIR=<path-from-your-env> pnpm db:reset
+
+# Generate TypeScript types (also requires SUPABASE_WORKDIR)
+SUPABASE_WORKDIR=<path-from-your-env> pnpm db:types
 ```
 
 ### Apply Migration Locally (Without Wiping Data)

@@ -36,8 +36,14 @@
           <span class="text-blue-500">Sending...</span>
         </template>
         <template v-else-if="status === 'failed'">
-          <Icon name="i-heroicons-x-circle" class="w-3 h-3 text-red-500" />
-          <span class="text-red-500">Failed to send</span>
+          <Icon name="i-heroicons-exclamation-triangle" class="w-3 h-3 text-red-500" />
+          <span class="text-red-500">Unable to complete</span>
+          <button
+            class="ml-2 text-primary-600 hover:text-primary-700 hover:underline font-medium"
+            @click="$emit('retry', text)"
+          >
+            Retry
+          </button>
         </template>
       </div>
     </div>
@@ -76,7 +82,7 @@ const props = defineProps<{
   status?: 'queued' | 'sending' | 'sent' | 'failed';
 }>();
 
-defineEmits(['finish']);
+defineEmits(['finish', 'retry']);
 
 const mdcBody = ref();
 
