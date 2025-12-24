@@ -1,5 +1,5 @@
 import { getUserInfo } from '../../utils/auth';
-import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { getPrivilegedSupabaseClient } from '~~/server/utils/authConfig';
 
 interface StartLessonRequest {
   chapterName: string;
@@ -39,7 +39,7 @@ interface LessonSlide {
  */
 export default defineEventHandler(async (event) => {
   try {
-    const supabase = await getSupabaseClient(event);
+    const supabase = getPrivilegedSupabaseClient(event);
     const userInfo = await getUserInfo(event);
     const body = await readBody<StartLessonRequest>(event);
 
@@ -134,6 +134,8 @@ export default defineEventHandler(async (event) => {
       });
 
     if (messageError) {
+      // Rollback: delete the orphaned thread
+      await supabase.from('threads').delete().eq('id', thread.id);
       throw createError({
         statusCode: 500,
         statusMessage: `Failed to create message: ${messageError.message}`,

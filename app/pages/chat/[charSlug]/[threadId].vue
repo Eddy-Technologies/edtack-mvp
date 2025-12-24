@@ -44,14 +44,14 @@
         <div class="flex-1 flex flex-col h-full relative">
           <!-- Chat Content Area - takes remaining space -->
           <div class="flex-1 overflow-hidden relative">
-            <!-- Loading state during thread creation -->
+            <!-- Loading state during thread creation or loading -->
             <div
-              v-if="isCreatingThread"
+              v-if="isCreatingThread || isLoadingThread"
               class="absolute inset-0 flex items-center justify-center bg-white/95 backdrop-blur-sm z-10"
             >
               <div class="flex flex-col items-center gap-3">
                 <UIcon name="i-heroicons-arrow-path" class="w-8 h-8 animate-spin text-primary" />
-                <span class="text-gray-500">Starting chat...</span>
+                <span class="text-gray-500">{{ isCreatingThread ? 'Starting chat...' : 'Loading conversation...' }}</span>
               </div>
             </div>
 
@@ -213,7 +213,7 @@ const showSlides = computed(() => selectedSlides.value.length > 0);
 const router = useRouter();
 const route = useRoute();
 const supabaseUser = useSupabaseUser();
-const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread } = useThreads();
+const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread, isLoadingThread } = useThreads();
 
 const {
   selectedCharacter,

@@ -146,6 +146,8 @@
                     size="sm"
                     color="blue"
                     variant="soft"
+                    :loading="lessonButtonLoading[chapter.name]"
+                    :disabled="lessonButtonLoading[chapter.name]"
                     @click="handleStudyAction(chapter, selectedSubjectData.subject_name, selectedSubjectData.display_name, 'lesson')"
                   >
                     <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-1" />
@@ -314,6 +316,7 @@ const quizExists = reactive<Record<string, boolean>>({});
 const quizCompleted = reactive<Record<string, boolean>>({});
 const quizMetadata = reactive<Record<string, any>>({}); // Store quiz metadata by taskChapterId
 const generatingStatus = reactive<Record<string, boolean>>({}); // Track which chapters are generating
+const lessonButtonLoading = reactive<Record<string, boolean>>({}); // Track lesson button loading state
 const pollingIntervals = reactive<Record<string, ReturnType<typeof setInterval>>>({}); // Polling intervals
 
 // Computed: Get currently selected subject object
@@ -406,6 +409,11 @@ const fetchSubjects = async () => {
 };
 
 const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice' | 'quiz') => {
+  // Set loading state for lesson button
+  if (actionType === 'lesson') {
+    lessonButtonLoading[chapter.name] = true;
+  }
+
   try {
     // Check token limits - show toast if exceeded but allow action (soft limit)
     const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
@@ -450,6 +458,12 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
         // If no seeded lesson, fall through to AI generation
       } catch (lessonError) {
         console.warn('Seeded lesson not available, falling back to AI generation:', lessonError);
+        toast.add({
+          title: 'Generating lesson',
+          description: 'Creating a fresh lesson for you...',
+          color: 'blue',
+          timeout: 3000,
+        });
         // Fall through to AI generation
       }
     }
@@ -464,6 +478,11 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
     await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
   } catch (error) {
     console.error('Error handling study action:', error);
+  } finally {
+    // Clear loading state for lesson button
+    if (actionType === 'lesson') {
+      lessonButtonLoading[chapter.name] = false;
+    }
   }
 };
 

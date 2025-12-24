@@ -55,6 +55,8 @@ export function useThreads() {
 
   // Fetch specific thread with messageHistory
   const fetchThread = async (threadId: string) => {
+    isLoadingThread.value = true;
+    messageHistory.value = []; // Clear stale data immediately
     try {
       const { threadData, success } = await $fetch(`/api/chat/thread/${threadId}`, { method: 'GET' });
 
@@ -67,6 +69,8 @@ export function useThreads() {
     } catch (err) {
       console.error('Error loading thread:', err);
       reset();
+    } finally {
+      isLoadingThread.value = false;
     }
   };
 
@@ -108,8 +112,7 @@ export function useThreads() {
     if (!threads.value.find((t) => t.id === thread.id)) {
       threads.value.unshift(thread);
     }
-    // Cache for use after navigation
-    createdThreadCache.value = thread;
+    // Don't cache - lesson threads have messages that need fetching via fetchThread
   };
 
   // Add message to current thread (handles all message types)
