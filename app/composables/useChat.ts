@@ -227,8 +227,10 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function connect(): Promise<boolean> {
     const tid = resolvedThreadId.value;
+    console.log('[useChat] connect() called for threadId:', tid);
 
     const success = await store.connect(tid);
+    console.log('[useChat] store.connect() result:', success);
 
     if (success) {
       // Subscribe to Realtime for cross-device sync
@@ -246,8 +248,10 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   function disconnect(): void {
     const tid = resolvedThreadId.value;
+    console.log('[useChat] disconnect() called for threadId:', tid);
     store.closeConnection(tid);
     realtimeSync.unsubscribeFromThread(tid);
+    console.log('[useChat] disconnect() completed');
   }
 
   /**
@@ -269,17 +273,39 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function startChat(message: string, userInfo?: ChatUserInfo): Promise<boolean> {
     const tid = resolvedThreadId.value;
+    console.log('[useChat] startChat called for threadId:', tid);
 
-    const conn = store.getConnection(tid);
-    if (!conn || !conn.chat.isConnected.value) {
+    let currentConn = store.getConnection(tid);
+    console.log('[useChat] Current connection:', !!currentConn, 'isConnected:', currentConn?.chat.isConnected.value);
+
+    if (!currentConn || !currentConn.chat.isConnected.value) {
+      console.log('[useChat] Not connected, attempting to connect...');
       const connected = await connect();
       if (!connected) {
+        console.log('[useChat] Connection failed, returning false');
+        return false;
+      }
+      // Re-fetch connection after successful connect
+      currentConn = store.getConnection(tid);
+    }
+
+    console.log('[useChat] After connect check, currentConn:', !!currentConn);
+
+    // Retry once if connection was lost due to race condition
+    if (!currentConn) {
+      console.log('[useChat] Connection lost, retrying connect...');
+      const retryConnected = await connect();
+      if (!retryConnected) {
+        console.log('[useChat] Retry connection failed, returning false');
+        return false;
+      }
+      currentConn = store.getConnection(tid);
+      console.log('[useChat] After retry, currentConn:', !!currentConn);
+      if (!currentConn) {
+        console.log('[useChat] Connection still null after retry, returning false');
         return false;
       }
     }
-
-    const currentConn = store.getConnection(tid);
-    if (!currentConn) return false;
 
     // Generate UUID for deduplication
     const uuid = crypto.randomUUID();
@@ -302,7 +328,9 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     store.setThreadState(tid, { status: 'processing' });
 
     // Send via WebSocket/SSE
+    console.log('[useChat] Calling currentConn.chat.startChat...');
     const success = currentConn.chat.startChat(message, userInfo);
+    console.log('[useChat] startChat result:', success);
 
     if (success) {
       store.updatePendingMessage(tid, uuid, { status: 'sent' });
@@ -338,15 +366,21 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function sendUserResponse(responseText: string, userInfo?: ChatUserInfo): Promise<boolean> {
     const tid = resolvedThreadId.value;
-    const conn = store.getConnection(tid);
+    let currentConn = store.getConnection(tid);
 
-    if (!conn || !conn.chat.isConnected.value) {
+    if (!currentConn || !currentConn.chat.isConnected.value) {
       const connected = await connect();
       if (!connected) return false;
+      currentConn = store.getConnection(tid);
     }
 
-    const currentConn = store.getConnection(tid);
-    if (!currentConn) return false;
+    // Retry once if connection was lost due to race condition
+    if (!currentConn) {
+      const retryConnected = await connect();
+      if (!retryConnected) return false;
+      currentConn = store.getConnection(tid);
+      if (!currentConn) return false;
+    }
 
     // Generate UUID for deduplication
     const uuid = crypto.randomUUID();

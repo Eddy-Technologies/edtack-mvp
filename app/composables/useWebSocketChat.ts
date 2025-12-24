@@ -51,7 +51,9 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
   };
 
   const connect = (token?: string) => {
+    console.log('[WebSocketChat] connect() called, isConnecting:', isConnecting.value, 'isConnected:', isConnected.value);
     if (isConnecting.value || isConnected.value) {
+      console.log('[WebSocketChat] connect() early return - already connecting or connected');
       return;
     }
 
@@ -59,6 +61,10 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
     if (token) {
       currentAuthToken = token;
     }
+
+    // Reset reconnect attempts on manual connect (allows retry after failure)
+    reconnectAttempts = 0;
+    console.log('[WebSocketChat] Reset reconnectAttempts to 0, proceeding with connection');
 
     isConnecting.value = true;
     error.value = null;
@@ -71,7 +77,7 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
 
     try {
       const wsUrl = buildWsUrl(currentAuthToken);
-      console.log('[WebSocket] Connecting to:', wsUrl.replace(/token=[^&]+/, 'token=***'));
+      console.log('[WebSocketChat] Connecting to:', wsUrl.replace(/token=[^&]+/, 'token=***'));
       ws.value = new WebSocket(wsUrl);
 
       ws.value.onopen = () => {
@@ -134,9 +140,17 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
         }
       };
 
-      ws.value.onclose = () => {
+      ws.value.onclose = (event) => {
+        console.log('[WebSocketChat] Connection closed, code:', event.code, 'reason:', event.reason, 'wasClean:', event.wasClean);
         isConnected.value = false;
         isConnecting.value = false;
+
+        // Reset waiting state - if we were waiting for a response, the connection loss means it won't arrive
+        if (isWaitingForResponse.value) {
+          console.log('[WebSocketChat] Connection closed while waiting for response - resetting isWaitingForResponse');
+          isWaitingForResponse.value = false;
+          responsePhase.value = '';
+        }
 
         // Reject connection promise if still pending
         if (connectionRejecter) {
@@ -148,10 +162,12 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
         if (reconnectAttempts < maxReconnectAttempts) {
           reconnectAttempts++;
           const delay = reconnectDelay * Math.pow(2, reconnectAttempts - 1);
+          console.log('[WebSocketChat] Reconnecting in', delay, 'ms (attempt', reconnectAttempts, 'of', maxReconnectAttempts, ')');
           reconnectTimeout = setTimeout(() => {
             connect();
           }, delay);
         } else {
+          console.log('[WebSocketChat] Max reconnect attempts reached');
           error.value = 'Failed to establish connection after multiple attempts';
         }
       };
@@ -187,15 +203,19 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
   };
 
   const sendMessage = (message: ChatMessage) => {
+    console.log('[WebSocketChat] sendMessage called, type:', message.type, 'wsOpen:', ws.value?.readyState === WebSocket.OPEN);
     if (!ws.value || ws.value.readyState !== WebSocket.OPEN) {
+      console.log('[WebSocketChat] sendMessage failed - WebSocket not open, readyState:', ws.value?.readyState);
       error.value = 'WebSocket is not connected';
       return false;
     }
 
     try {
       ws.value.send(JSON.stringify(message));
+      console.log('[WebSocketChat] sendMessage success');
       return true;
-    } catch {
+    } catch (e) {
+      console.error('[WebSocketChat] sendMessage failed:', e);
       error.value = 'Failed to send message';
       return false;
     }

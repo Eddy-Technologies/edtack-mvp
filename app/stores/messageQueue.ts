@@ -567,11 +567,16 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Disconnect from a thread
      */
     async closeConnection(threadId: string) {
+      console.log('[MessageQueue] closeConnection() called for threadId:', threadId);
       const conn = connectionPool[threadId];
       if (conn) {
+        console.log('[MessageQueue] Disconnecting and removing from pool');
         conn.chat.disconnect();
         Reflect.deleteProperty(connectionPool, threadId);
         this.connectionVersion++; // Trigger reactivity
+        console.log('[MessageQueue] Connection removed, connectionVersion:', this.connectionVersion);
+      } else {
+        console.log('[MessageQueue] No connection found in pool to close');
       }
     },
 
