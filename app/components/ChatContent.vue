@@ -151,6 +151,15 @@ const initializeChat = async () => {
     console.log('[ChatContent] Store has active connection, reusing');
     currentThreadId.value = props.threadId;
     chat.value = useChat(props.threadId);
+
+    // Populate messageStream even when reusing connection (fixes empty messages on thread switch)
+    messageStream.value = messageHistory.value.map(({ content, id, sender }) => {
+      if (!sender) {
+        return { ...JSON.parse(content), isUser: false, id };
+      }
+      return { text: content, isUser: true, id };
+    });
+
     return;
   }
 
@@ -317,6 +326,25 @@ onMounted(() => {
     (state) => {
       if (state.hasUser && state.profileLoaded && state.threadId && state.character) {
         initializeChat();
+      }
+    },
+    { immediate: true }
+  );
+
+  // Watch threadData prop for changes - syncs messageStream when switching threads
+  // This fixes the issue where initializeChat() returns early (reusing connection)
+  // but messageStream is never populated with the new thread's messages
+  watch(
+    () => props.threadData,
+    (newThreadData) => {
+      if (newThreadData?.thread_messages && props.threadId !== 'new') {
+        console.log('[ChatContent] Syncing messageStream from threadData prop');
+        messageStream.value = newThreadData.thread_messages.map((msg: any) => {
+          if (!msg.sender) {
+            return { ...JSON.parse(msg.content), isUser: false, id: msg.id };
+          }
+          return { text: msg.content, isUser: true, id: msg.id };
+        });
       }
     },
     { immediate: true }
