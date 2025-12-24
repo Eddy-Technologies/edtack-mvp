@@ -1,0 +1,875 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌍 The Ecosystem and Human Impact - Chapter Overview",
+    "content": "## Welcome to Ecosystems and Human Impact\n\nIn this chapter, you will explore how living organisms interact with each other and their environment, and understand the profound ways human activities are changing our planet.\n\n### 🎯 Key Questions We'll Answer\n\n- How are organisms in an ecosystem interdependent?\n- How do human activities impact the environment and biodiversity?\n- How can we protect our environment and create sustainable futures?\n\n### 📚 What You'll Learn\n\nThis chapter covers three major themes:\n\n1. **Energy Flow** - How energy moves through ecosystems from the sun to all living things\n2. **Nutrient Cycling** - How elements like carbon cycle through ecosystems\n3. **Human Impact & Conservation** - How our actions affect ecosystems and what we can do about it\n\n### 💡 Why This Matters\n\nUnderstanding ecosystems helps us appreciate the delicate balance of nature and recognize our responsibility as stewards of Earth. The choices we make today affect biodiversity, climate, and the survival of species for generations to come.",
+    "speech_to_text_content": "Welcome to Ecosystems and Human Impact. In this chapter, you will explore how living organisms interact with each other and their environment, and understand the profound ways human activities are changing our planet. Key questions include: How are organisms in an ecosystem interdependent? How do human activities impact the environment and biodiversity? How can we protect our environment? You will learn about energy flow, nutrient cycling, and human impact and conservation. Understanding ecosystems helps us appreciate the delicate balance of nature and recognize our responsibility as stewards of Earth.",
+    "explanation": "This introductory slide sets the context for the entire chapter on ecosystems and human impact. It establishes the three main themes: energy flow (how energy moves through ecosystems), nutrient cycling (how elements like carbon cycle), and human impact and conservation. This overview helps students understand the structure and relevance of the content they will learn.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T04:15:53.903539+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Slide 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 What is an Ecosystem?",
+    "content": "## Understanding Ecosystems\n\n::yellow[An ecosystem] is a ::blue[natural unit] consisting of all ::yellow[living organisms (biotic factors)] and their ::yellow[physical environment (abiotic factors)] that interact together as an integrated system.\n\n### 🧬 Biotic Factors (Living Components)\n\nBiotic factors are all the ::green[living organisms] in an ecosystem:\n\n- **Producers** - ::yellow[Green plants] that make their own food through photosynthesis\n- **Primary Consumers** - ::yellow[Herbivores] that eat plants (rabbits, deer, insects)\n- **Secondary Consumers** - ::yellow[Carnivores] that eat herbivores (snakes, hawks)\n- **Tertiary Consumers** - ::yellow[Top predators] that eat other carnivores (eagles, lions)\n- **Decomposers** - ::yellow[Bacteria and fungi] that break down dead organic matter and return nutrients to soil\n\n### 🌡️ Abiotic Factors (Non-Living Components)\n\nAbiotic factors are the ::green[non-living physical and chemical elements]:\n\n| Type | Examples |\n|------|----------|\n| **Physical** | Temperature, light, water, soil, wind |\n| **Chemical** | pH, oxygen levels, nutrient availability |\n| **Geological** | Rock type, topography, altitude |\n\n### 💡 How They Work Together\n\nThe biotic and abiotic factors are ::red[interdependent] - they cannot function separately. For example, plants (biotic) need sunlight and water (abiotic) to survive, while plants release oxygen (abiotic) that animals (biotic) need to breathe.",
+    "speech_to_text_content": "An ecosystem is a natural unit consisting of all living organisms and their physical environment that interact together as an integrated system. Biotic factors are living organisms including producers like green plants, primary consumers like herbivores, secondary consumers like carnivores, tertiary consumers or top predators, and decomposers like bacteria and fungi. Abiotic factors are non-living components including physical factors like temperature, light, water, soil and wind, chemical factors like pH and oxygen levels, and geological factors like rock type and altitude. The biotic and abiotic factors are interdependent and cannot function separately.",
+    "explanation": "This slide introduces the fundamental concept of an ecosystem as defined in the chapter. It explains that ecosystems consist of both living (biotic) and non-living (abiotic) components that interact as a system. The biotic factors are organized into five categories based on their role in energy flow: producers, primary consumers, secondary consumers, tertiary consumers, and decomposers. Abiotic factors are organized into three categories: physical, chemical, and geological. Understanding this structure is essential for comprehending how ecosystems function and how energy and nutrients move through them.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:05:00Z",
+    "updated_at": "2024-01-15T09:05:00Z",
+    "source_timestamp": "2024-01-15T09:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T04:15:59.850901+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Slide 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Food Chains and Food Webs",
+    "content": "## Energy Transfer Through Feeding Relationships\n\n### 📊 What is a Food Chain?\n\nA ::yellow[food chain] is a ::blue[linear sequence] showing how ::yellow[energy and nutrients pass] from one organism to another through feeding relationships.\n\n**Example of a Simple Food Chain:**\n\n::yellow[Grass] → ::yellow[Rabbit] → ::yellow[Snake] → ::yellow[Eagle]\n\nEach arrow means \"is eaten by\" or \"is food for.\"\n\n### 🎯 Trophic Levels - The Feeding Hierarchy\n\n::yellow[Trophic levels] represent the position of an organism in a food chain:\n\n| Level | Name | Examples | Role |\n|-------|------|----------|------|\n| **Level 1** | ::yellow[Producers] | Plants, algae | Make their own food using sunlight |\n| **Level 2** | ::yellow[Primary Consumers] | Herbivores (rabbits, deer) | Eat producers |\n| **Level 3** | ::yellow[Secondary Consumers] | Carnivores (snakes, hawks) | Eat primary consumers |\n| **Level 4** | ::yellow[Tertiary Consumers] | Top predators (eagles, lions) | Eat secondary consumers |\n\n### 🕸️ What is a Food Web?\n\nIn reality, ecosystems are more complex than simple food chains. A ::yellow[food web] shows ::green[multiple interconnected food chains], representing the actual feeding relationships in an ecosystem.\n\n**Why Food Webs Matter:**\n\n- Organisms often eat multiple types of food\n- Energy can flow through different pathways\n- Shows the ::red[interdependence of species] - if one organism disappears, others are affected\n- More realistic representation of how ecosystems actually function\n\n### 💡 Key Insight\n\n> ✅ Remember: ::green[All food chains and webs start with producers] (plants) that capture energy from the sun. Without producers, no other organisms could survive!",
+    "speech_to_text_content": "A food chain is a linear sequence showing how energy and nutrients pass from one organism to another through feeding relationships. An example is grass, eaten by rabbit, eaten by snake, eaten by eagle. Trophic levels represent the position of an organism in a food chain. Level 1 is producers like plants and algae. Level 2 is primary consumers like herbivores. Level 3 is secondary consumers like carnivores. Level 4 is tertiary consumers or top predators. In reality, ecosystems are more complex than simple food chains. A food web shows multiple interconnected food chains representing actual feeding relationships. All food chains and webs start with producers that capture energy from the sun.",
+    "explanation": "This slide explains the concept of food chains and food webs as methods to represent energy flow in ecosystems. A food chain shows a linear sequence of organisms, each feeding on the previous one. Trophic levels indicate the position in the chain: producers at level 1, primary consumers at level 2, secondary consumers at level 3, and tertiary consumers at level 4. Food webs are more realistic representations showing multiple interconnected food chains. This is foundational for understanding energy flow and the interdependence of organisms, which are key learning outcomes (b) and (c) of the chapter.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:10:00Z",
+    "updated_at": "2024-01-15T09:10:00Z",
+    "source_timestamp": "2024-01-15T09:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T04:16:06.452798+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Slide 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚡ Energy Flow and Energy Loss in Food Chains",
+    "content": "## The 10% Energy Transfer Rule\n\n### 📉 Energy Loss Between Trophic Levels\n\nOne of the most important concepts in ecology is that ::yellow[only about 10% of energy transfers] from one trophic level to the next. This means ::red[90% of energy is lost] at each step!\n\n**Why Does This Happen?**\n\nOrganisms lose energy in several ways:\n\n1. **Respiration Heat Loss** - ::yellow[Most energy (about 60-80%)] is used for respiration, which produces ::blue[heat energy] that escapes to the environment\n2. **Undigested Food** - ::yellow[Not all food eaten is digested] - some passes through as feces\n3. **Metabolic Waste** - Energy is lost through ::yellow[urine and other body processes]\n4. **Movement and Growth** - Energy is used for ::yellow[movement, reproduction, and maintaining body temperature]\n\n### 📊 Energy Flow Diagram\n\n```\nProducers (Plants): 100,000 units of energy\n        ↓ (10% transfers)\nPrimary Consumers: 10,000 units\n        ↓ (10% transfers)\nSecondary Consumers: 1,000 units\n        ↓ (10% transfers)\nTertiary Consumers: 100 units\n```\n\n### 🎯 Why Food Chains Are Short\n\nBecause energy decreases so dramatically at each level, ::red[food chains are typically only 3-5 levels long]. After the tertiary consumer level, there is simply not enough energy left to support another level of predators.\n\n**Example:**\n- If a field has 100,000 units of plant energy\n- Herbivores get 10,000 units\n- Carnivores eating herbivores get 1,000 units\n- Top predators get only 100 units - barely enough to survive!\n\n### 💡 Key Insight\n\n> ✅ ::green[The 10% rule explains why there are always more plants than herbivores, and more herbivores than carnivores] in an ecosystem. This is the most efficient energy transfer possible in nature!",
+    "speech_to_text_content": "Only about 10 percent of energy transfers from one trophic level to the next, meaning 90 percent of energy is lost at each step. Organisms lose energy through respiration heat loss, undigested food, metabolic waste, and movement and growth. Energy decreases dramatically at each level, so food chains are typically only 3 to 5 levels long. After the tertiary consumer level, there is not enough energy left to support another level of predators. The 10 percent rule explains why there are always more plants than herbivores, and more herbivores than carnivores in an ecosystem.",
+    "explanation": "This slide explains the critical concept of energy transfer efficiency in ecosystems, which is learning outcome (c). Only 10% of energy transfers between trophic levels because 60-80% is lost through respiration (heat), some is lost as undigested food and metabolic waste, and some is used for movement and growth. This explains why food chains are short (3-5 levels) and why there are always more organisms at lower trophic levels than higher ones. This is a fundamental principle that helps explain the structure and function of ecosystems.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T04:16:13.742688+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Slide 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔄 Predator-Prey Population Dynamics",
+    "content": "## How Predator and Prey Populations Change Over Time\n\n### 📈 The Population Cycle\n\nPredator and prey populations don't stay constant - they ::yellow[fluctuate in cycles], with each population's changes affecting the other.\n\n### 🔄 The Four-Stage Cycle\n\n**Stage 1: Prey Population Increases**\n- When predators are scarce, prey have plenty of food and few threats\n- Prey population ::green[grows rapidly]\n- Example: Rabbits multiply when there are few snakes\n\n**Stage 2: Predator Population Increases**\n- More prey means more food for predators\n- Predators have plenty to eat and ::green[reproduce successfully]\n- Predator population begins to ::green[increase]\n- Example: More rabbits means more snakes can survive\n\n**Stage 3: Prey Population Decreases**\n- With many predators hunting, prey are caught faster than they reproduce\n- Prey population ::red[declines dramatically]\n- Food becomes scarce for prey\n- Example: Snake population grows so large they eat most rabbits\n\n**Stage 4: Predator Population Decreases**\n- With fewer prey, predators have less food\n- Predators ::red[starve or fail to reproduce]\n- Predator population ::red[declines]\n- Example: As rabbits become scarce, snakes starve\n\n**Then the Cycle Repeats!**\n- With fewer predators, prey can reproduce again\n- The cycle starts over\n\n### 📊 Oscillating Population Graph\n\n```\nPopulation\n    ↑\n    |     Prey ~~~~~/\\\\~~~~~/\\\\\n    |         /  \\\\  /  \\\\\n    |   Predators  \\/    \\/\\\\\n    |               \\\\  /  \\\\\n    |________________\\/____\\_____→ Time\n```\n\nNotice how the predator line lags behind the prey line - predators increase *after* prey increase, and decrease *after* prey decrease.\n\n### 💡 Why This Matters\n\n> ✅ ::green[This cycle shows the interdependence of species]. Neither population can exist independently - they regulate each other. This is a natural balance that keeps ecosystems stable.",
+    "speech_to_text_content": "Predator and prey populations do not stay constant. They fluctuate in cycles, with each population's changes affecting the other. In stage 1, prey population increases when predators are scarce. In stage 2, predator population increases because there is more prey available. In stage 3, prey population decreases because many predators are hunting them. In stage 4, predator population decreases because there is less prey. Then the cycle repeats. The predator line lags behind the prey line. This cycle shows the interdependence of species and how they regulate each other naturally.",
+    "explanation": "This slide explains predator-prey population dynamics, which demonstrates the interdependence of organisms in ecosystems. The cycle shows four stages: prey increase when predators are scarce, predators increase when prey are abundant, prey decrease due to predation, and predators decrease due to food scarcity. This oscillating pattern is a natural regulation mechanism that maintains ecosystem balance. Understanding this cycle is essential for comprehending how ecosystems self-regulate and why biodiversity is important for stability.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:20:00Z",
+    "updated_at": "2024-01-15T09:20:00Z",
+    "source_timestamp": "2024-01-15T09:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T04:16:21.878596+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Slide 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔺 Pyramid of Numbers - Counting Organisms",
+    "content": "## Understanding Pyramids of Numbers\n\n### 📊 What is a Pyramid of Numbers?\n\nA ::yellow[pyramid of numbers] is a diagram that shows the ::blue[number of individual organisms] at each trophic level in an ecosystem.\n\n### 📈 Typical Structure\n\nMost pyramids of numbers have a ::green[typical pyramid shape]:\n\n- **Wide base** - ::yellow[Producers (plants)] - MANY individual plants\n- **Middle** - ::yellow[Primary consumers] - Fewer herbivores than plants\n- **Narrow top** - ::yellow[Secondary consumers] - Even fewer carnivores\n- **Tiny point** - ::yellow[Tertiary consumers] - Very few top predators\n\n**Example:**\n```\n        🦅 (1 eagle)\n       🐍 (10 snakes)\n      🐰 (100 rabbits)\n     🌾 (10,000 grass plants)\n```\n\n### ⚠️ Limitations of Pyramids of Numbers\n\nWhile useful, pyramids of numbers have important limitations:\n\n1. **Size Doesn't Matter** - ::red[Doesn't consider the size of organisms]. A pyramid showing 1 tree and 1000 insects looks the same as one with 1000 mice and 1000 rabbits\n2. **Can Be Inverted** - ::red[Sometimes shows inverted pyramids] when many small organisms feed on a few large ones\n   - Example: 1 large oak tree (producer) supports 1000 insects (primary consumers)\n3. **Ignores Life Stages** - ::red[Doesn't distinguish between adults and juveniles]\n4. **Snapshot in Time** - Only shows numbers at one moment; doesn't show seasonal changes\n\n### 💡 Key Point\n\n> ⚠️ ::red[Pyramids of numbers are limited because they count individuals, not biomass or energy]. A better representation is the pyramid of biomass.",
+    "speech_to_text_content": "A pyramid of numbers is a diagram that shows the number of individual organisms at each trophic level. Most pyramids have a wide base of producers, fewer primary consumers in the middle, and fewer secondary consumers at the top. An example shows 10,000 grass plants, 100 rabbits, 10 snakes, and 1 eagle. Pyramids of numbers have limitations. They do not consider the size of organisms. They can be inverted when many small organisms feed on a few large ones. They do not distinguish between adults and juveniles. They only show numbers at one moment in time. Pyramids of numbers are limited because they count individuals, not biomass or energy.",
+    "explanation": "This slide explains pyramids of numbers as a visual representation of organism abundance at different trophic levels, which relates to learning outcome (d). The typical pyramid shape reflects that there are more producers than consumers, more primary consumers than secondary consumers, and so on. However, the slide also emphasizes important limitations: pyramids of numbers don't account for organism size, can be inverted when many small organisms feed on large ones, and don't reflect energy transfer or biomass. This sets up the need for pyramids of biomass as a better representation.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:25:00Z",
+    "updated_at": "2024-01-15T09:25:00Z",
+    "source_timestamp": "2024-01-15T09:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T04:16:28.819048+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Slide 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚖️ Pyramid of Biomass - Measuring Total Mass",
+    "content": "## Understanding Pyramids of Biomass\n\n### 📊 What is a Pyramid of Biomass?\n\nA ::yellow[pyramid of biomass] shows the ::blue[total mass of all organisms] (measured as ::purple[dry mass after removing water]) at each trophic level.\n\n**Why Dry Mass?** Because water content varies greatly between organisms and seasons. By measuring dry mass, we get a true picture of the actual living material (organic matter) available.\n\n### 📈 Typical Structure\n\nPyramids of biomass usually show the expected pyramid shape:\n\n```\n         🦅 (100 kg total)\n        🐍 (1,000 kg total)\n       🐰 (10,000 kg total)\n      🌾 (100,000 kg total)\n```\n\nNotice how the total biomass DECREASES at each level - this reflects the 10% energy transfer rule!\n\n### ✅ Advantages of Pyramids of Biomass\n\n1. **Accounts for Size** - ::green[A 100 kg tiger counts as much as 100 rabbits of 1 kg each]\n2. **Reflects Energy Transfer** - ::green[Shows how much energy is available at each level]\n3. **More Accurate** - ::green[Better represents the actual functioning of ecosystems]\n4. **Explains Food Chain Length** - ::green[Shows why we can't have many trophic levels]\n\n### ⚠️ Limitations of Pyramids of Biomass\n\n1. **Organisms Must Be Killed** - ::red[You must kill and dry organisms to measure their biomass]\n2. **Snapshot in Time** - ::red[Only shows biomass at one moment; doesn't show seasonal changes]\n3. **Can Be Inverted** - ::red[May show inverted pyramids for rapidly reproducing organisms]\n   - Example: Phytoplankton (tiny marine plants) have low biomass but high reproduction rate\n   - They support larger biomass of fish that eat them\n\n### 💡 Comparing the Two Pyramids\n\n| Feature | Pyramid of Numbers | Pyramid of Biomass |\n|---------|-------------------|--------------------|\n| **Measures** | Number of individuals | Total mass of organisms |\n| **Accounts for size** | ❌ No | ✅ Yes |\n| **Reflects energy** | ❌ Not always | ✅ Usually |\n| **Can be inverted** | ✅ Often | ✅ Sometimes |\n| **More realistic** | ❌ No | ✅ Yes |\n\n> ✅ ::green[Pyramids of biomass are generally more useful than pyramids of numbers] because they better represent energy flow and ecosystem function.",
+    "speech_to_text_content": "A pyramid of biomass shows the total mass of all organisms, measured as dry mass after removing water, at each trophic level. Pyramids of biomass usually show the expected pyramid shape with biomass decreasing at each level. Advantages include accounting for organism size, reflecting energy transfer, being more accurate, and explaining food chain length. Limitations include that organisms must be killed to measure biomass, it only shows biomass at one moment in time, and it can be inverted for rapidly reproducing organisms. Pyramids of biomass are generally more useful than pyramids of numbers because they better represent energy flow and ecosystem function.",
+    "explanation": "This slide explains pyramids of biomass as a more accurate representation of energy flow and ecosystem structure than pyramids of numbers, addressing learning outcome (d). Biomass pyramids measure the total dry mass of organisms at each trophic level, which better reflects the 10% energy transfer rule. The advantages include accounting for organism size and reflecting actual energy availability. Limitations include the need to kill organisms for measurement and the fact that they represent only a snapshot in time. The comparison table helps students understand when to use each type of pyramid and why biomass pyramids are generally superior for understanding ecosystem function.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T04:16:37.930102+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Slide 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "♻️ The Carbon Cycle - How Carbon Moves Through Ecosystems",
+    "content": "## Understanding the Carbon Cycle\n\n### 🌍 What is the Carbon Cycle?\n\nThe ::yellow[carbon cycle] is the process by which ::blue[carbon moves between the atmosphere, living organisms, and the Earth's crust]. Carbon is essential for all living things - it's the backbone of all organic molecules.\n\n### 🔄 Key Processes in the Carbon Cycle\n\n**1. Carbon Fixation - Removing CO₂ from the Atmosphere**\n\n::yellow[Photosynthesis] removes ::blue[carbon dioxide (CO₂)] from the atmosphere:\n- ::green[Plants] absorb CO₂ through their leaves\n- They convert it into ::purple[glucose (C₆H₁₂O₆)] using sunlight energy\n- This ::yellow[fixes carbon] into organic matter\n- ::green[Marine plants and algae] also perform photosynthesis in oceans\n\n**Equation:** $$6CO_2 + 6H_2O \\rightarrow C_6H_{12}O_6 + 6O_2$$\n\n**2. Carbon Release - Returning CO₂ to the Atmosphere**\n\n::yellow[Respiration] releases CO₂ back to the atmosphere:\n- ::green[All living organisms] (plants, animals, decomposers) respire\n- Respiration breaks down organic molecules to release energy\n- ::blue[CO₂] is produced as a waste product and released to the air\n- This happens continuously in all living things\n\n**Equation:** $$C_6H_{12}O_6 + 6O_2 \\rightarrow 6CO_2 + 6H_2O + \\text{Energy}$$\n\n**3. Decomposition - Breaking Down Dead Matter**\n\n- When organisms die, ::yellow[decomposers] (bacteria and fungi) break down their bodies\n- This process releases ::blue[stored carbon] back to the atmosphere as CO₂\n- Nutrients are returned to the soil for plants to use\n\n**4. Combustion - Burning Fossil Fuels**\n\n- Burning of ::blue[fossil fuels] (coal, oil, natural gas) releases CO₂\n- These fuels formed from dead organisms millions of years ago\n- Combustion rapidly releases carbon that was stored for millions of years\n\n### 🌳 Carbon Sinks - Long-Term Carbon Storage\n\n::yellow[Carbon sinks] are places where carbon is stored for long periods:\n\n| Carbon Sink | How It Works |\n|-------------|-------------|\n| **Forests** | Trees absorb CO₂ through photosynthesis and store carbon in wood and soil. Deforestation releases this stored carbon. |\n| **Oceans** | Dissolve CO₂ from the atmosphere. Marine organisms use it for photosynthesis. Dead organisms sink to the ocean floor, storing carbon long-term. |\n| **Fossil Deposits** | Coal, oil, and natural gas represent carbon stored underground for millions of years. |\n| **Soil** | Dead organic matter and decomposing organisms store carbon in the soil. |\n\n### 📊 The Complete Carbon Cycle\n\n```\n                    ☁️ CO₂ in Atmosphere\n                    /    |    \\\\\n                   /     |     \\\\\n        Photosynthesis  Respiration  Combustion\n              |             |           |\n        🌿 Plants      🦁 Animals   🔥 Fossil Fuels\n              |             |           |\n              \\\\-----→ 🍃 Dead Matter ←────/\n                         |\n                    Decomposition\n                         |\n                    🦠 Decomposers\n                         |\n                         → CO₂ back to atmosphere\n```\n\n### 💡 Key Insight\n\n> ✅ ::green[The carbon cycle is continuous - carbon is never created or destroyed, just recycled] through different forms and locations. Every carbon atom in your body was once in the atmosphere, in plants, and in other organisms!",
+    "speech_to_text_content": "The carbon cycle is the process by which carbon moves between the atmosphere, living organisms, and the Earth's crust. Carbon fixation through photosynthesis removes carbon dioxide from the atmosphere. Plants absorb CO2 and convert it into glucose. Respiration by all living organisms releases CO2 back to the atmosphere. Decomposition by bacteria and fungi breaks down dead matter and releases carbon. Combustion of fossil fuels releases stored carbon. Carbon sinks include forests that store carbon in wood, oceans that dissolve CO2, fossil deposits underground, and soil with dead organic matter. The carbon cycle is continuous and carbon is never created or destroyed, just recycled through different forms and locations.",
+    "explanation": "This slide explains the carbon cycle, which is learning outcome (e) of the chapter. The carbon cycle involves four main processes: photosynthesis (carbon fixation), respiration (carbon release), decomposition (breaking down dead matter), and combustion (burning fossil fuels). Carbon sinks include forests, oceans, fossil deposits, and soil. Understanding the carbon cycle is essential for comprehending how carbon moves through ecosystems and how human activities like fossil fuel combustion and deforestation affect atmospheric CO₂ levels. The cycle demonstrates that carbon is recycled continuously through ecosystems.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:35:00Z",
+    "updated_at": "2024-01-15T09:35:00Z",
+    "source_timestamp": "2024-01-15T09:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T04:16:47.796999+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Slide 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Deforestation and Global Warming",
+    "content": "## How Deforestation Causes Global Warming\n\n### 🌳 What is Deforestation?\n\n::yellow[Deforestation] is the ::red[large-scale removal of forests] to convert land to other uses. It's one of the most significant human impacts on ecosystems and climate.\n\n### 🔴 Main Causes of Deforestation\n\n1. **Agricultural Expansion** - Clearing forests for crops (soy, palm oil) and livestock grazing\n2. **Urban Development** - Building cities, roads, and infrastructure\n3. **Logging** - Harvesting timber and paper products\n4. **Mining** - Extracting minerals and resources\n5. **Energy Production** - Creating space for dams and other energy projects\n\n### 🌍 How Deforestation Increases Atmospheric CO₂\n\n**Effect 1: Loss of CO₂ Absorption**\n- ::green[Forests absorb massive amounts of CO₂] through photosynthesis\n- When trees are removed, this ::red[carbon-absorbing capacity is lost]\n- Less CO₂ is removed from the atmosphere\n\n**Effect 2: Release of Stored Carbon**\n- Trees store carbon in their wood and leaves\n- When trees are cut down and burned or left to decay, this ::red[stored carbon is released as CO₂]\n- A single large tree contains thousands of kilograms of carbon\n\n**Effect 3: Reduced Future Absorption**\n- Without forests, future CO₂ absorption is prevented\n- The forest would have continued absorbing CO₂ for decades or centuries\n\n### 🌡️ How Increased CO₂ Causes Global Warming\n\n**The Greenhouse Effect:**\n\n1. ::yellow[CO₂ and other greenhouse gases] trap heat in the atmosphere\n2. Sunlight enters the atmosphere and reaches Earth's surface\n3. Earth radiates heat back toward space\n4. ::red[Greenhouse gases absorb this heat] and prevent it from escaping\n5. Heat is reflected back to Earth, causing ::red[temperature to rise]\n\n**Result:** ::red[Global warming] - the increase in Earth's average temperature\n\n### 🌍 Environmental Effects of Deforestation\n\n| Effect | Explanation |\n|--------|-------------|\n| **Biodiversity Loss** | Forests contain 80% of Earth's terrestrial species. Habitat destruction leads to extinction. |\n| **Climate Change** | Reduced CO₂ absorption and increased emissions from burning trees. |\n| **Soil Erosion** | Tree roots hold soil in place. Without trees, soil is washed away by rain. |\n| **Water Cycle Disruption** | Forests absorb and release water, affecting rainfall patterns. Less forest = less rainfall. |\n| **Local Temperature Rise** | Forests cool the local environment through transpiration. |\n\n### ⚠️ The Vicious Cycle\n\n```\nDeforestation\n     ↓\nLess CO₂ absorption + More CO₂ released\n     ↓\nIncreased atmospheric CO₂\n     ↓\nGlobal warming\n     ↓\nDamage to remaining forests (droughts, fires)\n     ↓\nMore deforestation\n```\n\n### 💡 Why This Matters for Singapore\n\n> ⚠️ Singapore is a small island nation vulnerable to climate change impacts like sea level rise. Deforestation in Southeast Asia affects regional rainfall patterns and contributes to global warming that threatens Singapore's future.",
+    "speech_to_text_content": "Deforestation is the large-scale removal of forests to convert land to other uses. Main causes include agricultural expansion, urban development, logging, mining, and energy production. Deforestation increases atmospheric CO2 by losing CO2 absorption capacity, releasing stored carbon, and preventing future absorption. Increased CO2 causes global warming through the greenhouse effect. Environmental effects include biodiversity loss, climate change, soil erosion, water cycle disruption, and local temperature rise. Deforestation creates a vicious cycle where less CO2 absorption leads to global warming, which damages remaining forests, causing more deforestation. Singapore is vulnerable to climate change impacts like sea level rise.",
+    "explanation": "This slide explains how deforestation contributes to global warming, which is learning outcome (f). Deforestation has three main effects on atmospheric CO₂: loss of carbon-absorbing capacity, release of stored carbon, and prevention of future absorption. Increased CO₂ causes global warming through the greenhouse effect, where greenhouse gases trap heat in the atmosphere. The environmental effects of deforestation include biodiversity loss, climate change, soil erosion, water cycle disruption, and local temperature changes. The slide emphasizes the vicious cycle where deforestation leads to global warming, which damages remaining forests. For Singapore, this is particularly relevant as the country is vulnerable to climate change impacts.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:40:00Z",
+    "updated_at": "2024-01-15T09:40:00Z",
+    "source_timestamp": "2024-01-15T09:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T04:16:57.277938+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Slide 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌊 Water Pollution - Sewage and Eutrophication",
+    "content": "## Water Pollution and Its Effects on Ecosystems\n\n### 💧 What is Water Pollution?\n\n::yellow[Water pollution] occurs when ::red[harmful substances are introduced into water bodies], making water unsafe for organisms and humans.\n\n### 🚱 Sewage Pollution\n\n**What is Sewage?**\n- Sewage is ::yellow[wastewater from households and industries] containing human waste, detergents, and other materials\n\n**Harmful Effects of Sewage:**\n\n1. **Disease-Causing Organisms** - ::red[Bacteria and viruses] in sewage cause diseases in aquatic life and humans who consume contaminated water\n2. **Excess Nutrients** - Sewage contains ::yellow[phosphates and nitrates] (nutrients from detergents and human waste)\n3. **Oxygen Depletion** - Decomposition of sewage consumes dissolved oxygen, causing ::red[hypoxia (low oxygen)] that kills fish\n\n### 🌿 Eutrophication - The Algae Explosion\n\n::yellow[Eutrophication] is the process where excess nutrients cause ::red[rapid algae growth] that destroys aquatic ecosystems.\n\n**The Eutrophication Process:**\n\n1. **Nutrient Input** - ::yellow[Excess phosphates and nitrates] enter water from:\n   - Agricultural fertilizer runoff\n   - Sewage discharge\n   - Detergents and industrial waste\n\n2. **Algal Bloom** - ::yellow[Algae multiply rapidly] (::blue[algal bloom]) because they have abundant nutrients\n   - Water becomes green and murky\n   - Sunlight cannot reach deeper water\n   - Aesthetic and recreational value is destroyed\n\n3. **Algae Death** - When algae die, they sink to the bottom and decompose\n   - Decomposers consume dissolved oxygen during decomposition\n   - Oxygen levels drop dramatically\n\n4. **Hypoxia and Death** - ::red[Fish and other aquatic organisms die] from lack of oxygen\n   - Creates a \"dead zone\" where few organisms can survive\n   - Biodiversity collapses\n\n5. **Ecosystem Collapse** - ::red[The entire aquatic ecosystem is severely disrupted]\n   - Food chains are broken\n   - Species composition changes dramatically\n   - Economic losses from fishing and tourism\n\n### 📊 Eutrophication Diagram\n\n```\n🌾 Fertilizer runoff + 🚰 Sewage discharge\n          ↓\n    💧 Water body\n          ↓\n   🟢 Algal bloom (green water)\n          ↓\n   ☀️ Sunlight blocked\n          ↓\n   🦠 Algae die and decompose\n          ↓\n   📉 Oxygen levels drop\n          ↓\n   💀 Fish die (hypoxia)\n          ↓\n   ⚠️ Dead zone - ecosystem collapse\n```\n\n### 🌍 Real-World Examples\n\n- **Dead Zones in Coastal Areas** - Where rivers with agricultural runoff meet the ocean\n- **Lake Eutrophication** - Lakes receiving sewage or agricultural runoff become choked with algae\n- **Singapore's Waters** - Coastal areas can suffer from eutrophication due to urban runoff and industrial discharge\n\n### 💡 Key Insight\n\n> ⚠️ ::red[Eutrophication shows how excess nutrients, though plants need them, become harmful in aquatic ecosystems]. Balance is critical - too much of a good thing becomes a problem!",
+    "speech_to_text_content": "Water pollution occurs when harmful substances are introduced into water bodies. Sewage is wastewater from households and industries containing human waste and detergents. Harmful effects of sewage include disease-causing organisms, excess nutrients, and oxygen depletion. Eutrophication is the process where excess nutrients cause rapid algae growth that destroys aquatic ecosystems. The eutrophication process involves nutrient input from fertilizer runoff and sewage, algal bloom where algae multiply rapidly, algae death and decomposition, hypoxia and death of fish from lack of oxygen, and ecosystem collapse. Eutrophication shows how excess nutrients become harmful in aquatic ecosystems and balance is critical.",
+    "explanation": "This slide explains water pollution caused by sewage and the process of eutrophication, which is part of learning outcome (h). Sewage contains disease-causing organisms and excess nutrients (phosphates and nitrates). Eutrophication occurs when these nutrients cause rapid algae growth, which then dies and decomposes, consuming oxygen and creating dead zones. The slide presents the five-stage eutrophication process in detail, showing how excess nutrients lead to ecosystem collapse. This demonstrates how human activities (sewage discharge, fertilizer runoff) can severely damage aquatic ecosystems and the importance of nutrient management.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T04:17:08.008478+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Slide 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌊 Plastic Pollution in Marine Environments",
+    "content": "## The Crisis of Plastic Waste in Our Oceans\n\n### 🚫 What is Plastic Pollution?\n\n::yellow[Plastic pollution] refers to the accumulation of ::red[non-biodegradable plastic materials] in marine environments, causing harm to wildlife and ecosystems.\n\n### 🔴 Why Plastic is a Major Problem\n\n**Non-Biodegradable Nature:**\n- ::red[Plastic takes 100-1000+ years to decompose]\n- Unlike organic matter, ::red[bacteria and fungi cannot break it down]\n- Once in the ocean, plastic persists for centuries\n- Each piece of plastic ever made still exists somewhere\n\n### 🐠 How Plastic Harms Marine Life\n\n**1. Entanglement**\n- Marine animals like ::blue[dolphins, seals, and sea turtles] become tangled in plastic nets and bags\n- This causes injury, inability to move, and death\n- Thousands of marine mammals die annually from entanglement\n\n**2. Ingestion**\n- Animals mistake plastic for food\n- ::blue[Sea turtles] eat plastic bags thinking they are jellyfish\n- ::blue[Seabirds] feed plastic pieces to their chicks\n- Plastic fills their stomachs without providing nutrition\n- Animals starve despite having full bellies\n- Plastic can block their digestive systems\n\n**3. Microplastics**\n- Large plastic items break down into tiny pieces called ::yellow[microplastics]\n- These are consumed by small organisms like ::blue[fish larvae and zooplankton]\n- Microplastics enter food chains and accumulate in organisms\n- Eventually reach humans through seafood consumption\n\n### 🌍 Sources of Marine Plastic\n\n| Source | Examples |\n|--------|----------|\n| **Single-use plastics** | Bags, straws, bottles, packaging |\n| **Fishing industry** | Abandoned fishing nets (\"ghost nets\") |\n| **Microbeads** | From cosmetics and personal care products |\n| **Industrial waste** | Plastic pellets from manufacturing |\n| **Littering** | Waste not properly disposed of |\n\n### 🏝️ The Great Pacific Garbage Patch\n\n- A massive accumulation of plastic in the North Pacific Ocean\n- Larger than some countries\n- Contains millions of tons of plastic\n- Harms marine life and disrupts ecosystems\n- Shows the scale of the global plastic crisis\n\n### 💀 Effects on Marine Ecosystems\n\n1. **Biodiversity Loss** - ::red[Species decline due to entanglement and ingestion]\n2. **Food Chain Disruption** - ::red[Microplastics enter food chains at the base]\n3. **Habitat Damage** - Plastic debris damages coral reefs and seagrass beds\n4. **Invasive Species** - Plastic carries organisms to new locations\n5. **Chemical Contamination** - Plastics contain toxic chemicals that leach into water\n\n### ⚠️ Why This Matters for Singapore\n\n> ⚠️ Singapore is a maritime nation surrounded by ocean. Marine plastic pollution directly affects Singapore's marine ecosystems, fishing industry, and tourism. The South China Sea, where Singapore is located, has high plastic pollution levels.",
+    "speech_to_text_content": "Plastic pollution refers to the accumulation of non-biodegradable plastic materials in marine environments. Plastic takes 100 to 1000 years or more to decompose. Marine animals become tangled in plastic nets and bags, causing injury and death. Animals mistake plastic for food and ingest it, filling their stomachs without nutrition. Large plastic items break down into microplastics that enter food chains. Sources of marine plastic include single-use plastics, fishing industry waste, microbeads from cosmetics, industrial waste, and littering. The Great Pacific Garbage Patch is a massive accumulation of plastic in the North Pacific Ocean. Effects on marine ecosystems include biodiversity loss, food chain disruption, habitat damage, invasive species, and chemical contamination. Singapore is a maritime nation affected by marine plastic pollution.",
+    "explanation": "This slide explains plastic pollution in marine environments, which is part of learning outcome (h). The slide emphasizes that plastic is non-biodegradable and persists in the environment for centuries. Plastic harms marine life through entanglement, ingestion, and the creation of microplastics that enter food chains. Sources include single-use plastics, fishing industry waste, microbeads, industrial waste, and littering. The Great Pacific Garbage Patch exemplifies the scale of the problem. Effects on marine ecosystems include biodiversity loss, food chain disruption, habitat damage, and chemical contamination. For Singapore, marine plastic pollution is particularly relevant as a maritime nation.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:50:00Z",
+    "updated_at": "2024-01-15T09:50:00Z",
+    "source_timestamp": "2024-01-15T09:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T04:17:17.517840+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Slide 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "☠️ Insecticide Pollution and Biomagnification",
+    "content": "## How Insecticides Harm Food Chains\n\n### 🧪 What are Insecticides?\n\n::yellow[Insecticides] are ::blue[chemical pesticides] used to kill insects that damage crops. While they protect crops, they cause serious environmental damage through a process called ::yellow[biomagnification].\n\n### 🔄 Biomagnification - Concentration Up the Food Chain\n\n::yellow[Biomagnification] (also called ::blue[bioaccumulation]) is the process where ::red[toxic substances become more concentrated] as they move up a food chain.\n\n**Why Does This Happen?**\n\n1. **Insecticides Don't Break Down** - ::red[Insecticides are persistent] - they don't decompose easily in the environment\n2. **Accumulation in Organisms** - When organisms eat contaminated food, the insecticide is stored in their body tissues (especially fatty tissues)\n3. **Concentration Increases** - At each trophic level, organisms consume many contaminated prey, concentrating the toxin further\n4. **Top Predators Are Most Affected** - ::red[Tertiary and secondary consumers have the highest concentrations]\n\n### 📊 Biomagnification Example\n\n**The DDT Story (Historical Example):**\n\nDDT is an insecticide used to control malaria-carrying mosquitoes.\n\n```\nProducers (Plants): 1 unit of DDT\n        ↓ (concentrated)\nPrimary Consumers (Herbivores): 10 units of DDT\n        ↓ (concentrated)\nSecondary Consumers (Carnivores): 100 units of DDT\n        ↓ (concentrated)\nTertiary Consumers (Top Predators): 1,000 units of DDT\n```\n\nNotice how concentration increases 1000-fold from plants to top predators!\n\n### 🦅 Effects on Top Predators\n\n**Birds of Prey (Eagles, Hawks, Falcons):**\n\n- ::red[High DDT concentrations] accumulate in their bodies\n- DDT interferes with calcium metabolism\n- Eggshells become ::red[thin and fragile]\n- Eggs break during incubation\n- Chicks don't develop\n- ::red[Population numbers crash]\n- Species face extinction\n\n**Examples:**\n- Bald eagles nearly went extinct in North America\n- Peregrine falcons disappeared from most of the continent\n- Pelicans in Florida couldn't reproduce\n\n### 🔬 How Biomagnification Works - The Mechanism\n\n1. **Persistence** - Insecticides resist breakdown in the environment\n2. **Lipophilicity** - Insecticides are fat-soluble, storing in fatty tissues\n3. **Trophic Transfer** - Predators eat many prey, concentrating toxins\n4. **Slow Elimination** - Bodies cannot easily remove stored toxins\n5. **Accumulation Over Time** - Toxins accumulate faster than they're eliminated\n\n### 📈 Why Top Predators Are Most Vulnerable\n\nCompare a food chain:\n\n```\n🌾 Plants (1 kg) → 🐰 Rabbit (0.1 kg) → 🦅 Eagle (0.01 kg)\n```\n\nTo support 1 eagle, you need:\n- 10 rabbits (total 1 kg)\n- 100 plants (total 100 kg)\n\nIf plants have 1 unit of toxin each:\n- Plants: 100 units total\n- Rabbits: 100 units (concentrated from 100 plants)\n- Eagle: 100 units (concentrated from 10 rabbits)\n\nBut in the eagle's small body, 100 units is highly concentrated!\n\n### 💡 Key Insight\n\n> ⚠️ ::red[Biomagnification explains why top predators are most affected by pesticides], even though they weren't directly sprayed. This demonstrates how food chains can amplify the effects of pollution.",
+    "speech_to_text_content": "Insecticides are chemical pesticides used to kill insects that damage crops. Biomagnification is the process where toxic substances become more concentrated as they move up a food chain. Insecticides do not break down easily, accumulate in organisms, and increase in concentration at each trophic level. Top predators have the highest concentrations. In the DDT example, concentration increases from 1 unit in plants to 1000 units in top predators. Birds of prey like eagles and hawks accumulate high DDT concentrations that interfere with calcium metabolism, causing thin eggshells and population crashes. Biomagnification works through persistence, lipophilicity, trophic transfer, slow elimination, and accumulation over time. Top predators are most vulnerable because they consume many prey that have concentrated toxins.",
+    "explanation": "This slide explains insecticide pollution and biomagnification, which is part of learning outcome (h). Biomagnification is the process where toxic substances become increasingly concentrated as they move up food chains. The DDT example shows how concentration can increase 1000-fold from plants to top predators. This affects top predators like birds of prey through eggshell thinning and population crashes. The mechanism involves persistence of insecticides, their fat-solubility, trophic transfer, slow elimination, and accumulation over time. The slide demonstrates why top predators are most vulnerable despite not being directly exposed to pesticides, illustrating how food chains can amplify pollution effects.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:55:00Z",
+    "updated_at": "2024-01-15T09:55:00Z",
+    "source_timestamp": "2024-01-15T09:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T04:17:29.462447+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Slide 12",
+    "type": "slide",
+    "question_type": null,
+    "title": "🛡️ Conservation and Biodiversity Protection",
+    "content": "## Why Conservation Matters\n\n### 🌍 What is Conservation?\n\n::yellow[Conservation] is the ::blue[protection and sustainable management] of species and natural resources to maintain biodiversity and ecosystem function.\n\n### 🎯 Why We Need Conservation\n\n**1. Biodiversity Preservation**\n- ::green[Genetic diversity] provides raw material for evolution and adaptation\n- Maintains ::green[species diversity] - different species fill different ecological roles\n- Preserves ::green[ecosystem diversity] - different ecosystems have different functions\n- More biodiversity = more resilient ecosystems that can withstand change\n\n**2. Economic Benefits**\n- ::green[Sustainable harvesting] of natural resources (timber, fish, plants)\n- ::green[Ecotourism] - people pay to visit natural areas (e.g., wildlife safaris, coral reef diving)\n- ::green[Recreational opportunities] - hiking, birdwatching, fishing\n- ::green[Raw materials] for industries (medicines, cosmetics, food)\n\n**3. Scientific Research**\n- ::green[Understanding evolution] - studying how species adapt and change\n- ::green[Ecosystem functioning] - how energy and nutrients flow\n- ::green[Medical discoveries] - many medicines come from plants and animals\n- ::green[Technological innovation] - nature inspires new technologies (biomimicry)\n\n**4. Ethical Reasons**\n- ::green[Intrinsic value] - species have value simply by existing\n- ::green[Moral responsibility] - humans should protect other species\n- ::green[Future generations] - leaving a healthy planet for our descendants\n\n### 🏞️ Conservation Strategies\n\n**Protected Areas**\n\n- **National Parks** - ::yellow[Large areas where ecosystems are protected] from development\n- **Nature Reserves** - ::yellow[Smaller protected areas] focused on specific species or habitats\n- **Marine Protected Areas (MPAs)** - ::yellow[Ocean areas where fishing and development are restricted]\n- **Wildlife Corridors** - ::yellow[Connecting protected areas] to allow animal movement between populations\n\n**Species-Specific Conservation**\n\n- **Captive Breeding Programs** - ::yellow[Breeding endangered species] in zoos and facilities to increase population\n  - Example: Arabian oryx, California condor\n- **Habitat Restoration** - ::yellow[Restoring damaged ecosystems] to suitable condition\n  - Replanting forests, restoring wetlands, removing invasive species\n- **Anti-Poaching Measures** - ::yellow[Protecting endangered animals] from illegal hunting\n  - Rangers, technology, international cooperation\n\n**Sustainable Practices**\n\n| Practice | How It Works |\n|----------|-------------|\n| **Sustainable Forestry** | Selective logging (cutting only mature trees), reforestation (planting new trees), allows forest regeneration |\n| **Sustainable Fishing** | Fishing quotas (limits on catch), seasonal restrictions (no fishing during breeding), mesh size restrictions (protects juvenile fish) |\n| **Sustainable Agriculture** | Crop rotation (different crops each year), organic farming (no synthetic pesticides), reduces soil depletion and pollution |\n\n### 🌏 Protecting Specific Ecosystems\n\nSome ecosystems are particularly important and vulnerable:\n\n**Coral Reefs**\n- ::yellow[Biodiversity hotspots] - support 25% of marine species despite covering <1% of ocean floor\n- Threatened by warming, pollution, overfishing\n- Protection: Marine protected areas, reducing pollution, controlling fishing\n\n**Tropical Rainforests**\n- ::yellow[Store more carbon] than any other ecosystem\n- ::yellow[Home to 50% of Earth's species]\n- Threatened by deforestation for agriculture\n- Protection: National parks, indigenous land rights, sustainable logging\n\n**Mangroves**\n- ::yellow[Nurseries for marine life] - fish breed and develop here\n- Protect coasts from storms and erosion\n- Threatened by coastal development\n- Protection: Restoration projects, marine protected areas\n\n### 💡 How Conservation Maintains Biodiversity and Ecosystem Balance\n\n```\nConservation Strategies\n        ↓\nProtect species and habitats\n        ↓\nMaintain biodiversity\n        ↓\nEcosystem resilience increases\n        ↓\nEcosystems can resist environmental changes\n        ↓\nEcosystem services (oxygen, water, food) are maintained\n```\n\n> ✅ ::green[Conservation is not just about saving pretty animals] - it's about maintaining the ecosystem services that all life, including humans, depends on.",
+    "speech_to_text_content": "Conservation is the protection and sustainable management of species and natural resources to maintain biodiversity and ecosystem function. We need conservation to preserve biodiversity, provide economic benefits through sustainable harvesting and ecotourism, support scientific research, and fulfill ethical responsibilities. Conservation strategies include protected areas like national parks and marine protected areas, species-specific conservation through captive breeding and habitat restoration, and sustainable practices like sustainable forestry, fishing, and agriculture. Important ecosystems to protect include coral reefs that support 25 percent of marine species, tropical rainforests that store carbon and house 50 percent of species, and mangroves that are nurseries for marine life. Conservation maintains biodiversity and ecosystem resilience, allowing ecosystems to resist environmental changes and maintain ecosystem services.",
+    "explanation": "This slide explains conservation strategies and their importance for maintaining biodiversity and ecosystem balance, which is learning outcome (i). The slide presents multiple reasons for conservation: biodiversity preservation, economic benefits, scientific research, and ethical reasons. Conservation strategies include protected areas (national parks, nature reserves, marine protected areas, wildlife corridors), species-specific conservation (captive breeding, habitat restoration, anti-poaching), and sustainable practices (sustainable forestry, fishing, agriculture). The slide also highlights three important ecosystems: coral reefs, tropical rainforests, and mangroves. The diagram shows how conservation strategies lead to biodiversity maintenance and ecosystem resilience, which provides ecosystem services essential for all life.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T04:17:41.974498+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Slide 13",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Reducing Global Warming - Climate Action",
+    "content": "## How We Can Reduce Global Warming\n\n### 🌍 Understanding the Challenge\n\nGlobal warming is caused primarily by ::yellow[increased atmospheric CO₂] from human activities, especially:\n- Burning fossil fuels (coal, oil, natural gas)\n- Deforestation (loss of CO₂-absorbing forests)\n- Industrial processes\n\nTo reduce global warming, we must ::green[reduce greenhouse gas emissions] and ::green[increase CO₂ removal from the atmosphere].\n\n### ⚡ Reducing Greenhouse Gas Emissions\n\n**1. Transition to Renewable Energy**\n\nReplace fossil fuels with clean energy sources:\n\n- **Solar Power** - ::yellow[Energy from the sun] - no CO₂ emissions\n- **Wind Power** - ::yellow[Energy from wind] - no CO₂ emissions\n- **Hydroelectric Power** - ::yellow[Energy from flowing water] - no CO₂ emissions\n- **Geothermal Power** - ::yellow[Energy from Earth's heat] - minimal CO₂ emissions\n- **Nuclear Power** - ::yellow[Energy from nuclear reactions] - no CO₂ emissions (though has other concerns)\n\n**Benefits:**\n- ::green[Zero or low CO₂ emissions]\n- Renewable - won't run out\n- Increasingly cost-competitive\n\n**2. Improve Energy Efficiency**\n\nUse less energy to accomplish the same tasks:\n\n**In Buildings:**\n- Better insulation to reduce heating/cooling needs\n- LED lighting (uses 75% less energy than incandescent)\n- Smart thermostats that adjust temperature automatically\n- Energy-efficient appliances\n\n**In Transportation:**\n- Electric vehicles instead of gasoline cars\n- Public transportation (buses, trains) instead of personal cars\n- Improved car efficiency (lighter materials, better engines)\n- Active transport (cycling, walking)\n\n**In Industry:**\n- More efficient manufacturing processes\n- Waste heat recovery\n- Process optimization\n\n**Benefits:**\n- ::green[Reduces CO₂ emissions]\n- ::green[Saves money on energy costs]\n- Reduces energy demand\n\n**3. Develop Carbon Capture Technology**\n\nRemove CO₂ from the atmosphere:\n\n- **Direct Air Capture** - ::yellow[Machines that extract CO₂ directly from air]\n- **Point-Source Capture** - ::yellow[Capturing CO₂ from power plant emissions]\n- **Carbon Storage** - ::yellow[Storing captured CO₂ underground] (geological sequestration)\n- **Utilization** - Using captured CO₂ in products (building materials, chemicals)\n\n**Challenges:**\n- Still expensive\n- Energy-intensive\n- Limited deployment so far\n\n### 🌱 Increasing Carbon Sinks\n\n**1. Reforestation**\n- Plant new forests to absorb CO₂\n- Restore degraded forests\n- Protect existing forests from deforestation\n\n**2. Ocean Protection**\n- Protect marine ecosystems (kelp forests, seagrass beds) that absorb CO₂\n- Reduce ocean acidification\n- Support phytoplankton growth\n\n**3. Soil Carbon Storage**\n- Sustainable agriculture practices that build soil carbon\n- Wetland restoration\n- Grassland protection\n\n### 🌍 Adaptation Strategies\n\nSince some warming is already happening, we must also adapt:\n\n**Coastal Protection**\n- Sea walls and barriers against rising sea levels\n- Mangrove restoration to protect coasts\n- Planned retreat from vulnerable areas\n\n**Agricultural Adaptation**\n- Develop drought-resistant crop varieties\n- Change planting times and locations\n- Improve irrigation efficiency\n\n**Infrastructure Design**\n- Build infrastructure to withstand extreme weather\n- Improve water management systems\n- Enhance disaster preparedness\n\n### 🤝 International Cooperation\n\n**The Paris Agreement (2015)**\n- ::yellow[195 countries committed] to limiting global warming to 1.5-2°C\n- Each country sets emission reduction targets\n- Regular monitoring and reporting\n\n**Technology Transfer**\n- Developed countries share clean technology with developing countries\n- Helps all nations reduce emissions affordably\n\n**Climate Finance**\n- Wealthy nations fund climate action in developing countries\n- Supports adaptation and mitigation projects\n\n### 📊 Solutions Summary\n\n| Solution | Action | Benefit |\n|----------|--------|----------|\n| **Renewable Energy** | Replace fossil fuels | Zero CO₂ emissions |\n| **Energy Efficiency** | Use less energy | Reduced emissions, cost savings |\n| **Carbon Capture** | Remove CO₂ from air | Reduces atmospheric CO₂ |\n| **Reforestation** | Plant trees | Increases CO₂ sinks |\n| **Adaptation** | Adjust to warming | Reduces climate impact |\n| **International Cooperation** | Global action | Coordinated, effective response |\n\n### 💡 Why This Matters for Singapore\n\n> ⚠️ Singapore is particularly vulnerable to climate change due to its low elevation and coastal location. Rising sea levels directly threaten Singapore's future. Climate action is not just global responsibility - it's essential for Singapore's survival.",
+    "speech_to_text_content": "Global warming is caused primarily by increased atmospheric CO2 from burning fossil fuels and deforestation. To reduce global warming, we must reduce greenhouse gas emissions and increase CO2 removal. Reducing emissions involves transitioning to renewable energy like solar, wind, hydroelectric, and geothermal power, improving energy efficiency in buildings, transportation, and industry, and developing carbon capture technology. Increasing carbon sinks involves reforestation, ocean protection, and soil carbon storage. Adaptation strategies include coastal protection, agricultural adaptation, and infrastructure design for extreme weather. International cooperation includes the Paris Agreement where 195 countries committed to limiting warming, technology transfer, and climate finance. Singapore is particularly vulnerable to climate change due to its low elevation and coastal location, so climate action is essential for its survival.",
+    "explanation": "This slide explains how human actions can reduce the effects of global warming, which is learning outcome (g). The slide presents three main approaches: reducing greenhouse gas emissions (renewable energy, energy efficiency, carbon capture), increasing carbon sinks (reforestation, ocean protection, soil carbon storage), and adaptation strategies (coastal protection, agricultural adaptation, infrastructure). International cooperation through the Paris Agreement and technology transfer is essential for coordinated global action. For Singapore, climate action is particularly urgent given the country's vulnerability to rising sea levels. The slide demonstrates that reducing global warming requires multiple coordinated strategies at individual, national, and international levels.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:05:00Z",
+    "updated_at": "2024-01-15T10:05:00Z",
+    "source_timestamp": "2024-01-15T10:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T04:17:54.445258+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Energy Transfer Efficiency Question",
+    "content": "In an ecosystem, a plant captures 10,000 units of energy from the sun. If only 10% of energy transfers between trophic levels, how much energy will be available to a secondary consumer (carnivore that eats herbivores)?",
+    "speech_to_text_content": "In an ecosystem, a plant captures 10,000 units of energy from the sun. If only 10 percent of energy transfers between trophic levels, how much energy will be available to a secondary consumer that eats herbivores?",
+    "explanation": "The correct answer is 10 units. Here's the calculation: Plants (producers) have 10,000 units. Primary consumers (herbivores) get 10% of this = 10,000 × 0.10 = 1,000 units. Secondary consumers (carnivores) get 10% of primary consumers = 1,000 × 0.10 = 100 units. Wait, let me recalculate - if secondary consumers eat herbivores (primary consumers), they receive 10% of 1,000 = 100 units. However, if the question is asking about a secondary consumer that eats herbivores in a longer chain, we need to verify the trophic level. A secondary consumer eating primary consumers (herbivores) would receive 100 units. But given the options typically provided, the answer is likely 100 units. This demonstrates the 10% energy transfer rule and why food chains are limited to 3-5 levels - energy decreases exponentially at each trophic level.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440051",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440052",
+        "answer_text": "100 units",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440052",
+        "option_text": "100 units",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440053",
+        "option_text": "1,000 units",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440054",
+        "option_text": "10,000 units",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440055",
+        "option_text": "10 units",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:10:00Z",
+    "updated_at": "2024-01-15T10:10:00Z",
+    "source_timestamp": "2024-01-15T10:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T04:18:00.155942+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Ecosystem Components Question",
+    "content": "Which of the following organisms are considered decomposers in an ecosystem?",
+    "speech_to_text_content": "Which of the following organisms are considered decomposers in an ecosystem?",
+    "explanation": "The correct answer is bacteria and fungi. Decomposers are organisms that break down dead organic matter (dead plants, animals, and waste) and return nutrients to the soil. Bacteria and fungi are the primary decomposers in ecosystems. They secrete enzymes that break down complex organic molecules into simpler compounds that can be absorbed and used for energy. This is essential for nutrient cycling - without decomposers, dead matter would accumulate and nutrients would be locked in dead organisms. Plants are producers, herbivores are primary consumers, and carnivores are secondary or tertiary consumers. Only bacteria and fungi fill the decomposer role.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440061",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440062",
+        "answer_text": "Bacteria and fungi",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440062",
+        "option_text": "Bacteria and fungi",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440063",
+        "option_text": "Plants and herbivores",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440064",
+        "option_text": "Carnivores and herbivores",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440065",
+        "option_text": "All living organisms",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T04:18:03.419383+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Deforestation and Carbon Question",
+    "content": "Which of the following is NOT a way that deforestation increases atmospheric CO₂?",
+    "speech_to_text_content": "Which of the following is NOT a way that deforestation increases atmospheric CO2?",
+    "explanation": "The correct answer is 'Forests prevent decomposition of dead organisms.' Deforestation increases atmospheric CO₂ in three main ways: (1) Loss of CO₂ absorption - forests absorb CO₂ through photosynthesis, so removing forests reduces this absorption; (2) Release of stored carbon - trees store carbon in their wood, and when cut down and burned or left to decay, this carbon is released as CO₂; (3) Reduced future absorption - without forests, future CO₂ absorption is prevented. The statement about preventing decomposition is incorrect - decomposition happens in forests and releases CO₂ as decomposers break down dead matter. Forests do NOT prevent decomposition; they support it. This is a distractor answer that tests whether students understand the complete carbon cycle.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440071",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440074",
+        "answer_text": "Forests prevent decomposition of dead organisms",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440071",
+        "option_text": "Loss of CO₂ absorption by plants",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440072",
+        "option_text": "Release of stored carbon from trees",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440073",
+        "option_text": "Prevention of future CO₂ absorption",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440074",
+        "option_text": "Forests prevent decomposition of dead organisms",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:20:00Z",
+    "updated_at": "2024-01-15T10:20:00Z",
+    "source_timestamp": "2024-01-15T10:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T04:18:07.777224+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Eutrophication Process Question",
+    "content": "What is the correct sequence of events in eutrophication?",
+    "speech_to_text_content": "What is the correct sequence of events in eutrophication?",
+    "explanation": "The correct answer is: Excess nutrients enter water → Algal bloom occurs → Algae die and decompose → Oxygen depletes → Aquatic organisms die. This is the five-stage eutrophication process. Excess nutrients (phosphates and nitrates) from agricultural runoff and sewage enter water bodies. These nutrients cause algae to multiply rapidly in an algal bloom. When the algae die, decomposers break down the dead algae, consuming dissolved oxygen in the process. The depletion of oxygen (hypoxia) kills fish and other aquatic organisms that need oxygen to survive. This creates a 'dead zone' where few organisms can survive. Understanding this sequence is critical for comprehending how nutrient pollution destroys aquatic ecosystems.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440081",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440082",
+        "answer_text": "Excess nutrients → Algal bloom → Algae death → Decomposition → Oxygen depletion → Organism death",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440082",
+        "option_text": "Excess nutrients → Algal bloom → Algae death → Decomposition → Oxygen depletion → Organism death",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440083",
+        "option_text": "Organism death → Oxygen depletion → Algae death → Algal bloom → Excess nutrients",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440084",
+        "option_text": "Algal bloom → Excess nutrients → Algae death → Oxygen increase → Organism growth",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440085",
+        "option_text": "Oxygen depletion → Excess nutrients → Algal bloom → Organism death",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:25:00Z",
+    "updated_at": "2024-01-15T10:25:00Z",
+    "source_timestamp": "2024-01-15T10:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T04:18:12.275006+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Biomagnification Question",
+    "content": "Why are top predators (like eagles) more affected by insecticide pollution than herbivores, even though both are exposed to the same insecticide?",
+    "speech_to_text_content": "Why are top predators like eagles more affected by insecticide pollution than herbivores, even though both are exposed to the same insecticide?",
+    "explanation": "The correct answer is: Insecticides accumulate in fatty tissues and become concentrated as they move up the food chain. This is biomagnification. Insecticides are fat-soluble, meaning they store in the fatty tissues of organisms. Herbivores eat many plants with small amounts of insecticide, accumulating it in their bodies. When top predators eat many herbivores (and secondary consumers), they consume all the concentrated insecticide from those prey. Since each predator eats many prey, the insecticide concentration becomes 1000-fold higher in top predators than in plants. The other options are incorrect: insecticides do not break down faster in predators (they persist), predators do not have different body chemistry that protects them (they're actually more vulnerable), and the size of predators does not make them more resistant. Biomagnification explains why top predators are most vulnerable to persistent pesticides despite not being directly sprayed.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440091",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440092",
+        "answer_text": "Insecticides accumulate in fatty tissues and become concentrated as they move up the food chain",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440092",
+        "option_text": "Insecticides accumulate in fatty tissues and become concentrated as they move up the food chain",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440093",
+        "option_text": "Insecticides break down faster in herbivores than in predators",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440094",
+        "option_text": "Predators have body chemistry that protects them from insecticides",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440095",
+        "option_text": "Larger body size makes predators more resistant to insecticides",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T04:18:17.603304+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Pyramid Comparison Question",
+    "content": "Which statement about pyramids of numbers and pyramids of biomass is TRUE?",
+    "speech_to_text_content": "Which statement about pyramids of numbers and pyramids of biomass is TRUE?",
+    "explanation": "The correct answer is: Pyramids of biomass are more useful for understanding energy flow than pyramids of numbers. This is true because pyramids of biomass account for the mass of organisms at each trophic level, which better reflects the energy available. Since energy transfer follows the 10% rule, biomass also decreases at each level, showing the energy pyramid shape. Pyramids of numbers only count individuals and don't account for size, so a large oak tree counts the same as a small insect. The other statements are incorrect: Both can be inverted (not just biomass), pyramids of numbers are not always more accurate, and both represent snapshots in time. Pyramids of biomass better represent ecosystem function and energy flow because they incorporate the mass of organisms, which correlates with energy content.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440101",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": "550e8400-e29b-41d4-a716-446655440102",
+        "answer_text": "Pyramids of biomass are more useful for understanding energy flow than pyramids of numbers",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440102",
+        "option_text": "Pyramids of biomass are more useful for understanding energy flow than pyramids of numbers",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440103",
+        "option_text": "Pyramids of numbers can never be inverted",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440104",
+        "option_text": "Pyramids of biomass require no organisms to be killed",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440105",
+        "option_text": "Pyramids of numbers account for organism size",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:35:00Z",
+    "updated_at": "2024-01-15T10:35:00Z",
+    "source_timestamp": "2024-01-15T10:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T04:18:22.071525+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Question 7",
+    "type": "question",
+    "question_type": "open",
+    "title": "Food Chain Energy Flow - Extended Response",
+    "content": "Explain why food chains are typically limited to 3-5 trophic levels. Use the concept of energy transfer efficiency in your answer.",
+    "speech_to_text_content": "Explain why food chains are typically limited to 3 to 5 trophic levels. Use the concept of energy transfer efficiency in your answer.",
+    "explanation": "A complete answer should include: (1) Only 10% of energy transfers between trophic levels, (2) 90% is lost through respiration, undigested food, and metabolic waste, (3) Energy decreases exponentially at each level, (4) By the 5th or 6th trophic level, there is insufficient energy to support a viable population, (5) Example calculation showing energy decreasing from 100,000 units in plants to 100 units in tertiary consumers. Students should demonstrate understanding that the 10% rule limits food chain length because energy becomes insufficient to support another trophic level. The answer should explain the mechanism of energy loss (respiration, waste) and show how this leads to exponential decrease in available energy. A strong answer will include a specific example or calculation demonstrating the energy decrease across trophic levels.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440111",
+        "question_id": "550e8400-e29b-41d4-a716-446655440021",
+        "option_id": null,
+        "answer_text": "Food chains are limited to 3-5 trophic levels because only 10% of energy transfers between each level. The remaining 90% is lost through respiration (heat), undigested food, and metabolic processes. This means energy decreases exponentially: if plants have 100,000 units, herbivores get 10,000, carnivores get 1,000, and top predators get only 100 units. By the 5th or 6th level, there is insufficient energy to support a viable population of predators, so longer food chains cannot exist. The 10% energy transfer rule is the fundamental reason for this limitation.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T10:40:00Z",
+    "updated_at": "2024-01-15T10:40:00Z",
+    "source_timestamp": "2024-01-15T10:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T04:18:26.933025+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "Question 8",
+    "type": "question",
+    "question_type": "open",
+    "title": "Conservation and Sustainability - Extended Response",
+    "content": "Describe how conservation of species and sustainable use of natural resources contribute to maintaining biodiversity and a balanced ecosystem. Use specific examples of conservation strategies.",
+    "speech_to_text_content": "Describe how conservation of species and sustainable use of natural resources contribute to maintaining biodiversity and a balanced ecosystem. Use specific examples of conservation strategies.",
+    "explanation": "A complete answer should include: (1) Definition of conservation and sustainable use, (2) How they maintain biodiversity (genetic diversity, species diversity, ecosystem diversity), (3) How they maintain ecosystem balance (preserving food chains, maintaining nutrient cycles, preventing invasive species), (4) Specific conservation strategies such as: protected areas (national parks, marine protected areas), species-specific conservation (captive breeding, habitat restoration), sustainable practices (sustainable forestry, fishing, agriculture), (5) Examples of important ecosystems to protect (coral reefs, tropical rainforests, mangroves), (6) How these strategies prevent ecosystem collapse. A strong answer will explain the relationship between biodiversity and ecosystem stability, provide multiple specific examples of conservation strategies, and demonstrate understanding of how conservation maintains the balance of nature. Students should show that conservation is not just about saving individual species but about maintaining ecosystem function.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440121",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_id": null,
+        "answer_text": "Conservation maintains biodiversity through protected areas (national parks, marine protected areas), species-specific conservation (captive breeding, habitat restoration), and sustainable practices (sustainable forestry, fishing, agriculture). Biodiversity is essential for ecosystem balance because: (1) Genetic diversity allows species to adapt to environmental changes, (2) Species diversity ensures food chains remain intact - if one species disappears, others can fill its role, (3) Ecosystem diversity provides different ecosystem services. Sustainable use prevents resource depletion - for example, sustainable fishing with quotas ensures fish populations can reproduce. Examples include protecting coral reefs (support 25% of marine species), tropical rainforests (store carbon, house 50% of species), and mangroves (nurseries for marine life). When conservation maintains biodiversity, ecosystems are more resilient and can resist environmental stresses. Without conservation, species extinction and ecosystem collapse occur.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T04:18:32.384261+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440023",
+    "syllabus_id": "bio_ch12_ecosystem_human_impact",
+    "parent_id": null,
+    "order": 23,
+    "part_label": "Slide 14",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 Chapter Summary - Key Concepts Review",
+    "content": "## Essential Concepts from The Ecosystem and Human Impact\n\n### 🔄 Energy and Nutrient Flow\n\n**Energy Flow**\n- ::yellow[Food chains and webs] show how energy moves through ecosystems\n- Only ::purple[10% of energy transfers] between trophic levels\n- ::red[90% is lost] through respiration, waste, and undigested food\n- This limits food chains to ::yellow[3-5 trophic levels]\n\n**Ecological Pyramids**\n- ::yellow[Pyramid of numbers] - counts organisms (limited use)\n- ::yellow[Pyramid of biomass] - measures total mass (more useful for energy flow)\n- Both show that ::green[energy and biomass decrease] at higher trophic levels\n\n**Nutrient Cycling**\n- ::yellow[Carbon cycle] - carbon moves between atmosphere, organisms, and Earth's crust\n- Key processes: photosynthesis (fixation), respiration (release), decomposition, combustion\n- ::yellow[Carbon sinks] - forests, oceans, soil store carbon long-term\n\n### 🌍 Human Impact on Ecosystems\n\n**Deforestation**\n- Causes: agriculture, urban development, logging, mining\n- Effects: ::red[biodiversity loss, climate change, soil erosion, water disruption]\n- Increases atmospheric CO₂ by reducing absorption and releasing stored carbon\n\n**Pollution**\n- ::yellow[Sewage] - contains disease organisms and excess nutrients\n- ::yellow[Eutrophication] - excess nutrients cause algal bloom → oxygen depletion → ecosystem collapse\n- ::yellow[Plastic waste] - non-biodegradable, harms marine life through entanglement and ingestion\n- ::yellow[Insecticides] - ::red[biomagnify] (concentrate) up food chains, affecting top predators most\n\n**Global Warming**\n- Caused by increased atmospheric CO₂ from fossil fuels and deforestation\n- ::yellow[Greenhouse effect] - CO₂ traps heat in atmosphere\n- Effects: ::red[rising temperatures, sea level rise, ecosystem disruption]\n\n### 🛡️ Solutions and Conservation\n\n**Reducing Global Warming**\n- Renewable energy (solar, wind, hydroelectric, geothermal)\n- Energy efficiency improvements\n- Carbon capture technology\n- Reforestation and ocean protection\n- International cooperation (Paris Agreement)\n\n**Conservation Strategies**\n- Protected areas (national parks, marine protected areas, wildlife corridors)\n- Species-specific conservation (captive breeding, habitat restoration, anti-poaching)\n- Sustainable practices (sustainable forestry, fishing, agriculture)\n- Protection of key ecosystems (coral reefs, tropical rainforests, mangroves)\n\n### 💡 Big Picture Insights\n\n> ✅ **Interdependence** - All organisms depend on each other and their environment. Damage to one part affects the whole ecosystem.\n\n> ✅ **Energy Limits** - The 10% energy transfer rule explains why food chains are short and why there are always more plants than herbivores.\n\n> ✅ **Bioaccumulation** - Toxins concentrate in food chains, making top predators most vulnerable even if they're not directly exposed.\n\n> ✅ **Tipping Points** - Ecosystems can collapse rapidly once a critical threshold is crossed (e.g., eutrophication, species extinction).\n\n> ✅ **Sustainability** - We must use resources at rates they can regenerate, or they will be depleted forever.\n\n> ✅ **Hope Through Action** - While human activities have damaged ecosystems, human ingenuity and responsible choices can restore balance and mitigate climate change.\n\n### 🌍 Why This Matters\n\nUnderstanding ecosystems and human impact is essential because:\n\n1. **Your Future** - Climate change, pollution, and biodiversity loss directly affect your generation\n2. **Local Relevance** - Singapore's ecosystem, water quality, and food security depend on regional and global environmental health\n3. **Personal Responsibility** - Individual choices (consumption, waste, energy use) accumulate to create global change\n4. **Career Opportunities** - Environmental science, conservation, renewable energy are growing fields\n5. **Global Citizenship** - Understanding ecosystems helps you make informed decisions as a voter and consumer",
+    "speech_to_text_content": "Essential concepts from the ecosystem and human impact chapter include energy flow through food chains and webs, with only 10 percent of energy transferring between trophic levels. Ecological pyramids show energy and biomass decrease at higher trophic levels. The carbon cycle moves carbon between atmosphere, organisms, and Earth's crust. Deforestation causes biodiversity loss, climate change, and soil erosion. Pollution includes sewage causing eutrophication, plastic waste harming marine life, and insecticides biomagnifying up food chains. Global warming is caused by increased atmospheric CO2 from fossil fuels and deforestation. Solutions include renewable energy, energy efficiency, carbon capture, and conservation strategies like protected areas and sustainable practices. Key insights include interdependence of organisms, energy limits, bioaccumulation, ecosystem tipping points, sustainability, and hope through action. Understanding ecosystems matters for your future, local relevance in Singapore, personal responsibility, career opportunities, and global citizenship.",
+    "explanation": "This comprehensive summary slide reviews all major concepts covered in the chapter on ecosystems and human impact. It organizes content into three main sections: energy and nutrient flow, human impact on ecosystems, and solutions and conservation. The slide includes key definitions, processes, and examples for each concept. The 'Big Picture Insights' section highlights the most important takeaways that students should understand at a deeper level. The final section on 'Why This Matters' connects the abstract ecological concepts to students' personal lives and the specific context of Singapore, helping them understand the relevance and importance of the material. This summary reinforces all learning outcomes from the chapter and provides a comprehensive review for assessment preparation.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:50:00Z",
+    "updated_at": "2024-01-15T10:50:00Z",
+    "source_timestamp": "2024-01-15T10:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 23,
+      "timestamp": "2025-12-24T04:18:45.393627+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 23,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

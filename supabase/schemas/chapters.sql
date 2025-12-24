@@ -9,5 +9,6 @@ CREATE TABLE chapters (
   level INT NOT NULL,
   description TEXT DEFAULT NULL,
   sort_order INTEGER NOT NULL DEFAULT 0, -- For ordering within chapters
+  lesson TEXT DEFAULT NULL, -- JSON array of slides for seeded lessons (null = use AI generation)
   CONSTRAINT unique_chapter_per_subject UNIQUE (subject_id, name) -- Ensure unique chapter names within the same subject
 );

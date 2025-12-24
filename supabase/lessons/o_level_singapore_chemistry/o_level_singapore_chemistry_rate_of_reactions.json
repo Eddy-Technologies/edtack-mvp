@@ -1,0 +1,768 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚡ Introduction to Rate of Reactions",
+    "content": "## Understanding How Fast Reactions Happen\n\nWelcome to the fascinating world of ::yellow[reaction rates]! Every day, chemical reactions happen all around us at different speeds. Some reactions are lightning-fast, while others take a very long time.\n\n### Why Does This Matter?\n\n🔬 Understanding ::yellow[reaction rates] helps us:\n- Control industrial processes efficiently\n- Preserve food and medicines\n- Design safer chemical processes\n- Understand biological processes in our bodies\n\n### The Key Question\n\nImagine you have a fizzy drink. When you open it, the gas escapes quickly. But if you seal it again, the gas escapes much more slowly. What causes this difference? This is what we'll explore in this chapter!\n\n### What You'll Learn\n\n1. How to measure and describe ::yellow[reaction rates]\n2. The ::yellow[collision theory] that explains why reactions occur\n3. Five key factors that affect how fast reactions happen\n4. How ::yellow[catalysts] work to speed up reactions\n5. How to design experiments to study reaction rates\n\n> 💡 **Key Insight**: ::green[Reactions don't just happen at one speed—we can control and predict how fast they go!]",
+    "speech_to_text_content": "Understanding how fast reactions happen. Every day, chemical reactions occur at different speeds. Some are very fast, others take a long time. Understanding reaction rates helps us control industrial processes, preserve food and medicines, and understand biological processes. In this chapter, you will learn how to measure reaction rates, understand collision theory, discover five factors that affect reaction speed, learn how catalysts work, and design experiments to study reaction rates.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T04:14:30.103814+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Slide 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 What is the Speed of a Reaction?",
+    "content": "## Defining Reaction Rate\n\nThe ::yellow[rate of reaction] is a measure of how fast a chemical reaction takes place as it proceeds over time. Think of it like the speed of a car—it tells us how much \"progress\" the reaction makes in a given time.\n\n### The Formula for Reaction Rate\n\n$$\\text{Rate of Reaction} = \\frac{\\text{Amount of Reactant Used}}{\\text{Time Taken}} \\text{ or } \\frac{\\text{Amount of Product Formed}}{\\text{Time Taken}}$$\n\n**What this means:**\n- ::blue[Reactants] are the starting materials that get used up\n- ::blue[Products] are the new substances formed\n- We measure either how fast reactants disappear OR how fast products appear\n\n### Real-World Example: Magnesium and Hydrochloric Acid\n\nConsider the reaction: **Mg + 2HCl → MgCl₂ + H₂**\n\n- If we collect hydrogen gas in 10 seconds, we get 50 cm³\n- If we collect it in 20 seconds, we get 80 cm³\n- The ::yellow[rate] is different because the reaction slows down over time!\n\n### Why Does the Reaction Slow Down?\n\n⚠️ **Important**: As the reaction proceeds:\n- The ::red[concentration of reactants decreases] (they're being used up)\n- Fewer reactant particles are available to collide\n- The ::red[rate of reaction slows down] as a result\n\n> 💡 **Key Point**: ::green[The rate is fastest at the beginning and gradually slows down as reactants are consumed.]",
+    "speech_to_text_content": "The rate of reaction measures how fast a chemical reaction takes place over time. The formula is: rate equals amount of reactant used divided by time taken, or amount of product formed divided by time taken. In the reaction of magnesium with hydrochloric acid, hydrogen gas is produced. The reaction slows down over time because the concentration of reactants decreases as they are used up. This means fewer reactant particles are available to collide, so the rate decreases.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:05:00Z",
+    "updated_at": "2024-01-15T09:05:00Z",
+    "source_timestamp": "2024-01-15T09:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T04:14:35.519267+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Slide 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "📈 Reading Reaction Graphs",
+    "content": "## How to Extract Information from Reaction Graphs\n\nWhen a gas is produced during a reaction (like Mg + HCl → MgCl₂ + H₂), we can plot a graph with:\n- **Y-axis**: Amount of gas produced (in cm³ or mL)\n- **X-axis**: Time (in seconds or minutes)\n\nThis graph gives us THREE important pieces of information!\n\n### 1️⃣ The Rate of Reaction (from the gradient)\n\nThe ::yellow[gradient] (or slope) of the line tells us the rate:\n- **Steeper gradient** = ::green[faster reaction]\n- **Gentler gradient** = ::red[slower reaction]\n- The **initial gradient** (at the start) shows the fastest rate\n\n$$\\text{Gradient} = \\frac{\\text{Change in Amount of Product}}{\\text{Change in Time}}$$\n\n### 2️⃣ When the Reaction Stops\n\nThe reaction stops when the gradient becomes **zero** (the line becomes horizontal). This happens when:\n- One of the ::blue[reactants is completely used up] (the limiting reactant)\n- The reaction can no longer proceed\n\n### 3️⃣ The Total Amount of Product Formed\n\nRead the y-axis value where the gradient becomes zero. This tells you the ::yellow[maximum amount of product] that was formed.\n\n### Typical Reaction Graph Shape\n\n```\nProduct (cm³)\n     ↑\n     |     ╱╱╱╱  ← Steep (fast reaction)\n     |    ╱╱╱\n     |   ╱╱╱\n     |  ╱╱  ← Gets less steep (reaction slows down)\n     | ╱\n     |─────────────→ Time\n     |═══════════  ← Flat line (reaction has stopped)\n```\n\n> 💡 **Remember**: ::green[The curved shape shows the reaction slowing down as reactants are used up.]",
+    "speech_to_text_content": "When a gas is produced during a reaction, we can plot a graph with the amount of gas produced on the y-axis and time on the x-axis. From this graph, we can find three things: First, the rate of reaction from the gradient or slope. A steeper gradient means a faster reaction. Second, when the reaction stops, which is when the gradient becomes zero and the line becomes horizontal. This happens when one reactant is completely used up. Third, the total amount of product formed, which we read from the y-axis value where the line becomes flat. The graph typically shows a curved shape that gets less steep over time, showing the reaction slowing down.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:10:00Z",
+    "updated_at": "2024-01-15T09:10:00Z",
+    "source_timestamp": "2024-01-15T09:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T04:14:41.783458+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Slide 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "💥 The Collision Theory of Particles",
+    "content": "## Why Do Reactions Happen? The Collision Theory\n\nHave you ever wondered why simply mixing two chemicals doesn't always result in a reaction? The answer lies in the ::yellow[collision theory]!\n\n### The Basic Idea\n\nFor a chemical reaction to occur, reactant particles must:\n1. **Collide** with each other\n2. Have **sufficient energy** to break apart and form new bonds\n\n### Not All Collisions Result in Reactions!\n\n⚠️ **Important**: When particles collide, they don't always react:\n- Sometimes they just **bounce apart** unchanged\n- This is called an ::red[ineffective collision]\n- Only certain collisions lead to products\n\n### What Makes a Collision \"Effective\"?\n\nAn ::yellow[effective collision] occurs when:\n- Particles collide with each other **AND**\n- They have energy **equal to or greater than** the ::yellow[activation energy]\n\n### Understanding Activation Energy\n\nThe ::yellow[activation energy (Ea)] is the **minimum energy required** for reactant particles to break their bonds and form products.\n\nThink of it like a hill:\n- Particles need enough energy to \"climb the hill\"\n- If they don't have enough energy, they just \"bounce back\"\n- If they have enough, they can \"go over the hill\" and form products\n\n```\nEnergy\n   ↑     ╱╲\n   |    ╱  ╲  ← Activation Energy (Ea)\n   |   ╱    ╲\n   |  ╱      ╲\n   | ╱        ╲___\n   |╱____________╲→ Reaction Progress\n  Reactants      Products\n```\n\n### The Two Ways to Increase Reaction Rate\n\nTo speed up a reaction, we must either:\n\n1. **Increase the frequency of collisions** - more particles colliding per second\n2. **Increase the energy of collisions** - particles colliding with more force/energy\n\n> 💡 **Key Concept**: ::green[A reaction only happens when particles collide with enough energy to overcome the activation energy barrier.]",
+    "speech_to_text_content": "For a chemical reaction to occur, reactant particles must collide with each other and have sufficient energy. Not all collisions result in reactions. Sometimes particles just bounce apart. An effective collision occurs when particles collide and have energy equal to or greater than the activation energy. Activation energy is the minimum energy required for reactant particles to break their bonds and form products. To speed up a reaction, we must either increase the frequency of collisions or increase the energy of collisions. Only collisions with enough energy to overcome the activation energy barrier result in products.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T04:14:47.725463+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Slide 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Factor 1: Concentration of Reactants",
+    "content": "## How Concentration Affects Reaction Rate\n\nConcentration is one of the most important factors controlling reaction speed. Let's understand why!\n\n### What is Concentration?\n\n::yellow[Concentration] measures how many particles of a substance are packed into a given volume.\n- **High concentration** = many particles in a small space\n- **Low concentration** = fewer particles in the same space\n\n### The Effect on Collision Frequency\n\nWhen you **increase the concentration**:\n- More reactant particles are present per unit volume\n- Particles are closer together\n- The **frequency of collisions increases** significantly\n- More effective collisions occur per second\n- **Result**: ::green[Reaction rate increases]\n\n### Real-World Analogy\n\nImagine a crowded dance floor:\n- When it's packed with people, they bump into each other constantly\n- When it's nearly empty, people rarely bump into each other\n- More people = more collisions!\n\n### Mathematical Relationship\n\nThere's an important relationship:\n\n**If you double the concentration, the amount of product formed is also doubled!**\n\nExample: Mg + 2HCl → MgCl₂ + H₂\n\n| Concentration of HCl | Volume of H₂ Produced | Time to Complete |\n|----------------------|------------------------|-------------------|\n| 1 mol/dm³           | 50 cm³                | 30 seconds        |\n| 2 mol/dm³           | 100 cm³               | 15 seconds        |\n\n**Notice**: \n- Double the concentration → double the product\n- Double the concentration → half the time needed!\n\n### Why This Happens\n\nWith higher concentration:\n1. More particles per unit volume\n2. More frequent collisions\n3. More effective collisions per second\n4. Faster consumption of reactants\n5. More product formed in the same time\n\n> ⚠️ **Important**: ::red[Concentration only affects the rate and the time taken—it doesn't change the total amount of product if one reactant is limiting.]\n\n> 💡 **Key Point**: ::green[Doubling concentration roughly doubles the reaction rate!]",
+    "speech_to_text_content": "Concentration measures how many particles are packed into a given volume. When you increase the concentration, more reactant particles are present per unit volume. They are closer together, so the frequency of collisions increases. More effective collisions occur per second, so the reaction rate increases. If you double the concentration, the amount of product formed is also doubled. For example, in the reaction of magnesium with hydrochloric acid, using 2 mol per cubic decimeter HCl instead of 1 mol per cubic decimeter produces twice the hydrogen gas in half the time.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:20:00Z",
+    "updated_at": "2024-01-15T09:20:00Z",
+    "source_timestamp": "2024-01-15T09:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T04:14:54.067229+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Slide 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Factor 2: Temperature",
+    "content": "## How Temperature Affects Reaction Rate\n\nTemperature is perhaps the most powerful factor for controlling reaction rates. Heat provides energy to particles!\n\n### What Happens When Temperature Increases?\n\nWhen you increase temperature:\n\n1. **Particles move faster**\n   - Higher temperature = more kinetic energy\n   - Faster-moving particles collide more frequently\n   - ::green[Collision frequency increases]\n\n2. **Particles have more energy**\n   - More particles have energy ≥ activation energy\n   - A larger proportion of collisions are effective\n   - ::green[Effective collision percentage increases]\n\n### The Double Effect\n\n⚡ **Temperature has TWO effects on reaction rate:**\n\n```\nIncreased Temperature\n        ↓\n    ┌───┴───┐\n    ↓       ↓\n Faster   More Particles\n Particle  with Enough\n Movement  Energy\n    ↓       ↓\n    └───┬───┘\n        ↓\n   MUCH FASTER REACTION\n```\n\n### Practical Example: Magnesium and Hydrochloric Acid\n\n**Mg + 2HCl → MgCl₂ + H₂**\n\n| Temperature | Reaction Speed | Time to Complete |\n|-------------|-----------------|------------------|\n| Cold acid (0°C) | Very slow | 5 minutes |\n| Room temperature (25°C) | Moderate | 1 minute |\n| Hot acid (60°C) | Very fast | 10 seconds |\n\n**Key observation**: Just a small temperature increase causes a dramatic speed increase!\n\n### Why Small Temperature Changes Have Big Effects\n\nConsider the energy distribution of particles:\n\n- At low temperature: Only a few particles have enough energy\n- At higher temperature: Many more particles have enough energy\n- This creates a **huge increase** in effective collisions\n\n### Energy Diagram Showing Temperature Effect\n\n```\nNumber of\nParticles\n    ↑      ╱╲ Low Temp\n    |     ╱  ╲\n    |    ╱    ╲      ╱╲ High Temp\n    |   ╱      ╲    ╱  ╲\n    |  ╱        ╲  ╱    ╲___\n    |_╱________╱__╱__________→ Particle Energy\n    └─────────────────────────\n           Activation Energy (Ea)\n```\n\nNotice: More particles exceed Ea at higher temperature!\n\n### Industrial Importance\n\n🏭 In factories:\n- Reactions are often heated to increase production speed\n- Even small temperature increases can save time and money\n- This is why industrial processes carefully control temperature\n\n> 💡 **Key Insight**: ::green[Temperature has the most dramatic effect on reaction rate because it increases both collision frequency AND particle energy.]\n\n> ⚠️ **Remember**: ::red[Increasing temperature increases the rate of BOTH forward and reverse reactions!]",
+    "speech_to_text_content": "When you increase temperature, particles move faster and have more kinetic energy. Faster-moving particles collide more frequently, increasing collision frequency. Also, more particles have energy equal to or greater than the activation energy, so more collisions are effective. Temperature has two effects on reaction rate. In the reaction of magnesium with hydrochloric acid, using hot acid instead of cold acid dramatically increases the reaction speed. Just a small temperature increase causes a big speed increase because many more particles have enough energy to react. In factories, reactions are often heated to increase production speed.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:25:00Z",
+    "updated_at": "2024-01-15T09:25:00Z",
+    "source_timestamp": "2024-01-15T09:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T04:15:02.471158+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Slide 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "💎 Factor 3: Particle Size (Surface Area)",
+    "content": "## How Particle Size Affects Reaction Rate\n\nFor reactions involving solid reactants, the size of the particles makes a huge difference!\n\n### Understanding Surface Area\n\n::yellow[Surface area] is the total exposed area of a solid that can come into contact with other reactants.\n\n**Key principle**: ::green[Smaller particles have a larger surface area per unit mass!]\n\n### Why This Matters for Reactions\n\nWhen a solid reacts:\n- Only particles at the **surface** can react with other substances\n- Particles inside the solid cannot react until the outer layer is consumed\n- **Larger surface area** = more particles exposed to react\n- **Result**: More collisions can occur per second\n\n### Visual Comparison: Magnesium and Hydrochloric Acid\n\nConsider 1 gram of magnesium in two forms:\n\n**Magnesium Ribbon (large chunks)**\n```\n┌─────────────────┐\n│                 │  ← Only the outer surface can react\n│  Mg Ribbon      │  ← Inside particles are \"hidden\"\n│                 │\n└─────────────────┘\nSmall surface area\n```\n\n**Magnesium Powder (fine particles)**\n```\n█ █ █ █ █ █ █ █ █  ← All particles exposed\n█ █ █ █ █ █ █ █ █  ← Much more surface area\n█ █ █ █ █ █ █ █ █  ← More particles can react\n```\nLarge surface area\n\n### The Effect on Reaction Rate\n\n| Particle Form | Surface Area | Reaction Speed | Time Taken |\n|---------------|--------------|-----------------|------------|\n| Large ribbon  | Small        | Slow           | 3 minutes  |\n| Medium pieces | Medium       | Moderate       | 1 minute   |\n| Fine powder   | Large        | Very fast      | 10 seconds |\n\n**Notice**: The same mass of magnesium, but dramatically different reaction rates!\n\n### Why Smaller Particles React Faster\n\n1. **More surface exposed** to the acid\n2. **More reactant particles** at the surface\n3. **More frequent collisions** between Mg and HCl\n4. **More effective collisions** per second\n5. **Faster reaction rate** overall\n\n### Real-World Examples\n\n🔥 **Explosions**: Fine powder explosions are much more violent than large chunks because:\n- Huge surface area\n- Extremely rapid reaction\n- Lots of energy released quickly\n\n🍪 **Baking**: Sugar dissolves faster in hot tea when it's crushed into small crystals rather than in one large lump\n\n🏭 **Industrial grinding**: Ores are crushed into powder before processing to increase reaction speed\n\n### Important Limitation\n\n⚠️ **Remember**: ::red[Particle size does NOT change the total amount of product formed]\n- A gram of powder produces the same amount of product as a gram of ribbon\n- It just produces it faster!\n\n> 💡 **Key Concept**: ::green[Smaller particles = larger surface area = faster reaction rate, because more reactant particles are exposed and available to collide!]",
+    "speech_to_text_content": "For reactions involving solid reactants, the size of the particles makes a big difference. Surface area is the total exposed area of a solid that can come into contact with other reactants. Smaller particles have a larger surface area per unit mass. When a solid reacts, only particles at the surface can react with other substances. Larger surface area means more particles are exposed to react, so more collisions can occur per second. For example, magnesium powder reacts much faster with hydrochloric acid than a magnesium ribbon of the same mass. The same mass of magnesium, but in powder form, produces the same amount of product but much more quickly. Fine powder explosions are much more violent than large chunks because of the huge surface area and extremely rapid reaction.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T04:15:11.245446+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Slide 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "💨 Factor 4: Pressure (for Gases)",
+    "content": "## How Pressure Affects Reaction Rate for Gases\n\nWhen reactants are gases, pressure becomes a very important factor!\n\n### What is Pressure in Terms of Particles?\n\n::yellow[Pressure] is caused by gas particles colliding with the walls of their container.\n- **High pressure** = more gas particles in the same volume\n- **Low pressure** = fewer gas particles in the same volume\n\n### The Effect of Increasing Pressure\n\nWhen you **increase the pressure** on a gas reaction:\n\n1. **Particles are forced closer together**\n   - Same number of particles in a smaller space\n   - Particles are more crowded\n\n2. **Collision frequency increases dramatically**\n   - More particles per unit volume\n   - More collisions per second\n   - More effective collisions\n\n3. **Result**: ::green[Reaction rate increases]\n\n### How Pressure and Concentration are Related\n\n⚡ **Important**: For gases, increasing pressure is like increasing concentration!\n- Both put more particles in the same space\n- Both increase collision frequency\n- Both speed up the reaction\n\n### Industrial Example: The Haber Process\n\nThe most important industrial example is the production of ammonia:\n\n**N₂ + 3H₂ ⇌ 2NH₃**\n\n| Pressure | Reaction Speed | Industrial Use |\n|----------|-----------------|----------------|\n| 1 atm (sea level) | Extremely slow | Not used |\n| 150 atm | Fast | Industrial standard |\n| 300 atm | Much faster | Some factories |\n\n**Why high pressure?**\n- At 1 atmosphere (normal pressure), this reaction is too slow\n- At 150 atmospheres, the reaction is fast enough to be profitable\n- Higher pressures give even faster reactions\n- The increased rate justifies the cost of high-pressure equipment\n\n### Visualizing Pressure Effect\n\n```\nLow Pressure          High Pressure\n  ↑                      ↑\n  │  ◯  ◯               │  ◯◯◯◯\n  │    ◯               │  ◯◯◯◯\n  │  ◯                 │  ◯◯◯◯\n  │                    │\n  │ Few collisions     │ Many collisions\n  │ Slow reaction      │ Fast reaction\n```\n\n### Important Note About Pressure\n\n⚠️ **Key point**: ::red[Pressure only affects reactions where at least one reactant is a gas]\n- For reactions in solution (like Mg + HCl in water), pressure has little effect\n- This is because liquids are incompressible\n- Pressure mainly matters for gas-phase reactions\n\n### Real-World Applications\n\n🏭 **Industrial chemistry**:\n- Ammonia synthesis at 150 atm\n- Hydrogenation reactions at high pressure\n- Gas processing and refining\n\n⚡ **Why it matters**:\n- Higher pressure = faster reaction = more production\n- But high pressure requires expensive equipment\n- Companies balance speed against cost\n\n> 💡 **Key Insight**: ::green[For gas reactions, increasing pressure is equivalent to increasing concentration—it crowds more particles into the same space, increasing collision frequency and reaction rate!]\n\n> 💡 **Remember**: ::yellow[Pressure mainly affects gas-phase reactions, not reactions in solution.]",
+    "speech_to_text_content": "When reactants are gases, pressure becomes an important factor. Pressure is caused by gas particles colliding with the walls of their container. When you increase the pressure on a gas reaction, particles are forced closer together. The same number of particles in a smaller space means more collisions per second. Increasing pressure is like increasing concentration for gases. Both put more particles in the same space and speed up the reaction. The Haber process for producing ammonia uses 150 atmospheres of pressure to make the reaction fast enough to be profitable. Pressure only affects reactions where at least one reactant is a gas. For reactions in solution, pressure has little effect because liquids are incompressible.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:35:00Z",
+    "updated_at": "2024-01-15T09:35:00Z",
+    "source_timestamp": "2024-01-15T09:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T04:15:19.724976+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Slide 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚙️ Factor 5: Catalysts",
+    "content": "## How Catalysts Speed Up Reactions\n\nA ::yellow[catalyst] is a special substance that speeds up a reaction without being consumed in the process!\n\n### What is a Catalyst?\n\n**Definition**: A ::yellow[catalyst] is a substance (usually a transition metal or its compound) that increases the rate of a reaction by providing an alternative pathway with **lower activation energy**.\n\n### Key Properties of Catalysts\n\n✅ **Catalysts are:**\n- **Unchanged after the reaction** - they can be reused\n- **Not consumed** - the same mass remains after\n- **Reusable** - one catalyst can speed up many reactions\n- **Selective** - different reactions need different catalysts\n\n### How Catalysts Work: The Activation Energy Path\n\nCatalysts work by **lowering the activation energy** required for the reaction.\n\n```\nEnergy\n   ↑       ╱╲ Without Catalyst\n   |      ╱  ╲  (High Ea)\n   |     ╱    ╲\n   |    ╱      ╲___\n   |   ╱          ╲\n   |  ╱╱╲ With Catalyst\n   | ╱  ╲ (Lower Ea)\n   |╱____╲____\n   └──────────────→ Reaction Progress\n  Reactants      Products\n```\n\n**What this means:**\n- Without catalyst: Particles need lots of energy to react\n- With catalyst: Particles need less energy to react\n- More particles have enough energy\n- More effective collisions occur\n- **Result**: ::green[Reaction rate increases dramatically!]\n\n### Why This Matters\n\nLower activation energy means:\n1. More reactant particles have sufficient energy\n2. A larger percentage of collisions are effective\n3. Reaction rate increases without needing heat\n4. No need to heat the reaction (saves energy costs)\n\n### Industrial Example: The Haber Process\n\n**N₂ + 3H₂ ⇌ 2NH₃**\n\n- **Without catalyst**: Reaction is too slow to be practical\n- **With iron catalyst**: Reaction is fast enough for industry\n- The iron catalyst provides an alternative pathway\n- Same products, but formed much faster\n\n### Real-World Applications\n\n🏭 **Industrial Catalysts:**\n- **Iron (Fe)** - Haber process for ammonia\n- **Platinum (Pt)** - Contact process for sulfuric acid\n- **Nickel (Ni)** - Hydrogenation of oils\n- **Vanadium (V)** - Sulfuric acid production\n\n🚗 **Catalytic Converters in Cars:**\n- Convert harmful gases (CO, NO) to safe products\n- Use platinum and palladium catalysts\n- Make exhaust less polluting\n\n### Important Characteristics of Catalysts\n\n⚠️ **Catalysts do NOT:**\n- Change the overall reaction\n- Change the amount of product formed\n- Get used up in the reaction\n- Change the final energy of products\n\n✅ **Catalysts DO:**\n- Lower the activation energy\n- Increase the reaction rate\n- Provide an alternative reaction pathway\n- Get recovered unchanged after the reaction\n\n### Why Catalysts are Valuable\n\n💰 **Economic benefits:**\n- Speed up slow reactions\n- Reduce energy costs (no need for high heat)\n- Increase production without heating\n- Can be reused many times\n\n🌍 **Environmental benefits:**\n- Reduce emissions (catalytic converters)\n- Make processes more efficient\n- Less energy consumption\n\n> 💡 **Key Concept**: ::green[A catalyst provides an alternative route with LOWER activation energy, allowing more particles to react without needing to heat the mixture!]\n\n> 💡 **Important**: ::yellow[Catalysts are NOT consumed in reactions—they can be used again and again!]",
+    "speech_to_text_content": "A catalyst is a substance, usually a transition metal or its compound, that increases the rate of a reaction by providing an alternative pathway with lower activation energy. Catalysts are unchanged after the reaction and can be reused. Catalysts work by lowering the activation energy required for the reaction. With lower activation energy, more particles have enough energy to react, so more effective collisions occur and the reaction rate increases. The Haber process uses an iron catalyst to speed up ammonia production. Catalytic converters in cars use platinum and palladium to convert harmful gases. Catalysts do not change the overall reaction or the amount of product formed. They provide an alternative pathway with lower activation energy, allowing reactions to proceed faster without heating.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:40:00Z",
+    "updated_at": "2024-01-15T09:40:00Z",
+    "source_timestamp": "2024-01-15T09:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T04:15:29.699740+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Slide 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧬 Enzymes: Biological Catalysts",
+    "content": "## What Are Enzymes?\n\n::yellow[Enzymes] are biological catalysts made of proteins that speed up chemical reactions in living organisms.\n\n### Key Differences from Regular Catalysts\n\nWhile both enzymes and regular catalysts lower activation energy, enzymes are special:\n\n| Feature | Regular Catalysts | Enzymes |\n|---------|-------------------|----------|\n| Made of | Metals or compounds | Proteins |\n| Where used | Industrial processes | Living cells |\n| Specificity | Can catalyze multiple reactions | Very specific - one enzyme, one reaction |\n| Temperature sensitivity | Not sensitive | Very sensitive |\n| pH sensitivity | Not sensitive | Very sensitive |\n| Reusability | Yes | Yes |\n\n### How Enzymes Work\n\nEach enzyme has a special region called the ::yellow[active site]:\n- **Active site** is shaped to fit specific reactant molecules\n- Only the correct reactants fit into the active site\n- This is called ::yellow[enzyme specificity]\n- Like a lock and key - only the right key fits!\n\n```\n    Enzyme\n      ↓\n    ╱╲╲\n   ╱  ╲╲  ← Active site (shaped like this substrate)\n  ╱    ╲╲\n         ╲ + Substrate → Reaction occurs\n          ╲╱╲\n           ╱  ╲\n          ╱    ╲\n```\n\n### Why Enzyme Specificity Matters\n\n🔬 **Example: Digestion**\n- ::yellow[Amylase] breaks down starch (only starch!)\n- ::yellow[Protease] breaks down proteins (only proteins!)\n- ::yellow[Lipase] breaks down fats (only fats!)\n- Each enzyme has a specific job\n\n### Temperature Sensitivity of Enzymes\n\nEnzymes are very sensitive to temperature changes!\n\n#### Optimum Temperature\n\nEach enzyme has an ::yellow[optimum temperature] where it works best:\n- **Below optimum**: Enzyme is ::red[dormant] (inactive, moves slowly)\n- **At optimum**: Enzyme is ::green[most active] (works fastest)\n- **Above optimum**: Enzyme is ::red[denatured] (destroyed permanently)\n\n### What Happens at Different Temperatures?\n\n```\nEnzyme Activity\n     ↑\n     |        ╱╲\n     |       ╱  ╲\n     |      ╱    ╲\n     |     ╱      ╲\n     |    ╱        ╲___\n     |___╱_____________→ Temperature\n     0°C  37°C  50°C  60°C\n           ↑\n        Optimum\n        (for human enzymes)\n```\n\n**Key temperatures:**\n- **Below 10°C**: Enzyme dormant, very slow\n- **37°C**: Optimum for human enzymes (body temperature)\n- **Above 50°C**: Enzyme starts to denature\n- **Above 60°C**: Enzyme completely denatured, permanently destroyed\n\n### pH Sensitivity of Enzymes\n\nEnzymes also have an ::yellow[optimum pH] where they work best:\n\n| Enzyme | Optimum pH | Location |\n|--------|------------|----------|\n| Pepsin | 2 (very acidic) | Stomach |\n| Trypsin | 8 (slightly alkaline) | Small intestine |\n| Salivary amylase | 7 (neutral) | Mouth |\n\n**What happens with wrong pH:**\n- Too acidic or too alkaline\n- Enzyme structure changes\n- Enzyme denatures\n- Enzyme can no longer function\n\n### Real-World Example: Laundry Detergents\n\n🧺 **Enzyme detergents contain:**\n- ::yellow[Proteases] - break down protein stains\n- ::yellow[Lipases] - break down grease stains\n- ::yellow[Amylases] - break down starch stains\n\n**Why they work:**\n- Enzymes break down stains at room temperature\n- No need for very hot water\n- Saves energy and money\n- More gentle on clothes\n\n### Important Characteristics of Enzymes\n\n✅ **Enzymes:**\n- Are reusable (not consumed)\n- Are very specific (one enzyme, one reaction)\n- Work at body temperature (no heating needed)\n- Are sensitive to temperature and pH\n- Can be denatured by extreme conditions\n\n⚠️ **Remember**: ::red[Enzymes are permanently destroyed (denatured) at high temperatures or extreme pH values!]\n\n### Biological Importance\n\nEnzymes are essential for life:\n- **Digestion** - break down food\n- **Respiration** - release energy from glucose\n- **DNA replication** - copy genetic material\n- **Photosynthesis** - capture light energy\n- **Protein synthesis** - build new proteins\n\n> 💡 **Key Concept**: ::green[Enzymes are biological catalysts that are highly specific, temperature-sensitive, and pH-sensitive. Each enzyme catalyzes only one specific reaction!]\n\n> 💡 **Remember**: ::yellow[Enzymes are denatured (permanently destroyed) at high temperatures, unlike regular catalysts!]",
+    "speech_to_text_content": "Enzymes are biological catalysts made of proteins that speed up chemical reactions in living organisms. Each enzyme has an active site shaped to fit specific reactant molecules. This is called enzyme specificity. Enzymes are very sensitive to temperature. Each enzyme has an optimum temperature where it works best. Below the optimum, the enzyme is dormant. Above the optimum, the enzyme is denatured and permanently destroyed. Human enzymes have an optimum temperature of 37 degrees Celsius, which is body temperature. Enzymes also have an optimum pH. At wrong pH values, enzymes denature. Enzyme detergents contain proteases, lipases, and amylases to break down different types of stains. Enzymes are reusable and very specific. Each enzyme catalyzes only one specific reaction.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T04:15:42.595451+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Slide 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Methods for Measuring Reaction Rates",
+    "content": "## How Scientists Measure How Fast Reactions Go\n\nChemists use different methods to measure reaction rates depending on what happens during the reaction. Let's explore six important methods!\n\n### 1️⃣ Change in Temperature (for Exothermic Reactions)\n\n**When to use**: Reactions that release heat\n\n**Example**: Combustion of methane\n$$\\text{CH}_4 + 2\\text{O}_2 → \\text{CO}_2 + 2\\text{H}_2\\text{O}$$\n\n**How it works:**\n- Use a thermometer to measure temperature change\n- Record temperature at regular time intervals\n- Plot temperature vs. time graph\n- Steeper slope = faster reaction\n- Faster temperature increase = faster reaction rate\n\n**Advantages**: Simple, direct measurement\n\n### 2️⃣ Formation of a Precipitate\n\n**When to use**: Reactions that produce insoluble solids\n\n**Example**: Sodium thiosulfate and hydrochloric acid\n$$\\text{Na}_2\\text{S}_2\\text{O}_3 + 2\\text{HCl} → 2\\text{NaCl} + \\text{S} + \\text{SO}_2 + \\text{H}_2\\text{O}$$\n\n**What happens:**\n- ::yellow[Yellow sulfur precipitate] forms in the solution\n- Solution becomes cloudy and opaque\n\n**How to measure:**\n1. Place reaction in a conical flask\n2. Put a paper with a cross underneath\n3. Time how long until the cross disappears\n4. Faster disappearance = faster reaction\n\n```\n     Conical Flask\n      ╱╲╱╲╱╲\n     ╱        ╲\n    │          │  ← Yellow precipitate forms\n    │          │  ← Solution becomes cloudy\n    │          │\n    ╲        ╱\n     ╲╱╲╱╱╲╱\n        ▀▀▀▀\n      Cross on paper\n```\n\n**Advantages**: Easy to observe, no special equipment needed\n\n### 3️⃣ Change in Colour\n\n**When to use**: Reactions where color changes\n\n**Example**: Iodine and hydrogen peroxide\n\n**How it works:**\n- Observe the intensity of color\n- Color becomes darker or lighter\n- Time how long for color change\n- Faster color change = faster reaction\n- Can use a colorimeter to measure precisely\n\n**Advantages**: Visual and easy to time\n\n### 4️⃣ Change in pH Value\n\n**When to use**: Acid-base reactions\n\n**Example**: Neutralization reaction\n$$\\text{NaOH} + \\text{HCl} → \\text{NaCl} + \\text{H}_2\\text{O}$$\n\n**How it works:**\n1. Use a pH probe or pH paper\n2. Measure pH at regular time intervals\n3. Plot pH vs. time\n4. Steeper change in pH = faster reaction\n\n**What happens:**\n- Starts acidic (low pH)\n- Gradually becomes neutral (pH 7)\n- Eventually becomes alkaline (high pH)\n\n**Advantages**: Can measure continuously with a pH probe\n\n### 5️⃣ Change in Gas Volume\n\n**When to use**: Reactions that produce or consume gases\n\n**Example**: Magnesium and hydrochloric acid\n$$\\text{Mg} + 2\\text{HCl} → \\text{MgCl}_2 + \\text{H}_2$$\n\n**How it works:**\n1. Collect gas in a graduated cylinder or gas syringe\n2. Record volume at regular time intervals\n3. Plot volume vs. time graph\n4. Steeper gradient = faster reaction\n5. Flat line = reaction complete\n\n**Equipment:**\n```\n     Gas syringe\n      ╱╱╱╱╱╱\n     │      │\n     │ Gas  │  ← Measures volume\n     │      │\n     ╲╱╱╱╱╱╱\n        ║\n        ║ (connected to reaction vessel)\n     ╭──┴──╮\n     │      │\n     │ Mg + HCl\n     │      │\n     ╰──────╯\n```\n\n**Advantages**: Accurate, can plot clear graphs\n\n### 6️⃣ Change in Mass\n\n**When to use**: Reactions where gas escapes\n\n**Example**: Sodium metal and water\n$$2\\text{Na} + 2\\text{H}_2\\text{O} → 2\\text{NaOH} + \\text{H}_2$$\n\n**How it works:**\n1. Place reaction on an electronic balance\n2. Record mass at regular time intervals\n3. Mass decreases as H₂ gas escapes\n4. Plot mass vs. time graph\n5. Steeper gradient = faster reaction\n\n**Why mass decreases:**\n- Hydrogen gas is produced and escapes\n- Gas is no longer part of the reaction mixture\n- Total mass of system decreases\n\n**Advantages**: Continuous measurement, very accurate\n\n### Summary Table: Choosing the Right Method\n\n| Reaction Type | Method | What to Measure | Equipment |\n|---------------|--------|-----------------|----------|\n| Exothermic | Temperature | Heat released | Thermometer |\n| Produces precipitate | Disappearance | Time for cloudiness | Timer, conical flask |\n| Color change | Color intensity | Color change | Colorimeter or eye |\n| Acid-base | pH change | pH value | pH probe |\n| Produces gas | Gas volume | Volume collected | Gas syringe |\n| Gas escapes | Mass change | Mass decrease | Electronic balance |\n\n### Practical Tips for Measuring Reactions\n\n✅ **Best practices:**\n- Take measurements at **regular time intervals**\n- Repeat experiments for **accuracy**\n- Record data in a **table**\n- Plot graphs to **visualize results**\n- Identify the point where reaction stops (flat line)\n\n⚠️ **Common mistakes:**\n- ::red[Not taking measurements frequently enough]\n- ::red[Forgetting to start timer at the beginning]\n- ::red[Not repeating experiments]\n- ::red[Not recording data immediately]\n\n> 💡 **Key Insight**: ::green[Different reactions require different measurement methods. Choose the method based on what's observable in your reaction!]\n\n> 💡 **Remember**: ::yellow[The steeper the gradient on your graph, the faster the reaction rate!]",
+    "speech_to_text_content": "Scientists use different methods to measure reaction rates depending on what happens during the reaction. For exothermic reactions, measure temperature change using a thermometer. For reactions that produce precipitates, time how long until a cross disappears beneath the solution. For color changes, observe how fast the color changes. For acid-base reactions, measure pH change using a pH probe. For reactions that produce gases, collect the gas in a gas syringe and measure volume. For reactions where gas escapes, measure the mass decrease on an electronic balance. Take measurements at regular time intervals and plot graphs. The steeper the gradient, the faster the reaction rate.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:50:00Z",
+    "updated_at": "2024-01-15T09:50:00Z",
+    "source_timestamp": "2024-01-15T09:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T04:15:57.566682+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Slide 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "📋 Interpreting Reaction Rate Data and Graphs",
+    "content": "## How to Understand and Analyze Reaction Data\n\nOnce you've collected data from a reaction experiment, you need to interpret it correctly. Let's learn how!\n\n### Reading a Typical Reaction Graph\n\nHere's what a typical reaction graph looks like:\n\n```\nProduct (cm³)\n    ↑\n 100│     ╱╱╱\n    │    ╱╱╱\n 80 │   ╱╱╱\n    │  ╱╱╱\n 60 │ ╱╱╱\n    │╱╱╱\n 40 │╱ ← Steep (fast reaction)\n    │\n 20 │\n    │\n  0 └─────────────────→ Time (s)\n    0  10  20  30  40  50\n```\n\n### Three Key Pieces of Information\n\n#### 1️⃣ The Initial Rate of Reaction\n\nThe ::yellow[initial rate] is found from the **gradient of the graph at the start**.\n\n**How to calculate:**\n$$\\text{Gradient} = \\frac{\\text{Change in Product}}{\\text{Change in Time}} = \\frac{Δy}{Δx}$$\n\n**Example:**\n- At 0 seconds: 0 cm³\n- At 10 seconds: 40 cm³\n- Gradient = 40 ÷ 10 = **4 cm³/s**\n\n**What it means:**\n- Product is being formed at 4 cm³ per second\n- Steeper gradient = faster reaction\n- Gentler gradient = slower reaction\n\n#### 2️⃣ When the Reaction Stops\n\nThe reaction stops when the gradient becomes **zero** (the line becomes horizontal).\n\n**How to identify:**\n- Look for where the line becomes flat\n- Gradient = 0\n- No more product is being formed\n- A reactant has been completely used up\n\n**In the example above:**\n- Reaction stops at about 30 seconds\n- After 30 seconds, the line is flat\n- No more gas is produced\n\n#### 3️⃣ The Total Amount of Product Formed\n\nRead the y-axis value where the line becomes flat.\n\n**In the example:**\n- Final product = 100 cm³\n- This is the maximum amount that could be formed\n- Determined by the limiting reactant\n\n### Comparing Two Reactions on the Same Graph\n\nWhen comparing reaction rates, plot both on the same graph:\n\n```\nProduct (cm³)\n    ↑\n 100│    ╱╱╱ ← Steep gradient = Fast reaction\n    │   ╱╱╱\n 80 │  ╱╱╱\n    │ ╱╱╱\n 60 │╱╱╱\n    │╱\n 40 │╱ ← Gentle gradient = Slow reaction\n    │\n 20 │\n    │\n  0 └─────────────────→ Time (s)\n    0  10  20  30  40  50\n```\n\n**Key observations:**\n- **Steeper line** = faster reaction (more product per unit time)\n- **Gentler line** = slower reaction\n- Both reach the same final amount (same limiting reactant)\n- But they reach it at different speeds\n\n### Effect of Different Factors on Graphs\n\n#### Effect of Increased Concentration\n\n```\nProduct\n    ↑\n    │  High concentration\n    │ ╱╱╱╱\n    │╱╱╱╱╱ ← Steeper (faster)\n    │╱\n    │╱ Low concentration\n    │╱╱  ← Gentler (slower)\n    │\n    └─────────→ Time\n```\n\n**Observations:**\n- Steeper gradient with higher concentration\n- Reaction finishes faster\n- Same final amount of product\n\n#### Effect of Increased Temperature\n\n```\nProduct\n    ↑\n    │  High temperature\n    │ ╱╱╱╱\n    │╱╱╱╱╱ ← Steeper (faster)\n    │╱\n    │╱ Low temperature\n    │╱╱  ← Gentler (slower)\n    │\n    └─────────→ Time\n```\n\n**Observations:**\n- Much steeper gradient at higher temperature\n- Reaction finishes much faster\n- Same final amount of product\n\n#### Effect of Using a Catalyst\n\n```\nProduct\n    ↑\n    │  With catalyst\n    │ ╱╱╱╱\n    │╱╱╱╱╱ ← Steeper (faster)\n    │╱\n    │╱ Without catalyst\n    │╱╱  ← Gentler (slower)\n    │\n    └─────────→ Time\n```\n\n**Observations:**\n- Catalyst makes gradient much steeper\n- Reaction finishes faster\n- Same final amount of product (catalyst doesn't change this)\n- Catalyst is not consumed\n\n### Common Mistakes in Interpreting Graphs\n\n⚠️ **Mistake 1**: Confusing the line shape with reaction rate\n- ::red[WRONG: \"A curved line means slow reaction\"]\n- ::green[RIGHT: \"The gradient (slope) determines the rate\"]\n\n⚠️ **Mistake 2**: Thinking the final height matters for rate\n- ::red[WRONG: \"Higher final product means faster reaction\"]\n- ::green[RIGHT: \"The steepness of the line at the start matters\"]\n\n⚠️ **Mistake 3**: Not recognizing when reaction stops\n- ::red[WRONG: \"The reaction continues if the line is still visible\"]\n- ::green[RIGHT: \"The reaction stops when the line becomes horizontal\"]\n\n### Calculating Average Rate\n\nSometimes you need to calculate the **average rate** over a time period:\n\n$$\\text{Average Rate} = \\frac{\\text{Total Product Formed}}{\\text{Total Time Taken}}$$\n\n**Example:**\n- Total product formed: 100 cm³\n- Total time: 30 seconds\n- Average rate = 100 ÷ 30 = **3.33 cm³/s**\n\n**Note**: Average rate is usually less than initial rate because the reaction slows down!\n\n### Data Table Analysis\n\nSometimes data is given in a table instead of a graph:\n\n| Time (s) | Product (cm³) | Change in Product | Rate (cm³/s) |\n|----------|---------------|-------------------|---------------|\n| 0        | 0             | -                 | -             |\n| 5        | 18            | 18                | 3.6           |\n| 10       | 32            | 14                | 2.8           |\n| 15       | 42            | 10                | 2.0           |\n| 20       | 48            | 6                 | 1.2           |\n| 25       | 50            | 2                 | 0.4           |\n| 30       | 50            | 0                 | 0             |\n\n**Observations:**\n- Rate decreases over time (3.6 → 0 cm³/s)\n- Reaction stops at 25 seconds (rate becomes 0)\n- Total product = 50 cm³\n\n> 💡 **Key Concept**: ::green[The gradient (slope) at any point tells you the instantaneous rate at that moment. The steeper the gradient, the faster the reaction!]\n\n> 💡 **Remember**: ::yellow[The final height of the graph shows total product, but the SLOPE shows the RATE. These are different things!]",
+    "speech_to_text_content": "Once you collect data from a reaction experiment, you need to interpret it correctly. A typical reaction graph shows three key pieces of information. First, the initial rate of reaction is found from the gradient or slope at the start. Gradient equals change in product divided by change in time. Second, the reaction stops when the gradient becomes zero and the line becomes horizontal. This happens when a reactant is completely used up. Third, the total amount of product formed is read from the y-axis value where the line becomes flat. When comparing two reactions, a steeper line means a faster reaction. The gradient determines the rate, not the final height of the graph. The reaction slows down over time, so the average rate is usually less than the initial rate.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:55:00Z",
+    "updated_at": "2024-01-15T09:55:00Z",
+    "source_timestamp": "2024-01-15T09:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T04:16:13.936698+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Slide 12",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎯 Summary: The Five Factors Affecting Reaction Rate",
+    "content": "## Quick Reference: All Five Factors\n\nLet's review all the factors that affect how fast reactions occur!\n\n### The Five Key Factors\n\n| Factor | Change | Effect on Rate | Explanation |\n|--------|--------|----------------|-------------|\n| **Concentration** | Increase | ↑ Faster | More particles per unit volume = more collisions |\n| **Temperature** | Increase | ↑ Much faster | Particles move faster + more have enough energy |\n| **Particle Size** | Decrease (smaller) | ↑ Faster | Larger surface area = more exposed particles |\n| **Pressure** (gases) | Increase | ↑ Faster | More particles per unit volume = more collisions |\n| **Catalyst** | Add | ↑ Much faster | Lower activation energy = more effective collisions |\n\n### How Each Factor Works\n\n#### 1️⃣ Concentration\n- ::yellow[Mechanism]: Increases collision frequency\n- ::yellow[Effect]: Moderate increase in rate\n- ::yellow[Example]: Doubling HCl concentration doubles reaction rate\n\n#### 2️⃣ Temperature  \n- ::yellow[Mechanism]: Increases collision frequency AND particle energy\n- ::yellow[Effect]: Large increase in rate\n- ::yellow[Example]: Hot acid reacts much faster than cold acid\n\n#### 3️⃣ Particle Size\n- ::yellow[Mechanism]: Increases surface area for reactions\n- ::yellow[Effect]: Moderate to large increase in rate\n- ::yellow[Example]: Mg powder reacts much faster than Mg ribbon\n\n#### 4️⃣ Pressure (gases)\n- ::yellow[Mechanism]: Increases collision frequency\n- ::yellow[Effect]: Moderate increase in rate\n- ::yellow[Example]: Haber process at 150 atm vs 1 atm\n\n#### 5️⃣ Catalyst\n- ::yellow[Mechanism]: Lowers activation energy\n- ::yellow[Effect]: Large increase in rate\n- ::yellow[Example]: Iron catalyst in ammonia synthesis\n\n### Which Factors Have the Biggest Effect?\n\n🏆 **Largest effects:**\n1. **Temperature** - Small change in temperature = huge change in rate\n2. **Catalyst** - Can dramatically speed up even very slow reactions\n\n📊 **Moderate effects:**\n3. **Concentration** - Doubling concentration roughly doubles rate\n4. **Particle size** - Significant effect, but depends on starting size\n5. **Pressure** - Important for gas reactions, less for solutions\n\n### Collision Theory Summary\n\nAll five factors work through one principle:\n\n$$\\text{Reaction Rate} ∝ \\text{Frequency of Effective Collisions}$$\n\n**Effective collision requires:**\n- Particles collide with each other\n- Collision energy ≥ Activation energy\n\n**The factors increase rate by:**\n- Increasing collision frequency, OR\n- Increasing collision energy, OR\n- Lowering the activation energy needed\n\n### Practical Applications\n\n🏭 **Industry uses multiple factors:**\n- **Haber process**: High temperature + high pressure + catalyst\n- **Sulfuric acid**: High temperature + catalyst\n- **Food preservation**: Low temperature + low concentration of reactants\n\n🧬 **Biology:**\n- Enzymes (biological catalysts) at body temperature\n- Optimized temperature and pH\n- Specific enzyme for each reaction\n\n### What Doesn't Change with These Factors\n\n⚠️ **Important**: These factors change the RATE but NOT:\n- The total amount of product formed (determined by limiting reactant)\n- The final energy of products\n- The overall reaction equation\n- Whether the reaction is exothermic or endothermic\n\n### Designing Experiments to Test Factors\n\nWhen testing each factor, ::red[keep all other variables constant]:\n\n**Testing concentration:**\n- Change: HCl concentration\n- Keep constant: Temperature, particle size, volume\n\n**Testing temperature:**\n- Change: Temperature\n- Keep constant: Concentration, particle size, volume\n\n**Testing particle size:**\n- Change: Mg form (powder vs ribbon)\n- Keep constant: Mass of Mg, concentration, temperature\n\n**Testing catalyst:**\n- Change: Presence/absence of catalyst\n- Keep constant: Temperature, concentration, particle size\n\n> 💡 **Key Insight**: ::green[All five factors work by either increasing collision frequency or increasing particle energy or lowering activation energy!]\n\n> 💡 **Remember**: ::yellow[Temperature and catalysts have the biggest effects on reaction rate!]",
+    "speech_to_text_content": "There are five key factors that affect reaction rate: concentration, temperature, particle size, pressure for gases, and catalysts. Increasing concentration increases collision frequency and speeds up the reaction. Increasing temperature increases collision frequency and particle energy, having a large effect on rate. Decreasing particle size increases surface area and speeds up the reaction. Increasing pressure for gases increases collision frequency. Adding a catalyst lowers activation energy and dramatically speeds up the reaction. Temperature and catalysts have the biggest effects. All factors work through increasing collision frequency or particle energy or lowering activation energy. These factors change the rate but not the total amount of product formed.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T04:16:24.804806+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Understanding Reaction Rate Graphs",
+    "content": "## Question 1: Reading Reaction Rate Graphs\n\nA student measures the volume of gas produced when magnesium reacts with hydrochloric acid. The graph below shows the results:\n\n```\nGas Volume (cm³)\n     ↑\n 100 │     ╱╱╱╱\n     │    ╱╱╱╱\n  80 │   ╱╱╱╱\n     │  ╱╱╱╱\n  60 │ ╱╱╱╱\n     │╱╱╱╱\n  40 │╱╱╱\n     │\n  20 │\n     │\n   0 └─────────────→ Time (s)\n     0  10  20  30  40  50\n```\n\nWhich statement about this reaction is **correct**?\n\nA) The reaction rate is constant throughout the reaction\n\nB) The reaction stops at 30 seconds because the gradient becomes zero\n\nC) The steeper gradient at the start shows the reaction is speeding up\n\nD) The total volume of gas produced is determined by the time taken",
+    "speech_to_text_content": "A student measures the volume of gas produced when magnesium reacts with hydrochloric acid. The graph shows gas volume on the y-axis and time on the x-axis. The line starts steep and gradually becomes less steep, becoming flat at 30 seconds when 100 cubic centimeters have been produced. Which statement about this reaction is correct? A) The reaction rate is constant throughout the reaction. B) The reaction stops at 30 seconds because the gradient becomes zero. C) The steeper gradient at the start shows the reaction is speeding up. D) The total volume of gas produced is determined by the time taken.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
+        "option_text": "A) The reaction rate is constant throughout the reaction",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "option_text": "B) The reaction stops at 30 seconds because the gradient becomes zero",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
+        "option_text": "C) The steeper gradient at the start shows the reaction is speeding up",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
+        "option_text": "D) The total volume of gas produced is determined by the time taken",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n**Why B is correct:**\nFrom the graph, the line becomes horizontal (flat) at 30 seconds, meaning the gradient becomes zero. When the gradient is zero, there is no change in gas volume, indicating the reaction has stopped. This happens because one of the reactants (the limiting reactant) has been completely used up.\n\n**Why other options are wrong:**\n\n**A) Incorrect**: The reaction rate is NOT constant. The gradient of the line changes throughout:\n- From 0-10 seconds: steep gradient (fast rate)\n- From 10-30 seconds: gradually becomes less steep (rate decreases)\n- After 30 seconds: gradient = 0 (reaction stopped)\nThe curved shape shows the rate is decreasing over time.\n\n**C) Incorrect**: The steeper gradient at the start does NOT show the reaction is speeding up. It shows the reaction is FASTEST at the beginning. As time goes on, the gradient becomes gentler (less steep), meaning the reaction is actually slowing down. The steeper part indicates a HIGHER rate, not an increasing rate.\n\n**D) Incorrect**: The total volume of gas produced (100 cm³) is determined by the ::yellow[limiting reactant], not by the time taken. Even if the reaction took longer, it would still produce the same 100 cm³. Time affects HOW FAST the gas is produced, not HOW MUCH is produced.\n\n**Key Concepts Tested:**\n- ::yellow[Gradient of a graph represents the rate of reaction]\n- ::yellow[Horizontal line (gradient = 0) means reaction has stopped]\n- ::yellow[Curved line shows reaction rate decreasing over time]\n- ::yellow[Total product is determined by limiting reactant, not time]\n\n**From Chapter Content:**\nThe chapter states: \"The reaction stop is the point where the reaction stops, and can be determined by the point where the gradient reaches 0.\" This directly confirms that option B is correct.",
+    "created_at": "2024-01-15T10:05:00Z",
+    "updated_at": "2024-01-15T10:05:00Z",
+    "source_timestamp": "2024-01-15T10:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T04:16:34.855787+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Collision Theory and Effective Collisions",
+    "content": "## Question 2: Understanding Effective Collisions\n\nWhich of the following best explains why not all collisions between reactant particles result in a chemical reaction?\n\nA) The particles are moving in opposite directions\n\nB) The collision energy must be equal to or greater than the activation energy\n\nC) There are too many particles in the reaction mixture\n\nD) The particles must be from different reactants",
+    "speech_to_text_content": "Which of the following best explains why not all collisions between reactant particles result in a chemical reaction? A) The particles are moving in opposite directions. B) The collision energy must be equal to or greater than the activation energy. C) There are too many particles in the reaction mixture. D) The particles must be from different reactants.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
+        "option_text": "A) The particles are moving in opposite directions",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "option_text": "B) The collision energy must be equal to or greater than the activation energy",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
+        "option_text": "C) There are too many particles in the reaction mixture",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
+        "option_text": "D) The particles must be from different reactants",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n**Why B is correct:**\nAccording to collision theory, an ::yellow[effective collision] occurs only when:\n1. Particles collide with each other, AND\n2. The collision has energy ≥ ::yellow[activation energy]\n\nIf the collision energy is less than the activation energy, the particles simply bounce apart without reacting. This is the fundamental principle of collision theory from the chapter: \"In order to react, the collisions of the particles must have energy equal to or greater than the activation energy for the reaction for the collision to be effective.\"\n\n**Why other options are wrong:**\n\n**A) Incorrect**: The direction particles are moving doesn't matter—what matters is that they collide and have sufficient energy. Particles moving in opposite directions can still collide effectively if they have enough energy.\n\n**C) Incorrect**: Having many particles actually increases the chance of effective collisions (more collisions occur), not decreases it. This option is backwards. More particles = more collision opportunities, not fewer.\n\n**D) Incorrect**: Particles must be from different reactants to form products, but this doesn't explain why some collisions don't result in reactions. Even collisions between different reactant types can be ineffective if they lack sufficient energy.\n\n**Key Concepts Tested:**\n- ::yellow[Effective collision definition]\n- ::yellow[Activation energy requirement]\n- ::yellow[Why some collisions don't result in reactions]\n\n**From Chapter Content:**\nThe chapter explicitly states: \"Particles do not always react when they collide, as sometimes they just bounce apart. In order to react, the collisions of the particles must have energy equal to or greater than the activation energy for the reaction for the collision to be effective.\"\n\n**Visual Understanding:**\nLow-energy collision → Particles bounce apart (NO reaction)\nHigh-energy collision (≥ Ea) → Particles react and form products",
+    "created_at": "2024-01-15T10:10:00Z",
+    "updated_at": "2024-01-15T10:10:00Z",
+    "source_timestamp": "2024-01-15T10:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T04:16:41.803632+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Factors Affecting Reaction Rate",
+    "content": "## Question 3: Comparing Different Reaction Conditions\n\nThe reaction Mg + 2HCl → MgCl₂ + H₂ is carried out under different conditions. Which pair of changes would have the MOST significant effect on increasing the reaction rate?\n\nA) Increasing concentration of HCl by 10% and crushing the Mg into smaller pieces\n\nB) Increasing temperature by 20°C and adding an iron catalyst\n\nC) Increasing the volume of the reaction vessel and using Mg powder instead of ribbon\n\nD) Decreasing the pressure and using a more dilute HCl solution",
+    "speech_to_text_content": "The reaction of magnesium with hydrochloric acid is carried out under different conditions. Which pair of changes would have the most significant effect on increasing the reaction rate? A) Increasing concentration of HCl by 10 percent and crushing the magnesium into smaller pieces. B) Increasing temperature by 20 degrees Celsius and adding an iron catalyst. C) Increasing the volume of the reaction vessel and using magnesium powder instead of ribbon. D) Decreasing the pressure and using a more dilute HCl solution.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
+        "option_text": "A) Increasing concentration of HCl by 10% and crushing the Mg into smaller pieces",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "option_text": "B) Increasing temperature by 20°C and adding an iron catalyst",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
+        "option_text": "C) Increasing the volume of the reaction vessel and using Mg powder instead of ribbon",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
+        "option_text": "D) Decreasing the pressure and using a more dilute HCl solution",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n**Why B is correct:**\nOption B combines the TWO factors that have the LARGEST effects on reaction rate:\n\n1. **Increasing temperature by 20°C**\n   - ::yellow[Temperature has a DRAMATIC effect] on reaction rate\n   - Small temperature increases cause large rate increases\n   - Increases both collision frequency AND particle energy\n   - Particles with energy ≥ activation energy increases significantly\n\n2. **Adding a catalyst**\n   - ::yellow[Catalysts have a DRAMATIC effect] on reaction rate\n   - Lowers the activation energy\n   - Allows many more particles to react\n   - Can increase rate by orders of magnitude\n\nTogether, these two changes would produce the most dramatic increase in reaction rate.\n\n**Why other options are weaker:**\n\n**A) Incorrect - Moderate effects:**\n- 10% increase in concentration: Modest increase in rate\n- Crushing Mg: Moderate increase due to larger surface area\n- Combined effect: Noticeable but not dramatic\n- Neither factor is as powerful as temperature or catalyst\n\n**C) Incorrect - One factor is counterproductive:**\n- Increasing volume: ::red[DECREASES] concentration, SLOWS reaction\n- Using Mg powder: Increases rate moderately\n- These work against each other!\n- Net effect is much less than option B\n\n**D) Incorrect - Both factors DECREASE rate:**\n- Decreasing pressure: Reduces collision frequency, SLOWS reaction\n- More dilute HCl: Reduces concentration, SLOWS reaction\n- ::red[Both changes make the reaction SLOWER, not faster!]\n\n**Comparing Factor Effects (from strongest to weakest):**\n\n1. **Catalyst** - Can increase rate by 100x or more\n2. **Temperature** - Even small increases cause large rate increases\n3. **Concentration** - Doubling concentration roughly doubles rate\n4. **Particle size** - Significant effect but depends on starting size\n5. **Pressure** - Moderate effect, mainly for gas reactions\n\n**From Chapter Content:**\nThe chapter states: \"Increasing temperature increases the frequency of collisions and makes the collisions more energetic, and so increases the rate of a reaction. A catalyst also speeds up a reaction as it provides an alternative route with a lower activation energy.\"\n\n**Key Insight:**\n::green[Temperature and catalysts are the most powerful factors for controlling reaction rates. Using both together creates the maximum effect!]",
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T04:16:51.572376+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Understanding Catalysts and Activation Energy",
+    "content": "## Question 4: How Catalysts Work\n\nA student investigates the decomposition of hydrogen peroxide with and without a catalyst. The diagram shows the activation energy pathways:\n\n```\nEnergy\n   ↑     ╱╲ Without catalyst\n   |    ╱  ╲  (High Ea)\n   |   ╱    ╲\n   |  ╱      ╲___\n   | ╱╱╲ With catalyst\n   |╱  ╲ (Lower Ea)\n   |____╲____\n   └──────────────→ Reaction Progress\n```\n\nBased on this diagram and collision theory, which statement is **correct**?\n\nA) The catalyst increases the total energy released by the reaction\n\nB) The catalyst allows more particles to have sufficient energy to react\n\nC) The catalyst increases the energy of the reactant particles\n\nD) The catalyst is consumed during the reaction and must be replaced",
+    "speech_to_text_content": "A student investigates the decomposition of hydrogen peroxide with and without a catalyst. The diagram shows activation energy pathways. Without catalyst, the activation energy is high. With catalyst, the activation energy is lower. Based on this diagram and collision theory, which statement is correct? A) The catalyst increases the total energy released by the reaction. B) The catalyst allows more particles to have sufficient energy to react. C) The catalyst increases the energy of the reactant particles. D) The catalyst is consumed during the reaction and must be replaced.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt1",
+        "option_text": "A) The catalyst increases the total energy released by the reaction",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt2",
+        "option_text": "B) The catalyst allows more particles to have sufficient energy to react",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt3",
+        "option_text": "C) The catalyst increases the energy of the reactant particles",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt4",
+        "option_text": "D) The catalyst is consumed during the reaction and must be replaced",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n**Why B is correct:**\nThe key to understanding catalysts is the ::yellow[activation energy] concept:\n\n1. **Lower activation energy** means fewer particles need energy to react\n2. At any given temperature, more particles will have energy ≥ the lower Ea\n3. Therefore, a larger proportion of collisions become effective collisions\n4. **Result**: More particles can react, increasing the reaction rate\n\nThis is exactly what the diagram shows: the catalyst provides a lower-energy pathway, allowing particles with less energy to successfully react.\n\n**From collision theory:**\nParticles need energy ≥ activation energy to react. By lowering Ea:\n- Particles that previously bounced apart now react\n- More effective collisions occur\n- Reaction rate increases\n\n**Why other options are wrong:**\n\n**A) Incorrect - Catalyst doesn't change energy released:**\nThe diagram shows the same starting point (reactants) and same ending point (products). The overall energy change (ΔE) is the same with or without catalyst. The catalyst only changes the PATH, not the start or end points. The same amount of energy is still released.\n\n**C) Incorrect - Catalyst doesn't add energy to particles:**\nThe catalyst doesn't heat the particles or give them more energy. It provides an alternative pathway that requires less energy. The particle energies remain the same; they just need less energy to overcome the lower barrier.\n\n**D) Incorrect - Catalyst is NOT consumed:**\nOne of the defining characteristics of a catalyst is that it is ::red[unchanged after the reaction]. The chapter states: \"They are unchanged after the reaction and hence can be reused after the reaction takes place.\" A catalyst can be used over and over again.\n\n**Key Concepts About Catalysts:**\n\n✅ **Catalysts:**\n- Lower the activation energy\n- Provide alternative reaction pathways\n- Allow more particles to react\n- Are NOT consumed\n- Can be reused indefinitely\n- Increase reaction rate without heating\n\n❌ **Catalysts do NOT:**\n- Add energy to particles\n- Change the total energy released\n- Change the final products\n- Get used up\n- Require heating\n\n**From Chapter Content:**\nThe chapter states: \"A catalyst is a transition metal or compound of a transition metal, and it provides an alternative route with a lower activation energy for a reaction to occur. More reactant particles will have energy equal to or greater than the activation energy, and more reactant particles are able to collide with enough energy for the reaction to occur.\"\n\nThis directly confirms that option B is correct—the lower activation energy allows more particles to have sufficient energy to react.",
+    "created_at": "2024-01-15T10:20:00Z",
+    "updated_at": "2024-01-15T10:20:00Z",
+    "source_timestamp": "2024-01-15T10:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T04:17:02.170861+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Enzymes and Temperature Sensitivity",
+    "content": "## Question 5: Enzyme Behavior at Different Temperatures\n\nA student measures the activity of an enzyme at different temperatures:\n\n| Temperature (°C) | Enzyme Activity (%) |\n|------------------|--------------------|\n| 10               | 20                 |\n| 25               | 95                 |\n| 37               | 100                |\n| 50               | 60                 |\n| 65               | 5                  |\n\nBased on this data, which statement is **correct**?\n\nA) The enzyme becomes more active as temperature increases\n\nB) The optimum temperature for this enzyme is 37°C\n\nC) At 65°C, the enzyme is dormant and can be reactivated by cooling\n\nD) The enzyme denatures at 50°C but can still function at 65°C",
+    "speech_to_text_content": "A student measures the activity of an enzyme at different temperatures. At 10 degrees Celsius, activity is 20 percent. At 25 degrees Celsius, activity is 95 percent. At 37 degrees Celsius, activity is 100 percent. At 50 degrees Celsius, activity is 60 percent. At 65 degrees Celsius, activity is 5 percent. Based on this data, which statement is correct? A) The enzyme becomes more active as temperature increases. B) The optimum temperature for this enzyme is 37 degrees Celsius. C) At 65 degrees Celsius, the enzyme is dormant and can be reactivated by cooling. D) The enzyme denatures at 50 degrees Celsius but can still function at 65 degrees Celsius.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt1",
+        "option_text": "A) The enzyme becomes more active as temperature increases",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "option_text": "B) The optimum temperature for this enzyme is 37°C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt3",
+        "option_text": "C) At 65°C, the enzyme is dormant and can be reactivated by cooling",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt4",
+        "option_text": "D) The enzyme denatures at 50°C but can still function at 65°C",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n**Why B is correct:**\nThe ::yellow[optimum temperature] is where the enzyme has maximum activity. Looking at the data:\n- 37°C shows 100% activity (the highest value)\n- This is the peak of enzyme activity\n- Therefore, 37°C is the optimum temperature\n\nThis makes biological sense: 37°C is normal human body temperature, so human enzymes (like those in digestion) are optimized to work best at this temperature.\n\n**Why other options are wrong:**\n\n**A) Incorrect - Enzyme activity doesn't continuously increase:**\nThe data clearly shows:\n- 10°C → 25°C: Activity increases (20% → 95%)\n- 25°C → 37°C: Activity increases (95% → 100%)\n- 37°C → 50°C: Activity DECREASES (100% → 60%) ❌\n- 50°C → 65°C: Activity DECREASES (60% → 5%) ❌\n\nThe enzyme does NOT become more active as temperature increases. It reaches a peak at 37°C and then decreases.\n\n**C) Incorrect - The enzyme is DENATURED, not dormant:**\nThis is a critical distinction:\n\n- ::yellow[Dormant] = Inactive but can be reactivated (reversible)\n- ::yellow[Denatured] = Permanently destroyed, cannot be reactivated (irreversible)\n\nAt 65°C:\n- Activity drops to only 5%\n- The enzyme structure is permanently damaged\n- It is ::red[DENATURED], not dormant\n- Cooling will NOT restore activity\n- The enzyme cannot function again\n\nFrom the chapter: \"When above the optimum temperature, they are denatured and cannot catalyse reactions again.\"\n\n**D) Incorrect - Both temperatures show damage, and denaturation is irreversible:**\n- At 50°C: Activity is 60% (not 0%, but significantly reduced)\n- At 65°C: Activity is 5% (almost completely non-functional)\n- At 50°C, the enzyme is already beginning to denature\n- At 65°C, the enzyme is severely denatured\n- Most importantly: ::red[Denaturation is PERMANENT]\n- Even if cooled, the enzyme cannot regain function\n\n**Understanding Enzyme Temperature Response:**\n\n```\nEnzyme Activity\n     ↑\n 100│        ╱╲  ← Optimum (37°C)\n     │       ╱  ╲\n  60│      ╱    ╲\n     │     ╱      ╲\n  20│    ╱        ╲___\n     │___╱_____________→ Temperature\n     0°  10°  37°  50°  65°\n          ↑   ↑    ↑    ↑\n       Dormant Opt Peak Denatured\n```\n\n**Key Temperature Concepts:**\n\n| Temperature Range | Enzyme State | Activity | Reversible? |\n|-------------------|--------------|----------|-------------|\n| Below 10°C | Dormant | Very low | Yes ✓ |\n| 10-37°C | Active | Increases | Yes ✓ |\n| 37°C | Optimum | Maximum | - |\n| 37-50°C | Denaturing | Decreases | Partial ⚠️ |\n| Above 60°C | Denatured | Minimal | No ❌ |\n\n**From Chapter Content:**\nThe chapter states: \"They are temperature sensitive and have a optimum temperature, at which catalytic activity is the highest. When below the optimum temperature, the enzymes are dormant, and when above the optimum temperature, they are denatured and cannot catalyse reactions again.\"\n\nThis confirms that:\n1. Optimum temperature = maximum activity (37°C in this case)\n2. Below optimum = dormant (reversible)\n3. Above optimum = denatured (IRREVERSIBLE)\n\n**Critical Learning Point:**\n::green[Enzyme denaturation is PERMANENT. Once denatured at high temperature, the enzyme cannot be recovered by cooling!]",
+    "created_at": "2024-01-15T10:25:00Z",
+    "updated_at": "2024-01-15T10:25:00Z",
+    "source_timestamp": "2024-01-15T10:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T04:17:15.172964+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Designing Experiments to Test Reaction Rate Factors",
+    "content": "## Question 6: Experimental Design for Testing Factors\n\nA student wants to investigate how the concentration of hydrochloric acid affects the rate of reaction with magnesium. Which of the following experimental procedures would be MOST APPROPRIATE?\n\nA) Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete\n\nB) Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H₂ gas produced at regular time intervals\n\nC) Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced\n\nD) Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel",
+    "speech_to_text_content": "A student wants to investigate how the concentration of hydrochloric acid affects the rate of reaction with magnesium. Which of the following experimental procedures would be most appropriate? A) Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete. B) Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H2 gas produced at regular time intervals. C) Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced. D) Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440019-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt1",
+        "option_text": "A) Use different concentrations of HCl, different temperatures, and different particle sizes of Mg, and measure the time taken for the reaction to complete",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt2",
+        "option_text": "B) Use different concentrations of HCl, keep temperature constant, keep Mg particle size the same, and measure the volume of H₂ gas produced at regular time intervals",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt3",
+        "option_text": "C) Use the same concentration of HCl, change only the temperature, use Mg powder, and measure the volume of gas produced",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt4",
+        "option_text": "D) Use different concentrations of HCl, use different amounts of Mg, and measure the mass of the reaction vessel",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n**Why B is correct:**\nOption B follows the scientific principle of ::yellow[controlling variables]:\n\n**Variable being tested (CHANGE THIS):**\n- Concentration of HCl (different concentrations)\n\n**Variables to keep constant (CONTROL THESE):**\n- Temperature (keep constant)\n- Mg particle size (keep the same)\n- Type of reactants (same HCl and Mg)\n\n**Measurement method (APPROPRIATE):**\n- Volume of H₂ gas at regular time intervals\n- This allows you to:\n  - Plot a graph of volume vs. time\n  - Calculate the gradient (reaction rate)\n  - Compare rates between different concentrations\n  - See how the reaction progresses\n\n**Why this is the best approach:**\nBy changing ONLY the concentration while keeping everything else constant, you can see the TRUE effect of concentration on reaction rate. Any differences in rate must be due to concentration changes, not other factors.\n\n**Why other options are wrong:**\n\n**A) Incorrect - Too many variables changed:**\n- Changes: HCl concentration, temperature, Mg particle size\n- ::red[This violates the rule of changing one variable at a time]\n- If the reaction rate changes, you won't know which factor caused it\n- Was it the concentration? The temperature? The particle size? You can't tell!\n- Measurement method (time to complete) is also less precise than measuring volume at intervals\n\n**C) Incorrect - Testing the wrong variable:**\n- The question asks about CONCENTRATION effects\n- This experiment tests TEMPERATURE effects\n- Concentration is kept the same (not what we want to test)\n- This is testing the wrong factor entirely\n\n**D) Incorrect - Multiple problems:**\n1. Changing both concentration AND amount of Mg\n   - Two variables changed = confounding results\n   - Can't determine which caused the effect\n\n2. Measuring mass of reaction vessel\n   - This is not an appropriate measurement for this reaction\n   - The vessel itself doesn't change mass\n   - The reaction mixture changes mass (gas escapes), but this is harder to measure accurately in a vessel\n   - Volume of gas is a much better measurement\n\n**Principles of Good Experimental Design:**\n\n✅ **Good experimental design requires:**\n1. **Change ONE independent variable** (concentration in this case)\n2. **Keep ALL other variables constant** (temperature, particle size, amount, type of reactants)\n3. **Measure the dependent variable** (reaction rate, shown by gas volume)\n4. **Take measurements at regular intervals** (allows graphing and rate calculation)\n5. **Repeat experiments** (for accuracy and reliability)\n\n❌ **Common mistakes:**\n- ::red[Changing multiple variables at once] - can't tell which caused the effect\n- ::red[Not controlling other factors] - results are unreliable\n- ::red[Poor measurement methods] - can't see clear patterns\n- ::red[Not taking enough data points] - can't plot accurate graphs\n\n**From Chapter Content:**\nThe chapter states: \"suggest a suitable method for investigating the effect of a given variable on the rate of a reaction.\" This requires:\n- Identifying the variable to test\n- Controlling other variables\n- Using appropriate measurement methods\n\n**Why measuring gas volume at regular intervals is best:**\n- Shows the reaction progress over time\n- Can calculate the gradient (reaction rate)\n- Can compare rates from different concentrations\n- Provides more data points for analysis\n- More accurate than just measuring total time\n\n> 💡 **Key Principle**: ::green[To test the effect of ONE factor, you must change only that factor and keep all others constant!]\n\n> 💡 **Remember**: ::yellow[Good experiments measure the dependent variable at regular intervals to show how the reaction progresses!]",
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T04:17:29.257184+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "singapore_o_level_chemistry_ch10",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Conclusion",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎓 Chapter Summary: Mastering Rate of Reactions",
+    "content": "## You've Completed the Rate of Reactions Chapter!\n\nCongratulations! You now understand one of the most important topics in chemistry. Let's review what you've learned:\n\n### 🔑 The Five Key Factors\n\nYou can control how fast reactions occur by adjusting:\n\n1. **Concentration** - More particles = more collisions = faster reaction\n2. **Temperature** - Particles move faster and have more energy = much faster reaction\n3. **Particle Size** - Smaller particles = larger surface area = faster reaction\n4. **Pressure** (gases) - More particles in same space = more collisions = faster reaction\n5. **Catalyst** - Lower activation energy = more particles can react = much faster reaction\n\n### 💡 The Central Concept: Collision Theory\n\nAll factors work through one principle:\n\n$$\\text{Faster Reactions} = \\text{More Effective Collisions}$$\n\n**Effective collisions require:**\n- Particles collide with each other\n- Collision energy ≥ ::yellow[activation energy]\n\n### 📊 Reading Graphs Like a Scientist\n\n**Three key pieces of information from a reaction graph:**\n1. **Gradient** = reaction rate (steeper = faster)\n2. **Where gradient = 0** = reaction has stopped\n3. **Final height** = total product formed\n\n### 🧬 Special Catalysts: Enzymes\n\nEnzymes are biological catalysts with special properties:\n- Very specific (one enzyme, one reaction)\n- Temperature sensitive (optimum temperature)\n- pH sensitive (optimum pH)\n- Permanently denatured at high temperatures\n- Essential for all life processes\n\n### 🔬 Measuring Reaction Rates\n\nYou can measure rates by observing:\n- Temperature change (exothermic reactions)\n- Precipitate formation (cloudiness)\n- Color change\n- pH change\n- Gas volume (most common)\n- Mass change\n\n### ✅ Experimental Design Rules\n\nWhen testing a factor:\n- Change ONLY that factor\n- Keep all other variables constant\n- Measure at regular time intervals\n- Plot graphs to visualize results\n- Repeat for accuracy\n\n### 🌍 Real-World Applications\n\nUnderstanding reaction rates helps us:\n- **Industry**: Control production speed (Haber process, sulfuric acid)\n- **Environment**: Reduce pollution (catalytic converters)\n- **Food**: Preserve freshness (low temperature storage)\n- **Medicine**: Design drug delivery systems\n- **Biology**: Understand digestion and metabolism\n\n### 🎯 What Makes You an Expert\n\nYou can now:\n\n✅ Explain why reactions happen at different speeds\n\n✅ Predict how changing conditions affects reaction rate\n\n✅ Design experiments to test factors\n\n✅ Read and interpret reaction graphs\n\n✅ Understand how catalysts and enzymes work\n\n✅ Apply collision theory to explain observations\n\n### 💪 Challenge Yourself\n\nTry these advanced questions:\n\n1. **Why does a catalyst lower activation energy?** (Hint: It provides an alternative pathway)\n\n2. **If you double the concentration, why doesn't the rate exactly double?** (Hint: Other factors matter too)\n\n3. **Why are enzymes denatured permanently at high temperature?** (Hint: Think about protein structure)\n\n4. **How would you design an experiment to test if a new catalyst works?** (Hint: What would you measure and what would you control?)\n\n### 📚 Key Terms to Remember\n\n- ::yellow[Rate of reaction] - how fast a reaction occurs\n- ::yellow[Collision theory] - explains reactions through particle collisions\n- ::yellow[Activation energy] - minimum energy needed for reaction\n- ::yellow[Effective collision] - collision that results in reaction\n- ::yellow[Catalyst] - speeds up reaction without being consumed\n- ::yellow[Enzyme] - biological catalyst with specific function\n- ::yellow[Optimum temperature] - temperature where enzyme works best\n- ::yellow[Denatured] - permanently destroyed (for enzymes)\n\n### 🔮 What's Next?\n\nThis knowledge of reaction rates connects to:\n- **Reversible reactions** - understanding equilibrium\n- **Energy changes** - exothermic vs endothermic\n- **Redox reactions** - electron transfer\n- **Organic chemistry** - reaction mechanisms\n- **Industrial chemistry** - large-scale production\n\n### 🌟 Final Thought\n\nUnderstanding reaction rates is fundamental to chemistry. Whether it's a fizzy drink going flat, food cooking in a pan, or industrial ammonia production, the same principles apply. You now have the knowledge to explain, predict, and control how fast chemical reactions happen!\n\n> 💡 **Remember**: ::green[Chemistry is not just about WHAT happens—it's about WHEN and HOW FAST it happens. You've mastered that!]\n\n---\n\n**Congratulations on completing this chapter! You're well on your way to mastering O-Level Chemistry! 🎉**",
+    "speech_to_text_content": "You have completed the rate of reactions chapter. You now understand the five key factors that control reaction rate: concentration, temperature, particle size, pressure for gases, and catalysts. All factors work through collision theory—faster reactions mean more effective collisions. You can read graphs to find reaction rate from the gradient, determine when reactions stop, and calculate total product formed. Enzymes are biological catalysts that are specific, temperature-sensitive, and pH-sensitive. You can measure reaction rates using temperature change, precipitate formation, color change, pH change, gas volume, or mass change. When testing factors, change only one variable and keep others constant. Understanding reaction rates helps in industry, environment, food preservation, medicine, and biology. You can now explain why reactions happen at different speeds, predict how changes affect rate, design experiments, read graphs, and understand catalysts and enzymes.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:35:00Z",
+    "updated_at": "2024-01-15T10:35:00Z",
+    "source_timestamp": "2024-01-15T10:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T04:17:43.096544+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

@@ -17,7 +17,7 @@ This project uses **pnpm** as the package manager.
 - `pnpm format` - Format code with Prettier
 
 ### Database Operations
-- `pnpm db:reset` - Reset local DB (migrations + seeds + users + assets)
+- `pnpm db:reset` - Reset local DB (migrations + seeds + users + assets + lessons)
 - `pnpm db:types` - Generate TypeScript types
 - `supabase db diff -f <name>` - Generate migration from schema changes
 - `supabase db push` - Push migrations to remote
@@ -34,7 +34,7 @@ This project uses **pnpm** as the package manager.
 ### Local Development
 ```bash
 supabase start   # Start local Supabase
-pnpm db:reset    # Reset DB + create users + upload assets
+pnpm db:reset    # Reset DB + create users + upload assets + import lessons
 ```
 
 ### Apply Migration Locally (Without Wiping Data)

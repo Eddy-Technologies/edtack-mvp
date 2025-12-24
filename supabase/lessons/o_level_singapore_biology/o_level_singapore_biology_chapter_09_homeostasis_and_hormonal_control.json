@@ -1,0 +1,824 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏥 Homeostasis and Hormonal Control - Chapter Overview",
+    "content": "## Welcome to Chapter 9: Homeostasis and Hormonal Control\n\nIn this chapter, you will discover how your body maintains a stable internal environment despite constant changes in the world around you.\n\n### 🎯 What You'll Learn\n\n- What ::yellow[homeostasis] means and why it's essential for life\n- How your body detects and responds to changes\n- The role of ::blue[hormones] in maintaining body functions\n- How your body regulates ::green[blood glucose], ::green[body temperature], and ::green[water balance]\n- Understanding ::red[diabetes mellitus] and how to manage it\n\n### 💡 Key Question\n\nWhy does your body need to keep its internal conditions constant, even when the external environment is constantly changing?\n\n**Answer**: Your cells and organs can only function efficiently within very narrow ranges of temperature, pH, glucose concentration, and water balance. Any significant deviation would damage cells and prevent normal physiological processes like digestion, respiration, and nutrient transport.",
+    "speech_to_text_content": "Welcome to Chapter 9: Homeostasis and Hormonal Control. In this chapter, you will discover how your body maintains a stable internal environment despite constant changes in the world around you. You will learn what homeostasis means and why it is essential for life, how your body detects and responds to changes, the role of hormones in maintaining body functions, how your body regulates blood glucose, body temperature, and water balance, and understanding diabetes mellitus and how to manage it.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T04:03:22.294703+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 What is Homeostasis?",
+    "content": "## Understanding Homeostasis\n\n### Definition\n\n::yellow[**Homeostasis**] is the maintenance of ::green[constant internal conditions] within narrow limits, despite changes in the external environment.\n\nThink of it like a thermostat in your home - it keeps the temperature constant even when it's hot outside or cold outside.\n\n### Why Homeostasis Matters 🎯\n\nYour body is like a highly specialized factory. For this factory to work properly:\n\n- **Enzymes need the right temperature** ⚙️: Enzymes work best at around 37°C. Too hot and they denature; too cold and they work slowly\n- **Cells need stable water balance** 💧: If blood becomes too dilute or too concentrated, water moves in or out of cells, damaging them\n- **Organs need consistent pH** ⚗️: Blood pH must stay around 7.4 for proteins and enzymes to function\n- **Glucose must be controlled** 🍬: Too much or too little glucose prevents cells from getting energy\n\n### Key Internal Conditions Regulated\n\n| Condition | Normal Range | Why Important |\n|-----------|--------------|---------------|\n| ::blue[Body temperature] | ~37°C (98.6°F) | Enzyme function, metabolic rate |\n| ::blue[Blood glucose] | 80-120 mg/dL | Energy supply for cells |\n| ::blue[Blood pH] | ~7.4 | Protein structure, enzyme activity |\n| ::blue[Water and salt balance] | Proper hydration | Cell water potential, nerve function |\n| ::blue[Blood pressure] | ~120/80 mmHg | Circulation to all organs |\n\n> 💡 **Key Insight**: Without homeostasis, your body would be like a car engine without a cooling system - it would quickly overheat and break down!",
+    "speech_to_text_content": "Homeostasis is the maintenance of constant internal conditions within narrow limits, despite changes in the external environment. Your body is like a highly specialized factory that needs to maintain specific conditions. Enzymes need the right temperature around 37 degrees Celsius. Cells need stable water balance. Organs need consistent pH around 7.4. And glucose must be controlled for cells to get energy. The key internal conditions regulated include body temperature at approximately 37 degrees Celsius, blood glucose between 80 and 120 milligrams per deciliter, blood pH at approximately 7.4, water and salt balance for proper hydration, and blood pressure at approximately 120 over 80 millimeters of mercury.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T04:03:28.240725+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔄 The Principles of Homeostasis: Stimulus, Response, and Feedback",
+    "content": "## How Homeostasis Works\n\nHomeostasis operates through three essential principles:\n\n### 1️⃣ Stimulus (Change in Environment)\n\nA ::yellow[**stimulus**] is a change in the internal or external environment.\n\n**Examples of stimuli**:\n- 🌡️ Temperature rises when you exercise\n- 🍫 Blood glucose increases after eating a meal\n- 💧 Blood becomes more concentrated when you lose water through sweating\n- 🏃 Physical activity increases oxygen demand\n\n### 2️⃣ Corrective Mechanism (Body's Response)\n\nWhen a stimulus is detected, your body activates a ::yellow[**corrective mechanism**] - a series of responses designed to counteract the change.\n\n**Example**: If body temperature rises:\n- Blood vessels near skin dilate (widen)\n- Sweat glands produce sweat\n- Evaporation of sweat cools the body\n- Temperature returns to normal\n\n### 3️⃣ Negative Feedback (The Control System)\n\n::yellow[**Negative feedback**] is the key principle that keeps homeostasis working. It means:\n\n> When a change occurs, the body responds in a way that ::green[**opposes or reverses that change**], returning conditions to normal.\n\n**Why \"negative\"?** It's not negative in a bad sense - it means the response is opposite to the stimulus!\n\n### The Negative Feedback Loop\n\n```\n1. STIMULUS (Change detected)\n   ↓\n2. DETECTION (Sensors register the change)\n   ↓\n3. RESPONSE (Body takes corrective action)\n   ↓\n4. RETURN TO NORMAL (Stimulus removed)\n   ↓\n5. FEEDBACK (Sensors detect return to normal, response stops)\n```\n\n### Real-World Example: Temperature Control\n\n**Scenario**: You're too hot (stimulus)\n\n1. 🌡️ **Detection**: Temperature receptors in skin detect heat\n2. 🧠 **Processing**: Brain (hypothalamus) receives the signal\n3. 💦 **Response**: Sweat glands activate, blood vessels dilate\n4. ❄️ **Result**: Body cools down\n5. ✅ **Feedback**: Sensors detect temperature returning to normal, sweating stops\n\n> ⚠️ **Important**: The response doesn't overshoot - it stops when conditions return to normal. This prevents the body from becoming too cold!",
+    "speech_to_text_content": "Homeostasis works through three essential principles: stimulus, corrective mechanism, and negative feedback. A stimulus is a change in the internal or external environment, such as temperature rising during exercise or blood glucose increasing after eating. When a stimulus is detected, your body activates a corrective mechanism - a series of responses designed to counteract the change. Negative feedback means when a change occurs, the body responds in a way that opposes or reverses that change, returning conditions to normal. The negative feedback loop involves detection of stimulus, processing by the brain, response from the body, return to normal conditions, and feedback that stops the response. This system ensures the body does not overshoot and become too extreme in the opposite direction.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T04:03:35.411240+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Temperature Regulation in Humans",
+    "content": "## How Your Body Controls Temperature\n\n### Normal Body Temperature\n\nYour body maintains a temperature of approximately ::yellow[**37°C (98.6°F)**] - this is the set point that your body tries to maintain.\n\n### The Temperature Control System\n\n#### 🔍 Detection: Thermoreceptors\n\n::yellow[**Thermoreceptors**] are sensory receptors that detect temperature changes:\n\n- **In the skin**: Detect external temperature changes (hot or cold objects)\n- **In the hypothalamus**: Detect internal core body temperature\n- **In other organs**: Monitor temperature throughout the body\n\n#### 🧠 Control Center: The Hypothalamus\n\nThe ::yellow[**hypothalamus**] is a small region of the brain that acts as your body's thermostat:\n\n- Receives signals from thermoreceptors\n- Compares actual temperature to the set point (37°C)\n- Sends signals to activate appropriate responses\n- Coordinates cooling or warming mechanisms\n\n### Response to HIGH Temperature 🔥\n\nWhen your body temperature rises above 37°C:\n\n#### 1. Vasodilation (Blood Vessels Widen)\n\n- Blood vessels near the skin ::green[**dilate (expand)**]\n- More blood flows to the skin surface\n- Heat radiates away from the body into the environment\n- This is why you look flushed when you're hot\n\n**Analogy**: Like opening a window to let hot air escape from a room\n\n#### 2. Sweating\n\n- ::yellow[**Sweat glands**] in the skin produce watery secretion\n- Sweat spreads across skin surface\n- Water in sweat ::green[**evaporates**], removing heat energy\n- This is the most effective cooling mechanism\n\n**Why evaporation cools**: Evaporation requires energy. This energy comes from heat in your body, cooling you down.\n\n**Did you know?** You can lose 1-2 liters of sweat per hour during intense exercise!\n\n#### 3. Behavioral Responses\n\n- 👕 Remove clothing or wear lighter clothes\n- 🏖️ Seek shade or air-conditioned environments\n- 🏃 Reduce physical activity\n- 💧 Drink more fluids to replace lost water\n\n### Response to LOW Temperature ❄️\n\nWhen your body temperature drops below 37°C:\n\n#### 1. Vasoconstriction (Blood Vessels Narrow)\n\n- Blood vessels near the skin ::green[**constrict (narrow)**]\n- Less blood flows to the skin surface\n- Heat is retained in the core of the body\n- Skin becomes pale as blood is diverted away\n\n**Analogy**: Like closing a window to keep warm air inside a room\n\n#### 2. Shivering\n\n- Muscles contract ::yellow[**involuntarily and rapidly**]\n- These muscle contractions generate heat through metabolism\n- The energy released from respiration warms the body\n- Shivering is an automatic response you can't control\n\n**Why shivering works**: Muscle contractions require ATP, which releases heat as a byproduct\n\n#### 3. Goosebumps\n\n- Hair follicles contract, making hair stand up\n- Traps a layer of air around the body for insulation\n- **Limited effectiveness in humans** (we don't have enough body hair)\n- More effective in furry animals like cats and dogs\n\n#### 4. Behavioral Responses\n\n- 🧥 Add layers of clothing\n- 🏠 Seek warm environments\n- 🏃 Increase physical activity to generate heat\n- 🤝 Curl up into a ball to reduce surface area\n\n### Summary Table: Temperature Responses\n\n| Situation | Response | Effect | Mechanism |\n|-----------|----------|--------|----------|\n| ::red[Too Hot] | Vasodilation | More heat loss | Blood to skin |\n| ::red[Too Hot] | Sweating | Evaporative cooling | Water evaporation |\n| ::green[Too Cold] | Vasoconstriction | Less heat loss | Blood to core |\n| ::green[Too Cold] | Shivering | Heat production | Muscle contractions |\n| ::green[Too Cold] | Goosebumps | Insulation | Air trapping |\n\n> 💡 **Key Insight**: Notice how the responses to heat and cold are exact opposites! This is negative feedback in action - the body always responds in a way that opposes the stimulus.",
+    "speech_to_text_content": "Your body maintains a temperature of approximately 37 degrees Celsius. The hypothalamus acts as your body's thermostat. Thermoreceptors in the skin and hypothalamus detect temperature changes. When body temperature rises, blood vessels near the skin dilate to allow more heat loss, sweat glands produce sweat which evaporates to cool the body, and behavioral responses include removing clothing and seeking cooler environments. When body temperature drops, blood vessels constrict to reduce heat loss, muscles shiver to generate heat through rapid contractions, goosebumps form to trap air for insulation, and behavioral responses include adding clothing and seeking warm environments. These responses work through negative feedback to maintain the set point of 37 degrees Celsius.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T04:03:46.608340+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Temperature Regulation - Check Your Understanding",
+    "content": "## Question 1: Temperature Control\n\nWhich of the following best explains why ::yellow[**sweating**] cools the body?\n\nA) Sweat contains cold chemicals that lower body temperature\nB) The production of sweat uses energy, cooling the body\nC) Water in sweat evaporates, removing heat energy from the body\nD) Sweat causes blood vessels to dilate, increasing heat loss",
+    "speech_to_text_content": "Which of the following best explains why sweating cools the body? A) Sweat contains cold chemicals that lower body temperature. B) The production of sweat uses energy, cooling the body. C) Water in sweat evaporates, removing heat energy from the body. D) Sweat causes blood vessels to dilate, increasing heat loss.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440005",
+        "option_id": "550e8400-e29b-41d4-a716-446655440005-opt-c",
+        "answer_text": "C",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005-opt-a",
+        "option_text": "A) Sweat contains cold chemicals that lower body temperature",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005-opt-b",
+        "option_text": "B) The production of sweat uses energy, cooling the body",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005-opt-c",
+        "option_text": "C) Water in sweat evaporates, removing heat energy from the body",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005-opt-d",
+        "option_text": "D) Sweat causes blood vessels to dilate, increasing heat loss",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **C) Water in sweat evaporates, removing heat energy from the body**.\n\n**Why this is correct**: Evaporation is a physical process that requires energy. When water molecules in sweat evaporate and change from liquid to gas, they require heat energy. This energy comes from the body, causing a significant cooling effect. This is the primary mechanism by which sweating cools the body.\n\n**Why other options are incorrect**:\n- **Option A** is wrong because sweat is not cold - it's actually the same temperature as the body. It's the evaporation process that cools, not the sweat itself.\n- **Option B** is partially true that sweat production uses energy, but this energy comes from metabolism and doesn't directly cool the body. The cooling effect comes from evaporation, not production.\n- **Option D** is incorrect because while vasodilation does contribute to heat loss, it's not the mechanism of sweating. Sweating works primarily through evaporation.\n\n**Key concept from chapter**: The chapter emphasizes that sweating is one of the body's main mechanisms for heat loss through evaporation, making it crucial during high temperature situations or exercise.",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T04:03:52.737194+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧬 What are Hormones and Endocrine Glands?",
+    "content": "## Introduction to Hormones\n\n### Definition of a Hormone\n\n::yellow[**A hormone**] is a ::green[**chemical substance**] that is:\n\n1. **Produced by a gland** (endocrine gland)\n2. **Carried by the blood** (in the bloodstream)\n3. **Alters the activity** of one or more specific target organs\n\n**Simple analogy**: Hormones are like chemical messengers that travel through your bloodstream delivering instructions to specific organs.\n\n### Key Characteristics of Hormones\n\n| Characteristic | Description |\n|---|---|\n| ::blue[Chemical nature] | Small protein molecules or steroid molecules |\n| ::blue[Production site] | Endocrine glands |\n| ::blue[Transport] | Through the bloodstream |\n| ::blue[Speed] | Slower than nervous system (seconds to minutes) |\n| ::blue[Duration] | Long-lasting effects (minutes to hours) |\n| ::blue[Target] | Specific target organs with receptors |\n| ::blue[Specificity] | Each hormone affects only cells with matching receptors |\n\n### What is an Endocrine Gland?\n\n::yellow[**An endocrine gland**] is a gland that:\n\n- Produces hormones\n- Releases hormones directly into the bloodstream (not through ducts)\n- Controls various body functions through chemical signaling\n\n**Contrast with exocrine glands**: \n- Exocrine glands (like sweat glands) release their products through ducts\n- Endocrine glands release directly into blood\n\n### Major Endocrine Glands\n\n```\n🧠 Pituitary Gland (Hypothalamus) - Controls growth, reproduction\n🧠 Thyroid Gland - Controls metabolism\n🫀 Adrenal Glands - Control stress response\n🔄 Pancreas - Controls blood glucose (Islets of Langerhans)\n🔬 Ovaries (females) - Produce sex hormones\n🔬 Testes (males) - Produce sex hormones\n```\n\n### The Islets of Langerhans: A Special Endocrine Tissue\n\n::yellow[**The islets of Langerhans**] are special clusters of cells within the ::blue[**pancreas**] that function as an endocrine gland.\n\n**Location**: Scattered throughout the pancreas tissue\n\n**Two main cell types**:\n\n| Cell Type | Hormone | Function |\n|-----------|---------|----------|\n| ::green[Beta (β) cells] | ::yellow[Insulin] | Lower blood glucose |\n| ::green[Alpha (α) cells] | ::yellow[Glucagon] | Raise blood glucose |\n\n**Why this matters**: The islets of Langerhans are crucial for regulating blood glucose - one of the most important homeostatic functions!\n\n### Hormonal vs. Nervous System Control\n\n| Aspect | Nervous System | Hormonal System |\n|--------|---|---|\n| ::blue[Speed] | Very fast (milliseconds) | Slower (seconds-minutes) |\n| ::blue[Duration] | Short-lived | Long-lasting |\n| ::blue[Range] | Local (via nerves) | Whole body (via blood) |\n| ::blue[Type of signal] | Electrical impulses | Chemical signals |\n| ::blue[Example] | Reflex arc (pulling hand from hot surface) | Insulin regulating glucose |\n\n> 💡 **Key Insight**: Both systems work together! The nervous system provides quick responses, while hormones provide sustained control. Together they maintain homeostasis.",
+    "speech_to_text_content": "A hormone is a chemical substance produced by an endocrine gland, carried by the blood, which alters the activity of one or more specific target organs. Hormones are chemical messengers that travel through the bloodstream. Endocrine glands produce hormones and release them directly into the bloodstream, unlike exocrine glands which release through ducts. The islets of Langerhans are special clusters of cells within the pancreas that function as an endocrine gland. Beta cells in the islets produce insulin to lower blood glucose, while alpha cells produce glucagon to raise blood glucose. The hormonal system works alongside the nervous system to maintain homeostasis, with hormones providing slower but longer-lasting effects compared to the nervous system's quick responses.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T04:04:01.607105+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🍬 Blood Glucose Regulation: The Insulin-Glucagon System",
+    "content": "## Why Blood Glucose Must Be Regulated\n\nBlood glucose concentration must be kept between ::yellow[**80-120 mg/dL**] (milligrams per deciliter) because:\n\n- **Glucose is the fuel** for cells - especially the brain and muscles\n- **Too much glucose** (hyperglycemia) damages blood vessels and nerves\n- **Too little glucose** (hypoglycemia) starves cells of energy, causing weakness and confusion\n- **Stable supply** ensures all organs function properly\n\n### The Role of the Liver in Glucose Homeostasis\n\nThe ::yellow[**liver**] is the main organ controlling blood glucose. It acts like a glucose storage and release center:\n\n#### 🏭 Liver Functions\n\n1. **Glucose Storage (Glycogenesis)**\n   - Excess glucose is converted to ::blue[**glycogen**]\n   - Glycogen is stored in liver and muscle cells\n   - Provides a \"glucose reserve\" for later use\n\n2. **Glucose Release (Glycogenolysis)**\n   - Stored glycogen is broken down back into glucose\n   - Glucose is released into bloodstream\n   - Happens when blood glucose drops\n\n3. **Glucose Production (Gluconeogenesis)**\n   - Liver makes new glucose from non-carbohydrate sources\n   - Uses amino acids from proteins\n   - Uses glycerol from fats\n   - Happens during prolonged fasting\n\n4. **Buffer Function**\n   - Maintains steady blood glucose levels\n   - Prevents extreme fluctuations\n   - Ensures continuous energy supply\n\n**Analogy**: The liver is like a bank account for glucose - you deposit excess glucose when you eat, and withdraw it when you need energy.\n\n## Insulin: The Storage Hormone 💉\n\n### What is Insulin?\n\n::yellow[**Insulin**] is a hormone produced by ::green[**beta cells**] in the ::blue[**islets of Langerhans**] (in the pancreas).\n\n### When is Insulin Released?\n\nInsulin is released when:\n- 🍽️ You eat a meal (especially carbohydrates)\n- Blood glucose concentration rises above normal\n- Stimulus: High blood glucose\n\n### Target Organs of Insulin\n\nInsulin affects:\n- **Liver** - stores glucose as glycogen\n- **Muscles** - store glucose as glycogen\n- **Adipose tissue** (fat) - stores glucose as fat\n\n### Effects of Insulin\n\nInsulin ::green[**LOWERS**] blood glucose by:\n\n1. **Increases glucose uptake** 📥\n   - Cells take up more glucose from blood\n   - Glucose enters liver, muscle, and fat cells\n\n2. **Stimulates glycogen synthesis** 🏗️\n   - Liver converts glucose to glycogen\n   - Muscles convert glucose to glycogen\n   - Glucose is stored for later use\n\n3. **Promotes fat synthesis** 🧈\n   - Excess glucose is converted to fat\n   - Stored in adipose tissue\n   - Energy is stored for long-term use\n\n4. **Increases protein synthesis** 💪\n   - Amino acids are used to build proteins\n   - Supports muscle growth and repair\n\n**Summary**: Insulin is the \"storage hormone\" - it tells your body to store energy when glucose is plentiful.\n\n## Glucagon: The Release Hormone 🔓\n\n### What is Glucagon?\n\n::yellow[**Glucagon**] is a hormone produced by ::green[**alpha cells**] in the ::blue[**islets of Langerhans**] (in the pancreas).\n\n### When is Glucagon Released?\n\nGlucagon is released when:\n- ⏰ You haven't eaten (between meals)\n- Blood glucose concentration drops below normal\n- Stimulus: Low blood glucose\n\n### Target Organ of Glucagon\n\nGlucagon primarily affects:\n- **Liver** - its main target organ\n\n### Effects of Glucagon\n\nGlucagon ::green[**RAISES**] blood glucose by:\n\n1. **Stimulates glycogen breakdown** 🔓\n   - Stored glycogen is broken down to glucose\n   - Glucose is released into bloodstream\n   - Provides quick energy\n\n2. **Promotes glucose production** 🏭\n   - Liver makes new glucose from amino acids\n   - Liver makes new glucose from glycerol\n   - Provides glucose during prolonged fasting\n\n3. **Stimulates fat breakdown** 🔥\n   - Stored fat is broken down\n   - Provides alternative energy source\n   - Releases glycerol for glucose production\n\n**Summary**: Glucagon is the \"release hormone\" - it tells your body to release stored glucose when energy is needed.\n\n## The Complete Glucose Regulation System\n\n### When Blood Glucose is HIGH (After Eating) 🍽️\n\n```\n1. 🍽️ EAT A MEAL (especially carbohydrates)\n   ↓\n2. 📈 Blood glucose rises above 80-120 mg/dL\n   ↓\n3. 🔍 Beta cells detect high glucose\n   ↓\n4. 💉 Pancreas releases INSULIN into blood\n   ↓\n5. 📥 Cells take up more glucose\n6. 🏗️ Liver converts glucose → glycogen (storage)\n7. 🧈 Excess glucose → fat (storage)\n   ↓\n8. ✅ Blood glucose returns to normal (80-120 mg/dL)\n   ↓\n9. 🛑 Beta cells stop releasing insulin\n```\n\n### When Blood Glucose is LOW (Between Meals) ⏰\n\n```\n1. ⏰ SEVERAL HOURS SINCE EATING\n   ↓\n2. 📉 Blood glucose drops below 80-120 mg/dL\n   ↓\n3. 🔍 Alpha cells detect low glucose\n   ↓\n4. 💉 Pancreas releases GLUCAGON into blood\n   ↓\n5. 🔓 Liver breaks down glycogen → glucose\n6. 🏭 Liver makes new glucose from amino acids\n7. 🔥 Fat is broken down for energy\n   ↓\n8. 📤 Glucose is released into blood\n   ↓\n9. ✅ Blood glucose returns to normal (80-120 mg/dL)\n   ↓\n10. 🛑 Alpha cells stop releasing glucagon\n```\n\n### Comparison: Insulin vs. Glucagon\n\n| Feature | Insulin | Glucagon |\n|---------|---------|----------|\n| ::blue[Produced by] | Beta cells | Alpha cells |\n| ::blue[Released when] | Blood glucose HIGH | Blood glucose LOW |\n| ::blue[Primary target] | Liver, muscle, fat | Liver |\n| ::blue[Main effect] | ::green[LOWERS] glucose | ::green[RAISES] glucose |\n| ::blue[Mechanism] | Increases uptake, storage | Increases release |\n| ::blue[Type] | Storage hormone | Release hormone |\n\n> 💡 **Key Insight**: Insulin and glucagon are ::yellow[**antagonistic hormones**] - they have opposite effects! This is another example of negative feedback keeping blood glucose stable. When one rises, the other falls, maintaining perfect balance.",
+    "speech_to_text_content": "Blood glucose must be maintained between 80 and 120 milligrams per deciliter. The liver stores excess glucose as glycogen through glycogenesis, breaks down glycogen to release glucose through glycogenolysis, and produces new glucose from non-carbohydrates through gluconeogenesis. Insulin is produced by beta cells in the islets of Langerhans and is released when blood glucose is high. Insulin increases glucose uptake by cells, stimulates glycogen synthesis in liver and muscles, promotes fat synthesis, and increases protein synthesis. Glucagon is produced by alpha cells in the islets of Langerhans and is released when blood glucose is low. Glucagon stimulates glycogen breakdown, promotes glucose production from amino acids and glycerol, and stimulates fat breakdown. These two hormones work as antagonistic hormones with opposite effects to maintain blood glucose homeostasis.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T04:04:16.484817+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "7",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Blood Glucose Regulation - Understanding Insulin and Glucagon",
+    "content": "## Question 2: Hormone Function\n\nA student eats a large bowl of rice for lunch. Which of the following best describes what happens to blood glucose and insulin levels?\n\nA) Blood glucose decreases; insulin levels decrease\nB) Blood glucose increases; insulin levels increase\nC) Blood glucose increases; insulin levels decrease\nD) Blood glucose decreases; insulin levels increase",
+    "speech_to_text_content": "A student eats a large bowl of rice for lunch. Which of the following best describes what happens to blood glucose and insulin levels? A) Blood glucose decreases; insulin levels decrease. B) Blood glucose increases; insulin levels increase. C) Blood glucose increases; insulin levels decrease. D) Blood glucose decreases; insulin levels increase.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440008",
+        "option_id": "550e8400-e29b-41d4-a716-446655440008-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt-a",
+        "option_text": "A) Blood glucose decreases; insulin levels decrease",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt-b",
+        "option_text": "B) Blood glucose increases; insulin levels increase",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt-c",
+        "option_text": "C) Blood glucose increases; insulin levels decrease",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt-d",
+        "option_text": "D) Blood glucose decreases; insulin levels increase",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Blood glucose increases; insulin levels increase**.\n\n**Why this is correct**: \n\n1. **Rice is a carbohydrate** - When you eat rice, it is digested into glucose\n2. **Blood glucose rises** - The glucose is absorbed into the bloodstream, causing blood glucose concentration to increase above the normal 80-120 mg/dL range\n3. **Insulin is released** - Beta cells in the islets of Langerhans detect the high blood glucose and release insulin in response\n4. **Both increase together** - This is a direct cause-and-effect relationship: high blood glucose stimulates insulin release\n\n**Why other options are incorrect**:\n- **Option A** is completely wrong - eating rice increases, not decreases, blood glucose\n- **Option C** is wrong because insulin levels should increase (not decrease) in response to high blood glucose. This would violate the normal regulatory mechanism\n- **Option D** is wrong because blood glucose should increase (not decrease) after eating rice\n\n**Key concept from chapter**: The chapter clearly states that insulin is released when blood glucose levels are high, and its trigger is elevated glucose concentration. After eating carbohydrates like rice, both blood glucose and insulin levels increase together as part of the normal homeostatic response.",
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T04:04:22.633709+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏥 Type 1 Diabetes Mellitus: Insulin-Dependent Diabetes",
+    "content": "## What is Type 1 Diabetes?\n\n::yellow[**Type 1 Diabetes Mellitus**] is a condition where the pancreas cannot produce enough insulin (or any insulin at all), causing persistently high blood glucose levels.\n\n### The Root Cause: Autoimmune Destruction\n\nType 1 diabetes is an ::red[**autoimmune disease**] where:\n\n- The body's immune system attacks the ::yellow[**beta cells**] in the islets of Langerhans\n- Beta cells are destroyed and cannot produce insulin\n- Without insulin, cells cannot take up glucose effectively\n- Blood glucose remains high (hyperglycemia)\n\n**Why does the immune system attack?** Scientists believe genetic factors and possibly viral infections trigger the immune system to mistakenly target the body's own cells.\n\n### Key Characteristics of Type 1 Diabetes\n\n#### 🧒 Early Onset\n- Usually develops in **childhood or adolescence**\n- Can appear suddenly\n- Most common type in young people\n\n#### 💉 Insulin Deficiency\n- **Little or no insulin production**\n- Pancreas cannot respond to high blood glucose\n- Cells cannot take up glucose effectively\n- Blood glucose becomes dangerously high\n\n#### 🧬 Genetic Component\n- **Strong hereditary tendency**\n- If a parent has Type 1 diabetes, children have higher risk\n- Not everyone with the genes develops diabetes\n- Environmental factors also play a role\n\n### Symptoms of Type 1 Diabetes 🚨\n\n#### 1. Hyperglycemia (High Blood Glucose)\n- Blood glucose remains persistently elevated\n- Can reach 200+ mg/dL (normal is 80-120 mg/dL)\n- Cells are starved of glucose despite high blood levels\n\n#### 2. Polyuria (Excessive Urination)\n- When blood glucose exceeds the kidney's reabsorption capacity\n- Glucose appears in urine (normally glucose is reabsorbed)\n- Water follows glucose into urine (osmotic effect)\n- Results in frequent urination, especially at night\n\n#### 3. Polydipsia (Excessive Thirst)\n- Loss of water through excessive urination\n- Blood becomes more concentrated (dehydration)\n- Osmoreceptors detect this and trigger thirst\n- Person drinks constantly but still feels thirsty\n\n#### 4. Weight Loss\n- Body cannot use glucose for energy\n- Breaks down stored fat and protein for energy\n- Results in rapid weight loss\n- Happens despite adequate food intake\n\n#### 5. Ketoacidosis (Dangerous Complication) ⚠️\n- When body breaks down fat too rapidly\n- Produces ketone bodies (acidic compounds)\n- Blood becomes too acidic (low pH)\n- Can be life-threatening if untreated\n- Symptoms: fruity-smelling breath, nausea, confusion\n\n### Treatment of Type 1 Diabetes\n\n#### 1. 💉 Insulin Injections\n- **Multiple daily doses required**\n- Usually 3-4 injections per day\n- Or continuous insulin pump\n- Cannot take insulin as pills (stomach acid destroys it)\n- Must match insulin doses to carbohydrate intake\n\n#### 2. 🩸 Blood Glucose Monitoring\n- Regular testing throughout the day\n- Using finger prick blood tests\n- Or continuous glucose monitors\n- Helps adjust insulin doses\n- Prevents dangerously high or low glucose\n\n#### 3. 🍽️ Dietary Management\n- **Carbohydrate counting**\n- Understanding how different foods affect glucose\n- Timing meals appropriately\n- Balancing carbs with insulin doses\n- Avoiding sudden glucose spikes\n\n#### 4. 🏃 Exercise\n- Regular physical activity\n- Helps cells take up glucose better\n- Improves insulin sensitivity\n- Reduces insulin requirements\n- Provides overall health benefits\n\n### Living with Type 1 Diabetes\n\n**Challenges**:\n- ⚠️ Risk of hypoglycemia (too low glucose) from excess insulin\n- ⚠️ Risk of hyperglycemia (too high glucose) from insufficient insulin\n- ⚠️ Long-term complications: eye damage, kidney damage, nerve damage\n- ⚠️ Requires constant monitoring and management\n\n**Modern advances**:\n- ✅ Insulin pumps for better control\n- ✅ Continuous glucose monitors\n- ✅ Better insulins with faster or slower action\n- ✅ Improved educational support\n\n> 💡 **Important**: Type 1 diabetes is NOT caused by diet or lifestyle - it's an autoimmune disease. People with Type 1 diabetes cannot prevent it through diet or exercise alone.",
+    "speech_to_text_content": "Type 1 Diabetes Mellitus is a condition where the pancreas cannot produce enough insulin, causing persistently high blood glucose levels. It is an autoimmune disease where the body's immune system attacks beta cells in the islets of Langerhans. Type 1 diabetes usually develops in childhood or adolescence and is characterized by little or no insulin production and a strong hereditary tendency. Symptoms include hyperglycemia or high blood glucose, polyuria or excessive urination due to glucose in urine, polydipsia or excessive thirst from dehydration, weight loss from breaking down fat and protein for energy, and potentially ketoacidosis from rapid fat breakdown. Treatment includes insulin injections, usually multiple daily doses, blood glucose monitoring through finger prick tests or continuous monitors, dietary management through carbohydrate counting, and regular exercise. Type 1 diabetes is not caused by diet or lifestyle but is an autoimmune disease.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T04:04:34.894282+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏥 Type 2 Diabetes Mellitus: Insulin-Resistant Diabetes",
+    "content": "## What is Type 2 Diabetes?\n\n::yellow[**Type 2 Diabetes Mellitus**] is a condition where the body either:\n\n1. **Becomes resistant to insulin** - Cells don't respond properly to insulin signals\n2. **Produces insufficient insulin** - Pancreas gradually produces less insulin\n3. **Both occur together** - Most common situation\n\nThe result is persistently high blood glucose levels, but the cause is different from Type 1.\n\n### The Root Cause: Insulin Resistance\n\nIn Type 2 diabetes:\n\n- **Cells become less responsive to insulin** 🔐\n  - Even though insulin is present, cells don't take up glucose effectively\n  - It's like the \"lock and key\" doesn't fit properly anymore\n  - Receptors on cells don't respond to insulin signals\n\n- **Pancreas tries to compensate** 💪\n  - Produces more and more insulin\n  - Eventually becomes exhausted\n  - Gradually produces less insulin\n\n- **Blood glucose remains high** 📈\n  - Cells can't take up glucose\n  - Glucose accumulates in blood\n  - Hyperglycemia develops\n\n### Key Characteristics of Type 2 Diabetes\n\n#### ⏰ Later Onset\n- Usually develops in **adulthood** (age 40+)\n- Can occur in younger people if risk factors present\n- Develops gradually, often undetected initially\n- Most common type of diabetes (90% of diabetes cases)\n\n#### 🧬 Genetic Predisposition + Lifestyle\n- **Genetic component**: Family history increases risk\n- **Lifestyle factors**: Often associated with obesity and inactivity\n- **Modifiable risk factors**: Unlike Type 1, Type 2 can often be prevented or delayed\n\n#### 📊 Progressive Condition\n- Worsens over time if untreated\n- Early stages: Insulin resistance only\n- Later stages: Both insulin resistance AND reduced insulin production\n- Eventually may require insulin therapy\n\n### Risk Factors for Type 2 Diabetes 🚨\n\n#### 1. 🍔 Obesity (Especially Abdominal Fat)\n- Excess body weight increases insulin resistance\n- Fat cells produce inflammatory chemicals\n- These chemicals interfere with insulin signaling\n- Abdominal (belly) fat is particularly harmful\n- **Strong link**: Overweight individuals have 80+ times higher risk\n\n#### 2. 🛋️ Sedentary Lifestyle (Lack of Exercise)\n- Muscles that don't exercise become less sensitive to insulin\n- Physical activity improves insulin sensitivity\n- Lack of exercise contributes to weight gain\n- Regular activity is protective\n\n#### 3. 🎂 Age\n- Risk increases significantly after age 45\n- Insulin sensitivity naturally decreases with age\n- Metabolism slows down\n- Weight gain is more common\n\n#### 4. 👨‍👩‍👧 Family History\n- **Genetic predisposition**: If parents have Type 2, risk is higher\n- Genes affect insulin production and sensitivity\n- Not everyone with family history develops diabetes\n- Environmental factors also important\n\n#### 5. 🌍 Ethnicity\n- Some populations have higher risk:\n  - Asian populations\n  - Hispanic/Latino populations\n  - African populations\n  - Pacific Islander populations\n- Reasons include genetic factors and environmental adaptation\n\n#### 6. 🤰 Gestational Diabetes History\n- Women who had diabetes during pregnancy at higher risk\n- Indicates underlying insulin resistance\n- Increased risk for Type 2 later in life\n\n#### 7. 🥤 Unhealthy Diet\n- High sugar consumption\n- Refined carbohydrates (white bread, white rice)\n- Processed foods high in calories\n- Low fiber intake\n- Sugary drinks\n\n### Management of Type 2 Diabetes\n\n#### 1. 🥗 Lifestyle Changes (First-Line Treatment)\n\n**Diet Modifications**:\n- Reduce refined carbohydrates\n- Increase fiber intake (whole grains, vegetables, fruits)\n- Reduce sugar and sugary drinks\n- Control portion sizes\n- Choose lean proteins\n- Limit saturated fats\n\n**Physical Activity**:\n- Aim for 150+ minutes of moderate activity per week\n- Include resistance training\n- Reduces insulin resistance\n- Helps weight loss\n- Improves overall health\n\n#### 2. ⚖️ Weight Loss\n- Even 5-10% weight loss improves insulin sensitivity\n- Reduces strain on pancreas\n- Decreases inflammation\n- Can reverse early-stage diabetes\n- Often the most effective intervention\n\n#### 3. 💊 Oral Medications\n\nWhen lifestyle changes alone are insufficient:\n\n- **Metformin**: Reduces glucose production by liver\n- **Sulfonylureas**: Stimulate pancreas to produce more insulin\n- **Thiazolidinediones**: Increase insulin sensitivity\n- **DPP-4 inhibitors**: Increase insulin release after meals\n- **SGLT2 inhibitors**: Increase glucose loss in urine\n\n#### 4. 💉 Insulin Therapy\n\n- May be needed in advanced cases\n- When oral medications no longer sufficient\n- When pancreas can no longer produce adequate insulin\n- Similar to Type 1 management\n\n### Comparison: Type 1 vs. Type 2 Diabetes\n\n| Feature | Type 1 | Type 2 |\n|---------|--------|--------|\n| ::blue[Cause] | Autoimmune (beta cells destroyed) | Insulin resistance + low production |\n| ::blue[Onset] | Childhood/adolescence | Adulthood (usually 40+) |\n| ::blue[Insulin production] | ::red[Little or none] | ::yellow[Normal initially, decreases] |\n| ::blue[Insulin resistance] | No | ::red[Yes] |\n| ::blue[Genetic component] | Yes | Yes |\n| ::blue[Lifestyle factors] | No | ::red[Yes - major role] |\n| ::blue[Preventable] | No | Often yes |\n| ::blue[Treatment] | Insulin required | Lifestyle + oral meds ± insulin |\n| ::blue[Frequency] | ~10% of diabetes cases | ~90% of diabetes cases |\n\n### Why Type 2 Diabetes is a Growing Problem 📈\n\n- **Rising obesity rates**: More sedentary lifestyles\n- **Unhealthy diets**: Processed foods, sugary drinks\n- **Aging population**: More people in high-risk age groups\n- **Urbanization**: Less physical activity\n- **Genetic predisposition**: Populations at higher genetic risk\n\n> 💡 **Important**: Type 2 diabetes is often preventable! Maintaining healthy weight, eating well, and exercising regularly can significantly reduce risk or delay onset.",
+    "speech_to_text_content": "Type 2 Diabetes Mellitus occurs when the body becomes resistant to insulin or produces insufficient insulin, or both. It usually develops in adulthood and is characterized by insulin resistance where cells don't respond properly to insulin signals, and the pancreas gradually produces less insulin. Risk factors include obesity especially abdominal fat, sedentary lifestyle, age over 45, family history, ethnicity with higher genetic risk, gestational diabetes history, and unhealthy diet with high sugar and refined carbohydrates. Management includes lifestyle changes such as diet modifications and physical activity, weight loss which improves insulin sensitivity, oral medications like metformin, and insulin therapy in advanced cases. Type 2 diabetes is often preventable through maintaining healthy weight, eating well, and exercising regularly. Unlike Type 1 which is autoimmune, Type 2 is strongly associated with lifestyle factors.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T04:04:50.323286+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "10",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Diabetes Types - Understanding the Differences",
+    "content": "## Question 3: Type 1 vs. Type 2 Diabetes\n\nA 45-year-old man who is overweight and sedentary is diagnosed with diabetes. His fasting blood glucose is 150 mg/dL, but his pancreas is still producing some insulin. Which type of diabetes is he most likely to have?\n\nA) Type 1 diabetes, because he has high blood glucose\nB) Type 2 diabetes, because he is overweight and has risk factors\nC) Type 1 diabetes, because his pancreas is still producing insulin\nD) Type 2 diabetes, because he is over 40 years old",
+    "speech_to_text_content": "A 45-year-old man who is overweight and sedentary is diagnosed with diabetes. His fasting blood glucose is 150 milligrams per deciliter, but his pancreas is still producing some insulin. Which type of diabetes is he most likely to have? A) Type 1 diabetes because he has high blood glucose. B) Type 2 diabetes because he is overweight and has risk factors. C) Type 1 diabetes because his pancreas is still producing insulin. D) Type 2 diabetes because he is over 40 years old.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440011-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440011",
+        "option_id": "550e8400-e29b-41d4-a716-446655440011-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440011-opt-a",
+        "option_text": "A) Type 1 diabetes, because he has high blood glucose",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440011-opt-b",
+        "option_text": "B) Type 2 diabetes, because he is overweight and has risk factors",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440011-opt-c",
+        "option_text": "C) Type 1 diabetes, because his pancreas is still producing insulin",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440011-opt-d",
+        "option_text": "D) Type 2 diabetes, because he is over 40 years old",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Type 2 diabetes, because he is overweight and has risk factors**.\n\n**Why this is correct**:\n\n1. **Age**: At 45 years old, he is in the typical age range for Type 2 diabetes onset (usually 40+), not Type 1 which typically develops in childhood/adolescence\n\n2. **Risk factors present**: He has multiple Type 2 risk factors:\n   - Overweight/obesity\n   - Sedentary lifestyle (lack of exercise)\n   - Age over 40\n   - These are characteristic risk factors for Type 2\n\n3. **Pancreas still producing insulin**: This is a KEY distinguishing feature of Type 2:\n   - Type 1: Pancreas produces little or NO insulin (autoimmune destruction)\n   - Type 2: Pancreas still produces SOME insulin, but cells are resistant to it\n   - The fact that he's producing insulin rules out Type 1\n\n4. **High blood glucose despite insulin production**: This indicates insulin resistance, which is the hallmark of Type 2:\n   - His cells aren't responding to the insulin his pancreas is making\n   - This is NOT what happens in Type 1 (which has no insulin to work with)\n\n**Why other options are incorrect**:\n- **Option A** is wrong because high blood glucose alone doesn't distinguish between types. Both types have high glucose.\n- **Option C** is wrong because Type 1 is characterized by little or no insulin production. If he's producing insulin, it's not Type 1.\n- **Option D** is partially true (age is a risk factor) but doesn't explain why it's Type 2. The better answer is B because it identifies the actual risk factors and the key insulin production feature.\n\n**Key concept from chapter**: The chapter states Type 2 diabetes occurs due to \"insulin resistance and relative insulin deficiency\" - meaning the pancreas still produces some insulin, but cells don't respond to it properly. This case perfectly fits that description.",
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T04:04:58.816426+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "11",
+    "type": "slide",
+    "question_type": null,
+    "title": "💧 Water Balance and Anti-Diuretic Hormone (ADH)",
+    "content": "## Why Water Balance is Important\n\nYour body must maintain the right amount of water because:\n\n- **Cell function**: Water is essential for all cellular processes\n- **Water potential**: The concentration of solutes (salts, glucose) in blood affects water movement\n- **Osmotic balance**: Water moves in/out of cells based on solute concentration\n- **Blood pressure**: Water content affects blood volume and pressure\n- **Temperature regulation**: Water (sweat) is crucial for cooling\n\nIf blood becomes too dilute (too much water) or too concentrated (too little water), cells can be damaged.\n\n## The Concept of Osmotic Potential\n\n### What is Osmotic Potential?\n\nThe ::yellow[**water potential**] (or osmotic potential) of blood depends on the concentration of solutes:\n\n- **High solute concentration** → ::red[**Low water potential**] (more negative)\n  - Water tends to move OUT of cells\n  - Cells shrivel\n  - Example: Drinking seawater\n\n- **Low solute concentration** → ::green[**High water potential**] (less negative)\n  - Water tends to move INTO cells\n  - Cells swell\n  - Example: Drinking pure water\n\n**Analogy**: Think of solutes as \"water magnets\" - high solute concentration attracts water molecules.\n\n## Anti-Diuretic Hormone (ADH): The Water Regulator\n\n### What is ADH?\n\n::yellow[**Anti-Diuretic Hormone (ADH)**], also called ::blue[**vasopressin**], is a hormone that regulates water balance by controlling how much water is reabsorbed by the kidneys.\n\n- **Produced by**: Hypothalamus (brain)\n- **Stored and released by**: Pituitary gland (at base of brain)\n- **Target organ**: Kidneys (collecting ducts)\n- **Function**: Controls water reabsorption\n\n### How ADH Works: Osmoregulation\n\n::yellow[**Osmoregulation**] is the regulation of water and salt balance to maintain constant blood osmotic potential.\n\n#### Scenario 1: When Blood is Too Concentrated (Low Water Potential) 🏜️\n\n**Stimulus**: Blood becomes too concentrated\n- You lose water through sweating\n- You haven't drunk enough water\n- Solute concentration increases\n- Water potential becomes too low\n\n**Detection**:\n- ::yellow[**Osmoreceptors**] in the hypothalamus detect high solute concentration\n- They sense that blood is too concentrated\n\n**Response**:\n```\n1. 🧠 Osmoreceptors detect concentrated blood\n   ↓\n2. 💉 Hypothalamus releases MORE ADH\n   ↓\n3. 💧 ADH travels in blood to kidneys\n   ↓\n4. 🔄 Kidneys reabsorb MORE water from urine\n   ↓\n5. 💦 Less water is lost in urine (urine becomes concentrated)\n   ↓\n6. 💧 More water returns to blood\n   ↓\n7. ✅ Blood water potential returns to normal\n```\n\n**Result**:\n- Urine is concentrated and small in volume\n- Water is conserved\n- Blood becomes more dilute\n\n#### Scenario 2: When Blood is Too Dilute (High Water Potential) 💧\n\n**Stimulus**: Blood becomes too dilute\n- You drink a lot of water\n- Solute concentration decreases\n- Water potential becomes too high\n\n**Detection**:\n- ::yellow[**Osmoreceptors**] in the hypothalamus detect low solute concentration\n- They sense that blood is too dilute\n\n**Response**:\n```\n1. 🧠 Osmoreceptors detect dilute blood\n   ↓\n2. 🛑 Hypothalamus releases LESS ADH\n   ↓\n3. ❌ Less ADH reaches kidneys\n   ↓\n4. 🔄 Kidneys reabsorb LESS water from urine\n   ↓\n5. 💦 More water is lost in urine (urine becomes dilute)\n   ↓\n6. 🌊 Less water returns to blood\n   ↓\n7. ✅ Blood water potential returns to normal\n```\n\n**Result**:\n- Urine is dilute and large in volume\n- Water is eliminated\n- Blood becomes more concentrated\n\n### How ADH Changes Kidney Function\n\nADH works by making the collecting ducts of the kidney more permeable to water:\n\n| Condition | ADH Level | Kidney Response | Urine |\n|-----------|-----------|-----------------|-------|\n| ::red[Concentrated blood] | ::green[HIGH] | Reabsorb more water | Small volume, concentrated |\n| ::green[Dilute blood] | ::red[LOW] | Reabsorb less water | Large volume, dilute |\n\n### The Negative Feedback Loop for Water Balance\n\n```\nBlood too concentrated\n        ↓\nOsmoreceptors detect\n        ↓\nMore ADH released\n        ↓\nKidneys reabsorb more water\n        ↓\nBlood becomes more dilute\n        ↓\nOsmoreceptors detect normal level\n        ↓\nADH release decreases\n        ↓\nLoop returns to balance\n```\n\n### Real-World Examples\n\n#### 🏃 After Intense Exercise\n- You lose water through sweating\n- Blood becomes concentrated\n- ADH levels rise\n- Kidneys conserve water\n- Urine becomes dark and concentrated\n- **Why**: Body is trying to conserve water\n\n#### 🍺 After Drinking Lots of Water\n- Blood becomes dilute\n- ADH levels drop\n- Kidneys let water pass through\n- Urine becomes clear and dilute\n- You urinate frequently\n- **Why**: Body is trying to eliminate excess water\n\n#### 🏜️ In the Desert\n- Constant water loss\n- ADH constantly elevated\n- Urine is minimal and very concentrated\n- **Why**: Body is conserving every drop of water\n\n### Disorders of Water Balance\n\n#### Diabetes Insipidus\n- **Problem**: ADH deficiency or kidney doesn't respond to ADH\n- **Result**: Cannot conserve water\n- **Symptoms**: Excessive thirst, excessive urination\n- **Difference from diabetes mellitus**: No glucose in urine, different cause\n\n#### SIADH (Syndrome of Inappropriate ADH)\n- **Problem**: Too much ADH is released\n- **Result**: Too much water is reabsorbed\n- **Symptoms**: Low blood sodium, swelling\n\n> 💡 **Key Insight**: ADH is an example of how a single hormone can precisely control a critical body function. The system is so sensitive that even small changes in blood water potential trigger ADH release or suppression!",
+    "speech_to_text_content": "Water balance is important for cell function, water potential, osmotic balance, blood pressure, and temperature regulation. Anti-Diuretic Hormone or ADH is produced by the hypothalamus and stored in the pituitary gland. It controls water reabsorption in the kidneys. When blood is too concentrated, osmoreceptors detect this, ADH is released, kidneys reabsorb more water, and urine becomes concentrated. When blood is too dilute, osmoreceptors detect this, less ADH is released, kidneys reabsorb less water, and urine becomes dilute. ADH works through negative feedback to maintain water balance. High ADH levels result in small volume concentrated urine. Low ADH levels result in large volume dilute urine. Examples include increased ADH after exercise when water is lost through sweating, and decreased ADH after drinking lots of water.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T04:05:14.310291+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "12",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "ADH and Water Balance - Understanding Osmoregulation",
+    "content": "## Question 4: ADH and Water Regulation\n\nA person exercises intensely in hot weather and loses a lot of water through sweating. Which of the following correctly describes what happens to ADH and urine production?\n\nA) ADH levels decrease; more dilute urine is produced\nB) ADH levels increase; more concentrated urine is produced\nC) ADH levels decrease; more concentrated urine is produced\nD) ADH levels increase; more dilute urine is produced",
+    "speech_to_text_content": "A person exercises intensely in hot weather and loses a lot of water through sweating and becomes dehydrated. Which of the following correctly describes what happens to ADH and urine production? A) ADH levels decrease; more dilute urine is produced. B) ADH levels increase; more concentrated urine is produced. C) ADH levels decrease; more concentrated urine is produced. D) ADH levels increase; more dilute urine is produced.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440013",
+        "option_id": "550e8400-e29b-41d4-a716-446655440013-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-a",
+        "option_text": "A) ADH levels decrease; more dilute urine is produced",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-b",
+        "option_text": "B) ADH levels increase; more concentrated urine is produced",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-c",
+        "option_text": "C) ADH levels decrease; more concentrated urine is produced",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-d",
+        "option_text": "D) ADH levels increase; more dilute urine is produced",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) ADH levels increase; more concentrated urine is produced**.\n\n**Why this is correct**:\n\n1. **Water loss through sweating**: When a person exercises in hot weather, they lose water through sweat\n\n2. **Blood becomes more concentrated**: As water is lost, the solute concentration in blood increases, and water potential decreases\n\n3. **Osmoreceptors detect this change**: The hypothalamus detects that blood is too concentrated\n\n4. **ADH is released**: In response to concentrated blood, the hypothalamus releases MORE ADH into the bloodstream\n\n5. **Kidneys conserve water**: ADH acts on the kidneys' collecting ducts, making them more permeable to water\n   - More water is reabsorbed from the filtrate\n   - Less water is lost in urine\n\n6. **Urine becomes concentrated**: With less water in the urine but the same amount of waste:\n   - Urine volume is small\n   - Urine is dark and concentrated\n   - This conserves body water\n\n**Why other options are incorrect**:\n- **Option A** is wrong because ADH should increase (not decrease) when blood is concentrated. Decreasing ADH would cause water loss, making the problem worse.\n- **Option C** is wrong because ADH should increase, not decrease\n- **Option D** is wrong because increased ADH causes concentrated (not dilute) urine. Dilute urine happens when ADH is low.\n\n**Key concept from chapter**: The chapter explains that ADH controls water reabsorption in kidneys. High ADH levels result in small volume, concentrated urine as the body conserves water. This is exactly what happens during dehydration from exercise and sweating.",
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T04:05:21.030930+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "13",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Nervous System vs. Hormonal System in Homeostasis",
+    "content": "## Two Control Systems Working Together\n\nYour body maintains homeostasis using TWO interconnected systems:\n\n1. ::yellow[**Nervous System**] - Quick responses\n2. ::yellow[**Hormonal (Endocrine) System**] - Sustained control\n\nBoth systems detect changes and coordinate responses, but they work differently.\n\n### Comparison: Nervous vs. Hormonal System\n\n| Feature | Nervous System | Hormonal System |\n|---------|---|---|\n| **Speed** | ::green[Very fast] (milliseconds) | Slower (seconds to minutes) |\n| **Duration** | Short-lived (while stimulus present) | Long-lasting (minutes to hours) |\n| **Range** | Local (via specific nerves) | Whole body (via bloodstream) |\n| **Type of signal** | Electrical impulses | Chemical signals (hormones) |\n| **Response time** | Immediate | Delayed |\n| **Precision** | Very precise | Widespread |\n| **Example** | Pulling hand from hot surface | Insulin regulating glucose |\n\n### Nervous System: The Fast Responder ⚡\n\n#### How It Works\n\n1. **Sensory receptors** detect a change\n2. **Impulses travel** along nerves to brain/spinal cord\n3. **Brain processes** the information\n4. **Motor nerves** send signals to muscles/glands\n5. **Response is immediate** (milliseconds)\n\n#### Example: Touching a Hot Object 🔥\n\n```\nHand touches hot surface\n        ↓ (1 millisecond)\nPain receptors in skin detect heat\n        ↓\nSensory nerve carries signal to spinal cord\n        ↓\nSpinal cord processes signal\n        ↓\nMotor nerve sends signal to arm muscles\n        ↓ (Total: ~50 milliseconds)\nArm muscles contract - hand pulls away\n```\n\n**Why so fast?** This is a reflex arc - doesn't even need to go to the brain! Your spinal cord can respond immediately to protect you.\n\n#### Advantages\n- ✅ Immediate response to danger\n- ✅ Precise control of specific muscles\n- ✅ Allows quick escape from threats\n- ✅ No delay in reaction time\n\n#### Disadvantages\n- ❌ Effect stops when stimulus stops\n- ❌ Can't maintain sustained control\n- ❌ Limited to areas served by nerves\n\n### Hormonal System: The Sustained Controller 🔄\n\n#### How It Works\n\n1. **Stimulus detected** (e.g., high blood glucose)\n2. **Endocrine gland** receives signal\n3. **Hormone is produced** and released into blood\n4. **Hormone travels** throughout body via bloodstream\n5. **Target organs respond** (takes seconds to minutes)\n6. **Response is sustained** as long as hormone is present\n\n#### Example: Eating a Meal 🍽️\n\n```\nEat a meal (especially carbs)\n        ↓ (1-2 minutes)\nGlucose is absorbed into blood\n        ↓\nBlood glucose rises\n        ↓\nBeta cells in pancreas detect high glucose\n        ↓\nPancreas produces and releases insulin\n        ↓\nInsulin travels in blood to all cells\n        ↓ (Total: 2-5 minutes)\nCells take up glucose, blood glucose falls\n```\n\n**Why slower?** Hormones must be produced, released, travel through blood, and bind to target cell receptors.\n\n#### Advantages\n- ✅ Sustained, long-lasting effects\n- ✅ Affects whole body simultaneously\n- ✅ Fine-tuned control over time\n- ✅ Can maintain homeostasis for extended periods\n- ✅ Coordinates multiple organs\n\n#### Disadvantages\n- ❌ Slower response time\n- ❌ Less precise (affects all target organs)\n- ❌ Takes time to stop (hormone must be broken down)\n- ❌ Can't respond to immediate threats\n\n### Integration: How They Work Together 🤝\n\nThe nervous and hormonal systems are **interconnected**:\n\n#### 1. Nervous System Activates Hormonal System\n\n**Example**: Stress response\n\n```\nSee a threat (snake!)\n        ↓\nNervous system detects threat\n        ↓\nNervous system signals adrenal glands\n        ↓\nAdrenal glands release adrenaline (hormone)\n        ↓\nAdrenaline causes sustained \"fight or flight\" response\n```\n\n#### 2. Hormonal System Affects Nervous System\n\n**Example**: Thyroid hormone affects nerve function\n- Thyroid hormone increases nerve sensitivity\n- Makes nervous system more responsive\n- Increases overall metabolic rate\n\n#### 3. Both Systems Maintain Homeostasis\n\n**Temperature regulation example**:\n\n- **Nervous system** (fast): Shivers start immediately when cold\n- **Hormonal system** (sustained): Thyroid hormone increases metabolic rate for long-term heat production\n\n### Real-World Example: The Complete Response 🏃\n\n**Scenario**: You see a dangerous animal while hiking\n\n**Immediate (Nervous System)**:\n- Eyes see the threat (0 ms)\n- Brain processes (50 ms)\n- Heart rate increases (100 ms)\n- Muscles tense, ready to run (200 ms)\n\n**Sustained (Hormonal System)**:\n- Adrenal glands release adrenaline (1-2 seconds)\n- Blood glucose increases (for energy)\n- Blood pressure rises (for circulation)\n- This continues for minutes/hours\n\n**Result**: You have both immediate reaction AND sustained ability to escape!\n\n### Summary: Why Both Systems?\n\n::yellow[**Quick response**] (nervous) + ::yellow[**Sustained control**] (hormonal) = ::green[**Perfect homeostasis**]\n\n- Nervous system handles emergencies\n- Hormonal system handles routine maintenance\n- Together they keep you alive and healthy\n\n> 💡 **Key Insight**: Your body is incredibly efficient! It uses the nervous system for quick threats and the hormonal system for steady, long-term control. This dual system allows you to respond to immediate dangers while maintaining stable internal conditions.",
+    "speech_to_text_content": "The nervous system and hormonal system work together to maintain homeostasis. The nervous system provides very fast responses in milliseconds through electrical impulses, while the hormonal system provides slower but longer-lasting responses in seconds to minutes through chemical signals. The nervous system is local and precise, affecting specific areas, while the hormonal system affects the whole body. The nervous system is good for immediate responses like pulling your hand away from a hot surface, while the hormonal system is good for sustained control like regulating blood glucose. Both systems are interconnected - the nervous system can activate hormonal responses, and hormones can affect nervous system function. Together they provide immediate reaction to threats and sustained maintenance of homeostasis.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T04:05:36.658878+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "14",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Nervous vs. Hormonal System - Comparing Control Systems",
+    "content": "## Question 5: System Comparison\n\nWhich of the following best explains why the hormonal system is better suited for maintaining blood glucose homeostasis than the nervous system?\n\nA) The hormonal system responds faster than the nervous system\nB) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments\nC) The nervous system is only found in the brain, not throughout the body\nD) The hormonal system controls all body functions, while the nervous system controls none",
+    "speech_to_text_content": "Which of the following best explains why the hormonal system is better suited for maintaining blood glucose homeostasis than the nervous system? A) The hormonal system responds faster than the nervous system. B) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments. C) The nervous system is only found in the brain, not throughout the body. D) The hormonal system controls all body functions, while the nervous system controls none.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-a",
+        "option_text": "A) The hormonal system responds faster than the nervous system",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
+        "option_text": "B) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-c",
+        "option_text": "C) The nervous system is only found in the brain, not throughout the body",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-d",
+        "option_text": "D) The hormonal system controls all body functions, while the nervous system controls none",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) The hormonal system can sustain its effects over long periods, while the nervous system only works for brief moments**.\n\n**Why this is correct**:\n\n1. **Blood glucose needs sustained control**: After you eat a meal, insulin needs to work for hours to help cells take up glucose and for the liver to store it as glycogen. This isn't a brief emergency - it's an ongoing process.\n\n2. **Hormones provide lasting effects**: Insulin stays in the bloodstream and continues to affect target organs as long as blood glucose is high. The effect is sustained and gradual.\n\n3. **Nervous system is too brief**: The nervous system works in milliseconds and stops as soon as the stimulus is gone. You can't use a system designed for quick reflexes to maintain steady glucose control over hours.\n\n4. **Glucose regulation happens continuously**: Between meals, glucagon is released to maintain glucose. This requires sustained hormonal control, not brief nervous impulses.\n\n**Why other options are incorrect**:\n- **Option A** is wrong because the nervous system actually responds FASTER than the hormonal system (milliseconds vs. seconds). Speed is not the advantage here.\n- **Option C** is wrong because the nervous system is found throughout the body, not just the brain. This is factually incorrect.\n- **Option D** is wrong because both systems control various body functions. This is a false statement.\n\n**Key concept from chapter**: The chapter emphasizes that hormones like insulin and glucagon provide sustained control of blood glucose, maintaining homeostasis over extended periods. This is a characteristic advantage of the hormonal system - long-lasting effects that maintain steady-state conditions.",
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T04:05:43.841969+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "15",
+    "type": "slide",
+    "question_type": null,
+    "title": "📚 Comprehensive Review: Homeostasis and Hormonal Control",
+    "content": "## Key Concepts Summary\n\n### 1️⃣ Homeostasis Basics\n\n::yellow[**Homeostasis**] = Maintenance of constant internal conditions despite external changes\n\n**Three Principles**:\n1. **Stimulus**: Change in environment\n2. **Corrective Mechanism**: Body's response\n3. **Negative Feedback**: Response opposes stimulus\n\n**Key Internal Conditions**:\n- Temperature: ~37°C\n- Blood glucose: 80-120 mg/dL\n- Blood pH: ~7.4\n- Water balance: Proper hydration\n- Blood pressure: ~120/80 mmHg\n\n### 2️⃣ Temperature Regulation\n\n**When TOO HOT**:\n- Vasodilation (blood vessels widen)\n- Sweating (evaporative cooling)\n- Behavioral responses (remove clothing)\n\n**When TOO COLD**:\n- Vasoconstriction (blood vessels narrow)\n- Shivering (heat production)\n- Goosebumps (insulation)\n- Behavioral responses (add clothing)\n\n**Control Center**: Hypothalamus\n**Sensors**: Thermoreceptors\n\n### 3️⃣ Hormones and Endocrine Glands\n\n::yellow[**Hormone**] = Chemical messenger produced by endocrine gland, carried by blood, affects target organs\n\n::yellow[**Endocrine Gland**] = Produces hormones, releases directly into blood\n\n**Key Endocrine Gland**: Islets of Langerhans (in pancreas)\n- Beta cells → Insulin\n- Alpha cells → Glucagon\n\n### 4️⃣ Blood Glucose Regulation\n\n**The Liver's Role**:\n- Glycogenesis: Glucose → Glycogen (storage)\n- Glycogenolysis: Glycogen → Glucose (release)\n- Gluconeogenesis: Non-carbs → Glucose (production)\n\n**Insulin** (::green[LOWERS] glucose):\n- Released when glucose is HIGH\n- Increases glucose uptake\n- Stimulates glycogen synthesis\n- Promotes fat synthesis\n\n**Glucagon** (::green[RAISES] glucose):\n- Released when glucose is LOW\n- Stimulates glycogen breakdown\n- Promotes glucose production\n- Stimulates fat breakdown\n\n### 5️⃣ Diabetes Mellitus\n\n**Type 1**:\n- Autoimmune destruction of beta cells\n- No insulin production\n- Childhood onset\n- Requires insulin injections\n\n**Type 2**:\n- Insulin resistance + low production\n- Adult onset (usually 40+)\n- Risk factors: obesity, sedentary lifestyle\n- Managed by lifestyle + oral meds ± insulin\n\n### 6️⃣ Water Balance (Osmoregulation)\n\n::yellow[**ADH**] (Anti-Diuretic Hormone):\n- Produced by: Hypothalamus\n- Released by: Pituitary gland\n- Target: Kidneys\n- Function: Controls water reabsorption\n\n**High ADH** (concentrated blood):\n- More water reabsorbed\n- Small volume, concentrated urine\n\n**Low ADH** (dilute blood):\n- Less water reabsorbed\n- Large volume, dilute urine\n\n### 7️⃣ Nervous vs. Hormonal System\n\n| Aspect | Nervous | Hormonal |\n|--------|---------|----------|\n| Speed | Very fast (ms) | Slower (sec-min) |\n| Duration | Brief | Long-lasting |\n| Range | Local | Whole body |\n| Signal | Electrical | Chemical |\n| Best for | Quick responses | Sustained control |\n\n## Connecting the Concepts\n\n### The Big Picture 🎯\n\nYour body uses TWO systems to maintain homeostasis:\n\n1. **Nervous System** ⚡\n   - Detects changes instantly\n   - Responds within milliseconds\n   - Controls immediate reactions\n   - Example: Pulling hand from hot surface\n\n2. **Hormonal System** 🔄\n   - Detects changes via osmoreceptors, thermoreceptors\n   - Responds within seconds to minutes\n   - Maintains steady-state conditions\n   - Example: Insulin controlling blood glucose\n\n### Integration in Real Life 🏃\n\n**Example: Intense Exercise**\n\n```\nYou start running\n        ↓\n🧠 NERVOUS SYSTEM (immediate)\n- Heart rate increases instantly\n- Blood vessels dilate to muscles\n- Pupils dilate\n        ↓\n🔄 HORMONAL SYSTEM (sustained)\n- Adrenal glands release adrenaline\n- Pancreas releases glucagon\n- Blood glucose increases\n- Body temperature rises\n- ADH increases (conserve water)\n        ↓\nResult: You can run for extended periods\n```\n\n**Example: Eating a Large Meal**\n\n```\nYou eat rice and bread\n        ↓\n🧠 NERVOUS SYSTEM (brief)\n- Taste receptors signal\n- Salivary glands produce saliva\n- Stomach begins contracting\n        ↓\n🔄 HORMONAL SYSTEM (sustained)\n- Glucose is absorbed\n- Insulin is released\n- Glucose uptake increases\n- Glycogen synthesis begins\n- Effect continues for hours\n        ↓\nResult: Blood glucose stays stable despite large meal\n```\n\n## Learning Outcomes Checklist ✅\n\nYou should now be able to:\n\n- ✅ Define homeostasis and explain why it's essential\n- ✅ Describe the three principles: stimulus, response, feedback\n- ✅ Explain temperature regulation mechanisms\n- ✅ Define hormones and endocrine glands\n- ✅ Describe the islets of Langerhans\n- ✅ Explain insulin and glucagon functions\n- ✅ Describe blood glucose regulation\n- ✅ Distinguish Type 1 and Type 2 diabetes\n- ✅ Identify risk factors and management of Type 2 diabetes\n- ✅ Explain ADH's role in water balance\n- ✅ Compare nervous and hormonal systems\n- ✅ Apply concepts to real-world situations\n\n> 💡 **Final Insight**: Homeostasis isn't a single system - it's the result of multiple systems (nervous, hormonal, excretory) working together in perfect coordination. Your body is an amazing example of biological engineering!",
+    "speech_to_text_content": "Homeostasis is the maintenance of constant internal conditions despite external changes through three principles: stimulus, corrective mechanism, and negative feedback. Temperature is regulated around 37 degrees Celsius through vasodilation and sweating when hot, and vasoconstriction and shivering when cold, controlled by the hypothalamus. Hormones are chemical messengers produced by endocrine glands that affect target organs. The islets of Langerhans in the pancreas contain beta cells that produce insulin and alpha cells that produce glucagon. Insulin lowers blood glucose by increasing uptake and storage, while glucagon raises blood glucose by promoting breakdown and production. Type 1 diabetes is autoimmune with no insulin production, while Type 2 involves insulin resistance and low production. Water balance is controlled by ADH which increases water reabsorption when blood is concentrated. The nervous system provides fast responses while the hormonal system provides sustained control, and together they maintain homeostasis.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T04:05:58.803006+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "16",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Comprehensive Assessment - Homeostasis Mechanisms",
+    "content": "## Question 6: Integrating Multiple Concepts\n\nA student becomes ill with a fever. Her body temperature rises to 39°C. Which of the following best explains the sequence of events that occurs?\n\nA) Thermoreceptors detect high temperature → hypothalamus signals → vasoconstriction and shivering → temperature decreases\nB) Thermoreceptors detect high temperature → hypothalamus signals → vasodilation and sweating → temperature decreases\nC) Insulin levels increase → blood glucose decreases → thermoreceptors detect change → temperature decreases\nD) ADH levels decrease → more water is lost → blood becomes concentrated → temperature increases",
+    "speech_to_text_content": "A student becomes ill with a fever. Her body temperature rises to 39 degrees Celsius. Which of the following best explains the sequence of events that occurs? A) Thermoreceptors detect high temperature, hypothalamus signals, vasoconstriction and shivering occur, temperature decreases. B) Thermoreceptors detect high temperature, hypothalamus signals, vasodilation and sweating occur, temperature decreases. C) Insulin levels increase, blood glucose decreases, thermoreceptors detect change, temperature decreases. D) ADH levels decrease, more water is lost, blood becomes concentrated, temperature increases.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-a",
+        "option_text": "A) Thermoreceptors detect high temperature → hypothalamus signals → vasoconstriction and shivering → temperature decreases",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-b",
+        "option_text": "B) Thermoreceptors detect high temperature → hypothalamus signals → vasodilation and sweating → temperature decreases",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-c",
+        "option_text": "C) Insulin levels increase → blood glucose decreases → thermoreceptors detect change → temperature decreases",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-d",
+        "option_text": "D) ADH levels decrease → more water is lost → blood becomes concentrated → temperature increases",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Thermoreceptors detect high temperature → hypothalamus signals → vasodilation and sweating → temperature decreases**.\n\n**Why this is correct**:\n\n1. **Thermoreceptors detect the fever**: When body temperature rises to 39°C (above the normal 37°C set point), thermoreceptors in the skin and hypothalamus detect this increase.\n\n2. **Hypothalamus processes the signal**: The hypothalamus acts as the body's thermostat. It receives signals that temperature is too high and initiates cooling responses.\n\n3. **Cooling mechanisms activate**:\n   - **Vasodilation**: Blood vessels near the skin surface dilate (widen), allowing more blood to flow to the skin where heat can be lost through radiation and convection\n   - **Sweating**: Sweat glands produce sweat, and evaporation of sweat removes significant heat energy from the body\n\n4. **Temperature decreases**: As heat is lost through these mechanisms, body temperature gradually returns toward normal (37°C).\n\n5. **Negative feedback**: Once temperature returns to normal, the cooling responses stop (feedback mechanism).\n\n**Why other options are incorrect**:\n\n- **Option A** is wrong because vasoconstriction and shivering are responses to COLD, not heat. These would increase temperature, making the fever worse, not better. This is the opposite of what the body needs.\n\n- **Option C** is wrong because insulin and blood glucose regulation are not involved in temperature control. Insulin affects glucose homeostasis, not temperature. This confuses two different homeostatic mechanisms.\n\n- **Option D** is wrong because ADH regulates water balance, not temperature. Also, ADH would increase (not decrease) during fever due to water loss through sweating, and this would not directly cause temperature decrease.\n\n**Key concept from chapter**: The chapter clearly states that in response to high temperature, the body activates vasodilation and sweating as cooling mechanisms, controlled by the hypothalamus through negative feedback. This is the correct temperature regulation response to fever.",
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T04:06:07.187657+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "17",
+    "type": "question",
+    "question_type": "fill",
+    "title": "Blood Glucose Regulation - Fill in the Blanks",
+    "content": "## Question 7: Blood Glucose Control\n\nComplete the following sentences about blood glucose regulation:\n\n1. When blood glucose is high after eating, the pancreas releases ::yellow[**___________**] from beta cells.\n\n2. Insulin acts on the ::yellow[**___________**] to convert excess glucose into glycogen for storage.\n\n3. When blood glucose is low between meals, ::yellow[**___________**] cells in the pancreas release glucagon.\n\n4. Glucagon stimulates the breakdown of glycogen (a process called ::yellow[**___________**]) to release glucose back into the blood.\n\n5. Type 2 diabetes is characterized by ::yellow[**___________**] where cells do not respond properly to insulin.",
+    "speech_to_text_content": "Complete the following sentences about blood glucose regulation. When blood glucose is high after eating, the pancreas releases blank from beta cells. Insulin acts on the blank to convert excess glucose into glycogen for storage. When blood glucose is low between meals, blank cells in the pancreas release glucagon. Glucagon stimulates the breakdown of glycogen, a process called blank, to release glucose back into the blood. Type 2 diabetes is characterized by blank where cells do not respond properly to insulin.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "answer_text": "1. insulin 2. liver 3. alpha 4. glycogenolysis 5. insulin resistance",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Correct answers**:\n\n1. **insulin** - Beta cells in the islets of Langerhans release insulin when blood glucose is high. Insulin is the storage hormone.\n\n2. **liver** - The liver is the primary organ for glucose storage. When insulin is present, the liver converts excess glucose into glycogen through glycogenesis.\n\n3. **alpha** - Alpha cells (also called α cells) in the islets of Langerhans release glucagon when blood glucose is low.\n\n4. **glycogenolysis** - This is the process of breaking down glycogen back into glucose. It's the opposite of glycogenesis. Glucagon stimulates this process when glucose is needed.\n\n5. **insulin resistance** - In Type 2 diabetes, cells become resistant to insulin, meaning they don't respond properly to insulin signals even though insulin is present. This is the key difference from Type 1 diabetes where there's no insulin production.\n\n**Key concepts from chapter**:\n- The chapter defines insulin as the hormone released by beta cells when glucose is high\n- The liver's role in glucose homeostasis includes glycogenesis, glycogenolysis, and gluconeogenesis\n- Alpha cells produce glucagon when glucose is low\n- Type 2 diabetes is characterized by insulin resistance and relative insulin deficiency\n- These are fundamental concepts that students must know to understand blood glucose regulation",
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T04:06:13.131721+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "18",
+    "type": "question",
+    "question_type": "open",
+    "title": "Extended Response - Homeostasis in Action",
+    "content": "## Question 8: Application Question\n\nA person has not eaten for 8 hours and has been studying in a warm room. Explain how the body maintains homeostasis in terms of:\n\n1. **Blood glucose regulation** - What hormones are involved and what do they do?\n2. **Temperature regulation** - How does the body respond to being in a warm room?\n3. **Water balance** - How might ADH levels change during this time?\n\nProvide a detailed explanation showing how these three systems work together to maintain homeostasis.",
+    "speech_to_text_content": "A person has not eaten for 8 hours and has been studying in a warm room. Explain how the body maintains homeostasis in terms of blood glucose regulation, temperature regulation, and water balance. What hormones are involved and what do they do? How does the body respond to being in a warm room? How might ADH levels change during this time? Provide a detailed explanation showing how these three systems work together to maintain homeostasis.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "answer_text": "A comprehensive answer should include: (1) Blood glucose: After 8 hours without food, blood glucose drops, alpha cells detect this, glucagon is released, liver breaks down glycogen through glycogenolysis and produces new glucose through gluconeogenesis, blood glucose returns to normal. (2) Temperature: In a warm room, body temperature tends to rise, thermoreceptors detect this, hypothalamus signals vasodilation and sweating, blood vessels dilate allowing heat loss, sweat evaporates removing heat, temperature returns to 37°C. (3) Water balance: Sweating causes water loss, blood becomes more concentrated, osmoreceptors detect this, ADH levels increase, kidneys reabsorb more water, urine becomes concentrated, water is conserved. Integration: All three systems work through negative feedback - each response opposes the stimulus and restores homeostasis.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Model answer - Key points that should be included**:\n\n### Blood Glucose Regulation (3 marks)\n\n✅ **Correct elements**:\n- After 8 hours without eating, blood glucose drops below normal (80 mg/dL)\n- Alpha cells in islets of Langerhans detect low glucose\n- Glucagon is released into bloodstream\n- Glucagon stimulates liver to:\n  - Break down glycogen → glucose (glycogenolysis)\n  - Produce new glucose from amino acids (gluconeogenesis)\n- Blood glucose returns to normal range\n- This is negative feedback - response opposes the stimulus\n\n### Temperature Regulation (3 marks)\n\n✅ **Correct elements**:\n- In a warm room, body temperature tends to rise\n- Thermoreceptors in skin and hypothalamus detect temperature increase\n- Hypothalamus acts as thermostat and signals cooling responses\n- Vasodilation: Blood vessels near skin dilate, more blood to surface, heat loss through radiation/convection\n- Sweating: Sweat glands produce sweat, water evaporates removing heat energy\n- Behavioral: May remove clothing, increase water intake\n- Temperature returns to 37°C set point\n- Negative feedback stops responses when temperature returns to normal\n\n### Water Balance (3 marks)\n\n✅ **Correct elements**:\n- Sweating causes significant water loss\n- Blood becomes more concentrated (lower water potential)\n- Osmoreceptors in hypothalamus detect concentrated blood\n- Hypothalamus releases more ADH\n- ADH acts on kidney collecting ducts\n- Kidneys reabsorb more water from filtrate\n- Urine becomes small volume and concentrated\n- Water is conserved to replace losses from sweating\n- Negative feedback: When blood returns to normal osmotic potential, ADH decreases\n\n### Integration/Negative Feedback (2 marks)\n\n✅ **Correct elements**:\n- All three systems use negative feedback\n- Each response opposes or reverses the initial stimulus\n- Systems work together to maintain homeostasis\n- Example: Sweating helps cool body but causes water loss, which is compensated by ADH\n- Multiple systems coordinate to maintain stable internal conditions\n\n**Total: 11 marks possible**\n\n**Common errors to avoid**:\n- ❌ Confusing insulin (storage) with glucagon (release)\n- ❌ Saying shivering occurs in a warm room (shivering is for cold)\n- ❌ Saying ADH decreases when sweating (ADH increases to conserve water)\n- ❌ Not mentioning negative feedback or how responses stop\n- ❌ Not explaining the mechanism - just stating facts\n- ❌ Forgetting that multiple systems work together\n\n**Key concepts from chapter**:\nThe chapter emphasizes that homeostasis operates through stimulus → detection → response → negative feedback. Students must understand that glucagon (not insulin) is released when glucose is low, that vasodilation and sweating (not vasoconstriction and shivering) occur when hot, and that ADH increases (not decreases) when blood is concentrated.",
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T04:06:23.776488+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "19",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎯 Key Takeaways and Real-World Applications",
+    "content": "## Why This Matters: Real-World Applications 🌍\n\n### Understanding Homeostasis Helps You:\n\n#### 1. 🏥 Understand Health and Disease\n\n**Diabetes**: Understanding insulin and glucagon helps explain why diabetics need to monitor blood glucose and manage diet\n\n**Fever**: Understanding temperature regulation explains why your body sweats when fighting infection\n\n**Dehydration**: Understanding ADH explains why you get thirsty and why excessive sweating is dangerous\n\n#### 2. 💪 Make Better Health Choices\n\n**Exercise**: Knowing that physical activity improves insulin sensitivity helps explain why exercise prevents Type 2 diabetes\n\n**Diet**: Understanding glucose regulation helps explain why refined carbohydrates cause rapid glucose spikes\n\n**Sleep**: Understanding that hormones regulate many functions helps explain why sleep is important for health\n\n#### 3. 🚑 Recognize Warning Signs\n\n**Diabetes symptoms**:\n- Excessive thirst (polydipsia) → Sign of high blood glucose\n- Frequent urination (polyuria) → Glucose in urine\n- Unexplained weight loss → Body breaking down fat for energy\n\n**Heat exhaustion**:\n- Excessive sweating → ADH trying to conserve water\n- Dizziness → Blood volume decreasing\n- Confusion → Brain not getting enough oxygen\n\n#### 4. 🧬 Understand Modern Medicine\n\n**Insulin pumps**: Deliver insulin continuously, mimicking natural pancreas function\n\n**Glucose monitors**: Help diabetics track blood glucose in real-time\n\n**Hormone replacement**: Understanding hormones helps treat deficiencies (thyroid, growth hormone, etc.)\n\n### Singapore Context 🇸🇬\n\n#### Rising Type 2 Diabetes in Singapore\n\n- **Problem**: Singapore has one of the highest Type 2 diabetes rates in Asia\n- **Causes**: \n  - Urbanization and sedentary lifestyle\n  - Dietary changes (processed foods, sugary drinks)\n  - Aging population\n  - Genetic factors in Asian populations\n\n- **Solutions**:\n  - Health promotion campaigns (HPB initiatives)\n  - Workplace wellness programs\n  - Subsidized health screenings\n  - Education about diet and exercise\n\n#### Heat and Humidity Challenges\n\n- **Singapore's tropical climate**: High temperature and humidity\n- **Homeostatic challenges**: \n  - Increased sweating and water loss\n  - Higher risk of heat exhaustion\n  - ADH working overtime to conserve water\n- **Practical implications**:\n  - Need to drink more water\n  - Outdoor workers at higher risk\n  - Importance of breaks and shade\n\n### Career Connections 💼\n\nUnderstanding homeostasis is crucial for:\n\n- **Doctors and Nurses**: Diagnose and treat homeostatic imbalances\n- **Nutritionists**: Design diets to manage blood glucose\n- **Exercise Physiologists**: Design programs to improve insulin sensitivity\n- **Public Health Officials**: Create campaigns to prevent Type 2 diabetes\n- **Pharmaceutical Researchers**: Develop new diabetes medications\n- **Athletes and Coaches**: Understand temperature regulation during training\n\n## Practical Tips for Maintaining Homeostasis 💡\n\n### Temperature Regulation\n\n✅ **Do**:\n- Dress appropriately for weather\n- Stay hydrated\n- Take breaks in shade during hot weather\n- Exercise during cooler times of day\n\n❌ **Don't**:\n- Exercise in extreme heat without breaks\n- Ignore signs of heat exhaustion\n- Wear inappropriate clothing\n\n### Blood Glucose Management\n\n✅ **Do**:\n- Eat balanced meals with fiber\n- Choose whole grains over refined carbs\n- Limit sugary drinks\n- Exercise regularly\n- Maintain healthy weight\n\n❌ **Don't**:\n- Skip meals\n- Eat large amounts of sugar\n- Be sedentary for long periods\n- Ignore family history of diabetes\n\n### Water Balance\n\n✅ **Do**:\n- Drink water regularly throughout day\n- Drink more when exercising or in hot weather\n- Monitor urine color (pale yellow = well hydrated)\n- Replace electrolytes during intense exercise\n\n❌ **Don't**:\n- Drink only when thirsty (thirst is late indicator)\n- Drink too much water at once (can dilute blood dangerously)\n- Ignore signs of dehydration\n\n## Summary of Learning 📝\n\n### Essential Concepts\n\n1. ::yellow[**Homeostasis**] = Stability through negative feedback\n2. ::yellow[**Temperature**] = Controlled by hypothalamus via vasodilation/vasoconstriction and sweating/shivering\n3. ::yellow[**Glucose**] = Controlled by insulin (lower) and glucagon (raise) from pancreas\n4. ::yellow[**Water**] = Controlled by ADH from pituitary gland\n5. ::yellow[**Systems integration**] = Nervous system (fast) + Hormonal system (sustained) = Perfect balance\n\n### Critical Thinking Questions\n\n- Why would someone with Type 1 diabetes experience weight loss before treatment?\n- How would a person's urine change if they drank 2 liters of water in 30 minutes?\n- Why is the hypothalamus called the \"master gland\" of homeostasis?\n- How would a person's body respond differently to cold if they had low thyroid hormone?\n\n> 💡 **Final Thought**: Your body is constantly working to maintain perfect balance. Every second, billions of cells are communicating through nerves and hormones, detecting changes and responding to keep you alive and healthy. Homeostasis is not a destination - it's a dynamic process that never stops!",
+    "speech_to_text_content": "Understanding homeostasis helps you understand health and disease, make better health choices, recognize warning signs, and understand modern medicine. In Singapore, there is a rising problem with Type 2 diabetes due to urbanization, dietary changes, and aging population. Singapore's tropical climate with high temperature and humidity creates challenges for temperature regulation and water balance. Understanding homeostasis is important for careers in medicine, nutrition, exercise physiology, and public health. To maintain homeostasis, dress appropriately for weather, stay hydrated, eat balanced meals with fiber, choose whole grains, limit sugar, exercise regularly, and drink water regularly throughout the day. The essential concepts are homeostasis equals stability through negative feedback, temperature is controlled by the hypothalamus, glucose is controlled by insulin and glucagon, water is controlled by ADH, and nervous and hormonal systems work together for perfect balance.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T04:06:37.707816+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "biology_o_level_chapter_9",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "20",
+    "type": "question",
+    "question_type": "boolean",
+    "title": "True or False - Homeostasis Concepts",
+    "content": "## Question 9: True or False Questions\n\nAnswer True or False for each statement:\n\n1. **Insulin is released when blood glucose is low.** \n   - True / False\n\n2. **The hypothalamus controls both temperature regulation and water balance.**\n   - True / False\n\n3. **Type 1 diabetes is caused by poor diet and lack of exercise.**\n   - True / False\n\n4. **Sweating is an example of a response to high body temperature.**\n   - True / False\n\n5. **The nervous system provides faster responses than the hormonal system.**\n   - True / False",
+    "speech_to_text_content": "Answer True or False for each statement. Insulin is released when blood glucose is low. The hypothalamus controls both temperature regulation and water balance. Type 1 diabetes is caused by poor diet and lack of exercise. Sweating is an example of a response to high body temperature. The nervous system provides faster responses than the hormonal system.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440021",
+        "answer_text": "1. False 2. True 3. False 4. True 5. True",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Correct Answers and Explanations**:\n\n1. **FALSE** - Insulin is released when blood glucose is ::red[**HIGH**], not low. When glucose is high (after eating), beta cells release insulin to lower blood glucose. When glucose is low, glucagon (not insulin) is released. This is a critical concept for understanding blood glucose regulation.\n\n2. **TRUE** - The hypothalamus controls both:\n   - **Temperature regulation**: Acts as the body's thermostat, detecting temperature changes and coordinating heating/cooling responses\n   - **Water balance**: Contains osmoreceptors that detect blood concentration and controls ADH release to regulate water reabsorption\n   - The hypothalamus is the master control center for homeostasis\n\n3. **FALSE** - Type 1 diabetes is an ::red[**autoimmune disease**], not caused by diet or lifestyle. The immune system attacks beta cells, destroying their ability to produce insulin. This is different from Type 2 diabetes, which is associated with lifestyle factors. People with Type 1 diabetes cannot prevent it through diet or exercise alone.\n\n4. **TRUE** - Sweating is a response to ::green[**high body temperature**]. When body temperature rises above 37°C, sweat glands produce sweat, and evaporation of water removes heat energy from the body. This is one of the main cooling mechanisms, along with vasodilation.\n\n5. **TRUE** - The nervous system responds in ::green[**milliseconds**] (very fast), while the hormonal system responds in ::green[**seconds to minutes**] (slower). This is why the nervous system handles immediate threats (like pulling your hand from a hot surface) while the hormonal system maintains steady-state conditions (like regulating blood glucose).\n\n**Key concepts from chapter**:\n- Insulin is the storage hormone released when glucose is high\n- Glucagon is the release hormone released when glucose is low\n- The hypothalamus is the control center for both temperature and water balance\n- Type 1 is autoimmune; Type 2 is lifestyle-related\n- Sweating and vasodilation are cooling responses\n- Nervous system is faster; hormonal system is more sustained",
+    "created_at": "2024-01-15T13:00:00Z",
+    "updated_at": "2024-01-15T13:00:00Z",
+    "source_timestamp": "2024-01-15T13:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T04:06:44.455718+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

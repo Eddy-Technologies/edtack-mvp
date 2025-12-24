@@ -38,6 +38,7 @@ export type Database = {
         Row: {
           description: string | null;
           display_name: string;
+          lesson: string | null;
           level: number;
           name: string;
           parent_id: string | null;
@@ -47,6 +48,7 @@ export type Database = {
         Insert: {
           description?: string | null;
           display_name: string;
+          lesson?: string | null;
           level: number;
           name: string;
           parent_id?: string | null;
@@ -56,6 +58,7 @@ export type Database = {
         Update: {
           description?: string | null;
           display_name?: string;
+          lesson?: string | null;
           level?: number;
           name?: string;
           parent_id?: string | null;
@@ -491,6 +494,100 @@ export type Database = {
           level_type?: string;
         };
         Relationships: [];
+      };
+      mark_responses: {
+        Row: {
+          assessment: string;
+          created_at: string | null;
+          id: string;
+          key_concepts: string[] | null;
+          processing_time_ms: number | null;
+          proposed_answer: string | null;
+          score: Json | null;
+          status: string | null;
+          submission_id: string;
+        };
+        Insert: {
+          assessment: string;
+          created_at?: string | null;
+          id?: string;
+          key_concepts?: string[] | null;
+          processing_time_ms?: number | null;
+          proposed_answer?: string | null;
+          score?: Json | null;
+          status?: string | null;
+          submission_id: string;
+        };
+        Update: {
+          assessment?: string;
+          created_at?: string | null;
+          id?: string;
+          key_concepts?: string[] | null;
+          processing_time_ms?: number | null;
+          proposed_answer?: string | null;
+          score?: Json | null;
+          status?: string | null;
+          submission_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'mark_responses_submission_id_fkey';
+            columns: ['submission_id'];
+            isOneToOne: false;
+            referencedRelation: 'mark_submissions';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      mark_submissions: {
+        Row: {
+          content_text: string | null;
+          created_at: string | null;
+          file_name: string | null;
+          file_size: number | null;
+          file_type: string | null;
+          file_url: string | null;
+          id: string;
+          status: string;
+          submission_type: string;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          content_text?: string | null;
+          created_at?: string | null;
+          file_name?: string | null;
+          file_size?: number | null;
+          file_type?: string | null;
+          file_url?: string | null;
+          id?: string;
+          status?: string;
+          submission_type: string;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          content_text?: string | null;
+          created_at?: string | null;
+          file_name?: string | null;
+          file_size?: number | null;
+          file_type?: string | null;
+          file_url?: string | null;
+          id?: string;
+          status?: string;
+          submission_type?: string;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'mark_submissions_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       message_feedback: {
         Row: {
@@ -1031,6 +1128,7 @@ export type Database = {
         Row: {
           content: string;
           created_at: string | null;
+          has_slides: boolean | null;
           id: string;
           sender: string | null;
           thread_id: string;
@@ -1039,6 +1137,7 @@ export type Database = {
         Insert: {
           content: string;
           created_at?: string | null;
+          has_slides?: boolean | null;
           id?: string;
           sender?: string | null;
           thread_id: string;
@@ -1047,6 +1146,7 @@ export type Database = {
         Update: {
           content?: string;
           created_at?: string | null;
+          has_slides?: boolean | null;
           id?: string;
           sender?: string | null;
           thread_id?: string;

@@ -1,0 +1,784 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-47g8-h9i0-j1k2l3m4n5o6",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Patterns in the Periodic Table - Chapter Overview",
+    "content": "## Welcome to Patterns in the Periodic Table\n\nThe ::yellow[Periodic Table] is one of the most important tools in chemistry. In this chapter, you will discover how elements are organized and how their properties follow predictable patterns.\n\n### What You'll Learn\n\n- 📊 How the ::yellow[Periodic Table] is organized by atomic number and electron configuration\n- 🔄 The ::yellow[periodic trends] that show how properties change across periods and down groups\n- 🧪 Why elements in the same ::blue[group] have similar chemical properties\n- ⚛️ How ::yellow[valence electrons] determine an element's behavior\n- 🌍 The special properties of ::blue[Group 1 (Alkali Metals)], ::blue[Group 17 (Halogens)], and ::blue[Group 18 (Noble Gases)]\n- 🎨 The unique characteristics of ::blue[Transition Elements]\n- 📈 The ::yellow[Reactivity Series] and how to predict which metals are more reactive\n\n### Why This Matters\n\nUnderstanding periodic patterns helps us:\n- Predict how elements will behave without memorizing everything\n- Understand why certain materials are useful in industry\n- Explain chemical reactions and properties\n- Design new materials and compounds\n\n> 💡 **Key Insight**: The Periodic Table isn't random—it's organized by the structure of atoms, and this structure determines everything about how elements behave!",
+    "speech_to_text_content": "Welcome to Patterns in the Periodic Table. The Periodic Table is one of the most important tools in chemistry. In this chapter, you will discover how elements are organized and how their properties follow predictable patterns. You will learn how the Periodic Table is organized by atomic number and electron configuration, the periodic trends that show how properties change across periods and down groups, why elements in the same group have similar chemical properties, how valence electrons determine an element's behavior, the special properties of Group 1, Group 17, and Group 18, the unique characteristics of Transition Elements, and the Reactivity Series. Understanding periodic patterns helps us predict how elements will behave, understand why certain materials are useful in industry, explain chemical reactions and properties, and design new materials and compounds.",
+    "answer": null,
+    "options": [],
+    "explanation": "This introduction establishes the scope and importance of periodic patterns in chemistry. It previews all major topics covered in the chapter including periodic trends, group properties, transition elements, and the reactivity series.",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T04:08:32.251118+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "b2c3d4e5-f6g7-48h9-i0j1-k2l3m4n5o6p7",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "1",
+    "type": "slide",
+    "question_type": null,
+    "title": "📋 The Organization of the Periodic Table",
+    "content": "## How the Periodic Table is Organized\n\nThe ::yellow[Periodic Table] is an arrangement of all known elements organized by their ::yellow[proton number] (also called atomic number). This organization reveals the fundamental patterns in chemistry.\n\n### Key Structural Features\n\n**Periods** (Horizontal Rows)\n- The table has ::blue[7 periods], numbered 1 to 7\n- Each period represents a new electron shell\n- For example: Period 2 elements have 2 electron shells, Period 3 elements have 3 electron shells\n- As you move across a period from left to right, the proton number increases by 1\n\n**Groups** (Vertical Columns)\n- The table has ::blue[18 groups], numbered 1 to 18\n- Each group contains elements with the same number of ::yellow[valence electrons] (outer shell electrons)\n- For example: All Group 1 elements have 1 valence electron, all Group 17 elements have 7 valence electrons\n- Elements in the same group show similar chemical properties\n\n### The Connection Between Position and Atomic Structure\n\n> 💡 **Critical Understanding**: An element's position in the Periodic Table directly relates to:\n> - Its ::yellow[proton number] (increases left to right, top to bottom)\n> - Its ::yellow[electronic configuration] (determines chemical behavior)\n> - The number of electron shells (determines period)\n> - The number of valence electrons (determines group)\n\n### States of Matter at Room Temperature\n\nAt room temperature and pressure (r.t.p), elements exist in different states:\n- **Solids**: Most elements (metals and non-metals)\n- **Liquids**: ::red[Mercury (Hg) and Bromine (Br)] - only two!\n- **Gases**: ::blue[Hydrogen (H₂), Fluorine (F₂), Oxygen (O₂), Nitrogen (N₂), Chlorine (Cl₂), and all Noble Gases]\n\n### Why This Organization Matters\n\nMendeleev's original organization has been refined into the modern Periodic Table because it shows the ::yellow[recurring relationship] between:\n- An element's atomic number\n- Its electronic configuration  \n- Its chemical and physical properties\n\nThis means if you know where an element sits in the table, you can predict many of its properties!",
+    "speech_to_text_content": "The Periodic Table is an arrangement of all known elements organized by their proton number or atomic number. The table has 7 periods, numbered 1 to 7, where each period represents a new electron shell. It also has 18 groups, numbered 1 to 18, where each group contains elements with the same number of valence electrons. An element's position in the Periodic Table directly relates to its proton number, electronic configuration, the number of electron shells, and the number of valence electrons. At room temperature and pressure, most elements are solids, but mercury and bromine are liquids, and hydrogen, fluorine, oxygen, nitrogen, chlorine, and all noble gases are gases. The modern Periodic Table shows the recurring relationship between an element's atomic number, its electronic configuration, and its chemical and physical properties.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide covers the fundamental organization of the Periodic Table, explaining periods, groups, and how an element's position relates to its atomic structure. It establishes the foundational concept that the table is organized by proton number and that this organization reflects electronic configuration patterns.",
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T04:08:39.431235+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "c3d4e5f6-g7h8-49i0-j1k2-l3m4n5o6p7q8",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "2",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚛️ Periodic Trends: How Properties Change Across Periods",
+    "content": "## Physical Properties Across a Period\n\n### Metallic to Non-Metallic Character\n\nAs you move from ::red[left to right] across a period, a dramatic change occurs:\n\n- **Left side (Groups 1-2)**: ::yellow[Metallic elements] - shiny, conduct electricity, malleable\n- **Middle**: Transition from metallic to non-metallic character\n- **Right side (Groups 13-17)**: ::yellow[Non-metallic elements] - dull, don't conduct electricity well, brittle\n\n### Example: Period 2 (Li, Be, B, C, N, O, F, Ne)\n\n| Element | Character | Properties |\n|---------|-----------|------------|\n| Li, Be | ::yellow[Metallic] | Conduct electricity, malleable |\n| B, C | ::yellow[Metalloid/Transition] | Intermediate properties |\n| N, O, F | ::yellow[Non-metallic] | Poor conductors, brittle |\n\n### Why Does This Happen?\n\nThe key is ::yellow[valence electrons]:\n- Elements with **few valence electrons** (1-3) tend to ::green[lose electrons] → metallic character\n- Elements with **many valence electrons** (5-7) tend to ::green[gain electrons] → non-metallic character\n- Elements with **4 valence electrons] sit in the middle\n\n### Chemical Properties Across a Period\n\nAs you move left to right:\n\n1. **Type of bonding in compounds changes**:\n   - Left: ::yellow[Ionic compounds] (e.g., Na⁺Cl⁻)\n   - Middle: ::yellow[Covalent compounds] with mixed character\n   - Right: ::yellow[Covalent compounds] (e.g., Cl₂, CO₂)\n\n2. **Oxides change from basic to acidic**:\n   - **Basic oxides** (left): Na₂O, MgO - react with acids\n   - **Amphoteric oxides** (middle): Al₂O₃ - react with both acids and bases\n   - **Acidic oxides** (right): CO₂, Cl₂O₇ - react with bases\n\n### The Relationship Between Valence Electrons and Properties\n\n::red[**This is crucial**]: The number of valence electrons (which equals the group number) determines:\n- How easily an atom loses or gains electrons\n- What charge its ion will have\n- What compounds it will form\n- How it will react with other elements\n\n> 💡 **Remember**: Across a period, as valence electrons increase, the element becomes less metallic and more non-metallic. This is because atoms with more valence electrons prefer to gain electrons rather than lose them.",
+    "speech_to_text_content": "As you move from left to right across a period, the character of elements changes from metallic to non-metallic. The left side contains metallic elements that are shiny and conduct electricity, while the right side contains non-metallic elements that are dull and don't conduct electricity well. The key to understanding this change is valence electrons. Elements with few valence electrons tend to lose electrons and have metallic character, while elements with many valence electrons tend to gain electrons and have non-metallic character. The type of bonding in compounds also changes across a period, from ionic on the left to covalent on the right. The oxides formed also change from basic on the left to acidic on the right. The number of valence electrons, which equals the group number, determines how easily an atom loses or gains electrons, what charge its ion will have, and how it will react with other elements.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide explains the periodic trend of metallic to non-metallic character across periods, connecting it to valence electrons and the resulting changes in bonding and oxide properties. It provides concrete examples and emphasizes the relationship between electronic configuration and chemical behavior.",
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T04:08:47.114149+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "d4e5f6g7-h8i9-50j0-k1l2-m3n4o5p6q7r8",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Valence Electrons and Ionic Charge",
+    "content": "## Understanding Valence Electrons\n\n::yellow[Valence electrons] are the electrons in the outermost shell of an atom. They are the electrons involved in chemical bonding and determine how an atom will react.\n\n### The Group Number Tells You Valence Electrons\n\nFor elements in Groups 1-18:\n- **Group number = Number of valence electrons**\n- Group 1: 1 valence electron\n- Group 2: 2 valence electrons\n- Group 13: 3 valence electrons\n- Group 14: 4 valence electrons\n- Group 15: 5 valence electrons\n- Group 16: 6 valence electrons\n- Group 17: 7 valence electrons\n- Group 18: 8 valence electrons (or 2 for He)\n\n### Predicting Ionic Charge for First 20 Elements\n\nThe number of valence electrons determines the charge of the ion an element will form:\n\n**Metals (Groups 1, 2, 13)** - ::green[Lose electrons to form positive ions]:\n- Group 1 elements: Lose 1 electron → charge of +1 (e.g., Na⁺, K⁺)\n- Group 2 elements: Lose 2 electrons → charge of +2 (e.g., Mg²⁺, Ca²⁺)\n- Group 13 elements: Lose 3 electrons → charge of +3 (e.g., Al³⁺)\n\n**Non-metals (Groups 15, 16, 17)** - ::green[Gain electrons to form negative ions]:\n- Group 15 elements: Gain 3 electrons → charge of -3 (e.g., N³⁻, P³⁻)\n- Group 16 elements: Gain 2 electrons → charge of -2 (e.g., O²⁻, S²⁻)\n- Group 17 elements: Gain 1 electron → charge of -1 (e.g., Cl⁻, Br⁻)\n\n### Why This Pattern?\n\nAtoms \"want\" to achieve a ::yellow[stable octet] (8 valence electrons) or ::yellow[stable duplet] (2 valence electrons for H, He, Li, Be).\n\n- **Atoms with few valence electrons** find it easier to ::green[lose] them\n- **Atoms with many valence electrons** find it easier to ::green[gain] them\n\n### Example: Sodium (Na) vs Chlorine (Cl)\n\n**Sodium (Na)** - Group 1\n- Has 1 valence electron\n- Loses 1 electron to become Na⁺\n- Now has 8 valence electrons (stable octet)\n\n**Chlorine (Cl)** - Group 17\n- Has 7 valence electrons\n- Gains 1 electron to become Cl⁻\n- Now has 8 valence electrons (stable octet)\n\n> ⚠️ **Important**: This pattern applies to the first 20 elements (up to Calcium). Transition elements have more complex behavior because they can lose electrons from multiple shells.",
+    "speech_to_text_content": "Valence electrons are the electrons in the outermost shell of an atom. The group number tells you the number of valence electrons. For example, Group 1 has 1 valence electron, Group 2 has 2 valence electrons, and Group 17 has 7 valence electrons. The number of valence electrons determines the charge of the ion an element will form. Metals in Groups 1, 2, and 13 lose electrons to form positive ions, while non-metals in Groups 15, 16, and 17 gain electrons to form negative ions. Atoms want to achieve a stable octet with 8 valence electrons. Atoms with few valence electrons find it easier to lose them, while atoms with many valence electrons find it easier to gain them. For example, sodium in Group 1 has 1 valence electron and loses it to become Na+ with a charge of plus 1. Chlorine in Group 17 has 7 valence electrons and gains 1 electron to become Cl- with a charge of minus 1. This pattern applies to the first 20 elements.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide explains valence electrons and their relationship to group number and ionic charge. It provides the systematic pattern for predicting ionic charges based on valence electron count and explains the underlying concept of achieving a stable octet.",
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T04:08:54.794654+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "e5f6g7h8-i9j0-51k1-l2m3-n4o5p6q7r8s9",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "4",
+    "type": "slide",
+    "question_type": null,
+    "title": "👥 Group Trends: Why Elements in the Same Group Are Similar",
+    "content": "## The Importance of Groups\n\nElements in the same ::yellow[group] (vertical column) have remarkably similar chemical properties. This is because they all have the ::yellow[same number of valence electrons].\n\n### Electronic Configuration Similarity\n\nAll elements in a group have the same number of valence electrons, which means:\n- They form ions with the same charge\n- They form compounds with the same formulas\n- They react in similar ways\n- They have similar chemical behavior\n\n### Example: Group 1 (Alkali Metals)\n\n- **Lithium (Li)**: 1s² 2s¹ → 1 valence electron\n- **Sodium (Na)**: 1s² 2s² 2p⁶ 3s¹ → 1 valence electron\n- **Potassium (K)**: [Ar] 4s¹ → 1 valence electron\n\nAll form ions with +1 charge: Li⁺, Na⁺, K⁺\nAll form similar compounds: LiCl, NaCl, KCl\n\n### Example: Group 17 (Halogens)\n\n- **Fluorine (F)**: 1s² 2s² 2p⁵ → 7 valence electrons\n- **Chlorine (Cl)**: [Ne] 3s² 3p⁵ → 7 valence electrons\n- **Bromine (Br)**: [Ar] 3d¹⁰ 4s² 4p⁵ → 7 valence electrons\n\nAll form ions with -1 charge: F⁻, Cl⁻, Br⁻\nAll form similar compounds: HF, HCl, HBr\n\n### Why Electronic Configuration Matters\n\nThe ::blue[electronic configuration] (arrangement of electrons) determines:\n- How many electrons an atom can lose or gain\n- What bonds it will form\n- How it will react with other elements\n- What compounds it will form\n\n> 💡 **Key Principle**: Elements in the same group have the same electronic configuration in their valence shell, so they behave similarly chemically. The only difference is that they have more electron shells as you go down the group.",
+    "speech_to_text_content": "Elements in the same group have the same number of valence electrons, which means they form ions with the same charge, form compounds with the same formulas, and react in similar ways. All elements in Group 1 have 1 valence electron and form ions with a plus 1 charge. All elements in Group 17 have 7 valence electrons and form ions with a minus 1 charge. The electronic configuration determines how many electrons an atom can lose or gain, what bonds it will form, and what compounds it will form. Elements in the same group have the same electronic configuration in their valence shell, so they behave similarly chemically.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide explains why elements in the same group have similar properties by focusing on their identical valence electron configuration. It provides concrete examples with Group 1 and Group 17 to illustrate the principle.",
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T04:09:00.530138+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "f6g7h8i9-j0k1-52l2-m3n4-o5p6q7r8s9t0",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Group 1: The Alkali Metals",
+    "content": "## Group 1 Elements: Lithium, Sodium, and Potassium\n\nThe Group 1 elements are known as the ::yellow[alkali metals]. They are a fascinating collection of elements that show clear trends in their properties.\n\n### Physical Properties\n\n**Appearance and Texture**\n- ::yellow[Soft metals] that can be cut easily with a knife\n- Shiny surface (though they tarnish quickly in air)\n- Low density - Li, Na, and K all ::green[float on water]!\n\n**Melting and Boiling Points**\n- Relatively low compared to other metals\n- ::red[Trend down the group]: Melting point **decreases** as you go down\n  - Lithium: 181°C\n  - Sodium: 98°C\n  - Potassium: 63°C\n\n**Density**\n- Very low density compared to most metals\n- Increases slightly down the group\n\n### Chemical Properties\n\n**Reactivity with Water**\nAll alkali metals react vigorously with water:\n\n- **Lithium**: Reacts steadily, producing hydrogen gas and lithium hydroxide\n  - 2Li(s) + 2H₂O(l) → 2LiOH(aq) + H₂(g)↑\n\n- **Sodium**: Reacts more vigorously, often ignites the hydrogen gas produced\n  - 2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)↑\n\n- **Potassium**: Reacts very vigorously, hydrogen gas ignites spontaneously (burns with purple flame)\n  - 2K(s) + 2H₂O(l) → 2KOH(aq) + H₂(g)↑\n\n> ⚠️ **Observation**: As you go down the group, the reaction becomes more vigorous!\n\n### Why Reactivity Increases Down the Group\n\nThe key is ::yellow[atomic size] and ::yellow[metallic bonding]:\n\n1. **Atomic size increases** as you go down (more electron shells)\n2. **Valence electrons get farther from nucleus** → weaker attraction\n3. **Metallic bonding becomes weaker** → electrons are lost more easily\n4. **Result**: Atoms lose their single valence electron more readily\n\n### Ionic Compounds\n\nAll Group 1 elements form similar ionic compounds:\n- **Charge**: +1 (they lose their 1 valence electron)\n- **Compounds**: NaCl, KCl, LiBr, KNO₃, etc.\n- **Properties of compounds**:\n  - White solids at room temperature\n  - Soluble in water\n  - Form colorless solutions\n\n### Practical Applications\n\n- **Sodium**: Used in street lamps (sodium vapor lamps), production of chemicals\n- **Potassium**: Used in fertilizers, medical applications\n- **Lithium**: Used in batteries, psychiatric medications\n\n> 💡 **Remember**: The trend in reactivity is important! Potassium is much more reactive than lithium, which is why it must be stored under oil to prevent reaction with water vapor in air.",
+    "speech_to_text_content": "Group 1 elements are known as the alkali metals, including lithium, sodium, and potassium. They are soft metals that can be cut easily with a knife and have low density. Lithium, sodium, and potassium all float on water. The melting point decreases down the group: lithium at 181 degrees Celsius, sodium at 98 degrees Celsius, and potassium at 63 degrees Celsius. All alkali metals react vigorously with water. Lithium reacts steadily, sodium reacts more vigorously and often ignites the hydrogen gas produced, and potassium reacts very vigorously with the hydrogen gas igniting spontaneously with a purple flame. As you go down the group, the reaction becomes more vigorous. The reactivity increases down the group because atomic size increases, valence electrons get farther from the nucleus, metallic bonding becomes weaker, and atoms lose their single valence electron more readily. All Group 1 elements form similar ionic compounds with a plus 1 charge, such as sodium chloride and potassium chloride. These compounds are white solids that are soluble in water and form colorless solutions. Sodium is used in street lamps and chemical production, potassium is used in fertilizers and medical applications, and lithium is used in batteries and psychiatric medications.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide comprehensively covers Group 1 alkali metals, including their physical properties (softness, low density, floating on water), chemical properties (reactions with water showing increasing reactivity), and the explanation for why reactivity increases down the group. It provides specific examples of compounds and practical applications.",
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T04:09:10.611567+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "g7h8i9j0-k1l2-53m3-n4o5-p6q7r8s9t0u1",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Group 17: The Halogens",
+    "content": "## Group 17 Elements: Fluorine, Chlorine, Bromine, and Iodine\n\nThe Group 17 elements are known as the ::yellow[halogens]. They are a collection of highly reactive non-metals with fascinating and varied properties.\n\n### Physical Properties\n\n**Structure**\n- All halogens exist as ::yellow[diatomic molecules]: F₂, Cl₂, Br₂, I₂\n- Simple molecular structure with weak intermolecular forces\n\n**Color and Appearance**\n- ::yellow[Fluorine (F₂)]: Yellow gas\n- ::yellow[Chlorine (Cl₂)]: Green gas\n- ::yellow[Bromine (Br₂)]: Brown liquid (evaporates to form brown vapor)\n- ::yellow[Iodine (I₂)]: Black solid (sublimes to form purple gas)\n- In aqueous solution, iodine appears brown\n\n### Melting and Boiling Points\n\nThese increase down the group due to stronger intermolecular forces:\n\n| Halogen | State at r.t.p | M.P. (°C) | B.P. (°C) |\n|---------|---|---|---|\n| ::yellow[Fluorine] | Gas | -220 | -188 |\n| ::yellow[Chlorine] | Gas | -102 | -35 |\n| ::yellow[Bromine] | Liquid | -7 | 59 |\n| ::yellow[Iodine] | Solid | 114 | 184 |\n\n**Why the trend?** As molecular size increases down the group, ::yellow[intermolecular forces] (van der Waals forces) become stronger, requiring more energy to melt or boil the substance.\n\n### Solubility\n\n- All halogens are ::yellow[colored and soluble] in water and organic solvents\n- Solubility varies with polarity of the solvent\n- Iodine is particularly soluble in organic solvents like carbon tetrachloride (turns bright purple)\n\n### Chemical Properties\n\n**Reactivity as Oxidizing Agents**\nAll halogens are very reactive and act as ::yellow[powerful oxidizing agents]:\n\n- They react with alkali metals to form ionic compounds:\n  - 2Na(s) + Cl₂(g) → 2NaCl(s)\n  - 2K(s) + Br₂(l) → 2KBr(s)\n\n- They react with non-metals to form covalent halides:\n  - H₂(g) + Cl₂(g) → 2HCl(g)\n  - H₂(g) + Br₂(l) → 2HBr(g)\n\n- When halides dissolve in water, they form acids:\n  - HCl(g) + H₂O(l) → H₃O⁺(aq) + Cl⁻(aq)\n\n### Halogen Displacement Reactions\n\n::red[**Critical Concept**]: A more reactive halogen can displace a less reactive halogen from its salt or halide solution.\n\n**Reactivity order (decreasing)**: F₂ > Cl₂ > Br₂ > I₂\n\n**Example: Chlorine displacing Iodine**\n- Reaction: Cl₂(g) + 2NaI(aq) → 2NaCl(aq) + I₂(aq)\n- Ionic equation: Cl₂(g) + 2I⁻(aq) → 2Cl⁻(aq) + I₂(aq)\n- **Observation**: The colorless solution turns brown (color of iodine)\n\n**Why?** Chlorine is more reactive than iodine, so it \"takes\" the electron from iodide ions, producing iodine molecules.\n\n### Group Trends Down the Halogens\n\n1. **Atomic size increases** → larger molecules\n2. **Intermolecular forces increase** → higher melting/boiling points\n3. **Oxidizing power decreases** → less reactive\n4. **Color becomes darker** → F₂ (yellow) → I₂ (black)\n\n> 💡 **Key Insight**: Although all halogens are reactive, fluorine is the MOST reactive non-metal known, while iodine is the least reactive of the halogens.",
+    "speech_to_text_content": "Group 17 elements are known as the halogens, including fluorine, chlorine, bromine, and iodine. All halogens exist as diatomic molecules. Fluorine is a yellow gas, chlorine is a green gas, bromine is a brown liquid, and iodine is a black solid that sublimes to form a purple gas. In aqueous solution, iodine appears brown. Melting and boiling points increase down the group because as molecular size increases, intermolecular forces become stronger. All halogens are colored and soluble in water and organic solvents. All halogens are very reactive and act as powerful oxidizing agents. They react with alkali metals to form ionic compounds and with non-metals to form covalent halides. When halides dissolve in water, they form acids. A more reactive halogen can displace a less reactive halogen from its salt or halide solution. The reactivity order is fluorine, chlorine, bromine, iodine. For example, chlorine can displace iodine from sodium iodide, and the colorless solution turns brown due to the formation of iodine. As you go down the group, atomic size increases, intermolecular forces increase, oxidizing power decreases, and color becomes darker.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide comprehensively covers Group 17 halogens, including their physical properties (diatomic molecules, colors, states), melting and boiling point trends, solubility, chemical reactivity as oxidizing agents, and the important concept of halogen displacement reactions. It explains the reactivity trend and provides concrete examples with observations.",
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T04:09:21.689530+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "h8i9j0k1-l2m3-54n4-o5p6-q7r8s9t0u1v2",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "7",
+    "type": "slide",
+    "question_type": null,
+    "title": "✨ Group 18: The Noble Gases",
+    "content": "## Group 18 Elements: The Noble Gases\n\nThe Group 18 elements are known as the ::yellow[noble gases]. They are the most chemically unreactive elements in the periodic table, and this special property makes them extremely useful.\n\n### Physical Properties\n\n**Structure and Appearance**\n- All noble gases are ::yellow[monoatomic] (exist as single atoms, not molecules)\n- All are ::yellow[colorless gases] at room temperature\n- Very low melting and boiling points\n\n**Solubility**\n- ::yellow[Insoluble in water]\n- This insolubility is one reason they don't react with aqueous solutions\n\n### Why Are Noble Gases So Unreactive?\n\nThe answer lies in their ::yellow[electronic configuration]:\n\n**Electron Configuration**\n- **Helium (He)**: 1s² → 2 valence electrons (::yellow[stable duplet])\n- **Neon (Ne)**: 1s² 2s² 2p⁶ → 8 valence electrons (::yellow[stable octet])\n- **Argon (Ar)**: [Ne] 3s² 3p⁶ → 8 valence electrons (::yellow[stable octet])\n- **Krypton (Kr)**: [Ar] 3d¹⁰ 4s² 4p⁶ → 8 valence electrons (::yellow[stable octet])\n\n**The Key Concept**: \nNoble gases have a ::yellow[complete valence shell]. They have either:\n- A stable duplet (2 electrons for He)\n- A stable octet (8 electrons for Ne, Ar, Kr, etc.)\n\nSince their outer shells are already full, they have:\n- No tendency to lose electrons\n- No tendency to gain electrons\n- No tendency to share electrons\n- **Result**: They don't form compounds!\n\n### Practical Applications\n\nBecause noble gases are unreactive, they provide an ::yellow[inert environment] where reactions won't occur:\n\n**Helium (He)**\n- Used to fill weather balloons and airships\n- Provides lift without the fire hazard of hydrogen\n- Used in deep-sea diving to prevent nitrogen narcosis\n\n**Neon (Ne)**\n- Used in advertising strip lights (neon signs)\n- Produces the characteristic red glow\n- Also used in high-voltage electrical equipment\n\n**Argon (Ar)**\n- Used to weld stainless steel and other metals\n- Provides an inert atmosphere so metals don't oxidize during welding\n- Used to fill electric light bulbs\n- Protects the hot filament from oxidizing in air\n- Used in the manufacture of steel\n\n### Group Trends Down the Noble Gases\n\n| Property | Trend |\n|----------|-------|\n| ::yellow[Atomic size] | Increases |\n| ::yellow[Density] | Increases |\n| ::yellow[Melting point] | Increases |\n| ::yellow[Boiling point] | Increases |\n| ::yellow[Reactivity] | Remains extremely low |\n\n**Why do melting and boiling points increase?**\nAlthough noble gases don't form chemical bonds, they do experience weak ::yellow[intermolecular forces] (van der Waals forces). As atoms get larger, these forces become slightly stronger, requiring more energy to melt or boil.\n\n### The Octet Rule\n\nThe stability of noble gases with full valence shells explains a fundamental principle in chemistry:\n\n> 💡 **The Octet Rule**: Every element reacts to achieve a stable octet structure (8 valence electrons), or a stable duplet structure for hydrogen, helium, and lithium. This is why:\n> - Sodium loses 1 electron to become Na⁺ (8 valence electrons)\n> - Chlorine gains 1 electron to become Cl⁻ (8 valence electrons)\n> - Oxygen gains 2 electrons to become O²⁻ (8 valence electrons)\n\n> ⚠️ **Important**: The chemical stability of noble gases demonstrates that a full valence shell is the most stable electron configuration. This is the driving force behind all chemical reactions!",
+    "speech_to_text_content": "Group 18 elements are known as the noble gases. All noble gases are monoatomic, meaning they exist as single atoms, not molecules. They are colorless gases at room temperature and are insoluble in water. Noble gases are so unreactive because they have a complete valence shell. Helium has 2 valence electrons, which is a stable duplet, while neon, argon, and krypton all have 8 valence electrons, which is a stable octet. Since their outer shells are already full, they have no tendency to lose, gain, or share electrons, and therefore don't form compounds. Because noble gases are unreactive, they provide an inert environment where reactions won't occur. Helium is used to fill weather balloons and airships, neon is used in advertising strip lights, and argon is used to weld stainless steel and fill electric light bulbs. As you go down the group, atomic size, density, melting point, and boiling point all increase, but reactivity remains extremely low. The stability of noble gases with full valence shells explains the octet rule: every element reacts to achieve a stable octet structure with 8 valence electrons, or a stable duplet structure for hydrogen, helium, and lithium.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide comprehensively covers Group 18 noble gases, explaining why they are unreactive (complete valence shells), their physical properties, and their practical applications. It introduces the important concept of the octet rule and explains how noble gas stability drives chemical reactions in other elements.",
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T04:09:32.695794+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "i9j0k1l2-m3n4-55o5-p6q7-r8s9t0u1v2w3",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎨 Transition Elements: The Versatile Metals",
+    "content": "## Transition Elements: Groups 3-11\n\nThe ::yellow[transition elements] (also called transition metals) are a fascinating group of metals located in the middle of the periodic table. They have unique properties that make them extremely important in industry and technology.\n\n### What Are Transition Elements?\n\nTransition elements are the elements from ::blue[Group 3 to Group 11], found in the d-block of the periodic table.\n\n**Common examples include**:\n- Iron (Fe)\n- Copper (Cu)\n- Zinc (Zn)\n- Manganese (Mn)\n- Nickel (Ni)\n- Platinum (Pt)\n- Tungsten (W)\n\n### Physical Properties\n\n**Metallic Structure and Bonding**\n- All transition elements are metals with ::yellow[giant metallic structures]\n- They have ::yellow[strong metallic bonding]\n- **Result**: High melting and boiling points (much higher than Group 1 metals)\n\n**Density**\n- ::yellow[High density] compared to other metals\n- Iron is about 8 times denser than water\n- Tungsten is even denser\n\n**Appearance**\n- Shiny, metallic appearance\n- Generally harder and stronger than Group 1 metals\n- Good conductors of electricity and heat\n\n### Chemical Properties\n\n**Variable Oxidation States**\n\nUnlike Group 1 metals which always have a +1 charge, transition elements can have ::red[multiple oxidation states]. This is because they can lose electrons from different shells.\n\n**Examples**:\n- **Iron (Fe)**: Can form Fe²⁺ (in FeCl₂) or Fe³⁺ (in FeCl₃)\n- **Manganese (Mn)**: Can have oxidation states of +2, +3, +4, +6, +7\n  - MnCl₂ (Mn²⁺)\n  - MnO₂ (Mn⁴⁺)\n  - KMnO₄ (Mn⁷⁺)\n- **Copper (Cu)**: Can form Cu⁺ or Cu²⁺\n\n> 💡 **Why multiple oxidation states?** Transition metals can lose electrons from both their outer s-orbital and their d-orbitals, giving them flexibility in electron loss.\n\n**Colored Compounds**\n\nMany transition metal compounds are ::yellow[brightly colored], unlike the white compounds of Group 1 metals:\n\n| Compound | Color |\n|----------|-------|\n| Fe(OH)₂ | Green |\n| Fe(OH)₃ | Orange/Brown |\n| CuSO₄ | Blue |\n| Cu(OH)₂ | Blue |\n| MnO₄⁻ (permanganate) | Purple |\n| Cr₂O₇²⁻ (dichromate) | Orange |\n\n**Why are they colored?** The d-electrons in transition metals can absorb light and jump between different energy levels, causing them to absorb certain colors and reflect others.\n\n### Catalytic Properties\n\n::yellow[Transition metals and their compounds] are excellent ::yellow[catalysts]. A catalyst is a substance that speeds up a reaction without being consumed.\n\n**Industrial Examples**:\n\n1. **Iron (Fe)**: Catalyst in the ::blue[Haber Process] for manufacturing ammonia\n   - N₂(g) + 3H₂(g) ⇌ 2NH₃(g) [using Fe catalyst]\n\n2. **Platinum (Pt)**: Catalyst in the production of ::blue[nitric acid]\n   - Used in catalytic converters in cars\n\n3. **Nickel (Ni)**: Catalyst in the manufacture of ::blue[margarine] from vegetable oils\n   - Converts unsaturated fats to saturated fats\n\n4. **Manganese(IV) oxide (MnO₂)**: Catalyst for the ::blue[decomposition of hydrogen peroxide]\n   - 2H₂O₂(aq) → 2H₂O(l) + O₂(g) [using MnO₂ catalyst]\n\n5. **Tungsten (W)**: Used as filaments in light bulbs\n   - High melting point makes it ideal for hot filaments\n\n### Oxidation State Notation\n\nWhen writing the formula of a transition metal compound, we often use ::yellow[Roman numerals] to show the oxidation state:\n\n- **Iron(II) chloride**: FeCl₂ (Fe has oxidation state +2)\n- **Iron(III) chloride**: FeCl₃ (Fe has oxidation state +3)\n- **Copper(II) sulfate**: CuSO₄ (Cu has oxidation state +2)\n- **Manganese(IV) oxide**: MnO₂ (Mn has oxidation state +4)\n\n> ⚠️ **Important**: The Roman numeral indicates the oxidation state, not the number of atoms!\n\n### Summary of Transition Element Properties\n\n| Property | Characteristic |\n|----------|----------------|\n| ::yellow[Structure] | Giant metallic |\n| ::yellow[Melting/Boiling Points] | High |\n| ::yellow[Density] | High |\n| ::yellow[Oxidation States] | Variable |\n| ::yellow[Compounds] | Often colored |\n| ::yellow[Catalytic Activity] | Excellent |\n| ::yellow[Conductivity] | Good |\n\n> 💡 **Why are transition metals so important?** Their variable oxidation states and catalytic properties make them indispensable in industry, from steel production to pharmaceutical manufacturing.",
+    "speech_to_text_content": "Transition elements are metals located in Groups 3 to 11 in the middle of the periodic table. They include iron, copper, zinc, manganese, nickel, platinum, and tungsten. All transition elements are metals with giant metallic structures and strong metallic bonding, resulting in high melting and boiling points. They have high density compared to other metals. Unlike Group 1 metals which always have a plus 1 charge, transition elements can have multiple oxidation states because they can lose electrons from different shells. For example, iron can form Fe 2+ or Fe 3+, and manganese can have oxidation states of plus 2, plus 3, plus 4, plus 6, or plus 7. Many transition metal compounds are brightly colored, unlike the white compounds of Group 1 metals. For example, Fe(OH)₂ is green, Fe(OH)₃ is orange or brown, and CuSO₄ is blue. Transition metals and their compounds are excellent catalysts. Iron is used as a catalyst in the Haber Process for manufacturing ammonia, platinum is used in the production of nitric acid, nickel is used in the manufacture of margarine from vegetable oils, and manganese(IV) oxide is used as a catalyst for the decomposition of hydrogen peroxide. When writing the formula of a transition metal compound, we often use Roman numerals to show the oxidation state, such as Iron(II) chloride for FeCl₂ and Iron(III) chloride for FeCl₃.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide comprehensively covers transition elements, including their definition, physical properties (high melting points, high density), chemical properties (variable oxidation states, colored compounds), and catalytic properties. It provides specific industrial examples of catalytic applications and explains the use of Roman numerals for oxidation states.",
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T04:09:46.848753+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "j0k1l2m3-n4o5-56p6-q7r8-s9t0u1v2w3x4",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "9",
+    "type": "slide",
+    "question_type": null,
+    "title": "📈 The Reactivity Series: Predicting Metal Behavior",
+    "content": "## Understanding the Reactivity Series\n\nThe ::yellow[reactivity series] is a list of metals arranged in order of their tendency to form positive ions (or lose electrons). It's one of the most useful tools in chemistry for predicting chemical reactions.\n\n### The Reactivity Series (Most to Least Reactive)\n\n1. **Potassium (K)** - Most reactive\n2. **Sodium (Na)**\n3. **Calcium (Ca)**\n4. **Magnesium (Mg)**\n5. **Carbon (C)** - Non-metal (included for reference in reduction reactions)\n6. **Zinc (Zn)**\n7. **Iron (Fe)**\n8. **Copper (Cu)**\n9. **Silver (Ag)** - Least reactive\n\n> ⚠️ **Important**: Reactivity DECREASES down this list. Potassium is the most reactive, silver is the least reactive.\n\n### How to Determine the Reactivity Series\n\nThe reactivity series is determined by observing how metals react with:\n\n**1. Water**\n\n- **K and Na**: React vigorously with cold water\n  - 2K(s) + 2H₂O(l) → 2KOH(aq) + H₂(g)↑\n  - 2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)↑\n\n- **Ca**: Reacts with water (less vigorously than K and Na)\n  - Ca(s) + 2H₂O(l) → Ca(OH)₂(aq) + H₂(g)↑\n\n- **Mg**: Reacts slowly with cold water, but vigorously with steam\n  - Mg(s) + H₂O(g) → MgO(s) + H₂(g)↑ (with steam)\n\n- **Zn, Fe, Cu**: Don't react with water or steam under normal conditions\n  - They are below the \"water line\"\n\n**2. Dilute Hydrochloric Acid (HCl)**\n\nMetals above Cu in the series react with dilute HCl, producing hydrogen gas:\n- Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g)↑\n- Zn(s) + 2HCl(aq) → ZnCl₂(aq) + H₂(g)↑\n- Fe(s) + 2HCl(aq) → FeCl₂(aq) + H₂(g)↑\n\nMetals below Cu (Cu, Ag) don't react with dilute HCl.\n\n**3. Oxygen (Forming Oxides)**\n\nAll metals react with oxygen, but at different rates:\n- Reactive metals (K, Na) burn vigorously in oxygen\n- Less reactive metals (Cu) oxidize slowly\n\n### Deducing Reactivity from Experimental Results\n\nYou can determine the order of reactivity by comparing how metals react:\n\n**Example**: If you observe that:\n- Metal A reacts with water\n- Metal B doesn't react with water but reacts with HCl\n- Metal C doesn't react with water or HCl\n\nThen the order is: **A > B > C** (A is most reactive)\n\n### Displacement Reactions\n\n::red[**Key Principle**]: A more reactive metal can displace a less reactive metal from its compound.\n\n**Example: Zinc displacing copper**\n- Zn(s) + CuSO₄(aq) → ZnSO₄(aq) + Cu(s)\n- Ionic equation: Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s)\n- Observation: Blue solution turns colorless, red copper deposits on the zinc\n\n**Why does this happen?**\nZinc is more reactive than copper, so it has a greater tendency to form Zn²⁺ ions. It \"takes\" the electrons from Cu²⁺, reducing them to Cu metal.\n\n**Example: Iron displacing copper**\n- Fe(s) + CuSO₄(aq) → FeSO₄(aq) + Cu(s)\n- Iron is more reactive than copper, so this reaction occurs\n\n**Example: Copper CANNOT displace zinc**\n- Cu(s) + ZnSO₄(aq) → NO REACTION\n- Copper is less reactive than zinc, so this doesn't happen\n\n### Reactivity Series Related to Tendency to Form Positive Ions\n\nThe reactivity series shows the ::yellow[tendency of a metal to lose electrons] and form its positive ion:\n\n- **K⁺**: K loses 1 electron very easily (most reactive)\n- **Na⁺**: Na loses 1 electron easily\n- **Ca²⁺**: Ca loses 2 electrons\n- **Mg²⁺**: Mg loses 2 electrons\n- **Zn²⁺**: Zn loses 2 electrons less easily\n- **Fe²⁺/Fe³⁺**: Fe loses electrons less easily\n- **Cu²⁺**: Cu loses electrons with difficulty\n- **Ag⁺**: Ag loses electrons with great difficulty (least reactive)\n\nThe more easily a metal loses electrons, the more reactive it is!\n\n> 💡 **Connection to Periodic Table**: Look at the reactivity series compared to the periodic table:\n> - Most reactive metals are in Group 1 (alkali metals)\n> - Reactivity generally decreases down Group 1 (K > Na > Li)\n> - Transition metals are in the middle of the reactivity series\n> - Least reactive metals are on the right side (Cu, Ag)",
+    "speech_to_text_content": "The reactivity series is a list of metals arranged in order of their tendency to form positive ions or lose electrons. The order from most to least reactive is: potassium, sodium, calcium, magnesium, carbon, zinc, iron, copper, and silver. Reactivity decreases down this list. The reactivity series is determined by observing how metals react with water, dilute hydrochloric acid, and oxygen. Potassium and sodium react vigorously with cold water, calcium reacts with water less vigorously, magnesium reacts slowly with cold water but vigorously with steam, and zinc, iron, and copper don't react with water or steam under normal conditions. Metals above copper in the series react with dilute hydrochloric acid, producing hydrogen gas, while metals below copper don't react with dilute hydrochloric acid. A more reactive metal can displace a less reactive metal from its compound. For example, zinc can displace copper from copper sulfate because zinc is more reactive than copper. Copper cannot displace zinc from zinc sulfate because copper is less reactive than zinc. The reactivity series shows the tendency of a metal to lose electrons and form its positive ion. The more easily a metal loses electrons, the more reactive it is. Most reactive metals are in Group 1, and reactivity generally decreases down Group 1.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide comprehensively covers the reactivity series, including the complete list of metals, how to determine it through reactions with water, HCl, and oxygen, how to deduce reactivity from experimental results, and the crucial concept of displacement reactions. It explains why more reactive metals can displace less reactive ones and connects the reactivity series to the periodic table.",
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T04:10:00.320585+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "k1l2m3n4-o5p6-57q7-r8s9-t0u1v2w3x4y5",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔥 Extraction of Metals: Using the Reactivity Series",
+    "content": "## How the Reactivity Series Relates to Metal Extraction\n\nThe ::yellow[reactivity series] is crucial for understanding how we extract metals from their ores. Different extraction methods are used depending on where a metal sits in the reactivity series.\n\n### Finding Metals in Nature\n\nIn the Earth's crust, metals are not found as pure elements. Instead, they are found as ::yellow[compounds], mainly ::yellow[oxides], which are called ::yellow[ores].\n\n**Examples of ores**:\n- Iron oxide (Fe₂O₃) - hematite\n- Aluminum oxide (Al₂O₃) - bauxite\n- Copper oxide (CuO)\n- Zinc oxide (ZnO)\n\n### Two Main Extraction Methods\n\n#### Method 1: Electrolysis of Molten Oxides\n\n**Used for**: Very reactive metals (K, Na, Ca, Mg)\n\n**Why this method?**\nThe oxides of very reactive metals are ::red[extremely stable] and cannot be broken down by heating with carbon. We need electrical energy to break the ionic bonds.\n\n**The process**:\n1. The metal oxide is melted\n2. Electrical current is passed through the molten oxide\n3. The metal cation is reduced at the cathode (negative electrode)\n4. The oxide anion is oxidized at the anode (positive electrode)\n\n**Example: Extracting magnesium**\n- Molten MgO undergoes electrolysis\n- At cathode: Mg²⁺ + 2e⁻ → Mg (reduction)\n- At anode: O²⁻ → ½O₂ + 2e⁻ (oxidation)\n\n> ⚠️ **Important**: This is an expensive process because it requires a lot of electrical energy. We only use it for metals that can't be extracted any other way.\n\n#### Method 2: Carbon Reduction\n\n**Used for**: Moderately reactive metals (Zn, Fe, Pb, Cu, Ag)\n\n**Why this method?**\nThese metals' oxides are not as stable as those of very reactive metals. Carbon (or carbon monoxide) can remove the oxygen, acting as a ::yellow[reducing agent].\n\n**The process**:\n1. The metal ore (usually the oxide) is heated strongly with carbon or carbon monoxide\n2. Carbon removes the oxygen from the metal oxide\n3. The metal is produced\n\n**Example: Extracting iron**\n- Fe₂O₃ + 3CO → 2Fe + 3CO₂\n- Or: 2Fe₂O₃ + 3C → 4Fe + 3CO₂\n- The carbon monoxide or carbon acts as the reducing agent\n\n**Example: Extracting copper**\n- 2CuO + C → 2Cu + CO₂\n- Carbon removes the oxygen, leaving pure copper\n\n> 💡 **Why carbon works**: Carbon is more reactive than these metals at high temperatures, so it \"takes\" the oxygen away from the metal oxide.\n\n### Method 3: No Extraction Needed\n\n**Used for**: Unreactive metals (Au, Pt, Ag)\n\n**Why no extraction?**\nThese metals are so unreactive that they don't form stable oxides or other compounds. They appear in the Earth's crust as ::yellow[pure elements].\n\n**Example**: Gold is often found as native gold (pure gold metal) in the ground. It just needs to be separated from rock by physical methods like panning or crushing.\n\n### Connecting Reactivity to Extraction Method\n\n| Reactivity | Metals | Extraction Method | Reason |\n|----------|--------|-------------------|--------|\n| Very high | K, Na, Ca, Mg | Electrolysis of molten oxide | Oxides too stable for carbon reduction |\n| Moderate | Zn, Fe, Pb, Cu, Ag | Carbon reduction | Oxides can be reduced by carbon |\n| Very low | Au, Pt | No extraction needed | Found as pure elements in nature |\n\n### Ease of Obtaining Metals\n\nThe ::yellow[ease of obtaining a metal from its ore] is directly related to its position in the reactivity series:\n\n- **Very reactive metals**: Difficult and expensive to extract (need electrolysis)\n- **Moderately reactive metals**: Moderately easy to extract (carbon reduction works)\n- **Unreactive metals**: Very easy (found as pure elements, just need separation)\n\n> 💡 **Why this pattern?** Very reactive metals have a strong tendency to form positive ions and hold onto oxygen. It takes a lot of energy to reverse this. Unreactive metals don't form stable compounds, so they're already in their elemental form.",
+    "speech_to_text_content": "The reactivity series is crucial for understanding how we extract metals from their ores. In the Earth's crust, metals are not found as pure elements but as compounds, mainly oxides, which are called ores. Two main extraction methods are used depending on where a metal sits in the reactivity series. Electrolysis of molten oxides is used for very reactive metals like potassium, sodium, calcium, and magnesium because their oxides are extremely stable and cannot be broken down by heating with carbon. Carbon reduction is used for moderately reactive metals like zinc, iron, lead, copper, and silver. The metal ore is heated strongly with carbon or carbon monoxide, which removes the oxygen from the metal oxide. Unreactive metals like gold and platinum don't need extraction because they are found as pure elements in the Earth's crust. The ease of obtaining a metal from its ore is directly related to its position in the reactivity series. Very reactive metals are difficult and expensive to extract because they have a strong tendency to form positive ions and hold onto oxygen. Moderately reactive metals are moderately easy to extract because carbon reduction works. Unreactive metals are very easy because they are found as pure elements.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide explains how the reactivity series determines which extraction method is used for different metals. It covers electrolysis for very reactive metals, carbon reduction for moderately reactive metals, and why unreactive metals need no extraction. It provides specific examples and explains the underlying chemistry.",
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T04:10:12.258554+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "l2m3n4o5-p6q7-58r8-s9t0-u1v2w3x4y5z6",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Thermal Stability of Metal Carbonates",
+    "content": "## How Heat Affects Metal Carbonates\n\nWhen metal carbonates are heated, they decompose. The ::yellow[thermal stability] (resistance to decomposition by heat) of a metal carbonate is directly related to the ::yellow[reactivity series].\n\n### Decomposition of Metal Carbonates\n\nWhen heated, metal carbonates decompose to form the metal oxide and carbon dioxide:\n\n**General equation**:\n$$\\text{Metal Carbonate} \\rightarrow \\text{Metal Oxide} + \\text{Carbon Dioxide}$$\n\n**Examples**:\n- CaCO₃(s) → CaO(s) + CO₂(g)↑\n- MgCO₃(s) → MgO(s) + CO₂(g)↑\n- ZnCO₃(s) → ZnO(s) + CO₂(g)↑\n- CuCO₃(s) → CuO(s) + CO₂(g)↑\n\n### The Reactivity Trend\n\n**Thermal stability DECREASES down the reactivity series**:\n\n| Metal | Carbonate | Ease of Decomposition | Thermal Stability |\n|-------|-----------|----------------------|-------------------|\n| Na | Na₂CO₃ | Very difficult | Very high |\n| Ca | CaCO₃ | Difficult | High |\n| Mg | MgCO₃ | Moderate | Moderate |\n| Zn | ZnCO₃ | Easy | Low |\n| Cu | CuCO₃ | Very easy | Very low |\n\n### Why This Pattern?\n\nThe thermal stability depends on the ::yellow[charge density] of the metal ion:\n\n**High charge density** (small, highly charged ions):\n- The metal ion strongly polarizes the carbonate ion (CO₃²⁻)\n- This weakens the C-O bonds in the carbonate\n- The carbonate decomposes more easily\n- **Result**: Low thermal stability\n\n**Low charge density** (large, weakly charged ions):\n- The metal ion weakly polarizes the carbonate ion\n- The C-O bonds remain strong\n- The carbonate resists decomposition\n- **Result**: High thermal stability\n\n### Connection to Reactivity Series\n\n::red[**Key Relationship**]: As you go up the reactivity series:\n- Metal ions become smaller and more highly charged\n- Charge density increases\n- The metal ion more strongly polarizes the carbonate ion\n- The carbonate becomes LESS stable to heat\n\nAs you go down the reactivity series:\n- Metal ions become larger and less highly charged\n- Charge density decreases\n- The metal ion weakly polarizes the carbonate ion\n- The carbonate becomes MORE stable to heat\n\n### Practical Example: Limestone (Calcium Carbonate)\n\nCalcium carbonate (CaCO₃) decomposes at about 900°C:\n\n**In the lab**:\n- CaCO₃(s) → CaO(s) + CO₂(g)↑ (at 900°C)\n\n**In industry**:\n- Limestone is heated in kilns to produce quicklime (CaO)\n- Quicklime is used to make cement and mortar\n- This is a major industrial process\n\n**Why can we decompose it?**\nCalcium is moderately reactive (in the middle of the series), so its carbonate has moderate thermal stability and can be decomposed at reasonably high temperatures.\n\n### Comparing Different Metal Carbonates\n\n**Sodium carbonate (Na₂CO₃)** - Very stable\n- Requires extremely high temperatures to decompose\n- Doesn't decompose easily in a Bunsen burner flame\n- Used in industry because it's stable\n\n**Copper carbonate (CuCO₃)** - Unstable\n- Decomposes easily when heated\n- Even gentle heating in a test tube causes decomposition\n- Changes from green to black as it forms CuO\n\n> 💡 **Remember**: The more reactive the metal, the LESS stable its carbonate. The less reactive the metal, the MORE stable its carbonate. This is because reactive metals form stronger bonds with oxygen, making it harder to remove the oxygen from the carbonate.",
+    "speech_to_text_content": "When metal carbonates are heated, they decompose to form the metal oxide and carbon dioxide. Thermal stability, or resistance to decomposition by heat, of a metal carbonate is directly related to the reactivity series. Thermal stability decreases down the reactivity series. Sodium carbonate is very stable and requires extremely high temperatures to decompose, while copper carbonate is unstable and decomposes easily when heated. The thermal stability depends on the charge density of the metal ion. High charge density, meaning small, highly charged ions, weakly polarizes the carbonate ion and leads to low thermal stability. Low charge density, meaning large, weakly charged ions, strongly polarizes the carbonate ion and leads to high thermal stability. As you go up the reactivity series, metal ions become smaller and more highly charged, charge density increases, the metal ion more strongly polarizes the carbonate ion, and the carbonate becomes less stable to heat. As you go down the reactivity series, metal ions become larger and less highly charged, charge density decreases, the metal ion weakly polarizes the carbonate ion, and the carbonate becomes more stable to heat. Calcium carbonate, or limestone, decomposes at about 900 degrees Celsius to form calcium oxide and carbon dioxide. This is a major industrial process used to produce quicklime for cement and mortar.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide explains the relationship between the reactivity series and the thermal stability of metal carbonates. It introduces the concept of charge density and explains why more reactive metals form less stable carbonates. It provides practical examples and connects to industrial applications.",
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T04:10:22.927481+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "m3n4o5p6-q7r8-59s9-t0u1-v2w3x4y5z6a7",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "12",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔐 Corrosion of Iron: Rusting",
+    "content": "## What is Rusting?\n\nRusting is the ::yellow[corrosion of iron] - a chemical process where iron reacts with oxygen and water to form iron oxide. This is one of the most important chemical processes in everyday life because rust causes billions of dollars in damage annually.\n\n### Essential Conditions for Rusting\n\n::red[**Both oxygen AND water are required] for iron to rust. If either is absent, rusting does not occur.\n\n**The two essential conditions**:\n1. **Oxygen (O₂)** - from the air\n2. **Water (H₂O)** - from moisture, rain, or humidity\n\n### The Rusting Process\n\nWhen iron is exposed to both oxygen and water, it undergoes oxidation:\n\n**Simplified equation**:\n$$4\\text{Fe} + 3\\text{O}_2 + 6\\text{H}_2\\text{O} \\rightarrow 4\\text{Fe(OH)}_3$$\n\nThe iron(III) hydroxide then dehydrates to form iron(III) oxide:\n$$2\\text{Fe(OH)}_3 \\rightarrow \\text{Fe}_2\\text{O}_3 + 3\\text{H}_2\\text{O}$$\n\nThis reddish-brown iron oxide is what we call ::yellow[rust].\n\n### Why Rusting is a Problem\n\n- Iron loses its strength and structural integrity\n- Rust is porous and flaky, allowing more iron underneath to rust\n- Rusting is a continuous process that can eventually destroy iron structures\n- Cars, bridges, ships, and buildings are all vulnerable\n\n### Prevention of Rusting\n\nSince both oxygen and water are needed, we can prevent rusting by removing either one:\n\n#### Method 1: Barrier Methods\n\nCreate a physical barrier between the iron and oxygen/water:\n\n**Painting**\n- A layer of paint seals the iron from air and water\n- If the paint is scratched, rusting can begin underneath\n- Common for cars, buildings, and equipment\n\n**Greasing (Oiling)**\n- A layer of grease or oil prevents water and oxygen from reaching the iron\n- Used on machinery and metal tools\n- Requires regular reapplication\n\n**Plastic Coating**\n- A plastic layer (like PVC or epoxy) protects the iron\n- Very durable and long-lasting\n- Used on pipes, gates, and outdoor furniture\n\n**Galvanizing**\n- The iron is coated with a layer of ::blue[zinc] metal\n- Zinc is more reactive than iron, so it oxidizes first\n- The zinc oxide layer prevents water and oxygen from reaching the iron\n- Used on roofing, fencing, and outdoor structures\n- Provides excellent long-term protection\n\n#### Method 2: Sacrificial Protection\n\n::red[**This is a clever method based on the reactivity series!]\n\n**The principle**:\nPlace a more reactive metal in contact with the iron. The more reactive metal corrodes preferentially, protecting the iron.\n\n**How it works**:\n1. The more reactive metal is more easily oxidized\n2. It loses electrons before the iron does\n3. The iron is protected from oxidation\n4. The more reactive metal gradually corrodes away\n5. It must be periodically replaced\n\n**Example: Protecting underwater pipes**\n- A piece of ::yellow[magnesium] (more reactive than iron) is attached to underwater pipes\n- Magnesium corrodes instead of the iron\n- The iron pipes remain protected\n- The magnesium block is called a \"sacrificial anode\"\n\n**Why magnesium?**\n- Magnesium is significantly more reactive than iron\n- It's readily available and relatively inexpensive\n- It corrodes at a predictable rate\n\n**Other applications**:\n- Ships have magnesium blocks attached to their hulls\n- Underground pipelines use sacrificial anodes\n- Water heater tanks use sacrificial anodes\n\n### Comparison of Prevention Methods\n\n| Method | How It Works | Advantages | Disadvantages |\n|--------|-------------|------------|---------------|\n| ::yellow[Painting] | Barrier | Cheap, easy to apply | Can be scratched, needs repainting |\n| ::yellow[Greasing] | Barrier | Effective for machinery | Needs regular reapplication |\n| ::yellow[Plastic Coating] | Barrier | Very durable | More expensive |\n| ::yellow[Galvanizing] | Barrier + Sacrificial | Long-lasting, self-healing | More expensive initially |\n| ::yellow[Sacrificial Protection] | Sacrificial anode | Protects even if coating damaged | Anode must be replaced |\n\n> 💡 **Key Insight**: Sacrificial protection uses the reactivity series - by using a more reactive metal, we can protect a less reactive metal from corrosion. This is a brilliant application of periodic table chemistry!",
+    "speech_to_text_content": "Rusting is the corrosion of iron, a chemical process where iron reacts with oxygen and water to form iron oxide. Both oxygen and water are essential for iron to rust. If either is absent, rusting does not occur. When iron is exposed to both oxygen and water, it undergoes oxidation to form iron(III) hydroxide, which then dehydrates to form iron(III) oxide, or rust. Rusting is a problem because iron loses its strength and structural integrity, and rust is porous and flaky, allowing more iron underneath to rust. Since both oxygen and water are needed, we can prevent rusting by removing either one. Barrier methods create a physical barrier between the iron and oxygen or water. Painting seals the iron from air and water, greasing prevents water and oxygen from reaching the iron, plastic coating protects the iron with a durable layer, and galvanizing coats the iron with a layer of zinc metal. Sacrificial protection places a more reactive metal in contact with the iron. The more reactive metal corrodes preferentially, protecting the iron. For example, a piece of magnesium is attached to underwater pipes because magnesium is more reactive than iron and corrodes instead of the iron. The iron pipes remain protected, and the magnesium block is called a sacrificial anode.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide comprehensively covers iron corrosion (rusting), explaining the essential conditions (oxygen and water), the chemical process, and various prevention methods including barrier methods (painting, greasing, plastic coating, galvanizing) and sacrificial protection. It explains the reactivity series principle behind sacrificial protection and provides practical examples.",
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T04:10:36.142558+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "n4o5p6q7-r8s9-60t0-u1v2-w3x4y5z6a7b8",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "13",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Periodic Trends",
+    "content": "## Question: Periodic Trends\n\nWhich of the following correctly describes the trend in metallic character across a period?\n\n**A)** Metallic character increases from left to right across a period\n\n**B)** Metallic character decreases from left to right across a period\n\n**C)** Metallic character remains constant across a period\n\n**D)** Metallic character increases then decreases across a period",
+    "speech_to_text_content": "Which of the following correctly describes the trend in metallic character across a period? Option A: Metallic character increases from left to right across a period. Option B: Metallic character decreases from left to right across a period. Option C: Metallic character remains constant across a period. Option D: Metallic character increases then decreases across a period.",
+    "answer": [
+      {
+        "id": "ans-001-1",
+        "question_id": "n4o5p6q7-r8s9-60t0-u1v2-w3x4y5z6a7b8",
+        "option_id": "opt-001-2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-001-1",
+        "option_text": "Metallic character increases from left to right across a period",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-001-2",
+        "option_text": "Metallic character decreases from left to right across a period",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-001-3",
+        "option_text": "Metallic character remains constant across a period",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-001-4",
+        "option_text": "Metallic character increases then decreases across a period",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Metallic character decreases from left to right across a period**.\n\n**Why this is correct:**\nAs you move from left to right across a period, the number of valence electrons increases. Elements with few valence electrons (1-3) are metallic because they easily lose electrons. Elements with many valence electrons (5-7) are non-metallic because they prefer to gain electrons. Therefore, metallic character decreases from left to right.\n\n**Example from Period 2:**\n- Lithium (1 valence electron) - metallic\n- Beryllium (2 valence electrons) - metallic\n- Boron (3 valence electrons) - metalloid\n- Carbon (4 valence electrons) - non-metallic\n- Nitrogen (5 valence electrons) - non-metallic\n- Oxygen (6 valence electrons) - non-metallic\n- Fluorine (7 valence electrons) - non-metallic\n\n**Why other options are incorrect:**\n- A is incorrect because metallic character decreases, not increases\n- C is incorrect because there is a clear trend, not a constant\n- D is incorrect because the trend is consistent (always decreasing), not increasing then decreasing\n\nThis is one of the most important periodic trends and directly relates to valence electron count.",
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T04:10:42.190222+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "o5p6q7r8-s9t0-61u1-v2w3-x4y5z6a7b8c9",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "14",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Group 1 Reactivity",
+    "content": "## Question: Alkali Metal Reactivity\n\nWhich statement correctly explains why potassium is more reactive than sodium?\n\n**A)** Potassium has more valence electrons than sodium\n\n**B)** Potassium atoms are smaller than sodium atoms\n\n**C)** Potassium atoms are larger than sodium atoms, so valence electrons are farther from the nucleus and easier to lose\n\n**D)** Potassium forms stronger metallic bonds than sodium",
+    "speech_to_text_content": "Which statement correctly explains why potassium is more reactive than sodium? Option A: Potassium has more valence electrons than sodium. Option B: Potassium atoms are smaller than sodium atoms. Option C: Potassium atoms are larger than sodium atoms, so valence electrons are farther from the nucleus and easier to lose. Option D: Potassium forms stronger metallic bonds than sodium.",
+    "answer": [
+      {
+        "id": "ans-002-1",
+        "question_id": "o5p6q7r8-s9t0-61u1-v2w3-x4y5z6a7b8c9",
+        "option_id": "opt-002-3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-002-1",
+        "option_text": "Potassium has more valence electrons than sodium",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-002-2",
+        "option_text": "Potassium atoms are smaller than sodium atoms",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-002-3",
+        "option_text": "Potassium atoms are larger than sodium atoms, so valence electrons are farther from the nucleus and easier to lose",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-002-4",
+        "option_text": "Potassium forms stronger metallic bonds than sodium",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **C) Potassium atoms are larger than sodium atoms, so valence electrons are farther from the nucleus and easier to lose**.\n\n**Why this is correct:**\nBoth potassium and sodium are in Group 1 and have 1 valence electron. However, potassium is below sodium in the group, meaning it has more electron shells (4 shells vs 3 shells for sodium). This makes potassium atoms larger. The valence electron in potassium is farther from the nucleus and experiences weaker electrostatic attraction. Therefore, it's easier to remove, making potassium more reactive.\n\n**Why other options are incorrect:**\n- A is incorrect because both have 1 valence electron (same number, not more)\n- B is incorrect because potassium atoms are LARGER, not smaller\n- D is incorrect because metallic bonds in potassium are actually WEAKER, not stronger, due to the larger atomic size\n\n**Supporting evidence:**\n- Li (most reactive in Group 1) has 2 shells\n- Na has 3 shells\n- K has 4 shells (most reactive of the three listed)\nThe trend shows that as atomic size increases down the group, reactivity increases due to easier loss of valence electrons.\n\nThis is a key concept: atomic size determines how easily valence electrons can be removed, which determines reactivity.",
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T04:10:48.244735+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "p6q7r8s9-t0u1-62v2-w3x4-y5z6a7b8c9d0",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "15",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Halogen Displacement",
+    "content": "## Question: Halogen Displacement Reactions\n\nWhen chlorine water is added to a solution of potassium iodide, the solution turns brown. What does this observation indicate?\n\n**A)** Chlorine is less reactive than iodine\n\n**B)** Chlorine is more reactive than iodine and has displaced the iodide ions\n\n**C)** Iodine is more reactive than chlorine and has been formed\n\n**D)** Both chlorine and iodine are equally reactive",
+    "speech_to_text_content": "When chlorine water is added to a solution of potassium iodide, the solution turns brown. What does this observation indicate? Option A: Chlorine is less reactive than iodine. Option B: Chlorine is more reactive than iodine and has displaced the iodide ions. Option C: Iodine is more reactive than chlorine and has been formed. Option D: Both chlorine and iodine are equally reactive.",
+    "answer": [
+      {
+        "id": "ans-003-1",
+        "question_id": "p6q7r8s9-t0u1-62v2-w3x4-y5z6a7b8c9d0",
+        "option_id": "opt-003-2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-003-1",
+        "option_text": "Chlorine is less reactive than iodine",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-003-2",
+        "option_text": "Chlorine is more reactive than iodine and has displaced the iodide ions",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-003-3",
+        "option_text": "Iodine is more reactive than chlorine and has been formed",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-003-4",
+        "option_text": "Both chlorine and iodine are equally reactive",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Chlorine is more reactive than iodine and has displaced the iodide ions**.\n\n**Why this is correct:**\nThe brown color indicates the formation of iodine (I₂). The reaction is:\n- Cl₂(g) + 2KI(aq) → 2KCl(aq) + I₂(aq)\n- Ionic equation: Cl₂(g) + 2I⁻(aq) → 2Cl⁻(aq) + I₂(aq)\n\nChlorine is more reactive than iodine, so it can displace iodide ions (I⁻) from the solution. The chlorine oxidizes the iodide ions to iodine molecules (I₂), which gives the brown color.\n\n**Why other options are incorrect:**\n- A is incorrect because the displacement shows chlorine IS more reactive\n- C is incorrect because iodine is being formed, not reacting; also iodine is LESS reactive\n- D is incorrect because if they were equally reactive, no displacement would occur\n\n**Supporting evidence from the reactivity series:**\nHalogen reactivity decreases down the group: F₂ > Cl₂ > Br₂ > I₂\n\nChlorine is higher in the group than iodine, so it's more reactive and can displace iodine from its compounds.\n\n**Key concept:** A more reactive halogen can always displace a less reactive halogen from its salt solution. This is a direct application of the reactivity series.",
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T04:10:54.189760+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "q7r8s9t0-u1v2-63w3-x4y5-z6a7b8c9d0e1",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "16",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Transition Metal Properties",
+    "content": "## Question: Transition Metal Characteristics\n\nWhich of the following is NOT a typical property of transition metals?\n\n**A)** They form colored compounds\n\n**B)** They have variable oxidation states\n\n**C)** They have high melting points\n\n**D)** They form white ionic compounds with a single positive charge",
+    "speech_to_text_content": "Which of the following is NOT a typical property of transition metals? Option A: They form colored compounds. Option B: They have variable oxidation states. Option C: They have high melting points. Option D: They form white ionic compounds with a single positive charge.",
+    "answer": [
+      {
+        "id": "ans-004-1",
+        "question_id": "q7r8s9t0-u1v2-63w3-x4y5-z6a7b8c9d0e1",
+        "option_id": "opt-004-4",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-004-1",
+        "option_text": "They form colored compounds",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-004-2",
+        "option_text": "They have variable oxidation states",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-004-3",
+        "option_text": "They have high melting points",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-004-4",
+        "option_text": "They form white ionic compounds with a single positive charge",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **D) They form white ionic compounds with a single positive charge**.\n\n**Why this is correct:**\nThis is NOT a typical property of transition metals:\n- Transition metals typically form COLORED compounds (not white)\n- They have VARIABLE oxidation states (not just a single charge like +1)\n- They can have many different positive charges: Fe²⁺ or Fe³⁺, Cu⁺ or Cu²⁺, Mn²⁺, Mn³⁺, Mn⁴⁺, etc.\n\nThis is characteristic of Group 1 metals (alkali metals), which form white ionic compounds with a single +1 charge (like NaCl, KBr, etc.), not transition metals.\n\n**Why other options are correct (they ARE typical properties):**\n- A is correct - transition metals form colored compounds: Fe(OH)₂ is green, Fe(OH)₃ is orange, CuSO₄ is blue, etc.\n- B is correct - transition metals have variable oxidation states: iron can be +2 or +3, manganese can be +2, +3, +4, +6, or +7\n- C is correct - transition metals have high melting points due to strong metallic bonding\n\n**Key distinction:**\n- Group 1 metals: white compounds, single charge (+1)\n- Transition metals: colored compounds, variable charges\n\nThis question tests your understanding of the differences between Group 1 metals and transition metals.",
+    "created_at": "2024-01-15T13:00:00Z",
+    "updated_at": "2024-01-15T13:00:00Z",
+    "source_timestamp": "2024-01-15T13:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T04:10:59.559296+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "r8s9t0u1-v2w3-64x4-y5z6-a7b8c9d0e1f2",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "17",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Metal Extraction",
+    "content": "## Question: Metal Extraction Methods\n\nWhy is magnesium extracted by electrolysis of molten magnesium oxide rather than by carbon reduction?\n\n**A)** Carbon reduction is too dangerous\n\n**B)** Magnesium oxide is too stable to be reduced by carbon at reasonable temperatures\n\n**C)** Electrolysis is cheaper than carbon reduction\n\n**D)** Magnesium reacts with carbon at high temperatures",
+    "speech_to_text_content": "Why is magnesium extracted by electrolysis of molten magnesium oxide rather than by carbon reduction? Option A: Carbon reduction is too dangerous. Option B: Magnesium oxide is too stable to be reduced by carbon at reasonable temperatures. Option C: Electrolysis is cheaper than carbon reduction. Option D: Magnesium reacts with carbon at high temperatures.",
+    "answer": [
+      {
+        "id": "ans-005-1",
+        "question_id": "r8s9t0u1-v2w3-64x4-y5z6-a7b8c9d0e1f2",
+        "option_id": "opt-005-2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-005-1",
+        "option_text": "Carbon reduction is too dangerous",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-005-2",
+        "option_text": "Magnesium oxide is too stable to be reduced by carbon at reasonable temperatures",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-005-3",
+        "option_text": "Electrolysis is cheaper than carbon reduction",
+        "imageUrl": null
+      },
+      {
+        "id": "opt-005-4",
+        "option_text": "Magnesium reacts with carbon at high temperatures",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Magnesium oxide is too stable to be reduced by carbon at reasonable temperatures**.\n\n**Why this is correct:**\nMagnesium is a very reactive metal (high in the reactivity series). Its oxide (MgO) is extremely stable with very strong ionic bonds. Carbon is not reactive enough to break these bonds at temperatures that are practical for industrial use. Therefore, we must use electrolysis, which provides enough electrical energy to break the ionic bonds and extract the magnesium.\n\n**Connection to the reactivity series:**\nThe reactivity series determines which extraction method to use:\n- Very reactive metals (K, Na, Ca, Mg) → Electrolysis of molten oxide (oxide too stable for carbon reduction)\n- Moderately reactive metals (Zn, Fe, Pb, Cu, Ag) → Carbon reduction (oxide can be reduced by carbon)\n- Unreactive metals (Au, Pt) → No extraction needed (found as pure elements)\n\nMagnesium is in the \"very reactive\" category, so it requires electrolysis.\n\n**Why other options are incorrect:**\n- A is incorrect because carbon reduction itself isn't dangerous; it's just ineffective\n- C is incorrect because electrolysis is actually MORE expensive, not cheaper, which is why we only use it for very reactive metals\n- D is incorrect because magnesium doesn't react with carbon; carbon simply can't remove oxygen from MgO effectively\n\n**Key principle:** The more reactive a metal, the more stable its oxide, and the more energy-intensive the extraction method required.",
+    "created_at": "2024-01-15T13:15:00Z",
+    "updated_at": "2024-01-15T13:15:00Z",
+    "source_timestamp": "2024-01-15T13:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T04:11:05.847419+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "s9t0u1v2-w3x4-65y5-z6a7-b8c9d0e1f2g3",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "18",
+    "type": "question",
+    "question_type": "open",
+    "title": "Application Question: Protecting Iron from Corrosion",
+    "content": "## Question: Iron Corrosion Prevention\n\nA steel bridge is exposed to air and moisture. Explain:\n\n1. Why the bridge will rust (mention the essential conditions)\n2. Why galvanizing (coating with zinc) protects the steel from rusting\n3. Why sacrificial protection using magnesium would also work to protect the bridge",
+    "speech_to_text_content": "A steel bridge is exposed to air and moisture. Explain: 1. Why the bridge will rust, mentioning the essential conditions. 2. Why galvanizing, or coating with zinc, protects the steel from rusting. 3. Why sacrificial protection using magnesium would also work to protect the bridge.",
+    "answer": [
+      {
+        "id": "ans-006-1",
+        "question_id": "s9t0u1v2-w3x4-65y5-z6a7-b8c9d0e1f2g3",
+        "answer_text": "See explanation for model answer with key points that must be covered.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Model Answer with Key Points:**\n\n**1. Why the bridge will rust:**\n- Iron rusting requires TWO essential conditions: oxygen (from air) AND water (from moisture/rain)\n- When both are present, iron undergoes oxidation: 4Fe + 3O₂ + 6H₂O → 4Fe(OH)₃\n- The iron(III) hydroxide dehydrates to form iron oxide (rust): 2Fe(OH)₃ → Fe₂O₃ + 3H₂O\n- Since the bridge is exposed to both air and moisture, both conditions are met, so rusting will occur\n\n**2. Why galvanizing protects the steel:**\n- Galvanizing coats the steel with a layer of zinc metal\n- This creates a physical barrier between the iron and oxygen/water\n- Additionally, zinc is more reactive than iron (higher in the reactivity series)\n- If the zinc coating is scratched, the exposed zinc oxidizes preferentially to iron\n- The zinc oxide layer seals the breach, providing continued protection\n- This is both a barrier method AND a sacrificial protection method\n\n**3. Why sacrificial protection with magnesium works:**\n- Magnesium is MORE reactive than iron (higher in the reactivity series)\n- When magnesium is in contact with iron in the presence of moisture, magnesium oxidizes preferentially\n- Magnesium loses electrons before iron does, so it corrodes instead of the iron\n- The iron is protected as long as the magnesium block is present\n- The magnesium block gradually corrodes away and must be replaced periodically\n- This is called a \"sacrificial anode\" because it sacrifices itself to protect the iron\n\n**Key connections to periodic table concepts:**\n- Both methods rely on the reactivity series\n- Zinc and magnesium are both more reactive than iron\n- The more reactive metal corrodes preferentially, protecting the less reactive iron\n- This demonstrates how understanding periodic trends has practical applications\n\n**Marking criteria:**\n- Must identify both oxygen and water as essential conditions for rusting\n- Must explain galvanizing as both a barrier and sacrificial method\n- Must reference the reactivity series to explain why Zn and Mg protect Fe\n- Must explain that Mg and Zn are more reactive and corrode preferentially",
+    "created_at": "2024-01-15T13:30:00Z",
+    "updated_at": "2024-01-15T13:30:00Z",
+    "source_timestamp": "2024-01-15T13:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T04:11:13.826147+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "t0u1v2w3-x4y5-66z6-a7b8-c9d0e1f2g3h4",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "19",
+    "type": "question",
+    "question_type": "open",
+    "title": "Analysis Question: Group Trends and Properties",
+    "content": "## Question: Comparing Alkali Metals and Halogens\n\nCompare the trends in reactivity down Group 1 (alkali metals) and down Group 17 (halogens). Explain why the reactivity trends are OPPOSITE in these two groups.",
+    "speech_to_text_content": "Compare the trends in reactivity down Group 1, alkali metals, and down Group 17, halogens. Explain why the reactivity trends are opposite in these two groups.",
+    "answer": [
+      {
+        "id": "ans-007-1",
+        "question_id": "t0u1v2w3-x4y5-66z6-a7b8-c9d0e1f2g3h4",
+        "answer_text": "See explanation for model answer with key points that must be covered.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Model Answer with Key Points:**\n\n**Reactivity Trends:**\n\n**Group 1 (Alkali Metals):**\n- Reactivity INCREASES down the group\n- Order: Li < Na < K (potassium is most reactive)\n- Trend: Reactivity increases as you go down\n\n**Group 17 (Halogens):**\n- Reactivity DECREASES down the group\n- Order: F₂ > Cl₂ > Br₂ > I₂ (fluorine is most reactive)\n- Trend: Reactivity decreases as you go down\n\n**These trends are OPPOSITE!**\n\n**Explanation for the Opposite Trends:**\n\nThe key difference is in what happens to the atoms as you go down each group:\n\n**Group 1 - Atoms get LARGER:**\n- Atomic size increases down the group\n- Valence electrons are farther from the nucleus\n- Nuclear attraction on valence electrons becomes weaker\n- Electrons are EASIER to lose (oxidation is easier)\n- Result: Reactivity increases (easier to lose electrons)\n\n**Group 17 - Atoms get LARGER:**\n- Atomic size increases down the group\n- However, the atoms need to GAIN electrons (not lose them)\n- The larger the atom, the farther away the incoming electrons are from the nucleus\n- It becomes harder to attract additional electrons\n- Result: Reactivity decreases (harder to gain electrons)\n\n**The Critical Difference:**\n- Group 1: Reactivity depends on LOSING electrons → larger atoms lose more easily → reactivity increases\n- Group 17: Reactivity depends on GAINING electrons → larger atoms attract less easily → reactivity decreases\n\n**Connecting to Electronic Configuration:**\n- Group 1 metals have few valence electrons (1) and tend to lose them\n- Group 17 non-metals have many valence electrons (7) and tend to gain electrons\n- The chemical behavior (losing vs. gaining) determines how atomic size affects reactivity\n\n**Marking criteria:**\n- Must correctly state the reactivity trends (increasing for Group 1, decreasing for Group 17)\n- Must explain that atomic size increases down both groups\n- Must explain that Group 1 reactivity increases because electrons are easier to lose from larger atoms\n- Must explain that Group 17 reactivity decreases because electrons are harder to attract to larger atoms\n- Must recognize that the opposite trends result from opposite chemical behaviors (losing vs. gaining electrons)",
+    "created_at": "2024-01-15T13:45:00Z",
+    "updated_at": "2024-01-15T13:45:00Z",
+    "source_timestamp": "2024-01-15T13:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T04:11:20.294449+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "u1v2w3x4-y5z6-67a7-b8c9-d0e1f2g3h4i5",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "20",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎓 Chapter Summary: Key Concepts Review",
+    "content": "## Summary of Patterns in the Periodic Table\n\nLet's review the most important concepts you've learned in this chapter.\n\n### 1. Periodic Table Organization\n\n- The ::yellow[Periodic Table] is organized by ::yellow[proton number] (atomic number)\n- ::yellow[Periods] (rows) represent the number of electron shells\n- ::yellow[Groups] (columns) represent the number of valence electrons\n- An element's position determines its electronic configuration and chemical properties\n\n### 2. Periodic Trends\n\n**Across a Period (left to right):**\n- ::yellow[Metallic character decreases]\n- ::yellow[Non-metallic character increases]\n- Bonding changes from ionic (left) to covalent (right)\n- Oxides change from basic to acidic\n\n**Down a Group:**\n- ::yellow[Atomic size increases]\n- ::yellow[Valence electrons are farther from nucleus]\n- ::yellow[First ionization energy decreases]\n- Reactivity patterns depend on the group:\n  - Group 1: Reactivity INCREASES (easier to lose electrons)\n  - Group 17: Reactivity DECREASES (harder to gain electrons)\n\n### 3. Valence Electrons and Ionic Charge\n\n- ::yellow[Group number = Number of valence electrons]\n- Metals lose valence electrons to form positive ions\n- Non-metals gain electrons to form negative ions\n- The ::yellow[stable octet] (8 valence electrons) is the goal\n\n### 4. Group 1: Alkali Metals\n\n- **Soft metals** with low density (float on water)\n- **1 valence electron** → form +1 ions\n- **Reactivity increases** down the group (K > Na > Li)\n- React vigorously with water, producing hydrogen gas\n- **Why reactivity increases**: Valence electrons farther from nucleus in larger atoms\n\n### 5. Group 17: Halogens\n\n- **Diatomic molecules** (F₂, Cl₂, Br₂, I₂)\n- **7 valence electrons** → form -1 ions\n- **Reactivity decreases** down the group (F₂ > Cl₂ > Br₂ > I₂)\n- **Colored** and **soluble** in water and organic solvents\n- More reactive halogens ::yellow[displace] less reactive ones from solutions\n\n### 6. Group 18: Noble Gases\n\n- **Monoatomic** (single atoms), not molecules\n- **Complete valence shells** (8 electrons or 2 for He)\n- **Extremely unreactive** - don't form compounds\n- Used to provide **inert environments** (welding, light bulbs, balloons)\n- Demonstrate the **octet rule** - stability of full valence shells\n\n### 7. Transition Elements\n\n- **High melting points** and **high density**\n- **Variable oxidation states** (can form multiple charges)\n- Form **colored compounds** (unlike Group 1 white compounds)\n- Excellent **catalysts** in industry (Fe in Haber process, Pt in nitric acid production)\n- **Roman numerals** indicate oxidation state: Fe²⁺ (Iron(II)), Fe³⁺ (Iron(III))\n\n### 8. The Reactivity Series\n\n**Order (most to least reactive):**\nK > Na > Ca > Mg > C > Zn > Fe > Cu > Ag\n\n**Key principles:**\n- More reactive metals ::yellow[displace] less reactive metals from compounds\n- Reactivity relates to tendency to form positive ions\n- Determined by reactions with water, HCl, and oxygen\n\n### 9. Metal Extraction\n\n**Electrolysis of molten oxide** → Very reactive metals (K, Na, Ca, Mg)\n- Oxides too stable for carbon reduction\n- Requires electrical energy\n- Expensive but necessary\n\n**Carbon reduction** → Moderately reactive metals (Zn, Fe, Pb, Cu, Ag)\n- Carbon removes oxygen from the oxide\n- More economical than electrolysis\n\n**No extraction needed** → Unreactive metals (Au, Pt)\n- Found as pure elements in nature\n- Just need physical separation\n\n### 10. Thermal Stability of Carbonates\n\n- ::yellow[Thermal stability DECREASES] down the reactivity series\n- More reactive metals form LESS stable carbonates\n- Less reactive metals form MORE stable carbonates\n- Depends on charge density of the metal ion\n\n### 11. Corrosion of Iron (Rusting)\n\n**Essential conditions for rusting:**\n- **Oxygen** (from air) AND\n- **Water** (from moisture)\n\n**Both are required!**\n\n**Prevention methods:**\n1. **Barrier methods**: Painting, greasing, plastic coating, galvanizing\n2. **Sacrificial protection**: Using more reactive metal (e.g., Mg, Zn) that corrodes instead of iron\n\n> 💡 **Key Insight**: Understanding the reactivity series allows us to predict and prevent corrosion!\n\n### Why All These Patterns Matter\n\nThe periodic patterns you've learned are not random—they all result from the ::yellow[electronic configuration] of atoms. Understanding these patterns allows us to:\n\n✅ Predict how elements will behave\n✅ Understand why certain materials are useful\n✅ Design industrial processes\n✅ Prevent corrosion and extend material life\n✅ Develop new compounds and materials\n\n> 🎯 **Final Thought**: The Periodic Table is not just a list to memorize. It's a map of chemistry, showing how the structure of atoms determines everything about how elements behave!",
+    "speech_to_text_content": "Let's review the most important concepts from the chapter on Patterns in the Periodic Table. The Periodic Table is organized by proton number. Periods represent the number of electron shells, and groups represent the number of valence electrons. Across a period, metallic character decreases and non-metallic character increases. Down a group, atomic size increases and valence electrons are farther from the nucleus. Group number equals the number of valence electrons. Metals lose valence electrons to form positive ions, while non-metals gain electrons to form negative ions. Group 1 alkali metals are soft with low density and have 1 valence electron. Reactivity increases down Group 1 because valence electrons are farther from the nucleus in larger atoms. Group 17 halogens are diatomic molecules with 7 valence electrons. Reactivity decreases down Group 17. More reactive halogens displace less reactive ones from solutions. Group 18 noble gases are monoatomic with complete valence shells and are extremely unreactive. Transition elements have high melting points, high density, variable oxidation states, and form colored compounds. They are excellent catalysts. The reactivity series shows metals in order from most to least reactive. More reactive metals displace less reactive metals from compounds. Metal extraction methods depend on reactivity: electrolysis for very reactive metals, carbon reduction for moderately reactive metals, and no extraction for unreactive metals. Thermal stability of carbonates decreases down the reactivity series. Rusting of iron requires both oxygen and water. Prevention methods include barrier methods and sacrificial protection using more reactive metals. Understanding these patterns allows us to predict element behavior, understand material usefulness, design industrial processes, and prevent corrosion.",
+    "answer": null,
+    "options": [],
+    "explanation": "This comprehensive summary slide reviews all major concepts covered in the chapter, organized by topic. It provides a quick reference guide for students to consolidate their learning and see how all the concepts connect to the underlying principle of electronic configuration determining chemical behavior.",
+    "created_at": "2024-01-15T14:00:00Z",
+    "updated_at": "2024-01-15T14:00:00Z",
+    "source_timestamp": "2024-01-15T14:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T04:11:37.015397+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

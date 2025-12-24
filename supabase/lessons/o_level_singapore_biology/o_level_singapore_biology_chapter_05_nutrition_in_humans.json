@@ -1,0 +1,895 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🍽️ Introduction to Nutrition in Humans",
+    "content": "## What is Nutrition?\n\n::yellow[Nutrition] is the fundamental process by which organisms obtain food and energy for growth, repair, and maintenance of the body. Without proper nutrition, your body cannot function optimally.\n\n### Why Does Your Body Need Nutrition?\n\nYour body requires nutrients for three essential purposes:\n\n- **Energy Production** 🔋 - To power all your daily activities, from studying to playing sports\n- **Growth** 📈 - To build new cells and tissues, especially important during your teenage years\n- **Repair and Maintenance** 🔧 - To fix damaged cells and keep organs working properly\n\n### The Five Stages of Nutrition\n\nNutrition is not just about eating food. It's a complete five-step process:\n\n| Stage | What Happens | Example |\n|-------|--------------|----------|\n| ::yellow[Ingestion] | Food enters your body through the mouth | Taking a bite of rice |\n| ::yellow[Digestion] | Large food molecules break down into smaller pieces | Stomach churning food |\n| ::yellow[Absorption] | Nutrients pass into the bloodstream | Nutrients entering blood in small intestine |\n| ::yellow[Assimilation] | Your cells use the nutrients | Using glucose for energy |\n| ::yellow[Egestion] | Undigested waste leaves your body | Feces passing through the anus |\n\n> 💡 **Key Insight**: Each stage is essential. If any stage fails, your body cannot properly use the food you eat!\n\n### Your Digestive System: A 9-Metre Journey\n\nThe ::blue[alimentary canal] is a long muscular tube stretching approximately 9 metres from your mouth to your anus. It works with special organs like the liver, pancreas, and gall bladder to process every meal you eat.\n\n⚠️ **Important**: Understanding how your digestive system works helps you make better food choices and recognize digestive problems early!",
+    "speech_to_text_content": "Nutrition is the process by which organisms obtain food and energy for growth, repair and maintenance of the body. Your body requires nutrients for energy production, growth, and repair and maintenance. Nutrition consists of five stages: ingestion, digestion, absorption, assimilation, and egestion. The alimentary canal is a nine-metre long tube extending from the mouth to the anus, working with special organs like the liver, pancreas, and gall bladder.",
+    "explanation": "This introductory slide establishes the foundational concept that nutrition is a multi-stage process essential for human survival and health. It introduces students to the complete journey of food through the body and explains why each stage matters. The five stages (ingestion, digestion, absorption, assimilation, egestion) form the framework for all subsequent learning in this chapter.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:53:16.883953+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 The Human Digestive System - Structure and Overview",
+    "content": "## Components of the Digestive System\n\nYour digestive system consists of two main parts working together:\n\n### 1. The Alimentary Canal (GI Tract)\n\nThis is the ::yellow[main tube] through which food travels. It includes:\n\n- **Mouth** 👄 - Where digestion begins\n- **Pharynx** - Connects mouth to oesophagus\n- **Oesophagus** 🌭 - Tube carrying food to stomach\n- **Stomach** 🍲 - Muscular bag mixing and digesting food\n- **Small Intestine** (Duodenum & Ileum) - Where most digestion and absorption occur\n- **Large Intestine** (Colon, Rectum, Anus) - Absorbs water and removes waste\n\n### 2. Associated Organs (Accessory Organs)\n\nThese organs produce substances that help digestion but food doesn't pass through them:\n\n- **Liver** 🔴 - Produces bile for fat digestion\n- **Gall Bladder** - Stores bile temporarily\n- **Pancreas** 🟣 - Produces digestive enzymes and hormones\n- **Salivary Glands** - Produce saliva to start digestion\n\n## The Journey of Food\n\n::blue[Visualize] this pathway: Mouth → Pharynx → Oesophagus → Stomach → Duodenum → Ileum → Colon → Rectum → Anus\n\nAt each stage, different processes occur to break down food and extract nutrients.\n\n> 💡 **Why This Matters**: The length and complexity of your digestive system ensures that food is thoroughly processed and nutrients are efficiently extracted before waste is eliminated.",
+    "speech_to_text_content": "The digestive system consists of the alimentary canal and associated organs. The alimentary canal includes the mouth, pharynx, oesophagus, stomach, small intestine (duodenum and ileum), and large intestine (colon, rectum, and anus). Associated organs include the liver, gall bladder, pancreas, and salivary glands. Food travels through the mouth, pharynx, oesophagus, stomach, duodenum, ileum, colon, rectum, and finally the anus.",
+    "explanation": "This slide provides the structural overview of the digestive system, introducing students to both the main alimentary canal and the accessory organs. It establishes the anatomical framework that will be detailed in subsequent slides. Understanding the basic structure is essential before learning about the specific functions of each part.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:53:22.322780+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "3",
+    "type": "slide",
+    "question_type": null,
+    "title": "👄 The Mouth and Buccal Cavity - Where Digestion Begins",
+    "content": "## The Mouth: Your First Digestive Station\n\nThe ::yellow[buccal cavity] (inside of your mouth) is where digestion begins. Three main structures work together here:\n\n### 1. Teeth 🦷 - Physical Breakdown\n\n**Function**: Break large pieces of food into smaller pieces\n\n**Why This Matters**:\n- Increases the ::yellow[surface area-to-volume ratio] of food\n- Larger surface area allows enzymes to work more efficiently\n- Smaller food pieces are easier to swallow and process\n\n**Example**: Chewing a piece of bread thoroughly makes it easier for your digestive system to break down the starch compared to swallowing it whole.\n\n### 2. Salivary Glands 💧 - Chemical Start\n\n**What They Produce**: ::yellow[Saliva] containing the enzyme ::blue[salivary amylase]\n\n**What Salivary Amylase Does**:\n- Breaks down ::yellow[starch] into ::yellow[maltose] (a simpler sugar)\n- Works best at neutral pH (around 7)\n- This is the FIRST chemical digestion in your body\n\n**Additional Functions of Saliva**:\n- Softens and moistens food for easier swallowing\n- Contains antibacterial substances to kill harmful bacteria\n- Lubricates food to make swallowing easier\n\n### 3. Tongue 👅 - Mixing and Movement\n\n**Functions**:\n- Mixes food with saliva thoroughly\n- Shapes food into small round masses called ::yellow[boli]\n- Pushes food to the back of mouth for swallowing\n\n## The Mouth Process Step-by-Step\n\n1. 👀 Food stimulates your salivary glands\n2. 💧 Saliva is released and mixes with food\n3. 🦷 Teeth chew and break food into smaller pieces\n4. 🔄 Tongue mixes food with saliva\n5. 🟤 Food forms into a bolus (small round mass)\n6. ⬇️ Tongue pushes bolus to the back of mouth\n7. 🤖 Swallowing reflex begins\n\n## Chemical Reaction in the Mouth\n\n```\nStarch → (salivary amylase) → Maltose\n```\n\n::red[Important]: Salivary amylase is deactivated by the acidic environment of the stomach, so starch digestion stops once food reaches the stomach!\n\n> 💡 **Key Insight**: The mouth is not just for tasting! It's the beginning of both physical and chemical digestion.",
+    "speech_to_text_content": "The buccal cavity, or inside of the mouth, is where digestion begins. Teeth break large pieces of food into smaller pieces, increasing surface area for enzyme action. Salivary glands produce saliva containing salivary amylase, which breaks down starch into maltose. The tongue mixes food with saliva and shapes it into small round masses called boli. Salivary amylase works at neutral pH and is the first chemical digestion in the body. The tongue pushes the bolus to the back of the mouth for swallowing.",
+    "explanation": "This slide covers the mouth's critical role in both mechanical and chemical digestion. Students learn about the three main structures (teeth, salivary glands, tongue) and their specific functions. The introduction of salivary amylase and the starch-to-maltose conversion is the first enzyme reaction students encounter, establishing the pattern for understanding other digestive enzymes.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:53:30.427025+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌭 The Oesophagus and Peristalsis - Moving Food Down",
+    "content": "## The Oesophagus: A Muscular Tube\n\nThe ::yellow[oesophagus] is a narrow, muscular tube that connects your mouth to your stomach. It passes through your thorax (chest area) and is approximately 25 centimetres long.\n\n### Muscle Structure of the Oesophagus\n\nThe walls of the oesophagus contain TWO layers of muscles arranged in different directions:\n\n| Muscle Layer | Location | Direction | Function |\n|--------------|----------|-----------|----------|\n| ::yellow[Circular Muscles] | Inner layer | Around the tube | Constrict to narrow the tube |\n| ::yellow[Longitudinal Muscles] | Outer layer | Along the tube | Contract to shorten the tube |\n\n## Peristalsis: The Wave-Like Motion 🌊\n\n::yellow[Peristalsis] is the rhythmic, wave-like muscular contraction that moves food through the entire alimentary canal.\n\n### How Peristalsis Works\n\n**The Antagonistic Muscle Action**:\n\nThese two muscle layers work as ::blue[antagonistic muscles] - they work against each other:\n\n**Step 1**: Circular muscles contract\n- Longitudinal muscles relax\n- Gut wall becomes narrower and longer\n- Food is pushed forward ✅\n\n**Step 2**: Longitudinal muscles contract\n- Circular muscles relax\n- Gut wall becomes wider and shorter\n- New food can enter the space ✅\n\nThis alternating pattern creates a wave that pushes food down!\n\n### Two Functions of Peristalsis\n\n1. **Mixes Food** 🔄 - Combines food with digestive juices\n2. **Propels Food** ➡️ - Moves food along the alimentary canal\n\n## Why Peristalsis is Amazing\n\n::green[Did you know]? Peristalsis works REGARDLESS of gravity! This is why astronauts can eat and digest food normally in space, even when floating upside down. Peristalsis pushes food through the entire digestive system through muscular action alone.\n\n> ⚠️ **Important**: Peristalsis occurs throughout the ENTIRE alimentary canal - not just the oesophagus! It's the primary mechanism for moving food from mouth to anus.\n\n> 💡 **Key Concept**: The coordinated contraction and relaxation of antagonistic muscles is a brilliant biological system that doesn't rely on gravity or conscious effort.",
+    "speech_to_text_content": "The oesophagus is a narrow, muscular tube connecting the mouth to the stomach. Its walls contain two layers of muscles: circular muscles on the inner layer and longitudinal muscles on the outer layer. Peristalsis is rhythmic wave-like muscular contraction that moves food through the alimentary canal. When circular muscles contract, longitudinal muscles relax, making the gut narrower and longer to push food forward. When longitudinal muscles contract, circular muscles relax, making the gut wider and shorter. Peristalsis works regardless of gravity and occurs throughout the entire alimentary canal.",
+    "explanation": "This slide introduces the concept of peristalsis, one of the most important mechanisms in digestion. Students learn about the antagonistic muscle action and how the coordinated contraction of two muscle layers creates wave-like motion. The explanation of how peristalsis works independently of gravity helps students understand its universal importance throughout the digestive system.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:53:38.110190+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🍲 The Stomach - Mixing and Partial Digestion",
+    "content": "## What is the Stomach?\n\nThe ::yellow[stomach] is a distensible (stretchy) muscular bag located on the left side of your abdominal cavity, partly covered by the liver. It's shaped somewhat like the letter 'J' and can hold up to 1.5 litres of food!\n\n### Structure of the Stomach\n\n**Thick Muscular Walls**: The stomach has well-developed muscular walls that allow it to:\n- Stretch to accommodate large meals\n- Contract to churn and mix food\n- Create the acidic environment needed for digestion\n\n**Inner Surface**: The inner surface has numerous pits lined with ::yellow[gastric glands] that secrete gastric juice.\n\n## What Happens in the Stomach?\n\n### The Three Main Functions\n\n1. **Physical Digestion** 🔄\n   - Muscular contractions churn food\n   - Mixes food thoroughly with gastric juice\n   - Breaks large pieces into smaller pieces\n   - Creates a semi-liquid mixture called ::yellow[chyme]\n\n2. **Chemical Digestion** ⚗️\n   - Gastric juice contains enzymes and acid\n   - Protein digestion begins here\n   - Creates the right pH for enzyme action\n\n3. **Storage** 📦\n   - Temporarily stores food\n   - Releases small amounts into duodenum gradually\n   - Ensures controlled digestion\n\n## Gastric Juice: The Stomach's Secret Weapon\n\n### Components of Gastric Juice\n\n| Component | Function |\n|-----------|----------|\n| ::yellow[Hydrochloric Acid (HCl)] | Creates acidic pH (~1.5-3.5), denatures salivary amylase, kills harmful bacteria, provides optimal pH for pepsin |\n| ::yellow[Pepsin] (a protease enzyme) | Breaks down proteins into smaller polypeptides |\n| ::yellow[Mucus] | Protects stomach wall from acid damage, lubricates food |\n\n### The Pepsin Reaction\n\n```\nProteins → (pepsin) → Polypeptides\n```\n\n::blue[Important]: Pepsin works ONLY in acidic conditions (low pH). This is why the stomach must be acidic!\n\n## The Stomach Process Step-by-Step\n\n1. 👀 Food (bolus) arrives from oesophagus\n2. 🔔 Stomach detects food presence\n3. 💧 Gastric glands secrete gastric juice\n4. 🔄 Stomach muscles contract rhythmically (churning)\n5. ⚗️ Food mixes with gastric juice\n6. ⏱️ Partial digestion of proteins occurs\n7. 🔀 Food becomes semi-liquid chyme\n8. ⬇️ Small amounts of chyme gradually enter duodenum\n\n## How Long Does Food Stay in the Stomach?\n\n::green[Typically 1-4 hours] depending on the type of food. Fatty foods stay longer than carbohydrates.\n\n> ⚠️ **Common Misconception**: The stomach doesn't digest carbohydrates significantly! Salivary amylase (from mouth) is deactivated by stomach acid, and pancreatic amylase (from small intestine) does most carbohydrate digestion.\n\n> 💡 **Key Insight**: The stomach is like a food processor - it combines mechanical churning with chemical digestion to create a manageable form that the small intestine can absorb.",
+    "speech_to_text_content": "The stomach is a distensible muscular bag located on the left side of the abdominal cavity. It has thick muscular walls and an inner surface with pits lined with gastric glands that secrete gastric juice. The stomach performs three functions: physical digestion through muscular churning, chemical digestion using gastric juice, and temporary storage of food. Gastric juice contains hydrochloric acid, which creates an acidic pH and kills harmful bacteria, pepsin, a protease enzyme that breaks down proteins into polypeptides, and mucus, which protects the stomach wall. Food becomes a semi-liquid mixture called chyme in the stomach.",
+    "explanation": "This slide covers the stomach's critical role in both mechanical and chemical digestion. Students learn about the structure, the composition of gastric juice, and how pepsin breaks down proteins. The introduction of chyme and the controlled release of food into the duodenum establishes the importance of the stomach in regulating digestion pace.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:53:47.594381+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Digestive Enzymes - The Molecular Scissors",
+    "content": "## What Are Digestive Enzymes?\n\n::yellow[Digestive enzymes] are biological catalysts that break down large food molecules into smaller, soluble molecules that your body can absorb and use.\n\n### Key Concept: Enzyme Specificity\n\nEach enzyme is specific - it breaks down ONE type of nutrient:\n- **Amylase** → breaks down carbohydrates\n- **Protease** → breaks down proteins\n- **Lipase** → breaks down fats\n\n> 💡 **Analogy**: Think of enzymes as specialized scissors - each type cuts only specific materials. You wouldn't use scissors designed for paper to cut cloth!\n\n## The Four Main Digestive Enzymes\n\n### 1. Salivary Amylase 🦷\n\n| Property | Details |\n|----------|----------|\n| **Location Produced** | Salivary glands (mouth) |\n| **Where It Works** | Mouth and briefly in oesophagus |\n| **Optimal pH** | Neutral (around 7) |\n| **Substrate** (Input) | ::yellow[Starch] |\n| **End Product** (Output) | ::yellow[Maltose] (a disaccharide) |\n| **Reaction** | Starch → Maltose |\n\n**What Happens**: Salivary amylase starts breaking down starch into maltose, but this process stops in the stomach when the acidic environment denatures the enzyme.\n\n### 2. Pepsin 🍲\n\n| Property | Details |\n|----------|----------|\n| **Location Produced** | Gastric glands (stomach) |\n| **Where It Works** | Stomach only |\n| **Optimal pH** | Acidic (pH 1.5-3.5) |\n| **Substrate** (Input) | ::yellow[Proteins] |\n| **End Product** (Output) | ::yellow[Polypeptides] (shorter protein chains) |\n| **Reaction** | Proteins → Polypeptides |\n\n**What Happens**: Pepsin requires the acidic environment of the stomach and breaks proteins into smaller pieces. This is only partial digestion - complete protein digestion happens in the small intestine.\n\n### 3. Pancreatic Amylase 🟣\n\n| Property | Details |\n|----------|----------|\n| **Location Produced** | Pancreas |\n| **Where It Works** | Small intestine (duodenum and ileum) |\n| **Optimal pH** | Slightly alkaline (pH 8-8.5) |\n| **Substrate** (Input) | ::yellow[Starch] (and any remaining from mouth) |\n| **End Product** (Output) | ::yellow[Maltose] |\n| **Reaction** | Starch → Maltose |\n\n**What Happens**: Pancreatic amylase completes the starch digestion that salivary amylase started. Together they ensure ALL starch is broken down to maltose.\n\n### 4. Pancreatic Protease 🟣\n\n| Property | Details |\n|----------|----------|\n| **Location Produced** | Pancreas |\n| **Where It Works** | Small intestine |\n| **Optimal pH** | Slightly alkaline |\n| **Substrate** (Input) | ::yellow[Polypeptides] (from stomach) |\n| **End Product** (Output) | ::yellow[Amino acids] |\n| **Reaction** | Polypeptides → Amino acids |\n\n**What Happens**: Pancreatic protease completes protein digestion, breaking polypeptides into individual amino acids that can be absorbed.\n\n### 5. Pancreatic Lipase 🟣\n\n| Property | Details |\n|----------|----------|\n| **Location Produced** | Pancreas |\n| **Where It Works** | Small intestine |\n| **Optimal pH** | Slightly alkaline |\n| **Substrate** (Input) | ::yellow[Fats/Lipids] (after emulsification by bile) |\n| **End Product** (Output) | ::yellow[Fatty acids and Glycerol] |\n| **Reaction** | Fats → Fatty acids + Glycerol |\n\n**What Happens**: Pancreatic lipase breaks down fat molecules into their building blocks. This can only happen after bile has emulsified (broken into tiny droplets) the fats.\n\n### 6. Maltase 👶\n\n| Property | Details |\n|----------|----------|\n| **Location Produced** | Epithelial cells of small intestine |\n| **Where It Works** | Small intestine |\n| **Optimal pH** | Slightly alkaline |\n| **Substrate** (Input) | ::yellow[Maltose] |\n| **End Product** (Output) | ::yellow[Glucose] |\n| **Reaction** | Maltose → Glucose (×2) |\n\n**What Happens**: Maltase completes carbohydrate digestion by breaking maltose into glucose, which can be absorbed.\n\n## Summary: Enzyme Action in Digestion\n\n```\nCARBOHYDRATES:\nStarch → (salivary amylase) → Maltose → (maltase) → Glucose\n         [Mouth]                        [Small intestine]\n\nPROTEINS:\nProteins → (pepsin) → Polypeptides → (pancreatic protease) → Amino acids\n           [Stomach]                  [Small intestine]\n\nFATS:\nFats → (bile emulsifies) → Droplets → (pancreatic lipase) → Fatty acids + Glycerol\n       [Small intestine]              [Small intestine]\n```\n\n> 💡 **Key Insight**: Digestion is a relay race! Each enzyme does its part, and the next enzyme picks up where the previous one left off. This ensures complete breakdown of nutrients.",
+    "speech_to_text_content": "Digestive enzymes are biological catalysts that break down large food molecules into smaller molecules. Salivary amylase from salivary glands breaks down starch to maltose in the mouth. Pepsin from gastric glands breaks down proteins to polypeptides in the stomach. Pancreatic amylase from the pancreas breaks down starch to maltose in the small intestine. Pancreatic protease breaks down polypeptides to amino acids. Pancreatic lipase breaks down fats to fatty acids and glycerol after bile emulsification. Maltase from epithelial cells breaks down maltose to glucose. Each enzyme is specific to one type of nutrient and has an optimal pH for function.",
+    "explanation": "This comprehensive slide introduces all major digestive enzymes, their locations, substrates, and products. Students learn the specificity of enzymes and how they work sequentially to completely break down macronutrients. The summary diagrams show the complete pathway for each nutrient type, establishing the foundation for understanding complete digestion.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:53:59.292268+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🤏 The Small Intestine - Where Digestion and Absorption Happen",
+    "content": "## The Small Intestine: The Star of Digestion\n\nDespite its name, the ::yellow[small intestine] is actually 6-7 metres long! It's called \"small\" because of its narrow diameter compared to the large intestine. This is where the MAJORITY of digestion and absorption occurs.\n\n### Two Regions of the Small Intestine\n\n| Region | Description | Function |\n|--------|-------------|----------|\n| ::yellow[Duodenum] | U-shaped first section, about 25 cm long | Receives chyme from stomach, bile, and pancreatic juice; most chemical digestion occurs here |\n| ::yellow[Ileum] | Coiled section, about 6 metres long | Completes digestion and absorbs most nutrients |\n\n## What Happens in the Small Intestine?\n\n### Step 1: Chyme Arrives\n\n1. 🍲 Chyme enters from stomach in small amounts\n2. 🔔 Duodenum detects chyme presence\n3. 💧 Pancreas receives signal → secretes pancreatic juice\n4. 🟡 Gall bladder receives signal → releases bile\n\n### Step 2: Neutralization\n\n- 🔴 Chyme is acidic (from stomach HCl)\n- 🟢 Pancreatic juice and bile are alkaline\n- ⚖️ Together they neutralize the acid\n- ✅ Creates optimal pH for intestinal enzymes\n\n### Step 3: Complete Chemical Digestion\n\nIn the small intestine, the remaining digestion occurs:\n\n**Carbohydrates**:\n- Starch → Maltose → ::green[Glucose] ✅\n\n**Proteins**:\n- Polypeptides → ::green[Amino acids] ✅\n\n**Fats**:\n- After bile emulsifies them → ::green[Fatty acids + Glycerol] ✅\n\n### Step 4: Absorption\n\nOnce nutrients are broken down into simple molecules, they are absorbed through the small intestine wall into the bloodstream.\n\n## The Liver and Gall Bladder Connection\n\n### Bile: The Fat Emulsifier\n\n**What is Bile?**\n- ::yellow[Bile] is a greenish liquid produced by the liver\n- It is NOT an enzyme (important!)\n- It is stored temporarily in the gall bladder\n\n**What Bile Does**:\n- **Emulsifies fats** 🔄 - Breaks large fat droplets into tiny droplets\n- Increases surface area for lipase to act on\n- Makes fats easier to digest and absorb\n\n**How It Works**:\n```\nLarge fat droplet → (bile emulsifies) → Many tiny fat droplets\n                                        ↓\n                                    (lipase acts on)\n                                        ↓\n                                  Fatty acids + Glycerol\n```\n\n### The Bile Pathway\n\n1. 🔴 Liver cells produce bile continuously\n2. 🟡 Bile is stored in gall bladder\n3. 🍲 When fatty food arrives in duodenum\n4. 🔔 Gall bladder receives signal\n5. ➡️ Gall bladder contracts and releases bile\n6. 🌊 Bile flows through bile duct into duodenum\n7. ✨ Bile emulsifies fats\n\n## The Pancreas: Digestion and Glucose Control\n\n### Pancreatic Juice\n\nThe pancreas produces ::yellow[pancreatic juice] containing:\n\n- **Pancreatic amylase** - Completes starch digestion\n- **Pancreatic protease** - Completes protein digestion\n- **Pancreatic lipase** - Breaks down fats (after bile emulsification)\n- **Sodium bicarbonate** - Neutralizes stomach acid\n\n### Pancreatic Hormones\n\nThe pancreas ALSO produces hormones that regulate blood glucose:\n\n- **Insulin** - Tells your body to store glucose\n- **Glucagon** - Tells your body to release stored glucose\n\n> 💡 **Key Insight**: The pancreas has a dual role - it's both a digestive organ AND an endocrine gland that controls blood glucose!\n\n## Why the Small Intestine is Perfectly Designed\n\n✅ **Long length** (6-7 metres) - Maximum time for digestion and absorption\n\n✅ **Narrow diameter** - Increases surface area relative to volume\n\n✅ **Receives bile and pancreatic juice** - Completes chemical digestion\n\n✅ **Highly folded inner surface** - (You'll learn about villi next!) Maximizes absorption\n\n> ⚠️ **Important**: The small intestine is where MOST nutrient absorption occurs. Without it, your body cannot get the nutrients it needs!",
+    "speech_to_text_content": "The small intestine is six to seven metres long and consists of the duodenum and ileum. The duodenum is U-shaped and about twenty-five centimetres long, where chyme from the stomach receives bile and pancreatic juice. The ileum is coiled and about six metres long, where most digestion and absorption occur. In the small intestine, chyme is neutralized, and complete digestion of carbohydrates, proteins, and fats occurs. Bile, produced by the liver and stored in the gall bladder, emulsifies fats. The pancreas produces pancreatic juice containing enzymes and sodium bicarbonate. The small intestine has a long length and narrow diameter, providing maximum time and surface area for digestion and absorption.",
+    "explanation": "This slide covers the small intestine's critical role as the primary site of digestion and absorption. Students learn about the two regions (duodenum and ileum), the arrival of chyme, neutralization, and completion of chemical digestion. The explanation of bile's role in fat emulsification and the pancreas's dual role in digestion and glucose regulation are essential concepts.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:54:11.928528+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Villi and Microvilli - Adaptations for Absorption",
+    "content": "## The Problem: How to Absorb Enough Nutrients?\n\nYour small intestine needs to absorb HUGE amounts of nutrients from food. But how?\n\n::yellow[Villi] and ::yellow[microvilli] are the answer - they dramatically increase the surface area available for absorption!\n\n## Villi: Finger-Like Projections\n\n### Structure of a Villus\n\nEach villus is a tiny, finger-like projection from the small intestine wall. The small intestine contains MILLIONS of villi!\n\n**What's Inside Each Villus?**\n\n| Structure | Function |\n|-----------|----------|\n| ::yellow[Blood Capillaries] | Absorb glucose and amino acids into the bloodstream |\n| ::yellow[Lacteal] | A lymphatic vessel that absorbs fatty acids and glycerol |\n| ::yellow[Epithelial Cells] | Single layer of cells with many mitochondria for active transport |\n| ::yellow[Connective Tissue] | Supports the villus structure |\n\n### Why Villi Work So Well\n\n**1. Increased Surface Area** 📈\n- Flat intestine surface = small absorption area\n- With villi = HUGE increase in surface area\n- More surface = faster absorption\n\n**2. Thin Epithelium** 🔄\n- Only ONE cell thick\n- Short diffusion distance for nutrients to cross\n- Faster absorption\n\n**3. Rich Blood Supply** 🩸\n- Each villus surrounded by capillaries\n- Continuous blood flow maintains concentration gradients\n- Nutrients absorbed quickly, fresh blood always available\n\n**4. Mitochondria** ⚡\n- Epithelial cells contain MANY mitochondria\n- Provides ATP energy for active transport\n- Can absorb against concentration gradients\n\n## Microvilli: Even Smaller Projections\n\n### What Are Microvilli?\n\n::yellow[Microvilli] are even tinier projections on the surface of epithelial cells lining the villi.\n\n**The Numbers**:\n- Each villus has thousands of epithelial cells\n- Each epithelial cell has thousands of microvilli\n- Total surface area increases by **600 times**! 🤯\n\n### Why Microvilli Matter\n\n- Further increase surface area for absorption\n- Create a \"brush border\" appearance under microscope\n- Provide space for enzymes (like maltase) to work\n- Maximize nutrient absorption efficiency\n\n## How Absorption Works in Villi\n\n### Glucose and Amino Acids\n\n**Pathway**: Small intestine → Blood capillaries → Hepatic portal vein → Liver\n\n**Two Mechanisms**:\n\n1. **Diffusion** 🔄\n   - When concentration is higher in intestine than blood\n   - Nutrients move down concentration gradient\n   - Passive transport (no energy needed)\n\n2. **Active Transport** ⚡\n   - When concentration is lower in intestine than blood\n   - Nutrients move UP concentration gradient\n   - Requires ATP energy from mitochondria\n   - Carrier proteins in cell membrane help transport\n\n> 💡 **Why Active Transport?**: Even when all nutrients are absorbed, the intestine can still absorb more by actively transporting them against the concentration gradient!\n\n### Fatty Acids and Glycerol\n\n**Pathway**: Small intestine → Epithelial cells → Lacteals → Lymphatic system\n\n**Process**:\n1. 🔄 Fatty acids and glycerol diffuse into epithelial cells\n2. 🔧 Inside cells, they recombine to form fat globules\n3. 📦 Fat globules enter lacteals (lymphatic vessels)\n4. 🌊 Travel through lymphatic system to bloodstream\n\n> ⚠️ **Important Difference**: Fats take a different route than glucose and amino acids! They go through the lymphatic system first, not directly to the liver.\n\n## The Adaptation Summary\n\n```\nStructural Adaptations:\n├─ Villi (millions of them)\n│  ├─ Finger-like projections\n│  └─ Increase surface area dramatically\n├─ Microvilli (thousands per epithelial cell)\n│  ├─ Further increase surface area\n│  └─ Create brush border\n└─ Thin epithelium (one cell thick)\n   └─ Short diffusion distance\n\nCirculatory Adaptations:\n├─ Rich blood supply (capillaries in each villus)\n│  └─ Maintains concentration gradients\n├─ Lacteal in each villus\n│  └─ Absorbs fats into lymphatic system\n└─ Continuous blood flow\n   └─ Removes absorbed nutrients\n\nCellular Adaptations:\n├─ Many mitochondria\n│  └─ Provides ATP for active transport\n└─ Carrier proteins\n   └─ Transport nutrients against gradients\n```\n\n> 💡 **Key Insight**: The small intestine is a masterpiece of biological design. Every feature - from the length of the organ to the structure of individual cells - is optimized for maximum nutrient absorption!",
+    "speech_to_text_content": "Villi are finger-like projections from the small intestine wall that increase surface area for absorption. Each villus contains blood capillaries that absorb glucose and amino acids, a lacteal that absorbs fatty acids and glycerol, epithelial cells with many mitochondria for active transport, and connective tissue. Microvilli are even smaller projections on epithelial cells, further increasing surface area by six hundred times. The epithelium is only one cell thick, providing a short diffusion distance. Glucose and amino acids are absorbed by diffusion or active transport into blood capillaries. Fatty acids and glycerol diffuse into epithelial cells, recombine to form fats, and enter lacteals to travel through the lymphatic system.",
+    "explanation": "This slide covers the crucial adaptations of the small intestine for absorption. Students learn about villi and microvilli as structural adaptations, the rich blood supply and lacteals as circulatory adaptations, and mitochondria and carrier proteins as cellular adaptations. The explanation of how glucose/amino acids differ from fats in their absorption pathways is essential for understanding nutrient transport.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:54:24.746865+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔴 The Large Intestine - Water Absorption and Waste Storage",
+    "content": "## The Large Intestine: The Final Stop\n\nThe ::yellow[large intestine] (also called the colon) is the final section of the alimentary canal. Despite being called \"large,\" it's actually shorter and wider than the small intestine (about 1.5 metres long).\n\n### Three Regions of the Large Intestine\n\n| Region | Description | Function |\n|--------|-------------|----------|\n| ::yellow[Colon] | Main section, wider than small intestine | Absorbs water and mineral salts |\n| ::yellow[Rectum] | Short section at the end | Temporarily stores faeces |\n| ::yellow[Anus] | Opening to outside | Expels faeces when rectum contracts |\n\n## What Enters the Large Intestine?\n\nBy the time food reaches the large intestine, it has already been:\n- ✅ Digested (broken into simple molecules)\n- ✅ Absorbed (nutrients taken into bloodstream)\n- ❌ NOT absorbed (water, fibre, some minerals, bacteria)\n\nSo what's LEFT is mostly **water** and **undigested material**.\n\n## The Main Function: Water Absorption\n\n### How Much Water?\n\n- **Water in** (from food, drinks, digestive juices): About 10 litres per day! 💧\n- **Water absorbed by colon**: About 90% of remaining water\n- **Water in faeces**: About 10% (that's why faeces are semi-solid)\n\n### Why Is Water Absorption Important?\n\n1. **Prevents Dehydration** 💧 - Reabsorbs water your body needs\n2. **Concentrates Waste** 🔄 - Makes faeces solid instead of liquid\n3. **Maintains Electrolyte Balance** ⚡ - Also absorbs mineral salts (Na+, K+, Cl-)\n\n> ⚠️ **Clinical Connection**: When the colon doesn't absorb enough water (due to infection or disease), you get diarrhoea. When too much water is absorbed, you get constipation!\n\n## Secondary Functions of the Large Intestine\n\n### 1. Mineral Salt Absorption\n\nThe colon absorbs important mineral salts:\n- **Sodium (Na+)** - For nerve and muscle function\n- **Potassium (K+)** - For muscle contraction\n- **Chloride (Cl-)** - For fluid balance\n\n### 2. Bacterial Action\n\nThe large intestine contains beneficial bacteria (the \"gut microbiome\") that:\n- Break down some undigested fibre\n- Produce vitamin K (important for blood clotting)\n- Produce vitamin B12 (important for nerve function)\n- Produce short-chain fatty acids for colon health\n\n> 💡 **Fun Fact**: The bacteria in your large intestine outnumber your own cells! You have about 100 trillion bacteria in your gut!\n\n### 3. Faeces Formation\n\nFaeces (poo) consists of:\n- Water (about 75%)\n- Undigested fibre\n- Dead bacteria\n- Dead epithelial cells\n- Bile pigments (which give faeces their brown colour)\n- Some mineral salts\n\n## The Process: From Chyme to Faeces\n\n1. 🌊 Liquid chyme enters colon from small intestine\n2. 💧 Colon absorbs ~90% of remaining water\n3. 🔄 Muscular contractions mix contents\n4. 📦 Contents become thicker and more solid\n5. 🚚 Faeces move slowly through colon (takes 12-24 hours)\n6. 📍 Faeces stored temporarily in rectum\n7. 💪 Rectal muscles contract, faeces expelled through anus\n\n## Egestion: The Final Stage of Nutrition\n\n::yellow[Egestion] is the removal of undigested waste from the body through the anus.\n\n**This is NOT excretion!**\n- **Egestion** = removal of undigested food (never entered body cells)\n- **Excretion** = removal of metabolic waste (produced by body cells)\n\n> 💡 **Key Insight**: The large intestine is not just a waste disposal system. It's an important organ that recycles water and minerals your body needs!\n\n## Disorders of the Large Intestine\n\n| Condition | Cause | Effect |\n|-----------|-------|--------|\n| ::yellow[Diarrhoea] | Colon doesn't absorb enough water | Watery faeces, dehydration |\n| ::yellow[Constipation] | Too much water absorbed, slow movement | Hard faeces, difficulty passing |\n| ::yellow[Inflammatory Bowel Disease] | Inflammation of colon lining | Pain, diarrhoea, malabsorption |\n| ::yellow[Colon Cancer] | Abnormal cell growth | Serious health threat |\n\n> ⚠️ **Important**: A healthy large intestine is essential for overall health!",
+    "speech_to_text_content": "The large intestine consists of the colon, rectum, and anus. The colon absorbs about ninety percent of remaining water and mineral salts from undigested food. The rectum temporarily stores faeces. The anus expels faeces when the rectum contracts. The large intestine contains beneficial bacteria that produce vitamin K and vitamin B12. Faeces consist of water, undigested fibre, dead bacteria, dead epithelial cells, bile pigments, and mineral salts. Egestion is the removal of undigested waste through the anus, which is different from excretion, the removal of metabolic waste.",
+    "explanation": "This slide covers the large intestine's primary function of water and mineral salt absorption, and its role in faeces formation and egestion. Students learn about the three regions, the importance of water reabsorption, the role of gut bacteria, and the distinction between egestion and excretion.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:54:37.375310+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🩸 Transport and Assimilation - From Intestine to Cells",
+    "content": "## After Absorption: What Happens Next?\n\nOnce nutrients are absorbed through the small intestine wall, they don't just stay in the bloodstream. They must be:\n1. **Transported** to where they're needed\n2. **Processed** by the liver\n3. **Assimilated** (used by body cells)\n\n## The Hepatic Portal Vein: A Special Blood Vessel\n\n### What Makes It Special?\n\nThe ::yellow[hepatic portal vein] is unique - it's the only vein that carries nutrient-rich blood DIRECTLY from one organ (small intestine) to another organ (liver) before returning to the heart.\n\n**Normal blood vessel pattern**:\n```\nOrgan → Vein → Heart → Artery → Organ\n```\n\n**Hepatic portal vein pattern**:\n```\nSmall Intestine → Hepatic Portal Vein → Liver → Hepatic Vein → Heart\n```\n\n### Why This Route?\n\n> 💡 **Key Reason**: The liver needs FIRST access to absorbed nutrients to process and regulate them before they enter the general circulation!\n\n### What the Hepatic Portal Vein Carries\n\n| Nutrient | From | To | Why |\n|----------|------|----|---------|\n| ::yellow[Glucose] | Small intestine | Liver | Liver regulates blood glucose |\n| ::yellow[Amino acids] | Small intestine | Liver | Liver uses for protein synthesis |\n| ::yellow[Minerals] | Small intestine | Liver | Liver stores and regulates minerals |\n| ::yellow[Vitamins] | Small intestine | Liver | Liver stores fat-soluble vitamins |\n\n> ⚠️ **Important Exception**: Fatty acids and glycerol DON'T travel via hepatic portal vein! They go through the lymphatic system first, then enter the bloodstream elsewhere.\n\n## Assimilation: What Cells Do With Nutrients\n\n::yellow[Assimilation] is the process where absorbed nutrients are used by body cells to:\n- Build new structures (growth)\n- Repair damaged tissues\n- Provide energy\n- Produce enzymes and hormones\n\n### Glucose Assimilation\n\n**What Happens to Glucose**:\n\n1. **Immediate Energy** ⚡\n   - Glucose enters cells\n   - Cellular respiration breaks it down\n   - Releases energy (ATP) for cell functions\n   - Reaction: $$C_6H_{12}O_6 + O_2 → CO_2 + H_2O + Energy$$\n\n2. **Storage as Glycogen** 📦\n   - Excess glucose converted to ::yellow[glycogen]\n   - Stored mainly in liver and muscles\n   - Can be converted back to glucose when needed\n   - Liver can store up to 100-120g of glycogen\n   - Muscles store about 400-500g of glycogen\n\n3. **Conversion to Fat** 🍯\n   - If glucose intake exceeds energy needs\n   - Excess glucose converted to fat\n   - Stored in adipose tissue (fat cells)\n   - Body's long-term energy reserve\n\n### Amino Acid Assimilation\n\n**What Happens to Amino Acids**:\n\n1. **Protein Synthesis** 🧬\n   - Amino acids used to build new proteins\n   - Used for:\n     - Muscle growth and repair\n     - Enzyme production\n     - Hormone production\n     - Antibody production (immunity)\n     - Hair, skin, nail growth\n\n2. **Energy Source** ⚡\n   - If protein intake exceeds needs\n   - Amino acids can be broken down for energy\n   - Less efficient than glucose/fat\n   - Produces urea as waste product\n\n3. **Special Functions** 🔬\n   - Some amino acids make neurotransmitters (brain chemicals)\n   - Some make haemoglobin (oxygen carrier)\n   - Some make collagen (structural protein)\n\n### Fat Assimilation\n\n**What Happens to Fatty Acids and Glycerol**:\n\n1. **Cell Membrane Building** 🔧\n   - Fats are major component of cell membranes\n   - Needed for all new cell formation\n   - Especially important during growth\n\n2. **Insulation and Protection** 🧥\n   - Subcutaneous fat (under skin) provides insulation\n   - Protects organs from damage\n   - Reduces heat loss\n\n3. **Hormone Production** 🔬\n   - Some hormones made from cholesterol (a lipid)\n   - Examples: testosterone, oestrogen\n\n4. **Energy Storage** 📦\n   - Fats stored in adipose tissue\n   - Most efficient long-term energy storage\n   - 1g fat = 9 calories\n   - 1g carbohydrate = 4 calories\n   - Fats store MORE than twice the energy!\n\n5. **Emergency Energy** ⚡\n   - When glucose is scarce (fasting, starvation)\n   - Fats broken down for energy\n   - Can sustain body for weeks without food\n\n## The Role of the Liver in Nutrient Processing\n\nThe liver is the ::blue[metabolic hub] of your body. It processes absorbed nutrients:\n\n### Glucose Regulation\n\n**When Blood Glucose is HIGH** (after eating):\n- Liver detects high glucose\n- Pancreas releases ::yellow[insulin]\n- Insulin signals liver to convert glucose → glycogen\n- Glucose stored for later use\n- Blood glucose returns to normal\n\n**When Blood Glucose is LOW** (during fasting):\n- Liver detects low glucose\n- Pancreas releases ::yellow[glucagon]\n- Glucagon signals liver to convert glycogen → glucose\n- Glucose released into bloodstream\n- Blood glucose returns to normal\n\n> 💡 **Key Insight**: Your liver acts like a glucose thermostat, keeping blood glucose in a safe range!\n\n### Amino Acid Processing\n\n**What the Liver Does**:\n- Removes amino groups from excess amino acids\n- Converts amino group to ::yellow[urea] (waste product)\n- Urea excreted by kidneys\n- This process is called ::yellow[deamination]\n\n**Why?**: Your body can't store excess amino acids like it stores glucose or fats. Excess amino acids must be broken down.\n\n## Summary: The Journey of a Nutrient\n\n```\n🍕 You eat a meal\n   ↓\n👄 Mouth: Physical and chemical digestion begins\n   ↓\n🍲 Stomach: More digestion, food becomes chyme\n   ↓\n🤏 Small Intestine: Complete digestion, absorption\n   ↓\n🩸 Hepatic Portal Vein: Transport to liver\n   ↓\n🔴 Liver: Processing and regulation\n   ↓\n💪 Body Cells: Assimilation (using nutrients)\n   ↓\n🔋 Energy ⚙️ Growth 🔧 Repair\n```\n\n> 💡 **Key Concept**: Nutrition is not complete until nutrients are actually USED by your cells. Absorption is just the beginning!",
+    "speech_to_text_content": "The hepatic portal vein transports nutrient-rich blood from the small intestine directly to the liver before returning to the heart. This allows the liver to process and regulate nutrients. Glucose can be used immediately for energy through cellular respiration, stored as glycogen in the liver and muscles, or converted to fat if excess. Amino acids are used for protein synthesis to build muscles, enzymes, and hormones, or broken down for energy producing urea as waste. Fatty acids and glycerol are used to build cell membranes, provide insulation, produce hormones, and store energy. The liver regulates blood glucose by converting glucose to glycogen when blood glucose is high and glycogen to glucose when blood glucose is low.",
+    "explanation": "This slide covers the transport of absorbed nutrients via the hepatic portal vein and their assimilation by body cells. Students learn how glucose, amino acids, and fats are processed and used differently. The explanation of the liver's role in glucose regulation through insulin and glucagon is foundational for understanding metabolic homeostasis.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:54:54.692110+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔴 The Liver - Your Body's Chemical Factory",
+    "content": "## The Liver: An Organ Like No Other\n\nThe ::yellow[liver] is the largest internal organ in your body (about the size of a football!) and performs over 500 different functions! It's truly the metabolic centre of your body.\n\n## The Six Major Functions of the Liver\n\n### 1. Glucose Regulation - Blood Sugar Control\n\n**The Problem**: Your blood glucose must stay within a narrow range (80-120 mg/dL) or serious health problems occur.\n\n**The Solution**: The liver acts as a glucose buffer:\n\n**When Glucose is HIGH** (after eating):\n```\nHigh blood glucose\n        ↓\n  Pancreas detects\n        ↓\n  Releases INSULIN\n        ↓\n  Liver converts: Glucose → Glycogen\n        ↓\n  Blood glucose drops to normal ✅\n```\n\n**When Glucose is LOW** (during fasting):\n```\nLow blood glucose\n        ↓\n  Pancreas detects\n        ↓\n  Releases GLUCAGON\n        ↓\n  Liver converts: Glycogen → Glucose\n        ↓\n  Blood glucose rises to normal ✅\n```\n\n> 💡 **Key Insight**: Your liver keeps your blood glucose stable 24/7, whether you're eating, sleeping, or exercising!\n\n### 2. Bile Production - Fat Digestion Helper\n\n**What is Bile?**\n- ::yellow[Bile] is a greenish liquid produced by liver cells\n- NOT an enzyme (doesn't break chemical bonds)\n- Acts as a physical emulsifier\n\n**What Bile Does**:\n- Breaks large fat droplets into tiny droplets\n- Increases surface area for pancreatic lipase\n- Makes fats easier to digest and absorb\n\n**Bile Components**:\n- Bile salts (the active emulsifying agents)\n- Cholesterol\n- Bilirubin (gives bile its colour)\n- Lecithin\n\n**The Bile Pathway**:\n```\n🔴 Liver produces bile continuously\n        ↓\n🟡 Bile stored in gall bladder\n        ↓\n🍲 Fatty food arrives in duodenum\n        ↓\n🔔 Gall bladder receives signal\n        ↓\n➡️ Bile released into duodenum\n        ↓\n✨ Fats emulsified\n        ↓\n🔬 Pancreatic lipase can now act\n```\n\n### 3. Amino Acid Metabolism - Protein Processing\n\n**The Challenge**: Your body can't store excess amino acids like it stores glucose or fats.\n\n**The Solution**: Deamination - Remove and Process\n\n**What is Deamination?**\n\n::yellow[Deamination] is the removal of the amino group (-NH2) from amino acids.\n\n```\nAmino acid\n   ↓\n(deamination by liver)\n   ↓\nAmino group (-NH2) → Converted to UREA\nCarbon skeleton → Used for energy or other molecules\n```\n\n**Why Deamination?**\n- Removes excess amino acids that can't be stored\n- Produces urea, which is excreted by kidneys\n- Allows the carbon skeleton to be used for energy\n\n**Where is Urea Made?**\n- Exclusively in the liver (humans)\n- Then transported in blood to kidneys\n- Kidneys filter urea into urine\n- Urea excreted from body\n\n> ⚠️ **Important**: If your liver doesn't work properly, urea builds up in blood (uremia) - a serious condition!\n\n### 4. Fat Digestion - Bile Production\n\n(Already covered above - bile is produced here)\n\n### 5. Hormone Breakdown - Removing Used Hormones\n\n**Why Hormones Need to Be Broken Down**:\n- Hormones are signalling molecules that cause specific effects\n- Once their job is done, they must be removed\n- Otherwise, they'd keep signalling indefinitely\n\n**Examples of Hormones Broken Down**:\n- **Insulin** - After it causes glucose uptake\n- **Glucagon** - After it causes glucose release\n- **Adrenaline** - After the \"fight or flight\" response\n- **Oestrogen and Testosterone** - Sex hormones\n- **Thyroid hormones** - Metabolism regulators\n\n**What Happens**:\n```\nHormone in blood\n        ↓\n  Liver detects it\n        ↓\n  Liver enzymes break it down\n        ↓\n  Breakdown products excreted\n        ↓\n  Hormone effect stops ✅\n```\n\n> 💡 **Key Insight**: Your liver is like a recycling centre for hormones - it breaks them down so your body doesn't have conflicting signals!\n\n### 6. Detoxification - Breaking Down Poisons\n\n**What Needs Detoxifying?**\n- Alcohol\n- Drugs (medicines and recreational)\n- Pesticides\n- Heavy metals\n- Other toxic substances\n\n**How Detoxification Works**:\n\nThe liver uses special enzymes (cytochrome P450 system) to:\n1. **Phase 1**: Modify toxic molecules\n2. **Phase 2**: Attach water-soluble groups\n3. **Phase 3**: Transport out of liver cells\n\nResult: Toxic substances become water-soluble and can be excreted in urine or bile.\n\n**Example - Alcohol Breakdown**:\n```\nEthanol (alcohol)\n        ↓\n(Alcohol dehydrogenase enzyme)\n        ↓\nAcetaldehyde (toxic!)\n        ↓\n(Aldehyde dehydrogenase enzyme)\n        ↓\nAcetic acid (harmless)\n        ↓\n(Further broken down to CO2 and water)\n        ↓\nExcreted or used for energy\n```\n\n> ⚠️ **Important**: The liver can only detoxify a certain amount per hour. Drinking too much alcohol overwhelms this system, causing liver damage!\n\n## Additional Liver Functions\n\nBeyond the six major functions, the liver also:\n\n- **Produces Proteins**: Albumin, clotting factors, immune proteins\n- **Stores Vitamins**: Fat-soluble vitamins A, D, E, K and B12\n- **Stores Minerals**: Iron and copper\n- **Produces Cholesterol**: For cell membranes and hormones\n- **Breaks Down Old Red Blood Cells**: Recycles iron\n- **Produces Heat**: Liver is a major heat-producing organ\n\n## Why Liver Health Matters\n\n| If Liver Fails | Consequence |\n|---|---|\n| Glucose regulation fails | Hypoglycaemia (low blood sugar) or hyperglycaemia (high blood sugar) |\n| Bile production stops | Fat malabsorption, fatty stools |\n| Amino acid metabolism fails | Urea buildup (uremia) |\n| Hormone breakdown fails | Hormonal imbalances |\n| Detoxification fails | Toxic buildup in body |\n| Protein production fails | Low albumin, poor blood clotting |\n\n> 💡 **Key Insight**: Your liver is so important that a person can live with only 25% of their liver function! The liver can also regenerate - it's the only organ that can grow back if part is removed!\n\n## Protecting Your Liver\n\n✅ **Do**:\n- Eat a balanced diet\n- Limit alcohol consumption\n- Stay hydrated\n- Exercise regularly\n- Maintain healthy weight\n\n❌ **Don't**:\n- Drink excessive alcohol\n- Take unnecessary medications\n- Expose yourself to toxic chemicals\n- Eat extremely high-fat diets\n- Share personal hygiene items (prevents hepatitis)",
+    "speech_to_text_content": "The liver is the largest internal organ and performs over five hundred functions. It regulates blood glucose by converting glucose to glycogen when blood glucose is high and glycogen to glucose when blood glucose is low. The liver produces bile, which emulsifies fats for digestion and absorption. The liver performs deamination, removing amino groups from excess amino acids and converting them to urea, which is excreted by the kidneys. The liver breaks down hormones, removing their effects once they have completed their function. The liver detoxifies harmful substances like alcohol and drugs, breaking them down into harmless products for excretion. The liver also produces proteins, stores vitamins and minerals, produces cholesterol, and breaks down old red blood cells.",
+    "explanation": "This comprehensive slide covers all six major functions of the liver and their importance to human health. Students learn about glucose regulation through insulin and glucagon, bile production for fat digestion, amino acid metabolism through deamination, hormone breakdown, and detoxification. The practical implications of liver failure help students understand why liver health is critical.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:55:13.293842+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "12",
+    "type": "slide",
+    "question_type": null,
+    "title": "🍺 Alcohol - Effects on the Body and Brain",
+    "content": "## What is Alcohol?\n\nAlcohol (ethanol) is a psychoactive drug found in beverages like beer, wine, and spirits. While some people consume it socially, it has serious effects on body and brain health.\n\n## Effects on the Digestive System\n\n### Short-Term Effects\n\n**Stomach Irritation**:\n- Alcohol stimulates excess stomach acid secretion\n- Increases risk of ::red[gastric ulcers] (holes in stomach lining)\n- Causes heartburn and indigestion\n- Can cause inflammation of stomach lining (gastritis)\n\n**Pancreas Effects**:\n- Alcohol irritates the pancreas\n- Can cause acute pancreatitis (inflammation)\n- Disrupts digestive enzyme secretion\n\n### Long-Term Effects: Liver Disease\n\n**The Problem**: The liver detoxifies alcohol, but excessive consumption overwhelms this system.\n\n**Three Stages of Liver Damage**:\n\n1. **Fatty Liver** 🍯\n   - Fat accumulates in liver cells\n   - Liver becomes enlarged\n   - Usually reversible if drinking stops\n   - No symptoms at this stage\n\n2. **Alcoholic Hepatitis** 🔥\n   - Liver cells become inflamed\n   - Cells start to die\n   - Fever, abdominal pain, jaundice (yellowing of skin)\n   - May be reversible with treatment\n\n3. **Cirrhosis** 🔴\n   - Liver cells are destroyed\n   - Replaced with scar tissue (fibrosis)\n   - Liver loses function\n   - ::red[IRREVERSIBLE] - permanent damage\n   - Can lead to liver failure and death\n\n**Cirrhosis Consequences**:\n- Portal hypertension (high blood pressure in liver vessels)\n- Ascites (fluid accumulation in abdomen)\n- Varices (enlarged veins that can rupture)\n- Encephalopathy (brain dysfunction from toxin buildup)\n- Liver failure and death\n\n> ⚠️ **Critical**: Cirrhosis is the end stage of liver disease. Once cirrhosis develops, only a liver transplant can save the person's life!\n\n## Effects on the Nervous System\n\n### How Alcohol Affects the Brain\n\nAlcohol is a ::red[central nervous system depressant] - it slows down brain function.\n\n### Immediate/Short-Term Effects\n\n**Impaired Judgment** 🧠\n- Alcohol affects the prefrontal cortex (decision-making area)\n- Reduces ability to think through consequences\n- Increases risk-taking behaviour\n- Poor decision-making (drink-driving, unprotected sex)\n\n**Reduced Self-Control** 🚫\n- Weakens impulse control\n- Leads to aggressive or violent behaviour\n- Increases likelihood of accidents and injuries\n- Loss of inhibitions\n\n**Increased Reaction Time** 🐢\n- Slows processing speed\n- Reaction time increases (dangerous for driving)\n- Coordination becomes poor\n- Reflexes slow down\n\n**Other Immediate Effects**:\n- Slurred speech\n- Blurred vision\n- Poor coordination (stumbling, falling)\n- Memory loss (blackouts)\n- Nausea and vomiting\n\n### Long-Term Effects: Brain Damage\n\n**Thiamine (Vitamin B1) Deficiency**:\n- Alcohol interferes with thiamine absorption\n- Thiamine essential for brain function\n- Deficiency causes Wernicke-Korsakoff syndrome\n- Results in severe memory loss and confusion\n\n**Brain Shrinkage**:\n- Chronic alcohol use damages brain cells\n- Brain volume decreases\n- Particularly affects prefrontal cortex (planning, judgment)\n- And hippocampus (memory formation)\n- Changes are partially reversible if drinking stops\n\n**Cognitive Decline**:\n- Memory problems\n- Difficulty concentrating\n- Reduced problem-solving ability\n- Personality changes\n- Increased risk of dementia\n\n**Fetal Alcohol Spectrum Disorder (FASD)**:\n- Alcohol crosses placenta to developing baby\n- Causes permanent brain damage\n- Intellectual disability\n- Learning difficulties\n- Behavioural problems\n- Facial abnormalities\n- ::red[COMPLETELY PREVENTABLE] by not drinking during pregnancy\n\n> ⚠️ **Critical**: There is NO safe level of alcohol during pregnancy!\n\n## Social and Behavioural Consequences\n\n### Addiction\n\n**How Addiction Develops**:\n1. Alcohol affects reward centres in brain (dopamine release)\n2. Brain adapts, needing more alcohol for same effect (tolerance)\n3. Person becomes psychologically and physically dependent\n4. Withdrawal symptoms if drinking stops (anxiety, tremors, seizures)\n\n**Addiction Consequences**:\n- Loss of control over drinking\n- Continued drinking despite negative consequences\n- Neglect of responsibilities\n- Relationship breakdown\n\n### Social Problems\n\n| Problem | Impact |\n|---------|--------|\n| ::red[Neglect of Family] | Children lack parental care, supervision, support |\n| ::red[Violence] | Increased aggression, domestic abuse, assault |\n| ::red[Criminal Behaviour] | Drink-driving, assault, theft to fund addiction |\n| ::red[Job Loss] | Absenteeism, poor performance, unemployment |\n| ::red[Financial Ruin] | Money spent on alcohol instead of necessities |\n| ::red[Homelessness] | Loss of housing due to job loss and poor decisions |\n| ::red[Social Isolation] | Loss of friends and support networks |\n\n### Public Health Impact\n\n- Alcohol-related accidents and injuries\n- Drink-driving deaths\n- Increased burden on healthcare system\n- Crime and violence in communities\n- Reduced workplace productivity\n- Economic costs to society\n\n## Alcohol and Teenagers\n\n::red[Special Concern]: Teenage brains are still developing (until age 25)!\n\n**Why Alcohol is Particularly Dangerous for Teens**:\n- Brain still developing prefrontal cortex (judgment, impulse control)\n- Alcohol interferes with critical brain development\n- Earlier drinking = higher addiction risk\n- Greater risk of binge drinking\n- More vulnerable to alcohol's toxic effects\n- Can cause permanent cognitive damage\n\n## The Dose Makes the Poison\n\n**Moderate Drinking** (if you choose to drink):\n- Women: ≤1 drink per day\n- Men: ≤2 drinks per day\n- Occasional consumption\n- No binge drinking\n\n**Binge Drinking** (dangerous):\n- Women: ≥4 drinks in 2 hours\n- Men: ≥5 drinks in 2 hours\n- Rapid intoxication\n- High risk of overdose and accidents\n\n**Chronic Heavy Drinking** (very dangerous):\n- Regular consumption of large amounts\n- Leads to all the long-term effects mentioned\n- High risk of addiction and disease\n- Likely to be fatal\n\n> 💡 **Key Insight**: Alcohol affects your brain and liver immediately with each drink. The more you drink, the more damage accumulates.\n\n## Why Understanding Alcohol Matters\n\nIn Singapore:\n- Alcohol consumption is increasing among young people\n- Drink-driving is a serious problem\n- Liver disease from alcohol is increasing\n- Understanding risks helps you make informed choices\n\n> 💡 **Personal Health Decision**: Knowing how alcohol affects your body and brain helps you decide whether the risks are worth any potential benefits. Your health is your most valuable asset!",
+    "speech_to_text_content": "Alcohol is a central nervous system depressant that affects the digestive system, nervous system, and liver. In the digestive system, alcohol stimulates excess stomach acid secretion, increasing the risk of gastric ulcers and gastritis. Long-term alcohol consumption causes liver disease, progressing through fatty liver, alcoholic hepatitis, and cirrhosis, where liver cells are destroyed and replaced with scar tissue. Cirrhosis is irreversible and can lead to liver failure and death. In the nervous system, alcohol impairs judgment, reduces self-control, and increases reaction time. Long-term alcohol use causes brain damage, including thiamine deficiency, brain shrinkage, and cognitive decline. Fetal alcohol spectrum disorder occurs when pregnant women drink, causing permanent brain damage to the baby. Alcohol addiction develops through dopamine release and tolerance, leading to neglect of family, violence, criminal behaviour, job loss, and social isolation. Teenagers are particularly vulnerable to alcohol's effects because their brains are still developing.",
+    "explanation": "This comprehensive slide covers alcohol's effects on multiple body systems, from immediate effects on the brain to long-term damage to the liver and nervous system. Students learn about the progression of liver disease, the mechanisms of brain damage, and the serious social and personal consequences of alcohol abuse. The information about fetal alcohol spectrum disorder emphasizes the critical importance of avoiding alcohol during pregnancy.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:55:31.775058+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "13",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Quiz: Understanding the Mouth and Digestion",
+    "content": "## Question 1: What is the primary function of teeth in the mouth?\n\nA) To produce saliva\nB) To break large pieces of food into smaller pieces, increasing surface area\nC) To mix food with digestive juices\nD) To kill harmful bacteria",
+    "speech_to_text_content": "What is the primary function of teeth in the mouth? A: To produce saliva. B: To break large pieces of food into smaller pieces, increasing surface area. C: To mix food with digestive juices. D: To kill harmful bacteria.",
+    "explanation": "The correct answer is **B) To break large pieces of food into smaller pieces, increasing surface area**.\n\n**Why this is correct**: Teeth perform mechanical digestion by breaking large food pieces into smaller pieces. This increases the surface area-to-volume ratio, allowing digestive enzymes (like salivary amylase) to act more efficiently on the food.\n\n**Why other options are incorrect**:\n- A) Saliva is produced by salivary glands, not teeth\n- C) Food mixing is done primarily by the tongue and stomach muscles, not teeth\n- D) While saliva contains antibacterial substances, teeth don't kill bacteria\n\n**Key Concept**: The physical breakdown of food in the mouth is essential because it increases the surface area available for chemical digestion. Without this mechanical digestion, enzymes would work much more slowly.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440013",
+        "option_id": "550e8400-e29b-41d4-a716-446655440013-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt1",
+        "option_text": "To produce saliva",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt2",
+        "option_text": "To break large pieces of food into smaller pieces, increasing surface area",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt3",
+        "option_text": "To mix food with digestive juices",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt4",
+        "option_text": "To kill harmful bacteria",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:50:00Z",
+    "updated_at": "2024-01-15T10:50:00Z",
+    "source_timestamp": "2024-01-15T10:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:55:36.977353+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "14",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Quiz: Peristalsis and Movement",
+    "content": "## Question 2: Which statement correctly describes how peristalsis moves food through the oesophagus?\n\nA) Gravity pulls food downward\nB) Circular muscles contract while longitudinal muscles relax, creating wave-like motion that pushes food forward\nC) Food is pushed by the stomach contracting\nD) Longitudinal muscles contract while circular muscles relax, pushing food backward",
+    "speech_to_text_content": "Which statement correctly describes how peristalsis moves food through the oesophagus? A: Gravity pulls food downward. B: Circular muscles contract while longitudinal muscles relax, creating wave-like motion that pushes food forward. C: Food is pushed by the stomach contracting. D: Longitudinal muscles contract while circular muscles relax, pushing food backward.",
+    "explanation": "The correct answer is **B) Circular muscles contract while longitudinal muscles relax, creating wave-like motion that pushes food forward**.\n\n**Why this is correct**: Peristalsis involves coordinated antagonistic muscle action:\n- When circular muscles contract and longitudinal muscles relax, the gut becomes narrower and longer, pushing food forward\n- When longitudinal muscles contract and circular muscles relax, the gut widens and shortens, allowing new food to enter\n- This alternating pattern creates a wave that propels food through the alimentary canal\n\n**Why other options are incorrect**:\n- A) While gravity assists in the oesophagus, peristalsis works independently of gravity (e.g., astronauts can eat in space)\n- C) The stomach doesn't push food through the oesophagus; the oesophagus muscles do\n- D) This describes the opposite of what happens; longitudinal contraction causes widening, not backward movement\n\n**Key Concept**: Peristalsis is a muscular mechanism that works throughout the entire alimentary canal, not just the oesophagus. It's the primary means of moving food, which is why digestion works even when lying down or upside down.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
+        "option_text": "Gravity pulls food downward",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "option_text": "Circular muscles contract while longitudinal muscles relax, creating wave-like motion that pushes food forward",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
+        "option_text": "Food is pushed by the stomach contracting",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
+        "option_text": "Longitudinal muscles contract while circular muscles relax, pushing food backward",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:55:42.346032+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "15",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Quiz: Enzyme Specificity and Function",
+    "content": "## Question 3: Which enzyme breaks down proteins into amino acids in the small intestine?\n\nA) Salivary amylase\nB) Pepsin\nC) Pancreatic protease\nD) Pancreatic lipase",
+    "speech_to_text_content": "Which enzyme breaks down proteins into amino acids in the small intestine? A: Salivary amylase. B: Pepsin. C: Pancreatic protease. D: Pancreatic lipase.",
+    "explanation": "The correct answer is **C) Pancreatic protease**.\n\n**Why this is correct**: \n- Pepsin (from stomach) breaks proteins into polypeptides\n- Pancreatic protease (from pancreas, acts in small intestine) completes protein digestion by breaking polypeptides into individual amino acids\n- Only amino acids are small enough to be absorbed through the small intestine wall\n\n**Protein Digestion Pathway**:\n```\nProteins → (pepsin in stomach) → Polypeptides → (pancreatic protease in small intestine) → Amino acids\n```\n\n**Why other options are incorrect**:\n- A) Salivary amylase breaks down carbohydrates (starch to maltose), not proteins\n- B) Pepsin does break down proteins, but only to polypeptides (partial digestion), and it works in the stomach, not small intestine\n- D) Pancreatic lipase breaks down fats, not proteins\n\n**Key Concept**: Protein digestion is a relay race - pepsin does partial digestion in the stomach, and pancreatic protease completes it in the small intestine. This two-stage process ensures complete breakdown into absorbable amino acids.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440015-opt3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
+        "option_text": "Salivary amylase",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "option_text": "Pepsin",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
+        "option_text": "Pancreatic protease",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
+        "option_text": "Pancreatic lipase",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T11:10:00Z",
+    "updated_at": "2024-01-15T11:10:00Z",
+    "source_timestamp": "2024-01-15T11:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:55:46.929368+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "16",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Quiz: Villus Structure and Absorption",
+    "content": "## Question 4: Why are villi and microvilli important for nutrient absorption in the small intestine?\n\nA) They produce digestive enzymes\nB) They increase the surface area available for absorption and allow closer contact between nutrients and blood\nC) They store glucose and amino acids\nD) They produce bile for fat digestion",
+    "speech_to_text_content": "Why are villi and microvilli important for nutrient absorption in the small intestine? A: They produce digestive enzymes. B: They increase the surface area available for absorption and allow closer contact between nutrients and blood. C: They store glucose and amino acids. D: They produce bile for fat digestion.",
+    "explanation": "The correct answer is **B) They increase the surface area available for absorption and allow closer contact between nutrients and blood**.\n\n**Why this is correct**:\n- Villi are finger-like projections that dramatically increase the inner surface area of the small intestine\n- Microvilli are even smaller projections on epithelial cells, increasing surface area by approximately 600 times\n- The thin epithelium (one cell thick) provides a short diffusion distance for nutrients to cross\n- Rich blood supply in capillaries within villi maintains concentration gradients\n- Together, these adaptations maximize the rate and efficiency of nutrient absorption\n\n**Why other options are incorrect**:\n- A) Digestive enzymes are produced by glands in the intestinal lining and pancreas, not by villi\n- C) Villi don't store nutrients; they absorb them into the bloodstream\n- D) Bile is produced by the liver and stored in the gall bladder, not by villi\n\n**Key Concept**: The structural adaptations of the small intestine (villi, microvilli, thin epithelium, rich blood supply) work together to ensure that digested nutrients can be absorbed as quickly and completely as possible. This is why the small intestine, despite being only 6-7 metres long, can absorb enormous amounts of nutrients.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
+        "option_text": "They produce digestive enzymes",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "option_text": "They increase the surface area available for absorption and allow closer contact between nutrients and blood",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
+        "option_text": "They store glucose and amino acids",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
+        "option_text": "They produce bile for fat digestion",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T11:20:00Z",
+    "updated_at": "2024-01-15T11:20:00Z",
+    "source_timestamp": "2024-01-15T11:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:55:52.081001+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "17",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Quiz: Liver Function and Glucose Regulation",
+    "content": "## Question 5: What does the liver do when blood glucose levels are high after a meal?\n\nA) It converts glucose to glycogen and stores it\nB) It converts glycogen to glucose and releases it\nC) It breaks down glucose to provide energy\nD) It converts glucose to fatty acids for long-term storage",
+    "speech_to_text_content": "What does the liver do when blood glucose levels are high after a meal? A: It converts glucose to glycogen and stores it. B: It converts glycogen to glucose and releases it. C: It breaks down glucose to provide energy. D: It converts glucose to fatty acids for long-term storage.",
+    "explanation": "The correct answer is **A) It converts glucose to glycogen and stores it**.\n\n**Why this is correct**:\n- When blood glucose is HIGH (after eating), the pancreas releases insulin\n- Insulin signals the liver to convert excess glucose to glycogen\n- Glycogen is stored in the liver (up to 100-120g) and muscles\n- This process lowers blood glucose back to normal levels\n- Glycogen serves as a short-term energy reserve (lasts about 12-24 hours)\n\n**Glucose Regulation Cycle**:\n```\nHigh blood glucose\n        ↓\nPancreas releases INSULIN\n        ↓\nLiver converts: Glucose → Glycogen\n        ↓\nBlood glucose returns to normal ✅\n```\n\n**Why other options are incorrect**:\n- B) This is what the liver does when blood glucose is LOW (opposite situation)\n- C) While glucose is broken down for energy in body cells, the liver's primary role is to store excess glucose, not use it for its own energy\n- D) While excess glucose can be converted to fat for long-term storage, the immediate response to high blood glucose is glycogen storage\n\n**Key Concept**: The liver acts as a \"glucose buffer\" - it stores glucose when abundant and releases it when scarce. This keeps blood glucose stable within a narrow range (80-120 mg/dL), which is essential for proper body function.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017-opt1",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt1",
+        "option_text": "It converts glucose to glycogen and stores it",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt2",
+        "option_text": "It converts glycogen to glucose and releases it",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt3",
+        "option_text": "It breaks down glucose to provide energy",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt4",
+        "option_text": "It converts glucose to fatty acids for long-term storage",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:55:57.817642+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "18",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Quiz: Bile and Fat Digestion",
+    "content": "## Question 6: What is the role of bile in fat digestion?\n\nA) It breaks chemical bonds in fat molecules\nB) It emulsifies fats into smaller droplets, increasing surface area for lipase\nC) It absorbs fats into the bloodstream\nD) It neutralizes stomach acid",
+    "speech_to_text_content": "What is the role of bile in fat digestion? A: It breaks chemical bonds in fat molecules. B: It emulsifies fats into smaller droplets, increasing surface area for lipase. C: It absorbs fats into the bloodstream. D: It neutralizes stomach acid.",
+    "explanation": "The correct answer is **B) It emulsifies fats into smaller droplets, increasing surface area for lipase**.\n\n**Why this is correct**:\n- Bile is NOT an enzyme (it doesn't break chemical bonds)\n- Bile is a physical emulsifier produced by the liver\n- Bile salts break large fat droplets into many tiny droplets\n- This increases the surface area available for pancreatic lipase to act on\n- Pancreatic lipase then breaks the emulsified fats into fatty acids and glycerol\n\n**Fat Digestion Process**:\n```\nLarge fat droplet\n        ↓\n(bile emulsifies)\n        ↓\nMany tiny fat droplets\n        ↓\n(pancreatic lipase acts on)\n        ↓\nFatty acids + Glycerol\n```\n\n**Why other options are incorrect**:\n- A) Bile is not an enzyme; it doesn't break chemical bonds. Only pancreatic lipase breaks fat molecules\n- C) Bile helps with digestion, not absorption. Fatty acids and glycerol are absorbed by epithelial cells\n- D) While pancreatic juice neutralizes stomach acid, bile does not. Bile's role is fat emulsification\n\n**Key Concept**: Bile is essential for fat digestion because it makes fats accessible to lipase. Without bile, fats would remain in large clumps that enzymes couldn't act on efficiently. This is why people with gallbladder problems often have difficulty digesting fatty foods.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt1",
+        "option_text": "It breaks chemical bonds in fat molecules",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "option_text": "It emulsifies fats into smaller droplets, increasing surface area for lipase",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt3",
+        "option_text": "It absorbs fats into the bloodstream",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt4",
+        "option_text": "It neutralizes stomach acid",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T11:40:00Z",
+    "updated_at": "2024-01-15T11:40:00Z",
+    "source_timestamp": "2024-01-15T11:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:56:03.448780+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "19",
+    "type": "question",
+    "question_type": "open",
+    "title": "Short Answer: Describe the Complete Digestion of Starch",
+    "content": "## Question 7: Describe the complete digestion of starch, including:\n- Where each stage occurs\n- Which enzyme is responsible\n- What the starch is converted into at each stage",
+    "speech_to_text_content": "Describe the complete digestion of starch, including where each stage occurs, which enzyme is responsible, and what the starch is converted into at each stage.",
+    "explanation": "**Model Answer**:\n\nStarch digestion occurs in three stages:\n\n**Stage 1 - Mouth (Mechanical + Chemical)**\n- Location: Buccal cavity\n- Enzyme: ::yellow[Salivary amylase]\n- Process: Starch is partially broken down\n- Product: ::yellow[Maltose] (disaccharide)\n- Reaction: Starch → Maltose\n\n**Stage 2 - Stomach**\n- Location: Stomach\n- What happens: Salivary amylase is deactivated by acidic pH\n- Enzyme: None (no starch digestion occurs here)\n- No further starch breakdown happens\n\n**Stage 3 - Small Intestine (Duodenum & Ileum)**\n- Location: Duodenum and ileum\n- Enzyme 1: ::yellow[Pancreatic amylase]\n  - Completes starch breakdown\n  - Product: Maltose\n  - Reaction: Starch → Maltose\n- Enzyme 2: ::yellow[Maltase]\n  - Location: Produced by epithelial cells\n  - Breaks down maltose\n  - Product: ::yellow[Glucose]\n  - Reaction: Maltose → Glucose (×2 molecules)\n\n**Complete Pathway**:\n```\nStarch → (salivary amylase) → Maltose → (pancreatic amylase) → Maltose → (maltase) → Glucose\n[Mouth]                                   [Small intestine]              [Small intestine]\n```\n\n**Final Product**: ::green[Glucose] - a monosaccharide that can be absorbed through the small intestine wall into the bloodstream\n\n**Key Points to Include**:\n1. Three distinct stages (mouth, stomach, small intestine)\n2. Two different amylases (salivary and pancreatic)\n3. Maltase completes the breakdown\n4. Final product is glucose, which is absorbable\n5. Salivary amylase is deactivated in stomach\n\n**Marking Criteria**:\n- Identifies all three locations ✓\n- Names correct enzymes ✓\n- Shows products at each stage ✓\n- Explains why starch digestion stops in stomach ✓\n- Shows complete pathway to glucose ✓",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": null,
+        "answer_text": "Starch digestion occurs in three stages: In the mouth, salivary amylase breaks down starch to maltose. In the stomach, salivary amylase is deactivated by acidic pH and no starch digestion occurs. In the small intestine, pancreatic amylase completes starch breakdown to maltose, and maltase breaks maltose down to glucose. The final product is glucose, which is absorbed into the bloodstream.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T11:50:00Z",
+    "updated_at": "2024-01-15T11:50:00Z",
+    "source_timestamp": "2024-01-15T11:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:56:10.396852+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "20",
+    "type": "question",
+    "question_type": "open",
+    "title": "Short Answer: Explain Villus Structure and Absorption",
+    "content": "## Question 8: Explain how the structure of a villus is adapted for its function of absorbing nutrients. Include in your answer:\n- The presence of capillaries\n- The presence of a lacteal\n- The epithelial cells and their features",
+    "speech_to_text_content": "Explain how the structure of a villus is adapted for its function of absorbing nutrients. Include in your answer the presence of capillaries, the presence of a lacteal, the epithelial cells and their features.",
+    "explanation": "**Model Answer**:\n\nA villus is a finger-like projection of the small intestine wall that is specially adapted for nutrient absorption:\n\n**1. Blood Capillaries** 🩸\n- Each villus contains a network of blood capillaries\n- Capillaries are in close contact with epithelial cells\n- Glucose and amino acids are absorbed into capillaries\n- Rich blood supply maintains concentration gradients\n- Continuous blood flow removes absorbed nutrients\n- This ensures nutrients can be absorbed quickly\n\n**2. Lacteal (Lymphatic Vessel)** 🌊\n- Each villus contains a lacteal (lymphatic vessel)\n- Fatty acids and glycerol are absorbed into the lacteal\n- Absorbed fats travel through lymphatic system\n- Eventually enter bloodstream\n- Provides alternative absorption route for lipids\n\n**3. Epithelial Cells** 🔬\n- Thin epithelium - only ONE cell thick\n- Provides short diffusion distance for nutrients\n- Cells contain many mitochondria\n- Mitochondria produce ATP for active transport\n- Can absorb nutrients against concentration gradients\n- Contain carrier proteins for active transport\n\n**4. Overall Villus Structure**\n- Finger-like projection increases surface area\n- Millions of villi in small intestine\n- Microvilli on epithelial cells further increase surface area\n- Total surface area increased ~600 times\n- Allows rapid absorption of large quantities of nutrients\n\n**Summary**:\nThe villus structure is perfectly adapted for absorption because:\n- ✓ Large surface area (villi + microvilli)\n- ✓ Short diffusion distance (thin epithelium)\n- ✓ Rich blood supply (capillaries)\n- ✓ Energy for active transport (mitochondria)\n- ✓ Alternative route for fats (lacteal)\n\n**Marking Criteria**:\n- Describes capillary function ✓\n- Describes lacteal function ✓\n- Explains thin epithelium advantage ✓\n- Mentions mitochondria and active transport ✓\n- Explains increased surface area ✓\n- Links structure to function ✓",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": null,
+        "answer_text": "A villus has capillaries that absorb glucose and amino acids into the bloodstream and maintain concentration gradients. It has a lacteal that absorbs fatty acids and glycerol into the lymphatic system. The epithelial cells are thin (one cell thick) for short diffusion distance and contain many mitochondria for active transport. The villus has a finger-like shape, and with millions of villi and microvilli, the surface area is greatly increased for rapid absorption of nutrients.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:56:17.106851+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "21",
+    "type": "question",
+    "question_type": "open",
+    "title": "Extended Response: Liver Functions and Health",
+    "content": "## Question 9: The liver performs multiple important functions. Describe THREE of the liver's functions and explain why each is important for human health.",
+    "speech_to_text_content": "The liver performs multiple important functions. Describe three of the liver's functions and explain why each is important for human health.",
+    "explanation": "**Model Answer** (Choose any three functions):\n\n**Function 1: Glucose Regulation** 🔄\n- The liver converts glucose to glycogen when blood glucose is high (after eating)\n- The liver converts glycogen back to glucose when blood glucose is low (during fasting)\n- **Why Important**: Maintains stable blood glucose levels (80-120 mg/dL) essential for:\n  - Brain function (brain uses 20% of body's glucose)\n  - Energy production for all cells\n  - Preventing hypoglycaemia (dangerously low blood sugar)\n  - Preventing hyperglycaemia (dangerously high blood sugar)\n\n**Function 2: Bile Production** 🟡\n- The liver produces bile containing bile salts\n- Bile emulsifies (breaks into tiny droplets) fats in the small intestine\n- **Why Important**: \n  - Makes fats accessible to pancreatic lipase\n  - Allows complete fat digestion\n  - Enables fat absorption\n  - Fats needed for cell membranes, hormones, insulation\n\n**Function 3: Amino Acid Metabolism/Deamination** 🔬\n- The liver removes amino groups from excess amino acids\n- Converts amino groups to urea\n- Urea is excreted by kidneys\n- **Why Important**:\n  - Excess amino acids must be broken down (can't be stored)\n  - Prevents toxic buildup of amino acids\n  - Urea removal prevents uremia (toxic condition)\n  - Allows use of amino acid carbon skeletons for energy\n\n**Function 4: Detoxification** 🚫\n- The liver breaks down harmful substances (alcohol, drugs, toxins)\n- Converts them to water-soluble forms for excretion\n- **Why Important**:\n  - Protects body from poison\n  - Prevents accumulation of toxins\n  - Allows safe removal of drugs and alcohol\n  - Without detoxification, toxins would accumulate and cause organ damage\n\n**Function 5: Hormone Breakdown** 🔴\n- The liver breaks down hormones after they've done their job\n- Removes hormones from circulation\n- **Why Important**:\n  - Prevents hormone levels from staying elevated indefinitely\n  - Allows body to stop hormonal responses\n  - Maintains hormonal balance\n  - Prevents hormonal imbalances and their effects\n\n**Marking Criteria**:\n- Identifies three different liver functions ✓\n- Explains what each function does ✓\n- Explains why each is important ✓\n- Links to human health consequences ✓\n- Uses correct biological terminology ✓\n- Shows understanding of metabolic processes ✓\n\n**Acceptable Answers**: Any three functions with proper explanation and health implications",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440021",
+        "option_id": null,
+        "answer_text": "Three important liver functions: 1) Glucose regulation - converts glucose to glycogen when blood glucose is high and glycogen to glucose when low, maintaining stable blood glucose for brain function and energy production. 2) Bile production - produces bile that emulsifies fats for digestion and absorption, allowing nutrient uptake. 3) Amino acid metabolism - removes amino groups from excess amino acids, converting them to urea for excretion, preventing toxic buildup.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T12:10:00Z",
+    "updated_at": "2024-01-15T12:10:00Z",
+    "source_timestamp": "2024-01-15T12:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:56:24.553681+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "22",
+    "type": "question",
+    "question_type": "open",
+    "title": "Extended Response: Effects of Alcohol on Health",
+    "content": "## Question 10: Discuss the effects of alcohol on the digestive system and the nervous system. Include both short-term and long-term effects, and explain the health consequences.",
+    "speech_to_text_content": "Discuss the effects of alcohol on the digestive system and the nervous system. Include both short-term and long-term effects, and explain the health consequences.",
+    "explanation": "**Model Answer**:\n\n**Effects on the Digestive System**\n\n**Short-Term Effects**:\n- Alcohol stimulates excess stomach acid secretion\n- Causes irritation and inflammation of stomach lining (gastritis)\n- Increases risk of gastric ulcers (holes in stomach wall)\n- Causes heartburn and indigestion\n- Disrupts normal digestion\n- **Consequence**: Abdominal pain, discomfort, difficulty digesting food\n\n**Long-Term Effects**:\n- Repeated alcohol consumption damages liver cells\n- Liver disease progresses through three stages:\n  1. **Fatty liver**: Fat accumulates in liver cells (reversible)\n  2. **Alcoholic hepatitis**: Liver cells inflame and die (partially reversible)\n  3. **Cirrhosis**: Liver cells destroyed, replaced with scar tissue (IRREVERSIBLE)\n- Cirrhosis leads to liver failure\n- **Consequences**: Complete loss of liver function, portal hypertension, varices, encephalopathy, death\n\n---\n\n**Effects on the Nervous System**\n\n**Short-Term Effects**:\n- Alcohol is a central nervous system depressant\n- Slows brain function\n- **Impaired Judgment**: Affects prefrontal cortex (decision-making), reduces ability to think through consequences, increases risk-taking\n- **Reduced Self-Control**: Weakens impulse control, leads to aggressive/violent behaviour, loss of inhibitions\n- **Increased Reaction Time**: Slows processing speed, reflexes slow down, dangerous for activities like driving\n- **Other Effects**: Slurred speech, blurred vision, poor coordination, memory loss (blackouts)\n- **Consequences**: Accidents, injuries, poor decisions, drink-driving, risky behaviour\n\n**Long-Term Effects**:\n- **Thiamine Deficiency**: Alcohol interferes with vitamin B1 absorption\n  - Causes Wernicke-Korsakoff syndrome\n  - Severe memory loss, confusion, permanent brain damage\n- **Brain Shrinkage**: Chronic alcohol damages brain cells\n  - Particularly affects prefrontal cortex and hippocampus\n  - Reduces brain volume\n  - Causes cognitive decline\n- **Memory Problems**: Difficulty forming new memories, remembering information\n- **Personality Changes**: Mood swings, depression, increased aggression\n- **Increased Dementia Risk**: Higher risk of early-onset dementia\n- **Fetal Alcohol Spectrum Disorder**: If pregnant woman drinks\n  - Alcohol crosses placenta\n  - Causes permanent brain damage to developing baby\n  - Results in intellectual disability, learning difficulties, behavioural problems\n  - ::red[COMPLETELY PREVENTABLE by not drinking during pregnancy]\n- **Consequences**: Permanent cognitive impairment, loss of independence, need for care\n\n---\n\n**Addiction and Social Consequences**:\n- Alcohol affects reward centres, causing addiction\n- Tolerance develops, requiring more alcohol for same effect\n- Withdrawal symptoms if drinking stops\n- Leads to neglect of family, violence, job loss, financial ruin, homelessness\n\n**Marking Criteria**:\n- Describes short-term digestive effects ✓\n- Describes long-term digestive effects ✓\n- Describes short-term nervous system effects ✓\n- Describes long-term nervous system effects ✓\n- Explains health consequences ✓\n- Mentions fetal effects ✓\n- Uses correct biological terminology ✓\n- Shows understanding of disease progression ✓",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_id": null,
+        "answer_text": "Short-term digestive effects: Alcohol stimulates excess stomach acid, causing gastritis and ulcers. Long-term effects: Liver disease progresses from fatty liver to hepatitis to cirrhosis, causing liver failure. Short-term nervous system effects: Alcohol impairs judgment, reduces self-control, and increases reaction time, causing accidents and poor decisions. Long-term effects: Brain damage, memory loss, cognitive decline, and if pregnant, fetal alcohol spectrum disorder causing permanent baby brain damage. Alcohol is addictive and leads to social problems.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T12:20:00Z",
+    "updated_at": "2024-01-15T12:20:00Z",
+    "source_timestamp": "2024-01-15T12:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T03:56:34.422169+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440023",
+    "syllabus_id": "bio_o_level_nutrition_humans",
+    "parent_id": null,
+    "order": 23,
+    "part_label": "23",
+    "type": "slide",
+    "question_type": null,
+    "title": "📚 Chapter Summary - Key Concepts Review",
+    "content": "## Complete Nutrition Process: Five Stages\n\n1. **Ingestion** 👄 - Food enters mouth\n2. **Digestion** 🔄 - Food broken into small molecules\n3. **Absorption** 🩸 - Nutrients enter bloodstream\n4. **Assimilation** ⚡ - Cells use nutrients\n5. **Egestion** 🚽 - Waste removed from body\n\n## The Digestive System Journey\n\n```\nMouth → Pharynx → Oesophagus → Stomach → Small Intestine → Large Intestine → Anus\n  ↓                                ↓            ↓\nTeeth break food          Churning, acid    Digestion &\nSaliva starts             digestion of      Absorption\nstarch digestion          proteins          (main site)\n```\n\n## Key Enzymes and Their Actions\n\n| Enzyme | Location | Substrate | Product |\n|--------|----------|-----------|----------|\n| ::yellow[Salivary amylase] | Mouth | Starch | Maltose |\n| ::yellow[Pepsin] | Stomach | Proteins | Polypeptides |\n| ::yellow[Pancreatic amylase] | Small intestine | Starch | Maltose |\n| ::yellow[Pancreatic protease] | Small intestine | Polypeptides | Amino acids |\n| ::yellow[Pancreatic lipase] | Small intestine | Fats (emulsified) | Fatty acids + Glycerol |\n| ::yellow[Maltase] | Small intestine | Maltose | Glucose |\n\n## Small Intestine - The Absorption Powerhouse\n\n✅ **Villi** - Finger-like projections increase surface area\n\n✅ **Microvilli** - Further increase surface area by 600x\n\n✅ **Capillaries** - Absorb glucose and amino acids\n\n✅ **Lacteals** - Absorb fatty acids and glycerol\n\n✅ **Mitochondria** - Provide ATP for active transport\n\n✅ **Thin epithelium** - One cell thick for fast diffusion\n\n## Nutrient Pathways After Absorption\n\n### Glucose and Amino Acids\n```\nSmall intestine → Capillaries → Hepatic portal vein → Liver\n                                                        ↓\n                                    Glucose → Glycogen (stored)\n                                    Amino acids → Proteins (synthesis)\n```\n\n### Fatty Acids and Glycerol\n```\nSmall intestine → Epithelial cells → Lacteals → Lymphatic system → Bloodstream\n                  (recombine to fats)\n```\n\n## The Liver: Metabolic Control Centre\n\n### Six Major Functions:\n\n1. **Glucose Regulation** - Maintains blood glucose 80-120 mg/dL\n2. **Bile Production** - Emulsifies fats for digestion\n3. **Amino Acid Metabolism** - Deaminates excess amino acids to urea\n4. **Hormone Breakdown** - Removes hormones from circulation\n5. **Detoxification** - Breaks down poisons and drugs\n6. **Protein Production** - Makes clotting factors and albumin\n\n### Glucose Regulation Cycle\n\n**High Blood Glucose**:\n```\nPancreas → Insulin → Liver: Glucose → Glycogen (storage)\n```\n\n**Low Blood Glucose**:\n```\nPancreas → Glucagon → Liver: Glycogen → Glucose (release)\n```\n\n## Large Intestine - Water and Waste\n\n- **Colon** - Absorbs ~90% of remaining water and mineral salts\n- **Rectum** - Temporarily stores faeces\n- **Anus** - Expels faeces\n- **Egestion** - Removal of undigested waste (different from excretion)\n\n## Physical vs Chemical Digestion\n\n### Physical Digestion (Mechanical)\n- Chewing by teeth\n- Churning by stomach\n- Emulsification by bile\n- **Result**: Increased surface area\n\n### Chemical Digestion (Enzymatic)\n- Salivary amylase breaks starch\n- Pepsin breaks proteins\n- Pancreatic enzymes complete digestion\n- **Result**: Small, absorbable molecules\n\n## Nutrient Uses in the Body\n\n### Glucose\n- ⚡ Immediate energy (cellular respiration)\n- 📦 Storage as glycogen (short-term)\n- 🍯 Conversion to fat (long-term storage)\n\n### Amino Acids\n- 🧬 Protein synthesis (growth, repair)\n- ⚡ Energy source (if excess)\n- 🔬 Enzyme and hormone production\n\n### Fats\n- 🔧 Cell membrane building\n- 🧥 Insulation and protection\n- 🔬 Hormone production\n- 📦 Energy storage (most efficient)\n\n## Alcohol: Health Hazards\n\n### Digestive System\n- Short-term: Gastritis, ulcers, heartburn\n- Long-term: Fatty liver → Hepatitis → ::red[Cirrhosis (irreversible)]\n\n### Nervous System\n- Short-term: Impaired judgment, reduced self-control, slower reactions\n- Long-term: Brain damage, memory loss, cognitive decline\n- Pregnancy: ::red[Fetal alcohol spectrum disorder - permanent baby brain damage]\n\n### Social Consequences\n- Addiction, family neglect, violence, job loss, homelessness\n\n## Essential Concepts to Master\n\n✅ Nutrition is a five-stage process\n\n✅ Each organ has specific digestive functions\n\n✅ Enzymes are specific and work in sequence\n\n✅ Small intestine is the main absorption site\n\n✅ Liver regulates and processes absorbed nutrients\n\n✅ Glucose must be kept in narrow blood range\n\n✅ Different nutrients are absorbed via different routes\n\n✅ Alcohol damages both digestive and nervous systems\n\n✅ Understanding nutrition helps make healthy choices\n\n> 💡 **Final Thought**: Your digestive system is a marvel of biological engineering. Every structure, every enzyme, every process is optimized to extract maximum nutrition from food and keep your body functioning optimally. Treat it well!",
+    "speech_to_text_content": "The nutrition process consists of five stages: ingestion, digestion, absorption, assimilation, and egestion. The digestive system includes the mouth, pharynx, oesophagus, stomach, small intestine, large intestine, and anus, with the liver, pancreas, and gall bladder as accessory organs. Key enzymes include salivary amylase, pepsin, pancreatic amylase, pancreatic protease, pancreatic lipase, and maltase. The small intestine absorbs nutrients through villi and microvilli. Glucose and amino acids are absorbed into capillaries and transported via the hepatic portal vein to the liver. Fatty acids and glycerol are absorbed into lacteals and travel through the lymphatic system. The liver regulates glucose, produces bile, metabolizes amino acids, breaks down hormones, and detoxifies harmful substances. The large intestine absorbs water and mineral salts. Alcohol damages the digestive system, causing liver disease, and the nervous system, causing brain damage and cognitive decline.",
+    "explanation": "This comprehensive summary slide reviews all major concepts covered in the chapter, providing a complete overview of human nutrition and digestion. It serves as a study guide and helps students consolidate their learning of the complex digestive processes and the liver's critical role in metabolism.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 23,
+      "timestamp": "2025-12-24T03:56:49.849106+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 23,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

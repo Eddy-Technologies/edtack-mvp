@@ -1,0 +1,757 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Welcome to Organic Chemistry",
+    "content": "## Organic Chemistry: The Chemistry of Life\n\n::yellow[Organic chemistry] is the study of compounds that contain ::blue[carbon]. These compounds form the basis of all living things and are essential to modern life.\n\n### Why Learn Organic Chemistry?\n\nOrganic compounds are everywhere:\n- 🔥 **Fuels** - Natural gas and crude oil power our homes and vehicles\n- 🏭 **Plastics** - From phone cases to water bottles, polymers are in everything\n- 🧬 **Living Things** - All living organisms are built from organic compounds\n- 💊 **Medicines** - Drugs that treat diseases are organic compounds\n\n### A Brief History\n\nBefore 1828, scientists believed that organic compounds could only be made by living things. Then ::green[Friedrich Wöhler] synthesized ::yellow[urea] (an organic compound) from inorganic materials, proving that organic compounds could be made in the laboratory. This discovery revolutionized chemistry!\n\n### What You'll Learn\n\nIn this chapter, we'll explore:\n1. How ::yellow[crude oil] and ::yellow[natural gas] provide energy and raw materials\n2. How organic compounds are ::yellow[classified] into families called ::yellow[homologous series]\n3. How to ::yellow[name] organic compounds systematically\n4. The properties and reactions of different organic compound families\n5. How ::yellow[polymers] are made and recycled\n\n> 💡 **Key Insight:** Understanding organic chemistry helps us develop sustainable technologies and protect our environment!",
+    "speech_to_text_content": "Welcome to Organic Chemistry. Organic chemistry is the study of compounds that contain carbon. These compounds form the basis of all living things and are essential to modern life. Organic compounds are everywhere - from fuels like natural gas and crude oil that power our homes, to plastics in everyday products, to the molecules that make up living organisms, to medicines that treat diseases. Before 1828, scientists believed organic compounds could only be made by living things. Then Friedrich Wöhler synthesized urea, an organic compound, from inorganic materials, proving that organic compounds could be made in the laboratory. This discovery revolutionized chemistry. In this chapter, you will learn how crude oil and natural gas provide energy and raw materials, how organic compounds are classified into families called homologous series, how to name organic compounds systematically, the properties and reactions of different organic compound families, and how polymers are made and recycled.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T04:17:58.780387+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Slide 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "⛽ Fuels and Energy Sources",
+    "content": "## What is a Fuel?\n\nA ::yellow[fuel] is a substance that burns in oxygen to produce ::blue[heat energy]. This energy can be used to:\n- Power vehicles\n- Heat homes\n- Generate electricity\n- Run industrial processes\n\n### Three Types of Fuels\n\n| Type | Examples | Uses |\n|------|----------|------|\n| **Solid Fuels** | Coal, charcoal | Heating, electricity generation |\n| **Liquid Fuels** | Petrol, diesel, kerosene | Vehicles, aircraft, heating |\n| **Gaseous Fuels** | Natural gas, hydrogen | Cooking, heating, electricity |\n\n### Why Different Fuels?\n\nDifferent fuels are chosen for different purposes based on their properties:\n- 🚗 **Petrol** - Portable, high energy density, good for cars\n- ✈️ **Kerosene** - Stable at high altitudes, perfect for aircraft\n- 🏠 **Natural Gas** - Clean burning, convenient for homes\n\n> ⚠️ **Important:** When fuels burn, they release energy but also produce greenhouse gases like ::red[carbon dioxide]. This contributes to climate change, which is why we need sustainable energy alternatives!",
+    "speech_to_text_content": "A fuel is a substance that burns in oxygen to produce heat energy. This energy can be used to power vehicles, heat homes, generate electricity, and run industrial processes. There are three types of fuels: solid fuels like coal and charcoal used for heating and electricity generation, liquid fuels like petrol, diesel, and kerosene used for vehicles, aircraft, and heating, and gaseous fuels like natural gas and hydrogen used for cooking, heating, and electricity. Different fuels are chosen for different purposes based on their properties. Petrol is portable with high energy density and good for cars. Kerosene is stable at high altitudes and perfect for aircraft. Natural gas is clean burning and convenient for homes. When fuels burn, they release energy but also produce greenhouse gases like carbon dioxide, which contributes to climate change, which is why we need sustainable energy alternatives.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:05:00Z",
+    "updated_at": "2024-01-15T09:05:00Z",
+    "source_timestamp": "2024-01-15T09:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T04:18:03.043059+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Slide 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌍 Natural Gas: The Cleanest Fossil Fuel",
+    "content": "## Composition and Formation\n\n::yellow[Natural gas] is primarily composed of:\n- **70-90% methane** (CH₄) - the main component\n- **Other alkanes** - ethane, propane, and butane in smaller amounts\n\nNatural gas forms from the ::yellow[decomposition of ancient animal and plant waste] buried deep underground over millions of years.\n\n### Why Natural Gas is \"Clean\"\n\nCompared to other fossil fuels, natural gas:\n- ✅ Produces fewer pollutants when burned\n- ✅ Releases less ::red[carbon dioxide] per unit of energy\n- ✅ Contains no sulfur compounds (which cause acid rain)\n- ✅ Burns more completely than coal or oil\n\n### Storage and Transportation\n\nNatural gas has an interesting challenge: it's a gas at room temperature, which makes storage difficult. The solution?\n\n**Liquefied Natural Gas (LNG)**\n- Natural gas is cooled to -161°C to become a liquid\n- ::green[Liquids take up much less space than gases]\n- This makes transportation and storage much more efficient\n- LNG can be transported in special ships around the world\n\n### Applications in Singapore\n\nSingapore uses natural gas extensively:\n- 🏭 Power generation for electricity\n- 🔥 Heating for industries and homes\n- 🚗 Some vehicles use compressed natural gas (CNG)\n\n> 💡 **Key Point:** While natural gas is cleaner than coal or oil, it still produces ::red[carbon dioxide] when burned, so renewable energy sources are still important for a sustainable future!",
+    "speech_to_text_content": "Natural gas is primarily composed of 70 to 90 percent methane, the main component, and other alkanes like ethane, propane, and butane in smaller amounts. Natural gas forms from the decomposition of ancient animal and plant waste buried deep underground over millions of years. Compared to other fossil fuels, natural gas produces fewer pollutants when burned, releases less carbon dioxide per unit of energy, contains no sulfur compounds which cause acid rain, and burns more completely than coal or oil. Natural gas has a challenge: it is a gas at room temperature, which makes storage difficult. The solution is Liquefied Natural Gas, or LNG. Natural gas is cooled to minus 161 degrees Celsius to become a liquid. Liquids take up much less space than gases, making transportation and storage much more efficient. LNG can be transported in special ships around the world. Singapore uses natural gas extensively for power generation for electricity, heating for industries and homes, and some vehicles use compressed natural gas. While natural gas is cleaner than coal or oil, it still produces carbon dioxide when burned, so renewable energy sources are still important for a sustainable future.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:10:00Z",
+    "updated_at": "2024-01-15T09:10:00Z",
+    "source_timestamp": "2024-01-15T09:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T04:18:08.958252+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Slide 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🛢️ Petroleum (Crude Oil): Nature's Complex Mixture",
+    "content": "## What is Crude Oil?\n\n::yellow[Petroleum] (also called ::yellow[crude oil]) is a dark brown, viscous (thick and sticky) liquid mixture found underground. It's one of the most important natural resources we use today.\n\n### Composition\n\nCrude oil consists of:\n- A complex mixture of many different ::yellow[hydrocarbons] (compounds containing only hydrogen and carbon)\n- Hundreds of different organic compounds with varying sizes and properties\n- Some compounds with just a few carbon atoms, others with dozens or hundreds\n\n### Why Separation is Necessary\n\nCrude oil as it comes from the ground is **not directly useful** because:\n- ❌ Different hydrocarbons have different properties\n- ❌ Some are gases, some are liquids, some are solids\n- ❌ Different applications need different products\n- ❌ We need to separate it into useful fractions\n\n## Fractional Distillation: Separating Crude Oil\n\n::yellow[Fractional distillation] is the industrial process used to separate crude oil into useful products.\n\n### How It Works\n\n**Step 1: Heating**\n- Crude oil is heated to approximately 350°C\n- Most of the oil evaporates into a vapor (gas)\n\n**Step 2: The Fractionating Column**\n- The hot vapor enters a tall column that is ::blue[hotter at the bottom and cooler at the top]\n- This temperature gradient is crucial for separation\n\n**Step 3: Separation by Boiling Point**\n- As vapors rise up the column, they cool down\n- Different hydrocarbons have different boiling points\n- When a hydrocarbon cools to its boiling point, it condenses back into a liquid\n- ::green[Hydrocarbons with low boiling points condense at the top] (cool section)\n- ::green[Hydrocarbons with high boiling points condense at the bottom] (hot section)\n\n**Step 4: Collection**\n- Each fraction is collected at different levels of the column\n- Fractions are removed as liquids at different heights\n\n### The Fractions Produced\n\n| Fraction | State at Room Temp | Boiling Point Range | Uses |\n|----------|-------------------|--------------------|---------|\n| **Petroleum Gas** | Gas | < 40°C | Cooking, heating, fuel |\n| **Petrol (Gasoline)** | Liquid | 40-200°C | Car fuel |\n| **Naphtha** | Liquid | 200-250°C | Making chemicals, alcohols, plastics |\n| **Kerosene (Jet Fuel)** | Liquid | 250-300°C | Aircraft fuel, heating, cooking |\n| **Diesel Oil** | Liquid | 300-350°C | Buses, taxis, lorries, trucks |\n| **Lubricating Oil** | Liquid | 350-400°C | Machine lubricants, waxes, polishes |\n\n### Key Relationships\n\n- 🔥 **Shorter hydrocarbon chains** → Lower boiling points → Gases or light liquids\n- 💧 **Longer hydrocarbon chains** → Higher boiling points → Thick, viscous liquids\n- 🌡️ **Position in column** correlates with boiling point\n\n> 💡 **Why This Matters:** Fractional distillation is one of the most important industrial processes. It turns a mixture of useless crude oil into products that power modern civilization!",
+    "speech_to_text_content": "Petroleum, also called crude oil, is a dark brown, viscous liquid mixture found underground and is one of the most important natural resources we use today. Crude oil consists of a complex mixture of many different hydrocarbons, compounds containing only hydrogen and carbon, with hundreds of different organic compounds with varying sizes and properties. Some compounds have just a few carbon atoms, others have dozens or hundreds. Crude oil as it comes from the ground is not directly useful because different hydrocarbons have different properties, some are gases, some are liquids, some are solids, different applications need different products, and we need to separate it into useful fractions. Fractional distillation is the industrial process used to separate crude oil into useful products. Crude oil is heated to approximately 350 degrees Celsius, and most of the oil evaporates into a vapor. The hot vapor enters a tall column that is hotter at the bottom and cooler at the top. This temperature gradient is crucial for separation. As vapors rise up the column, they cool down. Different hydrocarbons have different boiling points. When a hydrocarbon cools to its boiling point, it condenses back into a liquid. Hydrocarbons with low boiling points condense at the top in the cool section. Hydrocarbons with high boiling points condense at the bottom in the hot section. Each fraction is collected at different levels of the column. Fractions are removed as liquids at different heights. Shorter hydrocarbon chains have lower boiling points and are gases or light liquids. Longer hydrocarbon chains have higher boiling points and are thick, viscous liquids. The position in the column correlates with boiling point.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T04:18:18.669945+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Slide 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "♻️ Biofuels and Hydrogen: Sustainable Alternatives",
+    "content": "## The Problem with Fossil Fuels\n\nCrude oil and natural gas are **non-renewable** resources:\n- ⏰ They take millions of years to form\n- 📉 We're using them faster than nature can replace them\n- 🌍 Burning them releases greenhouse gases\n- 🚨 We need sustainable alternatives\n\n## Biofuels: Renewable Energy from Plants\n\n::yellow[Biofuels] are fuels produced from recently living biological materials, making them ::green[renewable and sustainable].\n\n### Why Biofuels Are Special\n\n- ♻️ **Renewable** - Plants can be grown again and again\n- 🌱 **Sustainable** - Can be replaced relatively quickly after use (unlike fossil fuels which take millions of years)\n- 🌍 **Lower carbon footprint** - Plants absorb CO₂ while growing\n- 🔄 **Circular** - The carbon released when burning is recaptured by new plants\n\n### Bioethanol: A Key Biofuel\n\n::yellow[Bioethanol] is ::blue[ethanol] produced from the ::yellow[fermentation of plants] such as sugarcane or corn.\n\n**The Process:**\n1. Plants like sugarcane or corn contain sugars\n2. Yeast is added to the plant material in the presence of water\n3. Yeast enzymes break down the sugar through fermentation\n4. This produces ethanol (C₂H₅OH) and carbon dioxide\n5. The ethanol is separated and purified\n\n**Uses of Bioethanol:**\n- ⛽ **Primary use**: Replacement for petrol in cars\n- 🚗 Many vehicles can run on pure bioethanol or blends (like E10 with 10% ethanol)\n- 🏭 Industrial chemical feedstock\n\n### Advantages of Bioethanol\n\n✅ Renewable - sugarcane and corn can be replanted annually\n✅ Reduces dependence on crude oil\n✅ Lower net carbon emissions\n✅ Supports agricultural industries\n\n### Challenges\n\n⚠️ Land use - requires significant agricultural land\n⚠️ Food security - competes with food crops\n⚠️ Energy input - growing and processing requires energy\n\n## Hydrogen: The Ultimate Clean Fuel\n\n::yellow[Hydrogen] (H₂) is another promising alternative fuel that produces ::green[only water when burned]:\n\n$$2H_2 + O_2 \\rightarrow 2H_2O$$\n\n### Advantages of Hydrogen\n\n- 🌍 **Completely clean** - Only produces water, no CO₂ or pollutants\n- ⚡ **High energy density** - Produces more energy per gram than ethanol\n- 🔋 **Versatile** - Can power vehicles, generate electricity, heat homes\n\n### Disadvantages of Hydrogen\n\n- ❄️ **Storage problem** - Hydrogen is a gas at room temperature, difficult to store and transport\n- 💰 **Expensive** - Current production methods are costly\n- 🏭 **Production methods matter** - Some production methods still release CO₂\n\n### How Hydrogen is Produced\n\n**Method 1: From Natural Gas (Steam Reforming)**\n- Methane reacts with steam at high temperature\n- Produces hydrogen and carbon dioxide\n- ⚠️ Still releases CO₂, not completely clean\n\n**Method 2: From Crude Oil (Cracking)**\n- Crude oil fractions are broken down\n- Produces hydrogen and smaller hydrocarbons\n- ⚠️ Still releases CO₂\n\n**Method 3: Electrolysis of Water**\n- Electric current splits water into hydrogen and oxygen\n- ✅ Completely clean if electricity comes from renewable sources\n- ⚠️ Currently expensive\n\n### Hydrogen vs. Bioethanol\n\n| Property | Hydrogen | Bioethanol |\n|----------|----------|------------|\n| **Energy per gram** | ::green[Higher] | Lower |\n| **State at room temp** | Gas (difficult to store) | Liquid (easy to store) |\n| **Handling** | ::red[Difficult] | ::green[Easy] |\n| **Current technology** | Developing | Established |\n| **Cost** | ::red[Very expensive] | Moderate |\n\n> 💡 **Future Outlook:** Hydrogen fuel cells are the most promising technology for zero-emission vehicles, but we need to solve the storage and production challenges first!",
+    "speech_to_text_content": "Crude oil and natural gas are non-renewable resources because they take millions of years to form, we are using them faster than nature can replace them, burning them releases greenhouse gases, and we need sustainable alternatives. Biofuels are fuels produced from recently living biological materials, making them renewable and sustainable. Biofuels are renewable because plants can be grown again and again, sustainable because they can be replaced relatively quickly after use unlike fossil fuels which take millions of years, have a lower carbon footprint because plants absorb carbon dioxide while growing, and are circular because the carbon released when burning is recaptured by new plants. Bioethanol is ethanol produced from the fermentation of plants such as sugarcane or corn. Plants like sugarcane or corn contain sugars. Yeast is added to the plant material in the presence of water. Yeast enzymes break down the sugar through fermentation. This produces ethanol and carbon dioxide. The ethanol is separated and purified. The primary use of bioethanol is as a replacement for petrol in cars. Many vehicles can run on pure bioethanol or blends like E10 with 10 percent ethanol. Bioethanol is renewable, reduces dependence on crude oil, has lower net carbon emissions, and supports agricultural industries. Challenges include land use requiring significant agricultural land, food security because it competes with food crops, and energy input because growing and processing requires energy. Hydrogen is another promising alternative fuel that produces only water when burned. Hydrogen is completely clean producing only water and no carbon dioxide or pollutants. Hydrogen produces more energy per gram than ethanol. Hydrogen is versatile and can power vehicles, generate electricity, and heat homes. However, hydrogen is a gas at room temperature and is difficult to store and transport. Current production methods are costly. Some production methods still release carbon dioxide. Hydrogen is produced through steam reforming from natural gas, through cracking from crude oil, or through electrolysis of water. Steam reforming produces hydrogen and carbon dioxide and still releases carbon dioxide. Cracking produces hydrogen and smaller hydrocarbons and still releases carbon dioxide. Electrolysis of water is completely clean if electricity comes from renewable sources but is currently expensive.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:20:00Z",
+    "updated_at": "2024-01-15T09:20:00Z",
+    "source_timestamp": "2024-01-15T09:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T04:18:31.222060+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Slide 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏭 Hydrocarbons and Homologous Series",
+    "content": "## What is a Hydrocarbon?\n\nA ::yellow[hydrocarbon] is a compound that contains ::blue[only two elements: hydrogen and carbon].\n\n### Examples of Hydrocarbons\n\n- Methane (CH₄) - natural gas\n- Ethane (C₂H₆) - component of natural gas\n- Propane (C₃H₈) - cooking fuel\n- Butane (C₄H₁₀) - lighter fuel\n- Octane (C₈H₁₈) - component of petrol\n- Benzene (C₆H₆) - industrial chemical\n\n## Homologous Series: Families of Organic Compounds\n\nA ::yellow[homologous series] is a family of organic compounds with:\n\n1. **The same general formula** - All members follow the same mathematical pattern\n2. **The same functional group** - All members have the same reactive group of atoms\n3. **Similar chemical properties** - Members react in similar ways\n4. **Gradual change in physical properties** - Properties change smoothly as we go down the series\n5. **Successive members differ by CH₂** - Each step adds one carbon and two hydrogens\n\n### Why Homologous Series Matter\n\n✅ **Predictability** - Once you know properties of one member, you can predict properties of others\n✅ **Organization** - Helps us organize and understand thousands of organic compounds\n✅ **Systematic** - Allows systematic naming and classification\n✅ **Simplification** - Reduces complexity by grouping similar compounds\n\n### Major Homologous Series\n\n| Series | General Formula | Functional Group | Examples |\n|--------|-----------------|------------------|----------|\n| **Alkanes** | CₙH₂ₙ₊₂ | Single C-C bonds | Methane, ethane, propane |\n| **Alkenes** | CₙH₂ₙ | C=C double bond | Ethene, propene, butene |\n| **Alcohols** | CₙH₂ₙ₊₂O | -OH group | Methanol, ethanol, propanol |\n| **Carboxylic Acids** | CₙH₂ₙO₂ | -COOH group | Methanoic acid, ethanoic acid |\n\n> 💡 **Key Insight:** Homologous series are like a family of compounds - each member is related to the others and shares common characteristics!",
+    "speech_to_text_content": "A hydrocarbon is a compound that contains only two elements: hydrogen and carbon. Examples of hydrocarbons include methane, ethane, propane, butane, octane, and benzene. A homologous series is a family of organic compounds with the same general formula, the same functional group, similar chemical properties, gradual change in physical properties, and successive members that differ by CH2. Homologous series matter because they provide predictability, organization, systematic naming and classification, and simplification. Major homologous series include alkanes with general formula CnH2n plus 2 and single C-C bonds, alkenes with general formula CnH2n and C equals C double bonds, alcohols with general formula CnH2n plus 2 O and OH groups, and carboxylic acids with general formula CnH2nO2 and COOH groups.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:25:00Z",
+    "updated_at": "2024-01-15T09:25:00Z",
+    "source_timestamp": "2024-01-15T09:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T04:18:37.631252+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Slide 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "📝 Naming Organic Compounds Systematically",
+    "content": "## The Naming System\n\nOrganic compound names follow a **two-part system**:\n\n### Part 1: The Prefix (Number of Carbon Atoms)\n\nThe prefix tells you how many carbon atoms are in the main chain:\n\n| Prefix | Number of Carbons |\n|--------|-------------------|\n| meth- | 1 |\n| eth- | 2 |\n| prop- | 3 |\n| but- | 4 |\n| pent- | 5 |\n| hex- | 6 |\n| hept- | 7 |\n| oct- | 8 |\n\n### Part 2: The Suffix (Functional Group / Homologous Series)\n\nThe suffix tells you what type of compound it is:\n\n| Suffix | Homologous Series | Functional Group | Examples |\n|--------|-------------------|------------------|----------|\n| -ane | Alkanes | Single C-C bonds | Methane, ethane, propane |\n| -ene | Alkenes | C=C double bond | Ethene, propene, butene |\n| -ol | Alcohols | -OH group | Methanol, ethanol, propanol |\n| -oic acid | Carboxylic Acids | -COOH group | Methanoic acid, ethanoic acid |\n\n## Examples of Naming\n\n### Example 1: Alkanes\n- **Methane** = meth- (1 carbon) + -ane (alkane) = CH₄\n- **Ethane** = eth- (2 carbons) + -ane (alkane) = C₂H₆\n- **Propane** = prop- (3 carbons) + -ane (alkane) = C₃H₈\n- **Butane** = but- (4 carbons) + -ane (alkane) = C₄H₁₀\n\n### Example 2: Alcohols\n- **Methanol** = meth- (1 carbon) + -ol (alcohol) = CH₃OH\n- **Ethanol** = eth- (2 carbons) + -ol (alcohol) = C₂H₅OH\n- **Propanol** = prop- (3 carbons) + -ol (alcohol) = C₃H₇OH\n- **Butanol** = but- (4 carbons) + -ol (alcohol) = C₄H₉OH\n\n### Example 3: Alkenes\n- **Ethene** = eth- (2 carbons) + -ene (alkene) = C₂H₄\n- **Propene** = prop- (3 carbons) + -ene (alkene) = C₃H₆\n- **Butene** = but- (4 carbons) + -ene (alkene) = C₄H₈\n\n### Example 4: Carboxylic Acids\n- **Methanoic acid** = meth- (1 carbon) + -oic acid = HCOOH\n- **Ethanoic acid** = eth- (2 carbons) + -oic acid = CH₃COOH\n- **Propanoic acid** = prop- (3 carbons) + -oic acid = C₂H₅COOH\n\n## Why Systematic Naming is Useful\n\n✅ **Unambiguous** - Each name refers to exactly one compound\n✅ **Universal** - Scientists worldwide use the same system\n✅ **Predictable** - You can predict the structure from the name\n✅ **Efficient** - No need to memorize random names\n✅ **Communication** - Chemists can discuss compounds clearly\n\n> 💡 **Practice Tip:** Always identify the number of carbons first (prefix), then the functional group (suffix). The name tells you the structure!",
+    "speech_to_text_content": "Organic compound names follow a two-part system. The prefix tells you how many carbon atoms are in the main chain. Meth- means 1 carbon, eth- means 2 carbons, prop- means 3 carbons, but- means 4 carbons. The suffix tells you what type of compound it is. Minus ane is for alkanes with single C-C bonds, minus ene is for alkenes with C equals C double bonds, minus ol is for alcohols with OH groups, minus oic acid is for carboxylic acids with COOH groups. Examples of alkane naming: methane equals meth- plus -ane equals CH4, ethane equals eth- plus -ane equals C2H6, propane equals prop- plus -ane equals C3H8, butane equals but- plus -ane equals C4H10. Examples of alcohol naming: methanol equals meth- plus -ol equals CH3OH, ethanol equals eth- plus -ol equals C2H5OH, propanol equals prop- plus -ol equals C3H7OH, butanol equals but- plus -ol equals C4H9OH. Examples of alkene naming: ethene equals eth- plus -ene equals C2H4, propene equals prop- plus -ene equals C3H6, butene equals but- plus -ene equals C4H8. Examples of carboxylic acid naming: methanoic acid equals meth- plus -oic acid equals HCOOH, ethanoic acid equals eth- plus -oic acid equals CH3COOH, propanoic acid equals prop- plus -oic acid equals C2H5COOH. Systematic naming is useful because it is unambiguous, universal, predictable, efficient, and enables clear communication.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T04:18:45.193597+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Slide 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "⛓️ Alkanes: The Saturated Hydrocarbons",
+    "content": "## What are Alkanes?\n\n::yellow[Alkanes] are hydrocarbons that contain ::blue[only carbon-carbon single bonds (C-C) and carbon-hydrogen bonds (C-H)].\n\n### General Formula\n\nAll alkanes follow the general formula:\n\n$$C_nH_{2n+2}$$\n\nWhere n = number of carbon atoms\n\n**Examples:**\n- Methane: n=1, formula = C₁H₄ = CH₄ ✓\n- Ethane: n=2, formula = C₂H₆ ✓\n- Propane: n=3, formula = C₃H₈ ✓\n- Butane: n=4, formula = C₄H₁₀ ✓\n\n### First Members of the Alkane Series\n\n| Name | Molecular Formula | Structural Pattern |\n|------|-------------------|--------------------|\n| Methane | CH₄ | CH₄ |\n| Ethane | C₂H₆ | CH₃-CH₃ |\n| Propane | C₃H₈ | CH₃-CH₂-CH₃ |\n| Butane | C₄H₁₀ | CH₃-CH₂-CH₂-CH₃ |\n\n## Physical Properties of Alkanes\n\n### 1. Molecular Structure\n\nAlkanes are ::yellow[simple molecular substances], meaning:\n- Molecules are held together by strong covalent bonds within the molecule\n- Molecules are held together by ::blue[weak forces of attraction between molecules] (intermolecular forces)\n- These weak forces are called van der Waals forces or London dispersion forces\n\n### 2. Melting and Boiling Points\n\n**Key Pattern:** As we go down the alkane series (more carbons), melting and boiling points ::green[increase gradually].\n\n**Why?**\n- Larger molecules have larger surface areas\n- Larger surface areas mean stronger intermolecular forces\n- Stronger forces require more energy to break, so higher temperatures are needed\n\n**At Room Temperature:**\n- CH₄ (methane) - **Gas**\n- C₂H₆ (ethane) - **Gas**\n- C₃H₈ (propane) - **Gas**\n- C₄H₁₀ (butane) - **Gas**\n- C₅H₁₂ onwards - **Liquids** (then solids at very high molecular weights)\n\n### 3. Viscosity\n\n::yellow[Viscosity] is how thick or sticky a liquid is.\n\n**Pattern:** Viscosity increases down the alkane series\n- Methane - Not applicable (gas)\n- Petrol - Thin, flows easily\n- Diesel - Thicker than petrol\n- Lubricating oil - Very thick and viscous\n\n**Why?** Larger molecules with stronger intermolecular forces flow more slowly.\n\n### 4. Solubility\n\n**In Water:** Alkanes are ::red[insoluble in water]\n- Alkanes are nonpolar (don't have charged regions)\n- Water is polar\n- \"Like dissolves like\" - polar and nonpolar don't mix\n- This is why oil spills don't mix with seawater\n\n**In Organic Solvents:** Alkanes are ::green[soluble in most organic solvents]\n- Examples: tetrachloromethane (CCl₄), hexane, benzene\n- Liquid alkanes themselves are often used as organic solvents\n\n## Chemical Properties of Alkanes\n\n### 1. General Reactivity\n\nAlkanes are ::red[generally unreactive] because:\n- C-C and C-H bonds are very strong\n- These bonds require a lot of energy to break\n- The electrons in these bonds are not easily accessible\n\nHowever, alkanes CAN undergo two important types of reactions:\n\n### 2. Combustion Reactions\n\n**Complete Combustion (Excess Oxygen)**\n\nWhen alkanes burn in plenty of oxygen, they produce carbon dioxide and water:\n\n$$C_nH_{2n+2} + \\frac{3n+1}{2}O_2 \\rightarrow nCO_2 + (n+1)H_2O$$\n\n**Example: Combustion of Butane**\n\n$$2C_4H_{10} + 13O_2 \\rightarrow 8CO_2 + 10H_2O$$\n\n- ::green[Complete combustion produces a clean, bright flame]\n- Used for heating and energy production\n- Produces greenhouse gas (CO₂)\n\n**Incomplete Combustion (Limited Oxygen)**\n\nWhen oxygen is limited, alkanes don't burn completely. They produce:\n- ::red[Carbon monoxide (CO)] - a toxic gas\n- ::red[Soot/elemental carbon (C)] - black powder\n- Water (H₂O)\n\n**Example: Incomplete Combustion of Butane**\n\n$$C_4H_{10} + 3O_2 \\rightarrow CO + 3C + 5H_2O$$\n\n**Observable Signs of Incomplete Combustion:**\n- ::red[Sooty flame] - black smoke\n- Deposits of carbon on surfaces\n- Smell of carbon monoxide\n\n> ⚠️ **Safety Warning:** Carbon monoxide is colorless, odorless, and toxic. Incomplete combustion in poorly ventilated spaces (like faulty heaters) can be dangerous!\n\n### 3. Substitution Reactions\n\n**What is a Substitution Reaction?**\n\nA substitution reaction is when one atom or group of atoms is ::yellow[replaced by another atom or group].\n\n**Halogenation of Alkanes**\n\nAlkanes can react with halogens (Cl₂, Br₂, I₂) in the presence of ::blue[UV light] (ultraviolet radiation).\n\n**Example: Chlorination of Methane**\n\n$$CH_4 + Cl_2 \\xrightarrow{UV \\ light} CH_3Cl + HCl$$\n\n- One hydrogen atom is replaced by a chlorine atom\n- Produces ::blue[chloromethane] (CH₃Cl)\n- Also produces hydrogen chloride gas (HCl)\n\n**Further Substitution**\n\nMore hydrogen atoms can be replaced:\n\n1. First substitution: CH₄ + Cl₂ → CH₃Cl (chloromethane) + HCl\n2. Second substitution: CH₃Cl + Cl₂ → CH₂Cl₂ (dichloromethane) + HCl\n3. Third substitution: CH₂Cl₂ + Cl₂ → CHCl₃ (trichloromethane) + HCl\n4. Fourth substitution: CHCl₃ + Cl₂ → CCl₄ (tetrachloromethane) + HCl\n\n**Why UV Light is Needed**\n\nUV light provides energy to:\n- Break the Cl-Cl bond in chlorine\n- Create reactive chlorine radicals\n- Initiate the substitution reaction\n\n> 💡 **Key Point:** Alkanes are not very reactive, but they can burn (combustion) and react with halogens (substitution) under specific conditions!",
+    "speech_to_text_content": "Alkanes are hydrocarbons that contain only carbon-carbon single bonds and carbon-hydrogen bonds. All alkanes follow the general formula CnH2n plus 2, where n equals the number of carbon atoms. Methane has n equals 1, formula equals C1H4 equals CH4. Ethane has n equals 2, formula equals C2H6. Propane has n equals 3, formula equals C3H8. Butane has n equals 4, formula equals C4H10. Alkanes are simple molecular substances, meaning molecules are held together by strong covalent bonds within the molecule, and molecules are held together by weak forces of attraction between molecules called van der Waals forces or London dispersion forces. As we go down the alkane series with more carbons, melting and boiling points increase gradually. Larger molecules have larger surface areas. Larger surface areas mean stronger intermolecular forces. Stronger forces require more energy to break, so higher temperatures are needed. At room temperature, methane, ethane, propane, and butane are gases, while C5H12 onwards are liquids and then solids at very high molecular weights. Viscosity is how thick or sticky a liquid is. Viscosity increases down the alkane series. Alkanes are insoluble in water because alkanes are nonpolar and water is polar. Like dissolves like, so polar and nonpolar do not mix. Alkanes are soluble in most organic solvents. Liquid alkanes themselves are often used as organic solvents. Alkanes are generally unreactive because C-C and C-H bonds are very strong. These bonds require a lot of energy to break. The electrons in these bonds are not easily accessible. However, alkanes can undergo two important types of reactions: combustion and substitution. When alkanes burn in plenty of oxygen, they produce carbon dioxide and water. The general equation is CnH2n plus 2 plus 3n plus 1 over 2 O2 yields nCO2 plus n plus 1 H2O. Example: combustion of butane is 2C4H10 plus 13O2 yields 8CO2 plus 10H2O. Complete combustion produces a clean, bright flame and is used for heating and energy production, but produces greenhouse gas. When oxygen is limited, alkanes do not burn completely. They produce carbon monoxide, which is a toxic gas, soot or elemental carbon, which is black powder, and water. Example: incomplete combustion of butane is C4H10 plus 3O2 yields CO plus 3C plus 5H2O. Observable signs of incomplete combustion include sooty flame with black smoke and deposits of carbon on surfaces. Carbon monoxide is colorless, odorless, and toxic. Incomplete combustion in poorly ventilated spaces can be dangerous. A substitution reaction is when one atom or group of atoms is replaced by another atom or group. Alkanes can react with halogens in the presence of UV light. Example: chlorination of methane is CH4 plus Cl2 with UV light yields CH3Cl plus HCl. One hydrogen atom is replaced by a chlorine atom, producing chloromethane. Also produces hydrogen chloride gas. More hydrogen atoms can be replaced through further substitution. UV light provides energy to break the Cl-Cl bond in chlorine, create reactive chlorine radicals, and initiate the substitution reaction.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:35:00Z",
+    "updated_at": "2024-01-15T09:35:00Z",
+    "source_timestamp": "2024-01-15T09:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T04:19:03.745402+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Slide 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Alkenes: The Unsaturated Hydrocarbons",
+    "content": "## What are Alkenes?\n\n::yellow[Alkenes] are hydrocarbons that contain ::blue[carbon-carbon double bonds (C=C)].\n\n### The Double Bond Explained\n\nA ::yellow[carbon-carbon double bond] is a special type of covalent bond where:\n- Two carbon atoms share ::purple[4 electrons total]\n- Each carbon contributes 2 electrons to the bond\n- This makes the bond much stronger than a single bond\n- The double bond is the defining feature of alkenes\n\n### General Formula\n\nAll alkenes follow the general formula:\n\n$$C_nH_{2n}$$\n\nWhere n = number of carbon atoms\n\n**Compare to Alkanes:** Alkenes have 2 fewer hydrogen atoms than alkanes!\n- Alkanes: CₙH₂ₙ₊₂\n- Alkenes: CₙH₂ₙ\n\n**Examples:**\n- Ethene: n=2, formula = C₂H₄ ✓\n- Propene: n=3, formula = C₃H₆ ✓\n- Butene: n=4, formula = C₄H₈ ✓\n\n### The Functional Group\n\nThe ::yellow[functional group] of alkenes is the ::blue[C=C double bond]. This group determines:\n- How the molecule reacts\n- What types of reactions it can undergo\n- Its chemical properties\n\n### First Members of the Alkene Series\n\n| Name | Molecular Formula | Structural Feature |\n|------|-------------------|--------------------|\n| Ethene | C₂H₄ | CH₂=CH₂ |\n| Propene | C₃H₆ | CH₃-CH=CH₂ |\n| Butene | C₄H₈ | CH₃-CH₂-CH=CH₂ |\n\n> 💡 **Note:** Methene (CH₂=) does not exist because a carbon atom needs 4 bonds. The smallest alkene is ethene.\n\n## Physical Properties of Alkenes\n\n### 1. Molecular Structure\n\nLike alkanes, alkenes are ::yellow[simple molecular substances]:\n- Strong covalent bonds within molecules\n- Weak intermolecular forces between molecules\n\n### 2. Melting and Boiling Points\n\n**Pattern:** Like alkanes, boiling points ::green[increase down the series]\n\n**At Room Temperature:**\n- C₂H₄ (ethene) - **Gas**\n- C₃H₆ (propene) - **Gas**\n- C₄H₈ (butene) - **Gas**\n- C₅H₁₀ onwards - **Liquids**\n\n**Why the same pattern as alkanes?**\n- Molecular size increases down the series\n- Intermolecular forces increase with size\n- Larger molecules need more energy to separate\n\n### 3. Viscosity\n\nViscosity ::green[increases down the series], similar to alkanes.\n\n### 4. Solubility\n\n**In Water:** Alkenes are ::red[insoluble in water] (like alkanes)\n- Nonpolar molecules don't dissolve in polar water\n\n**In Organic Solvents:** Alkenes are ::green[soluble in organic solvents] (like alkanes)\n- However, they are NOT commonly used as solvents themselves\n- Their reactivity interferes with reactions\n\n## Chemical Properties of Alkenes\n\n### Key Difference from Alkanes\n\n::red[Alkenes are much more reactive than alkanes] because:\n- The C=C double bond is reactive\n- The electrons in the double bond are more accessible\n- The double bond is easier to break than single bonds\n\n### 1. Combustion Reactions\n\n**Complete Combustion**\n\n$$C_nH_{2n} + \\frac{3n}{2}O_2 \\rightarrow nCO_2 + nH_2O$$\n\n**Example: Combustion of Ethene**\n\n$$C_2H_4 + 3O_2 \\rightarrow 2CO_2 + 2H_2O$$\n\n**Important Observation:**\n\nAlkenes burn with a ::red[sootier flame] than alkanes!\n\n**Why?**\n- Alkenes have a higher percentage of carbon by mass\n- They are more likely to undergo incomplete combustion\n- Incomplete combustion produces soot (elemental carbon)\n- This makes the flame appear black and sooty\n\n### 2. Addition Reactions\n\n**What is an Addition Reaction?**\n\nIn an ::yellow[addition reaction], the C=C double bond ::green[breaks open] and atoms are ::green[added across the double bond].\n\n**Why Addition Reactions Occur:**\n- The C=C bond is reactive\n- The double bond breaks to form two single bonds\n- Each carbon can then form additional bonds\n- New atoms are \"added\" to the molecule\n\n**General Pattern:**\n\nAlkene + Reactant → Product with single bonds\n\n**Key Reactants for Addition Reactions:**\n- H₂ (hydrogen gas)\n- Br₂ (bromine)\n- Cl₂ (chlorine)\n- I₂ (iodine)\n- H₂O (steam/water)\n- Other alkenes\n\n#### Addition of Hydrogen (Hydrogenation)\n\n**Conditions:**\n- Temperature: ~150°C\n- Catalyst: Nickel (Ni)\n- Hydrogen gas (H₂)\n\n**Reaction:**\n$$C_2H_4 + H_2 \\xrightarrow{Ni, 150°C} C_2H_6$$\n\n**Ethene + Hydrogen → Ethane**\n\n**Uses:**\n- Converting oils to fats (margarine production)\n- Making alkanes from alkenes\n- Industrial processes\n\n#### Addition of Bromine (Bromination)\n\n**Conditions:**\n- Room temperature\n- Bromine solution (Br₂) in an organic solvent\n- No catalyst needed\n\n**Reaction:**\n$$C_2H_4 + Br_2 \\rightarrow CH_2BrCH_2Br$$\n\n**Ethene + Bromine → 1,2-dibromoethane**\n\n**Observable Change:**\n- ::red[Brown bromine solution] decolorizes\n- Becomes ::green[colorless liquid]\n- This is a useful test for unsaturation!\n\n**Why This Test Works:**\n- Alkenes have C=C bonds and decolorize bromine\n- Alkanes have only single bonds and don't decolorize bromine\n- This is a quick way to distinguish them\n\n**Other Halogens:**\n- Cl₂ (chlorine) also undergoes addition\n- I₂ (iodine) also undergoes addition\n- Bromine is most commonly used because the color change is obvious\n\n#### Addition of Steam (Hydration)\n\n**Conditions:**\n- Temperature: ~300°C\n- Pressure: ~60 atmospheres\n- Catalyst: Phosphoric acid (H₃PO₄)\n- Steam (H₂O vapor)\n\n**Reaction:**\n$$C_2H_4 + H_2O \\xrightarrow{H_3PO_4, 300°C, 60atm} C_2H_5OH$$\n\n**Ethene + Steam → Ethanol**\n\n**Industrial Importance:**\n- This is how ethanol is manufactured industrially\n- Ethanol is a key chemical for:\n  - Beverages\n  - Solvents\n  - Fuels\n  - Antiseptics\n\n#### Addition Polymerization\n\n**What is Addition Polymerization?**\n\n::yellow[Addition polymerization] is when many alkene molecules (::yellow[monomers]) join together to form a long chain molecule (::yellow[polymer]).\n\n**Conditions:**\n- High temperature (100-300°C)\n- High pressure (1000-3000 atm)\n- Catalyst (e.g., peroxides)\n\n**Reaction:**\n\nMany ethene molecules (C₂H₄) → One polyethene molecule (-(C₂H₄)ₙ-)\n\n$$nC_2H_4 \\xrightarrow{heat, pressure, catalyst} -(C_2H_4)_n-$$\n\n**What Happens:**\n1. The C=C double bonds in alkene molecules break\n2. Single bonds form between molecules\n3. Thousands of molecules link together\n4. A very long chain (polymer) forms\n\n**Products:**\n- ::green[Polyethene (polythene)] - plastic bags, bottles\n- ::green[Polypropene] - car parts, containers\n- ::green[Polyvinyl chloride (PVC)] - pipes, cables\n\n**Importance:**\n- This is how most plastics are manufactured\n- Plastics are among the most useful materials we have\n- But they create environmental challenges (see later)\n\n> 💡 **Key Insight:** The C=C double bond makes alkenes much more reactive than alkanes. This reactivity allows them to undergo addition reactions that produce useful products like plastics!",
+    "speech_to_text_content": "Alkenes are hydrocarbons that contain carbon-carbon double bonds. A carbon-carbon double bond is a special type of covalent bond where two carbon atoms share 4 electrons total. Each carbon contributes 2 electrons to the bond. This makes the bond much stronger than a single bond. The double bond is the defining feature of alkenes. All alkenes follow the general formula CnH2n, where n equals the number of carbon atoms. Compare to alkanes: alkenes have 2 fewer hydrogen atoms than alkanes. Alkanes are CnH2n plus 2. Alkenes are CnH2n. Examples: ethene has n equals 2, formula equals C2H4. Propene has n equals 3, formula equals C3H6. Butene has n equals 4, formula equals C4H8. The functional group of alkenes is the C equals C double bond. This group determines how the molecule reacts, what types of reactions it can undergo, and its chemical properties. The smallest alkene is ethene because methene does not exist. Like alkanes, alkenes are simple molecular substances with strong covalent bonds within molecules and weak intermolecular forces between molecules. Like alkanes, boiling points increase down the series. At room temperature, ethene, propene, and butene are gases, while C5H10 onwards are liquids. Viscosity increases down the series, similar to alkanes. Alkenes are insoluble in water like alkanes because nonpolar molecules do not dissolve in polar water. Alkenes are soluble in organic solvents like alkanes, but they are not commonly used as solvents themselves because their reactivity interferes with reactions. Alkenes are much more reactive than alkanes because the C equals C double bond is reactive, the electrons in the double bond are more accessible, and the double bond is easier to break than single bonds. When alkenes burn in plenty of oxygen, they produce carbon dioxide and water. The general equation is CnH2n plus 3n over 2 O2 yields nCO2 plus nH2O. Example: combustion of ethene is C2H4 plus 3O2 yields 2CO2 plus 2H2O. Alkenes burn with a sootier flame than alkanes. Alkenes have a higher percentage of carbon by mass. They are more likely to undergo incomplete combustion. Incomplete combustion produces soot, which is elemental carbon. This makes the flame appear black and sooty. In an addition reaction, the C equals C double bond breaks open and atoms are added across the double bond. The C equals C bond is reactive. The double bond breaks to form two single bonds. Each carbon can then form additional bonds. New atoms are added to the molecule. Key reactants for addition reactions include hydrogen gas, bromine, chlorine, iodine, steam or water, and other alkenes. For hydrogenation, the conditions are temperature around 150 degrees Celsius, catalyst is nickel, and hydrogen gas. The reaction is C2H4 plus H2 with nickel at 150 degrees Celsius yields C2H6. Ethene plus hydrogen yields ethane. Uses include converting oils to fats for margarine production, making alkanes from alkenes, and industrial processes. For bromination, the conditions are room temperature and bromine solution in an organic solvent with no catalyst needed. The reaction is C2H4 plus Br2 yields CH2BrCH2Br. Ethene plus bromine yields 1,2-dibromoethane. The observable change is that brown bromine solution decolorizes and becomes colorless liquid. This is a useful test for unsaturation. For hydration, the conditions are temperature around 300 degrees Celsius, pressure around 60 atmospheres, catalyst is phosphoric acid, and steam. The reaction is C2H4 plus H2O with phosphoric acid at 300 degrees Celsius and 60 atmospheres yields C2H5OH. Ethene plus steam yields ethanol. This is how ethanol is manufactured industrially. Addition polymerization is when many alkene molecules called monomers join together to form a long chain molecule called a polymer. The conditions are high temperature between 100 and 300 degrees Celsius, high pressure between 1000 and 3000 atmospheres, and a catalyst. Many ethene molecules yield one polyethene molecule. The C equals C double bonds in alkene molecules break. Single bonds form between molecules. Thousands of molecules link together. A very long chain or polymer forms. Products include polyethene for plastic bags and bottles, polypropene for car parts and containers, and polyvinyl chloride or PVC for pipes and cables.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:40:00Z",
+    "updated_at": "2024-01-15T09:40:00Z",
+    "source_timestamp": "2024-01-15T09:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T04:19:28.022957+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Slide 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚙️ Cracking: Breaking Down Large Molecules",
+    "content": "## What is Cracking?\n\n::yellow[Cracking] is an industrial process where ::blue[large hydrocarbon molecules are broken down into smaller hydrocarbon molecules].\n\n### The Problem It Solves\n\nWhen crude oil is fractionally distilled:\n- ❌ We get too many long-chain alkanes (heavy fractions)\n- ❌ These are less useful and less profitable\n- ❌ We don't get enough short-chain alkenes (more valuable)\n- ❌ There's a mismatch between supply and demand\n\n**Solution:** Cracking converts unwanted long-chain molecules into useful short-chain products!\n\n## How Cracking Works\n\n### The Basic Process\n\n**Input:** Large alkane molecules (long chains)\n**Output:** Mixture of:\n- Smaller alkanes (short chains)\n- Smaller alkenes (short chains)\n- Hydrogen gas (H₂) - as a byproduct\n\n### General Equation\n\n$$\\text{Long-chain alkane} \\xrightarrow{\\text{heat, pressure, catalyst}} \\text{Short-chain alkenes} + \\text{Short-chain alkanes} + H_2$$\n\n### Specific Examples\n\n**Example 1: Simple Cracking**\n\n$$C_{10}H_{22} \\xrightarrow{\\text{catalyst}} C_2H_4 + C_8H_{18}$$\n\nDecane → Ethene + Octane\n\n**Example 2: Another Cracking Process**\n\n$$C_{10}H_{22} \\xrightarrow{\\text{catalyst}} C_4H_8 + C_6H_{14}$$\n\nDecane → Butene + Hexane\n\n**Example 3: Hydrogen Production**\n\n$$C_6H_{14} \\xrightarrow{\\text{catalyst}} C_2H_4 + C_2H_6 + H_2$$\n\nHexane → Ethene + Ethane + Hydrogen gas\n\n## Industrial Cracking: Catalytic Cracking\n\nIn industry, a special type called ::yellow[catalytic cracking] is used.\n\n### Conditions for Catalytic Cracking\n\n| Condition | Details |\n|-----------|----------|\n| **Temperature** | 500-700°C (very hot!) |\n| **Pressure** | ~1 atmosphere (relatively low) |\n| **Catalyst** | Al₂O₃ (aluminum oxide) or SiO₂ (silicon dioxide) |\n\n### Why These Conditions?\n\n- 🔥 **High temperature:** Provides energy to break C-C bonds in long chains\n- 📉 **Low pressure:** Keeps costs down, easier to manage\n- 🧪 **Catalyst:** Speeds up the reaction, lowers the temperature needed\n\n## Why Cracking is Important\n\n### 1. Matches Supply to Demand\n\n**The Problem:**\n- Crude oil has more long-chain alkanes than we need\n- We need more short-chain alkenes for plastics\n- Without cracking, crude oil is wasted\n\n**The Solution:**\n- Cracking converts excess long chains into needed short chains\n- Makes crude oil more valuable\n- Increases efficiency of the refining process\n\n### 2. Produces Valuable Products\n\n**Short-chain Alkenes:**\n- Ethene (C₂H₄) - starting material for polyethene plastic\n- Propene (C₃H₆) - starting material for polypropene plastic\n- Butene (C₄H₈) - starting material for other plastics\n\n**Short-chain Alkanes:**\n- More useful as fuels\n- Higher demand than long-chain alkanes\n- Better for petrol and diesel\n\n### 3. Produces Hydrogen Gas\n\nAs a byproduct, cracking produces ::blue[hydrogen gas (H₂)]\n\n**Uses of Hydrogen:**\n- 🏭 Haber process - making ammonia for fertilizers\n- 🔧 Industrial processes\n- ⚡ Potential future fuel\n- 🧪 Chemical synthesis\n\n## The Overall Benefit\n\n```\nCrude Oil Refining without Cracking:\n- Lots of long-chain alkanes (excess, low value)\n- Few short-chain alkenes (shortage, high value)\n- ❌ Inefficient, wasteful\n\nCrude Oil Refining with Cracking:\n- Long chains → broken down\n- Short-chain alkenes produced (meet demand)\n- Short-chain alkanes produced (useful fuels)\n- Hydrogen byproduct (valuable)\n- ✅ Efficient, profitable, sustainable\n```\n\n> 💡 **Key Insight:** Cracking is a crucial process that makes crude oil refining efficient and economical. Without it, much of the crude oil would be wasted!",
+    "speech_to_text_content": "Cracking is an industrial process where large hydrocarbon molecules are broken down into smaller hydrocarbon molecules. When crude oil is fractionally distilled, we get too many long-chain alkanes, these are less useful and less profitable, we do not get enough short-chain alkenes which are more valuable, and there is a mismatch between supply and demand. The solution is cracking, which converts unwanted long-chain molecules into useful short-chain products. The input is large alkane molecules with long chains. The output is a mixture of smaller alkanes with short chains, smaller alkenes with short chains, and hydrogen gas as a byproduct. The general equation is long-chain alkane with heat, pressure, and catalyst yields short-chain alkenes plus short-chain alkanes plus H2. Examples include: C10H22 with catalyst yields C2H4 plus C8H18, which is decane yields ethene plus octane. Another example is C10H22 with catalyst yields C4H8 plus C6H14, which is decane yields butene plus hexane. Another example is C6H14 with catalyst yields C2H4 plus C2H6 plus H2, which is hexane yields ethene plus ethane plus hydrogen gas. In industry, a special type called catalytic cracking is used. The conditions for catalytic cracking are temperature of 500 to 700 degrees Celsius, pressure of approximately 1 atmosphere, and catalyst of aluminum oxide or silicon dioxide. High temperature provides energy to break C-C bonds in long chains. Low pressure keeps costs down and is easier to manage. Catalyst speeds up the reaction and lowers the temperature needed. Cracking is important because it matches supply to demand. Without cracking, crude oil is wasted. Cracking converts excess long chains into needed short chains. It makes crude oil more valuable. It increases efficiency of the refining process. Short-chain alkenes are starting materials for polyethene plastic, polypropene plastic, and other plastics. Short-chain alkanes are more useful as fuels, have higher demand than long-chain alkanes, and are better for petrol and diesel. As a byproduct, cracking produces hydrogen gas. Uses of hydrogen include the Haber process for making ammonia for fertilizers, industrial processes, potential future fuel, and chemical synthesis.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T04:19:40.985250+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Slide 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔀 Isomers: Same Formula, Different Structures",
+    "content": "## What are Isomers?\n\n::yellow[Isomers] are compounds that have:\n- ✅ **The same molecular formula** (same number and type of atoms)\n- ❌ **Different structural formulas** (atoms arranged differently)\n- ❌ **Different properties** (because of different structures)\n\n### Simple Example\n\n**Butane (C₄H₁₀)** has two isomers:\n\n1. **Butane (straight-chain)**\n   - Structure: CH₃-CH₂-CH₂-CH₃\n   - All four carbons in a line\n\n2. **Methylpropane (branched)**\n   - Structure: CH₃-CH(CH₃)-CH₃\n   - One carbon has a branch\n\nBoth have formula C₄H₁₀ but are different compounds!\n\n## Types of Isomerism\n\n### Chain Isomerism\n\n::yellow[Chain isomers] have the same molecular formula but different carbon chain arrangements.\n\n**Straight-chain Isomers:**\n- All carbon atoms are joined in a continuous line\n- Also called \"normal\" isomers\n- Example: n-butane (CH₃-CH₂-CH₂-CH₃)\n\n**Branched-chain Isomers:**\n- Have one or more side chains (branches)\n- Carbon atoms are not all in a single line\n- Example: methylpropane (CH₃-CH(CH₃)-CH₃)\n\n## Comparing Straight-chain and Branched Isomers\n\n### Case Study: Butane and Methylpropane\n\n**Butane (n-butane)**\n```\nCH₃—CH₂—CH₂—CH₃\n```\n- All 4 carbons in a straight line\n- Greater surface area\n- Stronger intermolecular forces\n- ::blue[Higher boiling point: 0°C]\n\n**Methylpropane (isobutane)**\n```\n    CH₃\n    |\nCH₃—CH—CH₃\n```\n- Branched structure\n- Smaller surface area\n- Weaker intermolecular forces\n- ::blue[Lower boiling point: -12°C]\n\n### Why the Difference?\n\n**Surface Area Effect:**\n- Straight chains have large surface areas\n- Branched molecules are more compact\n- Larger surface area → more contact between molecules\n- More contact → stronger intermolecular forces\n- Stronger forces → higher boiling point needed to separate molecules\n\n**General Rule:**\n> ⚠️ ::red[Straight-chain isomers have HIGHER boiling points than branched-chain isomers of the same molecular formula]\n\n## Which Alkanes Have Isomers?\n\n### No Isomers\n\n- **Methane (CH₄)** - Only 1 carbon, no branching possible\n- **Ethane (C₂H₆)** - Only 2 carbons, no branching possible\n- **Propane (C₃H₈)** - Only 3 carbons, no branching possible\n\n### First Isomers Appear\n\n- **Butane (C₄H₁₀)** - First alkane with isomers!\n  - Isomer 1: Butane (straight chain)\n  - Isomer 2: Methylpropane (branched)\n\n### Higher Alkanes\n\n- **Pentane (C₅H₁₂)** - Has 3 isomers\n- **Hexane (C₆H₁₄)** - Has 5 isomers\n- **Heptane (C₇H₁₆)** - Has 9 isomers\n- **Octane (C₈H₁₈)** - Has 18 isomers!\n\n**Pattern:** As molecules get larger, the number of possible isomers increases dramatically!\n\n## Physical Properties of Isomers\n\nAlthough isomers have the same molecular formula, they have **different physical properties**:\n\n| Property | Straight-chain | Branched-chain |\n|----------|---|---|\n| **Boiling Point** | ::blue[Higher] | ::blue[Lower] |\n| **Melting Point** | Often lower | Often higher |\n| **Density** | Slightly different | Slightly different |\n| **Viscosity** | Higher | Lower |\n| **Solubility** | Slightly different | Slightly different |\n\n## Chemical Properties of Isomers\n\n**Important:** Isomers have the ::green[SAME chemical properties]!\n\n- They undergo the same reactions\n- They have the same functional groups\n- They belong to the same homologous series\n- They react at similar rates\n- They produce the same products\n\n> 💡 **Key Distinction:** Isomers differ in PHYSICAL properties but have SAME chemical properties. This is because chemical properties depend on functional groups, which are the same in all isomers of a particular series.\n\n## Saturated vs. Unsaturated Hydrocarbons\n\n### Saturated Hydrocarbons\n\n::yellow[Saturated hydrocarbons] contain ::blue[only single C-C bonds].\n\n- Each carbon atom is bonded to ::purple[4 other atoms]\n- No \"room\" for more atoms\n- Examples: alkanes (methane, ethane, propane)\n- Cannot undergo addition reactions\n- General formula: CₙH₂ₙ₊₂ (for alkanes)\n\n### Unsaturated Hydrocarbons\n\n::yellow[Unsaturated hydrocarbons] contain ::blue[one or more C=C double bonds].\n\n- Each carbon in the double bond is bonded to ::purple[3 other atoms]\n- \"Room\" for more atoms to be added\n- Examples: alkenes (ethene, propene, butene)\n- Can undergo addition reactions\n- General formula: CₙH₂ₙ (for alkenes with one double bond)\n\n### Comparison\n\n| Feature | Saturated | Unsaturated |\n|---------|-----------|-------------|\n| **Bonds** | Single C-C | C=C double bonds |\n| **Bonding** | ::blue[Saturated] | ::red[Unsaturated] |\n| **Reactivity** | Low | High |\n| **Addition reactions** | No | Yes |\n| **Bromine test** | No decolorization | Decolorization |\n| **Flame** | Clean | Sooty |\n\n> 💡 **Key Insight:** The presence of double bonds (unsaturation) makes a huge difference in chemical properties, even though the atoms are still just carbon and hydrogen!",
+    "speech_to_text_content": "Isomers are compounds that have the same molecular formula with the same number and type of atoms, but have different structural formulas with atoms arranged differently, and have different properties because of different structures. Butane, which has the formula C4H10, has two isomers. Butane with a straight chain has the structure CH3 dash CH2 dash CH2 dash CH3 with all four carbons in a line. Methylpropane with a branched structure has the structure CH3 dash CH with CH3 branch dash CH3. Both have formula C4H10 but are different compounds. Chain isomers have the same molecular formula but different carbon chain arrangements. Straight-chain isomers have all carbon atoms joined in a continuous line and are also called normal isomers. Branched-chain isomers have one or more side chains or branches and carbon atoms are not all in a single line. For butane and methylpropane, butane or n-butane has all 4 carbons in a straight line, greater surface area, stronger intermolecular forces, and a higher boiling point of 0 degrees Celsius. Methylpropane or isobutane has a branched structure, smaller surface area, weaker intermolecular forces, and a lower boiling point of minus 12 degrees Celsius. Straight chains have large surface areas. Branched molecules are more compact. Larger surface area means more contact between molecules. More contact means stronger intermolecular forces. Stronger forces mean higher boiling point is needed to separate molecules. Straight-chain isomers have higher boiling points than branched-chain isomers of the same molecular formula. Methane, ethane, and propane have no isomers. Butane is the first alkane with isomers. Pentane has 3 isomers. Hexane has 5 isomers. Heptane has 9 isomers. Octane has 18 isomers. As molecules get larger, the number of possible isomers increases dramatically. Although isomers have the same molecular formula, they have different physical properties. Straight-chain isomers have higher boiling points and melting points than branched-chain isomers. Isomers have the same chemical properties. They undergo the same reactions. They have the same functional groups. They belong to the same homologous series. They react at similar rates. They produce the same products. Isomers differ in physical properties but have the same chemical properties. This is because chemical properties depend on functional groups, which are the same in all isomers of a particular series. Saturated hydrocarbons contain only single C-C bonds. Each carbon atom is bonded to 4 other atoms. There is no room for more atoms. Examples are alkanes. They cannot undergo addition reactions. The general formula is CnH2n plus 2 for alkanes. Unsaturated hydrocarbons contain one or more C equals C double bonds. Each carbon in the double bond is bonded to 3 other atoms. There is room for more atoms to be added. Examples are alkenes. They can undergo addition reactions. The general formula is CnH2n for alkenes with one double bond.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:50:00Z",
+    "updated_at": "2024-01-15T09:50:00Z",
+    "source_timestamp": "2024-01-15T09:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T04:19:57.589063+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Slide 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧬 Polymers: Giant Molecules from Small Units",
+    "content": "## What are Polymers?\n\n::yellow[Polymers] are very large molecules made up of thousands of smaller molecules linked together in long chains.\n\n### Key Terms\n\n- **Monomer** (::blue[mono] = one, ::blue[mer] = unit): A small molecule that can link to other monomers\n- **Polymer** (::blue[poly] = many, ::blue[mer] = unit): A very large molecule made of many monomers joined together\n- **Polymerization**: The process of joining monomers to form a polymer\n\n### Why Polymers are Important\n\n✅ **Plastics** - The most common polymer-based materials\n✅ **Strength** - Polymers are often stronger than metals\n✅ **Flexibility** - Can be made rigid or flexible\n✅ **Lightweight** - Much lighter than metals\n✅ **Cheap** - Relatively inexpensive to produce\n✅ **Versatile** - Thousands of different polymers exist\n\n## Two Main Types of Polymerization\n\n### Type 1: Addition Polymerization\n\n**What Happens:**\n- Alkene monomers have C=C double bonds\n- Double bonds break open\n- Monomers link together with single bonds\n- No atoms are lost in the process\n\n**General Equation:**\n\n$$n\\text{(monomer with C=C)} \\xrightarrow{heat, pressure, catalyst} \\text{-(polymer chain)-}$$\n\n**Conditions:**\n- High temperature (100-300°C)\n- High pressure (1000-3000 atm)\n- Catalyst (e.g., peroxides)\n\n**Example: Polyethene (Polythene)**\n\n$$nC_2H_4 \\xrightarrow{conditions} -(C_2H_4)_n-$$\n\nMany ethene molecules → One long polyethene chain\n\n**Products of Addition Polymerization:**\n\n| Monomer | Polymer | Uses |\n|---------|---------|------|\n| Ethene (C₂H₄) | Polyethene | Plastic bags, bottles, films |\n| Propene (C₃H₆) | Polypropene | Car parts, containers, ropes |\n| Vinyl chloride | PVC | Pipes, cables, flooring |\n| Tetrafluoroethene | PTFE (Teflon) | Non-stick coatings, pipes |\n\n### Type 2: Condensation Polymerization\n\n**What Happens:**\n- Two different types of monomers join together\n- A small molecule (usually water) is released as a byproduct\n- Monomers link together with new bonds\n- Atoms ARE lost in the process\n\n**General Equation:**\n\n$$n\\text{(monomer A)} + n\\text{(monomer B)} \\rightarrow \\text{-(polymer)-} + n\\text{(small molecule, e.g., H}_2\\text{O)}$$\n\n**Common Condensation Polymers:**\n\n| Polymer | Monomers | Small Molecule Released | Uses |\n|---------|----------|------------------------|------|\n| **Polyester** | Diol + Dicarboxylic acid | Water (H₂O) | Clothing, bottles, films |\n| **Polyamide (Nylon)** | Diamine + Dicarboxylic acid | Water (H₂O) | Clothing, ropes, car parts |\n| **Polyurethane** | Diol + Diisocyanate | Carbon dioxide (CO₂) | Foam, coatings, adhesives |\n\n## Comparing Addition and Condensation Polymerization\n\n| Feature | Addition | Condensation |\n|---------|----------|-------------|\n| **Monomers** | ::blue[Same type] | ::blue[Two different types] |\n| **Bonds** | C-C single bonds form | Various bonds form |\n| **Byproduct** | ::red[None] | ::red[Small molecules (H₂O, CO₂)] |\n| **Atoms** | All atoms in polymer | Some atoms lost |\n| **Conditions** | High temp & pressure | Usually lower temp |\n| **Examples** | Polyethene, polypropene | Polyester, nylon |\n| **Reactivity** | From alkenes (C=C) | From functional groups (-OH, -COOH, -NH₂) |\n\n## Properties of Polymers\n\n### Physical Properties\n\n**Melting Point:**\n- Most polymers don't have a sharp melting point\n- They soften gradually over a range of temperatures\n- Depends on polymer structure and molecular weight\n\n**Solubility:**\n- Most polymers are insoluble in water\n- Some dissolve in organic solvents\n- Depends on the specific polymer\n\n**Strength and Flexibility:**\n- Can be engineered to be rigid or flexible\n- Depends on:\n  - Molecular weight (longer chains = stronger)\n  - Cross-linking between chains\n  - Additives mixed into the polymer\n\n### Chemical Properties\n\n**Stability:**\n- Most polymers are very stable\n- Resistant to acids, bases, and oxidation\n- This is why they don't decompose easily\n\n**Reactivity:**\n- Most polymers are unreactive\n- Don't undergo further chemical reactions\n- This makes them safe for many applications\n\n## The Problem: Polymer Waste and Sustainability\n\n### Why Polymers are a Problem\n\n::red[Non-biodegradable]\n- Polymers do NOT break down naturally\n- Bacteria and fungi cannot decompose them\n- They can persist in the environment for hundreds of years\n- Creates massive waste accumulation\n\n**Current Situation:**\n- 🌍 Billions of tons of plastic waste globally\n- 🌊 Plastic pollution in oceans and waterways\n- 🏔️ Plastic in landfills and dumps\n- 🐋 Harm to wildlife that ingests plastic\n\n### Solutions: Recycling and Recovery\n\n#### Physical Recycling\n\n**Process:**\n1. Collect used plastic products\n2. Sort by polymer type\n3. Shred into small pieces\n4. Melt and form new products\n\n**Advantages:**\n- ✅ Reduces landfill waste\n- ✅ Saves raw materials\n- ✅ Energy efficient\n\n**Limitations:**\n- ⚠️ Quality decreases with each cycle\n- ⚠️ Not all plastics can be recycled together\n- ⚠️ Contamination reduces effectiveness\n\n#### Chemical Recycling\n\n**Process:**\n1. Break down polymer chains (depolymerization)\n2. Recover monomers or useful chemicals\n3. Use as chemical feedstock for new products\n4. Or use as fuel\n\n**Advantages:**\n- ✅ Recovers useful chemicals\n- ✅ Can handle contaminated plastics\n- ✅ Produces high-quality materials\n\n**Challenges:**\n- ⚠️ More complex and expensive\n- ⚠️ Requires high temperatures\n- ⚠️ Energy-intensive\n\n## Contribution to Sustainable Development\n\n### How Recycling Helps\n\n1. **Reduces Resource Depletion**\n   - Less crude oil needed\n   - Preserves natural resources\n   - Extends supply for future generations\n\n2. **Reduces Landfill Waste**\n   - Keeps plastic out of landfills\n   - Reduces environmental contamination\n   - Saves land space\n\n3. **Reduces Energy Consumption**\n   - Recycling uses less energy than making new plastic\n   - Reduces greenhouse gas emissions\n   - Helps combat climate change\n\n4. **Creates Economic Opportunities**\n   - Recycling industry creates jobs\n   - Economic value in waste materials\n   - Supports circular economy\n\n5. **Protects Ecosystems**\n   - Reduces plastic pollution in oceans\n   - Protects wildlife\n   - Maintains biodiversity\n\n### Singapore's Approach\n\nSingapore is committed to sustainability:\n- 🏭 Advanced recycling facilities\n- 📋 Extended Producer Responsibility (EPR) schemes\n- 🎯 Target: Zero waste nation\n- 🔄 Circular economy initiatives\n- 🌍 Regional leadership in sustainability\n\n> 💡 **Future Outlook:** Scientists are developing biodegradable polymers and improving recycling technologies to address the polymer waste crisis. The goal is to create a circular economy where plastics are continuously recycled rather than discarded.",
+    "speech_to_text_content": "Polymers are very large molecules made up of thousands of smaller molecules linked together in long chains. A monomer is a small molecule that can link to other monomers. A polymer is a very large molecule made of many monomers joined together. Polymerization is the process of joining monomers to form a polymer. Polymers are important because they form the basis of plastics, are often stronger than metals, can be made rigid or flexible, are much lighter than metals, are relatively inexpensive to produce, and thousands of different polymers exist. In addition polymerization, alkene monomers have C equals C double bonds. Double bonds break open. Monomers link together with single bonds. No atoms are lost in the process. The conditions are high temperature between 100 and 300 degrees Celsius, high pressure between 1000 and 3000 atmospheres, and a catalyst. For polyethene, many ethene molecules yield one long polyethene chain. Products of addition polymerization include ethene monomer yielding polyethene for plastic bags, bottles, and films, propene monomer yielding polypropene for car parts, containers, and ropes, vinyl chloride yielding PVC for pipes, cables, and flooring, and tetrafluoroethene yielding PTFE or Teflon for non-stick coatings and pipes. In condensation polymerization, two different types of monomers join together. A small molecule, usually water, is released as a byproduct. Monomers link together with new bonds. Atoms are lost in the process. Common condensation polymers include polyester from diol plus dicarboxylic acid releasing water, polyamide or nylon from diamine plus dicarboxylic acid releasing water, and polyurethane from diol plus diisocyanate releasing carbon dioxide. Addition polymerization uses the same type of monomer, forms C-C single bonds, produces no byproduct, has all atoms in polymer, requires high temperature and pressure, and examples include polyethene and polypropene. Condensation polymerization uses two different types of monomers, forms various bonds, produces small molecules like water and carbon dioxide as byproducts, loses some atoms, usually requires lower temperature, and examples include polyester and nylon. Most polymers do not have a sharp melting point and soften gradually over a range of temperatures. Most polymers are insoluble in water but some dissolve in organic solvents. Polymers can be engineered to be rigid or flexible. Most polymers are very stable and resistant to acids, bases, and oxidation. Most polymers are unreactive and do not undergo further chemical reactions. Polymers are non-biodegradable, do not break down naturally, bacteria and fungi cannot decompose them, and can persist in the environment for hundreds of years. Currently, there are billions of tons of plastic waste globally, plastic pollution in oceans and waterways, plastic in landfills and dumps, and harm to wildlife that ingests plastic. In physical recycling, used plastic products are collected, sorted by polymer type, shredded into small pieces, melted and formed into new products. Advantages include reducing landfill waste, saving raw materials, and energy efficiency. Limitations include quality decreases with each cycle, not all plastics can be recycled together, and contamination reduces effectiveness. In chemical recycling, polymer chains are broken down through depolymerization, monomers or useful chemicals are recovered, and used as chemical feedstock for new products or as fuel. Advantages include recovering useful chemicals, handling contaminated plastics, and producing high-quality materials. Challenges include being more complex and expensive, requiring high temperatures, and being energy-intensive. Recycling helps reduce resource depletion by needing less crude oil and preserving natural resources. It reduces landfill waste by keeping plastic out of landfills and reducing environmental contamination. It reduces energy consumption because recycling uses less energy than making new plastic. It creates economic opportunities through the recycling industry and supports a circular economy. It protects ecosystems by reducing plastic pollution in oceans and protecting wildlife.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:55:00Z",
+    "updated_at": "2024-01-15T09:55:00Z",
+    "source_timestamp": "2024-01-15T09:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T04:20:20.195994+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Alkanes",
+    "content": "## Question 1: Properties of Alkanes\n\nWhich statement about alkanes is **correct**?\n\nA) Alkanes contain carbon-carbon double bonds\n\nB) Alkanes are more reactive than alkenes\n\nC) Alkanes have the general formula CₙH₂ₙ₊₂\n\nD) Alkanes are soluble in water",
+    "speech_to_text_content": "Which statement about alkanes is correct? Option A: Alkanes contain carbon-carbon double bonds. Option B: Alkanes are more reactive than alkenes. Option C: Alkanes have the general formula CnH2n plus 2. Option D: Alkanes are soluble in water.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440013",
+        "option_id": "550e8400-e29b-41d4-a716-446655440013-opt3",
+        "answer_text": "C",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt1",
+        "option_text": "Alkanes contain carbon-carbon double bonds",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt2",
+        "option_text": "Alkanes are more reactive than alkenes",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt3",
+        "option_text": "Alkanes have the general formula CₙH₂ₙ₊₂",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt4",
+        "option_text": "Alkanes are soluble in water",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **C) Alkanes have the general formula CₙH₂ₙ₊₂**.\n\n**Why C is correct:**\n- This is the defining characteristic of alkanes\n- All alkanes follow this formula where n = number of carbon atoms\n- Examples: Methane (CH₄), Ethane (C₂H₆), Propane (C₃H₈), Butane (C₄H₁₀)\n\n**Why the other options are incorrect:**\n\nA) **Wrong** - Alkanes contain only carbon-carbon SINGLE bonds (C-C). Double bonds (C=C) are found in alkenes, not alkanes.\n\nB) **Wrong** - Alkanes are LESS reactive than alkenes. Alkenes have reactive C=C double bonds that readily undergo addition reactions, while alkanes are generally unreactive due to their strong C-C and C-H single bonds.\n\nD) **Wrong** - Alkanes are INSOLUBLE in water. Alkanes are nonpolar molecules, and water is polar. The saying \"like dissolves like\" applies here - polar and nonpolar substances don't mix. However, alkanes ARE soluble in organic solvents.",
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T04:20:26.249701+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Alkene Reactions",
+    "content": "## Question 2: Addition Reactions of Alkenes\n\nWhen bromine is added to ethene at room temperature, what observable change occurs?\n\nA) The bromine solution remains brown\n\nB) The brown bromine solution decolorizes to form a colorless liquid\n\nC) A black sooty precipitate forms\n\nD) The solution becomes hot and releases a gas",
+    "speech_to_text_content": "When bromine is added to ethene at room temperature, what observable change occurs? Option A: The bromine solution remains brown. Option B: The brown bromine solution decolorizes to form a colorless liquid. Option C: A black sooty precipitate forms. Option D: The solution becomes hot and releases a gas.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
+        "option_text": "The bromine solution remains brown",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "option_text": "The brown bromine solution decolorizes to form a colorless liquid",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
+        "option_text": "A black sooty precipitate forms",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
+        "option_text": "The solution becomes hot and releases a gas",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) The brown bromine solution decolorizes to form a colorless liquid**.\n\n**Why B is correct:**\n\nThis is a classic chemical test for alkenes:\n- Ethene (C₂H₄) has a C=C double bond\n- The C=C bond is reactive and undergoes addition reactions\n- When bromine (Br₂) is added, it adds across the double bond\n- The reaction is: C₂H₄ + Br₂ → CH₂BrCH₂Br (1,2-dibromoethane)\n- The brown color of bromine disappears because the Br₂ is consumed\n- A colorless liquid (1,2-dibromoethane) is formed\n\n**Why the other options are incorrect:**\n\nA) **Wrong** - If the solution remained brown, it would indicate that no reaction occurred. This would suggest the compound is NOT an alkene.\n\nC) **Wrong** - Black soot forms during incomplete combustion, not during bromination. Soot is elemental carbon produced when hydrocarbons burn with insufficient oxygen.\n\nD) **Wrong** - The bromination of alkenes is not a combustion reaction. It doesn't release significant heat or gas. It's a room-temperature addition reaction.\n\n**Important:** This bromine decolorization test is used to distinguish between:\n- Alkenes (decolorize bromine) - contain C=C\n- Alkanes (do NOT decolorize bromine) - contain only C-C",
+    "created_at": "2024-01-15T10:05:00Z",
+    "updated_at": "2024-01-15T10:05:00Z",
+    "source_timestamp": "2024-01-15T10:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T04:20:32.375623+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Cracking",
+    "content": "## Question 3: Purpose of Cracking in Petroleum Refining\n\nWhy is cracking an important process in crude oil refining?\n\nA) It removes impurities from crude oil\n\nB) It converts long-chain alkanes into short-chain alkenes and alkanes that are more useful\n\nC) It increases the boiling point of crude oil fractions\n\nD) It produces natural gas from crude oil",
+    "speech_to_text_content": "Why is cracking an important process in crude oil refining? Option A: It removes impurities from crude oil. Option B: It converts long-chain alkanes into short-chain alkenes and alkanes that are more useful. Option C: It increases the boiling point of crude oil fractions. Option D: It produces natural gas from crude oil.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
+        "option_text": "It removes impurities from crude oil",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "option_text": "It converts long-chain alkanes into short-chain alkenes and alkanes that are more useful",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
+        "option_text": "It increases the boiling point of crude oil fractions",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
+        "option_text": "It produces natural gas from crude oil",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) It converts long-chain alkanes into short-chain alkenes and alkanes that are more useful**.\n\n**Why B is correct:**\n\nCracking solves a fundamental problem in petroleum refining:\n- Crude oil contains many long-chain alkanes (from fractional distillation)\n- These long chains are less useful and less valuable\n- There's a shortage of short-chain alkenes (needed for plastics)\n- Cracking breaks long chains into useful short chains\n- General equation: Long-chain alkane → Short-chain alkenes + Short-chain alkanes + H₂\n- Example: C₁₀H₂₂ → C₂H₄ + C₈H₁₈\n- Short-chain alkenes (ethene, propene) are valuable for making plastics\n- Short-chain alkanes are better fuels than long-chain alkanes\n\n**Why the other options are incorrect:**\n\nA) **Wrong** - Removing impurities is done by fractional distillation, not cracking. Cracking is about breaking molecules, not removing impurities.\n\nC) **Wrong** - Cracking actually decreases boiling points because it produces smaller molecules. Smaller molecules have lower boiling points than larger molecules.\n\nD) **Wrong** - Natural gas is a naturally occurring mixture of hydrocarbons (mainly methane) found underground. Cracking doesn't produce natural gas; it's a separate resource. However, cracking can produce hydrogen gas as a byproduct.\n\n**Key Insight:** Cracking is crucial because it matches the supply from crude oil refining to industrial demand, converting less useful long-chain alkanes into more valuable short-chain alkenes and alkanes.",
+    "created_at": "2024-01-15T10:10:00Z",
+    "updated_at": "2024-01-15T10:10:00Z",
+    "source_timestamp": "2024-01-15T10:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T04:20:38.851108+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Isomers",
+    "content": "## Question 4: Comparing Isomers\n\nButane and methylpropane are isomers with the molecular formula C₄H₁₀. Which statement is **correct**?\n\nA) Butane has a lower boiling point than methylpropane\n\nB) Butane has a higher boiling point than methylpropane\n\nC) Both have identical boiling points\n\nD) They have different chemical properties but the same physical properties",
+    "speech_to_text_content": "Butane and methylpropane are isomers with the molecular formula C4H10. Which statement is correct? Option A: Butane has a lower boiling point than methylpropane. Option B: Butane has a higher boiling point than methylpropane. Option C: Both have identical boiling points. Option D: They have different chemical properties but the same physical properties.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
+        "option_text": "Butane has a lower boiling point than methylpropane",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "option_text": "Butane has a higher boiling point than methylpropane",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
+        "option_text": "Both have identical boiling points",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
+        "option_text": "They have different chemical properties but the same physical properties",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Butane has a higher boiling point than methylpropane**.\n\n**Why B is correct:**\n\nThis demonstrates the key difference between isomers:\n\n**Butane (straight-chain):**\n- Structure: CH₃-CH₂-CH₂-CH₃\n- All four carbons in a line\n- Large surface area\n- Strong intermolecular forces\n- Boiling point: 0°C\n\n**Methylpropane (branched):**\n- Structure: CH₃-CH(CH₃)-CH₃\n- Branched, more compact shape\n- Smaller surface area\n- Weaker intermolecular forces\n- Boiling point: -12°C\n\n**Why the difference?**\n- Straight-chain isomers have larger surface areas\n- Larger surface area = more contact between molecules\n- More contact = stronger intermolecular forces\n- Stronger forces require more energy to overcome\n- Therefore, higher boiling point needed\n\n**Why the other options are incorrect:**\n\nA) **Wrong** - This is backwards. The straight-chain isomer (butane) has the higher boiling point, not the lower.\n\nC) **Wrong** - Isomers have different physical properties. The different structures lead to different intermolecular forces and therefore different boiling points.\n\nD) **Wrong** - Isomers have the SAME chemical properties (they undergo the same reactions) but DIFFERENT physical properties (like boiling point). This statement reverses the relationship.\n\n**Key Concept:** Isomers have the same molecular formula but different structures. This structural difference affects physical properties (boiling point, melting point, viscosity) but NOT chemical properties (they react the same way).",
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T04:20:45.176345+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Polymers",
+    "content": "## Question 5: Types of Polymerization\n\nWhat is the main difference between addition polymerization and condensation polymerization?\n\nA) Addition polymerization uses alkenes while condensation uses alkanes\n\nB) Addition polymerization produces no byproduct while condensation releases small molecules like water\n\nC) Addition polymerization requires high temperature while condensation requires low temperature\n\nD) Addition polymerization produces plastics while condensation produces natural fibers",
+    "speech_to_text_content": "What is the main difference between addition polymerization and condensation polymerization? Option A: Addition polymerization uses alkenes while condensation uses alkanes. Option B: Addition polymerization produces no byproduct while condensation releases small molecules like water. Option C: Addition polymerization requires high temperature while condensation requires low temperature. Option D: Addition polymerization produces plastics while condensation produces natural fibers.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017-opt2",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt1",
+        "option_text": "Addition polymerization uses alkenes while condensation uses alkanes",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt2",
+        "option_text": "Addition polymerization produces no byproduct while condensation releases small molecules like water",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt3",
+        "option_text": "Addition polymerization requires high temperature while condensation requires low temperature",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt4",
+        "option_text": "Addition polymerization produces plastics while condensation produces natural fibers",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Addition polymerization produces no byproduct while condensation releases small molecules like water**.\n\n**Why B is correct:**\n\nThis is the fundamental difference between these two polymerization mechanisms:\n\n**Addition Polymerization:**\n- Monomers: Same type (usually alkenes with C=C)\n- Process: C=C bonds break open, monomers link with C-C bonds\n- Byproduct: NONE - all atoms are incorporated into the polymer\n- General: nC₂H₄ → -(C₂H₄)ₙ-\n- All atoms from monomers end up in the final polymer\n\n**Condensation Polymerization:**\n- Monomers: Two different types (e.g., diol + carboxylic acid)\n- Process: Functional groups react, new bonds form\n- Byproduct: Small molecules released (usually H₂O, sometimes CO₂)\n- General: Monomer A + Monomer B → Polymer + H₂O\n- Some atoms are lost as small molecules\n\n**Why the other options are incorrect:**\n\nA) **Partially true but not the main difference** - While addition polymerization often uses alkenes, this isn't the defining characteristic that distinguishes it from condensation. Both can produce useful polymers.\n\nC) **Misleading** - Both can occur at various temperatures. Addition polymerization typically uses 100-300°C with high pressure, while condensation can occur at lower temperatures, but the temperature range overlaps. This isn't the main distinguishing feature.\n\nD) **Oversimplification** - Both types produce useful materials. Addition polymerization produces common plastics (polyethene, polypropene), while condensation produces polyester, nylon, and other polymers. Both are used industrially.\n\n**Key Distinction:** The presence or absence of a byproduct is the fundamental chemical difference between these two mechanisms.",
+    "created_at": "2024-01-15T10:20:00Z",
+    "updated_at": "2024-01-15T10:20:00Z",
+    "source_timestamp": "2024-01-15T10:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T04:20:52.457428+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "open",
+    "title": "Test Your Understanding: Naming Organic Compounds",
+    "content": "## Question 6: Systematic Naming\n\nName the following organic compounds based on their molecular formulas and structure types:\n\n1. A 3-carbon alcohol\n2. A 4-carbon alkane\n3. A 2-carbon alkene\n\nProvide the name and molecular formula for each.",
+    "speech_to_text_content": "Name the following organic compounds based on their molecular formulas and structure types. 1. A 3-carbon alcohol. 2. A 4-carbon alkane. 3. A 2-carbon alkene. Provide the name and molecular formula for each.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": null,
+        "answer_text": "1. Propanol (C₃H₈O or C₃H₇OH)\n2. Butane (C₄H₁₀)\n3. Ethene (C₂H₄)",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Model Answer:**\n\n**1. A 3-carbon alcohol:**\n- Name: ::green[**Propanol**]\n- Molecular formula: ::purple[**C₃H₈O**] or ::purple[**C₃H₇OH**]\n- Breakdown: prop- (3 carbons) + -ol (alcohol functional group)\n- Structure: CH₃-CH₂-CH₂-OH\n\n**2. A 4-carbon alkane:**\n- Name: ::green[**Butane**]\n- Molecular formula: ::purple[**C₄H₁₀**]\n- Breakdown: but- (4 carbons) + -ane (alkane, single bonds)\n- Structure: CH₃-CH₂-CH₂-CH₃\n- Verify formula: n=4, so CₙH₂ₙ₊₂ = C₄H₁₀ ✓\n\n**3. A 2-carbon alkene:**\n- Name: ::green[**Ethene**]\n- Molecular formula: ::purple[**C₂H₄**]\n- Breakdown: eth- (2 carbons) + -ene (alkene, double bond)\n- Structure: CH₂=CH₂\n- Verify formula: n=2, so CₙH₂ₙ = C₂H₄ ✓\n\n**Marking Criteria:**\n\n✅ **Full marks (3 points)** if student provides:\n- Correct names for all three compounds\n- Correct molecular formulas for all three\n- Proper use of naming convention (prefix + suffix)\n\n✅ **Partial marks (2 points)** if student:\n- Gets names correct but formulas wrong\n- Gets 2 out of 3 correct\n- Shows understanding of naming system\n\n✅ **1 point** if student:\n- Attempts all three\n- Shows some understanding of naming\n- Gets at least one completely correct\n\n❌ **0 points** if:\n- No attempt or completely incorrect\n- No understanding of naming system demonstrated\n\n**Key Concepts Tested:**\n- Understanding of prefixes (meth-, eth-, prop-, but-)\n- Understanding of suffixes (-ane, -ene, -ol)\n- Ability to apply general formulas (CₙH₂ₙ₊₂ for alkanes, CₙH₂ₙ for alkenes)\n- Knowledge of functional groups",
+    "created_at": "2024-01-15T10:25:00Z",
+    "updated_at": "2024-01-15T10:25:00Z",
+    "source_timestamp": "2024-01-15T10:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T04:20:59.062991+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Question 7",
+    "type": "question",
+    "question_type": "open",
+    "title": "Test Your Understanding: Combustion Reactions",
+    "content": "## Question 7: Writing Combustion Equations\n\nWrite the balanced equation for the **complete combustion** of propane (C₃H₈) in oxygen.\n\nThen explain why incomplete combustion is dangerous.",
+    "speech_to_text_content": "Write the balanced equation for the complete combustion of propane in oxygen. Then explain why incomplete combustion is dangerous.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-ans1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": null,
+        "answer_text": "Complete combustion equation: 2C₃H₈ + 5O₂ → 3CO₂ + 4H₂O\n\nIncomplete combustion is dangerous because it produces carbon monoxide (CO), which is a toxic gas that is colorless and odorless. Carbon monoxide binds to hemoglobin in blood, preventing oxygen transport, which can cause poisoning or death.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "**Model Answer:**\n\n**Part 1: Balanced Equation for Complete Combustion**\n\n$$2C_3H_8 + 5O_2 \\rightarrow 3CO_2 + 4H_2O$$\n\n**Verification (atom balance):**\n- Left side: C = 6, H = 16, O = 10\n- Right side: C = 3, H = 8, O = 6 + 2 = 8... Let me recalculate\n- Actually: 2C₃H₈ = 6C + 16H; 5O₂ = 10O\n- Right side: 3CO₂ = 3C + 6O; 4H₂O = 8H + 4O\n- Total right: 3C + 8H + 10O ✓ Balanced!\n\n**Alternative acceptable form (unbalanced):**\nC₃H₈ + 5/2 O₂ → 3CO₂ + 4H₂O\n\n**Part 2: Explanation of Incomplete Combustion Danger**\n\n::red[**Incomplete combustion is dangerous because:**]\n\n1. **Produces Carbon Monoxide (CO):**\n   - CO is a toxic gas\n   - Colorless and odorless (can't be detected by senses)\n   - Much more dangerous than CO₂\n\n2. **Health Effects:**\n   - CO binds to hemoglobin in red blood cells\n   - Prevents hemoglobin from binding to oxygen\n   - Reduces oxygen delivery to tissues and organs\n   - Can cause poisoning, organ damage, or death\n\n3. **Real-World Risk:**\n   - Faulty heaters in poorly ventilated spaces\n   - Car engines in enclosed garages\n   - Blocked chimneys\n   - Portable heaters without proper ventilation\n\n4. **Other Products:**\n   - Soot (elemental carbon) - black powder\n   - Pollutes air and damages respiratory system\n\n**Marking Criteria:**\n\n✅ **Full marks (3 points)** if student:\n- Writes correctly balanced equation\n- Identifies CO as the dangerous product\n- Explains the health hazard (binds to hemoglobin, prevents oxygen transport)\n\n✅ **Partial marks (2 points)** if student:\n- Balances equation correctly\n- Identifies CO as dangerous\n- Partial explanation of why it's dangerous\n\n✅ **1 point** if student:\n- Attempts balanced equation (even if not quite right)\n- Identifies CO as dangerous product\n- Limited explanation\n\n❌ **0 points** if:\n- No attempt or completely incorrect\n- Doesn't identify CO or danger\n\n**Key Concepts Tested:**\n- Balancing chemical equations\n- Understanding combustion reactions\n- Knowledge of incomplete combustion products\n- Understanding of toxicity and health hazards\n- Real-world application of chemistry knowledge",
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T04:21:06.456437+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "chemistry_organic_chapter_11",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Summary Slide",
+    "type": "slide",
+    "question_type": null,
+    "title": "📚 Chapter Summary: Key Concepts",
+    "content": "## Organic Chemistry Chapter Summary\n\n### 🔥 Fuels and Energy (Sections 1-5)\n\n**Natural Gas:**\n- 70-90% methane, formed from decomposition of ancient organisms\n- Cleanest fossil fuel, transported as liquefied natural gas (LNG)\n\n**Crude Oil:**\n- Complex mixture of hydrocarbons separated by fractional distillation\n- Temperature gradient in column separates by boiling point\n- Produces petroleum gas, petrol, kerosene, diesel, lubricating oil\n\n**Alternative Fuels:**\n- ::green[Bioethanol] - renewable, from fermentation of plants\n- ::green[Hydrogen] - clean (only produces water), but storage challenges\n\n### ⛓️ Hydrocarbons and Homologous Series (Sections 6-7)\n\n**Homologous Series:**\n- Same general formula, same functional group, similar properties\n- Successive members differ by CH₂\n- Gradual change in physical properties down the series\n\n**Naming System:**\n- Prefix = number of carbons (meth-, eth-, prop-, but-)\n- Suffix = functional group (-ane, -ene, -ol, -oic acid)\n\n### 🧪 Alkanes (Section 8)\n\n**Properties:**\n- General formula: CₙH₂ₙ₊₂\n- Single C-C bonds, generally unreactive\n- Boiling points increase down series\n- Insoluble in water, soluble in organic solvents\n\n**Reactions:**\n- ::blue[Combustion] - produces CO₂ + H₂O (complete) or CO + C + H₂O (incomplete)\n- ::blue[Substitution] - with halogens in UV light (e.g., CH₄ + Cl₂ → CH₃Cl + HCl)\n\n### 🔗 Alkenes (Section 9)\n\n**Properties:**\n- General formula: CₙH₂ₙ\n- C=C double bond (reactive functional group)\n- More reactive than alkanes\n- Burn with sooty flame (more carbon by mass)\n\n**Addition Reactions:**\n- ::green[Hydrogenation] - H₂ added (150°C, Ni catalyst)\n- ::green[Bromination] - Br₂ added (room temp, decolorizes)\n- ::green[Hydration] - H₂O added (300°C, 60 atm, H₃PO₄ catalyst) → alcohol\n- ::green[Polymerization] - many alkenes join (high temp/pressure, catalyst)\n\n### ⚙️ Cracking (Section 10)\n\n**Purpose:** Break long-chain alkanes into useful short-chain alkenes and alkanes\n\n**Conditions:** 500-700°C, ~1 atm, catalyst (Al₂O₃ or SiO₂)\n\n**Importance:**\n- Matches supply to industrial demand\n- Produces valuable alkenes for plastics\n- Produces hydrogen as byproduct\n\n### 🔀 Isomers (Section 11)\n\n**Definition:** Same molecular formula, different structural formula\n\n**Chain Isomerism:**\n- Straight-chain vs. branched-chain\n- Straight-chain has ::blue[HIGHER boiling point] (larger surface area)\n\n**Saturated vs. Unsaturated:**\n- Saturated (alkanes): Single bonds only\n- Unsaturated (alkenes): C=C double bonds\n\n### 🧬 Polymers (Section 12)\n\n**Addition Polymerization:**\n- Alkene monomers → polymer chains\n- No byproduct, high temp/pressure/catalyst\n- Examples: polyethene, polypropene, PVC\n\n**Condensation Polymerization:**\n- Two different monomer types → polymer\n- Releases small molecules (H₂O, CO₂)\n- Examples: polyester, nylon\n\n**Sustainability:**\n- Polymers are non-biodegradable\n- Physical recycling: collect, shred, melt\n- Chemical recycling: break down to chemicals/fuel\n- Reduces resource use, landfill waste, energy consumption\n\n## Essential Reactions to Know\n\n| Reaction | Equation | Conditions |\n|----------|----------|------------|\n| Alkane combustion | CₙH₂ₙ₊₂ + O₂ → CO₂ + H₂O | Oxygen |\n| Alkane substitution | CH₄ + Cl₂ → CH₃Cl + HCl | UV light |\n| Alkene hydrogenation | CₙH₂ₙ + H₂ → CₙH₂ₙ₊₂ | 150°C, Ni |\n| Alkene bromination | CₙH₂ₙ + Br₂ → CₙH₂ₙBr₂ | Room temp |\n| Alkene hydration | CₙH₂ₙ + H₂O → CₙH₂ₙ₊₂O | 300°C, 60 atm |\n| Cracking | Long alkane → short alkene + short alkane | 500-700°C |\n\n## Key Distinctions\n\n| Feature | Alkanes | Alkenes |\n|---------|---------|----------|\n| Bonds | Single C-C | C=C double |\n| Reactivity | Low | High |\n| Combustion | Clean flame | Sooty flame |\n| Bromine | No decolorization | Decolorization |\n| Addition | No | Yes |\n\n> 💡 **Final Thought:** Organic chemistry connects to everyday life - from the fuel in your car to the plastic in your phone to the clothes you wear. Understanding these concepts helps us develop sustainable technologies for the future!",
+    "speech_to_text_content": "This is a comprehensive summary of the organic chemistry chapter. Natural gas is 70 to 90 percent methane, formed from decomposition of ancient organisms, is the cleanest fossil fuel, and is transported as liquefied natural gas. Crude oil is a complex mixture of hydrocarbons separated by fractional distillation. Temperature gradient in the column separates hydrocarbons by boiling point. It produces petroleum gas, petrol, kerosene, diesel, and lubricating oil. Alternative fuels include bioethanol, which is renewable and made from fermentation of plants, and hydrogen, which is clean and only produces water but has storage challenges. A homologous series has the same general formula, same functional group, similar properties, successive members differing by CH2, and gradual change in physical properties down the series. The naming system uses a prefix for the number of carbons and a suffix for the functional group. Alkanes have the general formula CnH2n plus 2, single C-C bonds, are generally unreactive, have boiling points that increase down the series, are insoluble in water, and are soluble in organic solvents. Alkane reactions include combustion producing CO2 and H2O when complete, or CO and C and H2O when incomplete, and substitution with halogens in UV light. Alkenes have the general formula CnH2n, have a C equals C double bond which is a reactive functional group, are more reactive than alkanes, and burn with a sooty flame. Alkene addition reactions include hydrogenation with H2 added at 150 degrees Celsius with nickel catalyst, bromination with Br2 added at room temperature and decolorizes, hydration with H2O added at 300 degrees Celsius and 60 atmospheres with phosphoric acid catalyst to form an alcohol, and polymerization where many alkenes join at high temperature and pressure with catalyst. Cracking breaks long-chain alkanes into useful short-chain alkenes and alkanes. Conditions are 500 to 700 degrees Celsius, approximately 1 atmosphere, and catalyst of aluminum oxide or silicon dioxide. Importance includes matching supply to industrial demand, producing valuable alkenes for plastics, and producing hydrogen as a byproduct. Isomers have the same molecular formula but different structural formula. Chain isomerism includes straight-chain versus branched-chain, and straight-chain has a higher boiling point due to larger surface area. Saturated alkanes have single bonds only. Unsaturated alkenes have C equals C double bonds. Addition polymerization uses alkene monomers to form polymer chains with no byproduct at high temperature, pressure, and with catalyst, with examples including polyethene, polypropene, and PVC. Condensation polymerization uses two different monomer types to form polymers and releases small molecules like water and carbon dioxide, with examples including polyester and nylon. Polymers are non-biodegradable. Physical recycling collects, shreds, and melts plastics. Chemical recycling breaks down polymers to chemicals and fuel. Recycling reduces resource use, landfill waste, and energy consumption.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:35:00Z",
+    "updated_at": "2024-01-15T10:35:00Z",
+    "source_timestamp": "2024-01-15T10:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T04:21:23.546764+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

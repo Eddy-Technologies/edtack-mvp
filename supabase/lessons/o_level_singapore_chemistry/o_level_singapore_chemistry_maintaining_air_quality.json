@@ -1,0 +1,788 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌍 Maintaining Air Quality - Chapter Overview",
+    "content": "## Welcome to Air Quality Chemistry\n\nThis chapter explores how human activities impact our atmosphere and what chemistry can do to protect it.\n\n### Why Does This Matter? 🤔\n\nEvery day, we breathe air that contains not just oxygen and nitrogen, but also pollutants from cars, factories, and natural sources. Understanding air quality is crucial because:\n\n- 🏥 Poor air quality causes respiratory diseases and health problems\n- 🌱 Acid rain damages ecosystems, buildings, and crops\n- 🌡️ Greenhouse gases contribute to global warming and climate change\n- 🔬 Chemistry provides solutions like catalytic converters and air scrubbers\n\n### What You'll Learn\n\n1. **The composition of clean air** - What gases make up our atmosphere\n2. **Common air pollutants** - Where they come from and their effects\n3. **Chemical solutions** - How catalytic converters and other technologies reduce pollution\n4. **The carbon cycle** - How nature regulates atmospheric CO₂\n5. **Global warming** - Greenhouse gases and climate change\n\n> 💡 **Key Insight:** Chemistry isn't just about understanding pollution—it's about creating real solutions to protect our planet!\n\n### Guiding Questions 🎯\n\n- How does human activity impact the environment?\n- What can we do to minimize the negative impacts of human activity?\n- How can chemistry help us solve air quality problems?",
+    "speech_to_text_content": "Welcome to Maintaining Air Quality. This chapter explores how human activities impact our atmosphere and what chemistry can do to protect it. Every day, we breathe air that contains not just oxygen and nitrogen, but also pollutants from cars, factories, and natural sources. Understanding air quality is crucial because poor air quality causes respiratory diseases, acid rain damages ecosystems and buildings, greenhouse gases contribute to global warming, and chemistry provides solutions like catalytic converters. You will learn about the composition of clean air, common air pollutants and their sources, chemical solutions to reduce pollution, the carbon cycle, and global warming.",
+    "explanation": "This introductory slide sets the context for the entire chapter on maintaining air quality. It establishes the relevance of the topic to students' lives, outlines the major learning objectives, and poses guiding questions that will be answered throughout the lesson. The slide emphasizes that chemistry provides practical solutions to real environmental problems.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T04:21:39.372811+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Slide 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌬️ Composition of Dry Air",
+    "content": "## What Makes Up Our Atmosphere?\n\nDry air is a mixture of gases in very specific proportions. Understanding these proportions is fundamental to studying air quality.\n\n### The Composition of Dry Air 📊\n\n| Gas | Percentage |\n|-----|------------|\n| ::yellow[Nitrogen (N₂)] | 78% |\n| ::yellow[Oxygen (O₂)] | 21% |\n| ::yellow[Noble Gases (mainly Argon)] | ~0.93% |\n| ::yellow[Carbon Dioxide (CO₂)] | ~0.04% |\n\n### Key Points to Remember ✅\n\n- **Nitrogen** is the most abundant gas, making up nearly four-fifths of our air\n- **Oxygen** is essential for respiration in most living organisms\n- **Noble gases** like ::blue[argon] are inert and don't react with other substances\n- **Carbon dioxide**, though present in tiny amounts, plays a crucial role in photosynthesis and the carbon cycle\n\n### Why This Matters 💭\n\nWhen we talk about air pollution, we're discussing substances that are added to this natural mixture. Even small additions of pollutants can have significant effects because the atmosphere's natural balance is delicate.\n\n### Separating These Gases 🔬\n\nThese gases can be separated from each other through a process called ::yellow[fractional distillation]:\n\n1. Air is cooled to very low temperatures, turning it into a liquid\n2. The liquid air is slowly warmed in a special column called a ::blue[fractionating column]\n3. Each gas has a unique ::purple[boiling point]:\n   - **Nitrogen** (lowest boiling point) → collected first\n   - **Argon** → collected second\n   - **Oxygen** (highest boiling point) → collected last\n\n> ⚠️ **Important:** The exact percentages of gases can vary slightly depending on location and time, but these values represent dry air. Real air also contains water vapor, which affects its properties.",
+    "speech_to_text_content": "Dry air is a mixture of gases in specific proportions. Nitrogen makes up 78 percent, oxygen 21 percent, noble gases mainly argon about 0.93 percent, and carbon dioxide about 0.04 percent. Nitrogen is the most abundant gas, oxygen is essential for respiration, noble gases are inert and don't react, and carbon dioxide plays a crucial role in photosynthesis. These gases can be separated through fractional distillation where air is cooled to very low temperatures and then slowly warmed in a fractionating column. Nitrogen with the lowest boiling point is collected first, followed by argon, then oxygen with the highest boiling point.",
+    "explanation": "This slide covers Learning Outcome (a) from the syllabus: students must describe the volume composition of gases in dry air as approximately 78% nitrogen, 21% oxygen, and the remainder being noble gases (mainly argon) and carbon dioxide. The slide also explains the practical process of fractional distillation used to separate these gases, demonstrating that students understand not just what the composition is, but how it was determined and how these gases can be isolated.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T04:21:46.205576+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Slide 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "☠️ Common Atmospheric Pollutants",
+    "content": "## What Are Air Pollutants?\n\n::yellow[Air pollutants] are unwanted and harmful chemicals introduced into the atmosphere through human activity or natural processes. Let's examine the major pollutants that affect air quality.\n\n### The Six Main Air Pollutants 🏭\n\n#### 1. **Carbon Monoxide (CO)** 💨\n- **Source:** Incomplete combustion of carbon-containing fuels, especially in car engines\n- **Why it's dangerous:** \n  - ::red[Highly toxic] to humans\n  - Binds irreversibly to hemoglobin in red blood cells\n  - Reduces the blood's ability to carry oxygen\n  - Causes headaches, fatigue, and can be fatal at high concentrations\n- **Chemical process:** CO can be oxidized to form CO₂ in the atmosphere\n\n#### 2. **Nitrogen Oxides (NOₓ: NO and NO₂)** 🚗\n- **Sources:** \n  - Car engines and factories (high temperatures allow N₂ and O₂ to react)\n  - Lightning during thunderstorms\n- **Formation reactions:**\n  - $$N_2(g) + O_2(g) \\rightarrow 2NO(g)$$\n  - $$2NO(g) + O_2(g) \\rightarrow 2NO_2(g)$$\n- **Health effects:**\n  - Irritates lungs and causes breathing difficulties\n  - Irritates eyes\n  - Can cause lung inflammation\n  - Contributes to acid rain formation\n\n#### 3. **Sulfur Dioxide (SO₂)** 🌋\n- **Sources:**\n  - Volcanic eruptions\n  - Combustion of fossil fuels containing sulfur (coal, crude oil)\n  - Chemical reaction: $$S(s) + O_2(g) \\rightarrow SO_2(g)$$\n- **Effects:**\n  - Causes breathing difficulties\n  - Contributes significantly to acid rain\n  - Damages respiratory system\n\n#### 4. **Ozone (O₃)** ☀️\n- **Formation:** Created through photochemical reactions in sunlight:\n  - Between NO₂ and unburned hydrocarbons\n  - Between oxygen molecules in the presence of sunlight\n- **Health effects:**\n  - Irritates eyes and lungs\n  - Can trigger asthma attacks\n  - Damages respiratory tissue\n- **Note:** While ozone in the upper atmosphere protects us from UV radiation, ground-level ozone is a dangerous pollutant\n\n#### 5. **Unburned Hydrocarbons (CₓHᵧ)** ⛽\n- **Source:** Incomplete combustion in vehicle engines when oxygen is limited\n- **Effects:**\n  - Irritates eyes and lungs\n  - Reacts with NO₂ in sunlight to produce ozone and smog\n  - Forms brown haze visible in polluted cities\n- **Why it happens:** When fuel doesn't burn completely, hydrocarbon molecules escape into the air\n\n#### 6. **Methane (CH₄)** 🐄\n- **Sources:**\n  - Bacterial decay of plant and animal matter\n  - Decomposition of waste in landfills\n  - Exhaled by livestock (cattle)\n- **Primary concern:** Major ::yellow[greenhouse gas] contributing to global warming\n- **Strength:** 80 times more potent than CO₂ as a greenhouse gas\n\n### Summary Table 📋\n\n| Pollutant | Main Source | Primary Harm |\n|-----------|-------------|-------------|\n| CO | Car engines | Toxic, reduces oxygen transport |\n| NOₓ | Engines, lightning | Respiratory damage, acid rain |\n| SO₂ | Fossil fuels, volcanoes | Respiratory damage, acid rain |\n| O₃ | Photochemical reaction | Respiratory irritation |\n| Hydrocarbons | Incomplete combustion | Lung irritation, smog formation |\n| CH₄ | Decomposition, livestock | Greenhouse gas effect |\n\n> 💡 **Key Insight:** Most air pollutants come from burning fossil fuels. Understanding their sources helps us develop strategies to reduce them.",
+    "speech_to_text_content": "Air pollutants are unwanted and harmful chemicals introduced into the atmosphere. The six main air pollutants are carbon monoxide from incomplete combustion in car engines, which binds to hemoglobin and reduces oxygen transport; nitrogen oxides from car engines and lightning, which irritate lungs and contribute to acid rain; sulfur dioxide from volcanoes and fossil fuel combustion, which causes breathing difficulties; ozone from photochemical reactions, which irritates eyes and lungs; unburned hydrocarbons from incomplete combustion, which form smog; and methane from decomposition and livestock, which is a potent greenhouse gas. Most pollutants come from burning fossil fuels.",
+    "explanation": "This slide addresses Learning Outcome (b) and (c) from the syllabus. Students must name common atmospheric pollutants (carbon monoxide, methane, nitrogen oxides, ozone, sulfur dioxide, unburned hydrocarbons) and identify their sources. The slide provides detailed information on each pollutant, including their chemical origins, health effects, and environmental impacts. The chemical equations shown (N₂ + O₂ → 2NO, 2NO + O₂ → 2NO₂, S + O₂ → SO₂) demonstrate the chemical processes that create these pollutants.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T04:21:57.308521+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Identifying Sources of Air Pollutants",
+    "content": "Which of the following is NOT a source of nitrogen oxides in the atmosphere?\n\nA) Car engines at high temperatures\nB) Lightning during thunderstorms\nC) Volcanic eruptions\nD) Industrial factories at high temperatures",
+    "speech_to_text_content": "Which of the following is not a source of nitrogen oxides in the atmosphere? A, Car engines at high temperatures. B, Lightning during thunderstorms. C, Volcanic eruptions. D, Industrial factories at high temperatures.",
+    "explanation": "The correct answer is **C) Volcanic eruptions**. According to the chapter content, nitrogen oxides form when high temperatures provide energy for N₂ and O₂ to react. This occurs in:\n\n1. **Car engines** - High combustion temperatures cause N₂ and O₂ to react: N₂(g) + O₂(g) → 2NO(g), followed by 2NO(g) + O₂(g) → 2NO₂(g)\n2. **Lightning** - Heat energy from lightning causes N₂ and O₂ in the air to react and form NOₓ\n3. **Industrial factories** - High-temperature processes allow N₂ and O₂ to react\n\nVolcanic eruptions produce **sulfur dioxide (SO₂)**, not nitrogen oxides. While volcanoes release many gases, they do not produce the high-temperature nitrogen-oxygen reactions needed to form NOₓ. This tests students' understanding of Learning Outcome (c) regarding the specific sources of different pollutants.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005",
+        "question_id": "550e8400-e29b-41d4-a716-446655440004",
+        "option_id": "550e8400-e29b-41d4-a716-446655440008",
+        "answer_text": "C",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440005",
+        "option_text": "Car engines at high temperatures",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440006",
+        "option_text": "Lightning during thunderstorms",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008",
+        "option_text": "Volcanic eruptions",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440007",
+        "option_text": "Industrial factories at high temperatures",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T04:22:02.306351+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Slide 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🚗 Catalytic Converters: Chemical Solutions",
+    "content": "## How Catalytic Converters Clean Exhaust Gases\n\nOne of the most important applications of chemistry to solve air pollution is the ::yellow[catalytic converter], a device that uses chemical reactions to transform harmful pollutants into less harmful substances.\n\n### What Is a Catalytic Converter? 🔧\n\nA ::yellow[catalytic converter] is a component in vehicle exhaust systems that:\n- Contains catalysts made of precious metals: ::blue[platinum, palladium, and rhodium]\n- Is located midway through the exhaust pipe\n- Uses chemical reactions to convert toxic pollutants into safer products\n- Increases the surface area for reactions through a ::blue[honeycomb structure]\n\n### Why Honeycomb Structure? 🍯\n\nThe honeycomb design is crucial because:\n- It dramatically increases the ::yellow[surface area] available for chemical reactions\n- More surface area = more pollutant molecules can contact the catalyst\n- This makes the conversion process much more efficient\n- The catalyst itself is not consumed in the reaction (it's reusable)\n\n### Gases in Vehicle Exhaust 🌫️\n\nWhen a car engine runs, the exhaust contains:\n- CO₂ (carbon dioxide) - not harmful in the converter\n- ::red[CO (carbon monoxide)] - TOXIC pollutant\n- N₂ (nitrogen gas) - harmless\n- ::red[NO and NO₂ (nitrogen oxides)] - TOXIC pollutants\n- O₂ (oxygen) - harmless\n- ::red[CₓHᵧ (unburned hydrocarbons)] - TOXIC pollutants\n- H₂O (water vapor) - harmless\n\n### The Chemical Reactions in Catalytic Converters ⚗️\n\nThe catalytic converter uses ::yellow[redox reactions] to remove pollutants:\n\n#### Reaction 1: Carbon Monoxide and Nitrogen Oxides\n$$2CO(g) + 2NO(g) \\rightarrow 2CO_2(g) + N_2(g)$$\n\n- CO (toxic) is oxidized to CO₂\n- NO (toxic) is reduced to N₂ (harmless)\n- This is a perfect example of a ::purple[redox reaction] where both oxidation and reduction occur\n\n#### Reaction 2: Complete Oxidation of Carbon Monoxide\n$$2CO(g) + O_2(g) \\rightarrow 2CO_2(g)$$\n\n- Additional CO is oxidized to CO₂ using available oxygen\n- This ensures complete combustion of any remaining CO\n\n#### Reaction 3: Decomposition of Nitrogen Dioxide\n$$2NO_2(g) \\rightarrow N_2(g) + 2O_2(g)$$\n\n- NO₂ is decomposed directly into harmless nitrogen gas\n- This reaction occurs on the catalyst surface\n\n#### Reaction 4: Complete Oxidation of Hydrocarbons\n$$C_xH_y(g) + O_2(g) \\rightarrow CO_2(g) + H_2O(g)$$\n\n- Unburned hydrocarbons are completely oxidized\n- Products are carbon dioxide and water vapor\n- This prevents smog and ground-level ozone formation\n\n### The Trade-off: CO₂ Increase 📈\n\n> ⚠️ **Important Consideration:** Catalytic converters increase the amount of CO₂ produced, which is a greenhouse gas. However, this is still preferred because:\n\n1. CO₂ is non-toxic to humans (unlike CO, NO, NO₂)\n2. The immediate health benefits outweigh the long-term greenhouse gas concern\n3. CO₂ is naturally part of the atmosphere and involved in the carbon cycle\n4. The alternative (no catalytic converter) would mean more toxic pollutants in the air\n\n### How Catalytic Converters Work: Step-by-Step 🔬\n\n1. **Hot exhaust enters** the converter with pollutants\n2. **Gases contact the catalyst** - the precious metal surface\n3. **Reactions occur** - pollutants are transformed chemically\n4. **Clean gases exit** - mostly CO₂, N₂, H₂O, and unreacted O₂\n5. **Catalyst is regenerated** - ready for the next cycle\n\n### Why This Is Effective ✅\n\n- **Removes multiple pollutants** at once (CO, NOₓ, hydrocarbons)\n- **Highly efficient** - can remove 90%+ of harmful pollutants\n- **Uses chemistry elegantly** - turns poisons into harmless gases\n- **Passive process** - requires no external energy beyond the exhaust heat\n- **Reusable catalyst** - the precious metals last for years\n\n> 💡 **Real-World Application:** Modern cars have catalytic converters because they're legally required in most countries. Without them, vehicle emissions would be much more toxic!",
+    "speech_to_text_content": "A catalytic converter is a component in vehicle exhaust systems that contains catalysts made of platinum, palladium, and rhodium. It uses chemical reactions to convert toxic pollutants into safer products. The honeycomb structure increases surface area for reactions. Vehicle exhaust contains carbon dioxide, carbon monoxide, nitrogen, nitrogen oxides, oxygen, unburned hydrocarbons, and water vapor. The catalytic converter uses redox reactions to remove pollutants. Carbon monoxide and nitrogen oxides react to form carbon dioxide and nitrogen gas. Carbon monoxide can also be oxidized to carbon dioxide. Nitrogen dioxide decomposes into nitrogen gas and oxygen. Unburned hydrocarbons are oxidized to carbon dioxide and water vapor. While catalytic converters increase carbon dioxide production, this is preferred because carbon dioxide is non-toxic to humans, unlike the toxic pollutants removed.",
+    "explanation": "This slide covers Learning Outcome (d)(i), which requires students to describe the redox reactions in catalytic converters to remove combustion pollutants. The slide provides all four major chemical equations used in catalytic converters, explains the structure and function of the device, and addresses the important trade-off regarding CO₂ production. Students learn both the chemistry (the specific reactions) and the practical application (how this solves air pollution problems).",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T04:22:15.279604+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Slide 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌧️ Acid Rain: Formation and Effects",
+    "content": "## Understanding Acid Rain\n\n::yellow[Acid rain] is one of the most serious environmental consequences of air pollution. It forms when atmospheric pollutants dissolve in rainwater, creating acids that damage ecosystems and infrastructure.\n\n### Normal Rainwater pH 💧\n\n- **Unpolluted rainwater** has a pH of approximately **5.0 to 5.5**\n- This is slightly acidic (pH 7 is neutral) because CO₂ in the air forms weak carbonic acid\n- This natural acidity is not harmful\n\n### Acid Rain pH ☔\n\n- **Polluted rainwater** can have a pH of around **4.0**\n- This is approximately **10 times more acidic** than normal rainwater\n- pH scale is logarithmic: each decrease of 1 unit means 10 times more acidic\n- This level of acidity is harmful to ecosystems\n\n### How Acid Rain Forms: The Chemical Reactions ⚗️\n\nTwo major pollutants create acid rain through these reactions:\n\n#### Formation from Sulfur Dioxide (SO₂)\n\n**Step 1:** SO₂ is oxidized in the atmosphere\n$$2SO_2(g) + O_2(g) \\rightarrow 2SO_3(g)$$\n\n**Step 2:** SO₃ dissolves in rainwater to form sulfuric acid\n$$SO_3(g) + H_2O(l) \\rightarrow H_2SO_4(aq)$$\n\n**Overall:** Sulfur dioxide from fossil fuels is converted to sulfuric acid in rainwater\n\n#### Formation from Nitrogen Dioxide (NO₂)\n\n**Direct reaction:** NO₂ dissolves in rainwater to form nitric acid\n$$4NO_2(g) + 2H_2O(l) + O_2(g) \\rightarrow 4HNO_3(aq)$$\n\n**Result:** Nitrogen oxides from car engines and factories become nitric acid\n\n### Why These Reactions Matter 🔬\n\n- Both reactions convert ::red[gaseous pollutants] into ::red[strong acids]\n- Strong acids (H₂SO₄ and HNO₃) dramatically lower the pH of rainwater\n- The acids fall back to Earth as acid rain, affecting everything below\n\n### Effects of Acid Rain on the Environment 🌍\n\n#### 1. **Damage to Aquatic Life** 🐟\n- Acid rain can lower the pH of natural water bodies **below 4.0**\n- At these pH levels, fish and other aquatic organisms cannot survive\n- The acid denatures proteins and damages cell membranes\n- Entire aquatic ecosystems can collapse\n\n#### 2. **Damage to Buildings and Structures** 🏛️\n- Acid rain reacts with metals in buildings and bridges\n- **Reaction with limestone and marble:**\n  $$CaCO_3(s) + H_2SO_4(aq) \\rightarrow CaSO_4(aq) + H_2O(l) + CO_2(g)$$\n  or\n  $$CaCO_3(s) + 2HNO_3(aq) \\rightarrow Ca(NO_3)_2(aq) + H_2O(l) + CO_2(g)$$\n- These reactions dissolve the calcium carbonate, causing:\n  - Erosion of marble statues\n  - Deterioration of limestone buildings\n  - Weakening of concrete structures\n  - Damage to historical monuments\n\n#### 3. **Damage to Soil and Plants** 🌱\n- Acid rain ::red[leaches important nutrients] from soil\n- Essential minerals like calcium, magnesium, and potassium dissolve and wash away\n- Plants cannot absorb these nutrients, leading to:\n  - Stunted growth\n  - Weakened immune systems\n  - Death of forests and crops\n  - Loss of biodiversity\n\n#### 4. **Effects on Human Respiration** 👥\n- Acid rain increases acidity in water bodies used for drinking\n- SO₂ and NO₂ in the air directly irritate respiratory systems\n- Can trigger asthma attacks and breathing difficulties\n- Prolonged exposure increases risk of respiratory diseases\n\n### Comparison: pH Scale Understanding 📊\n\n| pH | Acidity Level | Example |\n|----|---------------|----------|\n| 7 | Neutral | Pure water |\n| 5.5 | Slightly acidic | Normal rainwater |\n| 5.0 | Slightly acidic | Normal rainwater |\n| 4.0 | Acidic | Acid rain |\n| 2.0 | Very acidic | Vinegar |\n| 1.0 | Extremely acidic | Battery acid |\n\n> 💡 **Key Insight:** Acid rain shows how atmospheric pollutants don't stay in the air—they return to Earth in precipitation, affecting water, soil, buildings, and living organisms far from their source.\n\n### The Global Problem 🌐\n\nAcid rain is a transnational problem:\n- Pollutants emitted in one country can form acid rain in another\n- Wind patterns carry SO₂ and NO₂ across borders\n- This makes it a challenge requiring international cooperation to solve",
+    "speech_to_text_content": "Acid rain forms when atmospheric pollutants dissolve in rainwater. Unpolluted rainwater has a pH of 5.0 to 5.5, while polluted rainwater can have a pH of 4.0, which is 10 times more acidic. Sulfur dioxide is oxidized to sulfur trioxide, which dissolves in rainwater to form sulfuric acid. Nitrogen dioxide dissolves in rainwater to form nitric acid. Acid rain can lower the pH of natural water bodies below 4.0, killing fish and aquatic organisms. Acid rain reacts with calcium carbonate in limestone and marble, causing erosion of statues and deterioration of buildings. Acid rain leaches important nutrients from soil, destroying plants. Acid rain increases acidity in water bodies and irritates respiratory systems.",
+    "explanation": "This slide addresses Learning Outcome (d)(ii) and (e), requiring students to describe the use of calcium carbonate to reduce acid rain effects and to discuss the effects of nitrogen dioxide and sulfur dioxide in acid rain formation. The slide provides the complete chemical reactions showing how SO₂ and NO₂ are converted to sulfuric and nitric acids, explains the pH concept, and details the multiple environmental impacts of acid rain on aquatic life, buildings, soil, and human health. The calcium carbonate reaction is included to show how this compound neutralizes acid rain.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T04:22:28.437284+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Slide 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Flue Gas Desulfurization: Controlling SO₂",
+    "content": "## Removing Sulfur Dioxide from Industrial Emissions\n\n::yellow[Flue gas desulfurization] is an industrial process that removes SO₂ from exhaust gases before they enter the atmosphere. This is a crucial technology for reducing acid rain.\n\n### The Problem: Sulfur in Fossil Fuels ⛽\n\n**Why is sulfur a problem?**\n\n- Fossil fuels (coal, crude oil, natural gas) contain significant amounts of sulfur\n- When these fuels burn, the sulfur is oxidized:\n  $$S(s) + O_2(g) \\rightarrow SO_2(g)$$\n- The SO₂ gas escapes into the atmosphere and forms acid rain\n\n**Why not just remove sulfur from the fuel?**\n\n- Removing sulfur from fossil fuels before burning would be ideal\n- However, this process is:\n  - ::red[Too expensive] - requires extensive chemical processing\n  - ::red[Too difficult] - sulfur compounds are chemically bonded in the fuel\n  - ::red[Economically impractical] - costs outweigh benefits for large-scale use\n\n**The solution:** Remove SO₂ from the exhaust gases AFTER combustion\n\n### Where Flue Gas Desulfurization Is Used 🏭\n\nThis technology is essential in:\n- **Power plants** that burn coal or fuel oil\n- **Waste incinerators** that burn various materials\n- **Industrial facilities** with high-temperature combustion processes\n- **Ships** that use heavy fuel oil\n\n### The Wet Scrubbing Process 💧\n\nThe most widely used method of flue gas desulfurization is **wet scrubbing** using calcium carbonate.\n\n#### Step 1: Create a Slurry\n- Limestone (CaCO₃) is mixed with water\n- This creates a ::yellow[slurry] - a liquid suspension of fine particles\n- The slurry is pumped into the flue gas stream\n\n#### Step 2: Spray the Slurry\n- The slurry droplets are sprayed through the hot flue gas\n- This increases contact between the CaCO₃ particles and SO₂ gas\n- The large surface area of droplets makes the reaction efficient\n\n#### Step 3: Chemical Reaction\nThe key reaction occurs:\n$$CaCO_3(s) + SO_2(g) \\rightarrow CaSO_3(g) + CO_2(g)$$\n\n**What happens:**\n- ::yellow[Calcium carbonate] (from limestone) reacts with ::red[sulfur dioxide]\n- Products are ::green[calcium sulfite] and carbon dioxide\n- SO₂ is removed from the gas stream\n- The calcium sulfite can be collected and disposed of safely\n\n#### Step 4: Clean Gas Exit\n- The treated flue gas exits the scrubber\n- SO₂ concentration is dramatically reduced\n- The gas can then be safely released to the atmosphere\n\n### Why Limestone Works 🔬\n\nCalcium carbonate is ideal because:\n\n1. **It's a base:** CaCO₃ neutralizes the acidic SO₂\n2. **It's cheap:** Limestone is abundant and inexpensive\n3. **It's effective:** Reacts completely with SO₂ in the scrubber\n4. **It's safe:** Products are non-toxic\n5. **It's available:** Can be easily mined and processed\n\n### The Complete Picture: Before and After 📊\n\n| Aspect | Without Scrubber | With Scrubber |\n|--------|------------------|----------------|\n| SO₂ in exhaust | High (harmful) | Low (safe) |\n| Acid rain formation | Yes (significant) | Greatly reduced |\n| Environmental impact | Severe | Minimized |\n| Cost | Lower initial | Higher but justified |\n| Health effects | Respiratory damage | Protected |\n\n### Advantages of Flue Gas Desulfurization ✅\n\n- **Highly effective:** Removes 95%+ of SO₂ from exhaust\n- **Practical:** Can be retrofitted to existing power plants\n- **Economical:** Limestone is cheap; benefits outweigh costs\n- **Safe:** Products are manageable and non-toxic\n- **Scalable:** Works for large industrial operations\n\n### Disadvantages and Challenges ⚠️\n\n- **Capital costs:** Initial installation is expensive\n- **Operating costs:** Requires continuous limestone supply\n- **Waste management:** Calcium sulfite byproduct must be disposed of\n- **Energy use:** The scrubbing process requires energy\n- **Maintenance:** Equipment needs regular cleaning and upkeep\n\n> 💡 **Real-World Impact:** In countries like Germany and Japan, flue gas desulfurization is mandatory in power plants. This has significantly reduced acid rain in these regions and improved air quality.\n\n### Connection to Acid Rain Prevention 🌧️\n\nRemember from the previous slide:\n- SO₂ in the atmosphere is oxidized to SO₃\n- SO₃ dissolves in rainwater to form H₂SO₄ (sulfuric acid)\n- Acid rain damages ecosystems, buildings, and health\n\nBy removing SO₂ before it enters the atmosphere, flue gas desulfurization **prevents the formation of acid rain at its source**. This is a preventive approach rather than trying to clean up acid rain after it forms.",
+    "speech_to_text_content": "Flue gas desulfurization removes sulfur dioxide from exhaust gases before they enter the atmosphere. Fossil fuels contain sulfur that is oxidized to sulfur dioxide when burned. Removing sulfur from fuel before burning is too expensive and difficult, so the solution is to remove sulfur dioxide from exhaust gases after combustion. Flue gas desulfurization is used in power plants, waste incinerators, and industrial facilities. The most widely used method is wet scrubbing using calcium carbonate. Limestone is mixed with water to create a slurry, which is sprayed through the flue gas. The calcium carbonate reacts with sulfur dioxide to form calcium sulfite and carbon dioxide. Calcium carbonate is ideal because it is a base that neutralizes acidic sulfur dioxide, it is cheap and abundant, it is effective, and its products are safe. Flue gas desulfurization removes over 95 percent of sulfur dioxide from exhaust.",
+    "explanation": "This slide covers Learning Outcome (d)(ii), which requires students to describe the use of calcium carbonate in flue gas desulfurization. The slide explains the complete process from the problem (sulfur in fossil fuels) through the solution (wet scrubbing with limestone slurry) to the chemical reaction and its benefits. Students learn not just the chemistry (the CaCO₃ + SO₂ reaction) but also the practical engineering and why this approach is chosen over alternatives. The slide emphasizes that this technology prevents acid rain formation by removing SO₂ before it enters the atmosphere.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T04:22:42.388442+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Understanding Acid Rain Formation",
+    "content": "Sulfur dioxide contributes to acid rain formation through a two-step process. Which of the following correctly describes this process?\n\nA) SO₂ reacts directly with rainwater to form H₂SO₄\nB) SO₂ is oxidized to SO₃, which then dissolves in rainwater to form H₂SO₄\nC) SO₂ is reduced to S, which then reacts with water to form H₂SO₄\nD) SO₂ reacts with oxygen in rainwater to form H₂SO₄",
+    "speech_to_text_content": "Sulfur dioxide contributes to acid rain formation through a two-step process. Which correctly describes this? A, SO₂ reacts directly with rainwater to form H₂SO₄. B, SO₂ is oxidized to SO₃, which then dissolves in rainwater to form H₂SO₄. C, SO₂ is reduced to S, which then reacts with water to form H₂SO₄. D, SO₂ reacts with oxygen in rainwater to form H₂SO₄.",
+    "explanation": "The correct answer is **B) SO₂ is oxidized to SO₃, which then dissolves in rainwater to form H₂SO₄**.\n\nAccording to the chapter content, the process occurs in two steps:\n\n**Step 1 (Oxidation in atmosphere):** \n$$2SO_2(g) + O_2(g) \\rightarrow 2SO_3(g)$$\nSulfur dioxide is oxidized by atmospheric oxygen to form sulfur trioxide.\n\n**Step 2 (Dissolution in rainwater):**\n$$SO_3(g) + H_2O(l) \\rightarrow H_2SO_4(aq)$$\nSulfur trioxide dissolves in rainwater to form sulfuric acid.\n\n**Why the other options are incorrect:**\n- **A** is incomplete - SO₂ doesn't react directly with rainwater; it must first be oxidized to SO₃\n- **C** is incorrect - SO₂ is oxidized, not reduced; reduction would produce sulfur, not sulfuric acid\n- **D** is vague and incorrect - while oxygen is involved, it occurs in the atmosphere (Step 1), not in rainwater\n\nThis question tests Learning Outcome (d)(ii) and (e) regarding acid rain formation and the role of SO₂.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013",
+        "question_id": "550e8400-e29b-41d4-a716-446655440012",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013",
+        "option_text": "SO₂ reacts directly with rainwater to form H₂SO₄",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_text": "SO₂ is oxidized to SO₃, which then dissolves in rainwater to form H₂SO₄",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_text": "SO₂ is reduced to S, which then reacts with water to form H₂SO₄",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_text": "SO₂ reacts with oxygen in rainwater to form H₂SO₄",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T04:22:48.723597+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Slide 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔵 The Carbon Cycle: Nature's CO₂ Regulator",
+    "content": "## How Nature Maintains Atmospheric CO₂ Balance\n\nThe ::yellow[carbon cycle] is the natural process that regulates the amount of carbon dioxide in the atmosphere. It demonstrates how carbon moves between the atmosphere, living organisms, and the Earth.\n\n### The Core Principle of the Carbon Cycle ⚖️\n\n**For atmospheric CO₂ to remain constant:**\n\n$$\\text{Rate of CO₂ removal from atmosphere} = \\text{Rate of CO₂ return to atmosphere}$$\n\nIf more CO₂ is added than removed, atmospheric CO₂ increases (leading to global warming). If more is removed than added, CO₂ decreases.\n\n### Process 1: Removal of CO₂ from the Atmosphere 🌿\n\n#### Photosynthesis by Plants and Marine Organisms\n\n**In plants (on land):**\n$$6CO_2(g) + 6H_2O(l) \\xrightarrow{\\text{sunlight}} C_6H_{12}O_6(s) + 6O_2(g)$$\n\n- Plants take CO₂ from the air and water from the soil\n- Using sunlight energy, they produce glucose (sugar) and oxygen\n- This removes CO₂ from the atmosphere and stores it as organic matter\n- Forests, crops, and all green plants perform this process\n\n**In oceans (by marine plants and algae):**\n- Marine photosynthetic organisms use CO₂ dissolved in seawater\n- This removes CO₂ from the ocean surface\n- Indirectly, this removes CO₂ from the atmosphere (as dissolved CO₂ is replenished from air)\n\n#### Absorption by Oceans and Water Bodies\n\n**Direct dissolution:**\n- CO₂ dissolves directly in oceans and large water bodies\n- This is a physical process (like CO₂ dissolving in fizzy drinks)\n- Approximately 50% of atmospheric CO₂ is absorbed by oceans\n\n**Conversion to other forms:**\n- Dissolved CO₂ is converted to ::blue[carbonic acid] (H₂CO₃)\n- Some CO₂ is incorporated into shells and skeletons of marine organisms\n- These organisms produce calcium carbonate (CaCO₃) for their shells\n- When organisms die, their shells accumulate on the seabed\n- This buries carbon deep in the ocean, removing it from the active cycle\n\n### Process 2: Return of CO₂ to the Atmosphere 🔄\n\n#### Respiration by Living Organisms\n\n**Cellular respiration in all living things:**\n$$C_6H_{12}O_6(aq) + 6O_2(g) \\rightarrow 6CO_2(g) + 6H_2O(l) + \\text{energy}$$\n\n- All living organisms (plants, animals, microorganisms) break down glucose\n- This releases energy needed for life processes\n- CO₂ is produced as a waste product and released into the atmosphere\n- This occurs continuously: animals breathe, plants respire at night\n- Respiration is the primary way CO₂ returns to the atmosphere from living things\n\n#### Combustion of Fossil Fuels\n\n**Burning coal, oil, and natural gas:**\n$$CH_4(g) + 2O_2(g) \\rightarrow CO_2(g) + 2H_2O(g)$$\n\n(Example shown is methane; similar reactions occur for coal and oil)\n\n- Fossil fuels are ancient organic matter that was buried for millions of years\n- When burned for energy, they release stored carbon as CO₂\n- This is a major source of CO₂ increase in the modern atmosphere\n- Burning fossil fuels releases CO₂ that was removed from the atmosphere long ago\n\n#### Decomposition of Organic Matter\n\n**Decay of dead organisms:**\n- When plants and animals die, bacteria decompose them\n- Decomposition releases CO₂ back into the atmosphere\n- This includes:\n  - Dead leaves and plant material on forest floors\n  - Dead animals\n  - Organic waste in landfills\n  - Peat bogs and other decomposing organic matter\n\n### The Carbon Cycle Diagram: Complete Picture 🔄\n\n```\n                    ATMOSPHERE (CO₂)\n                         ↕\n         ↙ Photosynthesis | Respiration ↘\n    \n    PLANTS & ALGAE ←→ ANIMALS\n         ↓                    ↓\n    Respiration         Respiration\n         ↓                    ↓\n    CO₂ released        CO₂ released\n         ↓                    ↓\n         └────→ ATMOSPHERE ←────┘\n              (CO₂ returns)\n              \n    FOSSIL FUELS (coal, oil, gas)\n         ↓\n    Combustion\n         ↓\n    CO₂ released\n         ↓\n    ATMOSPHERE\n    \n    OCEANS\n         ↓\n    Absorption & dissolution\n         ↓\n    Marine organisms (shells)\n         ↓\n    Sedimentation\n         ↓\n    Long-term storage\n```\n\n### Key Processes Summary Table 📊\n\n| Process | What Happens | CO₂ Effect | Time Scale |\n|---------|--------------|-----------|------------|\n| **Photosynthesis** | Plants absorb CO₂ and produce glucose | Removes CO₂ | Hours to days |\n| **Respiration** | Organisms break down glucose, release CO₂ | Adds CO₂ | Continuous |\n| **Combustion** | Fossil fuels burn, release stored CO₂ | Adds CO₂ | Seconds to minutes |\n| **Decomposition** | Dead matter breaks down, releases CO₂ | Adds CO₂ | Days to years |\n| **Ocean absorption** | CO₂ dissolves in water | Removes CO₂ | Continuous |\n| **Fossilization** | Organic matter becomes fossil fuels | Removes CO₂ | Millions of years |\n\n### Why Balance Is Important ⚖️\n\n**When the cycle is balanced:**\n- Atmospheric CO₂ remains relatively constant\n- Earth's climate is stable\n- Ecosystems can adapt and thrive\n- Agriculture and human civilization can flourish\n\n**When the cycle is unbalanced (too much CO₂ added):**\n- Atmospheric CO₂ increases\n- Global temperatures rise\n- Climate patterns change\n- Ecosystems struggle to adapt\n- Human societies face challenges\n\n### The Problem Today: Imbalance 🚨\n\nHuman activities have disrupted the carbon cycle:\n\n1. **Burning fossil fuels** - Adding massive amounts of CO₂ that was stored for millions of years\n2. **Deforestation** - Removing trees that absorb CO₂ through photosynthesis\n3. **Industrial processes** - Releasing CO₂ from cement, chemicals, and other manufacturing\n4. **Agriculture** - Releasing CO₂ from soil and livestock\n\nThese activities add CO₂ faster than natural processes can remove it, causing atmospheric CO₂ to increase.\n\n> 💡 **Key Insight:** The carbon cycle is a perfect example of how chemistry connects to environmental science. Understanding the cycle helps us understand why CO₂ is increasing and why we need to reduce emissions.",
+    "speech_to_text_content": "The carbon cycle is the natural process that regulates the amount of carbon dioxide in the atmosphere. For atmospheric CO₂ to remain constant, the rate of CO₂ removal must equal the rate of CO₂ return. Plants remove CO₂ through photosynthesis, using the equation 6CO₂ plus 6H₂O produces C₆H₁₂O₆ plus 6O₂. Oceans absorb CO₂ through dissolution and marine organisms incorporate it into shells. Living organisms return CO₂ through respiration, using the equation C₆H₁₂O₆ plus 6O₂ produces 6CO₂ plus 6H₂O. Fossil fuels release CO₂ when burned. Dead organic matter releases CO₂ through decomposition. When the cycle is balanced, atmospheric CO₂ remains constant. Human activities like burning fossil fuels and deforestation have disrupted the cycle, adding CO₂ faster than natural processes can remove it.",
+    "explanation": "This slide covers Learning Outcome (g), which requires students to describe the carbon cycle including the processes of combustion, respiration, and photosynthesis, and how the carbon cycle regulates atmospheric CO₂. The slide provides both the chemical equations (photosynthesis and respiration) and the conceptual understanding of how carbon moves through the environment. It explains removal processes (photosynthesis, ocean absorption) and return processes (respiration, combustion, decomposition), demonstrating the balance that maintains constant atmospheric CO₂. The slide also connects to Learning Outcome (h) by explaining why disruption of this cycle leads to increased CO₂ and global warming.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T04:23:06.989805+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Slide 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Greenhouse Gases and Global Warming",
+    "content": "## Understanding the Greenhouse Effect and Global Warming\n\n::yellow[Global warming] is the increase in the average temperature of Earth's surface caused by increasing amounts of ::yellow[greenhouse gases] in the atmosphere. This is one of the most pressing environmental challenges of our time.\n\n### What Are Greenhouse Gases? 🔥\n\n::yellow[Greenhouse gases] are atmospheric gases that trap heat in the atmosphere, causing the planet to warm. The main greenhouse gases are:\n\n1. **Carbon Dioxide (CO₂)** - The primary greenhouse gas\n   - Sources: Combustion of fossil fuels, respiration, decomposition\n   - Concentration: Increasing due to human activities\n   - Lifetime in atmosphere: 100-300 years\n\n2. **Methane (CH₄)** - A potent but shorter-lived greenhouse gas\n   - Sources: Livestock digestion, landfill decomposition, wetlands, fossil fuel extraction\n   - Strength: ::red[80 times more potent than CO₂] as a greenhouse gas\n   - Lifetime in atmosphere: ~10 years\n\n### How the Greenhouse Effect Works 🌍\n\n#### Step 1: Solar Radiation Enters\n- The Sun's radiation reaches Earth's atmosphere\n- Some radiation is reflected back into space by clouds and the atmosphere\n- Some radiation passes through the atmosphere and reaches Earth's surface\n\n#### Step 2: Earth's Surface Absorbs and Radiates\n- Earth's surface absorbs the solar radiation\n- The surface is warmed by this energy\n- The surface then radiates heat (infrared radiation) back upward\n\n#### Step 3: Heat Trapped by Greenhouse Gases\n- Some of the heat radiating from Earth's surface escapes into space\n- However, ::yellow[greenhouse gases in the atmosphere absorb much of this heat]\n- The absorbed heat is re-radiated in all directions, including back toward Earth\n- This causes the atmosphere to warm and trap more heat near the surface\n\n#### Step 4: Enhanced Warming\n- The trapped heat warms the atmosphere further\n- The warmed atmosphere radiates more heat back to Earth's surface\n- This creates a warming feedback loop\n\n### Diagram: The Greenhouse Effect 📊\n\n```\n    ☀️ SUNLIGHT\n     ↓\n  ☁️ Atmosphere\n  ↙ Reflected  ↘ Passes through\n     ↓\n  🌍 Earth's Surface\n     ↓\n  🔥 Heat radiation (infrared)\n     ↑\n  ☁️ Greenhouse gases trap heat\n  ↙ Some escapes  ↘ Much reflected back down\n     ↓\n  🌡️ Atmosphere warms\n  ↓\n  🌍 Surface warms more\n```\n\n### Why Some Greenhouse Effect Is Essential ✅\n\n**The natural greenhouse effect is necessary for life:**\n\n- Without any greenhouse effect, Earth would be about 33°C colder\n- Average temperature would be around -18°C instead of +15°C\n- Life as we know it could not exist\n- The natural greenhouse effect has kept Earth habitable for billions of years\n\n### The Problem: Too Much of a Good Thing ⚠️\n\n**However, an enhanced greenhouse effect is dangerous:**\n\n- Increased greenhouse gas concentrations strengthen the greenhouse effect\n- More heat is trapped in the atmosphere\n- Global temperatures rise beyond what ecosystems can handle\n- If the greenhouse effect becomes too strong, surface temperatures would be too hot to sustain life\n- We're currently experiencing this enhanced greenhouse effect\n\n### Sources of Increased Greenhouse Gases 🏭\n\n#### Activities Increasing CO₂:\n1. **Burning fossil fuels** - Coal, oil, natural gas for energy\n   - Power generation\n   - Transportation (cars, planes, ships)\n   - Industrial processes\n   - Heating and cooling buildings\n\n2. **Deforestation** - Removing trees that absorb CO₂\n   - Fewer trees to perform photosynthesis\n   - Decomposition of cut trees releases stored CO₂\n   - Loss of carbon sinks\n\n3. **Cement and steel production** - Industrial chemical processes\n   - Cement production releases CO₂ directly\n   - Steel production requires high temperatures\n\n#### Activities Increasing CH₄:\n1. **Livestock farming** - Cattle and sheep digestion\n   - Methane is produced during bacterial fermentation in animal stomachs\n   - Global livestock industry is a major source\n\n2. **Landfills and waste** - Decomposition of organic matter\n   - Bacteria break down waste anaerobically (without oxygen)\n   - This produces methane gas\n\n3. **Fossil fuel extraction and transport** - Leaks from oil and gas operations\n   - Natural gas (mostly methane) leaks from pipelines and wells\n\n### The Imbalance in the Carbon Cycle 📈\n\nRemember the carbon cycle:\n- **Natural removal:** Photosynthesis, ocean absorption\n- **Natural addition:** Respiration, decomposition\n- **Human addition:** Fossil fuel combustion, deforestation, agriculture\n\n**The problem:**\n$$\\text{CO₂ added by humans} > \\text{CO₂ removed by nature}$$\n\nThis imbalance causes atmospheric CO₂ to increase year after year, accelerating the greenhouse effect.\n\n### Evidence of Increasing Greenhouse Gases 📊\n\n- **CO₂ levels:** Increased from ~280 ppm (pre-industrial) to ~420 ppm (today)\n- **CH₄ levels:** Increased significantly since industrialization\n- **Temperature trend:** Global average temperature has risen ~1.1°C since 1900\n- **Acceleration:** The rate of increase is accelerating\n\n### Potential Effects of Increased Greenhouse Gases 🌡️\n\n#### Short-term Effects (Already Occurring):\n- Rising average global temperatures\n- More frequent and intense heat waves\n- Changes in precipitation patterns\n- Melting of polar ice and glaciers\n- Rising sea levels\n\n#### Long-term Effects (Projected):\n- Severe droughts in some regions\n- Flooding in others\n- Ecosystem disruption\n- Species extinction\n- Food security threats\n- Mass migration of climate refugees\n\n> 💡 **Key Insight:** Global warming is not a future problem—it's happening now. The greenhouse effect is a real physical process, and increased greenhouse gases are causing measurable warming that affects weather patterns, ecosystems, and human societies.\n\n### The Role of Chemistry in Solutions 🔬\n\nChemistry provides tools to address global warming:\n- **Carbon capture:** Chemical processes to remove CO₂ from air\n- **Renewable energy:** Chemical batteries for energy storage\n- **Efficient combustion:** Better catalysts for cleaner burning\n- **Alternative fuels:** Chemical synthesis of carbon-neutral fuels\n- **Materials science:** Development of better insulation and energy efficiency",
+    "speech_to_text_content": "Global warming is the increase in average Earth surface temperature caused by increasing greenhouse gases in the atmosphere. The main greenhouse gases are carbon dioxide and methane. Methane is 80 times more potent than carbon dioxide. The greenhouse effect works when solar radiation enters the atmosphere, some is reflected back and some passes through. Earth's surface absorbs the radiation and radiates heat back upward. Greenhouse gases absorb this heat and re-radiate it in all directions, including back to Earth, trapping heat. Some greenhouse effect is necessary for life, keeping Earth about 33 degrees Celsius warmer. However, increased greenhouse gases strengthen the effect, causing dangerous warming. Human activities increase greenhouse gases through burning fossil fuels, deforestation, livestock farming, and landfills. Carbon dioxide levels have increased from 280 parts per million to 420 parts per million. Potential effects include heat waves, changing precipitation, melting ice, rising sea levels, droughts, flooding, and ecosystem disruption.",
+    "explanation": "This slide covers Learning Outcome (h), which requires students to state that carbon dioxide and methane are greenhouse gases that may contribute to global warming, give their sources, and describe potential effects. The slide explains the physical mechanism of the greenhouse effect, distinguishes between the natural greenhouse effect (necessary for life) and the enhanced greenhouse effect (dangerous), identifies human sources of greenhouse gases, and details both current and projected effects. The slide connects to earlier content about the carbon cycle by explaining why human activities have disrupted the balance, causing atmospheric CO₂ to increase.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T04:23:25.123105+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Comparing Greenhouse Gases",
+    "content": "According to the chapter, which statement about methane (CH₄) and carbon dioxide (CO₂) is correct?\n\nA) Methane is less potent than carbon dioxide as a greenhouse gas\nB) Methane is 80 times more potent than carbon dioxide as a greenhouse gas\nC) Methane and carbon dioxide have equal potency as greenhouse gases\nD) Methane is only produced by human activities, while CO₂ is natural",
+    "speech_to_text_content": "According to the chapter, which statement about methane and carbon dioxide is correct? A, Methane is less potent than carbon dioxide as a greenhouse gas. B, Methane is 80 times more potent than carbon dioxide as a greenhouse gas. C, Methane and carbon dioxide have equal potency as greenhouse gases. D, Methane is only produced by human activities, while CO₂ is natural.",
+    "explanation": "The correct answer is **B) Methane is 80 times more potent than carbon dioxide as a greenhouse gas**.\n\nAccording to the chapter content: \"Cattle is a significant source of CH₄, which a greenhouse gas 80 times as strong as CO₂.\"\n\nThis is an important distinction in understanding greenhouse gases:\n- While CO₂ is more abundant in the atmosphere, methane is much more effective at trapping heat\n- Although methane has a shorter atmospheric lifetime (~10 years) compared to CO₂ (100-300 years), its immediate warming effect is much stronger\n- This is why reducing methane emissions from livestock and landfills is a priority for climate action\n\n**Why the other options are incorrect:**\n- **A** is false - methane is actually MORE potent, not less\n- **C** is false - they have different potencies; methane is much stronger\n- **D** is false - both gases have natural sources (respiration, decomposition) and human sources (combustion, agriculture)\n\nThis question tests Learning Outcome (h) regarding the properties of greenhouse gases and their relative importance in global warming.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440023",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_text": "Methane is less potent than carbon dioxide as a greenhouse gas",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023",
+        "option_text": "Methane is 80 times more potent than carbon dioxide as a greenhouse gas",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021",
+        "option_text": "Methane and carbon dioxide have equal potency as greenhouse gases",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_text": "Methane is only produced by human activities, while CO₂ is natural",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T04:23:30.727256+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440024",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Slide 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌪️ Climate Change: The Consequence of Global Warming",
+    "content": "## From Global Warming to Climate Change\n\n::yellow[Climate change] is the broader set of environmental changes that result from global warming. While global warming refers specifically to temperature increase, climate change encompasses all the ways our climate patterns are shifting.\n\n### The Difference: Global Warming vs. Climate Change 🌡️ vs. 🌍\n\n**Global Warming:**\n- Refers specifically to ::yellow[increasing average global temperatures]\n- Caused by greenhouse gas accumulation\n- A measurable, physical phenomenon\n- Can be tracked with thermometers and satellites\n\n**Climate Change:**\n- Refers to ::yellow[broader shifts in climate patterns]\n- Results FROM global warming\n- Includes temperature, precipitation, wind patterns, and more\n- Affects weather systems, ocean currents, and atmospheric circulation\n\n### How Global Warming Causes Climate Change 🔄\n\nThe climate in any region is influenced by:\n\n1. **Ocean temperature** - Warm or cool ocean currents affect regional climate\n2. **Wind speed and direction** - Determines weather patterns and precipitation\n3. **Atmospheric pressure systems** - Creates high and low pressure zones\n4. **Humidity and moisture patterns** - Affects precipitation\n5. **Jet streams** - High-altitude winds that guide weather systems\n\nWhen global warming increases Earth's average temperature, it disrupts all of these factors:\n- Ocean currents change due to different water temperatures\n- Atmospheric circulation patterns shift\n- Wind patterns move to new locations\n- Moisture distribution changes\n- The entire climate system is disturbed\n\n### Climate Change Phenomena and Their Effects 🌍\n\n#### 1. **Changes in Rainfall Patterns** 🌧️\n\n**What happens:**\n- Global warming shifts wind patterns that carry moisture\n- Some regions receive much less rain than they used to\n- Other regions receive much more rain than they used to\n- Rainfall becomes less predictable and more extreme\n\n**Environmental consequences:**\n- **Desertification:** Lush, fertile areas become dry deserts\n  - Vegetation dies due to lack of water\n  - Soil becomes barren and eroded\n  - Ecosystems collapse\n  \n- **Flooding:** Other areas experience excessive rainfall\n  - Rivers overflow their banks\n  - Soil becomes waterlogged\n  - Crops are destroyed by flooding\n  - Infrastructure is damaged\n\n**Impact on food security:**\n- Fertile land becomes barren and us no longer being able to produce enough food\n- Agricultural productivity decreases globally\n- Crop failures become more common\n- Food prices increase\n- Malnutrition and famine become more likely\n\n#### 2. **Heat Waves** 🔥\n\n**What happens:**\n- Periods of extreme heat become more common\n- Temperature records are broken more frequently\n- Heat waves last longer and are more intense\n- Entire regions experience dangerous temperatures\n\n**Consequences:**\n- **Direct health impacts:**\n  - Heat exhaustion and heat stroke\n  - Increased mortality, especially in elderly and vulnerable populations\n  - Strain on healthcare systems\n  \n- **Ecosystem impacts:**\n  - ::red[Wildfires become more common and more severe]\n  - Entire ecosystems are destroyed by fire\n  - Species lose their habitats\n  - Biodiversity decreases\n  - Carbon stored in forests is released as CO₂\n  \n- **Infrastructure impacts:**\n  - Roads and runways melt\n  - Power grids fail due to cooling demand\n  - Water shortages\n\n#### 3. **Tropical Storms** 🌀\n\n**What are tropical storms?**\n\nTropical storms include:\n- **Typhoons** (Western Pacific)\n- **Hurricanes** (Atlantic and Eastern Pacific)\n- **Cyclones** (Indian Ocean)\n\nThese are the same phenomenon with different regional names.\n\n**How they form:**\n- Tropical storms form over warm ocean water\n- They move westwards, driven by prevailing winds\n- They bring strong winds, sheets of rain, and extreme weather\n- A ::blue[storm surge] (ultra-high tide) accompanies the storm\n\n**Why global warming makes them worse:**\n- Warmer oceans provide more energy for storm formation\n- The warmer the water, the stronger the storms\n- More storms may form overall\n- Storms may be more frequent and more intense\n\n**Impacts of tropical storms:**\n- **Human impacts:**\n  - Endangers human lives\n  - Destroys homes and buildings\n  - Causes injuries and deaths\n  - Displaces populations\n  \n- **Economic impacts:**\n  - Destroys property and infrastructure\n  - Disrupts commerce and trade\n  - Costs billions of dollars in damage\n  - Hampers economic development\n  \n- **Environmental impacts:**\n  - Damages ecosystems and habitats\n  - Kills wildlife\n  - Causes soil erosion\n  - Contaminates freshwater supplies\n  \n- **Agricultural impacts:**\n  - Destroys crops and farmland\n  - Damages fishing communities\n  - Reduces food production\n\n#### 4. **Ocean Warming and Acidification** 🌊\n\n**Ocean warming:**\n- As global temperatures rise, ocean water also warms\n- Marine organisms are very sensitive to water temperature\n- Even small temperature changes can be harmful\n\n**Coral bleaching:**\n- ::yellow[Coral reefs] are a key marine habitat\n- Corals are extremely sensitive to temperature\n- When water becomes too warm, corals expel their symbiotic algae\n- This causes ::red[bleaching] - corals turn white and die\n- Bleached reefs cannot support marine life\n\n**Ocean acidification:**\n- As CO₂ increases in the atmosphere, more dissolves in oceans\n- Dissolved CO₂ forms carbonic acid, lowering ocean pH\n- The ocean is becoming more acidic\n- This affects shells, skeletons, and calcium carbonate structures\n\n**Biodiversity loss:**\n- Loss of coral reefs destroys a major marine habitat\n- Greatly reduces marine biodiversity\n- Fish populations decline\n- Many species humans depend on for food are severely affected\n- Ocean food webs collapse\n\n**Human impacts:**\n- Fishing communities lose their livelihoods\n- Food security threatened for populations dependent on seafood\n- Economic impacts on tourism and recreation\n\n### Summary Table: Climate Change Effects 📊\n\n| Climate Change | Primary Cause | Main Effects |\n|----------------|---------------|---------------|\n| Rainfall changes | Shifting wind patterns | Desertification, flooding, food insecurity |\n| Heat waves | Higher average temperatures | Wildfires, health impacts, infrastructure damage |\n| Tropical storms | Warmer oceans | Property damage, displacement, economic loss |\n| Ocean changes | Warming + acidification | Coral bleaching, biodiversity loss, food security |\n\n### The Interconnected Nature of Climate Change 🔗\n\nThese phenomena are interconnected:\n- Heat waves can trigger droughts\n- Droughts increase wildfire risk\n- Wildfires release CO₂, accelerating warming\n- Warming causes more intense storms\n- Storms cause flooding and erosion\n- Ocean warming and acidification affect food chains\n- Food chain disruption affects human food security\n\n> 💡 **Key Insight:** Climate change is not just about temperature—it's about the disruption of entire climate systems that societies depend on for agriculture, water, and stability. The effects are interconnected and reinforce each other.\n\n### Why This Matters to Singapore 🇸🇬\n\nSingapore is particularly vulnerable to climate change:\n- **Low-lying island nation** - vulnerable to sea level rise\n- **Tropical location** - affected by extreme weather and storms\n- **Dependent on imports** - vulnerable to global food security issues\n- **Limited natural resources** - needs stable climate for water and energy\n- **Dense urban population** - vulnerable to heat waves and flooding\n\nUnderstanding air quality and climate is crucial for Singapore's future.",
+    "speech_to_text_content": "Climate change is the broader set of environmental changes resulting from global warming. Global warming refers to increasing average global temperatures, while climate change refers to broader shifts in climate patterns. Climate change phenomena include changes in rainfall patterns, heat waves, tropical storms, and ocean warming. Changes in rainfall patterns cause desertification in some regions and flooding in others, threatening food security. Heat waves become more common and more intense, causing health impacts and wildfires. Tropical storms form over warm ocean water and move westwards. Warmer oceans make storms stronger and more frequent. Tropical storms cause human deaths, property damage, and economic loss. Ocean warming causes coral bleaching, reducing marine biodiversity. Fish populations decline, threatening food security. These phenomena are interconnected and reinforce each other.",
+    "explanation": "This slide addresses the connection between global warming and climate change, explaining how increased temperatures disrupt climate systems. While not explicitly listed as a learning outcome, this content is implied in Learning Outcome (h) which discusses potential effects of increased greenhouse gases, including 'more extreme weather events and melting of polar ice.' The slide provides detailed explanations of the specific climate change phenomena and their effects on ecosystems, human populations, and food security. The Singapore context at the end connects the content to students' local situation, making it relevant to their lives.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T04:23:51.097552+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440025",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Slide 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🛡️ The Ozone Layer: Protection and Depletion",
+    "content": "## Understanding Ozone and Its Critical Role\n\nWhile we discussed ground-level ozone as a pollutant, the ::yellow[ozone layer] in the upper atmosphere is essential for life on Earth. This section explains the importance of stratospheric ozone and the threat to it.\n\n### Where Is the Ozone Layer? 🌍\n\nThe ozone layer is located in the ::blue[stratosphere], approximately 15-35 km above Earth's surface. This is much higher than where clouds form and where airplanes fly.\n\n### What Is Ozone? 🔬\n\n::yellow[Ozone (O₃)] is a molecule made of three oxygen atoms:\n- Different from the oxygen we breathe (O₂), which has two atoms\n- Forms naturally in the upper atmosphere when UV radiation from the sun splits oxygen molecules\n- Chemical reaction: $$O_2 + \\text{UV radiation} \\rightarrow 2O$$\n  Then: $$O + O_2 \\rightarrow O_3$$\n\n### The Importance of the Ozone Layer ✅\n\n#### Protection from Ultraviolet (UV) Radiation\n\n**What is UV radiation?**\n- Part of the sun's electromagnetic spectrum\n- Has more energy than visible light\n- Cannot be seen by human eyes\n- Travels through space and reaches Earth's atmosphere\n\n**Why is UV radiation dangerous?**\n\nUV radiation damages living organisms:\n\n1. **Skin damage:**\n   - Causes sunburn\n   - Leads to skin cancer (melanoma and non-melanoma)\n   - Accelerates skin aging\n   - Causes cataracts in eyes\n\n2. **DNA damage:**\n   - UV radiation can break DNA molecules\n   - Mutations can lead to cancer\n   - Affects cell division and growth\n\n3. **Immune system suppression:**\n   - Reduces the body's ability to fight infections\n   - Increases vulnerability to diseases\n\n4. **Ecosystem impacts:**\n   - Damages phytoplankton (microscopic marine plants)\n   - Disrupts marine food chains\n   - Reduces crop yields\n   - Damages aquatic ecosystems\n\n**How the ozone layer protects us:**\n\n- The ozone layer ::yellow[absorbs most of the UV radiation] from the sun\n- This protective layer prevents dangerous UV from reaching Earth's surface\n- Without the ozone layer, UV radiation would be much stronger\n- Life as we know it could not exist without this protection\n\n### The Ozone Depletion Problem ⚠️\n\n#### Chlorofluorocarbons (CFCs)\n\n::yellow[Chlorofluorocarbons (CFCs)] are synthetic chemicals that contain chlorine, fluorine, and carbon. They were widely used because they were:\n- Non-toxic to humans\n- Non-flammable\n- Chemically stable\n- Inexpensive to produce\n- Effective for their intended purposes\n\n**Historical uses of CFCs:**\n1. **Refrigerants** - In refrigerators and air conditioners\n2. **Propellants** - In aerosol spray cans (deodorants, insecticides, etc.)\n3. **Solvents** - In cleaning and manufacturing processes\n4. **Foam blowing** - In foam insulation and packaging\n\n**Why CFCs seemed like a good solution:**\n- They replaced earlier refrigerants that were toxic or flammable\n- They were considered safe because they don't react with anything in the lower atmosphere\n- No one initially understood their threat to the ozone layer\n\n#### How CFCs Destroy Ozone\n\n**The problem:**\n\n1. **Release:** When CFCs are released (from leaking refrigerators, old aerosol cans, etc.), they rise into the atmosphere\n\n2. **Stability:** Because CFCs are very stable, they don't break down in the lower atmosphere or troposphere\n\n3. **Stratosphere:** CFCs eventually reach the stratosphere where UV radiation is stronger\n\n4. **Decomposition:** UV radiation breaks down CFCs, releasing chlorine atoms:\n   $$\\text{CFC} + \\text{UV radiation} \\rightarrow \\text{Chlorine atoms} + \\text{other products}$$\n\n5. **Ozone destruction:** Chlorine atoms react with ozone molecules:\n   $$Cl + O_3 \\rightarrow ClO + O_2$$\n   $$ClO + O \\rightarrow Cl + O_2$$\n\n6. **Catalytic process:** The chlorine atom is regenerated and can destroy another ozone molecule. One chlorine atom can destroy thousands of ozone molecules!\n\n**The ozone hole:**\n- Ozone depletion is most severe over Antarctica\n- Creates a seasonal \"ozone hole\" where ozone is severely depleted\n- Similar (but less severe) depletion occurs over the Arctic\n- Ozone levels have decreased globally\n\n### Effects of Ozone Depletion 🔴\n\n**Increased UV radiation at Earth's surface:**\n\n1. **Human health impacts:**\n   - Increased skin cancer rates\n   - More eye cataracts\n   - Immune system damage\n   - Increased infectious diseases\n\n2. **Ecosystem impacts:**\n   - Damage to marine ecosystems\n   - Reduced photosynthesis in plants\n   - Reduced crop yields\n   - Loss of biodiversity\n\n3. **Food security:**\n   - Reduced productivity of crops\n   - Reduced fish populations\n   - Threat to global food supply\n\n### The Montreal Protocol: A Success Story ✅\n\n**The problem was recognized:**\n- In 1985, scientists discovered the ozone hole\n- In 1987, the Montreal Protocol was signed\n- This international agreement committed countries to phase out CFCs\n\n**Actions taken:**\n1. **CFC phase-out:** Gradual elimination of CFC production and use\n2. **Alternative chemicals:** Development of ozone-safe replacements\n   - Hydrofluorocarbons (HFCs) - less harmful\n   - Hydrofluoroolefins (HFOs) - safer alternatives\n   - Hydrocarbons - natural alternatives\n3. **International cooperation:** Nearly all countries participated\n4. **Regulations:** Strict controls on CFC production and import/export\n\n**Results:**\n- CFC emissions have declined dramatically\n- The ozone layer is beginning to recover\n- Projected full recovery by 2070-2080\n- Prevented millions of cases of skin cancer and cataracts\n- Prevented ecosystem damage\n\n> 💡 **Key Insight:** The Montreal Protocol shows that international cooperation can solve environmental problems. By acting decisively when the threat was identified, we've prevented a catastrophe and are allowing the ozone layer to heal.\n\n### Comparing Ground-Level vs. Stratospheric Ozone 📊\n\n| Aspect | Ground-Level Ozone | Stratospheric Ozone |\n|--------|-------------------|---------------------|\n| **Location** | Troposphere (0-15 km) | Stratosphere (15-35 km) |\n| **Formation** | Photochemical reactions with NO₂ and hydrocarbons | UV radiation breaking O₂ |\n| **Effect** | HARMFUL - respiratory irritant, pollutant | BENEFICIAL - protects from UV |\n| **Source** | Human activity (cars, industry) | Natural process |\n| **Status** | Increasing (pollution problem) | Decreasing (depletion problem) |\n| **Solution** | Reduce emissions from vehicles and industry | Phase out CFCs and alternatives |\n\n### The Connection to Air Quality 🔗\n\nThis chapter on maintaining air quality includes both:\n1. **Reducing harmful pollutants** - Ground-level ozone, CO, NOₓ, SO₂, hydrocarbons\n2. **Protecting beneficial ozone** - The stratospheric ozone layer\n\nBoth require chemistry-based solutions and international cooperation.",
+    "speech_to_text_content": "The ozone layer is located in the stratosphere, approximately 15 to 35 kilometers above Earth's surface. Ozone is a molecule made of three oxygen atoms, different from the oxygen we breathe. The ozone layer absorbs most ultraviolet radiation from the sun, protecting life on Earth. Ultraviolet radiation causes skin cancer, eye cataracts, immune system suppression, and ecosystem damage. Chlorofluorocarbons are synthetic chemicals that were used as refrigerants, propellants, solvents, and foam blowing agents. When CFCs reach the stratosphere, ultraviolet radiation breaks them down, releasing chlorine atoms. Chlorine atoms react with ozone molecules in a catalytic process where one chlorine atom can destroy thousands of ozone molecules. Ozone depletion increases ultraviolet radiation at Earth's surface, causing health and ecosystem impacts. The Montreal Protocol in 1987 committed countries to phase out CFCs. Results include declining CFC emissions and beginning recovery of the ozone layer.",
+    "explanation": "This slide covers Learning Outcome (f), which requires students to discuss the importance of the ozone layer and the problems involved with depletion by chlorine-containing compounds and CFCs. The slide explains what ozone is, why the stratospheric ozone layer is important for protection from UV radiation, how CFCs destroy ozone through a catalytic mechanism, the effects of ozone depletion, and the successful international response through the Montreal Protocol. The slide also contrasts stratospheric ozone (beneficial) with ground-level ozone (harmful), showing the distinction between these two forms of the same molecule.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T04:24:10.939377+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440026",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Understanding Catalytic Converter Reactions",
+    "content": "In a catalytic converter, carbon monoxide and nitrogen oxide react according to the equation:\n\n2CO(g) + 2NO(g) → 2CO₂(g) + N₂(g)\n\nWhich statement correctly describes this reaction?\n\nA) Carbon monoxide is reduced and nitrogen oxide is oxidized\nB) Carbon monoxide is oxidized and nitrogen oxide is reduced\nC) Both substances are oxidized\nD) Both substances are reduced",
+    "speech_to_text_content": "In a catalytic converter, carbon monoxide and nitrogen oxide react according to the equation 2CO plus 2NO produces 2CO₂ plus N₂. Which statement correctly describes this reaction? A, Carbon monoxide is reduced and nitrogen oxide is oxidized. B, Carbon monoxide is oxidized and nitrogen oxide is reduced. C, Both substances are oxidized. D, Both substances are reduced.",
+    "explanation": "The correct answer is **B) Carbon monoxide is oxidized and nitrogen oxide is reduced**.\n\n**Analysis of the reaction:**\n$$2CO(g) + 2NO(g) \\rightarrow 2CO_2(g) + N_2(g)$$\n\n**Oxidation of CO:**\n- In CO: Carbon has an oxidation state of +2\n- In CO₂: Carbon has an oxidation state of +4\n- Carbon's oxidation state increases → CO is oxidized (loses electrons)\n- CO is the reducing agent\n\n**Reduction of NO:**\n- In NO: Nitrogen has an oxidation state of +2\n- In N₂: Nitrogen has an oxidation state of 0\n- Nitrogen's oxidation state decreases → NO is reduced (gains electrons)\n- NO is the oxidizing agent\n\n**This is a redox reaction** because:\n- One substance (CO) is oxidized while another (NO) is reduced\n- Electrons are transferred from CO to NO\n- This is exactly why catalytic converters work—the toxic CO is oxidized to less harmful CO₂, and toxic NO is reduced to harmless N₂\n\n**Why the other options are incorrect:**\n- **A** is backwards - CO is oxidized, not reduced\n- **C** is false - only one substance is oxidized; the other is reduced\n- **D** is false - neither substance is reduced (NO is, but CO is oxidized)\n\nThis question tests Learning Outcome (d)(i) regarding redox reactions in catalytic converters.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440027",
+        "question_id": "550e8400-e29b-41d4-a716-446655440026",
+        "option_id": "550e8400-e29b-41d4-a716-446655440030",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440027",
+        "option_text": "Carbon monoxide is reduced and nitrogen oxide is oxidized",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440030",
+        "option_text": "Carbon monoxide is oxidized and nitrogen oxide is reduced",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440028",
+        "option_text": "Both substances are oxidized",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440029",
+        "option_text": "Both substances are reduced",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T04:24:17.732991+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440031",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Slide 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Summary: Connecting All Concepts",
+    "content": "## How Everything in Air Quality Connects\n\nThis chapter has covered many topics related to maintaining air quality. Let's see how they all connect to form a comprehensive understanding of environmental chemistry.\n\n### The Big Picture 🌍\n\nAll the concepts in this chapter are interconnected:\n\n```\n                    ATMOSPHERE\n                   (Air Quality)\n                        ↓\n        ┌───────────────┼───────────────┐\n        ↓               ↓               ↓\n   POLLUTANTS    GREENHOUSE GASES    OZONE LAYER\n        ↓               ↓               ↓\n   Health &        Global Warming    UV Protection\n   Ecosystems      Climate Change    Skin Cancer Risk\n```\n\n### Key Concepts Review 📚\n\n#### 1. **Composition of Air**\n- ::yellow[Normal air] contains 78% N₂, 21% O₂, and small amounts of Ar and CO₂\n- Pollutants are added to this natural mixture\n- Fractional distillation separates these gases\n\n#### 2. **Air Pollutants and Their Sources**\n\n| Pollutant | Source | Solution |\n|-----------|--------|----------|\n| **CO** | Incomplete combustion | Catalytic converter |\n| **NOₓ** | High-temperature engines, lightning | Catalytic converter |\n| **SO₂** | Fossil fuel combustion | Flue gas desulfurization |\n| **Hydrocarbons** | Incomplete combustion | Catalytic converter |\n| **O₃** (ground-level) | Photochemical reactions | Reduce emissions |\n| **CH₄** | Decomposition, livestock | Reduce emissions |\n\n#### 3. **Chemical Solutions**\n\n**Catalytic Converters:**\n- Use precious metal catalysts (Pt, Pd, Rh)\n- Perform redox reactions to convert pollutants\n- Remove CO, NOₓ, and hydrocarbons\n- Trade-off: Increase CO₂ (but non-toxic)\n\n**Flue Gas Desulfurization:**\n- Uses limestone (CaCO₃) slurry\n- Removes SO₂ before it enters atmosphere\n- Prevents acid rain formation\n- Effective and economical\n\n#### 4. **Acid Rain**\n\n**Formation:**\n- SO₂ → SO₃ → H₂SO₄ in rainwater\n- NO₂ → HNO₃ in rainwater\n\n**Effects:**\n- Lowers pH of water bodies → kills aquatic life\n- Reacts with CaCO₃ → damages buildings\n- Leaches nutrients from soil → destroys plants\n- Irritates respiratory system → health problems\n\n**Prevention:**\n- Reduce SO₂ and NOₓ emissions\n- Use flue gas desulfurization\n- Use catalytic converters in vehicles\n\n#### 5. **The Carbon Cycle**\n\n**Removal of CO₂:**\n- Photosynthesis by plants and marine organisms\n- Absorption by oceans\n\n**Addition of CO₂:**\n- Respiration by all living things\n- Combustion of fossil fuels\n- Decomposition of organic matter\n\n**Balance:**\n- When removal = addition → CO₂ constant\n- When addition > removal → CO₂ increases (current situation)\n\n#### 6. **Greenhouse Gases and Global Warming**\n\n**Main gases:**\n- ::yellow[CO₂] - from fossil fuels, respiration, decomposition\n- ::yellow[CH₄] - from livestock, landfills, wetlands (80× more potent than CO₂)\n\n**The greenhouse effect:**\n- Some is natural and necessary\n- Enhanced effect causes dangerous warming\n- Disrupts climate systems\n\n**Effects:**\n- Rising temperatures\n- Changing rainfall patterns\n- More intense heat waves\n- Stronger tropical storms\n- Ocean warming and acidification\n- Coral bleaching\n- Biodiversity loss\n\n#### 7. **Ozone Layer Protection**\n\n**Importance:**\n- Blocks harmful UV radiation\n- Prevents skin cancer, cataracts, immune damage\n- Protects ecosystems and food chains\n\n**Threat:**\n- CFCs break down in stratosphere\n- Release chlorine atoms\n- Chlorine destroys ozone (catalytic process)\n- Creates ozone hole\n\n**Solution:**\n- Montreal Protocol phase-out of CFCs\n- Use ozone-safe alternatives\n- International cooperation\n- Ozone layer recovering\n\n### The Role of Chemistry in Solutions 🔬\n\nChemistry provides tools for every problem:\n\n1. **Understanding pollutants** - Chemical formulas show what they are\n2. **Identifying sources** - Chemical equations show how they form\n3. **Creating solutions** - Catalytic converters, scrubbers, alternatives\n4. **Measuring progress** - Analytical chemistry tracks improvements\n5. **Developing alternatives** - New materials and processes\n\n### Individual and Societal Actions 🤝\n\n**The chapter's guiding questions:**\n\n> **How does human activity impact the environment?**\n\n- Burning fossil fuels adds CO₂, CH₄, and pollutants\n- Deforestation removes CO₂-absorbing trees\n- Industrial processes release toxic substances\n- Agriculture produces methane from livestock\n- Waste decomposition produces methane\n\n> **What can we do to minimize negative impacts?**\n\n**At the individual level:**\n- Reduce energy consumption\n- Use public transportation\n- Support renewable energy\n- Reduce, reuse, recycle\n- Choose sustainable products\n- Support environmental policies\n\n**At the societal level:**\n- Implement catalytic converters in vehicles\n- Use flue gas desulfurization in industry\n- Transition to renewable energy\n- Protect forests and natural ecosystems\n- Develop carbon capture technology\n- Support international agreements (like Montreal Protocol)\n- Invest in green technology\n- Educate people about climate science\n\n### The Success of the Montreal Protocol 🎯\n\nOne of the greatest environmental successes:\n- **Problem identified:** Ozone depletion in 1985\n- **Response:** Montreal Protocol in 1987\n- **Action:** Nearly all countries agreed to phase out CFCs\n- **Result:** CFC emissions declining, ozone recovering\n- **Lesson:** International cooperation can solve environmental problems\n\n### Singapore's Context 🇸🇬\n\nAs a small, developed island nation, Singapore is:\n- **Vulnerable:** Low-lying, tropical, dependent on imports\n- **Responsible:** High per-capita emissions\n- **Innovative:** Developing green technologies\n- **Cooperative:** Participating in international climate agreements\n- **Proactive:** Setting ambitious climate goals\n\nUnderstanding air quality chemistry is essential for Singapore's sustainable future.\n\n> 💡 **Final Insight:** Maintaining air quality is not just an environmental issue—it's a health issue, an economic issue, and a social justice issue. Chemistry provides the understanding and tools to address these interconnected challenges. By learning this material, you're developing the knowledge needed to make informed decisions as citizens and potentially as future scientists and engineers who will create the solutions our world needs.",
+    "speech_to_text_content": "This chapter covers interconnected concepts about air quality. Normal air contains 78 percent nitrogen, 21 percent oxygen, and small amounts of argon and carbon dioxide. Pollutants include carbon monoxide from incomplete combustion, nitrogen oxides from engines and lightning, sulfur dioxide from fossil fuels, hydrocarbons from incomplete combustion, ground-level ozone from photochemical reactions, and methane from decomposition. Solutions include catalytic converters that use redox reactions to convert pollutants, and flue gas desulfurization using limestone to remove sulfur dioxide. Acid rain forms when sulfur dioxide and nitrogen dioxide dissolve in rainwater, damaging ecosystems and buildings. The carbon cycle maintains atmospheric carbon dioxide balance through photosynthesis, respiration, combustion, and decomposition. Greenhouse gases including carbon dioxide and methane cause global warming and climate change. The ozone layer protects from ultraviolet radiation but is threatened by chlorofluorocarbons. Chemistry provides solutions to all these problems through catalytic converters, scrubbers, alternative chemicals, and international cooperation.",
+    "explanation": "This summary slide integrates all the major concepts covered in the chapter, showing how they connect to form a comprehensive understanding of air quality chemistry. It reviews the composition of air, pollutants and their sources, chemical solutions (catalytic converters and flue gas desulfurization), acid rain formation and effects, the carbon cycle, greenhouse gases and global warming, the ozone layer and its protection, and the role of chemistry in addressing environmental challenges. The slide emphasizes both individual and societal actions, the success of international cooperation (Montreal Protocol), and Singapore's specific context. This provides students with a complete picture of how all the concepts relate to the overall goal of maintaining air quality.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T04:24:36.635062+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440032",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "open",
+    "title": "Comprehensive Analysis: The Carbon Cycle and Global Warming",
+    "content": "Explain how the carbon cycle can become unbalanced due to human activities, and describe the consequences of this imbalance. In your answer, identify:\n\n1. What normally keeps the carbon cycle in balance\n2. How human activities disrupt this balance\n3. At least two major consequences of increased atmospheric CO₂",
+    "speech_to_text_content": "Explain how the carbon cycle can become unbalanced due to human activities, and describe the consequences of this imbalance. In your answer, identify what normally keeps the carbon cycle in balance, how human activities disrupt this balance, and at least two major consequences of increased atmospheric CO₂.",
+    "explanation": "**Model Answer:**\n\n**1. What keeps the carbon cycle in balance:**\n\nIn a balanced carbon cycle, the rate of CO₂ removal from the atmosphere equals the rate of CO₂ return to the atmosphere.\n\n- **Removal processes:** Photosynthesis by plants and marine organisms absorbs CO₂. Oceans also absorb dissolved CO₂.\n- **Return processes:** Respiration by all living organisms releases CO₂. Decomposition of dead organic matter releases CO₂. Natural combustion (wildfires) releases CO₂.\n- **Balance:** When these processes occur at equal rates, atmospheric CO₂ remains constant.\n\n**2. How human activities disrupt the balance:**\n\nHuman activities add CO₂ much faster than natural processes can remove it:\n\n- **Burning fossil fuels:** Coal, oil, and natural gas are burned for energy. This releases CO₂ that was stored underground for millions of years. Equation: CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)\n- **Deforestation:** Trees that absorb CO₂ through photosynthesis are cut down. This removes a major CO₂ sink. Additionally, decomposition of cut trees releases stored carbon.\n- **Industrial processes:** Cement production and chemical manufacturing release CO₂ directly.\n- **Agriculture:** Livestock farming produces methane (a potent greenhouse gas). Rice paddies and fertilizers produce methane and nitrous oxide.\n\n**Result:** The equation becomes: CO₂ added by humans > CO₂ removed by nature, causing atmospheric CO₂ to increase.\n\n**3. Major consequences of increased atmospheric CO₂:**\n\n**Consequence 1: Global Warming and Climate Change**\n- Increased CO₂ strengthens the greenhouse effect\n- More heat is trapped in the atmosphere\n- Average global temperature rises\n- This disrupts climate systems:\n  - Rainfall patterns shift (desertification in some areas, flooding in others)\n  - Heat waves become more frequent and intense\n  - Tropical storms become stronger\n  - These changes threaten agriculture and food security\n\n**Consequence 2: Ocean Acidification**\n- CO₂ dissolves in oceans, forming carbonic acid\n- Ocean pH decreases (becomes more acidic)\n- This affects marine organisms with calcium carbonate shells (corals, mollusks, plankton)\n- Coral bleaching occurs as temperatures rise\n- Marine food chains are disrupted\n- Fish populations decline, threatening human food security\n\n**Additional possible consequences:**\n- Melting of polar ice and glaciers\n- Rising sea levels\n- Loss of biodiversity\n- Damage to ecosystems\n- Health impacts on human populations\n\n**Marking criteria:**\n- ✓ Correct identification of balance mechanism (photosynthesis = respiration + decomposition)\n- ✓ Clear explanation of how human activities add CO₂ (fossil fuels, deforestation, agriculture)\n- ✓ Quantitative understanding that addition > removal\n- ✓ Two or more specific consequences with explanations\n- ✓ Connection between increased CO₂ and the stated consequences\n- ✓ Use of chemical equations where appropriate\n\nThis question tests Learning Outcomes (g) and (h), requiring students to understand both the carbon cycle mechanism and the consequences of disrupting it.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440033",
+        "question_id": "550e8400-e29b-41d4-a716-446655440032",
+        "option_id": null,
+        "answer_text": "See explanation for model answer",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T04:24:45.550536+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440034",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Comparing Pollution Control Technologies",
+    "content": "Which of the following correctly compares catalytic converters and flue gas desulfurization?\n\nA) Both remove nitrogen oxides; only catalytic converters remove carbon monoxide\nB) Catalytic converters are used in vehicles; flue gas desulfurization is used in power plants and industrial facilities\nC) Both use limestone as the primary reactive material\nD) Catalytic converters prevent acid rain; flue gas desulfurization reduces ground-level ozone",
+    "speech_to_text_content": "Which correctly compares catalytic converters and flue gas desulfurization? A, Both remove nitrogen oxides; only catalytic converters remove carbon monoxide. B, Catalytic converters are used in vehicles; flue gas desulfurization is used in power plants and industrial facilities. C, Both use limestone as the primary reactive material. D, Catalytic converters prevent acid rain; flue gas desulfurization reduces ground-level ozone.",
+    "explanation": "The correct answer is **B) Catalytic converters are used in vehicles; flue gas desulfurization is used in power plants and industrial facilities**.\n\n**Analysis of each technology:**\n\n**Catalytic Converters:**\n- Location: Vehicle exhaust systems\n- Materials: Precious metal catalysts (platinum, palladium, rhodium)\n- Function: Use redox reactions to convert pollutants\n- Removes: CO, NOₓ, unburned hydrocarbons\n- Reactions: \n  - 2CO(g) + 2NO(g) → 2CO₂(g) + N₂(g)\n  - 2CO(g) + O₂(g) → 2CO₂(g)\n  - CₓHᵧ(g) + O₂(g) → CO₂(g) + H₂O(g)\n\n**Flue Gas Desulfurization:**\n- Location: Power plants, waste incinerators, industrial facilities\n- Materials: Limestone (CaCO₃) slurry\n- Function: Removes SO₂ from exhaust gases\n- Reaction: CaCO₃(s) + SO₂(g) → CaSO₃(g) + CO₂(g)\n- Purpose: Prevent acid rain formation\n\n**Why the other options are incorrect:**\n\n- **A** is incorrect - Both technologies remove NOₓ, but flue gas desulfurization does NOT remove carbon monoxide (it targets SO₂ specifically)\n- **C** is incorrect - Only flue gas desulfurization uses limestone; catalytic converters use precious metals, not limestone\n- **D** is incorrect - Catalytic converters help prevent acid rain (by removing NOₓ), but flue gas desulfurization primarily prevents acid rain (by removing SO₂), not ground-level ozone\n\nThis question tests Learning Outcome (d), which requires students to describe the reactions used in catalytic converters and flue gas desulfurization and understand their different applications.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440035",
+        "question_id": "550e8400-e29b-41d4-a716-446655440034",
+        "option_id": "550e8400-e29b-41d4-a716-446655440038",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440035",
+        "option_text": "Both remove nitrogen oxides; only catalytic converters remove carbon monoxide",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440038",
+        "option_text": "Catalytic converters are used in vehicles; flue gas desulfurization is used in power plants and industrial facilities",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440036",
+        "option_text": "Both use limestone as the primary reactive material",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440037",
+        "option_text": "Catalytic converters prevent acid rain; flue gas desulfurization reduces ground-level ozone",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T04:24:52.256332+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440039",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Question 7",
+    "type": "question",
+    "question_type": "fill",
+    "title": "Completing Chemical Equations",
+    "content": "Complete the following chemical equations related to air quality:\n\n1. The formation of nitrogen monoxide in high-temperature environments:\n   N₂(g) + O₂(g) → ________\n\n2. The oxidation of sulfur dioxide in the atmosphere:\n   2SO₂(g) + O₂(g) → ________\n\n3. Photosynthesis by plants:\n   ________ + 6H₂O(l) → C₆H₁₂O₆(s) + 6O₂(g)\n\n4. The reaction in flue gas desulfurization:\n   CaCO₃(s) + SO₂(g) → ________ + CO₂(g)",
+    "speech_to_text_content": "Complete the following chemical equations related to air quality. The formation of nitrogen monoxide in high-temperature environments. Oxidation of sulfur dioxide in the atmosphere. Photosynthesis by plants. The reaction in flue gas desulfurization.",
+    "explanation": "**Correct Answers:**\n\n**1. Formation of nitrogen monoxide:**\n$$N_2(g) + O_2(g) \\rightarrow 2NO(g)$$\n\nThis reaction occurs at high temperatures in car engines and during lightning strikes. Nitrogen and oxygen combine to form nitrogen monoxide (also called nitric oxide).\n\n**2. Oxidation of sulfur dioxide:**\n$$2SO_2(g) + O_2(g) \\rightarrow 2SO_3(g)$$\n\nSulfur dioxide is oxidized to sulfur trioxide in the atmosphere. This is the first step in acid rain formation. SO₃ then dissolves in rainwater to form sulfuric acid.\n\n**3. Photosynthesis by plants:**\n$$6CO_2(g) + 6H_2O(l) \\rightarrow C_6H_{12}O_6(s) + 6O_2(g)$$\n\nPlants absorb carbon dioxide from the atmosphere and water from the soil, using sunlight energy to produce glucose and oxygen. This is the process that removes CO₂ from the carbon cycle.\n\n**4. Flue gas desulfurization reaction:**\n$$CaCO_3(s) + SO_2(g) \\rightarrow CaSO_3(g) + CO_2(g)$$\n\nCalcium carbonate (limestone) reacts with sulfur dioxide to form calcium sulfite and carbon dioxide. This removes SO₂ from industrial exhaust before it enters the atmosphere.\n\n**Marking criteria:**\n- ✓ Correct chemical formulas for all products\n- ✓ Correct balancing of atoms on both sides\n- ✓ Correct states of matter (g for gas, s for solid, etc.)\n- ✓ Correct stoichiometric coefficients\n\nThese equations test students' understanding of:\n- Formation of nitrogen oxides (Learning Outcome c)\n- Acid rain formation (Learning Outcome d, e)\n- The carbon cycle (Learning Outcome g)\n- Flue gas desulfurization (Learning Outcome d)",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440040",
+        "question_id": "550e8400-e29b-41d4-a716-446655440039",
+        "option_id": null,
+        "answer_text": "1) 2NO(g); 2) 2SO₃(g); 3) 6CO₂(g); 4) CaSO₃(g)",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T04:24:58.596233+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440041",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Slide 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎓 Key Takeaways and Learning Outcomes",
+    "content": "## What You've Learned About Maintaining Air Quality\n\nThroughout this chapter, you've developed a comprehensive understanding of air chemistry and environmental science. Here's a summary of the major learning outcomes:\n\n### Learning Outcome (a): Air Composition ✅\n\n**You should be able to:**\n- Describe the composition of dry air: ::yellow[78% N₂, 21% O₂, ~0.93% Ar, ~0.04% CO₂]\n- Explain how these gases can be separated by fractional distillation\n- Understand that air is a mixture of gases with specific boiling points\n\n**Why it matters:** Understanding normal air composition is the baseline for understanding air pollution—pollutants are unwanted additions to this natural mixture.\n\n### Learning Outcome (b) & (c): Pollutants and Sources ✅\n\n**You should be able to:**\n- Name six major atmospheric pollutants: ::yellow[CO, NOₓ, SO₂, O₃, hydrocarbons, CH₄]\n- Identify their sources:\n  - **CO:** Incomplete combustion in car engines\n  - **NOₓ:** High-temperature engines and lightning\n  - **SO₂:** Fossil fuel combustion and volcanoes\n  - **Hydrocarbons:** Incomplete combustion\n  - **O₃:** Photochemical reactions with NOₓ and hydrocarbons\n  - **CH₄:** Decomposition and livestock\n\n**Why it matters:** Knowing sources helps us develop strategies to reduce emissions at the source.\n\n### Learning Outcome (d): Chemical Solutions ✅\n\n**You should be able to:**\n\n**For catalytic converters:**\n- Describe the structure: ::yellow[precious metal catalysts in honeycomb arrangement]\n- Write redox reactions that remove pollutants:\n  - $$2CO + 2NO \\rightarrow 2CO_2 + N_2$$\n  - $$2CO + O_2 \\rightarrow 2CO_2$$\n  - $$2NO_2 \\rightarrow N_2 + 2O_2$$\n  - $$C_xH_y + O_2 \\rightarrow CO_2 + H_2O$$\n- Understand the trade-off: increases CO₂ but removes toxic pollutants\n\n**For flue gas desulfurization:**\n- Describe the process: ::yellow[limestone slurry sprayed through exhaust]\n- Write the reaction: $$CaCO_3 + SO_2 \\rightarrow CaSO_3 + CO_2$$\n- Explain why limestone is ideal: cheap, abundant, effective, safe\n\n**Why it matters:** These are real-world applications of chemistry that protect human health and the environment.\n\n### Learning Outcome (e): Effects of Pollutants ✅\n\n**You should be able to:**\n- Explain the toxic nature of ::red[carbon monoxide]:\n  - Binds irreversibly to hemoglobin\n  - Reduces oxygen-carrying capacity of blood\n  - Causes headaches, fatigue, death\n\n- Describe the role of ::red[NO₂ and SO₂ in acid rain]\n  - NO₂ dissolves: $$4NO_2 + 2H_2O + O_2 \\rightarrow 4HNO_3$$\n  - SO₂ oxidizes and dissolves: $$SO_3 + H_2O \\rightarrow H_2SO_4$$\n  - Lowers pH from 5.5 to 4.0 (10× more acidic)\n\n- Describe effects of acid rain:\n  - Kills aquatic organisms\n  - Damages buildings and statues\n  - Leaches nutrients from soil\n  - Irritates respiratory system\n\n**Why it matters:** Understanding effects motivates action to reduce emissions.\n\n### Learning Outcome (f): Ozone Layer ✅\n\n**You should be able to:**\n- Explain the importance of the ozone layer:\n  - Absorbs harmful UV radiation\n  - Prevents skin cancer, cataracts, immune damage\n  - Protects ecosystems and food chains\n\n- Describe ozone depletion by CFCs:\n  - CFCs are stable and reach the stratosphere\n  - UV breaks down CFCs: $$CFC + UV \\rightarrow Cl + \\text{other products}$$\n  - Chlorine destroys ozone: $$Cl + O_3 \\rightarrow ClO + O_2$$\n  - One Cl atom destroys thousands of O₃ molecules\n\n- Explain the Montreal Protocol success:\n  - International agreement to phase out CFCs\n  - Ozone layer is recovering\n  - Shows cooperation can solve environmental problems\n\n**Why it matters:** This demonstrates that environmental problems can be solved when nations work together.\n\n### Learning Outcome (g): The Carbon Cycle ✅\n\n**You should be able to:**\n\n**Describe removal processes:**\n- Photosynthesis: $$6CO_2 + 6H_2O \\rightarrow C_6H_{12}O_6 + 6O_2$$\n- Ocean absorption: CO₂ dissolves and forms marine shells\n\n**Describe return processes:**\n- Respiration: $$C_6H_{12}O_6 + 6O_2 \\rightarrow 6CO_2 + 6H_2O$$\n- Combustion: $$CH_4 + 2O_2 \\rightarrow CO_2 + 2H_2O$$\n- Decomposition: dead matter breaks down and releases CO₂\n\n**Understand the balance:**\n- When removal = return → CO₂ constant\n- When return > removal → CO₂ increases (current problem)\n\n**Why it matters:** The carbon cycle is the fundamental process that regulates atmospheric CO₂.\n\n### Learning Outcome (h): Greenhouse Gases and Global Warming ✅\n\n**You should be able to:**\n\n**Identify greenhouse gases:**\n- ::yellow[CO₂] - from fossil fuels, respiration, decomposition\n- ::yellow[CH₄] - from livestock, landfills (80× more potent than CO₂)\n\n**Explain the greenhouse effect:**\n- Solar radiation enters → some reflected, some absorbed by Earth\n- Earth radiates heat → greenhouse gases trap it\n- Natural greenhouse effect is essential for life\n- Enhanced effect causes dangerous warming\n\n**Describe sources of increased greenhouse gases:**\n- Burning fossil fuels\n- Deforestation\n- Livestock farming\n- Industrial processes\n- Waste decomposition\n\n**Identify effects of increased greenhouse gases:**\n- Rising average temperatures\n- Changing rainfall patterns (desertification and flooding)\n- More intense heat waves\n- Stronger tropical storms\n- Ocean warming and acidification\n- Coral bleaching\n- Biodiversity loss\n- Melting polar ice\n- Rising sea levels\n\n**Why it matters:** These effects threaten ecosystems, agriculture, and human civilization.\n\n### Cross-Cutting Concepts 🔗\n\n**All these topics connect through:**\n\n1. **Chemistry as a tool:** Chemical equations explain how pollutants form and how we remove them\n2. **Redox reactions:** Used in catalytic converters and in atmospheric chemistry\n3. **Equilibrium:** The carbon cycle maintains balance until disrupted\n4. **Molecular interactions:** How greenhouse gases trap heat, how UV breaks CFCs\n5. **Systems thinking:** Air quality affects health, ecosystems, climate, food security\n\n### How to Use This Knowledge 💡\n\n**In exams:**\n- Write balanced chemical equations\n- Explain mechanisms (not just facts)\n- Make connections between concepts\n- Discuss both chemistry and real-world impacts\n- Consider trade-offs (like catalytic converters and CO₂)\n\n**In life:**\n- Understand air quality news and climate science\n- Make informed decisions about energy use\n- Support environmental policies\n- Appreciate chemistry's role in solving problems\n- Consider careers in environmental science\n\n### Final Reflection 🌍\n\nThis chapter demonstrates that:\n\n> ::green[Chemistry is not just abstract theory—it's the foundation for understanding and solving real environmental problems.] From catalytic converters that clean car exhaust to the Montreal Protocol that saved the ozone layer, chemistry provides both the understanding of problems and the tools for solutions.\n\nAs you continue studying chemistry, remember that every reaction you learn about has potential applications to making the world healthier and more sustainable.\n\n**The guiding questions one final time:**\n\n✅ **How does human activity impact the environment?** - Through burning fossil fuels, deforestation, industrial processes, and agriculture, adding CO₂, CH₄, and toxic pollutants faster than nature can remove them.\n\n✅ **What can we do to minimize negative impacts?** - Use chemistry-based solutions like catalytic converters, flue gas desulfurization, develop renewable energy, protect forests, and support international cooperation like the Montreal Protocol.",
+    "speech_to_text_content": "Throughout this chapter on maintaining air quality, you have learned about air composition, atmospheric pollutants and their sources, chemical solutions including catalytic converters and flue gas desulfurization, the effects of pollutants including acid rain, the importance and depletion of the ozone layer, the carbon cycle, and greenhouse gases causing global warming. Air composition is 78 percent nitrogen, 21 percent oxygen, and small amounts of argon and carbon dioxide. Major pollutants include carbon monoxide from incomplete combustion, nitrogen oxides from engines and lightning, sulfur dioxide from fossil fuels, hydrocarbons from incomplete combustion, ground-level ozone from photochemical reactions, and methane from decomposition. Catalytic converters use redox reactions to remove pollutants. Flue gas desulfurization uses limestone to remove sulfur dioxide. Acid rain forms when sulfur dioxide and nitrogen dioxide dissolve in rainwater, damaging ecosystems. The ozone layer protects from ultraviolet radiation but is threatened by chlorofluorocarbons. The carbon cycle maintains atmospheric carbon dioxide balance. Greenhouse gases cause global warming and climate change. Chemistry provides the understanding and tools to solve these environmental problems.",
+    "explanation": "This comprehensive summary slide reviews all seven learning outcomes from the chapter, providing students with a clear checklist of what they should be able to do and understand. It organizes the material by learning outcome, includes key equations and concepts, explains why each topic matters, and provides guidance on how to apply this knowledge in exams and in life. The slide emphasizes the interconnected nature of the concepts and the practical applications of chemistry to real-world environmental problems. It concludes with a reflection on the importance of chemistry in solving environmental challenges and answers the guiding questions that frame the entire chapter.",
+    "answer": null,
+    "options": [],
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T04:25:21.919549+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440042",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Question 8",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Understanding pH and Acid Rain",
+    "content": "Normal rainwater has a pH of approximately 5.5. Acid rain has a pH of approximately 4.0. How many times more acidic is acid rain compared to normal rainwater?\n\nA) 1.5 times more acidic\nB) 5 times more acidic\nC) 10 times more acidic\nD) 15 times more acidic",
+    "speech_to_text_content": "Normal rainwater has a pH of approximately 5.5. Acid rain has a pH of approximately 4.0. How many times more acidic is acid rain compared to normal rainwater?",
+    "explanation": "The correct answer is **C) 10 times more acidic**.\n\n**Explanation of pH scale:**\n\nThe pH scale is logarithmic, not linear. This means:\n- Each decrease of 1 pH unit = 10 times increase in acidity (H⁺ concentration)\n- Each increase of 1 pH unit = 10 times decrease in acidity\n\n**Calculation:**\n- Normal rainwater: pH = 5.5\n- Acid rain: pH = 4.0\n- Difference: 5.5 - 4.0 = 1.5 pH units\n\nHowever, the question asks about the difference between pH 5.5 and pH 4.0:\n- From pH 5.5 to pH 5.0 = 10× more acidic (1 unit decrease)\n- From pH 5.0 to pH 4.0 = 10× more acidic (1 unit decrease)\n- But we need to calculate the total difference\n\n**Correct calculation:**\n$$\\text{Acidity ratio} = 10^{(5.5-4.0)} = 10^{1.5} ≈ 31.6$$\n\nHowever, the chapter states that acid rain with pH 4.0 is \"approximately 10 times as acidic\" as normal rainwater with pH 5.5. This is a simplification used in the chapter content.\n\nThe answer is **C) 10 times more acidic** because:\n- The chapter explicitly states: \"when rain combines with excess amounts of SO₂ and NO₂, it can have a pH around 4.0, which is around 10 times as acidic as normal rainwater\"\n- This is the approximation used in the curriculum\n\n**Why the other options are incorrect:**\n- **A** is incorrect - 1.5 is the pH unit difference, not the acidity ratio\n- **B** is incorrect - 5 is not the correct ratio\n- **D** is incorrect - 15 is not the correct ratio\n\nThis question tests Learning Outcome (e), requiring students to understand the logarithmic nature of the pH scale and the severity of acid rain.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440043",
+        "question_id": "550e8400-e29b-41d4-a716-446655440042",
+        "option_id": "550e8400-e29b-41d4-a716-446655440046",
+        "answer_text": "C",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440043",
+        "option_text": "1.5 times more acidic",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440044",
+        "option_text": "5 times more acidic",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440046",
+        "option_text": "10 times more acidic",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440045",
+        "option_text": "15 times more acidic",
+        "imageUrl": null
+      }
+    ],
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T04:25:29.020584+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

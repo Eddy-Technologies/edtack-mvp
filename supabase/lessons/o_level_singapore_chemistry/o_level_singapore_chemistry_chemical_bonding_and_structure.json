@@ -1,0 +1,884 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Chemical Bonding and Structure - Introduction",
+    "content": "## Welcome to Chemical Bonding and Structure\n\nThis chapter explores one of the most fundamental concepts in chemistry: ::yellow[how atoms bond together and why these bonds matter].\n\n### Why Does This Matter?\n\nUnderstanding chemical bonding helps explain:\n- 💎 Why diamonds are so hard\n- 🧂 Why salt dissolves in water\n- ⚡ Why metals conduct electricity\n- 🌡️ Why different substances have different melting points\n\n### The Big Question\n\n::blue[How does the transfer or sharing of electrons between atoms result in the atoms being attracted to each other?]\n\nAnd more importantly: ::yellow[Why does the bonding in and structure of a substance affect its physical properties?]\n\n### What You'll Learn\n\nBy the end of this chapter, you will understand:\n1. **Ionic Bonding** - when atoms transfer electrons\n2. **Covalent Bonding** - when atoms share electrons\n3. **Metallic Bonding** - the unique bonding in metals\n4. **Structure and Properties** - how bonding determines what a substance is like",
+    "speech_to_text_content": "Welcome to Chemical Bonding and Structure. This chapter explores how atoms bond together and why these bonds matter. Understanding chemical bonding helps explain why diamonds are so hard, why salt dissolves in water, why metals conduct electricity, and why different substances have different melting points. By the end of this chapter, you will understand ionic bonding, covalent bonding, metallic bonding, and how structure determines properties.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:51:37.916809+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Why Do Atoms Bond? The Noble Gas Connection",
+    "content": "## The Driving Force Behind Chemical Bonding\n\n### The Noble Gas Rule\n\nAtoms naturally want to achieve the stable electronic configuration of a ::yellow[noble gas]. This is the key to understanding why atoms bond!\n\n### What Are Noble Gases?\n\n::blue[Noble gases] are special elements found in the last group of the periodic table:\n- Helium (He)\n- Neon (Ne)\n- Argon (Ar)\n- Krypton (Kr)\n- Xenon (Xe)\n- Radon (Rn)\n\n### Why Are They Special?\n\n::green[Noble gases are chemically unreactive] because they have a **full valence electron shell** - meaning their outermost electron shell is completely filled with electrons.\n\n- They exist as ::yellow[monoatomic] (single atoms) in nature\n- They don't naturally bond with other elements\n- They are extremely stable\n\n### The Quest for Stability\n\nWhen atoms bond, they are essentially trying to achieve the same stability as noble gases. Atoms will:\n1. **Lose electrons** to empty their outer shell\n2. **Gain electrons** to fill their outer shell\n3. **Share electrons** with other atoms\n\n> 💡 **Key Insight:** All chemical bonding is driven by atoms trying to achieve a full valence electron shell - just like noble gases!",
+    "speech_to_text_content": "Atoms naturally want to achieve the stable electronic configuration of a noble gas. Noble gases are special elements found in the last group of the periodic table, including helium, neon, argon, krypton, xenon, and radon. Noble gases are chemically unreactive because they have a full valence electron shell. When atoms bond, they are trying to achieve the same stability as noble gases by losing, gaining, or sharing electrons.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:05:00Z",
+    "updated_at": "2024-01-15T08:05:00Z",
+    "source_timestamp": "2024-01-15T08:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:51:42.249788+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "2",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚛️ Understanding Ions and Electron Transfer",
+    "content": "## What Are Ions?\n\n::yellow[Ions] are atoms that have gained or lost electrons, giving them an electrical charge.\n\n### How Ions Form\n\nWhen an atom loses or gains electrons:\n- **Loses electrons** → becomes a ::green[positive ion (cation)]\n- **Gains electrons** → becomes a ::red[negative ion (anion)]\n\n### Real Example: Sodium and Chlorine\n\nLet's look at how sodium (Na) and chlorine (Cl) form ions:\n\n**Sodium's Electronic Configuration:** 2.8.1\n- Has 1 electron in its outer shell\n- Nearest noble gas (Neon) has configuration 2.8\n- Solution: ::yellow[Lose 1 electron]\n- Result: Na⁺ (sodium ion)\n\n**Chlorine's Electronic Configuration:** 2.8.7\n- Has 7 electrons in its outer shell\n- Nearest noble gas (Argon) has configuration 2.8.8\n- Solution: ::yellow[Gain 1 electron]\n- Result: Cl⁻ (chloride ion)\n\n### The Charge Notation\n\n- If an atom loses ::purple[1 electron] → charge is **+1** (written as Na⁺)\n- If an atom loses ::purple[2 electrons] → charge is **+2** (written as Mg²⁺)\n- If an atom gains ::purple[1 electron] → charge is **-1** (written as Cl⁻)\n- If an atom gains ::purple[2 electrons] → charge is **-2** (written as O²⁻)\n\n> ⚠️ **Important:** The charge number shows HOW MANY electrons were lost or gained, not how many electrons the atom has!",
+    "speech_to_text_content": "Ions are atoms that have gained or lost electrons, giving them an electrical charge. When an atom loses electrons, it becomes a positive ion or cation. When an atom gains electrons, it becomes a negative ion or anion. Sodium has electronic configuration 2.8.1 and loses 1 electron to become Na+. Chlorine has configuration 2.8.7 and gains 1 electron to become Cl-. The charge number shows how many electrons were lost or gained.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:10:00Z",
+    "updated_at": "2024-01-15T08:10:00Z",
+    "source_timestamp": "2024-01-15T08:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:51:46.621066+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Ionic Bonding Explained",
+    "content": "## What Is Ionic Bonding?\n\n::yellow[Ionic bonding] is the electrostatic attraction between oppositely charged ions. It occurs when one atom transfers electrons to another atom.\n\n### How Ionic Bonds Form\n\nIonic bonds form between:\n- **Metals** (which lose electrons easily)\n- **Non-metals** (which gain electrons easily)\n\n### The Process\n\n1. **Metal atom loses electrons** → becomes a ::green[positive cation]\n2. **Non-metal atom gains electrons** → becomes a ::red[negative anion]\n3. **Opposite charges attract** → ::yellow[ionic bond forms]\n4. **Both atoms achieve noble gas configuration** → stable!\n\n### Real Example: Sodium Chloride (NaCl)\n\n```\nNa (2.8.1)  +  Cl (2.8.7)  →  Na⁺  +  Cl⁻\n  ↓                              ↓\nLoses 1e⁻                    Gains 1e⁻\n(becomes +1)                (becomes -1)\n                              ↓\n                    IONIC BOND FORMS!\n```\n\n### Dot-and-Cross Diagrams\n\nChemists use special diagrams to show ionic bonding:\n- ::blue[Dots] represent electrons from one atom\n- ::blue[Crosses] represent electrons from the other atom\n- This helps visualize electron transfer\n\n### Important: Ionic Compounds\n\nWhen ionic bonds form, we get ::yellow[ionic compounds] that:\n- Contain ions held together by ionic bonds\n- Have NO net charge (positive and negative charges balance)\n- Are formed in fixed ratios (e.g., NaCl always has 1 Na⁺ and 1 Cl⁻)\n\n> 💡 **Key Point:** Ionic bonding is about ::green[electron transfer] - one atom gives electrons to another, and the resulting opposite charges attract each other.",
+    "speech_to_text_content": "Ionic bonding is the electrostatic attraction between oppositely charged ions. It occurs when metals lose electrons and non-metals gain electrons. Sodium loses one electron to become Na+ while chlorine gains one electron to become Cl-. The opposite charges attract, forming an ionic bond. Ionic compounds have no net charge and are formed in fixed ratios.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:51:51.988823+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "4",
+    "type": "slide",
+    "question_type": null,
+    "title": "📋 Common Cations You Need to Know",
+    "content": "## Important Cations (Positive Ions)\n\nHere are the most important cations you'll encounter in O-Level Chemistry:\n\n### +1 Cations (Lost 1 Electron)\n\n| Ion Name | Formula | Type |\n|----------|---------|------|\n| Hydrogen | H⁺ | Sometimes |\n| Sodium | Na⁺ | Group 1 |\n| Potassium | K⁺ | Group 1 |\n| Silver | Ag⁺ | Transition metal |\n| Ammonium | NH₄⁺ | Polyatomic* |\n\n*Note: Ammonium has 4 hydrogen atoms but only a +1 charge!\n\n### +2 Cations (Lost 2 Electrons)\n\n| Ion Name | Formula | Type |\n|----------|---------|------|\n| Magnesium | Mg²⁺ | Group 2 |\n| Calcium | Ca²⁺ | Group 2 |\n| Barium | Ba²⁺ | Group 2 |\n| Iron (II) | Fe²⁺ | Transition metal |\n| Copper (II) | Cu²⁺ | Transition metal |\n| Zinc | Zn²⁺ | Transition metal |\n| Lead (II) | Pb²⁺ | Group 14 |\n\n### +3 Cations (Lost 3 Electrons)\n\n| Ion Name | Formula |\n|----------|----------|\n| Aluminium | Al³⁺ |\n| Iron (III) | Fe³⁺ |\n\n### +4 Cations (Lost 4 Electrons)\n\nSome Group 14 elements can lose 4 electrons, but this is less common.\n\n> 💡 **Memory Tip:** Group number often tells you the charge! Group 1 atoms form +1 ions, Group 2 atoms form +2 ions, and so on (though there are exceptions with transition metals).",
+    "speech_to_text_content": "Important cations include hydrogen, sodium, potassium, silver, and ammonium which are +1 ions. Magnesium, calcium, barium, iron two plus, copper two plus, zinc, and lead two plus are +2 ions. Aluminium and iron three plus are +3 ions. The group number in the periodic table often indicates the charge of the cation formed.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:20:00Z",
+    "updated_at": "2024-01-15T08:20:00Z",
+    "source_timestamp": "2024-01-15T08:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:51:56.562410+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "5",
+    "type": "slide",
+    "question_type": null,
+    "title": "📋 Common Anions You Need to Know",
+    "content": "## Important Anions (Negative Ions)\n\nHere are the most important anions you'll encounter in O-Level Chemistry:\n\n### -1 Anions (Gained 1 Electron)\n\n| Ion Name | Formula | Type |\n|----------|---------|------|\n| Fluoride | F⁻ | Halogen (Group 17) |\n| Chloride | Cl⁻ | Halogen (Group 17) |\n| Bromide | Br⁻ | Halogen (Group 17) |\n| Iodide | I⁻ | Halogen (Group 17) |\n| Hydroxide | OH⁻ | Polyatomic* |\n| Nitrate | NO₃⁻ | Polyatomic* |\n| Manganate (VIII) | MnO₄⁻ | Polyatomic* |\n\n*Polyatomic ions are groups of atoms bonded together that act as a single ion.\n\n### -2 Anions (Gained 2 Electrons)\n\n| Ion Name | Formula | Type |\n|----------|---------|------|\n| Oxide | O²⁻ | Group 16 |\n| Carbonate | CO₃²⁻ | Polyatomic* |\n| Sulfate | SO₄²⁻ | Polyatomic* |\n\n*Note: Carbonate has 3 oxygen atoms but a -2 charge, NOT -3!\n\n### -3 Anions (Gained 3 Electrons)\n\n| Ion Name | Formula | Type |\n|----------|---------|------|\n| Phosphate | PO₄³⁻ | Polyatomic* |\n\n*Note: Phosphate has 4 oxygen atoms but a -3 charge, NOT -4!\n\n### -4 Anions (Gained 4 Electrons)\n\nSome Group 14 elements can gain 4 electrons, but this is less common.\n\n> ⚠️ **Critical Warning:** ::red[Don't confuse the number of atoms with the charge!] For example:\n> - NO₃⁻ has 3 oxygen atoms but charge is -1\n> - SO₄²⁻ has 4 oxygen atoms but charge is -2\n> - PO₄³⁻ has 4 oxygen atoms but charge is -3\n\n> 💡 **Memory Tip:** Group 17 (halogens) form -1 ions, Group 16 elements form -2 ions, Group 15 elements form -3 ions, and so on.",
+    "speech_to_text_content": "Important anions include fluoride, chloride, bromide, iodide, hydroxide, nitrate, and manganate which are -1 ions. Oxide, carbonate, and sulfate are -2 ions. Phosphate is a -3 ion. Do not confuse the number of atoms in an ion with its charge. For example, nitrate has 3 oxygen atoms but only a -1 charge.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:25:00Z",
+    "updated_at": "2024-01-15T08:25:00Z",
+    "source_timestamp": "2024-01-15T08:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:52:01.346911+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏗️ Giant Ionic Lattice Structures",
+    "content": "## What Is a Giant Ionic Lattice Structure (GILS)?\n\n::yellow[Giant ionic lattice structures] are the 3D arrangements of ions in solid ionic compounds. Think of them as enormous 3D grids of alternating positive and negative ions.\n\n### How the Structure Is Arranged\n\n- Each ion is surrounded by **6 ions of opposite charge**\n- Positive ions and negative ions alternate throughout the structure\n- The ions are arranged in an **orderly and regular pattern**\n- This creates a **regular, geometric shape** (like a cube)\n\n### Real Example: Sodium Chloride (NaCl)\n\nIn solid NaCl:\n- Each Na⁺ is surrounded by 6 Cl⁻ ions\n- Each Cl⁻ is surrounded by 6 Na⁺ ions\n- This creates a cubic crystal structure\n- The pattern repeats millions of times throughout the crystal\n\n### Why Are They So Hard?\n\n::green[Ionic compounds are very hard] because:\n- Strong ::blue[electrostatic forces] hold the ions in place\n- Each ion is bonded to multiple ions around it\n- It takes enormous energy to break these bonds\n\n### But They're Also Brittle!\n\n⚠️ When you apply force to an ionic crystal:\n1. The layers shift slightly\n2. Ions of the **same charge** move next to each other\n3. Repulsive forces between same charges become very strong\n4. The crystal suddenly **shatters** - it doesn't bend!\n\n> 💡 **Key Difference:** Ionic compounds are **hard but brittle** - they break suddenly rather than bending.",
+    "speech_to_text_content": "Giant ionic lattice structures are the three-dimensional arrangements of ions in solid ionic compounds. Each ion is surrounded by six ions of opposite charge in an orderly and regular pattern. In sodium chloride, each sodium plus is surrounded by six chloride ions and vice versa. Ionic compounds are very hard because of strong electrostatic forces, but they are brittle because when layers shift, ions of the same charge repel each other and the crystal shatters.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:52:06.527621+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Physical Properties of Ionic Compounds",
+    "content": "## How Does Structure Affect Properties?\n\nThe giant ionic lattice structure directly determines the properties of ionic compounds:\n\n### Melting and Boiling Points\n\n::yellow[Ionic compounds have HIGH melting and boiling points]\n\n**Why?** \n- Breaking the ionic bonds requires enormous energy\n- You must overcome strong electrostatic attractions between all the ions\n- More energy is needed if ions have higher charges (e.g., Mg²⁺ and O²⁻ compounds have higher melting points than Na⁺ and Cl⁻ compounds)\n\n### Solubility in Water\n\n::green[Most ionic compounds are soluble in water]\n\n**Why?**\n- Water molecules are attracted to the ions\n- Water molecules surround and separate the ions from the lattice\n- The ions dissolve, forming an aqueous solution\n- NOT soluble in organic solvents (like petrol or oil)\n\n### Electrical Conductivity\n\nIonic compounds conduct electricity in certain states:\n\n| State | Conducts? | Why? |\n|-------|-----------|------|\n| Solid | ❌ No | Ions are fixed in place, cannot move |\n| Molten (melted) | ✅ Yes | Ions are free to move and carry charge |\n| Dissolved in water | ✅ Yes | Ions are free to move in solution |\n\n**Why the difference?**\n- For electricity to flow, ::blue[charged particles must be able to move]\n- In solid state, ions are locked in the rigid lattice\n- When melted or dissolved, ions can move freely\n\n### Hardness and Brittleness\n\n- **Very hard:** Strong electrostatic forces hold ions firmly\n- **Brittle:** Cannot bend - shatters when stressed\n\n> 💡 **Summary:** The properties of ionic compounds (high melting point, soluble in water, conducts when molten/dissolved) all come from their giant ionic lattice structure and the strong electrostatic forces between ions.",
+    "speech_to_text_content": "Ionic compounds have high melting and boiling points because breaking ionic bonds requires enormous energy. Most ionic compounds are soluble in water because water molecules are attracted to the ions. Ionic compounds conduct electricity when molten or dissolved in water because ions can move freely, but not when solid because ions are fixed in place. Ionic compounds are very hard but brittle because of strong electrostatic forces.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:35:00Z",
+    "updated_at": "2024-01-15T08:35:00Z",
+    "source_timestamp": "2024-01-15T08:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:52:12.131468+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "8",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚛️ Covalent Bonding - Sharing Electrons",
+    "content": "## What Is Covalent Bonding?\n\n::yellow[Covalent bonding] is when two atoms **share a pair of electrons** to achieve a stable noble gas configuration.\n\n### How Is It Different from Ionic Bonding?\n\n| Ionic Bonding | Covalent Bonding |\n|---|---|\n| **Transfer** electrons | **Share** electrons |\n| Metal + Non-metal | Non-metal + Non-metal |\n| Forms ions | Forms molecules |\n| Electrostatic attraction | Attraction between nuclei and shared electrons |\n\n### Why Do Non-Metals Share Electrons?\n\nNon-metals don't form ions easily because:\n- They would need to gain many electrons (difficult!)\n- They would need to lose many electrons (very difficult!)\n- **Solution:** Share electrons with other atoms\n\n### Real Example: Chlorine Gas (Cl₂)\n\n```\nCl (2.8.7)  +  Cl (2.8.7)  →  Cl:Cl\n                                 ↓\n                    Shared pair of electrons\n```\n\nEach chlorine atom:\n- Needs 1 more electron to achieve 2.8.8 (Argon configuration)\n- Shares 1 electron with the other Cl atom\n- Now each Cl \"sees\" 8 electrons in its outer shell\n- Both atoms are stable!\n\n### The Electron Pair\n\n::blue[A covalent bond] consists of:\n- **2 electrons** (the shared pair)\n- These electrons are attracted to **both nuclei**\n- This attraction holds the atoms together\n\n### Single, Double, and Triple Bonds\n\nAtoms can share different numbers of electron pairs:\n\n| Bond Type | Electron Pairs | Example | Strength |\n|-----------|---|---------|----------|\n| Single bond | 1 pair | H-H, C-C | Weakest |\n| Double bond | 2 pairs | C=C, O=O | Stronger |\n| Triple bond | 3 pairs | N≡N | Strongest |\n\n> 💡 **Key Point:** In covalent bonding, atoms SHARE electrons - both atoms benefit from the shared electrons!",
+    "speech_to_text_content": "Covalent bonding is when two atoms share a pair of electrons to achieve a stable noble gas configuration. Non-metals share electrons rather than transfer them because gaining or losing many electrons is difficult. In chlorine gas, each chlorine atom shares one electron with the other chlorine atom. Both atoms can now achieve the electron configuration of argon. Atoms can share one, two, or three pairs of electrons, forming single, double, or triple bonds.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:40:00Z",
+    "updated_at": "2024-01-15T08:40:00Z",
+    "source_timestamp": "2024-01-15T08:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:52:18.103330+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Common Covalent Molecules",
+    "content": "## Important Covalent Molecules\n\nHere are some common covalent molecules you'll study:\n\n### Simple Molecules (2 Atoms)\n\n**Hydrogen Gas (H₂)**\n- Each H needs 1 electron to achieve He configuration (1s¹)\n- Share 1 pair: H:H or H-H\n- Single bond\n\n**Oxygen Gas (O₂)**\n- Each O needs 2 electrons to achieve Ne configuration (2.8)\n- Share 2 pairs: O::O or O=O\n- Double bond\n\n**Chlorine Gas (Cl₂)**\n- Each Cl needs 1 electron to achieve Ar configuration (2.8.8)\n- Share 1 pair: Cl:Cl or Cl-Cl\n- Single bond\n\n### Molecules with More Atoms\n\n**Water (H₂O)**\n- Oxygen needs 2 electrons\n- Each hydrogen needs 1 electron\n- Oxygen forms 2 single bonds with 2 hydrogen atoms\n- Structure: H-O-H\n\n**Methane (CH₄)**\n- Carbon needs 4 electrons\n- Each hydrogen needs 1 electron\n- Carbon forms 4 single bonds with 4 hydrogen atoms\n- Structure: H-C-H with H above and below\n\n**Carbon Dioxide (CO₂)**\n- Carbon needs 4 electrons\n- Each oxygen needs 2 electrons\n- Carbon forms 2 double bonds with 2 oxygen atoms\n- Structure: O=C=O\n\n### Dot-and-Cross Diagrams\n\nChemists show covalent bonding using:\n- ::blue[Dots] for electrons from one atom\n- ::blue[Crosses] for electrons from another atom\n- Shared electrons shown between atoms\n\n> 💡 **Key Pattern:** The number of bonds an atom forms depends on how many electrons it needs to fill its outer shell. Carbon always forms 4 bonds, oxygen always forms 2 bonds, hydrogen always forms 1 bond.",
+    "speech_to_text_content": "Hydrogen gas has a single bond where each hydrogen shares one electron pair. Oxygen gas has a double bond where each oxygen shares two electron pairs. Chlorine gas has a single bond. Water has oxygen bonded to two hydrogens with single bonds. Methane has carbon bonded to four hydrogens with single bonds. Carbon dioxide has carbon bonded to two oxygens with double bonds. The number of bonds an atom forms depends on how many electrons it needs to fill its outer shell.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:52:22.964642+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ Physical Properties of Covalent Substances",
+    "content": "## How Does Covalent Structure Affect Properties?\n\nCovalent substances have very different properties depending on their structure. There are two main types:\n\n## Simple Molecular Substances (SMS)\n\n::yellow[Simple molecular substances] are individual molecules held together by **weak intermolecular forces**.\n\n### Examples\n- H₂, O₂, Cl₂ (diatomic molecules)\n- H₂O, CH₄, CO₂ (polyatomic molecules)\n- I₂ (iodine)\n\n### Properties of Simple Molecular Substances\n\n**Melting and Boiling Points:** ::red[LOW]\n- Only weak forces between molecules need to be broken\n- Little energy required\n- Many are gases or liquids at room temperature\n- Volatile (evaporate easily)\n\n**Electrical Conductivity:** ❌ ::red[Do NOT conduct]\n- No mobile charge carriers\n- All valence electrons are used in bonding\n- Exception: Some covalent acids (like HCl) conduct when dissolved in water\n\n**Solubility:** Varies\n- Polar molecules (like water) dissolve in water\n- Non-polar molecules (like oil) don't dissolve in water\n\n**Hardness:** ::yellow[Soft]\n- Weak forces between molecules\n- Easy to crush or break\n\n### Size Matters!\n\nThe larger the molecule:\n- More electrons → stronger intermolecular forces\n- Higher melting and boiling points\n- Example: I₂ (larger) has higher melting point than Cl₂ (smaller)\n\n---\n\n## Giant Molecular Substances (GMS)\n\n::yellow[Giant molecular substances] are atoms bonded together by **strong covalent bonds throughout the entire structure**.\n\n### Examples\n- Diamond (carbon)\n- Graphite (carbon)\n- Silicon dioxide (sand)\n- Silicon (Si)\n\n### Properties of Giant Molecular Substances\n\n**Melting and Boiling Points:** ::green[VERY HIGH]\n- Strong covalent bonds throughout the structure\n- Enormous energy needed to break all bonds\n- Don't melt easily\n\n**Electrical Conductivity:** ❌ Usually NO\n- Exception: ::blue[Graphite conducts electricity]!\n  - Only 3 of 4 valence electrons bond\n  - The 4th electron is free to move\n\n**Solubility:** ❌ Insoluble\n- Covalent bonds are too strong\n- Solvent molecules can't break them apart\n\n**Hardness:** Very hard (except graphite)\n- Strong covalent bonds throughout\n- Difficult to break or scratch\n\n### Special Case: Graphite\n\nGraphite is interesting because:\n- **Hard in one direction** (strong covalent bonds within layers)\n- **Soft in another direction** (weak forces between layers)\n- **Conducts electricity** (free electrons)\n- **Lubricating** (layers slide over each other easily)\n\n> 💡 **Key Comparison:** Simple molecular substances are soft with low melting points. Giant molecular substances are hard with high melting points. The difference is in the strength of forces holding the structure together!",
+    "speech_to_text_content": "Simple molecular substances are held together by weak intermolecular forces and have low melting and boiling points. They do not conduct electricity and are soft. Giant molecular substances are held together by strong covalent bonds throughout and have very high melting and boiling points. They are usually hard and do not conduct electricity, except graphite which conducts because it has free electrons. Graphite is soft in one direction because of weak forces between layers.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:50:00Z",
+    "updated_at": "2024-01-15T08:50:00Z",
+    "source_timestamp": "2024-01-15T08:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:52:30.965113+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Metallic Bonding - The Sea of Electrons",
+    "content": "## What Is Metallic Bonding?\n\n::yellow[Metallic bonding] is the electrostatic attraction between a lattice of positive metal ions and a \"sea\" of delocalised valence electrons.\n\n### The Metal Structure\n\nMetals have a unique structure:\n\n```\n   Metal Cations (Positive Ions)\n   + + + + +\n   + + + + +    Surrounded by a\n   + + + + +    \"Sea of Electrons\"\n   + + + + +\n   + + + + +\n```\n\n### How It Works\n\n1. Metal atoms lose their valence electrons\n2. These electrons become **delocalised** - they don't belong to any one atom\n3. The electrons form a \"sea\" that moves throughout the structure\n4. The sea of electrons attracts the positive metal cations\n5. This attraction holds the metal together\n\n### Why \"Delocalised\"?\n\n::blue[Delocalised electrons] are electrons that:\n- Don't belong to a specific atom\n- Can move freely throughout the structure\n- Belong to the entire metal structure\n- This is what makes metals special!\n\n### Real Example: Sodium Metal\n\n```\nNa → Na⁺ + e⁻  (loses 1 valence electron)\n\nMany sodium atoms do this, creating:\n- A lattice of Na⁺ ions\n- A sea of electrons that moves between them\n```\n\n> 💡 **Key Concept:** The delocalised electrons are the key to understanding all metal properties!",
+    "speech_to_text_content": "Metallic bonding is the electrostatic attraction between a lattice of positive metal ions and a sea of delocalised valence electrons. Metal atoms lose their valence electrons, which become delocalised and move freely throughout the structure. These free electrons form a sea that attracts the positive metal cations, holding the metal together. Delocalised electrons are the key to understanding metal properties.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:55:00Z",
+    "updated_at": "2024-01-15T08:55:00Z",
+    "source_timestamp": "2024-01-15T08:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:52:35.735624+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "12",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚙️ Physical Properties of Metals",
+    "content": "## How Does Metallic Structure Explain Metal Properties?\n\nThe sea of delocalised electrons explains ALL the special properties of metals!\n\n### High Melting and Boiling Points\n\n::yellow[Metals have very high melting and boiling points]\n\n**Why?**\n- Strong electrostatic attraction between cations and electron sea\n- Enormous energy needed to break these bonds\n- The more electrons available, the higher the melting point\n\n### Excellent Electrical Conductivity\n\n✅ ::green[Metals conduct electricity very well]\n\n**Why?**\n- Delocalised electrons can move freely\n- When voltage is applied, electrons flow easily\n- This flow of electrons = electric current\n- Better than ionic compounds (ions can't move in solid state)\n\n### Excellent Thermal Conductivity\n\n✅ ::green[Metals conduct heat very well]\n\n**Why?**\n- Delocalised electrons move and transfer kinetic energy\n- Heat spreads quickly through the metal\n- This is why metal pans heat up so fast!\n\n### Malleability and Ductility\n\n::green[Metals can be hammered into sheets (malleable) or drawn into wires (ductile)]\n\n**Why?**\n- Metal cations are all the same size\n- Packed in orderly layers\n- When force is applied, layers can slide over each other\n- The electron sea **moves with the cations**\n- Bonds are NOT broken - they reform in new positions!\n- This is very different from ionic compounds (which shatter)\n\n### Sonorous (Ringing Sound)\n\n::yellow[Metals make a ringing sound when struck]\n\n**Why?**\n- When hit, the vibration travels through the electron sea\n- The sea of electrons maintains the structure\n- Vibrations continue and create sound waves\n\n### Shiny Appearance\n\n✨ ::yellow[Metals are shiny and lustrous]\n\n**Why?**\n- Delocalised electrons can absorb and re-emit light\n- This gives metals their characteristic shine\n\n### Density\n\n::yellow[Metals are generally dense]\n\n**Why?**\n- Metal atoms are packed closely together\n- Strong attraction between cations and electron sea\n- This creates tightly packed structures\n\n### Chemical Properties: Form Alkaline Oxides\n\n::blue[When metals react with oxygen, they form basic (alkaline) oxides]\n\nExample:\n- Sodium burns in oxygen: 4Na + O₂ → 2Na₂O\n- Na₂O dissolves in water to form NaOH (alkaline)\n\n### Chemical Properties: Lose Electrons\n\n::blue[Metals react by losing electrons to form cations]\n\nExample:\n- Mg → Mg²⁺ + 2e⁻\n- This is why metals are good reducing agents\n\n---\n\n## Summary Table\n\n| Property | Why? |\n|----------|------|\n| High melting point | Strong attraction to electron sea |\n| Conducts electricity | Delocalised electrons move freely |\n| Conducts heat | Electrons transfer kinetic energy |\n| Malleable/ductile | Layers slide; electron sea moves with them |\n| Shiny | Electrons absorb and re-emit light |\n| Dense | Atoms packed tightly |\n| Lose electrons | Valence electrons are delocalised |\n\n> 💡 **Key Insight:** Almost every property of metals comes from having delocalised electrons that can move freely!",
+    "speech_to_text_content": "Metals have high melting and boiling points because of strong electrostatic attraction between cations and the electron sea. Metals conduct electricity and heat very well because delocalised electrons can move freely. Metals are malleable and ductile because layers can slide over each other while the electron sea moves with them. Metals are shiny because electrons absorb and re-emit light. Metals react by losing electrons to form cations.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:52:44.076810+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "13",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧬 Elements, Compounds, and Mixtures",
+    "content": "## Three Types of Pure and Impure Substances\n\nUnderstanding the difference between these is crucial for chemistry!\n\n---\n\n## Elements\n\n::yellow[An element] is a pure substance that **cannot be broken down into simpler substances by chemical methods**.\n\n### What Elements Look Like\n\nElements can exist as:\n\n1. **Atoms** - single atoms not bonded to anything\n   - Example: Argon gas (Ar)\n\n2. **Molecules** - atoms of the same element bonded together\n   - Example: Oxygen gas (O₂), nitrogen gas (N₂)\n   - Note: H₂ is an element (not a compound!)\n\n3. **Giant Metallic Structure** - lattice of metal cations and electron sea\n   - Example: Iron (Fe), copper (Cu), gold (Au)\n\n### Properties of Elements\n\n- **Fixed melting and boiling points**\n- **Cannot be decomposed** by chemical methods\n- **Pure substances** - only one type of particle\n\n### Examples\n- All elements on the periodic table\n- Carbon (C), Sulfur (S), Hydrogen (H₂)\n\n---\n\n## Compounds\n\n::yellow[A compound] is a pure substance made of **two or more elements chemically combined in a fixed ratio**.\n\n### How Compounds Form\n\n- Elements bond through **ionic or covalent bonding**\n- The ratio of elements is always the same\n- Example: H₂O always has 2 hydrogen atoms and 1 oxygen atom\n\n### Important Distinction\n\n⚠️ **Not all molecules are compounds!**\n- H₂ is a molecule but it's an ELEMENT (two H atoms bonded)\n- O₂ is a molecule but it's an ELEMENT (two O atoms bonded)\n- CO₂ is a molecule AND a COMPOUND (C and O bonded)\n\n### Properties of Compounds\n\n- **Different from their elements** - properties change when bonded!\n  - Sodium (Na) is a soft metal\n  - Chlorine (Cl₂) is a toxic gas\n  - NaCl (sodium chloride) is table salt - completely different!\n\n- **Fixed melting and boiling points**\n- **Can be separated** (but with difficulty)\n  - Heat decomposition: 2H₂O → 2H₂ + O₂ (requires electricity)\n  - Electrolysis: breaks bonds using electric current\n\n### Examples\n- Water (H₂O)\n- Carbon dioxide (CO₂)\n- Sodium chloride (NaCl)\n- Methane (CH₄)\n\n---\n\n## Mixtures\n\n::yellow[A mixture] is an **impure substance** made of elements, molecules, or compounds **physically combined without a fixed ratio**.\n\n### Key Differences from Compounds\n\n| Compound | Mixture |\n|----------|----------|\n| Chemically bonded | Physically mixed |\n| Fixed ratio | Variable ratio |\n| Different properties from elements | Similar properties to components |\n| Hard to separate | Easy to separate |\n\n### Properties of Mixtures\n\n- **Variable composition** - ratio of components can change\n  - Example: Air at sea level has different O₂ % than air on a mountain\n\n- **Range of melting and boiling points**\n  - Different components melt/boil at different temperatures\n  - No single fixed melting point\n\n- **Easy to separate** (usually)\n  - Heating: separate by different boiling points\n  - Filtration: separate solids from liquids\n  - Crystallisation: separate dissolved solids\n  - Distillation: separate liquids by boiling point\n\n- **Similar properties to components**\n  - A mixture of salt and sugar tastes like both salt and sugar\n  - Not like compounds where properties are completely new\n\n### Examples\n\n**Air**\n- Mixture of N₂, O₂, Ar, CO₂, and other gases\n- No fixed ratio (varies by altitude, location, weather)\n- Physically mixed, not chemically bonded\n\n**Seawater**\n- Mixture of water and dissolved salts\n- Variable composition (some areas more salty)\n\n**Brass** (alloy)\n- Mixture of copper and zinc\n- Properties between pure copper and pure zinc\n\n---\n\n## Quick Comparison\n\n| Feature | Element | Compound | Mixture |\n|---------|---------|----------|----------|\n| Type | Pure | Pure | Impure |\n| Bonding | None or metallic | Ionic or covalent | Physical |\n| Fixed ratio | N/A | Yes | No |\n| Can separate | No | Difficult (chemical) | Easy (physical) |\n| Properties | Characteristic | New properties | Similar to parts |\n\n> 💡 **Memory Tip:** Think of it like cooking! An element is a single ingredient. A compound is a recipe where ingredients chemically react. A mixture is a salad where ingredients stay separate!",
+    "speech_to_text_content": "An element is a pure substance that cannot be broken down into simpler substances by chemical methods. Elements can exist as atoms, molecules, or giant metallic structures. A compound is a pure substance made of two or more elements chemically combined in a fixed ratio. Compounds have different properties from their elements. A mixture is an impure substance made of elements, molecules, or compounds physically combined without a fixed ratio. Mixtures have variable composition and are easy to separate.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:05:00Z",
+    "updated_at": "2024-01-15T09:05:00Z",
+    "source_timestamp": "2024-01-15T09:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:52:55.966373+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "14",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔀 Alloys - Mixtures of Metals",
+    "content": "## What Is an Alloy?\n\n::yellow[An alloy] is a **mixture of a metal with another element** (usually another metal).\n\n### Important: Alloys Are Mixtures, Not Compounds!\n\n- **Not chemically bonded** - elements are physically mixed\n- **Variable composition** - ratio can change\n- **No fixed melting point** - components melt at different temperatures\n\n### Common Alloys\n\n| Alloy | Composition | Uses |\n|-------|-------------|------|\n| Brass | Copper + Zinc | Decorative items, musical instruments |\n| Steel | Iron + Carbon | Buildings, bridges, tools |\n| Bronze | Copper + Tin | Sculptures, bells |\n| Stainless Steel | Iron + Chromium + Nickel | Cutlery, medical instruments |\n| Aluminium alloys | Aluminium + other metals | Aircraft, car parts |\n\n---\n\n## Why Use Alloys Instead of Pure Metals?\n\n### Strength and Hardness\n\n::green[Alloys are usually stronger and harder than pure metals]\n\n**Why?**\n- Pure metals have atoms of the **same size** packed in orderly layers\n- Layers can slide easily → metal is soft\n- Alloy atoms are **different sizes**\n- Different sized atoms disrupt the orderly layers\n- Layers **cannot slide easily** → alloy is harder and stronger\n\n### Corrosion Resistance\n\n::green[Alloys resist rust and corrosion better]\n\n**Example:**\n- Pure iron rusts easily\n- Stainless steel (iron + chromium) resists rust\n- The chromium forms a protective oxide layer\n\n### Lower Melting Point\n\n::yellow[Alloys have lower melting points than pure metals]\n\n**Why?**\n- Different atoms disrupt the regular structure\n- Weaker overall structure\n- Requires less energy to melt\n\n**Note:** This is different from mixing pure substances - when you add an impurity, melting point decreases but boiling point increases!\n\n### Better Properties for Specific Uses\n\n::blue[Engineers can design alloys with specific properties]\n\nExample:\n- Brass (Cu + Zn) is easier to machine than pure copper\n- Steel is stronger than pure iron\n- Aluminium alloys are lighter than pure aluminium\n\n---\n\n## Alloy Structure at the Atomic Level\n\n### Pure Metal\n\n```\nM  M  M  M  M     All same size\nM  M  M  M  M     Layers can slide\nM  M  M  M  M     Soft!\n```\n\n### Alloy\n\n```\nM  A  M  A  M     Different sizes\nA  M  A  M  A     Layers disrupted\nM  A  M  A  M     Can't slide - hard!\n```\n\n(M = original metal, A = added element)\n\n---\n\n## Why Alloys Matter\n\n⚠️ Pure metals are often **not strong enough** for real-world applications:\n- Pure iron is too soft for building construction\n- Pure copper is too soft for electrical wiring (needs to be drawn into wires)\n- Pure aluminium is too soft for aircraft\n\n✅ **Solution:** Use alloys!\n- Steel for bridges and buildings\n- Brass for plumbing fixtures\n- Duralumin for aircraft\n\n> 💡 **Key Insight:** By understanding how atomic structure affects properties, engineers can create alloys with exactly the properties needed for specific applications!",
+    "speech_to_text_content": "An alloy is a mixture of a metal with another element, usually another metal. Alloys are mixtures, not compounds, so they have variable composition. Alloys are stronger and harder than pure metals because atoms of different sizes disrupt the orderly layers, preventing them from sliding. Alloys have lower melting points and better corrosion resistance than pure metals. Engineers use alloys to create materials with specific properties for different applications.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:10:00Z",
+    "updated_at": "2024-01-15T09:10:00Z",
+    "source_timestamp": "2024-01-15T09:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:53:04.521002+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "15",
+    "type": "slide",
+    "question_type": null,
+    "title": "💎 Diamond vs Graphite - Two Forms of Carbon",
+    "content": "## Allotropes of Carbon\n\n::yellow[Allotropes] are different forms of the same element. Diamond and graphite are both forms of pure carbon, but with completely different structures and properties!\n\n---\n\n## Diamond Structure\n\n### Atomic Arrangement\n\n- Each carbon atom bonds to **4 other carbon atoms**\n- Bonds are arranged in a **3D tetrahedral structure**\n- **Continuous network** of strong covalent bonds throughout\n- This is a **giant covalent substance**\n\n### Properties of Diamond\n\n**Hardness:** ✅ ::green[EXTREMELY HARD]\n- Strongest natural material on Earth\n- Can only be scratched by another diamond\n- All 4 valence electrons are used in bonding\n\n**Melting Point:** ✅ ::green[VERY HIGH] (3823°C)\n- Strong covalent bonds throughout\n- Enormous energy needed to break all bonds\n\n**Electrical Conductivity:** ❌ ::red[Does NOT conduct]\n- All electrons are used in bonding\n- No free electrons to carry charge\n\n**Solubility:** ❌ Insoluble\n- Covalent bonds too strong\n- Solvents can't break them apart\n\n**Density:** ::yellow[High density]\n- Atoms closely packed in 3D structure\n\n### Uses of Diamond\n\n💍 **Jewellery** - beautiful and extremely hard\n\n🔪 **Cutting tools** - diamond-tipped saws and drills\n\n🌡️ **Heat sinks** - excellent thermal conductor (despite not conducting electricity!)\n\n---\n\n## Graphite Structure\n\n### Atomic Arrangement\n\n- Each carbon atom bonds to **3 other carbon atoms**\n- Forms **layers** of hexagonal rings\n- Layers are held by **weak intermolecular forces**\n- This is a **giant covalent substance** with layers\n\n### Properties of Graphite\n\n**Hardness:** ⚠️ ::yellow[SOFT] (within layers)\n- Weak forces between layers\n- Layers slide over each other easily\n- Can be scratched and used as pencil \"lead\"\n\n**Melting Point:** ✅ ::green[VERY HIGH] (3650°C)\n- Strong covalent bonds within layers\n- Weak forces between layers don't matter for melting\n\n**Electrical Conductivity:** ✅ ::green[CONDUCTS ELECTRICITY]\n- Only 3 of 4 valence electrons are used in bonding\n- The 4th electron is **delocalised** (can move freely)\n- These free electrons carry electric current\n- Behaves a bit like a metal!\n\n**Solubility:** ❌ Insoluble\n- Covalent bonds too strong\n\n**Density:** ::yellow[Lower than diamond]\n- Layered structure is less tightly packed\n\n### Uses of Graphite\n\n✏️ **Pencils** - soft and leaves marks\n\n⚡ **Electrodes** - conducts electricity\n\n🧴 **Lubricants** - layers slide easily\n\n🔋 **Batteries** - conducts electricity\n\n---\n\n## Comparison Table\n\n| Property | Diamond | Graphite |\n|----------|---------|----------|\n| **Bonds per atom** | 4 | 3 |\n| **Structure** | 3D continuous | Layered |\n| **Hardness** | Extremely hard | Soft |\n| **Melting point** | Very high (3823°C) | Very high (3650°C) |\n| **Conducts electricity** | ❌ No | ✅ Yes |\n| **Solubility** | Insoluble | Insoluble |\n| **Density** | High | Lower |\n| **Uses** | Jewellery, cutting tools | Pencils, lubricants, electrodes |\n\n---\n\n## Why Are They So Different?\n\n::blue[Same element (carbon), completely different properties!]\n\nThe key difference is **structure**:\n- **Diamond:** 3D network, all electrons bonded, very hard\n- **Graphite:** Layered structure, free electrons, conducts, soft\n\nThis perfectly demonstrates the central principle of this chapter:\n\n> 💡 **KEY PRINCIPLE:** ::green[The structure and bonding of a substance determines its physical properties!]\n\nEven though both are pure carbon, their different atomic arrangements create completely different materials with different uses.",
+    "speech_to_text_content": "Diamond and graphite are two forms of pure carbon with different structures. In diamond, each carbon atom bonds to four other carbon atoms in a three-dimensional structure, making it extremely hard. In graphite, each carbon atom bonds to three other carbon atoms in layers held by weak forces. Graphite is soft and conducts electricity because it has free electrons. The different structures of diamond and graphite give them completely different properties.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:53:14.741725+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "16",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏗️ Relating Structure to Properties - The Big Picture",
+    "content": "## The Central Principle of This Chapter\n\n::green[The structure and bonding of a substance completely determines its physical and chemical properties]\n\nIf you know the structure, you can predict the properties. If you know the properties, you can deduce the structure!\n\n---\n\n## How to Predict Properties from Structure\n\n### Step 1: Identify the Type of Substance\n\n**Is it ionic, covalent (simple or giant), or metallic?**\n\n### Step 2: Consider the Forces\n\n| Type | Forces | Strength |\n|------|--------|----------|\n| Ionic | Electrostatic (ions) | Very strong |\n| Covalent (simple) | Intermolecular forces | Weak |\n| Covalent (giant) | Covalent bonds | Very strong |\n| Metallic | Electrostatic (cations + electron sea) | Very strong |\n\n### Step 3: Predict Properties\n\n**Melting Point:**\n- Strong forces → High melting point\n- Weak forces → Low melting point\n\n**Electrical Conductivity:**\n- Free mobile charge carriers → Conducts\n- No free charge carriers → Doesn't conduct\n\n**Hardness:**\n- Strong directional bonds → Hard\n- Weak forces → Soft\n- Can slide (metals, graphite) → Malleable/ductile\n\n**Solubility:**\n- Polar solvent (water) breaks ionic bonds → Soluble\n- Covalent bonds too strong → Insoluble\n\n---\n\n## Examples: Predicting Properties\n\n### Example 1: Sodium Chloride (NaCl)\n\n**Structure:** Ionic compound with giant ionic lattice\n\n**Forces:** Strong electrostatic attractions between Na⁺ and Cl⁻\n\n**Predicted Properties:**\n- ✅ High melting point (801°C) - strong forces\n- ✅ Soluble in water - polar water breaks ionic bonds\n- ✅ Conducts when molten/dissolved - ions can move\n- ✅ Hard but brittle - strong forces, but layers shift\n\n### Example 2: Methane (CH₄)\n\n**Structure:** Simple molecular substance\n\n**Forces:** Weak intermolecular forces between molecules\n\n**Predicted Properties:**\n- ✅ Low melting point (-182°C) - weak forces\n- ✅ Gas at room temperature - weak forces\n- ❌ Doesn't conduct - no free charge carriers\n- ✅ Soft/compressible - weak forces\n\n### Example 3: Iron (Fe)\n\n**Structure:** Metallic - lattice of Fe cations + electron sea\n\n**Forces:** Strong electrostatic attraction between cations and electron sea\n\n**Predicted Properties:**\n- ✅ High melting point (1538°C) - strong forces\n- ✅ Conducts electricity - free delocalised electrons\n- ✅ Malleable and ductile - layers slide, electron sea moves\n- ✅ Shiny - electrons absorb/re-emit light\n\n### Example 4: Diamond (C)\n\n**Structure:** Giant covalent - continuous 3D network\n\n**Forces:** Strong covalent bonds throughout\n\n**Predicted Properties:**\n- ✅ Very high melting point (3823°C) - strong bonds\n- ❌ Doesn't conduct - no free electrons\n- ✅ Extremely hard - strong directional bonds\n- ❌ Insoluble - bonds too strong to break\n\n---\n\n## How to Deduce Structure from Properties\n\n### If a substance:\n\n**Conducts electricity when solid:**\n→ Probably metallic (delocalised electrons)\n\n**Conducts electricity only when molten/dissolved:**\n→ Probably ionic (ions only move when liquid)\n\n**Doesn't conduct electricity at all:**\n→ Probably covalent (no free charge carriers)\n\n**Has high melting point AND conducts:**\n→ Probably metallic or giant covalent\n\n**Has low melting point AND doesn't conduct:**\n→ Probably simple molecular\n\n**Is hard and brittle:**\n→ Probably ionic\n\n**Is hard and malleable:**\n→ Probably metallic\n\n**Is soft:**\n→ Probably simple molecular\n\n---\n\n## Summary: The Structure-Property Connection\n\n| Substance Type | Bonding | Forces | Melting Pt | Conducts | Hardness | Soluble in H₂O |\n|---|---|---|---|---|---|---|\n| **Ionic** | Electrostatic | Very strong | High | Only when molten/dissolved | Hard, brittle | Often yes |\n| **Simple Molecular** | Covalent (within) + intermolecular | Weak | Low | No | Soft | Variable |\n| **Giant Covalent** | Covalent | Very strong | Very high | No (except graphite) | Hard | No |\n| **Metallic** | Electrostatic (cations + e⁻) | Very strong | High | Yes | Hard, malleable | No |\n\n> 💡 **The Golden Rule:** ::yellow[Never memorise properties! Instead, understand the structure and bonding, and you can deduce all the properties!]",
+    "speech_to_text_content": "The structure and bonding of a substance completely determines its physical and chemical properties. If you know the structure, you can predict the properties. Strong forces lead to high melting points. Substances with free mobile charge carriers conduct electricity. Substances with strong directional bonds are hard. Ionic compounds are soluble in water. Simple molecular substances have low melting points. Understanding structure allows you to deduce all properties without memorising.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:20:00Z",
+    "updated_at": "2024-01-15T09:20:00Z",
+    "source_timestamp": "2024-01-15T09:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:53:25.731994+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "17",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Ionic Bonding",
+    "content": "## Question 1: Ionic Bonding\n\nWhich of the following describes how an ionic bond forms between sodium and chlorine?\n\nA) Sodium and chlorine share electrons equally\n\nB) Sodium transfers one electron to chlorine, and opposite charges attract\n\nC) Chlorine transfers electrons to sodium\n\nD) Both sodium and chlorine lose electrons to form a neutral compound",
+    "speech_to_text_content": "Which of the following describes how an ionic bond forms between sodium and chlorine? Option A: Sodium and chlorine share electrons equally. Option B: Sodium transfers one electron to chlorine, and opposite charges attract. Option C: Chlorine transfers electrons to sodium. Option D: Both sodium and chlorine lose electrons to form a neutral compound.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440018-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt-a",
+        "option_text": "A) Sodium and chlorine share electrons equally",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt-b",
+        "option_text": "B) Sodium transfers one electron to chlorine, and opposite charges attract",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt-c",
+        "option_text": "C) Chlorine transfers electrons to sodium",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt-d",
+        "option_text": "D) Both sodium and chlorine lose electrons to form a neutral compound",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Sodium transfers one electron to chlorine, and opposite charges attract**.\n\n**Why B is correct:**\n- Sodium (Na) has electronic configuration 2.8.1 and loses 1 electron to achieve 2.8 (noble gas configuration)\n- This makes sodium a +1 cation (Na⁺)\n- Chlorine (Cl) has electronic configuration 2.8.7 and gains 1 electron to achieve 2.8.8 (noble gas configuration)\n- This makes chlorine a -1 anion (Cl⁻)\n- The opposite charges (+ and -) attract each other, forming an ionic bond\n- This is electron TRANSFER, not sharing\n\n**Why other options are wrong:**\n- **A is wrong:** This describes covalent bonding, not ionic bonding. In covalent bonding, electrons are SHARED. In ionic bonding, electrons are TRANSFERRED.\n- **C is wrong:** Chlorine gains electrons, not transfers them. Metals (like sodium) transfer electrons TO non-metals (like chlorine).\n- **D is wrong:** Only sodium loses electrons. Chlorine gains electrons. They don't both lose electrons. Also, the compound IS neutral because the charges balance (Na⁺ and Cl⁻ = NaCl with no net charge).\n\n**Key concept:** Ionic bonding involves electron transfer from metal to non-metal, creating ions with opposite charges that attract each other.",
+    "created_at": "2024-01-15T09:25:00Z",
+    "updated_at": "2024-01-15T09:25:00Z",
+    "source_timestamp": "2024-01-15T09:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:53:32.784512+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "18",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Covalent Bonding",
+    "content": "## Question 2: Covalent Bonding\n\nWhich statement correctly describes covalent bonding in oxygen gas (O₂)?\n\nA) Each oxygen atom loses 2 electrons to achieve a stable configuration\n\nB) The two oxygen atoms share 2 pairs of electrons, forming a double bond\n\nC) One oxygen atom transfers electrons to the other oxygen atom\n\nD) Each oxygen atom shares 4 electrons with the other oxygen atom",
+    "speech_to_text_content": "Which statement correctly describes covalent bonding in oxygen gas? Option A: Each oxygen atom loses 2 electrons to achieve a stable configuration. Option B: The two oxygen atoms share 2 pairs of electrons, forming a double bond. Option C: One oxygen atom transfers electrons to the other oxygen atom. Option D: Each oxygen atom shares 4 electrons with the other oxygen atom.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440019-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt-a",
+        "option_text": "A) Each oxygen atom loses 2 electrons to achieve a stable configuration",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt-b",
+        "option_text": "B) The two oxygen atoms share 2 pairs of electrons, forming a double bond",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt-c",
+        "option_text": "C) One oxygen atom transfers electrons to the other oxygen atom",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt-d",
+        "option_text": "D) Each oxygen atom shares 4 electrons with the other oxygen atom",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) The two oxygen atoms share 2 pairs of electrons, forming a double bond**.\n\n**Why B is correct:**\n- Oxygen has electronic configuration 2.6\n- Each oxygen atom needs 2 more electrons to achieve 2.8 (noble gas configuration)\n- Instead of transferring or losing electrons, the two oxygen atoms SHARE electrons\n- Each oxygen atom contributes 1 electron pair, creating a double bond (O=O)\n- Both atoms now \"see\" 8 electrons in their outer shell\n- This is written as O::O or O=O (the colon or line represents the shared pair)\n\n**Why other options are wrong:**\n- **A is wrong:** Oxygen doesn't lose electrons in covalent bonding. It shares them. Also, losing 2 electrons would create O²⁻ (an anion), not a neutral O atom.\n- **C is wrong:** This describes ionic bonding. In covalent bonding between two identical atoms (O and O), there's no electron transfer. Both atoms are the same, so they share equally.\n- **D is wrong:** Each oxygen atom shares 2 electrons total (1 pair), not 4 electrons. A double bond consists of 2 pairs of shared electrons, but each atom only contributes 1 pair.\n\n**Key concept:** In covalent bonding, atoms SHARE electron pairs. The number of pairs shared determines the bond type (single, double, or triple bond).",
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:53:38.654270+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "19",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Metallic Bonding",
+    "content": "## Question 3: Metallic Bonding and Metal Properties\n\nWhich property of metals can be explained by the presence of delocalised electrons in the metallic structure?\n\nA) Metals are hard because atoms are packed tightly together\n\nB) Metals conduct electricity because delocalised electrons can move freely throughout the structure\n\nC) Metals have high melting points because they form covalent bonds\n\nD) Metals are brittle because the lattice structure breaks easily",
+    "speech_to_text_content": "Which property of metals can be explained by the presence of delocalised electrons in the metallic structure? Option A: Metals are hard because atoms are packed tightly together. Option B: Metals conduct electricity because delocalised electrons can move freely throughout the structure. Option C: Metals have high melting points because they form covalent bonds. Option D: Metals are brittle because the lattice structure breaks easily.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": "550e8400-e29b-41d4-a716-446655440020-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt-a",
+        "option_text": "A) Metals are hard because atoms are packed tightly together",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt-b",
+        "option_text": "B) Metals conduct electricity because delocalised electrons can move freely throughout the structure",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt-c",
+        "option_text": "C) Metals have high melting points because they form covalent bonds",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt-d",
+        "option_text": "D) Metals are brittle because the lattice structure breaks easily",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Metals conduct electricity because delocalised electrons can move freely throughout the structure**.\n\n**Why B is correct:**\n- In metallic bonding, metal atoms lose their valence electrons\n- These electrons become DELOCALISED - they don't belong to any one atom\n- The delocalised electrons form a \"sea\" that moves throughout the entire metal structure\n- When an electric potential is applied, these free electrons move easily\n- This flow of electrons = electric current\n- Therefore, metals are excellent conductors of electricity\n- This is the KEY property that explains metallic bonding!\n\n**Why other options are wrong:**\n- **A is wrong:** While atoms are packed tightly, this doesn't explain electrical conductivity. Many non-conducting solids (like ionic compounds) also have tightly packed atoms.\n- **C is wrong:** Metals do NOT form covalent bonds. They form metallic bonds (lattice of cations + electron sea). Also, covalent bonding would not explain why metals conduct electricity.\n- **D is wrong:** Metals are NOT brittle! This is a key difference from ionic compounds. Metals are malleable and ductile because the electron sea moves with the atoms as layers slide. Ionic compounds are brittle.\n\n**Key concept:** The delocalised electrons in metallic bonding explain multiple metal properties:\n- Electrical conductivity (electrons move freely)\n- Thermal conductivity (electrons transfer kinetic energy)\n- Malleability/ductility (electron sea maintains bonds as layers slide)\n- Shiny appearance (electrons absorb and re-emit light)",
+    "created_at": "2024-01-15T09:35:00Z",
+    "updated_at": "2024-01-15T09:35:00Z",
+    "source_timestamp": "2024-01-15T09:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:53:45.156115+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "20",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Structure and Properties",
+    "content": "## Question 4: Relating Structure to Physical Properties\n\nWhich of the following substances would you expect to have a HIGH melting point and conduct electricity ONLY when molten or dissolved in water?\n\nA) Methane (CH₄) - a simple molecular substance\n\nB) Sodium chloride (NaCl) - an ionic compound\n\nC) Diamond (C) - a giant covalent substance\n\nD) Copper (Cu) - a metal",
+    "speech_to_text_content": "Which of the following substances would you expect to have a high melting point and conduct electricity only when molten or dissolved in water? Option A: Methane, a simple molecular substance. Option B: Sodium chloride, an ionic compound. Option C: Diamond, a giant covalent substance. Option D: Copper, a metal.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440021",
+        "option_id": "550e8400-e29b-41d4-a716-446655440021-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt-a",
+        "option_text": "A) Methane (CH₄) - a simple molecular substance",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt-b",
+        "option_text": "B) Sodium chloride (NaCl) - an ionic compound",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt-c",
+        "option_text": "C) Diamond (C) - a giant covalent substance",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt-d",
+        "option_text": "D) Copper (Cu) - a metal",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Sodium chloride (NaCl) - an ionic compound**.\n\n**Why B is correct:**\n- Ionic compounds have a giant ionic lattice structure with strong electrostatic forces\n- HIGH melting point: Strong electrostatic attraction between ions requires enormous energy to break\n- Conducts electricity ONLY when molten or dissolved:\n  - In SOLID state: Ions are fixed in the lattice and cannot move → does NOT conduct\n  - In MOLTEN state: Ions are free to move → CONDUCTS electricity\n  - In AQUEOUS solution: Ions are free to move in water → CONDUCTS electricity\n- This pattern of \"conducts only when molten/dissolved\" is the signature of ionic compounds\n\n**Why other options are wrong:**\n- **A is wrong:** Methane is a simple molecular substance with weak intermolecular forces → LOW melting point (not high). Also doesn't conduct in any state.\n- **C is wrong:** Diamond is a giant covalent substance with high melting point ✓, but it does NOT conduct electricity in any state ✗ (no free charge carriers).\n- **D is wrong:** Copper is a metal that conducts electricity in the SOLID state ✗ (not just molten/dissolved). Metals have delocalised electrons that move freely even in solid state.\n\n**Key concept:** The property of \"conducts only when molten or dissolved\" is UNIQUE to ionic compounds. This is because:\n- Ions are the charge carriers\n- Ions can only move when the rigid lattice is broken (melting or dissolving)\n- When solid, ions are locked in place and cannot move",
+    "created_at": "2024-01-15T09:40:00Z",
+    "updated_at": "2024-01-15T09:40:00Z",
+    "source_timestamp": "2024-01-15T09:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:53:51.588426+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "21",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Elements, Compounds, and Mixtures",
+    "content": "## Question 5: Classifying Substances\n\nWhich of the following is a COMPOUND?\n\nA) Oxygen gas (O₂)\n\nB) Water (H₂O)\n\nC) Nitrogen gas (N₂)\n\nD) Copper (Cu)",
+    "speech_to_text_content": "Which of the following is a compound? Option A: Oxygen gas. Option B: Water. Option C: Nitrogen gas. Option D: Copper.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_id": "550e8400-e29b-41d4-a716-446655440022-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-opt-a",
+        "option_text": "A) Oxygen gas (O₂)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-opt-b",
+        "option_text": "B) Water (H₂O)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-opt-c",
+        "option_text": "C) Nitrogen gas (N₂)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-opt-d",
+        "option_text": "D) Copper (Cu)",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Water (H₂O)**.\n\n**Why B is correct:**\nWater is a COMPOUND because:\n- It contains TWO different elements: hydrogen (H) and oxygen (O)\n- The elements are chemically bonded together (covalent bonds)\n- They are combined in a FIXED ratio: always 2 hydrogen atoms to 1 oxygen atom\n- The properties of water are completely different from its elements:\n  - Hydrogen is a flammable gas\n  - Oxygen is a supporter of combustion\n  - Water is a liquid that extinguishes fire!\n- Water can be decomposed by chemical methods (electrolysis): 2H₂O → 2H₂ + O₂\n\n**Why other options are wrong:**\n- **A is wrong:** Oxygen gas (O₂) is an ELEMENT, not a compound. It contains only one element (oxygen). Even though it's a molecule (2 oxygen atoms bonded together), it's still an element because both atoms are the same.\n- **C is wrong:** Nitrogen gas (N₂) is an ELEMENT, not a compound. It contains only one element (nitrogen). Like O₂, it's a molecule of the same element.\n- **D is wrong:** Copper (Cu) is an ELEMENT. It's a pure metal containing only one element.\n\n**Critical Distinction:**\n⚠️ **Not all molecules are compounds!**\n- O₂ and N₂ are molecules but they are ELEMENTS\n- H₂O is a molecule AND a COMPOUND\n- The key difference: Compounds must contain TWO OR MORE different elements\n\n**Key concept:** A compound must contain:\n1. Two or more DIFFERENT elements\n2. Chemically bonded together\n3. In a FIXED ratio\n4. With properties different from the elements",
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T03:53:57.650907+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440023",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 23,
+    "part_label": "22",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Test Your Understanding: Diamond vs Graphite",
+    "content": "## Question 6: Allotropes of Carbon\n\nWhy does graphite conduct electricity while diamond does not, even though both are made of pure carbon?\n\nA) Graphite has a lower melting point than diamond\n\nB) Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding\n\nC) Diamond is harder than graphite\n\nD) Graphite is a mixture while diamond is a pure element",
+    "speech_to_text_content": "Why does graphite conduct electricity while diamond does not, even though both are made of pure carbon? Option A: Graphite has a lower melting point than diamond. Option B: Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding. Option C: Diamond is harder than graphite. Option D: Graphite is a mixture while diamond is a pure element.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023-a1",
+        "question_id": "550e8400-e29b-41d4-a716-446655440023",
+        "option_id": "550e8400-e29b-41d4-a716-446655440023-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023-opt-a",
+        "option_text": "A) Graphite has a lower melting point than diamond",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023-opt-b",
+        "option_text": "B) Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023-opt-c",
+        "option_text": "C) Diamond is harder than graphite",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023-opt-d",
+        "option_text": "D) Graphite is a mixture while diamond is a pure element",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **B) Graphite has free delocalised electrons because each carbon atom only uses 3 of its 4 valence electrons for bonding**.\n\n**Why B is correct:**\n\n**Diamond:**\n- Each carbon atom bonds to 4 other carbon atoms\n- All 4 valence electrons are used in covalent bonds\n- NO free electrons available\n- Therefore: Does NOT conduct electricity\n\n**Graphite:**\n- Each carbon atom bonds to 3 other carbon atoms (forming layers)\n- Only 3 of the 4 valence electrons are used in bonding\n- The 4th electron is FREE and DELOCALISED\n- These free electrons can move throughout the graphite structure\n- Therefore: CONDUCTS electricity\n\nThis is the KEY difference! Same element (carbon), different structures, different electrical properties.\n\n**Why other options are wrong:**\n- **A is wrong:** While it's true that graphite has a lower melting point, this doesn't explain electrical conductivity. Many substances with low melting points don't conduct electricity.\n- **C is wrong:** While diamond is harder, hardness doesn't determine electrical conductivity. Many hard substances (like ceramic) don't conduct.\n- **D is wrong:** Both graphite and diamond are pure elements made entirely of carbon. Neither is a mixture. This is false information.\n\n**Key Concept:** This question demonstrates the central principle of the chapter:\n::yellow[Structure determines properties!]\n\nSame element (carbon), different structures (diamond vs graphite), completely different properties (doesn't conduct vs conducts).\n\nThe presence or absence of free electrons is determined entirely by the atomic structure!",
+    "created_at": "2024-01-15T09:50:00Z",
+    "updated_at": "2024-01-15T09:50:00Z",
+    "source_timestamp": "2024-01-15T09:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 23,
+      "timestamp": "2025-12-24T03:54:04.150152+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 23,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440024",
+    "syllabus_id": "chem_o_level_sg",
+    "parent_id": null,
+    "order": 24,
+    "part_label": "23",
+    "type": "slide",
+    "question_type": null,
+    "title": "📚 Chapter Summary - Chemical Bonding and Structure",
+    "content": "## The Three Types of Chemical Bonding\n\n### 1️⃣ Ionic Bonding\n\n**What:** Electrostatic attraction between oppositely charged ions\n\n**How it forms:** Metal atoms TRANSFER electrons to non-metal atoms\n\n**Structure:** Giant ionic lattice - 3D arrangement of alternating positive and negative ions\n\n**Key Properties:**\n- ✅ High melting and boiling points (strong electrostatic forces)\n- ✅ Soluble in water (polar water breaks ionic bonds)\n- ✅ Conducts electricity when molten or dissolved (ions can move)\n- ❌ Doesn't conduct when solid (ions locked in place)\n- ✅ Hard but brittle (strong forces, but shatters when stressed)\n\n---\n\n### 2️⃣ Covalent Bonding\n\n**What:** Sharing of electron pairs between atoms\n\n**How it forms:** Non-metal atoms SHARE electrons to achieve noble gas configuration\n\n**Two Types of Covalent Structures:**\n\n**A) Simple Molecular Substances**\n- Individual molecules held by weak intermolecular forces\n- Examples: H₂, O₂, H₂O, CH₄, CO₂, I₂\n- Properties:\n  - ✅ Low melting/boiling points\n  - ❌ Don't conduct electricity\n  - ✅ Soft\n  - ✅ Variable solubility\n\n**B) Giant Covalent Substances**\n- Continuous 3D network of strong covalent bonds\n- Examples: Diamond, graphite, silicon dioxide, silicon\n- Properties:\n  - ✅ Very high melting points\n  - ❌ Usually don't conduct (except graphite)\n  - ✅ Very hard (except graphite)\n  - ❌ Insoluble\n\n---\n\n### 3️⃣ Metallic Bonding\n\n**What:** Attraction between metal cations and a sea of delocalised electrons\n\n**Structure:** Lattice of positive metal ions surrounded by a mobile \"sea\" of electrons\n\n**Key Properties (ALL explained by delocalised electrons):**\n- ✅ High melting and boiling points (strong attraction to electron sea)\n- ✅ Conduct electricity in solid state (free electrons move)\n- ✅ Conduct heat well (electrons transfer energy)\n- ✅ Malleable and ductile (layers slide, electron sea moves with them)\n- ✅ Shiny (electrons absorb and re-emit light)\n- ✅ Dense (atoms closely packed)\n- ✅ React by losing electrons\n\n---\n\n## Comparing All Substance Types\n\n| Property | Ionic | Simple Molecular | Giant Covalent | Metallic |\n|----------|-------|------------------|-----------------|----------|\n| **Bonding** | Electrostatic | Covalent (weak forces between) | Covalent (strong throughout) | Metallic |\n| **Melting Pt** | High | Low | Very high | High |\n| **Conducts (solid)** | No | No | No* | Yes |\n| **Conducts (molten/dissolved)** | Yes | No | No | - |\n| **Hardness** | Hard, brittle | Soft | Hard | Hard, malleable |\n| **Soluble in water** | Often yes | Variable | No | No |\n\n*Except graphite which conducts in all states\n\n---\n\n## Elements, Compounds, and Mixtures\n\n### Elements\n- Pure substance, cannot be broken down\n- Can be atoms, molecules, or metallic lattices\n- Fixed melting/boiling points\n\n### Compounds\n- Pure substance, two or more elements chemically bonded\n- Fixed ratio and fixed melting/boiling points\n- Different properties from elements\n- Can be separated by chemical methods\n\n### Mixtures\n- Impure, elements/compounds physically mixed\n- Variable ratio and variable melting/boiling points\n- Similar properties to components\n- Easy to separate by physical methods\n\n### Alloys (Special Mixtures)\n- Mixture of metal with another element\n- Stronger and harder than pure metals\n- Lower melting point than pure metals\n- Better corrosion resistance\n\n---\n\n## The Golden Principle\n\n### ::green[STRUCTURE DETERMINES PROPERTIES]\n\nIf you know the structure and bonding, you can predict ALL physical properties:\n\n1. **Identify the bonding type** (ionic, covalent, metallic)\n2. **Consider the strength of forces**\n3. **Predict the properties:**\n   - Strong forces → High melting point\n   - Free charge carriers → Conducts electricity\n   - Strong directional bonds → Hard\n   - Weak forces → Low melting point, soft\n\n---\n\n## Key Concepts to Remember\n\n✅ **Atoms want to achieve noble gas configuration** - this drives all bonding\n\n✅ **Ionic bonding = electron transfer** → opposite charges attract\n\n✅ **Covalent bonding = electron sharing** → atoms share pairs\n\n✅ **Metallic bonding = delocalised electrons** → explains all metal properties\n\n✅ **Structure determines properties** → same element can have different properties (diamond vs graphite)\n\n✅ **Not all molecules are compounds** → O₂ and N₂ are elements, not compounds\n\n✅ **Ionic compounds conduct only when molten/dissolved** → unique signature of ionic compounds\n\n✅ **Alloys are stronger than pure metals** → different sized atoms disrupt layers\n\n> 💡 **Final Thought:** Chemistry is not about memorising facts. It's about understanding how atoms bond together and how that structure creates the properties we observe in the world around us!",
+    "speech_to_text_content": "Chemical bonding comes in three types: ionic, covalent, and metallic. Ionic bonding is electrostatic attraction between ions formed by electron transfer. Covalent bonding is sharing of electrons between non-metals. Metallic bonding is attraction between metal cations and delocalised electrons. Simple molecular substances have low melting points. Giant covalent substances have very high melting points. Metals conduct electricity and are malleable. Elements are pure substances that cannot be broken down. Compounds are pure substances with two or more elements chemically bonded. Mixtures are impure substances physically combined. Structure determines all physical properties.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:55:00Z",
+    "updated_at": "2024-01-15T09:55:00Z",
+    "source_timestamp": "2024-01-15T09:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 24,
+      "timestamp": "2025-12-24T03:54:18.080933+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 24,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

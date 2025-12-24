@@ -1,0 +1,883 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "Welcome to Experimental Chemistry",
+    "content": "## 🔬 Experimental Chemistry: Chapter 1\n\n**Welcome to the world of laboratory science!** In this chapter, you will discover how chemists design experiments, measure physical quantities accurately, and separate mixtures to obtain pure substances.\n\n### Why Does This Matter?\n\nEvery day, chemists in industries, hospitals, and research facilities conduct experiments. Whether it's testing the purity of medicines, extracting useful materials from mixtures, or measuring chemical reactions, the skills you'll learn in this chapter are fundamental to all practical chemistry.\n\n### What You'll Learn\n\nThis chapter covers three main areas:\n\n1. **🎯 Experimental Design** - How to choose the right apparatus for measuring time, temperature, mass, and volume\n2. **⚗️ Methods of Purification** - Techniques to separate and purify substances from mixtures\n3. **✅ Purity Assessment** - How to determine whether a substance is pure using melting/boiling points and chromatography\n\n> 💡 **Key Insight**: The foundation of chemistry is careful measurement and precise separation techniques. Master these skills, and you'll understand how chemists solve real-world problems!\n\n::yellow[Pure substances] are critical in manufacturing medicines, food products, and industrial chemicals. Without proper purification methods, we couldn't have safe drugs or quality products.",
+    "speech_to_text_content": "Welcome to Experimental Chemistry, Chapter 1. In this chapter, you will discover how chemists design experiments, measure physical quantities accurately, and separate mixtures to obtain pure substances. Every day, chemists in industries, hospitals, and research facilities conduct experiments. Whether it's testing the purity of medicines, extracting useful materials from mixtures, or measuring chemical reactions, the skills you'll learn in this chapter are fundamental to all practical chemistry. This chapter covers three main areas: Experimental Design - how to choose the right apparatus for measuring time, temperature, mass, and volume; Methods of Purification - techniques to separate and purify substances from mixtures; and Purity Assessment - how to determine whether a substance is pure using melting or boiling points and chromatography. The foundation of chemistry is careful measurement and precise separation techniques. Master these skills, and you'll understand how chemists solve real-world problems. Pure substances are critical in manufacturing medicines, food products, and industrial chemicals.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:40:57.105613+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "1.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "Measuring Physical Quantities: The Foundation of Experiments",
+    "content": "## 📏 Physical Quantities in Chemistry\n\nWhen conducting experiments, chemists need to measure four main **physical quantities**: time, temperature, mass, and volume. Each quantity has its own SI unit and specific apparatus for measurement.\n\n### What is an SI Unit?\n\n::blue[SI units] (Système International d'Unités) are the standard units used worldwide in science. They ensure that measurements can be compared and understood by scientists everywhere.\n\n### The Four Key Physical Quantities\n\n| Physical Quantity | SI Unit | Symbol | Common Apparatus |\n|------------------|---------|--------|------------------|\n| ::yellow[Time] | Seconds | s | Stopwatch |\n| ::yellow[Temperature] | Kelvin | K | Thermometer |\n| ::yellow[Mass] | Kilogram | kg | Balance (beam or electronic) |\n| ::yellow[Volume] | Cubic metre | m³ | Pipette, burette, measuring cylinder, volumetric flask, gas syringe |\n\n### Why Accurate Measurement Matters\n\n> ⚠️ **Critical Point**: In chemistry, measurements must be as accurate as possible. A small error in measurement can lead to incorrect conclusions about chemical reactions or substance properties!\n\nFor example, if you're testing the purity of a medicine, even a tiny error in measuring its melting point could lead to incorrect conclusions about whether it's safe to use.",
+    "speech_to_text_content": "Physical Quantities in Chemistry. When conducting experiments, chemists need to measure four main physical quantities: time, temperature, mass, and volume. Each quantity has its own SI unit and specific apparatus for measurement. SI units, or Système International d'Unités, are the standard units used worldwide in science. They ensure that measurements can be compared and understood by scientists everywhere. The four key physical quantities are: Time measured in seconds using a stopwatch; Temperature measured in Kelvin using a thermometer; Mass measured in kilograms using a balance; and Volume measured in cubic metres using various apparatus. In chemistry, measurements must be as accurate as possible. A small error in measurement can lead to incorrect conclusions about chemical reactions or substance properties.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:41:01.679805+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "1.1.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "Measuring Time and Temperature",
+    "content": "## ⏱️ Measuring Time\n\n**SI Unit:** ::purple[seconds (s)]\n\n**Apparatus:** ::yellow[Stopwatch]\n\n### Key Conversions\n- 60 seconds = 1 minute\n- Used to measure the duration of reactions, heating times, or any process that takes place over time\n\n### Real-World Example\nWhen measuring how fast a chemical reaction occurs, you start the stopwatch when reactants mix and stop it when the reaction is complete. This helps determine the ::green[reaction rate].\n\n---\n\n## 🌡️ Measuring Temperature\n\n**SI Unit:** ::purple[Kelvin (K)]\n\n**Apparatus:** ::yellow[Thermometer]\n\n### Converting Between Celsius and Kelvin\n\n::green[Temperature in Kelvin = Temperature in Celsius + 273]\n\n**Example:**\n- 25°C = 25 + 273 = ::green[298 K]\n- 0°C = 0 + 273 = ::green[273 K]\n- 100°C = 100 + 273 = ::green[373 K]\n\n### Why Use Kelvin in Science?\n\n> 💡 **Important**: Scientists use Kelvin because it's an ::blue[absolute scale]. Zero Kelvin (0 K) represents the lowest possible temperature in the universe, making Kelvin more useful for scientific calculations than Celsius.\n\n### Real-World Application\nWhen distilling liquids or measuring melting/boiling points, accurate temperature measurement is essential. Different substances have different melting and boiling points, which helps identify them!",
+    "speech_to_text_content": "Measuring Time and Temperature. Time is measured in seconds using a stopwatch. 60 seconds equals 1 minute. It is used to measure the duration of reactions, heating times, or any process that takes place over time. When measuring how fast a chemical reaction occurs, you start the stopwatch when reactants mix and stop it when the reaction is complete. This helps determine the reaction rate. Temperature is measured in Kelvin using a thermometer. To convert from Celsius to Kelvin, add 273 to the Celsius temperature. For example, 25 degrees Celsius equals 298 Kelvin. Scientists use Kelvin because it's an absolute scale where zero Kelvin represents the lowest possible temperature in the universe. When distilling liquids or measuring melting and boiling points, accurate temperature measurement is essential.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:41:06.676711+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "1.1.2",
+    "type": "slide",
+    "question_type": null,
+    "title": "Measuring Mass and Length",
+    "content": "## ⚖️ Measuring Mass\n\n**SI Unit:** ::purple[Kilogram (kg)]\n\n**Apparatus:** \n- ::yellow[Beam balance] (mechanical, reliable)\n- ::yellow[Electronic balance] (digital, very precise)\n\n### Key Conversions\n- 1 kilogram = 1000 grams\n- 1 gram = 1000 milligrams\n\n### How to Use a Balance\n1. Place the substance on one side\n2. Add standard weights until balanced\n3. Read the total mass\n\n### Real-World Application\nIn pharmaceutical manufacturing, precise mass measurement ensures that each medicine tablet contains the correct amount of active ingredient. Even small variations can affect how well the medicine works!\n\n---\n\n## 📐 Measuring Length\n\n**SI Unit:** ::purple[Metre (m)]\n\n**Apparatus:**\n- ::yellow[Ruler] (for small distances)\n- ::yellow[Measuring tape] (for larger distances)\n\n### Key Conversions\n- 1 kilometre = 1000 metres\n- 1 metre = 100 centimetres\n- 1 centimetre = 10 millimetres\n\n### Why Length Matters in Chemistry\nLength measurements are used to:\n- Measure the height of liquid in graduated cylinders\n- Determine dimensions of apparatus\n- Calculate surface areas in reactions\n\n> 💡 **Remember**: While length isn't as frequently measured as volume or mass in chemistry experiments, it's still important for setting up apparatus correctly and calculating certain properties.",
+    "speech_to_text_content": "Measuring Mass and Length. Mass is measured in kilograms using a beam balance or electronic balance. One kilogram equals 1000 grams. To use a balance, place the substance on one side and add standard weights until balanced, then read the total mass. In pharmaceutical manufacturing, precise mass measurement ensures that each medicine tablet contains the correct amount of active ingredient. Length is measured in metres using a ruler or measuring tape. One kilometre equals 1000 metres. Length measurements are used to measure the height of liquid in graduated cylinders, determine dimensions of apparatus, and calculate surface areas in reactions. While length isn't as frequently measured as volume or mass in chemistry experiments, it's still important for setting up apparatus correctly.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:41:11.150895+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "1.1.3",
+    "type": "slide",
+    "question_type": null,
+    "title": "Measuring Volume: The Most Important Quantity in Chemistry",
+    "content": "## 📊 Measuring Volume\n\n**SI Unit:** ::purple[Cubic metre (m³)]\n\n**Alternative Units:** Litres (L), millilitres (mL), cubic centimetres (cm³)\n\n### Key Conversions\n- 1 cubic metre = 1000 litres\n- 1 litre = 1000 millilitres\n- 1 millilitre = 1 cubic centimetre (1 mL = 1 cm³)\n\n> ⚠️ **Note from Chapter**: 1 cubic metre = 100 millilitres is INCORRECT. The correct conversion is 1 cubic metre = 1,000,000 millilitres (or 1,000 litres).\n\n---\n\n## 🧪 Volume Measuring Apparatus\n\nDifferent apparatus are used depending on the volume needed and the accuracy required:\n\n### 1. ::yellow[Pipette]\n- **Accuracy:** High precision (±0.05 mL)\n- **Volume Range:** Up to around 25 cm³\n- **Use:** Transferring fixed, precise volumes of liquid\n- **Example:** Measuring exactly 10 mL of a solution\n\n### 2. ::yellow[Volumetric Flask]\n- **Accuracy:** Very high precision\n- **Volume Range:** Large volumes (up to around 250 cm³)\n- **Use:** Preparing solutions of known concentration\n- **Example:** Making exactly 100 mL of a diluted solution\n\n### 3. ::yellow[Measuring Cylinder]\n- **Accuracy:** Moderate precision (±1 mL)\n- **Volume Range:** 20-50 cm³ (1 decimal place)\n- **Use:** Rough measurements, general use\n- **Example:** Measuring 30 mL of water for a reaction\n\n### 4. ::yellow[Burette]\n- **Accuracy:** High precision (±0.05 mL, 2 decimal places)\n- **Volume Range:** 50 cm³\n- **Use:** Titrations, precise delivery of variable volumes\n- **Example:** Dispensing acid slowly until an endpoint is reached\n\n### 5. ::yellow[Gas Syringe]\n- **Use:** Measuring volumes of gases\n- **Example:** Measuring the volume of hydrogen gas produced in a reaction\n\n---\n\n## 💡 How to Choose the Right Apparatus\n\nConsider these questions:\n1. **How much volume?** - Choose apparatus with appropriate range\n2. **How accurate?** - Does the experiment need high precision?\n3. **What liquid?** - Some liquids require special apparatus\n\n| Situation | Best Apparatus | Why? |\n|-----------|----------------|------|\n| Measuring 10 mL precisely for a reaction | ::blue[Pipette] | Highest accuracy |\n| Making a 100 mL solution of known concentration | ::blue[Volumetric flask] | Designed for this purpose |\n| Quick measurement of 30 mL water | ::blue[Measuring cylinder] | Fast and adequate accuracy |\n| Titration experiment | ::blue[Burette] | Allows controlled delivery |\n| Collecting gas from reaction | ::blue[Gas syringe] | Measures gas volumes |\n\n> 🎯 **Key Principle**: Always use the most precise apparatus available for the accuracy your experiment requires. Using a measuring cylinder when a pipette is needed could introduce errors!",
+    "speech_to_text_content": "Measuring Volume. Volume is measured in cubic metres, but chemists often use litres or millilitres. One cubic metre equals 1000 litres, and one litre equals 1000 millilitres. Different apparatus are used depending on the volume needed and the accuracy required. A pipette provides high precision up to around 25 cubic centimetres and is used for transferring fixed, precise volumes. A volumetric flask provides very high precision for large volumes up to around 250 cubic centimetres and is used for preparing solutions of known concentration. A measuring cylinder provides moderate precision and is used for rough measurements. A burette provides high precision and is used for titrations and precise delivery of variable volumes. A gas syringe is used for measuring volumes of gases. When choosing apparatus, consider how much volume is needed, how accurate the measurement must be, and what liquid is being measured. Always use the most precise apparatus available for the accuracy your experiment requires.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:41:19.912801+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "1.1.4",
+    "type": "slide",
+    "question_type": null,
+    "title": "Collecting and Drying Gases: Essential Laboratory Techniques",
+    "content": "## 💨 How Are Gases Collected?\n\nWhen experiments produce gases, chemists must collect them in pure form. Three main methods exist, each suited to different gas properties.\n\n---\n\n## 🌊 Method 1: Water Displacement\n\n### How It Works\n::yellow[Water displacement] involves bubbling gas through water and collecting it in a gas jar. The gas rises and displaces water, which flows out.\n\n### Requirements\n- Gas must be ::green[insoluble or only slightly soluble] in water\n- Solubility in water does NOT affect this method\n\n### Suitable Gases\n- ::blue[Hydrogen (H₂)] - insoluble\n- ::blue[Oxygen (O₂)] - slightly soluble\n- ::blue[Nitrogen (N₂)] - insoluble\n- ::blue[Methane (CH₄)] - insoluble\n- ::blue[Carbon dioxide (CO₂)] - slightly soluble\n\n### Why Not All Gases?\n> ⚠️ ::red[Very soluble gases] like ammonia, chlorine, and sulfur dioxide would dissolve in water and not be collected properly!\n\n### Real-World Example\nWhen producing oxygen in the lab by decomposing hydrogen peroxide with a catalyst, water displacement works perfectly because oxygen is only slightly soluble in water.\n\n---\n\n## ⬇️ Method 2: Downward Delivery\n\n### How It Works\n::yellow[Downward delivery] collects gas in a gas jar positioned so the gas enters from above and sinks down, displacing air upward.\n\n### Requirements\n- Gas must be ::green[DENSER than air]\n- Solubility in water does NOT affect this method\n- The relative molecular mass (Mr) of air is 29\n- Gas must have Mr > 29\n\n### Suitable Gases\n- ::blue[Chlorine (Cl₂)] - Mr = 71 (2.4 times denser than air)\n- ::blue[Hydrogen chloride (HCl)] - Mr = 36.5\n- ::blue[Sulfur dioxide (SO₂)] - Mr = 64\n- ::blue[Carbon dioxide (CO₂)] - Mr = 44 (denser than air)\n\n### Why This Works\nBecause these gases are heavier than air, they naturally sink down, pushing lighter air out of the jar.\n\n---\n\n## ⬆️ Method 3: Upward Delivery\n\n### How It Works\n::yellow[Upward delivery] collects gas in a gas jar positioned so the gas enters from below and rises up, displacing air downward.\n\n### Requirements\n- Gas must be ::green[LESS DENSE than air]\n- Solubility in water does NOT affect this method\n- Gas must have Mr < 29\n\n### Suitable Gases\n- ::blue[Ammonia (NH₃)] - Mr = 17 (much lighter than air)\n\n### Why This Works\nAmmonia is much lighter than air, so it naturally floats upward, pushing heavier air out of the jar.\n\n---\n\n## 📊 Comparison of Gas Collection Methods\n\n| Method | Works Because | Suitable For | Example |\n|--------|---------------|-------------|----------|\n| ::yellow[Water displacement] | Gas insoluble/slightly soluble in water | O₂, H₂, N₂, CH₄ | Collecting oxygen from decomposition |\n| ::yellow[Downward delivery] | Gas denser than air (Mr > 29) | Cl₂, HCl, SO₂, CO₂ | Collecting chlorine gas |\n| ::yellow[Upward delivery] | Gas less dense than air (Mr < 29) | NH₃ | Collecting ammonia gas |\n\n> 💡 **Key Insight**: The choice of collection method depends on the gas properties, not on how the gas is made!",
+    "speech_to_text_content": "How Are Gases Collected? When experiments produce gases, chemists must collect them in pure form. Three main methods exist, each suited to different gas properties. Water displacement involves bubbling gas through water and collecting it in a gas jar. The gas must be insoluble or only slightly soluble in water. Suitable gases include hydrogen, oxygen, nitrogen, methane, and carbon dioxide. Downward delivery collects gas in a gas jar positioned so the gas enters from above and sinks down. The gas must be denser than air, with a relative molecular mass greater than 29. Suitable gases include chlorine, hydrogen chloride, and sulfur dioxide. Upward delivery collects gas in a gas jar positioned so the gas enters from below and rises up. The gas must be less dense than air, with a relative molecular mass less than 29. Ammonia is the main example. The choice of collection method depends on the gas properties, not on how the gas is made.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:41:29.070357+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "1.1.5",
+    "type": "slide",
+    "question_type": null,
+    "title": "Calculating Gas Density and Drying Gases",
+    "content": "## 🔢 Understanding Relative Molecular Mass\n\n### ::yellow[Relative Atomic Mass (Ar)]\nThe number of protons and neutrons in an atom.\n\n**Examples:**\n- Hydrogen (H): Ar = 1\n- Carbon (C): Ar = 12\n- Chlorine (Cl): Ar = 35.5\n- Oxygen (O): Ar = 16\n\n### ::yellow[Relative Molecular Mass (Mr)]\nThe sum of the relative atomic masses of all atoms in a molecule.\n\n**How to Calculate:**\n1. Identify all atoms in the molecule\n2. Multiply each atom's Ar by how many times it appears\n3. Add all the values together\n\n**Examples:**\n- Hydrogen gas (H₂): Mr = 1 + 1 = 2\n- Oxygen gas (O₂): Mr = 16 + 16 = 32\n- Carbon dioxide (CO₂): Mr = 12 + (16 × 2) = 12 + 32 = 44\n- Chlorine gas (Cl₂): Mr = 35.5 + 35.5 = 71\n- Ammonia (NH₃): Mr = 14 + (1 × 3) = 14 + 3 = 17\n\n### ::yellow[Air's Relative Molecular Mass]\nAir is mostly nitrogen (78%) and oxygen (21%), giving an average Mr of approximately ::green[29]\n\n---\n\n## 📐 Calculating Gas Density\n\n### The Formula\n\n$$\\text{Density} = \\frac{\\text{Mass}}{\\text{Volume}}$$\n\n### Comparing Densities\nTo compare gas densities, we compare their Mr values:\n- **Mr > 29**: Gas is denser than air → use downward delivery\n- **Mr < 29**: Gas is less dense than air → use upward delivery\n- **Mr ≈ 29**: Gas density similar to air → use water displacement\n\n### Example Calculation\nCompare the densities of ammonia (NH₃) and chlorine (Cl₂):\n- Ammonia: Mr = 17 (less dense than air, Mr < 29)\n- Chlorine: Mr = 71 (more dense than air, Mr > 29)\n- Therefore, ammonia floats up, chlorine sinks down\n\n---\n\n## 🧴 Methods for Drying Gases\n\nMany gases produced in reactions contain water vapour. These ::yellow[drying agents] remove moisture:\n\n### 1. ::yellow[Concentrated Sulfuric Acid]\n\n**Suitable for:** Most gases\n\n**Limitations:**\n- ⚠️ Cannot dry gases that react with sulfuric acid\n- Examples of gases it CANNOT dry: ammonia (reacts to form ammonium sulfate)\n\n**How to Use:**\n- Bubble the moist gas through the sulfuric acid\n- The sulfuric acid absorbs water molecules\n\n**Real-World Application:**\nDrying hydrogen gas before storing it for experiments\n\n---\n\n### 2. ::yellow[Quicklime (Calcium Oxide, CaO)]\n\n**Suitable for:** Basic and neutral gases (e.g., ammonia)\n\n**Limitations:**\n- Cannot dry gases that react with calcium oxide\n- Examples: acidic gases like hydrogen chloride\n\n**How to Use:**\n- Pass the gas through calcium oxide powder\n- The calcium oxide absorbs water from the gas\n\n**Important Precaution:**\n> ⚠️ ::red[Calcium oxide must be freshly heated before use!] It readily absorbs moisture from the air, so old calcium oxide may already be saturated with water and won't work effectively.\n\n**Real-World Application:**\nDrying ammonia gas in laboratory experiments\n\n---\n\n### 3. ::yellow[Fused Calcium Chloride (CaCl₂)]\n\n**Suitable for:** Hydrogen, nitrogen, carbon dioxide (regularly used for these)\n\n**Limitations:**\n- Cannot dry gases that react with calcium chloride\n\n**How to Use:**\n- Pass the gas through fused (dried) calcium chloride\n- The calcium chloride absorbs water molecules\n\n**Important Precaution:**\n> ⚠️ ::red[Fused calcium chloride must be freshly heated before use!] Like quicklime, it readily absorbs moisture from air.\n\n**Real-World Application:**\nDrying hydrogen gas collected from metal reactions\n\n---\n\n## 📊 Choosing the Right Drying Agent\n\n| Drying Agent | Best For | Cannot Use For | Precaution |\n|--------------|----------|----------------|------------|\n| ::blue[Concentrated H₂SO₄] | Most gases | Ammonia (reacts) | Handle carefully - corrosive |\n| ::blue[Calcium oxide] | Basic/neutral gases | Acidic gases | Must be freshly heated |\n| ::blue[Calcium chloride] | H₂, N₂, CO₂ | Ammonia (reacts) | Must be freshly heated |\n\n> 💡 **Key Principle**: Always check whether your gas reacts with the drying agent before using it!",
+    "speech_to_text_content": "Understanding Relative Molecular Mass. Relative atomic mass is the number of protons and neutrons in an atom. Relative molecular mass is the sum of the relative atomic masses of all atoms in a molecule. Air has a relative molecular mass of approximately 29. Calculating Gas Density uses the formula: Density equals mass divided by volume. To compare gas densities, we compare their relative molecular mass values. If Mr is greater than 29, the gas is denser than air. If Mr is less than 29, the gas is less dense than air. Methods for Drying Gases: Concentrated sulfuric acid is suitable for most gases but cannot dry ammonia. Quicklime is suitable for basic and neutral gases but must be freshly heated. Fused calcium chloride is suitable for hydrogen, nitrogen, and carbon dioxide but must be freshly heated. Always check whether your gas reacts with the drying agent before using it.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:41:40.779917+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "1.2.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "Introduction to Mixtures and Separation Methods",
+    "content": "## 🧪 What is a Mixture?\n\n### Definition\n\nA ::yellow[mixture] consists of two or more substances that are **NOT chemically combined**.\n\n### Key Difference: Mixture vs. Compound\n\n| Feature | Mixture | Compound |\n|---------|---------|----------|\n| ::blue[Composition] | Two or more substances physically mixed | Two or more elements chemically bonded |\n| ::blue[Properties] | Retains properties of individual substances | Has new properties different from elements |\n| ::blue[Separation] | Can be separated by physical methods | Can only be separated by chemical reactions |\n| ::blue[Example] | Salt water, sand and iron, oil and water | Sodium chloride (NaCl), water (H₂O) |\n\n---\n\n## 🔬 Why Do We Need to Separate Mixtures?\n\n### Real-World Applications\n\n1. **Manufacturing Quality Products**\n   - Separating useful substances from waste products\n   - Ensuring medicines contain only active ingredients\n   - Removing impurities from food products\n\n2. **Environmental Protection**\n   - Separating waste materials for recycling\n   - Treating polluted water\n   - Extracting valuable metals from ores\n\n3. **Scientific Research**\n   - Isolating pure substances to study their properties\n   - Identifying components in unknown samples\n   - Preparing pure chemicals for experiments\n\n> 💡 **Key Insight**: Pure substances are absolutely essential in consumer products. Imagine taking medicine that contains impurities - you wouldn't know the correct dose of the active ingredient!\n\n---\n\n## 🎯 How to Choose a Separation Method\n\nThe method used depends on:\n\n1. **::yellow[Type of mixture]**\n   - Solid-solid mixture?\n   - Solid-liquid mixture?\n   - Liquid-liquid mixture?\n\n2. **::yellow[Physical properties]** of the substances\n   - Solubility in solvents\n   - Density\n   - Particle size\n   - Boiling/melting points\n   - Magnetic properties\n\n3. **::yellow[Desired outcome]**\n   - Do you want to separate all components?\n   - Do you want pure solid or pure liquid?\n   - How pure does it need to be?\n\n> ⚠️ **Critical Principle**: Different physical properties allow different separation methods. Always identify what makes the substances different before choosing your method!",
+    "speech_to_text_content": "What is a Mixture? A mixture consists of two or more substances that are not chemically combined. Key differences exist between mixtures and compounds. A mixture retains the properties of individual substances and can be separated by physical methods. A compound has new properties different from elements and can only be separated by chemical reactions. Why do we need to separate mixtures? Real-world applications include manufacturing quality products, environmental protection, and scientific research. Pure substances are absolutely essential in consumer products. How to choose a separation method depends on the type of mixture, the physical properties of the substances, and the desired outcome. Different physical properties allow different separation methods.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:41:47.253812+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "1.2.2",
+    "type": "slide",
+    "question_type": null,
+    "title": "Separating Solid-Solid Mixtures",
+    "content": "## 🔗 Solid-Solid Mixture Separation Methods\n\nWhen you have a mixture of two solids, you need to use their different physical properties to separate them.\n\n---\n\n## 🧲 Method 1: Magnetic Attraction\n\n### How It Works\nMagnetic substances are attracted to magnets, while non-magnetic substances are not. By using a magnet, you can physically remove magnetic materials from the mixture.\n\n### Suitable For\n- Separating ::blue[iron], ::blue[cobalt], or ::blue[nickel] from non-magnetic materials\n- Separating certain ::blue[alloys] (metal mixtures) that contain magnetic metals\n\n### Real-World Example: Landfill Waste Sorting\n> 💡 **Did You Know?** Waste management facilities use large magnets to sort metal waste in landfills. Steel cans and other iron-containing items are automatically separated from other waste for recycling!\n\n### Step-by-Step Process\n1. Place the magnet near the mixture\n2. Magnetic particles stick to the magnet\n3. Remove the magnet with attached particles\n4. Wipe the magnet clean to collect the separated magnetic material\n\n### Advantages\n- ✅ Quick and easy\n- ✅ No chemicals needed\n- ✅ Both products remain unchanged\n\n---\n\n## 🎯 Method 2: Sieving\n\n### How It Works\nA ::yellow[sieve] is a mesh with holes of specific sizes. Large particles cannot pass through the small pores, while small particles fall through.\n\n### Suitable For\nSeparating solids with ::green[different particle sizes]\n\n### Real-World Examples\n- Separating sand from gravel\n- Separating flour from lumps\n- Separating different sizes of grain in agriculture\n- Sorting crushed rock by size in construction\n\n### Step-by-Step Process\n1. Pour the mixture onto the sieve\n2. Shake or tap the sieve gently\n3. Small particles fall through to a container below\n4. Large particles remain on top of the sieve\n\n### How a Sieve Works\n```\nLarge particles (cannot pass) ↓ ↓ ↓\n||||||||||||  ← Sieve mesh\n↓ ↓ ↓\nSmall particles (pass through)\n```\n\n### Advantages\n- ✅ Simple and fast\n- ✅ No chemicals needed\n- ✅ Effective for large differences in particle size\n- ✅ Both products remain unchanged\n\n### Limitations\n- ⚠️ Only works if particle sizes are significantly different\n- ⚠️ Cannot separate two solids of similar size\n\n---\n\n## 🧂 Method 3: Using a Suitable Solvent\n\n### How It Works\nOne solid dissolves in a solvent while the other doesn't. The soluble solid becomes a ::yellow[solute] (dissolved substance) in the ::yellow[solvent] (liquid that does the dissolving).\n\n### Key Definitions\n- **::blue[Solvent]**: The liquid that dissolves solids (usually water)\n- **::blue[Solute]**: The solid that dissolves in the solvent\n- **::blue[Solution]**: The mixture of solute and solvent\n- **::blue[Insoluble]**: Cannot dissolve\n\n### Real-World Example\nSeparating salt from sand:\n- Add water (solvent)\n- Salt dissolves (becomes solute) → salt solution\n- Sand is insoluble and remains as solid\n- Filter to separate the sand from the solution\n- Evaporate water to recover salt crystals\n\n### Advantages\n- ✅ Works even when particle sizes are similar\n- ✅ Can recover both substances\n- ✅ Used in industry for many separations\n\n### Limitations\n- ⚠️ Need to find a suitable solvent\n- ⚠️ Extra steps needed to recover the dissolved solid\n- ⚠️ Some solids dissolve in the same solvents\n\n---\n\n## 💎 Method 4: Sublimation\n\n### How It Works\n::yellow[Sublimation] is when a solid changes directly into a gas without passing through the liquid state.\n\n### Suitable For\nSeparating solids where one substance can sublime and the other cannot.\n\n### Substances That Sublime\n- ::blue[Iodine (I₂)] - purple solid\n- ::blue[Ammonium chloride (NH₄Cl)] - white solid\n- ::blue[Naphthalene (C₁₀H₈)] - white solid (mothballs!)\n\n### Step-by-Step Process\n1. Heat the mixture gently\n2. The subliming substance vaporizes (turns to gas)\n3. The gas rises and cools\n4. It condenses back to solid form (but pure)\n5. The non-subliming substance remains behind\n\n### Real-World Example\nSeparating iodine from sand:\n- Heat gently\n- Iodine sublimes (becomes purple gas)\n- Gas condenses on a cold surface above\n- Pure iodine crystals form\n- Sand remains at the bottom\n\n### Advantages\n- ✅ Produces very pure products\n- ✅ No chemicals needed\n- ✅ Effective separation\n\n### Limitations\n- ⚠️ Only works for substances that sublime\n- ⚠️ Requires careful temperature control\n- ⚠️ Some sublime substances are toxic (like iodine)\n\n---\n\n## 📊 Comparison of Solid-Solid Separation Methods\n\n| Method | Best For | Advantage | Limitation |\n|--------|----------|-----------|------------|\n| ::yellow[Magnetic attraction] | Separating iron/cobalt/nickel | Fast, simple | Only works for magnetic metals |\n| ::yellow[Sieving] | Different particle sizes | Easy, no chemicals | Needs significant size difference |\n| ::yellow[Using solvent] | Solids with different solubility | Works for similar-sized particles | Need to recover dissolved solid |\n| ::yellow[Sublimation] | One solid sublimes | Very pure products | Only for subliming substances |\n\n> 🎯 **Decision-Making Tip**: Always start by asking: \"What physical property is different between these solids?\" The answer will guide you to the right method!",
+    "speech_to_text_content": "Solid-Solid Mixture Separation Methods. Magnetic Attraction: Magnetic substances are attracted to magnets while non-magnetic substances are not. Suitable for iron, cobalt, nickel, and some alloys. Sieving: A sieve separates solids with different particle sizes. Large particles cannot pass through small pores while small particles fall through. Suitable for separating sand from gravel. Using a Suitable Solvent: One solid dissolves in a solvent while the other doesn't. The soluble solid becomes a solute in the solvent. Suitable for separating salt from sand. Sublimation: A solid changes directly into gas without passing through liquid. Suitable for separating iodine, ammonium chloride, or naphthalene from other solids. When choosing a method, ask what physical property is different between the solids.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:42:02.440294+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "1.2.3",
+    "type": "slide",
+    "question_type": null,
+    "title": "Separating Solid-Liquid Mixtures: Part 1",
+    "content": "## 💧 Solid-Liquid Mixture Separation Methods\n\nWhen you have a solid mixed with a liquid, you're dealing with either:\n- An ::yellow[insoluble solid] (doesn't dissolve)\n- A ::yellow[dissolved solid] (solute in solution)\n\n---\n\n## 🔽 Method 1: Filtration\n\n### When to Use Filtration\nUse filtration to separate an ::green[insoluble solid from a liquid].\n\n### Key Definitions\n- **::blue[Filtrate]**: The liquid that passes through the filter paper\n- **::blue[Residue]**: The solid that remains on the filter paper\n- **::blue[Insoluble]**: A solid that cannot dissolve in the liquid\n\n### How Filtration Works\n1. Pour the mixture into a funnel lined with filter paper\n2. The liquid (filtrate) passes through the filter paper\n3. The solid (residue) is too large to pass through and remains on the paper\n4. Gravity pulls the liquid downward\n\n### Step-by-Step Laboratory Procedure\n1. Fold filter paper into a cone shape\n2. Place the cone in a funnel\n3. Wet the filter paper slightly with the liquid being filtered\n4. Pour the mixture slowly down a glass rod into the funnel\n5. Collect the filtrate in a beaker below\n6. The residue stays on the filter paper\n7. Rinse the residue with distilled water to remove any dissolved impurities\n\n### Real-World Applications\n- Separating sand from seawater\n- Removing dirt from water\n- Separating solid impurities from solutions\n- Purifying water in water treatment plants\n- Separating tea leaves from tea in a teapot\n\n### Advantages\n- ✅ Simple and quick\n- ✅ No heating required\n- ✅ Can recover both solid and liquid\n\n### Limitations\n- ⚠️ Only works for insoluble solids\n- ⚠️ Filter paper has a minimum pore size\n- ⚠️ Very fine particles might pass through\n\n---\n\n## 🔥 Method 2: Evaporation to Dryness\n\n### When to Use Evaporation\nUse evaporation to separate a ::green[dissolved solid from its solvent].\n\n### How It Works\nThe liquid is heated until all the solvent has vaporized (turned to gas), leaving only the solid behind.\n\n### Key Principle\n- The solid (solute) has a much higher boiling point than the solvent\n- Water boils at 100°C\n- Most dissolved salts don't vaporize even at very high temperatures\n\n### Step-by-Step Laboratory Procedure\n1. Pour the solution into an evaporating basin\n2. Heat gently over a Bunsen burner\n3. The solvent gradually evaporates\n4. Solid crystals begin to form as water disappears\n5. Continue heating until all liquid is gone\n6. Allow to cool\n7. Collect the dry solid\n\n### Real-World Applications\n- Obtaining salt crystals from seawater\n- Recovering dissolved minerals from water\n- Producing salt in salt pans (solar evaporation)\n- Extracting dissolved substances from solutions\n\n### Advantages\n- ✅ Simple process\n- ✅ Recovers the dissolved solid\n- ✅ Works for any soluble solid\n\n### Limitations\n- ⚠️ Requires heating\n- ⚠️ Some dissolved substances may decompose at high temperatures\n- ⚠️ Slow process for large volumes\n- ⚠️ Energy intensive\n\n### Real-World Example: Salt Production\n> 💡 **Did You Know?** In hot countries like Singapore, seawater is evaporated in large salt pans. The sun's heat does the evaporation, and salt crystals are left behind. This is how table salt is produced!\n\n---\n\n## 💎 Method 3: Crystallisation\n\n### When to Use Crystallisation\nUse crystallisation to separate a ::green[pure solid from its saturated solution].\n\n### Key Definitions\n- **::blue[Saturated solution]**: A solution in which no more solute can dissolve at that temperature\n- **::blue[Crystals]**: Pure solid that forms as solution cools\n- **::blue[Crystallisation]**: Process of forming pure crystals from solution\n\n### Why Crystallisation Instead of Evaporation?\n\nCrystallisation produces purer, better-formed crystals than evaporation because:\n- Slow cooling allows atoms to arrange in orderly patterns\n- Beautiful, large crystals form\n- Impurities remain dissolved in the remaining solution\n\n### Step-by-Step Laboratory Procedure\n\n1. **Heat the solution** until it becomes saturated (no more solute dissolves)\n2. **Cool gradually** - place the beaker in a larger container of cool water\n3. **Wait patiently** - crystals form as temperature drops (this takes time!)\n4. **Observe crystal formation** - you'll see beautiful crystals growing\n5. **Filter the crystals** - pour through filter paper to separate crystals from remaining liquid\n6. **Wash with distilled water** - removes any dissolved impurities\n7. **Dry on filter paper** - place on clean filter paper to dry\n\n### Real-World Applications\n- Growing rock candy (crystallised sugar)\n- Producing pure salt crystals\n- Manufacturing pharmaceutical crystals\n- Purifying dissolved substances\n- Growing gemstone crystals\n\n### Advantages\n- ✅ Produces very pure crystals\n- ✅ Beautiful, large crystals form\n- ✅ Impurities remain in solution\n- ✅ Lower energy than evaporation\n\n### Limitations\n- ⚠️ Slow process (requires time for cooling)\n- ⚠️ Requires careful temperature control\n- ⚠️ Some substances don't crystallise well\n- ⚠️ Requires more equipment than evaporation\n\n### Comparison: Evaporation vs. Crystallisation\n\n| Feature | Evaporation | Crystallisation |\n|---------|-------------|------------------|\n| ::blue[Speed] | Faster | Slower |\n| ::blue[Crystal quality] | Small, irregular crystals | Large, pure crystals |\n| ::blue[Purity] | Good | Excellent |\n| ::blue[Energy use] | High (requires heating) | Lower |\n| ::blue[Best for] | Quick separation | Obtaining pure crystals |\n\n> 💡 **Key Insight**: Crystallisation is the preferred method in industry when purity is important (like in medicines), even though it takes longer!",
+    "speech_to_text_content": "Solid-Liquid Mixture Separation Methods. Filtration is used to separate an insoluble solid from a liquid. The filtrate is the liquid that passes through, and the residue is the solid that remains. Evaporation to dryness is used to separate a dissolved solid from its solvent by heating until all liquid vaporizes. Crystallisation is used to separate a pure solid from its saturated solution by cooling gradually. A saturated solution is one in which no more solute can dissolve. Crystallisation produces purer, better-formed crystals than evaporation because slow cooling allows atoms to arrange in orderly patterns. The procedure involves heating the solution until saturated, cooling gradually, filtering the crystals, washing with distilled water, and drying on filter paper. Crystallisation is preferred in industry when purity is important.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:42:17.284302+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "1.2.4",
+    "type": "slide",
+    "question_type": null,
+    "title": "Separating Solid-Liquid Mixtures: Part 2 - Distillation",
+    "content": "## 🔬 Method 4: Simple Distillation\n\n### When to Use Simple Distillation\nUse simple distillation to separate a ::green[pure solvent (liquid) from its solution].\n\n### Key Difference from Other Methods\n- **Evaporation**: Leaves solid behind, discards liquid\n- **Distillation**: Collects the liquid, discards solid\n\n### How Simple Distillation Works\n\n1. **Heat the solution** in a round-bottom flask\n2. **Liquid vaporizes** (turns to gas) - the solvent boils off first\n3. **Gas rises** through a tube\n4. **Cool the gas** in a condenser (cold water jacket)\n5. **Gas condenses** back to liquid\n6. **Pure liquid drips** into a collection flask\n7. **Solid remains** in the original flask\n\n### The Apparatus\n\n```\nHeat ↓\n[Round flask with solution] → [Condenser with water] → [Collection flask]\n                    ↑\n              Thermometer measures\n              boiling point\n```\n\n### Step-by-Step Laboratory Procedure\n\n1. Pour the solution into a round-bottom flask\n2. Add a few boiling chips (prevent bumping)\n3. Insert a thermometer to measure temperature\n4. Connect the flask to a condenser\n5. Run cold water through the condenser jacket\n6. Heat the flask gently\n7. Watch the thermometer - it rises as solvent boils\n8. Pure solvent vapour enters the condenser\n9. Condenser cools the vapour back to liquid\n10. Pure liquid drips into the collection flask\n\n### Important Condition: Boiling Point Difference\n\n> ⚠️ **Critical Requirement**: Simple distillation can ONLY be used when there is a ::red[SIGNIFICANT DIFFERENCE in boiling points] between the solvent and the dissolved solid.\n\n**Why?**\n- The solvent must boil and evaporate while the solid stays behind\n- If boiling points are too close, both substances evaporate together\n- This ruins the separation\n\n### Real-World Applications\n\n- **Desalination**: Removing salt from seawater to produce fresh water\n- **Alcohol production**: Separating ethanol from fermented solutions\n- **Water purification**: Removing dissolved minerals from water\n- **Industrial chemistry**: Separating and purifying liquids\n\n### Example: Distilling Salt Water\n\n- Salt water is heated\n- Water boils at 100°C and evaporates\n- Salt has a boiling point of about 1465°C (doesn't evaporate!)\n- Water vapour condenses in the condenser\n- Pure water collects in the flask\n- Salt remains in the original flask\n\n### Advantages\n- ✅ Produces pure solvent\n- ✅ Can recover both solvent and solid\n- ✅ Works when boiling points differ significantly\n- ✅ Used in industry for large-scale separation\n\n### Limitations\n- ⚠️ Requires significant boiling point difference\n- ⚠️ Energy intensive (requires heating)\n- ⚠️ Some substances decompose at high temperatures\n- ⚠️ Cannot separate two liquids with similar boiling points\n\n### Why Not for All Solutions?\n\n**Example: Separating two miscible liquids**\n- Ethanol boils at 78°C\n- Water boils at 100°C\n- Difference of 22°C is NOT large enough\n- Both liquids would evaporate together\n- Simple distillation would fail\n- Need ::blue[fractional distillation] instead (see next slide)\n\n---\n\n## 💧 Miscible and Immiscible Liquids\n\n### ::yellow[Miscible Liquids]\n\n**Definition**: Liquids that form a ::green[uniform (homogeneous) solution] when mixed\n\n**Characteristics**:\n- Mix completely\n- Cannot be separated by a separating funnel\n- Require distillation techniques\n- Form a single phase\n\n**Examples**:\n- Water and ethanol\n- Water and acetone\n- Oil and turpentine\n\n**Analogy**: Like mixing two colours of paint - they blend completely and you can't separate them back by just letting them sit.\n\n### ::yellow[Immiscible Liquids]\n\n**Definition**: Liquids that form a ::green[non-uniform (heterogeneous) mixture] when mixed\n\n**Characteristics**:\n- Do NOT mix completely\n- Form separate layers\n- Can be separated by a separating funnel\n- Two distinct phases visible\n\n**Examples**:\n- Oil and water\n- Petrol and water\n- Mercury and water\n- Alcohol and petrol (some combinations)\n\n**Analogy**: Like mixing oil and vinegar in a salad - they form separate layers and you can see the boundary between them.\n\n### Visual Comparison\n\n```\nMiscible (e.g., water + ethanol):\nUniform colour throughout\n║ Clear solution ║\n║ No boundary    ║\n\nImmiscible (e.g., oil + water):\n╔═══════════════╗\n║ Oil layer     ║  ← Less dense\n╠═══════════════╣\n║ Water layer   ║  ← More dense\n╚═══════════════╝\n```\n\n> 💡 **Key Insight**: Whether liquids are miscible or immiscible determines which separation method to use!",
+    "speech_to_text_content": "Simple Distillation is used to separate a pure solvent from its solution. The solution is heated, the solvent vaporizes, the gas rises through a tube, the gas is cooled in a condenser, and pure liquid drips into a collection flask. Simple distillation can only be used when there is a significant difference in boiling points between the solvent and dissolved solid. Real-world applications include desalting seawater and purifying water. Advantages include producing pure solvent and recovering both solvent and solid. Limitations include requiring significant boiling point difference and being energy intensive. Miscible liquids form a uniform solution when mixed and cannot be separated by a separating funnel. Immiscible liquids form a non-uniform mixture when mixed and form separate layers. Examples of miscible liquids are water and ethanol. Examples of immiscible liquids are oil and water.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:42:30.782908+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "1.2.5",
+    "type": "slide",
+    "question_type": null,
+    "title": "Separating Liquid-Liquid Mixtures",
+    "content": "## 🧴 Liquid-Liquid Mixture Separation Methods\n\nWhen you have two liquids mixed together, the method depends on whether they are ::yellow[miscible] (mix completely) or ::yellow[immiscible] (form separate layers).\n\n---\n\n## 🔄 Method 1: Using a Separating Funnel (For Immiscible Liquids)\n\n### When to Use Separating Funnel\nUse a separating funnel to separate ::green[immiscible liquids] that form separate layers.\n\n### How a Separating Funnel Works\n\n```\n╔═══════════════════╗\n║   Immiscible      ║\n║   Liquids         ║\n║   (2 layers)      ║\n╠═══════════════════╣\n║  Tap at bottom    ║ ← Opens to let liquid out\n╚═══════════════════╝\n```\n\n### Step-by-Step Laboratory Procedure\n\n1. **Pour the mixture** into the separating funnel\n2. **Let it settle** - the liquids separate into layers (takes a few minutes)\n3. **Identify the layers** - denser liquid sinks to bottom\n4. **Open the tap** at the bottom of the funnel\n5. **Collect the lower layer** in a beaker\n6. **Close the tap** when you reach the boundary between layers\n7. **Open the top stopper** to let air in (prevents vacuum)\n8. **Collect the upper layer** in another beaker\n\n### Layer Arrangement\n\nLiquids arrange by density:\n- **Bottom layer**: ::blue[Denser liquid] (higher density)\n- **Top layer**: ::blue[Less dense liquid] (lower density)\n- **Boundary**: Clear line visible between layers\n\n### Real-World Example: Oil and Water\n\n```\n╔═══════════════════╗\n║ Water (less dense)║  ← Top layer (denser than oil)\n║ (denser)          ║\n╠═══════════════════╣\n║ Oil (less dense)  ║  ← Bottom layer (lighter than water)\n╚═══════════════════╝\n```\n\n> 💡 **Surprising Fact**: Even though we say \"oil floats on water,\" in a separating funnel, oil comes out first from the tap at the bottom because water is actually denser!\n\n### Real-World Applications\n\n- **Separating oil from water** in oil spills\n- **Extracting organic compounds** from aqueous solutions\n- **Purifying immiscible liquids** in industry\n- **Separating petroleum fractions** (crude oil refining)\n- **Removing contaminants** from industrial waste\n\n### Advantages\n- ✅ Simple and quick\n- ✅ No heating required\n- ✅ Can recover both liquids\n- ✅ Effective for immiscible liquids\n\n### Limitations\n- ⚠️ Only works for immiscible liquids\n- ⚠️ Cannot separate miscible liquids\n- ⚠️ Requires careful handling to avoid mixing layers\n- ⚠️ Some liquids may form an emulsion (mixture of tiny droplets)\n\n---\n\n## 🌈 Method 2: Chromatography (For Miscible Liquids)\n\n### When to Use Chromatography\nUse chromatography to separate ::green[miscible liquids] or to identify components in a mixture.\n\n### What is Chromatography?\n\n::yellow[Chromatography] is a separation technique based on different solubility in a solvent. Components separate because they dissolve to different degrees in the moving solvent.\n\n### How Paper Chromatography Works\n\n**The Setup:**\n1. A drop of the mixture is placed on a pencil line at the edge of filter paper\n2. The paper is placed in a solvent (the mobile phase)\n3. The solvent travels up the paper, carrying the mixture\n4. Components separate based on solubility\n\n**Step-by-Step Procedure:**\n\n1. **Draw a pencil line** across the bottom of filter paper (baseline)\n2. **Mark a spot** on the baseline with the mixture (use a pencil, not pen!)\n3. **Pour solvent** into a beaker or chromatography chamber\n4. **Dip the paper** so the baseline just touches the solvent\n5. **Keep the paper vertical** - solvent travels upward\n6. **Watch the separation** - different colours move different distances\n7. **Stop when** the solvent reaches near the top (the solvent front)\n8. **Mark the solvent front** with a pencil\n9. **Allow to dry** and examine the separated components\n\n### Key Definitions\n\n- **::blue[Mobile phase]**: The solvent that moves up the paper\n- **::blue[Stationary phase]**: The filter paper that stays still\n- **::blue[Solvent front]**: The furthest point the solvent reaches\n- **::blue[Rf value]**: A number that identifies each component\n\n### Understanding Separation\n\n**Why do components separate?**\n- Different solubility in the solvent\n- More soluble components travel further\n- Less soluble components don't travel as far\n\n**Order on paper (from bottom to top):**\n- Baseline (starting point)\n- Least soluble component (travels least)\n- ...\n- Most soluble component (travels furthest)\n- Solvent front (furthest point)\n\n### Calculating Rf Values\n\n::purple[Rf value = Distance travelled by component / Distance travelled by solvent front]\n\n**Example:**\n- Component travels 6 cm\n- Solvent front travels 10 cm\n- Rf = 6/10 = 0.6\n\n### Using Rf Values to Identify Components\n\n1. **Calculate Rf** for your unknown component\n2. **Compare with known values** from reference chromatograms\n3. **If Rf matches** a known substance, you've identified it!\n4. **Each substance has a characteristic Rf** for a given solvent\n\n### Real-World Applications\n\n- **Food testing**: Identifying food dyes and additives\n- **Crime forensics**: Analyzing ink and blood samples\n- **Pharmaceutical analysis**: Testing drug purity\n- **Environmental testing**: Detecting pollutants in water\n- **Quality control**: Checking food and cosmetic products\n\n### Example: Purple Food Colouring\n\nA drop of purple food colouring is placed on paper and chromatographed:\n\n```\n                    Solvent front ────\n                    Red component ─────\n                    Blue component ────\n                    Yellow component ──\nBaseline (starting point) ─────────────\n```\n\nThe purple colour separates into its component dyes: red, blue, and yellow!\n\n### Advantages\n- ✅ Separates miscible liquids\n- ✅ Identifies components\n- ✅ Simple and inexpensive\n- ✅ Works for coloured and colourless compounds\n\n### Limitations\n- ⚠️ Only separates small quantities\n- ⚠️ Cannot recover large amounts of pure substance\n- ⚠️ Requires suitable solvent\n- ⚠️ Colourless compounds need locating agents\n\n---\n\n## 🔍 Locating Agents for Colourless Compounds\n\n### The Problem\nMany organic compounds are colourless, so you can't see them on the chromatogram after separation!\n\n### The Solution: Locating Agents\n\n::yellow[Locating agents] are substances that react with colourless compounds to make them visible (usually by changing colour or glowing under UV light).\n\n### How Locating Agents Work\n\n1. **Spray or dip** the dried chromatogram with locating agent\n2. **Chemical reaction** occurs between agent and colourless components\n3. **Coloured spots appear** where components are located\n4. **Mark the spots** and measure their Rf values\n\n### Common Locating Agents\n\n- **Iodine solution**: Turns organic compounds brown/purple\n- **Ninhydrin**: Turns amino acids purple/pink\n- **UV light**: Some compounds fluoresce (glow) under UV\n- **Specific chemical reagents**: React with particular functional groups\n\n### Important Note\n\n> ⚠️ **Knowledge Requirement**: You don't need to memorize specific locating agents for the exam. Understanding the general principle is sufficient: locating agents help visualize colourless compounds!\n\n### Real-World Example\n\nAnalyzing amino acids in a protein:\n1. Separate amino acids by chromatography\n2. Spray with ninhydrin\n3. Purple/pink spots appear where each amino acid is\n4. Identify each amino acid by comparing Rf values\n\n---\n\n## 📊 Comparison: Separating Funnel vs. Chromatography\n\n| Feature | Separating Funnel | Chromatography |\n|---------|------------------|------------------|\n| ::blue[For immiscible/miscible] | Immiscible only | Miscible liquids |\n| ::blue[Amount recovered] | Large quantities | Small quantities |\n| ::blue[Speed] | Quick | Slower |\n| ::blue[Can identify components] | No | Yes |\n| ::blue[Requires heating] | No | No |\n| ::blue[Best for] | Bulk separation | Analysis & identification |\n\n> 💡 **Key Insight**: Use separating funnel for bulk separation of immiscible liquids, use chromatography to identify components and separate miscible liquids!",
+    "speech_to_text_content": "Liquid-Liquid Mixture Separation Methods. Using a Separating Funnel for immiscible liquids: Pour the mixture into the funnel, let it settle, identify the layers by density, open the tap at the bottom, and collect each layer in separate beakers. Denser liquid is at the bottom, less dense liquid is at the top. Paper Chromatography for miscible liquids: Draw a pencil line across filter paper, place a spot of the mixture on the baseline, dip the paper in solvent, and watch the separation. Different components move different distances based on solubility. Calculate Rf values by dividing the distance travelled by the component by the distance travelled by the solvent front. Locating agents help visualize colourless compounds by making them visible. Real-world applications include separating oil from water and identifying food dyes. Use separating funnel for bulk separation of immiscible liquids and chromatography to identify components and separate miscible liquids.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:42:52.631402+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "1.2.6",
+    "type": "slide",
+    "question_type": null,
+    "title": "Fractional Distillation: Separating Miscible Liquids",
+    "content": "## 🔬 Fractional Distillation\n\n### When to Use Fractional Distillation\n\nUse fractional distillation when:\n1. You have ::green[two miscible liquids] (mix completely)\n2. Their ::green[boiling points are too close] for simple distillation to work\n3. Simple distillation would fail because both liquids evaporate together\n\n### Why Simple Distillation Fails\n\n**Example: Separating ethanol (bp 78°C) and water (bp 100°C)**\n\n- Boiling point difference: 22°C\n- This is NOT large enough!\n- When ethanol boils, some water also vaporizes\n- Both liquids evaporate together\n- You get a mixture, not pure ethanol\n\n> ⚠️ **Critical Point**: Simple distillation requires a LARGE boiling point difference (typically >25°C). Fractional distillation is needed when the difference is smaller.\n\n---\n\n## 🏗️ The Key Innovation: The Fractionating Column\n\n### What is a Fractionating Column?\n\nA ::yellow[fractionating column] (or fractionating tower) is added above the flask in a distillation setup. It contains:\n- Small glass beads, or\n- Packing material (glass wool, ceramic pieces), or\n- Metal coils\n\n### Purpose of the Column\n\nThe column provides a ::green[LARGE SURFACE AREA] for vapours to condense onto.\n\n### How It Works: The Separation Process\n\n**Step 1: Heating**\n- Both liquids boil and evaporate\n- Mixture of vapours rises into the column\n\n**Step 2: Condensation and Re-evaporation**\n- Vapours hit the cool glass beads in the column\n- Some condense back to liquid\n- Liquid drips back down\n\n**Step 3: Repeated Cycles**\n- As liquid drips down, it meets hot vapour rising up\n- They interact repeatedly\n- Each interaction separates them further\n\n**Step 4: Separation by Boiling Point**\n- Liquid with LOWER boiling point rises higher before condensing\n- Liquid with HIGHER boiling point condenses lower in column\n- This creates a temperature gradient in the column\n\n**Step 5: Collection**\n- Low boiling point liquid reaches the top and exits first\n- High boiling point liquid exits later\n- Thermometer monitors which liquid is exiting\n\n### The Temperature Gradient\n\n```\nTop of column (cool, ~78°C)\n    ↑ Ethanol vapour (low bp)\n    ↑ Mixed vapours\n    ↑ Water vapour (high bp)\nBottom of column (hot, ~100°C)\n```\n\n---\n\n## 🔧 Apparatus Setup\n\n**Comparison with Simple Distillation:**\n\n```\nSimple Distillation:\nFlask → Condenser → Collection\n\nFractional Distillation:\nFlask → Fractionating Column → Condenser → Collection\n         (with glass beads)\n```\n\n### Step-by-Step Procedure\n\n1. **Pack the column** with glass beads or packing material\n2. **Pour the mixture** into the round-bottom flask\n3. **Insert thermometer** at the exit of the column (not in the flask!)\n4. **Connect the condenser** to the column\n5. **Heat the flask** gently\n6. **Monitor the temperature**:\n   - When temperature reaches the bp of first liquid, it starts to distil\n   - Change collection flask when temperature rises\n   - Collect second liquid when temperature reaches its bp\n7. **Continue heating** until all liquid has distilled\n\n---\n\n## 🌍 Real-World Application: Crude Oil Refining\n\n### The Most Important Industrial Use\n\nFractional distillation is used in oil refineries to separate crude oil into different products:\n\n**Crude oil contains:**\n- Hundreds of different hydrocarbons (molecules made of carbon and hydrogen)\n- Each has a different boiling point\n\n**In a fractionating column (called a fractionating tower):**\n- Crude oil is heated to ~350°C\n- Vapours rise through the tower\n- Different hydrocarbons condense at different heights\n- Each level collects a different product\n\n**Products collected (from top to bottom):**\n1. **Petroleum gas** (bp < 40°C) - used for heating\n2. **Petrol/Gasoline** (bp 40-200°C) - fuel for cars\n3. **Kerosene** (bp 200-250°C) - fuel for aircraft\n4. **Diesel** (bp 250-350°C) - fuel for trucks\n5. **Fuel oil** (bp > 350°C) - heating oil\n6. **Bitumen** (residue) - road surfacing\n\n> 💡 **Why This Matters**: Without fractional distillation, we couldn't separate crude oil into useful products. All the petrol, diesel, and jet fuel you use depends on this technique!\n\n---\n\n## 📊 Comparison: Simple vs. Fractional Distillation\n\n| Feature | Simple Distillation | Fractional Distillation |\n|---------|-------------------|------------------------|\n| ::blue[Boiling point difference needed] | Large (>25°C) | Small (<25°C) |\n| ::blue[Apparatus] | Flask + Condenser | Flask + Column + Condenser |\n| ::blue[Column present] | No | Yes (with glass beads) |\n| ::blue[How it works] | Single evaporation-condensation | Multiple cycles in column |\n| ::blue[Separation quality] | Good for large differences | Excellent for close bps |\n| ::blue[Time required] | Shorter | Longer |\n| ::blue[Best for] | Separating solvent from solid | Separating two miscible liquids |\n| ::blue[Industrial use] | Water purification | Oil refining |\n\n### Decision Tree: Which Distillation to Use?\n\n```\nDo you have two miscible liquids?\n    ↓ YES\nIs boiling point difference > 25°C?\n    ↓ YES → Use SIMPLE DISTILLATION\n    ↓ NO → Use FRACTIONAL DISTILLATION\n```\n\n> 🎯 **Key Principle**: The fractionating column allows multiple separation cycles, making it possible to separate liquids with similar boiling points that simple distillation cannot separate!",
+    "speech_to_text_content": "Fractional Distillation is used when you have two miscible liquids with boiling points that are too close for simple distillation. Simple distillation requires a large boiling point difference, typically greater than 25 degrees Celsius. A fractionating column contains glass beads or packing material that provides a large surface area for vapours to condense onto. The column works by repeated cycles of condensation and re-evaporation, with each interaction separating the liquids further. The most important industrial use is crude oil refining, where crude oil is separated into different products like petrol, kerosene, diesel, and fuel oil at different heights in a fractionating tower. The procedure involves packing the column with glass beads, heating the flask, monitoring the temperature at the column exit, and changing collection flasks when temperature rises. Fractional distillation is essential for separating crude oil into useful products.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:43:08.890200+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "1.3.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "Determining Purity: Melting and Boiling Points",
+    "content": "## 🌡️ How Do We Know If a Substance is Pure?\n\n### The Key Principle\n\nEvery ::yellow[pure substance] has a characteristic melting point and boiling point. These are like a \"fingerprint\" that identifies the substance.\n\n### Pure Substance vs. Impure Substance\n\n| Property | Pure Substance | Impure Substance (Mixture) |\n|----------|---|---|\n| ::blue[Melting point] | Sharp, at specific temperature | Melts over a range of temperatures |\n| ::blue[Boiling point] | Sharp, at specific temperature | Boils over a range of temperatures |\n| ::blue[Appearance during melting] | Solid → Liquid at one temperature | Gradual transition over range |\n| ::blue[Example] | Pure water melts at exactly 0°C | Salt water melts below 0°C |\n\n---\n\n## 🔥 Understanding Melting and Boiling Points\n\n### What is a Melting Point?\n\nThe ::yellow[melting point] is the temperature at which a solid turns into a liquid.\n\n**For pure substances:**\n- Melting occurs at a SHARP, SPECIFIC temperature\n- Example: Pure ice melts at exactly 0°C (at 1 atmosphere pressure)\n- All the ice melts at this temperature\n\n**For impure substances (mixtures):**\n- Melting occurs over a RANGE of temperatures\n- Starts melting below the pure substance's melting point\n- Continues melting as temperature increases\n- Example: Salty ice melts starting at -5°C and continues melting until -1°C\n\n### What is a Boiling Point?\n\nThe ::blue[boiling point] is the temperature at which a liquid turns into a gas.\n\n**For pure substances:**\n- Boiling occurs at a SHARP, SPECIFIC temperature\n- Example: Pure water boils at exactly 100°C (at 1 atmosphere pressure)\n- All the water boils at this temperature\n\n**For impure substances (mixtures):**\n- Boiling occurs over a RANGE of temperatures\n- Starts boiling below the pure substance's boiling point\n- Continues boiling as temperature increases\n\n---\n\n## 🔬 How Impurities Affect Melting and Boiling Points\n\n### Effect on Melting Point\n\n::red[**Impurities LOWER the melting point**]\n\n**Why?**\n- Impurity particles interfere with the crystalline structure\n- Less thermal energy is needed to break the solid structure\n- Melting begins at a lower temperature\n\n**Example:**\n- Pure water: melts at 0°C\n- Salt water: melts at -2°C (lower!)\n- Very salty water: melts at -10°C (even lower!)\n\n**Real-World Application:**\nThis is why salt is spread on icy roads in winter! The salt dissolves in the thin layer of water on ice, lowering the melting point below 0°C, so the ice melts even when it's below freezing.\n\n### Effect on Boiling Point\n\n::red[**Impurities RAISE the boiling point**]\n\n**Why?**\n- Impurity particles make it harder for liquid molecules to escape as gas\n- More thermal energy is needed to boil the liquid\n- Boiling begins at a higher temperature\n\n**Example:**\n- Pure water: boils at 100°C\n- Salt water: boils at 101°C (higher!)\n- Very salty water: boils at 102°C (even higher!)\n\n**Real-World Application:**\nWhen cooking pasta, adding salt to water raises the boiling point slightly, which can help cook the pasta faster (though the effect is small).\n\n---\n\n## 📊 Melting and Boiling Point Data\n\n### Using Data to Identify Substances\n\nScientists maintain reference tables of melting and boiling points for known pure substances.\n\n**Procedure:**\n1. Measure the melting point of your unknown substance\n2. Measure the boiling point of your unknown substance\n3. Compare with reference table\n4. If values match a known substance, you've identified it!\n\n### Example: Identifying a White Powder\n\n**Measured data:**\n- Melting point: 801°C\n- Boiling point: 1413°C\n\n**Reference table:**\n- Sodium chloride: mp 801°C, bp 1413°C ✓ MATCH!\n- Sucrose: mp 186°C, bp 400°C ✗ No match\n- Benzoic acid: mp 122°C, bp 250°C ✗ No match\n\n**Conclusion:** The white powder is sodium chloride (table salt)!\n\n### Example: Detecting Impurities\n\n**Pure ethanol reference data:**\n- Melting point: -114°C\n- Boiling point: 78°C\n\n**Your measured data:**\n- Melting point: -115°C (lower than 78°C)\n- Boiling point: 79°C (higher than 78°C)\n\n**Conclusion:** Your ethanol contains impurities! The melting point is lower and boiling point is higher than the pure substance.\n\n---\n\n## 🔍 How to Measure Melting and Boiling Points\n\n### Measuring Melting Point\n\n**Apparatus needed:**\n- Thermometer\n- Capillary tube (thin glass tube)\n- Substance to test\n- Heating apparatus\n- Melting point block or water bath\n\n**Procedure:**\n1. Fill a capillary tube with the substance\n2. Attach to a thermometer\n3. Heat slowly in a water bath\n4. Observe when the solid first turns to liquid\n5. Record this temperature as the melting point\n6. The temperature should remain constant as all solid melts\n\n### Measuring Boiling Point\n\n**Apparatus needed:**\n- Thermometer\n- Round-bottom flask\n- Heating apparatus\n- Condenser (optional)\n- Boiling chips (prevent bumping)\n\n**Procedure:**\n1. Pour liquid into flask\n2. Add boiling chips\n3. Insert thermometer into the liquid\n4. Heat gently\n5. Observe when bubbles form throughout the liquid\n6. Record the temperature - this is the boiling point\n7. The temperature should remain constant during boiling\n\n---\n\n## ✅ Assessing Purity Using Melting/Boiling Point Data\n\n### What Tells You a Substance is Pure?\n\n✅ **Signs of purity:**\n- ::green[Sharp melting point] (not a range)\n- ::green[Sharp boiling point] (not a range)\n- ::green[Melting and boiling points match reference values] exactly\n- ::green[No colour change] during melting/boiling\n\n### What Tells You a Substance is Impure?\n\n❌ **Signs of impurity:**\n- ::red[Melting occurs over a range] of temperatures\n- ::red[Boiling occurs over a range] of temperatures\n- ::red[Melting point is lower] than reference value\n- ::red[Boiling point is higher] than reference value\n- ::red[Colour change or decomposition] during heating\n\n> 💡 **Key Insight**: The sharper and more specific the melting/boiling points, the purer the substance!",
+    "speech_to_text_content": "How Do We Know If a Substance is Pure? Every pure substance has a characteristic melting point and boiling point. Pure substances melt and boil at sharp, specific temperatures, while impure substances melt and boil over a range of temperatures. Impurities lower the melting point and raise the boiling point. For example, pure water melts at 0 degrees Celsius, but salt water melts at a lower temperature. Pure water boils at 100 degrees Celsius, but salt water boils at a higher temperature. Scientists maintain reference tables of melting and boiling points for known pure substances. By measuring the melting and boiling points of an unknown substance and comparing with reference values, you can identify it. Signs of purity include sharp melting and boiling points that match reference values. Signs of impurity include melting and boiling occurring over a range of temperatures.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:43:23.864345+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "1.3.2",
+    "type": "slide",
+    "question_type": null,
+    "title": "The Importance of Pure Substances in Everyday Life",
+    "content": "## 🏥 Why Must Substances Be Pure?\n\n### The Critical Importance of Purity\n\n::yellow[Pure substances] are absolutely essential in products we use every day. When substances are impure, they can be ineffective or even dangerous!\n\n---\n\n## 💊 Pharmaceuticals (Medicines and Drugs)\n\n### Why Purity is Critical\n\nWhen you take a medicine, you need to know exactly how much active ingredient you're getting.\n\n**If the medicine is impure:**\n- ⚠️ You might get too little of the active ingredient → medicine doesn't work\n- ⚠️ You might get too much → overdose and side effects\n- ⚠️ Impurities might be toxic or cause allergic reactions\n- ⚠️ Impurities might interfere with the medicine's action\n\n### Real-World Example: Aspirin\n\n**Pure aspirin:**\n- Exact dose per tablet\n- Predictable effects\n- Safe for most people\n\n**Impure aspirin:**\n- Unknown amount of active ingredient\n- Unpredictable effects\n- Might contain harmful impurities\n- Could cause serious harm\n\n### Regulatory Standards\n\nGovernments and health organizations (like the FDA in USA, or Health Sciences Authority in Singapore) set strict purity standards for all medicines:\n- Minimum purity levels (often >99%)\n- Maximum allowable impurities\n- Testing required before sale\n\n> 💡 **Why This Matters**: Before any medicine reaches a pharmacy, it has been tested extensively to ensure purity and safety. This is why medicines are expensive - the testing and purification costs are high!\n\n---\n\n## 🍎 Foodstuffs\n\n### Why Purity is Critical\n\nFood purity affects both taste and safety.\n\n### Examples of Purity Issues\n\n**Salt for cooking:**\n- Pure salt: white crystals, salty taste\n- Impure salt: might contain minerals that affect taste, or harmful substances\n- Iodized salt: purposefully has iodine added (controlled impurity) to prevent iodine deficiency\n\n**Sugar:**\n- Pure sugar: white crystals, sweet taste\n- Impure sugar: might contain molasses or other substances\n- Brown sugar: contains molasses (controlled, intentional impurity)\n\n**Food additives:**\n- Must be pure forms of approved additives\n- Impurities in food colouring could be toxic\n- Preservatives must be pure to be effective\n\n### Food Safety Standards\n\nGovernments regulate food purity:\n- Maximum pesticide residues allowed\n- Banned substances must be absent\n- Contaminants (bacteria, heavy metals) must be below safe levels\n- Labeling must accurately reflect contents\n\n### Real-World Example: Contaminated Food Scare\n\n> 💡 **Historical Example**: In 2008, melamine (a chemical) was found as an impurity in Chinese infant formula. This caused serious illness in thousands of babies. This tragedy shows why food purity testing is so important!\n\n---\n\n## 🧪 Other Consumer Products\n\n### Cosmetics and Personal Care\n\n**Purity matters because:**\n- Impurities might cause skin reactions\n- Impurities might reduce effectiveness\n- Heavy metals in impurities could accumulate in skin\n\n**Examples:**\n- Shampoo: must be pure to not damage hair\n- Sunscreen: impurities could reduce UV protection\n- Moisturizer: impurities might cause irritation\n\n### Water for Drinking\n\n**Purity is essential because:**\n- Impurities can cause illness (bacteria, viruses, chemicals)\n- Some impurities accumulate in the body over time (lead, arsenic)\n- Taste and odour affected by impurities\n\n**Standards:**\n- Drinking water standards set maximum levels for all contaminants\n- Regular testing required\n- Treatment plants remove impurities\n\n### Fuels and Lubricants\n\n**Purity matters because:**\n- Impurities damage engines\n- Impurities reduce fuel efficiency\n- Impurities cause corrosion\n\n---\n\n## 🔬 How Purity is Ensured in Manufacturing\n\n### Quality Control Steps\n\n1. **Raw materials tested** for purity before use\n2. **Manufacturing process controlled** to minimize contamination\n3. **Intermediate products tested** during manufacturing\n4. **Final product tested** for purity before packaging\n5. **Random samples tested** from each batch\n6. **Storage conditions controlled** to prevent contamination\n\n### Purification Techniques Used\n\nManufacturers use the separation techniques you've learned:\n- **Crystallisation** - produces very pure crystals\n- **Distillation** - purifies liquids\n- **Chromatography** - identifies and separates components\n- **Filtration** - removes solid impurities\n- **Recrystallisation** - purifies solids further\n\n### Cost Implications\n\n> 💡 **Why are medicines expensive?** The cost of ensuring purity is very high! A pharmaceutical company might:\n- Test raw materials extensively\n- Perform multiple purification steps\n- Test intermediate products\n- Test final products\n- Maintain quality control records\n- All of this adds to the cost!\n\n---\n\n## 📊 Summary: Purity Standards\n\n| Product Type | Why Purity Matters | Consequence of Impurity |\n|---|---|---|\n| ::yellow[Medicines] | Dose accuracy, safety | Wrong dose, side effects, harm |\n| ::yellow[Food] | Safety, taste, nutrition | Illness, bad taste, nutrient loss |\n| ::yellow[Water] | Health and safety | Disease, poisoning, illness |\n| ::yellow[Cosmetics] | Skin safety, effectiveness | Skin reactions, reduced effectiveness |\n| ::yellow[Fuels] | Engine performance | Damage, corrosion, poor performance |\n\n---\n\n## 🎯 Key Takeaway\n\n::green[Pure substances are not just a laboratory concept - they are essential for the safety and effectiveness of products we use every single day!] The separation and purification methods you've learned in this chapter are used by industries worldwide to ensure the products we consume are safe and effective.\n\n> ⚠️ **Remember**: When you buy a medicine, drink water, or use a cosmetic product, you're relying on chemists and technicians who have used these purification techniques to ensure the product is pure and safe!",
+    "speech_to_text_content": "Why Must Substances Be Pure? Pure substances are absolutely essential in products we use every day. Pharmaceuticals must be pure because you need to know exactly how much active ingredient you're getting. If medicine is impure, you might get too little and it won't work, or too much and you'll have side effects. Governments set strict purity standards for all medicines. Foodstuffs must be pure for both taste and safety. Salt and sugar must be pure, and food additives must be pure forms of approved additives. Governments regulate food purity with maximum pesticide residues and banned substances. Other consumer products like cosmetics, water, and fuels must be pure because impurities can cause problems. Manufacturers ensure purity through quality control steps including testing raw materials, controlling the manufacturing process, testing intermediate and final products, and maintaining quality control records. The cost of ensuring purity is very high, which is why medicines are expensive. Pure substances are essential for the safety and effectiveness of products we use every day.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:43:40.152305+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "1.3.3",
+    "type": "slide",
+    "question_type": null,
+    "title": "Chapter Summary and Decision-Making Guide",
+    "content": "## 📚 Experimental Chemistry: Complete Overview\n\nYou've now learned all the major concepts in experimental chemistry! Let's bring it all together.\n\n---\n\n## 🎯 Part 1: Measuring Physical Quantities\n\n### The Four Essential Measurements\n\n| Quantity | SI Unit | Apparatus | Accuracy |\n|----------|---------|-----------|----------|\n| ::yellow[Time] | Seconds (s) | Stopwatch | Depends on reaction speed |\n| ::yellow[Temperature] | Kelvin (K) | Thermometer | ±1°C typically |\n| ::yellow[Mass] | Kilogram (kg) | Balance | ±0.01 g (electronic) |\n| ::yellow[Volume] | Cubic metre (m³) | Various apparatus | Depends on apparatus chosen |\n\n### Volume Apparatus Decision Tree\n\n```\nWhat volume do you need to measure?\n    ↓\nSmall, precise volume (e.g., 10 mL)?\n    → Use PIPETTE (±0.05 mL)\n    ↓\nLarge, precise volume (e.g., 100 mL)?\n    → Use VOLUMETRIC FLASK\n    ↓\nQuick measurement (e.g., 30 mL)?\n    → Use MEASURING CYLINDER (±1 mL)\n    ↓\nTitration or precise delivery?\n    → Use BURETTE (±0.05 mL, 2 d.p.)\n    ↓\nMeasuring gas volume?\n    → Use GAS SYRINGE\n```\n\n### Gas Collection Decision Tree\n\n```\nWhat gas are you collecting?\n    ↓\nInsoluble or slightly soluble (H₂, O₂, N₂)?\n    → Use WATER DISPLACEMENT\n    ↓\nDenser than air (Mr > 29)? (Cl₂, HCl, SO₂)?\n    → Use DOWNWARD DELIVERY\n    ↓\nLess dense than air (Mr < 29)? (NH₃)?\n    → Use UPWARD DELIVERY\n```\n\n### Gas Drying Decision Tree\n\n```\nWhat gas do you need to dry?\n    ↓\nMost gases?\n    → Use CONCENTRATED SULFURIC ACID\n    (but NOT ammonia - it reacts!)\n    ↓\nBasic/neutral gases like ammonia?\n    → Use QUICKLIME (CaO)\n    (must be freshly heated!)\n    ↓\nHydrogen, nitrogen, or carbon dioxide?\n    → Use FUSED CALCIUM CHLORIDE\n    (must be freshly heated!)\n```\n\n---\n\n## 🧪 Part 2: Separating Mixtures\n\n### The Complete Separation Decision Tree\n\n```\nWhat type of mixture do you have?\n    ↓\nSOLID-SOLID MIXTURE?\n    ↓\n    Magnetic metals (Fe, Co, Ni)?\n        → MAGNETIC ATTRACTION\n    ↓\n    Different particle sizes?\n        → SIEVING\n    ↓\n    Different solubility?\n        → USE SUITABLE SOLVENT\n    ↓\n    One substance sublimes?\n        → SUBLIMATION\n\nSOLID-LIQUID MIXTURE?\n    ↓\n    Insoluble solid + liquid?\n        → FILTRATION\n    ↓\n    Dissolved solid in solution?\n        → EVAPORATION (quick, small crystals)\n        → CRYSTALLISATION (slow, pure crystals)\n\nLIQUID-LIQUID MIXTURE?\n    ↓\n    Immiscible liquids (separate layers)?\n        → SEPARATING FUNNEL\n    ↓\n    Miscible liquids (completely mixed)?\n        ↓\n        Large boiling point difference (>25°C)?\n            → SIMPLE DISTILLATION\n        ↓\n        Small boiling point difference (<25°C)?\n            → FRACTIONAL DISTILLATION\n    ↓\n    Need to identify components?\n        → CHROMATOGRAPHY\n```\n\n### Key Separation Methods Summary\n\n| Method | Use For | Advantages | Limitations |\n|--------|---------|-----------|-------------|\n| ::yellow[Filtration] | Insoluble solid from liquid | Quick, simple | Only for insoluble solids |\n| ::yellow[Evaporation] | Dissolved solid from solution | Simple, recovers solid | Slow, small crystals |\n| ::yellow[Crystallisation] | Pure solid from solution | Very pure crystals | Slow, requires cooling |\n| ::yellow[Simple distillation] | Solvent from solution | Recovers both | Needs large bp difference |\n| ::yellow[Fractional distillation] | Two miscible liquids | Separates close bp liquids | Complex apparatus, slow |\n| ::yellow[Separating funnel] | Immiscible liquids | Quick, recovers both | Only for immiscible |\n| ::yellow[Chromatography] | Identify components | Identifies substances | Small quantities only |\n\n---\n\n## 🔍 Part 3: Assessing Purity\n\n### Melting and Boiling Point Analysis\n\n**Pure Substance:**\n- ✅ Sharp melting point (not a range)\n- ✅ Sharp boiling point (not a range)\n- ✅ Values match reference data\n\n**Impure Substance:**\n- ❌ Melting over a range of temperatures\n- ❌ Boiling over a range of temperatures\n- ❌ Melting point LOWER than pure substance\n- ❌ Boiling point HIGHER than pure substance\n\n### Chromatography Analysis\n\n**Rf Value Calculation:**\n$$\\text{Rf} = \\frac{\\text{Distance travelled by component}}{\\text{Distance travelled by solvent front}}$$\n\n**Using Rf to identify:**\n1. Calculate Rf for unknown substance\n2. Compare with reference values\n3. Match = Identification\n\n---\n\n## 💡 Problem-Solving Strategies\n\n### When You See a Mixture Problem\n\n**Step 1: Identify the mixture type**\n- Solid-solid?\n- Solid-liquid?\n- Liquid-liquid?\n\n**Step 2: Identify the physical properties that differ**\n- Density?\n- Solubility?\n- Boiling point?\n- Particle size?\n- Magnetic properties?\n\n**Step 3: Choose the method based on the different property**\n- Different density → separating funnel\n- Different solubility → use solvent\n- Different boiling point → distillation\n- Different particle size → sieving\n- Different magnetic properties → magnetic attraction\n\n**Step 4: Consider practical constraints**\n- Time available?\n- Equipment available?\n- Purity required?\n- Amount of product needed?\n\n---\n\n## 🏆 Real-World Applications\n\n### Industrial Examples\n\n1. **Water Treatment Plants**\n   - Filtration to remove solids\n   - Distillation/osmosis to remove dissolved salts\n   - Chromatography to test for pollutants\n\n2. **Pharmaceutical Manufacturing**\n   - Crystallisation to produce pure drugs\n   - Chromatography to test purity\n   - Melting point determination for quality control\n\n3. **Oil Refining**\n   - Fractional distillation to separate crude oil\n   - Produces petrol, diesel, kerosene\n   - Billions of litres processed annually\n\n4. **Food Manufacturing**\n   - Crystallisation of sugar\n   - Evaporation of salt\n   - Chromatography to test for additives\n\n5. **Environmental Cleanup**\n   - Separating oil from water in spills\n   - Removing heavy metals from contaminated water\n   - Recovering valuable materials from waste\n\n---\n\n## ✅ Checklist: Have You Mastered This Chapter?\n\nYou should be able to:\n\n### Experimental Design\n- ✅ Name appropriate apparatus for measuring time, temperature, mass, and volume\n- ✅ Suggest suitable apparatus for specific experiments\n- ✅ Explain why certain apparatus are chosen\n- ✅ Describe how to collect and dry gases\n- ✅ Calculate relative molecular mass and compare with air\n\n### Methods of Separation and Purification\n- ✅ Describe all separation methods (filtration, evaporation, crystallisation, distillation, etc.)\n- ✅ Suggest suitable methods for different mixtures\n- ✅ Explain the principles behind each method\n- ✅ Perform and interpret paper chromatography\n- ✅ Calculate and use Rf values\n\n### Purity Assessment\n- ✅ Explain how melting/boiling points indicate purity\n- ✅ Interpret melting/boiling point data\n- ✅ Use data to identify substances\n- ✅ Explain why purity matters in real products\n- ✅ Describe how impurities affect melting/boiling points\n\n---\n\n## 🎓 Final Thoughts\n\n::green[The techniques you've learned in this chapter are the foundation of practical chemistry.] Whether you become a scientist, engineer, pharmacist, or work in any technical field, these skills will be valuable.\n\n> 💡 **Remember**: Good experimental chemistry is about:\n1. **Choosing the right tools** for the job\n2. **Understanding the principles** behind techniques\n3. **Measuring accurately** and carefully\n4. **Thinking critically** about results\n5. **Applying knowledge** to real-world problems\n\nYou now have these skills! 🎉",
+    "speech_to_text_content": "Experimental Chemistry Complete Overview. Part 1: Measuring Physical Quantities. Time is measured in seconds using a stopwatch. Temperature is measured in Kelvin using a thermometer. Mass is measured in kilograms using a balance. Volume is measured in cubic metres using various apparatus depending on the volume and accuracy needed. Gas Collection: Use water displacement for insoluble gases, downward delivery for gases denser than air, and upward delivery for gases less dense than air. Gas Drying: Use concentrated sulfuric acid for most gases, quicklime for basic gases, and fused calcium chloride for hydrogen and nitrogen. Part 2: Separating Mixtures. For solid-solid mixtures, use magnetic attraction, sieving, suitable solvents, or sublimation. For solid-liquid mixtures, use filtration, evaporation, or crystallisation. For liquid-liquid mixtures, use a separating funnel for immiscible liquids or distillation for miscible liquids. Part 3: Assessing Purity. Pure substances have sharp melting and boiling points. Impure substances melt and boil over a range of temperatures, with lower melting points and higher boiling points. Chromatography can identify components using Rf values. The techniques learned are the foundation of practical chemistry used in industries worldwide.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:44:01.787604+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Practice Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Choosing Apparatus for Volume Measurement",
+    "content": "## Practice Question 1\n\nA student needs to measure exactly 25 mL of a solution for a chemical reaction. Which apparatus would be MOST suitable for this measurement?\n\nA) Measuring cylinder\nB) Pipette\nC) Burette\nD) Volumetric flask",
+    "speech_to_text_content": "A student needs to measure exactly 25 mL of a solution for a chemical reaction. Which apparatus would be most suitable for this measurement? Options are: A) Measuring cylinder, B) Pipette, C) Burette, or D) Volumetric flask.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017a",
+        "option_text": "A) Measuring cylinder",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017b",
+        "option_text": "B) Pipette",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017c",
+        "option_text": "C) Burette",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017d",
+        "option_text": "D) Volumetric flask",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B) Pipette. A pipette is designed to measure and transfer a fixed, precise volume of liquid (up to around 25 cm³). It provides high accuracy (±0.05 mL), which is ideal for this task. A measuring cylinder (A) has lower accuracy (±1 mL) and is used for rough measurements. A burette (C) is used for titrations where you need to dispense variable volumes gradually. A volumetric flask (D) is used for preparing solutions of known concentration, not for transferring fixed volumes. Since the student needs exactly 25 mL with high precision, a pipette is the best choice.",
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:44:06.706047+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Practice Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Collecting Chlorine Gas",
+    "content": "## Practice Question 2\n\nChlorine gas (Cl₂) is produced in a laboratory experiment. The relative molecular mass of chlorine is 71. Which method should be used to collect this gas?\n\nA) Water displacement\nB) Downward delivery\nC) Upward delivery\nD) Gas syringe only",
+    "speech_to_text_content": "Chlorine gas is produced in a laboratory experiment. The relative molecular mass of chlorine is 71. Which method should be used to collect this gas? Options are: A) Water displacement, B) Downward delivery, C) Upward delivery, or D) Gas syringe only.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440018b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018a",
+        "option_text": "A) Water displacement",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018b",
+        "option_text": "B) Downward delivery",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018c",
+        "option_text": "C) Upward delivery",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018d",
+        "option_text": "D) Gas syringe only",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B) Downward delivery. Chlorine gas has a relative molecular mass of 71, which is much greater than the relative molecular mass of air (29). This means chlorine is denser than air and will sink downward. In downward delivery, the gas enters from above and sinks into a gas jar, displacing lighter air upward. Water displacement (A) is not suitable because chlorine is very soluble in water and would dissolve rather than being collected as a gas. Upward delivery (C) is for gases less dense than air (like ammonia). A gas syringe (D) alone is not the best method for collecting large volumes of gas.",
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:44:10.974545+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Practice Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Separating a Salt and Sand Mixture",
+    "content": "## Practice Question 3\n\nA student has a mixture of salt and sand. Which sequence of steps would successfully separate both components?\n\nA) Sieve the mixture, then filter the result\nB) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate\nC) Heat the mixture to sublime the salt\nD) Use a separating funnel to separate the components",
+    "speech_to_text_content": "A student has a mixture of salt and sand. Which sequence of steps would successfully separate both components? Options are: A) Sieve the mixture then filter the result, B) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate, C) Heat the mixture to sublime the salt, or D) Use a separating funnel to separate the components.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440019b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019a",
+        "option_text": "A) Sieve the mixture, then filter the result",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019b",
+        "option_text": "B) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019c",
+        "option_text": "C) Heat the mixture to sublime the salt",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019d",
+        "option_text": "D) Use a separating funnel to separate the components",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B) Add water to dissolve the salt, filter to separate sand, then evaporate the filtrate. This method works because salt is soluble in water while sand is insoluble. The procedure is: (1) Add water to the mixture - salt dissolves forming a solution, sand remains as solid; (2) Filter - the sand (residue) remains on the filter paper, salt solution (filtrate) passes through; (3) Evaporate the filtrate - heating drives off the water, leaving pure salt crystals. Option A fails because sieving works for different particle sizes, but salt and sand particles may be similar sizes. Option C fails because salt does not sublime - it has a very high melting point. Option D fails because a separating funnel is for liquid-liquid mixtures, not solid mixtures.",
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:44:15.971444+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Practice Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Separating Two Miscible Liquids",
+    "content": "## Practice Question 4\n\nA student has a mixture of two miscible liquids with boiling points of 78°C and 95°C. Why would simple distillation NOT be suitable for this separation?\n\nA) The boiling point difference is too large\nB) The boiling point difference is too small (only 17°C)\nC) Miscible liquids cannot be separated by any distillation method\nD) The apparatus is not available",
+    "speech_to_text_content": "A student has a mixture of two miscible liquids with boiling points of 78 degrees Celsius and 95 degrees Celsius. Why would simple distillation not be suitable for this separation? Options are: A) The boiling point difference is too large, B) The boiling point difference is too small (only 17 degrees Celsius), C) Miscible liquids cannot be separated by any distillation method, or D) The apparatus is not available.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": "550e8400-e29b-41d4-a716-446655440020b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020a",
+        "option_text": "A) The boiling point difference is too large",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020b",
+        "option_text": "B) The boiling point difference is too small (only 17°C)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020c",
+        "option_text": "C) Miscible liquids cannot be separated by any distillation method",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020d",
+        "option_text": "D) The apparatus is not available",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B) The boiling point difference is too small (only 17°C). Simple distillation requires a SIGNIFICANT boiling point difference (typically >25°C) between the two liquids. With only 17°C difference, when the lower-boiling liquid (78°C) evaporates, the higher-boiling liquid (95°C) also evaporates at the same time. This means both liquids enter the condenser together, and you get a mixture rather than pure separation. Fractional distillation (with a fractionating column) would be needed instead. Option A is incorrect because a larger difference would actually be better. Option C is incorrect because miscible liquids can be separated by fractional distillation. Option D is not the reason for the limitation.",
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:44:20.679194+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Practice Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Interpreting Melting Point Data for Purity",
+    "content": "## Practice Question 5\n\nA student measures the melting point of a white solid and finds it melts gradually between 118°C and 125°C. The reference melting point for the pure substance is 122°C. What can be concluded?\n\nA) The substance is pure because the melting point is close to the reference value\nB) The substance is impure because it melts over a range of temperatures\nC) The substance is pure but the measurement was inaccurate\nD) The substance has been contaminated with water",
+    "speech_to_text_content": "A student measures the melting point of a white solid and finds it melts gradually between 118 degrees Celsius and 125 degrees Celsius. The reference melting point for the pure substance is 122 degrees Celsius. What can be concluded? Options are: A) The substance is pure because the melting point is close to the reference value, B) The substance is impure because it melts over a range of temperatures, C) The substance is pure but the measurement was inaccurate, or D) The substance has been contaminated with water.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440021",
+        "option_id": "550e8400-e29b-41d4-a716-446655440021b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021a",
+        "option_text": "A) The substance is pure because the melting point is close to the reference value",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021b",
+        "option_text": "B) The substance is impure because it melts over a range of temperatures",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021c",
+        "option_text": "C) The substance is pure but the measurement was inaccurate",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021d",
+        "option_text": "D) The substance has been contaminated with water",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B) The substance is impure because it melts over a range of temperatures. A pure substance has a sharp melting point at a specific temperature - it melts at one temperature, not over a range. The fact that this substance melts gradually between 118°C and 125°C (a range of 7°C) is a clear sign of impurity. Impurities lower the melting point and cause melting to occur over a range of temperatures. While the centre of the range (121.5°C) is close to the reference value (122°C), the wide range is the key indicator of impurity. Option A is incorrect because the range, not the average value, indicates purity. Option C is incorrect because a pure substance would show a sharp melting point, not a range. Option D is too specific - the impurity could be any substance, not necessarily water.",
+    "created_at": "2024-01-15T13:00:00Z",
+    "updated_at": "2024-01-15T13:00:00Z",
+    "source_timestamp": "2024-01-15T13:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:44:25.888191+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "Practice Question 6",
+    "type": "question",
+    "question_type": "fill",
+    "title": "Calculating Rf Values in Chromatography",
+    "content": "## Practice Question 6\n\nIn a paper chromatography experiment:\n- A component travels 4.8 cm from the baseline\n- The solvent front travels 8.0 cm from the baseline\n\nCalculate the Rf value for this component.\n\nRf = _____________ (Give your answer to 2 decimal places)",
+    "speech_to_text_content": "In a paper chromatography experiment, a component travels 4.8 centimetres from the baseline and the solvent front travels 8.0 centimetres from the baseline. Calculate the Rf value for this component. Give your answer to 2 decimal places.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_id": null,
+        "answer_text": "0.60",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "The correct answer is 0.60. The Rf value is calculated using the formula: Rf = Distance travelled by component / Distance travelled by solvent front. In this case: Rf = 4.8 cm / 8.0 cm = 0.6 = 0.60 (to 2 decimal places). Rf values are always between 0 and 1 (or 0% and 100%). An Rf of 0.60 means the component travelled 60% of the distance that the solvent front travelled. This Rf value can then be compared with reference values to identify the component.",
+    "created_at": "2024-01-15T13:15:00Z",
+    "updated_at": "2024-01-15T13:15:00Z",
+    "source_timestamp": "2024-01-15T13:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T03:44:29.046093+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440023",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 23,
+    "part_label": "Practice Question 7",
+    "type": "question",
+    "question_type": "open",
+    "title": "Explaining Crystallisation vs. Evaporation",
+    "content": "## Practice Question 7\n\nA student needs to separate a dissolved salt from water. Explain why crystallisation would produce purer crystals than simple evaporation.\n\nYour answer should include:\n- How each method works\n- Why one produces purer crystals than the other\n- At least one practical difference between the methods",
+    "speech_to_text_content": "A student needs to separate a dissolved salt from water. Explain why crystallisation would produce purer crystals than simple evaporation. Your answer should include how each method works, why one produces purer crystals than the other, and at least one practical difference between the methods.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440023",
+        "option_id": null,
+        "answer_text": "Model answer: Evaporation works by heating the solution until all water evaporates, leaving salt crystals behind. Crystallisation works by heating the solution until it becomes saturated, then cooling it gradually. Crystallisation produces purer crystals because slow cooling allows salt atoms to arrange in an orderly, crystalline pattern, while impurities remain dissolved in the remaining solution. In evaporation, rapid heating causes fast evaporation, and impurities become trapped within the crystals as they form quickly. Practically, crystallisation takes much longer (requires time for gradual cooling) while evaporation is faster. Crystallisation produces large, well-formed crystals, while evaporation produces small, irregular crystals.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "This question tests understanding of two key separation methods. The model answer should include: (1) Evaporation: heating until all solvent evaporates, leaving dissolved solid behind. (2) Crystallisation: heating to saturation point, then cooling gradually to allow crystals to form. (3) Why crystallisation is purer: slow cooling allows atoms to arrange in orderly patterns, impurities stay in solution and are removed when you filter; in evaporation, impurities can be trapped in crystals as they form rapidly. (4) Practical differences: crystallisation is slower (requires time for cooling), evaporation is faster; crystallisation produces large pure crystals, evaporation produces smaller crystals with more impurities. Students should demonstrate understanding that purity depends on the rate of crystal formation and the separation of impurities.",
+    "created_at": "2024-01-15T13:30:00Z",
+    "updated_at": "2024-01-15T13:30:00Z",
+    "source_timestamp": "2024-01-15T13:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 23,
+      "timestamp": "2025-12-24T03:44:34.967629+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 23,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440024",
+    "syllabus_id": "chemistry_o_level_singapore",
+    "parent_id": null,
+    "order": 24,
+    "part_label": "Practice Question 8",
+    "type": "question",
+    "question_type": "open",
+    "title": "Designing a Separation Procedure",
+    "content": "## Practice Question 8\n\nA student has a mixture containing:\n- Sand (insoluble in water)\n- Salt (soluble in water)\n- Iron filings (magnetic)\n\nDesign a complete procedure to separate all three components. You should:\n1. Identify which separation method to use for each step\n2. Explain why each method is suitable\n3. Describe the order of steps (which should be done first, second, third)\n4. Identify what you would have at the end of each step",
+    "speech_to_text_content": "A student has a mixture containing sand, salt, and iron filings. Design a complete procedure to separate all three components. You should identify which separation method to use for each step, explain why each method is suitable, describe the order of steps, and identify what you would have at the end of each step.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440024a",
+        "question_id": "550e8400-e29b-41d4-a716-446655440024",
+        "option_id": null,
+        "answer_text": "Model answer: Step 1 - Magnetic attraction: Use a magnet to remove iron filings from the mixture. Iron is magnetic while sand and salt are not. This is the easiest and quickest method. After this step, you have separated iron filings. Step 2 - Add water: Add water to the remaining mixture (sand and salt). Salt dissolves in water (forms a solution) while sand is insoluble and remains as a solid. Step 3 - Filtration: Filter the mixture to separate the insoluble sand from the salt solution. The residue on the filter paper is sand. The filtrate (liquid) contains dissolved salt. Step 4 - Evaporation: Heat the salt solution to evaporate all the water, leaving salt crystals behind. Alternative: Crystallisation could be used instead of evaporation to get purer salt crystals. Final products: Iron filings (separated in step 1), sand (separated in step 3), salt (separated in step 4).",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "This question tests the ability to design a complete separation procedure using multiple methods. The model answer demonstrates: (1) Correct identification of three methods: magnetic attraction, filtration, and evaporation. (2) Correct order: magnetic attraction first (removes iron), then add water and filter (separates sand), then evaporate (recovers salt). (3) Explanation of why each method works: iron is magnetic, sand is insoluble, salt is soluble. (4) Clear identification of products after each step. Acceptable variations: crystallisation instead of evaporation for salt recovery. Students should show logical thinking about the order of steps (you must remove magnetic iron first before adding water, otherwise the magnet would remove wet iron filings which is messier).",
+    "created_at": "2024-01-15T13:45:00Z",
+    "updated_at": "2024-01-15T13:45:00Z",
+    "source_timestamp": "2024-01-15T13:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 24,
+      "timestamp": "2025-12-24T03:44:41.277074+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 24,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

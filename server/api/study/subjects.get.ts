@@ -67,7 +67,8 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('is_active', true)
-      .order('display_name');
+      .order('display_name')
+      .order('sort_order', { referencedTable: 'chapters' });
 
     // Apply role-based filtering for tasks
     // Parents see tasks they created, Students see tasks assigned to them

@@ -1,0 +1,827 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧬 Welcome to Enzymes: The Catalysts of Life",
+    "content": "## What Makes Life Possible?\n\nImagine a world where chemical reactions move at a snail's pace. Food would take years to digest, energy production would be impossibly slow, and life as we know it simply could not exist. Yet every second, thousands of chemical reactions happen inside your body at incredible speeds.\n\n### The Secret: ::yellow[Enzymes]\n\n::yellow[Enzymes] are the unsung heroes of biology—::blue[biological catalysts] made of protein that speed up chemical reactions without being consumed in the process.\n\n## Why Do We Need Enzymes?\n\nWithout enzymes, the chemical reactions needed for life would be too slow to sustain living organisms. Enzymes allow reactions to occur at body temperature and at rates fast enough to keep us alive.\n\n### Key Facts About Enzymes 🔬\n\n- **Protein-based**: Made from complex chains of amino acids folded into precise 3D shapes\n- **Reusable**: Not consumed by reactions, so one enzyme molecule can catalyze thousands of reactions\n- **Specific**: Each enzyme typically works on only one type of substrate\n- **Essential**: Required for digestion, photosynthesis, respiration, and nearly every biological process\n\n> 💡 **Think about it**: Enzymes are like molecular machines that make chemistry happen at biological speeds—without them, life would literally come to a stop!",
+    "speech_to_text_content": "Welcome to enzymes: the catalysts of life. Enzymes are biological catalysts made of protein that speed up chemical reactions without being consumed. Without enzymes, chemical reactions would be too slow to sustain life. Enzymes are reusable, specific to their substrates, and essential for all biological processes including digestion, photosynthesis, and respiration.",
+    "answer": null,
+    "options": [],
+    "explanation": "This introductory slide establishes the importance of enzymes in biology. Enzymes are protein-based biological catalysts that speed up biochemical reactions without being consumed. They are essential for maintaining life processes at speeds compatible with living organisms. Key characteristics include their protein structure, catalytic function, reusability, and substrate specificity.",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:50:11.326057+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔍 What Are Enzymes? Understanding Enzyme Structure",
+    "content": "## Definition of Enzymes\n\n::yellow[Enzymes] are ::blue[biological catalysts made of protein] that speed up biochemical reactions without being consumed in the process.\n\nLet's break this down:\n\n### 1️⃣ Protein Structure\n\nEnzymes are built from ::blue[polypeptide chains]—long strings of amino acids folded into complex, three-dimensional shapes. This precise 3D structure is absolutely critical to enzyme function.\n\n### 2️⃣ Catalytic Function\n\nEnzymes work by ::yellow[lowering the activation energy]—the energy barrier that must be overcome for a reaction to occur. This allows reactions to happen much faster at normal body temperatures.\n\n### 3️⃣ Not Consumed\n\nUnlike reactants in a chemical equation, enzymes are ::green[not used up] in the reactions they catalyze. One enzyme molecule can be reused thousands of times, making them incredibly efficient.\n\n### 4️⃣ Substrate Specificity\n\nEach enzyme typically catalyzes only ::yellow[one specific reaction] on ::yellow[one specific substrate]. This specificity is determined by the enzyme's unique 3D shape.\n\n## Why This Matters 💡\n\nThe protein structure of an enzyme directly determines:\n- Which substrates it can bind to\n- How fast it works\n- What conditions it prefers (temperature, pH)\n- Whether it can be denatured (damaged)\n\n> **Key Insight**: An enzyme's 3D shape is everything. If the shape is lost, the enzyme loses its function completely.",
+    "speech_to_text_content": "Enzymes are biological catalysts made of protein that speed up biochemical reactions without being consumed. They have a complex three-dimensional protein structure, lower the activation energy of reactions, are not consumed in reactions and can be reused, and show substrate specificity. The precise three-dimensional shape of an enzyme is critical to its function.",
+    "answer": null,
+    "options": [],
+    "explanation": "This slide covers the fundamental definition and characteristics of enzymes. Enzymes are proteins that act as biological catalysts, accelerating chemical reactions by lowering activation energy without being consumed. Key characteristics include: protein composition (polypeptide chains), catalytic function through activation energy reduction, reusability, and substrate specificity. The three-dimensional structure of the protein is essential to enzyme function.",
+    "created_at": "2024-01-15T09:05:00Z",
+    "updated_at": "2024-01-15T09:05:00Z",
+    "source_timestamp": "2024-01-15T09:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:50:16.899914+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔑 The Active Site: Where Enzyme Magic Happens",
+    "content": "## Understanding the Active Site\n\nThe ::yellow[active site] is the specific region of an enzyme where substrate molecules bind and the chemical reaction occurs. Think of it as the \"business end\" of the enzyme.\n\n### Key Characteristics of the Active Site\n\n#### 1. Unique 3D Shape\n\nThe active site has a very specific three-dimensional shape that is ::yellow[complementary to the substrate] molecule. This is like a lock designed for one particular key.\n\n#### 2. Precise Fit\n\nThe shape of the active site determines:\n- **Which substrates can bind**: Only molecules with the right shape can fit\n- **Enzyme specificity**: Each enzyme recognizes and binds its specific substrate(s)\n- **Reaction efficiency**: Perfect fit allows optimal catalysis\n\n#### 3. Functional Groups\n\nThe active site contains ::blue[amino acid residues] with special chemical groups that:\n- Help stabilize the substrate\n- Facilitate breaking or forming chemical bonds\n- Stabilize the transition state of the reaction\n\n## The Lock and Key Model 🔐\n\nThis is a simple but powerful way to understand enzyme specificity:\n\n| Component | Analogy |\n|-----------|----------|\n| ::yellow[Enzyme] | ::yellow[Lock] |\n| ::yellow[Active Site] | ::yellow[Keyhole] |\n| ::yellow[Substrate] | ::yellow[Key] |\n| ::yellow[Enzyme-Substrate Complex] | ::yellow[Lock with key inserted] |\n\n**The Principle**: Just as only the correct key fits a particular lock, only the correct substrate fits a particular enzyme's active site.\n\n## Why This Matters 💡\n\nThe specificity of the active site means:\n- ::green[Each enzyme is highly selective] about what it reacts with\n- ::green[Cells can control reactions] by using specific enzymes\n- ::red[If the active site is damaged], the enzyme cannot function\n\n> **Remember**: The active site's shape is absolutely critical. If the enzyme is denatured (unfolded), the active site loses its shape and the enzyme becomes useless.",
+    "speech_to_text_content": "The active site is the specific region of an enzyme where substrate molecules bind. It has a unique three-dimensional shape that is complementary to the substrate molecule. The active site contains amino acid residues with functional groups that facilitate the reaction. The lock and key model illustrates that only the correct substrate fits a particular enzyme's active site, just as only the correct key fits a particular lock.",
+    "answer": null,
+    "options": [],
+    "explanation": "The active site is the region of an enzyme where substrate binding and catalysis occur. Key characteristics include: unique complementary shape to the substrate, determination of enzyme specificity, and presence of functional amino acid residues. The lock and key model provides a useful analogy: the enzyme is the lock, the active site is the keyhole, and the substrate is the key. Only the correct substrate fits the active site, explaining enzyme specificity. The shape of the active site is critical—if damaged, the enzyme cannot function.",
+    "created_at": "2024-01-15T09:10:00Z",
+    "updated_at": "2024-01-15T09:10:00Z",
+    "source_timestamp": "2024-01-15T09:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:50:24.536850+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "3",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚙️ How Enzymes Work: The Step-by-Step Mechanism",
+    "content": "## The Enzyme Reaction Cycle\n\nEnzyme catalysis follows a precise four-step process. Let's walk through each step:\n\n### Step 1️⃣: Substrate Binding\n\n**What happens:**\n- Substrate molecules approach the enzyme's active site\n- The substrate has a shape complementary to the active site\n- The substrate binds to the active site through weak chemical interactions\n\n**Result**: Formation of the ::yellow[enzyme-substrate complex] (ES complex)\n\n**Equation**: E + S → ES\n- E = Enzyme\n- S = Substrate\n- ES = Enzyme-substrate complex\n\n### Step 2️⃣: Catalysis (The Reaction)\n\n**What happens:**\n- The enzyme stabilizes the transition state of the reaction\n- The enzyme ::yellow[lowers the activation energy] required for the reaction\n- This allows the reaction to proceed much faster than without the enzyme\n- Chemical bonds in the substrate are broken or new bonds are formed\n\n**Key insight**: The enzyme doesn't change the overall energy of the reaction—it just makes it easier to get there!\n\n### Step 3️⃣: Product Formation\n\n**What happens:**\n- The substrate is converted into product(s)\n- The product(s) have a different shape from the substrate\n- The product(s) no longer fit the active site as well\n\n**Result**: The enzyme-product complex becomes unstable\n\n### Step 4️⃣: Product Release\n\n**What happens:**\n- The product(s) dissociate (separate) from the enzyme\n- The enzyme returns to its original shape and state\n- The enzyme is now free to bind another substrate molecule\n\n**Result**: The enzyme is ready for the next reaction cycle\n\n**Equation**: ES → E + P\n- P = Product\n\n## The Complete Cycle\n\n```\nE + S → ES → EP → E + P\n```\n\nThe enzyme (E) binds substrate (S), catalyzes the reaction, releases product (P), and is ready to work again!\n\n## Why This Matters 💡\n\n- ::green[Enzymes are reusable]: One enzyme can catalyze thousands of reactions\n- ::yellow[Speed is increased]: By lowering activation energy, reactions happen much faster\n- ::yellow[Efficiency matters]: The enzyme-substrate complex formation is specific and efficient\n- ::red[Product release is important]: If products don't release, the enzyme gets stuck!\n\n> **Key Concept**: The enzyme acts as a facilitator, not a participant. It speeds up the reaction without being permanently changed.",
+    "speech_to_text_content": "Enzyme catalysis follows a four-step cycle. First, substrate binding occurs when the substrate approaches and binds to the enzyme's active site, forming an enzyme-substrate complex. Second, catalysis occurs as the enzyme stabilizes the transition state and lowers the activation energy, allowing the reaction to proceed faster. Third, product formation occurs as the substrate is converted to products. Fourth, product release occurs as the products dissociate from the enzyme, freeing it for the next reaction cycle. The complete cycle is: enzyme plus substrate forms enzyme-substrate complex, which converts to enzyme-product complex, which releases enzyme and product.",
+    "answer": null,
+    "options": [],
+    "explanation": "Enzyme catalysis occurs through a four-step mechanism: (1) Substrate binding—the substrate binds to the enzyme's active site forming an enzyme-substrate complex; (2) Catalysis—the enzyme stabilizes the transition state and lowers activation energy; (3) Product formation—the substrate is converted to product; (4) Product release—products dissociate from the enzyme, freeing it for reuse. The overall cycle is E + S → ES → EP → E + P. The enzyme acts as a facilitator, speeding up reactions without being consumed, allowing it to be reused thousands of times.",
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:50:32.285826+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎯 Enzyme Specificity: Why Each Enzyme Has a Job",
+    "content": "## What is Enzyme Specificity?\n\n::yellow[Enzyme specificity] means that each enzyme catalyzes only one particular reaction or works on only one particular substrate. It's like having a toolbox where each tool is designed for exactly one job.\n\n## The Basis of Specificity: Shape and Chemistry\n\n### 1. Shape Complementarity\n\nThe active site of an enzyme has a unique 3D shape that is ::yellow[complementary to its specific substrate].\n\n- **Perfect fit**: Only the correct substrate fits the active site\n- **Wrong substrates don't fit**: Other molecules are excluded\n- **Determined by protein structure**: The amino acid sequence creates the shape\n\n### 2. Chemical Compatibility\n\nThe active site contains specific ::blue[functional groups] (chemical structures) that:\n- Interact with specific parts of the substrate\n- Facilitate the specific reaction needed\n- Create the right environment for catalysis\n\n## Real-World Examples 🔬\n\nLook at how different enzymes are specialized:\n\n| Enzyme | Substrate | Product | Function |\n|--------|-----------|---------|----------|\n| ::yellow[Amylase] | ::blue[Starch] | ::green[Maltose] | Breaks down starch |\n| ::yellow[Lipase] | ::blue[Fats/Triglycerides] | ::green[Fatty acids + Glycerol] | Breaks down fats |\n| ::yellow[Pepsin] | ::blue[Proteins] | ::green[Polypeptides] | Breaks down proteins |\n| ::yellow[Lactase] | ::blue[Lactose] | ::green[Glucose + Galactose] | Breaks down milk sugar |\n\n**Notice**: Each enzyme works on only ONE type of substrate!\n\n## Why Specificity Matters 💡\n\n1. **Cellular Control**: Cells can control exactly which reactions happen by using specific enzymes\n2. **Metabolic Pathways**: Complex biochemical pathways work because each step uses a specific enzyme\n3. **Efficiency**: No wasted effort on wrong reactions\n4. **Prevention of Errors**: The cell doesn't accidentally break down the wrong molecules\n\n## The Consequence of Specificity ⚠️\n\n::red[If an enzyme is missing or defective], the specific reaction it catalyzes cannot occur effectively. For example:\n- **Lactose intolerance**: Missing or low lactase → cannot digest lactose\n- **Phenylketonuria (PKU)**: Missing phenylalanine hydroxylase → dangerous buildup of amino acid\n\n> **Key Insight**: Enzyme specificity is both a feature and a vulnerability. It allows precise control but means each enzyme is irreplaceable for its specific job.",
+    "speech_to_text_content": "Enzyme specificity means each enzyme catalyzes only one particular reaction or works on only one substrate. This specificity is based on shape complementarity—the active site shape matches the substrate shape—and chemical compatibility of functional groups. Examples include amylase breaking down starch, lipase breaking down fats, pepsin breaking down proteins, and lactase breaking down lactose. Specificity allows cells to control reactions precisely, but also means missing enzymes cause problems like lactose intolerance.",
+    "answer": null,
+    "options": [],
+    "explanation": "Enzyme specificity refers to the property that each enzyme catalyzes only one particular reaction or works on only one substrate. This specificity is based on: (1) Shape complementarity—the active site shape is complementary to the specific substrate; (2) Chemical compatibility—the active site contains functional groups that interact specifically with the substrate. Examples include: amylase (starch → maltose), lipase (fats → fatty acids + glycerol), pepsin (proteins → polypeptides), and lactase (lactose → glucose + galactose). Specificity allows precise cellular control of reactions but means missing enzymes prevent specific reactions from occurring.",
+    "created_at": "2024-01-15T09:20:00Z",
+    "updated_at": "2024-01-15T09:20:00Z",
+    "source_timestamp": "2024-01-15T09:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:50:41.820222+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌡️ How Temperature Affects Enzyme Activity",
+    "content": "## Temperature's Effect on Enzymes\n\nTemperature has a dramatic effect on how fast enzymes work. Understanding this relationship is crucial for understanding enzyme behavior in living organisms.\n\n## Low Temperature (0-10°C): Too Cold ❄️\n\n### What Happens:\n- **Slow molecular motion**: Molecules move more slowly\n- **Low kinetic energy**: Particles don't have much energy\n- **Few collisions**: Substrate and enzyme molecules rarely meet\n- **Slow reaction rate**: Very few enzyme-substrate complexes form\n\n### Result:\n::red[Enzyme activity is very slow]. At 0°C, many enzymes barely function at all.\n\n### Real-World Example:\nFood stored in a refrigerator stays fresh longer because enzyme activity in bacteria is slowed down.\n\n## Optimum Temperature (35-40°C): Just Right ✅\n\n### For Human Enzymes:\n- **Optimal molecular motion**: Molecules move at the perfect speed\n- **Maximum collisions**: Enzyme and substrate meet frequently\n- **Highest activity**: Enzyme works at its fastest rate\n- **Efficient catalysis**: The enzyme's 3D shape is maintained\n\n### Why 37°C?\nHuman body temperature is approximately 37°C, so human enzymes have evolved to work best at this temperature.\n\n### Result:\n::green[Enzyme activity is at its maximum].\n\n## High Temperature (above 45°C): Too Hot 🔥\n\n### What Happens:\n- **Increased molecular motion**: Molecules move very fast\n- **Protein vibration**: The enzyme protein vibrates excessively\n- **Bond breaking**: Weak bonds holding the protein's 3D shape break\n- **Denaturation**: The enzyme unfolds and loses its shape\n\n### The Active Site is Destroyed:\n- The precise 3D shape of the active site is lost\n- Substrate can no longer bind properly\n- Enzyme can no longer catalyze reactions\n\n### Is It Reversible?\n::red[NO! This denaturation is usually permanent]. Once an enzyme is denatured by heat, it cannot refold back to its original shape.\n\n## The Temperature-Activity Graph 📊\n\n```\nActivity\n   ↑\n   |     ╱╲\n   |    ╱  ╲\n   |   ╱    ╲\n   |  ╱      ╲\n   | ╱        ╲___\n   |╱            ╲___\n   └──────────────────→ Temperature\n   0   37   45   60°C\n```\n\n- **0-37°C**: Activity increases (more molecular motion)\n- **37°C**: Peak activity (optimum temperature)\n- **37-45°C**: Activity decreases (denaturation begins)\n- **45°C+**: Rapid decrease (enzyme is denatured)\n\n## Why This Matters 💡\n\n1. **Body temperature regulation**: Maintaining 37°C is critical for enzyme function\n2. **Fever danger**: High fevers can denature enzymes and cause serious harm\n3. **Food preservation**: Cooking denatures bacterial enzymes, preserving food\n4. **Refrigeration**: Slowing enzymes keeps food fresh\n\n> **Key Concept**: Temperature affects enzyme activity in two ways: (1) Below optimum, increased heat increases activity; (2) Above optimum, heat denatures the enzyme, destroying it permanently.",
+    "speech_to_text_content": "Temperature dramatically affects enzyme activity. At low temperatures (0-10°C), molecular motion is slow and enzyme activity is very low. At optimum temperature for human enzymes (35-40°C, around body temperature of 37°C), enzyme activity is at its maximum. Above 45°C, the enzyme protein denatures—its three-dimensional shape is permanently lost and the enzyme becomes inactive. This denaturation is usually irreversible. Temperature affects enzyme activity because it influences molecular motion and collision frequency below the optimum, and causes protein denaturation above the optimum.",
+    "answer": null,
+    "options": [],
+    "explanation": "Temperature affects enzyme activity in three distinct ranges: (1) Low temperature (0-10°C)—slow molecular motion reduces collision frequency and enzyme activity is very low; (2) Optimum temperature (35-40°C for human enzymes, around 37°C body temperature)—maximum molecular motion and collision frequency result in highest enzyme activity; (3) High temperature (above 45°C)—excessive molecular motion breaks weak bonds in the protein, causing denaturation. Denaturation is usually permanent—the enzyme's three-dimensional shape and active site are destroyed and cannot be restored. This explains why fever is dangerous and why cooking preserves food.",
+    "created_at": "2024-01-15T09:25:00Z",
+    "updated_at": "2024-01-15T09:25:00Z",
+    "source_timestamp": "2024-01-15T09:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:50:51.517414+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "6",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚗️ How pH Affects Enzyme Activity",
+    "content": "## pH's Effect on Enzymes\n\n::yellow[pH] measures how acidic or alkaline a solution is (on a scale of 0-14). Different enzymes work best at different pH levels, and extreme pH can destroy enzymes.\n\n## pH Scale Reminder 📊\n\n- **pH 0-6**: Acidic (high H⁺ ions)\n- **pH 7**: Neutral\n- **pH 8-14**: Alkaline/Basic (high OH⁻ ions)\n\n## Extreme Acidic Conditions (pH < 4): Too Acidic 🔴\n\n### What Happens:\n- **Excess H⁺ ions**: Acidic environment has too many hydrogen ions\n- **Protein structure disruption**: H⁺ ions interfere with the bonds in the protein\n- **Active site change**: The precise shape of the active site is altered\n- **Loss of function**: The enzyme can no longer bind substrate effectively\n\n### Result:\n::red[Enzyme activity is greatly reduced or lost]\n\n### Real-World Example:\nPepsin (a digestive enzyme) works in the extremely acidic stomach (pH 1.5-2.0), but most enzymes would be destroyed at this pH.\n\n## Optimum pH: Just Right ✅\n\n### Different Enzymes, Different Optimums:\n\n| Enzyme | Location | Optimum pH | Environment |\n|--------|----------|------------|-------------|\n| ::yellow[Pepsin] | Stomach | ::blue[1.5-2.0] | Very acidic |\n| ::yellow[Salivary Amylase] | Mouth | ::blue[6.8-7.0] | Slightly acidic |\n| ::yellow[Trypsin] | Small intestine | ::blue[8.0-8.5] | Alkaline |\n| ::yellow[Pancreatic Lipase] | Small intestine | ::blue[8.0-8.5] | Alkaline |\n\n### At Optimum pH:\n- The enzyme's protein structure is stable\n- The active site maintains its perfect shape\n- Substrate binding and catalysis are most efficient\n- ::green[Enzyme activity is at its maximum]\n\n### Why Different Optimums?\nEnzymes have evolved to work in their natural environment:\n- Pepsin evolved for the acidic stomach\n- Intestinal enzymes evolved for the alkaline small intestine\n\n## Extreme Alkaline Conditions (pH > 10): Too Basic 🔵\n\n### What Happens:\n- **Excess OH⁻ ions**: Alkaline environment has too many hydroxide ions\n- **Protein denaturation**: OH⁻ ions disrupt the protein's 3D structure\n- **Active site destruction**: The shape of the active site is lost\n- **Permanent damage**: The enzyme is usually irreversibly denatured\n\n### Result:\n::red[Enzyme activity is greatly reduced or completely lost]\n\n## The pH-Activity Graph 📈\n\n```\nActivity\n   ↑\n   |           ╱╲\n   |          ╱  ╲\n   |         ╱    ╲\n   |        ╱      ╲\n   |       ╱        ╲\n   |      ╱          ╲___\n   |_____╱________________╲____\n   └─────────────────────────→ pH\n   0    2    7    8    12    14\n       ↑         ↑    ↑\n    Pepsin   Neutral Trypsin\n```\n\n- **pH 0-4**: Activity low (too acidic for most enzymes)\n- **pH 1.5-2**: Pepsin works best here\n- **pH 6-8**: Neutral enzymes work best here\n- **pH 8-9**: Intestinal enzymes work best here\n- **pH 10-14**: Activity drops (too alkaline)\n\n## Why This Matters 💡\n\n1. **Digestive efficiency**: Different enzymes in different organs work at their optimum pH\n2. **Body pH regulation**: The body carefully maintains pH in different compartments\n3. **Enzyme damage**: Extreme pH can permanently denature enzymes\n4. **Industrial applications**: Detergent enzymes must work in alkaline conditions\n\n## pH vs Temperature: Key Difference ⚠️\n\n| Factor | Below Optimum | Above Optimum |\n|--------|---------------|---------------|\n| **Temperature** | Reversible (slow) | Irreversible (denaturation) |\n| **pH** | Reversible (slow) | Irreversible (denaturation) |\n\n> **Key Insight**: Both extreme temperature and extreme pH can permanently denature enzymes. However, enzymes are adapted to work at specific pH values in their natural environments—pepsin in the stomach's acid, pancreatic enzymes in the small intestine's alkaline environment.",
+    "speech_to_text_content": "pH measures acidity or alkalinity on a scale of 0-14. Extreme acidic conditions (pH less than 4) disrupt enzyme protein structure and reduce activity. Each enzyme has an optimum pH where it works best: pepsin works at pH 1.5-2.0 in the acidic stomach, while trypsin works at pH 8.0-8.5 in the alkaline small intestine. Extreme alkaline conditions (pH greater than 10) also denature enzymes and destroy their activity. At optimum pH, the enzyme's three-dimensional structure is stable and activity is maximum. Both extreme temperature and extreme pH can permanently denature enzymes.",
+    "answer": null,
+    "options": [],
+    "explanation": "pH affects enzyme activity through three ranges: (1) Extreme acidic conditions (pH < 4)—excess H⁺ ions disrupt protein structure and reduce enzyme activity; (2) Optimum pH (varies by enzyme)—the enzyme's protein structure is stable and activity is maximum. Different enzymes have different optimums based on their natural environment: pepsin (pH 1.5-2.0 in stomach), salivary amylase (pH 6.8-7.0 in mouth), trypsin and pancreatic lipase (pH 8.0-8.5 in small intestine); (3) Extreme alkaline conditions (pH > 10)—excess OH⁻ ions denature the enzyme protein, permanently destroying activity. Both extreme temperature and extreme pH cause irreversible enzyme denaturation.",
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:51:01.535838+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "7",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 Effects of Enzyme and Substrate Concentration",
+    "content": "## How Concentration Affects Enzyme Reactions\n\nBoth ::yellow[enzyme concentration] and ::yellow[substrate concentration] affect how fast an enzyme-catalyzed reaction proceeds. Let's explore each one.\n\n## Enzyme Concentration Effects\n\n### Low Enzyme Concentration\n\n**Scenario**: Few enzyme molecules available\n\n- **Limited active sites**: Only a few active sites available for substrate to bind\n- **Slow overall reaction**: The reaction rate is limited by the number of enzymes\n- **Substrate excess**: More substrate molecules than enzyme can process\n- **Enzyme is the limiting factor**: Adding more substrate won't help\n\n### Increasing Enzyme Concentration\n\n**What happens**:\n- **More active sites**: More enzyme molecules mean more places for substrate to bind\n- **Faster reaction rate**: More enzyme-substrate complexes form simultaneously\n- **Linear relationship**: Reaction rate increases proportionally with enzyme concentration\n- **Until substrate runs out**: As long as there's enough substrate\n\n### High Enzyme Concentration (Substrate Limited)\n\n**Scenario**: Lots of enzyme but limited substrate\n\n- **Plateau effect**: Adding more enzyme has no effect on reaction rate\n- **Substrate becomes limiting**: All available substrate is being processed\n- **Maximum rate (Vmax)**: The fastest possible reaction rate is reached\n- **No further increase**: Extra enzymes have nothing to work on\n\n## Substrate Concentration Effects\n\n### Low Substrate Concentration\n\n**Scenario**: Few substrate molecules available\n\n- **Few collisions**: Limited enzyme-substrate encounters\n- **Slow reaction rate**: Many enzymes remain unused and waiting\n- **First-order kinetics**: Reaction rate is proportional to substrate concentration\n- **Substrate is the limiting factor**: Adding more enzyme won't help much\n\n**Graph behavior**: Reaction rate increases linearly with substrate concentration\n\n### Increasing Substrate Concentration\n\n**What happens**:\n- **More collisions**: Increased enzyme-substrate complex formation\n- **Higher reaction rate**: More active sites are occupied\n- **Gradual saturation**: Approaches maximum rate\n- **Efficiency improves**: Enzymes are working harder\n\n### High Substrate Concentration (Enzyme Saturated)\n\n**Scenario**: Lots of substrate but limited enzyme\n\n- **Enzyme saturation**: All active sites are occupied by substrate\n- **Maximum rate (Vmax)**: The fastest possible reaction rate for that amount of enzyme\n- **Zero-order kinetics**: Reaction rate is independent of substrate concentration\n- **All enzymes working**: Every enzyme is doing its job\n- **No further increase**: Adding more substrate won't speed up the reaction\n\n## Substrate Concentration Graph 📈\n\n```\nReaction Rate\n      ↑\n      |              ___________  ← Vmax (maximum rate)\n      |            ╱\n      |          ╱\n      |        ╱\n      |      ╱\n      |    ╱\n      |  ╱\n      |╱\n      └──────────────────────→ Substrate Concentration\n      \n      Low           High\n      (rate ∝ [S])  (rate independent of [S])\n```\n\n**Key features**:\n- Starts with a steep increase (low substrate)\n- Gradually flattens out (saturation)\n- Reaches Vmax (maximum rate)\n\n## Enzyme Concentration Graph 📊\n\n```\nReaction Rate\n      ↑\n      |  ╱\n      | ╱  (with excess substrate)\n      |╱\n      └──────────────────────→ Enzyme Concentration\n      \n      Linear relationship (as long as substrate is available)\n```\n\n**Key feature**: Linear increase in reaction rate with enzyme concentration (until substrate runs out)\n\n## Real-World Comparison 🔬\n\n| Condition | Limiting Factor | Effect of Adding More |\n|-----------|-----------------|----------------------|\n| ::yellow[Low enzyme, high substrate] | ::blue[Enzyme] | Adding enzyme increases rate ✅ |\n| ::yellow[High enzyme, low substrate] | ::blue[Substrate] | Adding enzyme has little effect ❌ |\n| ::yellow[Enzyme saturated] | ::blue[Enzyme capacity] | Adding substrate has no effect ❌ |\n| ::yellow[Substrate depleted] | ::blue[Substrate] | Adding substrate increases rate ✅ |\n\n## Why This Matters 💡\n\n1. **Industrial efficiency**: Factories optimize enzyme and substrate concentrations for maximum production\n2. **Metabolic regulation**: Cells control reaction rates by adjusting enzyme and substrate levels\n3. **Understanding bottlenecks**: Knowing what limits a reaction helps improve it\n4. **Enzyme kinetics**: This is the foundation of understanding enzyme behavior\n\n> **Key Insight**: The reaction rate is limited by whichever is in shorter supply—enzyme or substrate. The limiting factor determines the maximum possible reaction rate.",
+    "speech_to_text_content": "Enzyme concentration and substrate concentration both affect reaction rate. At low enzyme concentration, enzyme is the limiting factor and reaction rate increases linearly with more enzyme. At high enzyme concentration with limited substrate, the enzyme becomes saturated and adding more enzyme has no effect. At low substrate concentration, substrate is the limiting factor and reaction rate increases linearly with more substrate. At high substrate concentration, the enzyme becomes saturated, reaching maximum rate (Vmax), and adding more substrate has no effect. The limiting factor—whichever is in shorter supply—determines the maximum possible reaction rate.",
+    "answer": null,
+    "options": [],
+    "explanation": "Enzyme and substrate concentration both affect reaction rate: (1) Low enzyme concentration—enzyme is limiting, reaction rate increases linearly with more enzyme; (2) High enzyme concentration with limited substrate—enzyme becomes saturated, adding more enzyme has no effect; (3) Low substrate concentration—substrate is limiting, reaction rate increases linearly with more substrate; (4) High substrate concentration—enzyme becomes saturated at maximum rate (Vmax), adding more substrate has no effect. The limiting factor (enzyme or substrate, whichever is in shorter supply) determines the maximum reaction rate. This is fundamental to understanding enzyme kinetics and metabolic regulation.",
+    "created_at": "2024-01-15T09:35:00Z",
+    "updated_at": "2024-01-15T09:35:00Z",
+    "source_timestamp": "2024-01-15T09:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:51:13.285936+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "8",
+    "type": "slide",
+    "question_type": null,
+    "title": "💔 Enzyme Denaturation: When Enzymes Break",
+    "content": "## What is Enzyme Denaturation?\n\n::yellow[Denaturation] is the ::red[permanent loss of enzyme structure and function] due to disruption of the protein's 3D shape.\n\nWhen an enzyme is denatured:\n- The protein unfolds\n- The active site loses its precise shape\n- The enzyme can no longer bind substrate\n- The enzyme becomes useless\n\n**Most importantly**: Denaturation is usually ::red[IRREVERSIBLE]—the enzyme cannot refold back to its original shape.\n\n## Causes of Enzyme Denaturation\n\n### 1. High Temperature 🔥\n\n**What happens**:\n- Excessive molecular motion\n- Weak bonds (hydrogen bonds, ionic bonds) that hold the protein's 3D shape break\n- The protein unfolds and loses its structure\n\n**When it occurs**:\n- Usually above 45°C for most human enzymes\n- Different enzymes denature at different temperatures\n\n**Example**: Cooking an egg—the proteins denature and the egg white turns from clear to white\n\n**Is it reversible?** ::red[NO—usually permanent]\n\n### 2. Extreme pH ⚗️\n\n**What happens**:\n- Extreme acidity (pH < 4): Excess H⁺ ions interfere with protein structure\n- Extreme alkalinity (pH > 10): Excess OH⁻ ions disrupt the protein\n- Charges on amino acids are altered\n- The protein's 3D shape is lost\n\n**When it occurs**:\n- pH values far from the enzyme's optimum\n- Usually pH < 3 or pH > 11 causes severe damage\n\n**Example**: Pepsin works at pH 1.5-2.0, but most enzymes would be destroyed at this pH\n\n**Is it reversible?** ::red[Usually permanent]\n\n### 3. Heavy Metals 🧪\n\n**What happens**:\n- Heavy metals (like mercury, lead, cadmium) bind to the enzyme\n- Specifically bind to sulfur-containing amino acids\n- This distorts the enzyme's 3D structure\n- The active site becomes non-functional\n\n**Result**:\n- Enzyme loses catalytic activity\n- This is why heavy metal poisoning is so dangerous\n\n**Example**: Mercury poisoning can damage many enzymes in the body\n\n**Is it reversible?** ::red[Usually permanent]\n\n### 4. Organic Chemicals and Solvents 🧬\n\n**What happens**:\n- Alcohols, detergents, and organic solvents disrupt protein structure\n- These chemicals dissolve the hydrophobic (water-fearing) parts of the protein\n- The protein loses its 3D shape\n\n**Examples**:\n- Ethanol (alcohol) denatures proteins\n- Detergents break down lipid interactions\n- Acetone and other solvents dissolve protein structure\n\n**Is it reversible?** ::red[Usually permanent]\n\n## Summary Table: Denaturation Causes 📋\n\n| Cause | Mechanism | Reversible? | Example |\n|-------|-----------|-------------|----------|\n| ::yellow[High Temperature] | Breaks weak bonds | ::red[No] | Cooking food |\n| ::yellow[Extreme pH] | Alters charges | ::red[No] | Strong acid/base |\n| ::yellow[Heavy Metals] | Binds to sulfur | ::red[No] | Mercury poisoning |\n| ::yellow[Organic Chemicals] | Dissolves structure | ::red[No] | Ethanol treatment |\n\n## Why Denaturation Matters 💡\n\n1. **Health implications**: Denaturation of essential enzymes can be fatal\n2. **Food preservation**: Cooking denatures bacterial enzymes, preserving food\n3. **Sterilization**: High heat or chemicals denature pathogenic enzymes\n4. **Industrial applications**: Understanding denaturation helps preserve enzymes\n5. **Enzyme storage**: Enzymes must be stored carefully to prevent denaturation\n\n## Prevention: How to Keep Enzymes Safe 🛡️\n\n- **Store at cool temperatures**: Refrigeration prevents denaturation\n- **Maintain appropriate pH**: Keep enzymes at their optimum pH\n- **Avoid heavy metals**: Use pure chemicals and equipment\n- **Avoid organic solvents**: Keep enzymes in aqueous solutions\n- **Proper handling**: Gentle treatment prevents damage\n\n> **Critical Concept**: Once an enzyme is denatured, it's usually gone for good. The cell cannot simply \"fix\" a denatured enzyme—it must make a new one, which takes time and energy. This is why protecting enzyme structure is so important.",
+    "speech_to_text_content": "Enzyme denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape. Causes of denaturation include: high temperature (above 45°C), which breaks weak bonds holding the protein structure; extreme pH (below 4 or above 10), which alters amino acid charges; heavy metals, which bind to sulfur-containing amino acids and distort structure; and organic chemicals like alcohols and detergents, which dissolve the hydrophobic parts of proteins. Denaturation is usually irreversible—the enzyme cannot refold back to its original shape. Understanding denaturation is important for enzyme storage, food preservation, and understanding how toxins damage enzymes.",
+    "answer": null,
+    "options": [],
+    "explanation": "Enzyme denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape. Four main causes are: (1) High temperature (above 45°C)—breaks weak bonds holding the protein structure; (2) Extreme pH (pH < 4 or pH > 10)—alters charges on amino acids and disrupts protein structure; (3) Heavy metals—bind to sulfur-containing amino acids and distort structure; (4) Organic chemicals (alcohols, detergents)—dissolve hydrophobic interactions in the protein. Denaturation is usually irreversible—the enzyme cannot refold to its original shape. This has important implications for enzyme storage, food preservation, and understanding how toxins damage enzymes.",
+    "created_at": "2024-01-15T09:40:00Z",
+    "updated_at": "2024-01-15T09:40:00Z",
+    "source_timestamp": "2024-01-15T09:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:51:25.378913+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🍽️ Enzymes in Digestion: Breaking Down Food",
+    "content": "## The Digestive Process Overview\n\n**Purpose**: Break down large, complex food molecules into small, simple molecules that the body can absorb and use\n\n**How**: Both physical breakdown (chewing, churning) and ::yellow[chemical digestion] (enzymes) work together\n\n**Where**: Occurs throughout the digestive tract from the mouth to the small intestine\n\n**Result**: Complex foods → Simple, absorbable molecules\n\n## The Three Types of Digestive Enzymes\n\nDifferent enzymes break down different types of food:\n\n1. **Carbohydrate-digesting enzymes** → Break down starches and sugars\n2. **Protein-digesting enzymes** → Break down proteins\n3. **Fat-digesting enzymes** → Break down fats\n\n## Carbohydrate Digestion 🌾\n\n### Amylase (Salivary and Pancreatic)\n\n**Location**: Saliva (from salivary glands) and pancreatic juice\n\n**Substrate**: ::yellow[Starch] (a large polysaccharide)\n\n**Product**: ::green[Maltose] (a smaller disaccharide)\n\n**Optimum pH**: 6.8-7.0 (slightly acidic)\n\n**Action**: Breaks starch down into smaller pieces\n\n### Maltase\n\n**Location**: Small intestine wall\n\n**Substrate**: ::yellow[Maltose]\n\n**Product**: ::green[Glucose + Glucose]\n\n**Function**: Final breakdown of starch—converts maltose to individual glucose molecules\n\n### Sucrase\n\n**Location**: Small intestine wall\n\n**Substrate**: ::yellow[Sucrose] (table sugar)\n\n**Product**: ::green[Glucose + Fructose]\n\n**Function**: Digests table sugar into simple sugars\n\n### Lactase\n\n**Location**: Small intestine wall\n\n**Substrate**: ::yellow[Lactose] (milk sugar)\n\n**Product**: ::green[Glucose + Galactose]\n\n**Function**: Digests milk sugar\n\n**Important note**: ::red[Some people lack lactase], causing lactose intolerance—they cannot digest milk products\n\n## Protein Digestion 🥩\n\n### Pepsin\n\n**Location**: Stomach\n\n**Substrate**: ::yellow[Proteins]\n\n**Product**: ::green[Polypeptides] (shorter protein chains)\n\n**Optimum pH**: 1.5-2.0 (very acidic)\n\n**Special feature**: Activated by stomach acid—pepsinogen (inactive) → pepsin (active)\n\n**Why this pH?**: The stomach is very acidic, and pepsin evolved to work in this environment\n\n### Trypsin\n\n**Location**: Small intestine (produced by pancreas)\n\n**Substrate**: ::yellow[Proteins and polypeptides]\n\n**Product**: ::green[Smaller polypeptides]\n\n**Optimum pH**: 8.0-8.5 (alkaline)\n\n**Role**: Continues protein breakdown in the alkaline small intestine\n\n### Chymotrypsin\n\n**Location**: Small intestine (produced by pancreas)\n\n**Substrate**: ::yellow[Proteins and polypeptides]\n\n**Product**: ::green[Smaller polypeptides]\n\n**Optimum pH**: 8.0-8.5 (alkaline)\n\n**Role**: Works alongside trypsin to break down proteins\n\n### Peptidases\n\n**Location**: Small intestine wall\n\n**Substrate**: ::yellow[Small polypeptides]\n\n**Product**: ::green[Amino acids]\n\n**Function**: Final step—breaks down remaining peptides into individual amino acids\n\n## Fat Digestion 🧈\n\n### Pancreatic Lipase\n\n**Location**: Small intestine (produced by pancreas)\n\n**Substrate**: ::yellow[Triglycerides] (fats)\n\n**Product**: ::green[Fatty acids + Glycerol]\n\n**Optimum pH**: 8.0-8.5 (alkaline)\n\n**Special requirement**: Needs help from ::blue[bile salts] (from the liver) to emulsify (break up) fats into smaller droplets\n\n**Why bile helps**: Lipase can only work on the surface of fat droplets. Bile makes droplets smaller, increasing surface area for enzyme access.\n\n## The Complete Digestive Journey 🗺️\n\n### Step 1️⃣: Mouth 👄\n\n- **Enzyme**: Salivary amylase\n- **Action**: Begins breaking down starch\n- **pH**: Slightly acidic (6.8-7.0)\n- **Duration**: Very brief—only while chewing\n\n### Step 2️⃣: Stomach 🔴\n\n- **Enzyme**: Pepsin\n- **Action**: Breaks down proteins into polypeptides\n- **pH**: Very acidic (1.5-2.0)\n- **Additional action**: Stomach acid denatures proteins, making them easier for pepsin to attack\n- **Duration**: 2-4 hours of churning\n\n### Step 3️⃣: Small Intestine 🧪\n\n**This is where most digestion happens!**\n\n- **Pancreatic enzymes arrive**: Amylase, trypsin, chymotrypsin, lipase\n- **pH**: Alkaline (8.0-8.5) due to bicarbonate from pancreas\n- **Bile**: Liver sends bile to help digest fats\n- **Enzymes from intestine wall**: Maltase, sucrase, lactase, peptidases\n- **Result**: All food molecules broken down to absorbable units\n- **Absorption**: Simple molecules (glucose, amino acids, fatty acids) are absorbed into the bloodstream\n\n## Enzyme Summary Table 📋\n\n| Enzyme | Location | Substrate | Product | pH |\n|--------|----------|-----------|---------|----|\n| ::yellow[Salivary Amylase] | Mouth | Starch | Maltose | 6.8-7.0 |\n| ::yellow[Pepsin] | Stomach | Proteins | Polypeptides | 1.5-2.0 |\n| ::yellow[Pancreatic Amylase] | Small intestine | Starch | Maltose | 8.0-8.5 |\n| ::yellow[Trypsin] | Small intestine | Proteins | Polypeptides | 8.0-8.5 |\n| ::yellow[Pancreatic Lipase] | Small intestine | Fats | Fatty acids + Glycerol | 8.0-8.5 |\n| ::yellow[Maltase] | Small intestine | Maltose | Glucose | 8.0-8.5 |\n| ::yellow[Sucrase] | Small intestine | Sucrose | Glucose + Fructose | 8.0-8.5 |\n| ::yellow[Lactase] | Small intestine | Lactose | Glucose + Galactose | 8.0-8.5 |\n| ::yellow[Peptidases] | Small intestine | Polypeptides | Amino acids | 8.0-8.5 |\n\n## Why This Matters 💡\n\n1. **Nutrient absorption**: Food must be broken down to be absorbed\n2. **Enzyme specialization**: Different enzymes for different foods\n3. **pH adaptation**: Enzymes work at their specific pH levels\n4. **Sequential digestion**: Enzymes work in sequence through the digestive tract\n5. **Health implications**: Missing enzymes cause digestive problems (e.g., lactose intolerance)\n\n> **Key Insight**: Digestion is a masterpiece of enzyme specialization. Each enzyme works on a specific substrate at its optimum pH in its specific location, and together they transform a complex meal into simple molecules the body can use.",
+    "speech_to_text_content": "Enzymes in digestion break down complex food molecules into simple, absorbable units. Carbohydrate digestion: salivary and pancreatic amylase break starch into maltose, maltase breaks maltose into glucose, sucrase breaks sucrose into glucose and fructose, and lactase breaks lactose into glucose and galactose. Protein digestion: pepsin in the stomach (pH 1.5-2.0) breaks proteins into polypeptides, trypsin and chymotrypsin in the small intestine (pH 8.0-8.5) continue breakdown, and peptidases break polypeptides into amino acids. Fat digestion: pancreatic lipase in the small intestine breaks triglycerides into fatty acids and glycerol, with help from bile to emulsify fats. Digestion occurs sequentially in the mouth, stomach, and small intestine.",
+    "answer": null,
+    "options": [],
+    "explanation": "Digestive enzymes break down food through three main pathways: (1) Carbohydrate digestion—salivary amylase (mouth) and pancreatic amylase (small intestine) break starch to maltose; maltase, sucrase, and lactase (small intestine wall) complete digestion to monosaccharides; (2) Protein digestion—pepsin (stomach, pH 1.5-2.0) begins breakdown; trypsin and chymotrypsin (small intestine, pH 8.0-8.5) continue; peptidases (small intestine wall) complete breakdown to amino acids; (3) Fat digestion—pancreatic lipase (small intestine, pH 8.0-8.5) breaks triglycerides to fatty acids and glycerol, with bile emulsifying fats. Digestion occurs sequentially in the mouth (starch begins), stomach (protein begins, acidic), and small intestine (all digestion completed, alkaline). Each enzyme works at its optimum pH in its specific location.",
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:51:43.021484+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🏭 Practical Applications: Enzymes in Industry and Medicine",
+    "content": "## Beyond the Body: Enzymes in Technology\n\nEnzymes aren't just important in living organisms—they're also powerful tools in industry, medicine, and biotechnology. Understanding enzyme applications shows why enzyme science matters in the real world.\n\n## Industrial Enzyme Technology 🏭\n\n### Food and Beverage Production\n\n**Fruit Juice Production**:\n- **Enzyme used**: Pectinase and cellulase\n- **Purpose**: Breaks down pectin and cellulose in fruit cell walls\n- **Benefit**: Makes juice clearer and easier to extract\n- **Result**: More efficient juice production\n\n**Cheese Making**:\n- **Enzyme used**: Rennin (protease)\n- **Purpose**: Curdles milk by breaking down milk proteins\n- **Benefit**: Speeds up cheese production\n- **Result**: Consistent quality cheese\n\n**Brewing and Fermentation**:\n- **Enzyme used**: Amylase and proteases\n- **Purpose**: Breaks down starches and proteins in grains\n- **Benefit**: Makes sugars available for yeast fermentation\n- **Result**: Better flavor and faster fermentation\n\n### Detergent Industry 🧼\n\n**Laundry Detergents**:\n- **Enzymes used**: Proteases, lipases, amylases\n- **Purpose**: Break down protein stains (blood, sweat), fat stains (oil, grease), starch stains (food)\n- **Benefit**: Removes tough stains at lower temperatures\n- **Environmental benefit**: Lower temperature washing = less energy use\n- **Challenge**: Enzymes must work in alkaline conditions (pH 8-9)\n\n**Dishwashing Detergents**:\n- **Enzymes used**: Proteases and lipases\n- **Purpose**: Remove food residues\n- **Benefit**: Cleaner dishes with less scrubbing\n\n### Textile and Leather Industries\n\n**Fabric Treatment**:\n- **Enzyme used**: Cellulase\n- **Purpose**: Softens fabric by breaking down cellulose fibers\n- **Benefit**: Creates softer, more comfortable clothing\n\n**Leather Processing**:\n- **Enzyme used**: Proteases\n- **Purpose**: Removes hair and non-leather proteins\n- **Benefit**: Speeds up leather processing\n\n## Medical and Diagnostic Applications 🏥\n\n### Diagnostic Tests\n\n**Blood Glucose Testing**:\n- **Enzyme used**: Glucose oxidase\n- **Purpose**: Breaks down glucose and produces a measurable signal\n- **Application**: Diabetes management\n- **Benefit**: Rapid, accurate glucose measurement\n\n**Pregnancy Tests**:\n- **Enzymes used**: Horseradish peroxidase and other enzymes\n- **Purpose**: Detect pregnancy hormone (hCG)\n- **Benefit**: Quick, reliable home testing\n\n**Cholesterol Testing**:\n- **Enzyme used**: Cholesterol oxidase\n- **Purpose**: Breaks down cholesterol for measurement\n- **Application**: Heart disease risk assessment\n\n### Therapeutic Applications\n\n**Enzyme Replacement Therapy**:\n- **Purpose**: Treat genetic diseases where the body lacks a specific enzyme\n- **Example**: Lactase supplements for lactose intolerance\n- **Example**: Gaucher disease treatment (replaces deficient enzyme)\n- **Benefit**: Allows patients to digest foods they otherwise couldn't\n\n**Wound Healing**:\n- **Enzyme used**: Proteases (like papain from papaya)\n- **Purpose**: Breaks down dead tissue in wounds\n- **Benefit**: Promotes healing and prevents infection\n\n**Cancer Treatment**:\n- **Enzyme used**: Asparaginase\n- **Purpose**: Breaks down asparagine, starving cancer cells\n- **Application**: Leukemia treatment\n- **Benefit**: Kills cancer cells with fewer side effects than some other treatments\n\n## Enzyme Inhibition: Turning Off Enzymes 🛑\n\n### What is Enzyme Inhibition?\n\n::yellow[Enzyme inhibition] is the process of reducing or stopping enzyme activity. This is important in medicine because we sometimes want to slow down or block specific reactions.\n\n### Types of Inhibition\n\n#### Competitive Inhibition\n\n**How it works**:\n- An inhibitor molecule competes with the substrate for the active site\n- The inhibitor has a shape similar to the substrate\n- When the inhibitor binds, the substrate cannot\n\n**Result**: Reduced enzyme activity\n\n**Example**: Statins (competitive inhibitors of cholesterol synthesis enzyme)\n\n#### Non-Competitive Inhibition\n\n**How it works**:\n- The inhibitor binds to a different part of the enzyme (not the active site)\n- This changes the enzyme's 3D shape\n- The active site becomes distorted and substrate cannot bind properly\n\n**Result**: Reduced enzyme activity\n\n**Example**: Some antibiotics inhibit bacterial enzymes\n\n### Medical Applications of Inhibition\n\n**Cholesterol Management**:\n- **Drug**: Statins (competitive inhibitors)\n- **Target enzyme**: HMG-CoA reductase\n- **Effect**: Blocks cholesterol synthesis\n- **Benefit**: Reduces heart disease risk\n\n**Pain Relief**:\n- **Drug**: Aspirin, ibuprofen\n- **Target enzyme**: Cyclooxygenase (COX)\n- **Effect**: Blocks prostaglandin synthesis\n- **Benefit**: Reduces inflammation and pain\n\n**Antibiotic Action**:\n- **Drug**: Penicillin\n- **Target enzyme**: Bacterial cell wall synthesis enzymes\n- **Effect**: Inhibits bacterial growth\n- **Benefit**: Kills bacteria without harming human cells\n\n**HIV Treatment**:\n- **Drug**: Protease inhibitors\n- **Target enzyme**: HIV protease\n- **Effect**: Blocks virus protein processing\n- **Benefit**: Prevents virus replication\n\n## Enzyme Deficiencies: When Enzymes Are Missing 😢\n\n### Lactose Intolerance\n\n**Problem**: Lack of lactase enzyme\n\n**Cause**: Genetic—some people naturally produce less lactase as they age\n\n**Effect**: Cannot digest lactose (milk sugar)\n\n**Symptoms**: Bloating, cramping, diarrhea after consuming milk\n\n**Treatment**: \n- Avoid lactose-containing foods\n- Use lactase enzyme supplements\n- Consume lactose-free milk products\n\n### Phenylketonuria (PKU)\n\n**Problem**: Deficiency in phenylalanine hydroxylase enzyme\n\n**Cause**: Genetic—inherited recessive disorder\n\n**Effect**: Cannot break down phenylalanine (an amino acid)\n\n**Consequence**: Dangerous buildup of phenylalanine → brain damage if untreated\n\n**Treatment**: \n- Special diet low in phenylalanine\n- Early detection through newborn screening\n- Enzyme replacement therapy (in development)\n\n### Cystic Fibrosis\n\n**Problem**: Pancreatic enzymes don't reach the small intestine properly\n\n**Cause**: Genetic—defective CFTR protein blocks enzyme secretion\n\n**Effect**: Poor digestion and nutrient absorption\n\n**Treatment**: \n- Enzyme supplements (pancreatic enzyme replacement)\n- High-calorie diet\n- Nutritional support\n\n## Industrial Enzyme Advantages 💡\n\n1. **Efficiency**: Enzymes speed up industrial processes\n2. **Specificity**: Enzymes target specific reactions, reducing waste\n3. **Sustainability**: Enzyme-based processes often use less energy and fewer chemicals\n4. **Cost-effectiveness**: Enzymes can be reused multiple times\n5. **Environmental friendliness**: Biodegradable and non-toxic\n\n## The Future of Enzyme Technology 🚀\n\n- **Enzyme engineering**: Creating modified enzymes for new applications\n- **Biofuel production**: Using enzymes to break down cellulose for fuel\n- **Personalized medicine**: Tailoring enzyme treatments to individual genetics\n- **Bioremediation**: Using enzymes to clean up environmental pollution\n- **Synthetic biology**: Designing new enzymes for novel purposes\n\n> **Key Insight**: Enzymes are not just biological molecules—they're powerful tools that industry and medicine use to solve real-world problems. Understanding enzymes opens doors to countless practical applications.",
+    "speech_to_text_content": "Enzymes have many practical applications beyond the body. In industry: fruit juice production uses pectinase, cheese making uses rennin protease, brewing uses amylase, and detergents use proteases and lipases to remove stains. In medicine: diagnostic tests use glucose oxidase and other enzymes, enzyme replacement therapy treats diseases like lactose intolerance, and enzyme inhibitors like statins and aspirin treat various conditions. Enzyme deficiencies cause problems: lactose intolerance results from lack of lactase, phenylketonuria from lack of phenylalanine hydroxylase, and cystic fibrosis from pancreatic enzyme problems. Enzyme inhibition blocks specific reactions and is used in many drugs.",
+    "answer": null,
+    "options": [],
+    "explanation": "Practical applications of enzymes include: (1) Industrial uses—fruit juice production (pectinase), cheese making (rennin), brewing (amylase), detergents (proteases, lipases for stain removal); (2) Medical diagnostics—glucose testing (glucose oxidase), pregnancy tests, cholesterol testing; (3) Therapeutic applications—enzyme replacement therapy (lactase supplements for lactose intolerance, enzyme replacement for Gaucher disease), wound healing (proteases), cancer treatment (asparaginase); (4) Enzyme inhibition—competitive inhibitors (statins for cholesterol, aspirin for pain), non-competitive inhibitors (antibiotics, HIV protease inhibitors); (5) Enzyme deficiencies—lactose intolerance (lack of lactase), phenylketonuria/PKU (lack of phenylalanine hydroxylase), cystic fibrosis (pancreatic enzyme problems). These applications demonstrate the practical importance of understanding enzyme function.",
+    "created_at": "2024-01-15T09:50:00Z",
+    "updated_at": "2024-01-15T09:50:00Z",
+    "source_timestamp": "2024-01-15T09:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:52:01.631162+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Review Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "What is the primary function of an enzyme?",
+    "content": "## Question 1: Understanding Enzyme Function\n\nWhich of the following best describes the primary function of an enzyme?\n\nA) To provide energy for chemical reactions\n\nB) To speed up chemical reactions by lowering the activation energy\n\nC) To permanently change the products of a reaction\n\nD) To be consumed in the chemical reaction it catalyzes",
+    "speech_to_text_content": "What is the primary function of an enzyme? A) To provide energy for chemical reactions. B) To speed up chemical reactions by lowering the activation energy. C) To permanently change the products of a reaction. D) To be consumed in the chemical reaction it catalyzes.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440012",
+        "option_id": "550e8400-e29b-41d4-a716-446655440012-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt-a",
+        "option_text": "A) To provide energy for chemical reactions",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt-b",
+        "option_text": "B) To speed up chemical reactions by lowering the activation energy",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt-c",
+        "option_text": "C) To permanently change the products of a reaction",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt-d",
+        "option_text": "D) To be consumed in the chemical reaction it catalyzes",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B. Enzymes are biological catalysts that speed up chemical reactions by lowering the activation energy—the energy barrier that must be overcome for a reaction to occur. This is their primary function. A is incorrect because enzymes do not provide energy; they only make it easier for reactions to occur at existing energy levels. C is incorrect because enzymes do not change the products of reactions—they only speed up the conversion from reactants to products. D is incorrect because enzymes are NOT consumed in reactions; they are reusable catalysts that can catalyze thousands of reactions.",
+    "created_at": "2024-01-15T09:55:00Z",
+    "updated_at": "2024-01-15T09:55:00Z",
+    "source_timestamp": "2024-01-15T09:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:52:06.372031+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Review Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "What determines enzyme specificity?",
+    "content": "## Question 2: Understanding Enzyme Specificity\n\nWhich factor MOST directly determines the specificity of an enzyme (i.e., which substrate it can act on)?\n\nA) The temperature at which the enzyme works\n\nB) The pH of the enzyme's environment\n\nC) The three-dimensional shape of the enzyme's active site\n\nD) The amount of enzyme present in the cell",
+    "speech_to_text_content": "What determines enzyme specificity? Which factor most directly determines the specificity of an enzyme? A) The temperature at which the enzyme works. B) The pH of the enzyme's environment. C) The three-dimensional shape of the enzyme's active site. D) The amount of enzyme present in the cell.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440013",
+        "option_id": "550e8400-e29b-41d4-a716-446655440013-opt-c",
+        "answer_text": "C",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-a",
+        "option_text": "A) The temperature at which the enzyme works",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-b",
+        "option_text": "B) The pH of the enzyme's environment",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-c",
+        "option_text": "C) The three-dimensional shape of the enzyme's active site",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440013-opt-d",
+        "option_text": "D) The amount of enzyme present in the cell",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is C. Enzyme specificity is determined by the unique three-dimensional shape of the enzyme's active site. The active site has a shape that is complementary to its specific substrate (lock and key model), which determines which substrate molecules can bind to it. A is incorrect because temperature affects the rate of enzyme activity, not its specificity. B is incorrect because pH affects enzyme activity, not its specificity. D is incorrect because the amount of enzyme present affects the overall reaction rate, not which substrate the enzyme can act on.",
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:52:10.735982+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Review Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Effect of temperature on human enzymes",
+    "content": "## Question 3: Temperature Effects on Enzyme Activity\n\nWhat happens to the activity of a human enzyme when the temperature is increased from 37°C to 50°C?\n\nA) The enzyme activity increases because molecular motion increases\n\nB) The enzyme activity decreases because the enzyme becomes denatured\n\nC) The enzyme activity remains the same because enzymes are not affected by temperature\n\nD) The enzyme activity increases indefinitely as temperature continues to increase",
+    "speech_to_text_content": "What happens to the activity of a human enzyme when the temperature is increased from 37°C to 50°C? A) The enzyme activity increases because molecular motion increases. B) The enzyme activity decreases because the enzyme becomes denatured. C) The enzyme activity remains the same because enzymes are not affected by temperature. D) The enzyme activity increases indefinitely as temperature continues to increase.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_id": "550e8400-e29b-41d4-a716-446655440014-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt-a",
+        "option_text": "A) The enzyme activity increases because molecular motion increases",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt-b",
+        "option_text": "B) The enzyme activity decreases because the enzyme becomes denatured",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt-c",
+        "option_text": "C) The enzyme activity remains the same because enzymes are not affected by temperature",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt-d",
+        "option_text": "D) The enzyme activity increases indefinitely as temperature continues to increase",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B. The optimum temperature for human enzymes is approximately 37°C (body temperature). When temperature increases above this optimum to 50°C, the enzyme becomes denatured. At temperatures above 45°C, weak bonds holding the enzyme's three-dimensional structure break, the protein unfolds, and the active site loses its complementary shape. This denaturation is usually permanent, so enzyme activity decreases. A is incorrect because while increased temperature does increase molecular motion below the optimum, at 50°C denaturation dominates. C is incorrect because enzymes are definitely affected by temperature. D is incorrect because enzyme activity does not increase indefinitely—it peaks at the optimum temperature and then decreases.",
+    "created_at": "2024-01-15T10:05:00Z",
+    "updated_at": "2024-01-15T10:05:00Z",
+    "source_timestamp": "2024-01-15T10:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:52:14.910499+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Review Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Effect of pH on enzyme activity",
+    "content": "## Question 4: pH Effects on Enzyme Activity\n\nPepsin is a digestive enzyme that works in the stomach. Which statement correctly describes why pepsin functions at pH 1.5-2.0 while most other human enzymes work at pH 6-8?\n\nA) Pepsin is stronger than other enzymes and can work in any pH\n\nB) Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments\n\nC) The stomach is the only place where enzymes are needed in the body\n\nD) Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH",
+    "speech_to_text_content": "Pepsin is a digestive enzyme that works in the stomach. Which statement correctly describes why pepsin functions at pH 1.5-2.0 while most other human enzymes work at pH 6-8? A) Pepsin is stronger than other enzymes and can work in any pH. B) Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments. C) The stomach is the only place where enzymes are needed in the body. D) Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-a",
+        "option_text": "A) Pepsin is stronger than other enzymes and can work in any pH",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-b",
+        "option_text": "B) Pepsin has evolved to work specifically at the pH of the stomach environment, while other enzymes have evolved for their specific environments",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-c",
+        "option_text": "C) The stomach is the only place where enzymes are needed in the body",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt-d",
+        "option_text": "D) Pepsin does not actually work at pH 1.5-2.0; it is denatured at that pH",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B. Different enzymes have different optimum pH values because they have evolved to work in their specific environments. Pepsin's optimum pH of 1.5-2.0 matches the acidic environment of the stomach, while other enzymes like trypsin (pH 8.0-8.5) have evolved for the alkaline small intestine. Each enzyme's three-dimensional structure, including its active site, is adapted to function optimally at its specific pH. A is incorrect because pepsin is not \"stronger\"—it's simply adapted for its specific environment. C is incorrect because enzymes are needed throughout the body in many locations. D is incorrect because pepsin works best at pH 1.5-2.0, not being denatured at that pH.",
+    "created_at": "2024-01-15T10:10:00Z",
+    "updated_at": "2024-01-15T10:10:00Z",
+    "source_timestamp": "2024-01-15T10:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:52:20.527817+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Review Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Enzyme concentration and reaction rate",
+    "content": "## Question 5: Enzyme Concentration Effects\n\nIn an experiment, a scientist keeps the substrate concentration constant while increasing the enzyme concentration. What will happen to the reaction rate?\n\nA) The reaction rate will decrease because the enzyme and substrate will compete with each other\n\nB) The reaction rate will increase proportionally until the substrate becomes the limiting factor\n\nC) The reaction rate will remain constant regardless of enzyme concentration\n\nD) The reaction rate will increase exponentially without any limit",
+    "speech_to_text_content": "In an experiment, a scientist keeps the substrate concentration constant while increasing the enzyme concentration. What will happen to the reaction rate? A) The reaction rate will decrease because the enzyme and substrate will compete with each other. B) The reaction rate will increase proportionally until the substrate becomes the limiting factor. C) The reaction rate will remain constant regardless of enzyme concentration. D) The reaction rate will increase exponentially without any limit.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt-a",
+        "option_text": "A) The reaction rate will decrease because the enzyme and substrate will compete with each other",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt-b",
+        "option_text": "B) The reaction rate will increase proportionally until the substrate becomes the limiting factor",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt-c",
+        "option_text": "C) The reaction rate will remain constant regardless of enzyme concentration",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt-d",
+        "option_text": "D) The reaction rate will increase exponentially without any limit",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B. When enzyme concentration increases while substrate concentration remains constant, the reaction rate increases proportionally. This is because more enzyme molecules provide more active sites for substrate binding. However, this linear increase continues only until the substrate becomes the limiting factor—at that point, all available substrate is being processed, and adding more enzyme has no effect. A is incorrect because enzyme and substrate do not compete; they work together. C is incorrect because reaction rate does depend on enzyme concentration. D is incorrect because the increase is linear (not exponential) and has a limit when substrate becomes limiting.",
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:52:24.982026+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Review Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Enzyme denaturation and reversibility",
+    "content": "## Question 6: Enzyme Denaturation\n\nWhich of the following statements correctly describes enzyme denaturation?\n\nA) Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme\n\nB) Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape\n\nC) Denaturation only occurs at very high temperatures above 100°C\n\nD) Denaturation cannot be caused by pH changes, only by temperature",
+    "speech_to_text_content": "Which of the following statements correctly describes enzyme denaturation? A) Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme. B) Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape. C) Denaturation only occurs at very high temperatures above 100°C. D) Denaturation cannot be caused by pH changes, only by temperature.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017-opt-b",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-a",
+        "option_text": "A) Denaturation is a temporary loss of enzyme function that can be reversed by cooling the enzyme",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-b",
+        "option_text": "B) Denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-c",
+        "option_text": "C) Denaturation only occurs at very high temperatures above 100°C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt-d",
+        "option_text": "D) Denaturation cannot be caused by pH changes, only by temperature",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is B. Enzyme denaturation is the permanent loss of enzyme structure and function due to disruption of the protein's three-dimensional shape. The key word is \"permanent\"—once denatured, the enzyme usually cannot refold back to its original shape. A is incorrect because denaturation is irreversible, not temporary. C is incorrect because denaturation can occur at much lower temperatures (above 45°C for many human enzymes). D is incorrect because denaturation can be caused by multiple factors including extreme pH (both acidic and alkaline), high temperature, heavy metals, and organic solvents.",
+    "created_at": "2024-01-15T10:20:00Z",
+    "updated_at": "2024-01-15T10:20:00Z",
+    "source_timestamp": "2024-01-15T10:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:52:29.522204+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Review Question 7",
+    "type": "question",
+    "question_type": "open",
+    "title": "Explain enzyme action mechanism",
+    "content": "## Question 7: Understanding the Enzyme Action Mechanism\n\nExplain the four main steps of the enzyme-catalyzed reaction cycle. For each step, describe what happens and what is formed or released.",
+    "speech_to_text_content": "Explain the four main steps of the enzyme-catalyzed reaction cycle. For each step, describe what happens and what is formed or released.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": null,
+        "answer_text": "Step 1 - Substrate Binding: The substrate molecule approaches and binds to the enzyme's active site, forming an enzyme-substrate (ES) complex. Step 2 - Catalysis: The enzyme stabilizes the transition state and lowers the activation energy, allowing the reaction to proceed. The enzyme facilitates breaking or forming of chemical bonds. Step 3 - Product Formation: The substrate is converted into product(s). The product(s) have a different shape from the substrate and no longer fit the active site as well. Step 4 - Product Release: The product(s) dissociate from the enzyme. The enzyme returns to its original shape and is free to bind another substrate molecule. The cycle can then repeat.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "The enzyme-catalyzed reaction cycle has four main steps: (1) Substrate Binding—the substrate binds to the enzyme's active site through complementary shape recognition, forming an enzyme-substrate complex (E + S → ES); (2) Catalysis—the enzyme stabilizes the transition state and lowers the activation energy, facilitating the chemical reaction; (3) Product Formation—the substrate is converted to product(s), which have a different shape and fit the active site poorly; (4) Product Release—the product dissociates from the enzyme (ES → E + P), freeing the enzyme for the next reaction cycle. The overall equation is: E + S → ES → EP → E + P. Key points: the enzyme is not consumed, the substrate is converted to product, and the enzyme can be reused thousands of times.",
+    "created_at": "2024-01-15T10:25:00Z",
+    "updated_at": "2024-01-15T10:25:00Z",
+    "source_timestamp": "2024-01-15T10:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:52:33.978781+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Review Question 8",
+    "type": "question",
+    "question_type": "open",
+    "title": "Explain how temperature and pH affect enzymes",
+    "content": "## Question 8: Effects of Environmental Factors on Enzymes\n\nDescribe how both temperature and pH affect enzyme activity. Include:\n1. What happens at the optimum conditions\n2. What happens at extreme conditions\n3. Why these conditions have these effects on the enzyme",
+    "speech_to_text_content": "Describe how both temperature and pH affect enzyme activity. Include: 1. What happens at the optimum conditions. 2. What happens at extreme conditions. 3. Why these conditions have these effects on the enzyme.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": null,
+        "answer_text": "Temperature: At optimum temperature (37°C for human enzymes), enzyme activity is at its maximum because molecular motion is optimal for frequent enzyme-substrate collisions while the enzyme's protein structure remains stable. At low temperatures, molecular motion is slow, collisions are infrequent, and enzyme activity is low. At high temperatures (above 45°C), the enzyme becomes denatured—weak bonds break, the protein unfolds, the active site loses its shape, and enzyme activity is permanently lost. pH: At optimum pH (varies by enzyme—pepsin at 1.5-2.0, most enzymes at 6-8, pancreatic enzymes at 8-9), the enzyme's three-dimensional structure is stable and activity is maximum. At extreme pH (very acidic or very alkaline), H+ or OH- ions disrupt the protein structure, change amino acid charges, distort the active site, and cause irreversible denaturation. Both temperature and pH affect enzyme activity because they influence the protein's three-dimensional structure, which is essential for active site function.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "Temperature effects on enzymes: (1) Optimum temperature (37°C for human enzymes)—enzyme activity is maximum due to optimal molecular motion and collision frequency; (2) Low temperature—slow molecular motion reduces collisions and enzyme activity; (3) High temperature (above 45°C)—breaks weak bonds, causes denaturation, permanently destroys the active site. pH effects on enzymes: (1) Optimum pH varies by enzyme (pepsin pH 1.5-2.0, most human enzymes pH 6-8, pancreatic enzymes pH 8-9)—enzyme activity is maximum; (2) Extreme pH—H+ or OH- ions disrupt protein structure, alter amino acid ionization, cause denaturation, permanently destroy activity. Both factors affect enzyme activity because they influence the protein's three-dimensional structure. The key difference is that below optimum temperature, cooling reverses the effect, but above optimum temperature, heating causes irreversible denaturation. Similarly, pH changes can denature enzymes irreversibly at extreme values.",
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:52:40.257733+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Review Question 9",
+    "type": "question",
+    "question_type": "open",
+    "title": "Digestive enzymes and their locations",
+    "content": "## Question 9: Enzymes in Digestion\n\nDescribe the role of three different digestive enzymes. For each enzyme, include:\n1. The name of the enzyme\n2. Where it is produced/located\n3. What substrate it acts on\n4. What products it produces\n5. Why its location is important for its function",
+    "speech_to_text_content": "Describe the role of three different digestive enzymes. For each enzyme, include: 1. The name of the enzyme. 2. Where it is produced or located. 3. What substrate it acts on. 4. What products it produces. 5. Why its location is important for its function.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": null,
+        "answer_text": "Example answers (any three enzymes are acceptable): 1. Amylase: Located in saliva (salivary glands) and pancreatic juice. Acts on starch substrate. Produces maltose. Important because it begins starch breakdown in the mouth and continues in the small intestine. 2. Pepsin: Located in the stomach. Acts on proteins. Produces polypeptides. Important because the stomach's acidic pH (1.5-2.0) is the optimum for pepsin, and this low pH also denatures proteins, making them easier for pepsin to break down. 3. Trypsin: Located in the small intestine (from pancreas). Acts on proteins and polypeptides. Produces smaller polypeptides. Important because the small intestine's alkaline pH (8.0-8.5) is the optimum for trypsin. 4. Lipase: Located in the small intestine (from pancreas). Acts on triglycerides (fats). Produces fatty acids and glycerol. Important because it works in the alkaline small intestine where bile emulsifies fats, increasing surface area for enzyme access. 5. Lactase: Located in the small intestine wall. Acts on lactose. Produces glucose and galactose. Important because it completes carbohydrate digestion in the small intestine where absorption occurs.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "Digestive enzyme examples: Amylase (saliva/pancreas, starch→maltose, pH 6.8-7.0), Pepsin (stomach, proteins→polypeptides, pH 1.5-2.0), Trypsin (small intestine, proteins→polypeptides, pH 8.0-8.5), Chymotrypsin (small intestine, proteins→polypeptides, pH 8.0-8.5), Lipase (small intestine, triglycerides→fatty acids+glycerol, pH 8.0-8.5), Maltase (small intestine, maltose→glucose, pH 8.0-8.5), Sucrase (small intestine, sucrose→glucose+fructose), Lactase (small intestine, lactose→glucose+galactose), Peptidases (small intestine, polypeptides→amino acids). Location is critical because: enzymes work at their optimum pH in their specific location; the mouth and stomach are acidic (for amylase and pepsin); the small intestine is alkaline (for pancreatic and intestinal enzymes); products are absorbed in the small intestine; bile is available in the small intestine to help lipase with fat digestion.",
+    "created_at": "2024-01-15T10:35:00Z",
+    "updated_at": "2024-01-15T10:35:00Z",
+    "source_timestamp": "2024-01-15T10:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:52:46.578814+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "enzymes-chapter-4",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Summary",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎯 Chapter Summary: Key Takeaways About Enzymes",
+    "content": "## Essential Concepts You've Learned\n\n### 1️⃣ What Enzymes Are\n\n::yellow[Enzymes] are ::blue[biological catalysts made of protein] that speed up chemical reactions by lowering activation energy without being consumed in the process.\n\n**Key characteristics**:\n- Protein structure with precise 3D shape\n- Increase reaction rate dramatically\n- Not consumed—reusable\n- Show substrate specificity\n\n### 2️⃣ How Enzymes Work\n\nThe enzyme-catalyzed reaction follows four steps:\n\n1. **Substrate Binding** → Substrate binds to active site\n2. **Catalysis** → Enzyme lowers activation energy\n3. **Product Formation** → Substrate converts to product\n4. **Product Release** → Product leaves, enzyme is free\n\n**Overall**: E + S → ES → EP → E + P\n\n### 3️⃣ The Active Site and Specificity\n\nThe ::yellow[active site] has a unique 3D shape complementary to the substrate (::blue[lock and key model]).\n\n- Each enzyme recognizes only its specific substrate\n- Shape determines specificity\n- If the active site is damaged, the enzyme is useless\n\n### 4️⃣ Temperature Effects\n\n| Temperature Range | Effect | Reversible? |\n|------------------|--------|-------------|\n| 0-37°C | Activity increases | Yes |\n| 37°C (optimum) | Maximum activity | — |\n| 37-45°C | Activity decreases | Yes |\n| 45°C+ (denaturation) | Permanent loss | **No** |\n\n### 5️⃣ pH Effects\n\nDifferent enzymes have different optimum pH values:\n\n- **Pepsin**: pH 1.5-2.0 (stomach)\n- **Most enzymes**: pH 6-8 (neutral)\n- **Pancreatic enzymes**: pH 8-9 (small intestine)\n\nExtreme pH causes irreversible denaturation.\n\n### 6️⃣ Enzyme and Substrate Concentration\n\n- **Low enzyme, high substrate**: Enzyme is limiting → increase enzyme to increase rate\n- **High enzyme, low substrate**: Substrate is limiting → increase substrate to increase rate\n- **Enzyme saturated**: All active sites occupied → adding more won't help\n\n### 7️⃣ Denaturation: When Enzymes Break\n\n::red[Denaturation] is permanent loss of enzyme function caused by:\n- High temperature (above 45°C)\n- Extreme pH\n- Heavy metals\n- Organic chemicals\n\n**Result**: The protein unfolds, active site is destroyed, enzyme is useless\n\n### 8️⃣ Enzymes in Digestion\n\nDifferent enzymes break down different foods at different locations:\n\n- **Mouth**: Salivary amylase → starch to maltose\n- **Stomach**: Pepsin → proteins to polypeptides\n- **Small intestine**: All remaining digestion completed\n  - Amylase, trypsin, lipase, maltase, sucrase, lactase, peptidases\n  - Breaks down all macromolecules to absorbable units\n\n### 9️⃣ Practical Applications\n\n**Industry**: Food production, detergents, textiles, leather processing\n\n**Medicine**: Diagnostic tests, enzyme replacement therapy, enzyme inhibitors (drugs)\n\n**Enzyme deficiencies**: Lactose intolerance, PKU, cystic fibrosis\n\n## Critical Concepts to Remember ⚠️\n\n1. **Enzyme specificity is absolute**: Each enzyme works on specific substrates only\n2. **3D shape is everything**: If the protein unfolds, the enzyme is destroyed\n3. **Enzymes are not consumed**: They are reusable catalysts\n4. **Optimum conditions matter**: Temperature and pH must be right for enzyme function\n5. **Denaturation is usually permanent**: Once an enzyme is denatured, it's gone\n6. **Location determines function**: Enzymes work where they're needed at their optimum conditions\n\n## Why Enzymes Matter 💡\n\nWithout enzymes:\n- Life would be impossible\n- Chemical reactions would be too slow\n- Digestion wouldn't happen\n- Energy production would stop\n- Diseases would develop from missing enzymes\n\nEnzymes are the molecular machines that make life possible!\n\n## Your Next Steps 🚀\n\nYou now understand:\n- ✅ What enzymes are and how they work\n- ✅ How enzymes are affected by temperature and pH\n- ✅ How enzyme and substrate concentration affect reaction rates\n- ✅ What happens when enzymes are denatured\n- ✅ How enzymes work in digestion\n- ✅ Real-world applications of enzymes\n\n**Challenge yourself**: Can you explain why each digestive enzyme works at its specific location? Can you predict what would happen if pepsin ended up in the small intestine? Can you explain why lactose intolerance happens?\n\n> **Final Thought**: Enzymes are not just abstract biology concepts—they're real molecular machines working in your body right now, breaking down your food, producing energy, and keeping you alive. Understanding enzymes is understanding how life works at the molecular level!",
+    "speech_to_text_content": "Summary of enzymes chapter. Enzymes are biological catalysts made of protein that speed up reactions by lowering activation energy without being consumed. They work through four steps: substrate binding, catalysis, product formation, and product release. The active site has a unique shape complementary to the substrate, determining enzyme specificity. Temperature affects enzymes: optimum is 37°C for human enzymes, below optimum activity increases, above 45°C denaturation occurs irreversibly. Different enzymes have different optimum pH values based on their location. Enzyme and substrate concentration affect reaction rates—whichever is limiting determines the maximum rate. Denaturation is permanent loss of function from high temperature, extreme pH, heavy metals, or chemicals. Digestive enzymes work at different locations: mouth (amylase), stomach (pepsin), small intestine (all remaining digestion). Enzymes have practical applications in industry and medicine. Without enzymes, life would be impossible.",
+    "answer": null,
+    "options": [],
+    "explanation": "This summary slide consolidates all major concepts from the chapter: (1) Definition and characteristics of enzymes; (2) Four-step enzyme action mechanism; (3) Active site and lock-and-key model of specificity; (4) Temperature effects with optimum at 37°C and denaturation above 45°C; (5) pH effects with different optimums for different enzymes; (6) Enzyme and substrate concentration effects on reaction rate; (7) Denaturation as permanent loss of function; (8) Digestive enzymes at different locations with different optimum pH values; (9) Practical applications in industry and medicine. The summary emphasizes that enzymes are essential for life, that their three-dimensional shape is critical, that they work at specific conditions, and that denaturation is usually permanent.",
+    "created_at": "2024-01-15T10:40:00Z",
+    "updated_at": "2024-01-15T10:40:00Z",
+    "source_timestamp": "2024-01-15T10:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:53:01.362229+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

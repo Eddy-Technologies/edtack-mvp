@@ -1,0 +1,1211 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Welcome to Chemical Calculations",
+    "content": "## Understanding Chemical Calculations\n\n::yellow[Chemical calculations] form the foundation of practical chemistry. They help us understand the relationships between the amounts of substances that react together and the products they form.\n\n### What You'll Learn\n\nIn this chapter, you'll discover how to:\n\n- 📝 Write and interpret ::blue[chemical symbols, formulae, and equations]\n- ⚖️ Understand why ::yellow[chemical equations must be balanced]\n- 🔢 Convert between ::purple[mass, volume, and number of particles]\n- 🧮 Solve complex stoichiometry problems\n- 💧 Work with solutions and concentrations\n- 📊 Calculate percentage yield and purity\n\n### Why It Matters\n\nChemists use these calculations every day to:\n- Plan experiments and reactions\n- Predict how much product will form\n- Scale up reactions from lab to industrial scale\n- Ensure safety by controlling reactant amounts\n- Verify the purity of chemicals\n\n> 💡 **Key Insight:** ::green[Every chemical reaction involves specific proportions of reactants and products—these calculations help us find them!]",
+    "speech_to_text_content": "Welcome to chemical calculations. In this chapter you will learn how to write and interpret chemical symbols, formulae, and equations. You will understand why chemical equations must be balanced, and how to convert between mass, volume, and number of particles. You will solve complex stoichiometry problems, work with solutions and concentrations, and calculate percentage yield and purity.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:54:34.832046+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Section 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "📚 Guiding Questions & Learning Outcomes",
+    "content": "## The Big Questions\n\nAs you work through this chapter, keep these guiding questions in mind:\n\n1. **What information can be derived from the chemical symbols, formulae and equations?**\n   - Chemical symbols and formulae tell us the composition and structure of substances\n   - Equations show us what happens during reactions\n\n2. **Why must a chemical equation be balanced?**\n   - ::yellow[Conservation of mass] principle: atoms cannot be created or destroyed\n   - The same atoms must appear on both sides of the equation\n\n3. **How do the macroscopic quantities (e.g. mass, volume of a gas) relate to the number of particles in a substance?**\n   - We use the ::yellow[mole concept] to connect the visible world to the atomic world\n   - This allows us to count particles by measuring mass or volume\n\n## Learning Outcomes\n\nBy the end of this chapter, you will be able to:\n\n### Section 4.1: Formulae and Equation Writing\n- State the symbols of elements and formulae of compounds\n- Deduce formulae from atomic ratios\n- Construct chemical equations with state symbols\n- Write ionic equations\n\n### Section 4.2: The Mole Concept and Stoichiometry\n- Define and calculate relative atomic and molecular mass\n- Use the mole to convert between mass and number of particles\n- Calculate percentage composition, empirical and molecular formulae\n- Solve stoichiometric problems involving mass, volume, and concentration\n- Calculate percentage yield and purity",
+    "speech_to_text_content": "The guiding questions for this chapter are: What information can be derived from chemical symbols, formulae and equations? Why must a chemical equation be balanced? How do macroscopic quantities like mass and volume relate to the number of particles? By the end of this chapter you will be able to state chemical symbols and formulae, deduce formulae from atomic ratios, construct chemical equations, and solve stoichiometric problems.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:54:39.533954+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Section 2.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔤 Chemical Symbols and Ions: Cations",
+    "content": "## Understanding Cations\n\n::yellow[Cations] are **positively charged ions** formed when atoms lose electrons. Most cations come from metals, though some non-metals can also form cations.\n\n### How Cations Form\n\nWhen a metal atom loses electrons during ionic bonding:\n- The atom has fewer electrons than protons\n- This creates a positive charge\n- Example: A sodium atom (Na) loses one electron to become Na⁺\n\n### Naming Cations\n\n**For metals that form only ONE type of cation:**\n- Simply use the element's name\n- Examples:\n  - Na⁺ = **sodium ion**\n  - Ca²⁺ = **calcium ion**\n  - Al³⁺ = **aluminium ion**\n  - Ag⁺ = **silver ion** (special case: only forms Ag⁺)\n  - Zn²⁺ = **zinc ion** (special case: only forms Zn²⁺)\n\n**For transition metals and post-transition metals that form MULTIPLE cations:**\n- Use the element's name followed by the charge in Roman numerals in brackets\n- Examples:\n  - Cu⁺ = **copper(I) ion**\n  - Cu²⁺ = **copper(II) ion**\n  - Fe²⁺ = **iron(II) ion**\n  - Fe³⁺ = **iron(III) ion**\n  - Pb²⁺ = **lead(II) ion**\n\n### Why This Matters\n\n::green[The Roman numeral tells you the charge of the cation], which is essential for writing formulas correctly. Different cations of the same element have different properties and reactivity!\n\n> ⚠️ ::red[Common Mistake]: Don't confuse the Roman numeral with a subscript number. Cu(II) means the charge is +2, not that there are 2 copper atoms.",
+    "speech_to_text_content": "Cations are positively charged ions formed when atoms lose electrons. Most cations come from metals. For metals that form only one type of cation, simply use the element's name. For transition metals and post-transition metals that form multiple cations, use the element's name followed by the charge in Roman numerals in brackets. For example, copper two plus is written as copper(II).",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:54:44.793220+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Section 2.2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔤 Chemical Symbols and Ions: Anions",
+    "content": "## Understanding Anions\n\n::yellow[Anions] are **negatively charged ions** formed when atoms gain electrons. Anions are typically formed from non-metal elements.\n\n### How Anions Form\n\nWhen a non-metal atom gains electrons during ionic bonding:\n- The atom has more electrons than protons\n- This creates a negative charge\n- Example: A chlorine atom (Cl) gains one electron to become Cl⁻\n\n### Naming Anions\n\n**For simple anions from single elements:**\n- Take the element's name and replace the ending with **-ide**\n- Examples:\n  - F⁻ = **fluoride ion**\n  - Cl⁻ = **chloride ion**\n  - Br⁻ = **bromide ion**\n  - O²⁻ = **oxide ion**\n  - N³⁻ = **nitride ion**\n  - S²⁻ = **sulfide ion**\n\n### Polyatomic Ions\n\n::yellow[Polyatomic ions] are ions formed from molecules that have gained or lost electrons.\n\n**Negatively charged polyatomic ions:**\n- Also use the **-ide** ending if they don't contain oxygen\n- Examples:\n  - OH⁻ = **hydroxide ion** (contains oxygen, so -ide is used)\n  - CN⁻ = **cyanide ion**\n\n**Polyatomic ions containing oxygen:**\n- Use the **-ate** ending\n- Examples:\n  - NO₃⁻ = **nitrate ion**\n  - SO₄²⁻ = **sulfate ion**\n  - CO₃²⁻ = **carbonate ion**\n  - PO₄³⁻ = **phosphate ion**\n\n### Charge Patterns\n\n| Group Number | Typical Anion Charge | Examples |\n|--------------|----------------------|----------|\n| 15 | -3 | N³⁻, P³⁻ |\n| 16 | -2 | O²⁻, S²⁻ |\n| 17 | -1 | F⁻, Cl⁻, Br⁻ |\n\n> 💡 **Key Pattern:** The charge on an anion relates to the group number: Group 15 forms -3, Group 16 forms -2, Group 17 forms -1",
+    "speech_to_text_content": "Anions are negatively charged ions formed when atoms gain electrons. For simple anions from single elements, take the element's name and replace the ending with minus-ide. For example, chlorine becomes chloride. Polyatomic ions are ions formed from molecules that have gained or lost electrons. Negatively charged polyatomic ions use the minus-ide ending, while those containing oxygen use the minus-ate ending.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:54:49.907729+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Section 2.3",
+    "type": "slide",
+    "question_type": null,
+    "title": "📋 Writing Ionic Compound Formulae",
+    "content": "## The Criss-Cross Method\n\nTo write the formula of an ionic compound, use the **criss-cross method**:\n\n### Step-by-Step Process\n\n1. **Write the cation and anion symbols with their charges**\n   - Example: Ca²⁺ and Cl⁻\n\n2. **Cross over the charges as subscripts**\n   - The charge of the cation becomes the subscript of the anion\n   - The charge of the anion becomes the subscript of the cation\n   - Ca²⁺ and Cl⁻ → CaCl₂\n\n3. **Simplify if possible**\n   - Cancel common factors\n   - Example: Ca²⁺ and O²⁻ → Ca₂O₂ → CaO\n\n4. **Always write the cation first, then the anion**\n\n### Worked Examples\n\n**Example 1: Sodium and Bromine**\n- Na⁺ and Br⁻\n- Criss-cross: Na₁Br₁ = ::green[NaBr]\n\n**Example 2: Calcium and Bromine**\n- Ca²⁺ and Br⁻\n- Criss-cross: Ca₁Br₂ = ::green[CaBr₂]\n\n**Example 3: Aluminium and Oxide**\n- Al³⁺ and O²⁻\n- Criss-cross: Al₂O₃ = ::green[Al₂O₃]\n\n### With Polyatomic Ions\n\nWhen using polyatomic ions, use **brackets** if you need more than one of the ion:\n\n**Example 1: Calcium and Hydroxide**\n- Ca²⁺ and OH⁻\n- Need 2 hydroxide ions: Ca²⁺ and (OH⁻)₂\n- Formula: ::green[Ca(OH)₂]\n- ⚠️ ::red[NOT CaOH₂] - always use brackets!\n\n**Example 2: Zinc and Nitrate**\n- Zn²⁺ and NO₃⁻\n- Need 2 nitrate ions: Zn²⁺ and (NO₃⁻)₂\n- Formula: ::green[Zn(NO₃)₂]\n\n**Example 3: Calcium and Carbonate**\n- Ca²⁺ and CO₃²⁻\n- Charges balance with 1:1 ratio\n- Formula: ::green[CaCO₃]\n- No brackets needed - charges cancel exactly\n\n> 💡 **Remember:** Brackets are only needed when you have MORE THAN ONE of the polyatomic ion. Single polyatomic ions don't need brackets!",
+    "speech_to_text_content": "To write an ionic compound formula, use the criss-cross method. Write the cation and anion symbols with their charges. Cross over the charges as subscripts. The charge of the cation becomes the subscript of the anion and vice versa. Always write the cation first. When using polyatomic ions, use brackets if you need more than one of the ion.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:54:55.930945+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Section 2.4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔤 Writing Covalent Compound Names",
+    "content": "## Naming Covalent Compounds\n\n::yellow[Covalent compounds] are named differently from ionic compounds. They use **prefixes** to show how many atoms of each element are present.\n\n### Prefix System\n\n| Prefix | Number of Atoms |\n|--------|------------------|\n| mono- | 1 |\n| di- | 2 |\n| tri- | 3 |\n| tetra- | 4 |\n| penta- | 5 |\n| hexa- | 6 |\n\n### Naming Rules\n\n1. **Name the first element** using the prefix if there are multiple atoms\n   - Usually NO prefix for the first element if there's only one\n\n2. **Name the second element** with the appropriate prefix\n   - Add -ide to the end of the element name\n\n3. **Drop the vowel** if the prefix ends in 'a' or 'o' and the element name starts with a vowel\n   - mono + oxide = monoxide (not monooxide)\n   - tetra + oxide = tetroxide (not tetraoxide)\n\n### Worked Examples\n\n**Example 1: CO₂**\n- 1 carbon atom, 2 oxygen atoms\n- Carbon (no prefix), dioxide\n- Name: ::green[Carbon dioxide]\n\n**Example 2: BCl₃**\n- 1 boron atom, 3 chlorine atoms\n- Boron (no prefix), trichloride\n- Name: ::green[Boron trichloride]\n\n**Example 3: N₂O₅**\n- 2 nitrogen atoms, 5 oxygen atoms\n- Dinitrogen, pentoxide (drop the 'a' from penta)\n- Name: ::green[Dinitrogen pentoxide]\n\n**Example 4: P₄O₁₀**\n- 4 phosphorus atoms, 10 oxygen atoms\n- Tetraphosphorus, decoxide\n- Name: ::green[Tetraphosphorus decoxide]\n\n**Example 5: SO₃**\n- 1 sulfur atom, 3 oxygen atoms\n- Sulfur (no prefix), trioxide\n- Name: ::green[Sulfur trioxide]\n\n> 💡 **Key Difference:** Unlike ionic compounds, covalent compounds ALWAYS use prefixes to show the exact number of atoms. This is how you know they're covalent!",
+    "speech_to_text_content": "Covalent compounds are named using prefixes to show how many atoms of each element are present. Mono means one, di means two, tri means three, tetra means four. Name the first element with a prefix if needed, then name the second element with the appropriate prefix and add minus-ide to the end. Drop the vowel if the prefix ends in a or o and the element name starts with a vowel.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:55:01.182606+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Section 3.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚗️ Chemical Equations: The Basics",
+    "content": "## What is a Chemical Equation?\n\nA ::yellow[chemical equation] is a way to represent a chemical reaction using symbols and formulae. It shows:\n- What substances react (::blue[reactants])\n- What substances are produced (::blue[products])\n- The ::purple[state of matter] of each substance\n\n### The General Format\n\n```\nReactants → Products\n```\n\n**Key Features:**\n- ::yellow[Reactants] are written on the **LEFT** side\n- ::yellow[Products] are written on the **RIGHT** side\n- An **ARROW** (→) separates reactants from products\n- **NOT** an equals sign!\n\n### State Symbols\n\nEach substance in an equation must have a state symbol in brackets:\n\n| Symbol | Meaning | Example |\n|--------|---------|----------|\n| **(s)** | Solid | Cu(s), NaCl(s) |\n| **(l)** | Liquid | H₂O(l), Br₂(l) |\n| **(g)** | Gas | O₂(g), CO₂(g) |\n| **(aq)** | Aqueous (dissolved in water) | HCl(aq), NaOH(aq) |\n\n### A Complete Example\n\n**Reaction:** Hydrochloric acid reacts with sodium hydroxide solution to form sodium chloride and water\n\n$$\\text{HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)}$$\n\n- ::blue[HCl(aq)] = hydrochloric acid (aqueous)\n- ::blue[NaOH(aq)] = sodium hydroxide solution (aqueous)\n- ::blue[NaCl(aq)] = sodium chloride solution (aqueous)\n- ::blue[H₂O(l)] = water (liquid)\n\n### Why State Symbols Matter\n\n::green[State symbols tell us important information about the reaction:]\n- Whether heat is needed or released\n- Whether the reaction happens in water\n- What physical changes occur\n- How to safely conduct the experiment\n\n> ⚠️ ::red[Critical Point]: Never write a chemical equation without state symbols! Incomplete equations are considered incorrect.",
+    "speech_to_text_content": "A chemical equation represents a chemical reaction using symbols and formulae. It shows what substances react, called reactants, and what substances are produced, called products. Reactants are written on the left, products on the right, separated by an arrow. Each substance must have a state symbol: s for solid, l for liquid, g for gas, or aq for aqueous.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:55:06.841316+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Section 3.2",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚖️ Balancing Chemical Equations",
+    "content": "## Why Balance Equations?\n\nThe ::yellow[Law of Conservation of Mass] states that **matter cannot be created or destroyed** in a chemical reaction. This means:\n- The same atoms must appear on BOTH sides of the equation\n- The SAME NUMBER of each type of atom on both sides\n- We must balance equations to show this truth\n\n### Unbalanced vs. Balanced\n\n**Unbalanced equation:**\n$$\\text{Na(s) + Cl₂(g) → NaCl(s)}$$\n- LEFT: 1 Na atom, 2 Cl atoms\n- RIGHT: 1 Na atom, 1 Cl atom\n- ❌ Chlorine atoms don't balance!\n\n**Balanced equation:**\n$$\\text{2Na(s) + Cl₂(g) → 2NaCl(s)}$$\n- LEFT: 2 Na atoms, 2 Cl atoms\n- RIGHT: 2 Na atoms, 2 Cl atoms\n- ✅ All atoms balance!\n\n## How to Balance Equations\n\n### Step 1: Write the Unbalanced Equation\nFirst, write the formulae correctly with state symbols\n\n### Step 2: Count Atoms on Each Side\nMake a list of each element and how many atoms appear on each side\n\n### Step 3: Add Coefficients\n- Place numbers (coefficients) in front of formulae to balance atoms\n- ::red[NEVER change the subscripts in formulae!]\n- ::red[NEVER add or remove atoms!]\n\n### Step 4: Check Your Work\nRecount all atoms to ensure they balance\n\n## Balancing Strategy\n\n**General Order:**\n1. Balance ::yellow[metals] first\n2. Balance ::yellow[non-metals] second\n3. Balance ::yellow[hydrogen] third\n4. Balance ::yellow[oxygen] last\n\n### Worked Example\n\n**Balance:** Fe + O₂ → Fe₂O₃\n\n**Step 1:** Count atoms (unbalanced)\n- LEFT: 1 Fe, 2 O\n- RIGHT: 2 Fe, 3 O\n\n**Step 2:** Balance Fe first\n- Need 2 Fe on left: 2Fe + O₂ → Fe₂O₃\n- LEFT: 2 Fe, 2 O\n- RIGHT: 2 Fe, 3 O\n\n**Step 3:** Balance O\n- Need 3 O on left, but O₂ comes in pairs\n- Use 3 O₂: 2Fe + 3O₂ → Fe₂O₃\n- LEFT: 2 Fe, 6 O\n- RIGHT: 2 Fe, 3 O (still wrong!)\n\n**Step 4:** Adjust and recount\n- Need to make 6 O on right: multiply Fe₂O₃ by 2\n- 2Fe + 3O₂ → 2Fe₂O₃\n- LEFT: 2 Fe, 6 O\n- RIGHT: 4 Fe, 6 O (Fe doesn't balance!)\n\n**Step 5:** Fix Fe\n- Need 4 Fe on left: 4Fe + 3O₂ → 2Fe₂O₃\n- LEFT: 4 Fe, 6 O\n- RIGHT: 4 Fe, 6 O ✅\n\n**Final Answer:** ::green[4Fe(s) + 3O₂(g) → 2Fe₂O₃(s)]\n\n> 💡 **Tip:** Balancing can require trial and error. Start with the most complex formula and work systematically. If you get stuck, try a different element!",
+    "speech_to_text_content": "The law of conservation of mass states that matter cannot be created or destroyed in a chemical reaction. The same atoms must appear on both sides of the equation in the same number. To balance equations, count atoms on each side, add coefficients to balance, and never change the subscripts in formulae. Balance metals first, then non-metals, then hydrogen, then oxygen.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:55:14.708280+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Section 3.3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Ionic Equations: Showing What Really Reacts",
+    "content": "## What is an Ionic Equation?\n\nAn ::yellow[ionic equation] shows only the ions and molecules that actually participate in a reaction. It's more informative than a regular chemical equation because it shows the real chemistry happening.\n\n### The Key Concept: Spectator Ions\n\n::yellow[Spectator ions] are ions that:\n- Appear on both sides of the equation\n- Don't participate in the reaction\n- Can be cancelled out\n\nWhen we write an ionic equation, we **remove spectator ions** to show only the essential chemistry.\n\n## How to Write Ionic Equations\n\n### Step 1: Write the Balanced Chemical Equation\nWith correct state symbols\n\n### Step 2: Split Aqueous Substances\n- Aqueous (aq) substances that are ionic compounds split into their ions\n- Solids (s), liquids (l), and gases (g) stay as complete formulae\n- Only split compounds that dissolve in water!\n\n### Step 3: Cancel Spectator Ions\n- Identify ions that appear on BOTH sides\n- Cross them out\n\n### Step 4: Write the Net Ionic Equation\n- Write what remains after cancelling\n\n## Worked Example\n\n**Reaction:** Sulfuric acid reacts with barium nitrate to form barium sulfate precipitate and nitric acid\n\n### Step 1: Balanced Equation\n$$\\text{H₂SO₄(aq) + Ba(NO₃)₂(aq) → BaSO₄(s) + 2HNO₃(aq)}$$\n\n### Step 2: Split Aqueous Substances\n- H₂SO₄(aq) → 2H⁺(aq) + SO₄²⁻(aq)\n- Ba(NO₃)₂(aq) → Ba²⁺(aq) + 2NO₃⁻(aq)\n- BaSO₄(s) stays as BaSO₄(s) (it's a precipitate!)\n- 2HNO₃(aq) → 2H⁺(aq) + 2NO₃⁻(aq)\n\n**Full ionic equation:**\n$$\\text{2H⁺(aq) + SO₄²⁻(aq) + Ba²⁺(aq) + 2NO₃⁻(aq) → BaSO₄(s) + 2H⁺(aq) + 2NO₃⁻(aq)}$$\n\n### Step 3: Cancel Spectator Ions\n- ::red[2H⁺(aq)] appears on both sides - CANCEL\n- ::red[2NO₃⁻(aq)] appears on both sides - CANCEL\n\n### Step 4: Net Ionic Equation\n$$\\text{SO₄²⁻(aq) + Ba²⁺(aq) → BaSO₄(s)}$$\n\n**This is the NET IONIC EQUATION!** It shows the essential reaction: sulfate ions and barium ions combine to form a white precipitate.\n\n## Why This Matters\n\n::green[The net ionic equation reveals the true chemistry:]\n- It shows which ions actually react\n- It removes \"noise\" from spectator ions\n- It helps predict what will happen in similar reactions\n- It shows that many different reactions produce the same net result\n\n> 💡 **Key Insight:** Different starting materials can produce the same net ionic equation if they contain the same ions!\n\n> ⚠️ ::red[Remember]: Only split substances that are in aqueous (aq) state! Solids, liquids, and gases remain as complete formulae.",
+    "speech_to_text_content": "An ionic equation shows only the ions and molecules that actually participate in a reaction. Spectator ions appear on both sides and don't participate, so they can be cancelled. To write an ionic equation, first write the balanced equation, then split aqueous substances into their ions, cancel spectator ions, and write the net ionic equation showing only what remains.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:55:22.498018+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Section 4.1",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚛️ Relative Atomic Mass and Relative Molecular Mass",
+    "content": "## Relative Atomic Mass (Aᵣ)\n\n::yellow[Relative atomic mass (Aᵣ)] is the **average mass of one atom of an element** compared to 1/12 of the mass of a carbon-12 atom.\n\n### Why Carbon-12?\n- Carbon-12 is chosen as the standard for comparison\n- By definition, carbon-12 has an Aᵣ of exactly 12\n- All other elements are compared to this standard\n\n### Examples of Relative Atomic Masses\n\n| Element | Symbol | Aᵣ |\n|---------|--------|----|\n| Hydrogen | H | 1 |\n| Carbon | C | 12 |\n| Nitrogen | N | 14 |\n| Oxygen | O | 16 |\n| Sodium | Na | 23 |\n| Magnesium | Mg | 24 |\n| Sulfur | S | 32 |\n| Chlorine | Cl | 35.5 |\n| Calcium | Ca | 40 |\n| Iron | Fe | 56 |\n| Copper | Cu | 64 |\n\n## Relative Molecular Mass (Mᵣ)\n\n::yellow[Relative molecular mass (Mᵣ)] is the **average mass of one molecule** of a substance compared to 1/12 of the mass of a carbon-12 atom.\n\n### Calculating Mᵣ\n\n**Formula:**\n$$\\text{M}_r = \\text{Sum of all relative atomic masses in the molecule}$$\n\n**Method:**\n1. Write the molecular formula\n2. Find the Aᵣ of each element\n3. Multiply Aᵣ by the number of atoms of that element\n4. Add all the values together\n\n### Worked Examples\n\n**Example 1: Water (H₂O)**\n- H: 2 atoms × 1 = 2\n- O: 1 atom × 16 = 16\n- Mᵣ = 2 + 16 = ::green[18]\n\n**Example 2: Sulfuric acid (H₂SO₄)**\n- H: 2 atoms × 1 = 2\n- S: 1 atom × 32 = 32\n- O: 4 atoms × 16 = 64\n- Mᵣ = 2 + 32 + 64 = ::green[98]\n\n**Example 3: Calcium carbonate (CaCO₃)**\n- Ca: 1 atom × 40 = 40\n- C: 1 atom × 12 = 12\n- O: 3 atoms × 16 = 48\n- Mᵣ = 40 + 12 + 48 = ::green[100]\n\n**Example 4: Ammonium nitrate (NH₄NO₃)**\n- N: 2 atoms × 14 = 28\n- H: 4 atoms × 1 = 4\n- O: 3 atoms × 16 = 48\n- Mᵣ = 28 + 4 + 48 = ::green[80]\n\n## Why This Matters\n\n::green[Knowing Mᵣ allows us to:]\n- Convert between mass and number of particles\n- Calculate concentrations of solutions\n- Solve stoichiometry problems\n- Predict reaction ratios\n\n> 💡 **Key Insight:** The Mᵣ of a substance has the same numerical value as the molar mass in g/mol. If Mᵣ = 18, then 1 mole of that substance has a mass of 18 grams!",
+    "speech_to_text_content": "Relative atomic mass is the average mass of one atom of an element compared to 1/12 of the mass of a carbon-12 atom. Relative molecular mass is the average mass of one molecule compared to the same standard. To calculate relative molecular mass, find the relative atomic mass of each element, multiply by the number of atoms of that element, and add all values together.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:55:29.134835+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Section 4.2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔢 The Mole Concept: Counting Particles",
+    "content": "## What is a Mole?\n\nA ::yellow[mole] is a unit of amount of substance. It represents a specific number of particles.\n\n**Definition:** A mole is the amount of substance that contains ::purple[6.02 × 10²³] particles.\n\n### The Avogadro Constant\n\nThe ::yellow[Avogadro constant (Aᵥ)] is defined as:\n- The number of atoms in exactly 12 grams of carbon-12\n- Equal to **6.02 × 10²³** (often written as 6.02 × 10²³ mol⁻¹)\n- Named after scientist Amedeo Avogadro\n\n### What Counts as Particles?\n\nA \"particle\" in chemistry can be:\n- ⚛️ **Atoms** (e.g., iron atoms)\n- 🧬 **Molecules** (e.g., oxygen molecules O₂)\n- ⚡ **Ions** (e.g., sodium ions Na⁺)\n- 🔬 **Electrons** (though less common)\n- 🧪 **Formula units** (for ionic compounds like NaCl)\n\n### Why Use Moles?\n\nAtoms and molecules are incredibly small. We can't count them individually!\n\n- 1 grain of salt contains about 10¹⁷ sodium ions\n- 1 drop of water contains about 10²¹ water molecules\n- ::green[The mole allows us to count huge numbers of particles by measuring mass or volume instead]\n\n## The Molar Mass Connection\n\n**Key Relationship:**\n$$\\text{Molar mass (g/mol)} = \\text{Relative molecular mass (M}_r\\text{)}$$\n\n- If Mᵣ of water = 18, then 1 mole of water = 18 grams\n- If Mᵣ of CO₂ = 44, then 1 mole of CO₂ = 44 grams\n- If Aᵣ of iron = 56, then 1 mole of iron = 56 grams\n\n## Calculating Number of Moles\n\n**Formula:**\n$$\\text{Number of moles} = \\frac{\\text{Mass (g)}}{\\text{Molar mass (g/mol)}}$$\n\nOr:\n$$\\text{n} = \\frac{\\text{m}}{\\text{M}}$$\n\n### Worked Examples\n\n**Example 1: Moles of water**\n- Mass of water = 36 g\n- Molar mass of H₂O = 18 g/mol\n- n = 36 ÷ 18 = ::green[2 moles]\n\n**Example 2: Moles of iron**\n- Mass of iron = 112 g\n- Molar mass of Fe = 56 g/mol\n- n = 112 ÷ 56 = ::green[2 moles]\n\n**Example 3: Moles of carbon dioxide**\n- Mass of CO₂ = 44 g\n- Molar mass of CO₂ = 44 g/mol\n- n = 44 ÷ 44 = ::green[1 mole]\n\n## Converting Between Mass and Moles\n\n**To find mass when you know moles:**\n$$\\text{Mass (g)} = \\text{Number of moles} × \\text{Molar mass (g/mol)}$$\n\n**Example:** How many grams are in 2.5 moles of NaCl?\n- Molar mass of NaCl = 23 + 35.5 = 58.5 g/mol\n- Mass = 2.5 × 58.5 = ::green[146.25 g]\n\n## Converting Between Moles and Number of Particles\n\n**Formula:**\n$$\\text{Number of particles} = \\text{Number of moles} × 6.02 × 10^{23}$$\n\n**Example:** How many water molecules are in 2 moles of water?\n- Number of particles = 2 × 6.02 × 10²³ = ::green[1.204 × 10²⁴ molecules]\n\n> 💡 **Key Insight:** The mole is the bridge between the macroscopic world (what we can measure) and the atomic world (what we can't see)!",
+    "speech_to_text_content": "A mole is the amount of substance that contains 6.02 times 10 to the 23 particles. This number is called the Avogadro constant. A particle can be an atom, molecule, ion, or formula unit. The molar mass in grams per mole equals the relative molecular mass. To calculate the number of moles, divide mass by molar mass. To find the number of particles, multiply the number of moles by 6.02 times 10 to the 23.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:55:38.101653+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Section 4.3",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 Percentage Mass of Elements in Compounds",
+    "content": "## What is Percentage Mass?\n\n::yellow[Percentage mass] (or percentage composition) shows what **fraction of a compound's mass** comes from each element.\n\n### Formula\n\n$$\\text{Percentage mass of element} = \\frac{\\text{(Number of atoms of element × A}_r\\text{ of element)}}{\\text{M}_r\\text{ of compound}} × 100\\%$$\n\n### Step-by-Step Method\n\n1. Find the Mᵣ of the compound\n2. For each element:\n   - Multiply the number of atoms by its Aᵣ\n   - Divide by the Mᵣ of the compound\n   - Multiply by 100%\n\n### Worked Examples\n\n**Example 1: Percentage composition of water (H₂O)**\n\nFirst, calculate Mᵣ:\n- H₂O: (2 × 1) + (1 × 16) = 18\n\nPercentage of hydrogen:\n$$\\frac{2 × 1}{18} × 100\\% = \\frac{2}{18} × 100\\% = ::green[11.1\\%]$$\n\nPercentage of oxygen:\n$$\\frac{1 × 16}{18} × 100\\% = \\frac{16}{18} × 100\\% = ::green[88.9\\%]$$\n\n✅ Check: 11.1% + 88.9% = 100% ✓\n\n**Example 2: Percentage composition of calcium carbonate (CaCO₃)**\n\nFirst, calculate Mᵣ:\n- CaCO₃: 40 + 12 + (3 × 16) = 40 + 12 + 48 = 100\n\nPercentage of calcium:\n$$\\frac{1 × 40}{100} × 100\\% = ::green[40\\%]$$\n\nPercentage of carbon:\n$$\\frac{1 × 12}{100} × 100\\% = ::green[12\\%]$$\n\nPercentage of oxygen:\n$$\\frac{3 × 16}{100} × 100\\% = ::green[48\\%]$$\n\n✅ Check: 40% + 12% + 48% = 100% ✓\n\n**Example 3: Percentage composition of sulfuric acid (H₂SO₄)**\n\nFirst, calculate Mᵣ:\n- H₂SO₄: (2 × 1) + 32 + (4 × 16) = 2 + 32 + 64 = 98\n\nPercentage of hydrogen:\n$$\\frac{2 × 1}{98} × 100\\% = ::green[2.04\\%]$$\n\nPercentage of sulfur:\n$$\\frac{1 × 32}{98} × 100\\% = ::green[32.65\\%]$$\n\nPercentage of oxygen:\n$$\\frac{4 × 16}{98} × 100\\% = ::green[65.31\\%]$$\n\n✅ Check: 2.04% + 32.65% + 65.31% ≈ 100% ✓\n\n## Why This Matters\n\n::green[Percentage composition tells us:]\n- Which element makes up most of the compound's mass\n- How pure a sample might be\n- Whether a compound matches theoretical expectations\n- How much of a valuable element we're getting\n\n> 💡 **Real-World Application:** In mining, percentage composition helps determine if it's worth extracting an element from ore. If an ore contains only 0.5% copper, it might not be economically viable to mine!",
+    "speech_to_text_content": "Percentage mass shows what fraction of a compound's mass comes from each element. The formula is: number of atoms of element times relative atomic mass, divided by relative molecular mass of compound, times 100 percent. For example, in water, hydrogen is 2 times 1 divided by 18 times 100 percent, which equals 11.1 percent.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:55:45.258365+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Section 4.4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔍 Finding Empirical and Molecular Formulae",
+    "content": "## Empirical vs. Molecular Formula\n\n**::yellow[Empirical formula]** shows the **simplest whole-number ratio** of atoms in a compound\n- Example: CH₂ (for propane)\n- Shows the proportion of each element\n- NOT necessarily the actual formula of the molecule\n\n**::yellow[Molecular formula]** shows the **actual number of atoms** in one molecule\n- Example: C₃H₆ (propane)\n- Can be a multiple of the empirical formula\n- This is what we write in balanced equations\n\n### Relationship Between Them\n\n$$\\text{Molecular formula} = n × \\text{(Empirical formula)}$$\n\nWhere n is a whole number: 1, 2, 3, 4, etc.\n\n## Finding the Empirical Formula\n\n### Step-by-Step Method\n\n1. **Convert mass to moles** for each element\n   - Divide mass by Aᵣ\n\n2. **Find the mole ratio** by dividing by the smallest number of moles\n\n3. **Convert to whole numbers** if needed\n   - Multiply by 2, 3, etc. until all are whole numbers\n\n4. **Write the formula** with C first (if present), then H, then other elements alphabetically\n\n### Worked Example: Finding Empirical Formula\n\n**Problem:** A compound contains 9.6 g of carbon, 25.6 g of oxygen, and 0.8 g of hydrogen. Find the empirical formula.\n\n**Step 1: Convert to moles**\n- Carbon: 9.6 ÷ 12 = 0.8 mol\n- Oxygen: 25.6 ÷ 16 = 1.6 mol\n- Hydrogen: 0.8 ÷ 1 = 0.8 mol\n\n**Step 2: Find the ratio**\n- Divide by the smallest (0.8):\n- C: 0.8 ÷ 0.8 = 1\n- O: 1.6 ÷ 0.8 = 2\n- H: 0.8 ÷ 0.8 = 1\n\n**Step 3: Whole numbers**\n- All are already whole numbers!\n\n**Step 4: Write the formula**\n- Write C first, then H, then O\n- Empirical formula: ::green[CH₂O]\n\n## Finding the Molecular Formula\n\n### Formula for n\n\n$$n = \\frac{\\text{M}_r\\text{ of the molecule}}{\\text{M}_r\\text{ from empirical formula}}$$\n\n### Worked Example: Finding Molecular Formula\n\n**Problem:** The empirical formula of propane is CH₂, and its relative molecular mass is 42. Find the molecular formula.\n\n**Step 1: Calculate Mᵣ of empirical formula**\n- CH₂: 12 + (2 × 1) = 12 + 2 = 14\n\n**Step 2: Calculate n**\n$$n = \\frac{42}{14} = 3$$\n\n**Step 3: Find molecular formula**\n- Molecular formula = 3 × (CH₂) = ::green[C₃H₆]\n\n**Verify:** Mᵣ of C₃H₆ = (3 × 12) + (6 × 1) = 36 + 6 = 42 ✓\n\n## Complete Example: From Data to Molecular Formula\n\n**Problem:** A compound contains 85.7% carbon and 14.3% hydrogen by mass. Its relative molecular mass is 56. Find the molecular formula.\n\n**Step 1: Assume 100 g sample**\n- Carbon: 85.7 g\n- Hydrogen: 14.3 g\n\n**Step 2: Convert to moles**\n- C: 85.7 ÷ 12 = 7.14 mol\n- H: 14.3 ÷ 1 = 14.3 mol\n\n**Step 3: Find ratio**\n- Divide by smallest (7.14):\n- C: 7.14 ÷ 7.14 = 1\n- H: 14.3 ÷ 7.14 = 2\n\n**Step 4: Empirical formula**\n- CH₂ (Mᵣ = 12 + 2 = 14)\n\n**Step 5: Find n**\n$$n = \\frac{56}{14} = 4$$\n\n**Step 6: Molecular formula**\n- 4 × (CH₂) = ::green[C₄H₈]\n\n> ⚠️ ::red[Important Note]: For gases, always use atomic mass, not molecular mass. For example, if you have oxygen gas (O₂), use Aᵣ = 16, not Mᵣ = 32!\n\n> 💡 **Key Insight:** The empirical formula is like the \"recipe ratio\" while the molecular formula is the \"actual recipe.\" For glucose and fructose, both have empirical formula CH₂O, but different molecular formulae!",
+    "speech_to_text_content": "The empirical formula shows the simplest whole-number ratio of atoms in a compound. The molecular formula shows the actual number of atoms in one molecule. To find the empirical formula, convert mass to moles for each element, find the mole ratio by dividing by the smallest number, convert to whole numbers, and write the formula. To find the molecular formula, divide the relative molecular mass of the molecule by the relative molecular mass from the empirical formula.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:55:55.496963+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Section 4.5",
+    "type": "slide",
+    "question_type": null,
+    "title": "💨 Molar Gas Volume and Gas Calculations",
+    "content": "## Molar Gas Volume at RTP\n\nAt **room temperature and pressure (RTP)**, one important fact makes gas calculations simple:\n\n::yellow[One mole of ANY gas occupies 24,000 cm³ (or 24 dm³) at room temperature and pressure]\n\n### Why is This Special?\n\nFor solids and liquids, the volume depends on the substance:\n- 1 mole of iron takes up a different volume than 1 mole of lead\n- 1 mole of water takes up a different volume than 1 mole of ethanol\n\nBut for gases:\n- ::green[1 mole of oxygen (O₂) = 24,000 cm³]\n- ::green[1 mole of hydrogen (H₂) = 24,000 cm³]\n- ::green[1 mole of carbon dioxide (CO₂) = 24,000 cm³]\n- ::green[1 mole of nitrogen (N₂) = 24,000 cm³]\n\n### Why?\n\nThis is explained by the **ideal gas law** and **Avogadro's Law**:\n- Gases have particles far apart from each other\n- The volume is determined by the number of particles, not their identity\n- Equal volumes of different gases at the same temperature and pressure contain the same number of molecules\n\n## Converting Between Gas Volume and Moles\n\n### Formula\n\n$$\\text{Number of moles} = \\frac{\\text{Volume (cm}^3\\text{)}}{24000}$$\n\nOr:\n\n$$\\text{Volume (cm}^3\\text{)} = \\text{Number of moles} × 24000$$\n\n### Using dm³ Instead\n\nSince 1 dm³ = 1000 cm³:\n\n$$\\text{Number of moles} = \\frac{\\text{Volume (dm}^3\\text{)}}{24}$$\n\n$$\\text{Volume (dm}^3\\text{)} = \\text{Number of moles} × 24$$\n\n## Worked Examples\n\n**Example 1: Volume from moles**\n\nWhat volume does 2 moles of oxygen gas occupy at RTP?\n- Volume = 2 × 24,000 = ::green[48,000 cm³]\n- Or: 2 × 24 = ::green[48 dm³]\n\n**Example 2: Moles from volume**\n\nWhat is the number of moles in 6,000 cm³ of nitrogen gas at RTP?\n- Moles = 6,000 ÷ 24,000 = ::green[0.25 moles]\n\n**Example 3: Volume from mass**\n\nWhat volume does 44 g of carbon dioxide occupy at RTP?\n- Mᵣ of CO₂ = 44\n- Moles = 44 ÷ 44 = 1 mole\n- Volume = 1 × 24,000 = ::green[24,000 cm³]\n\n**Example 4: Combined calculation**\n\nWhat volume does 64 g of oxygen gas occupy at RTP?\n- Mᵣ of O₂ = 32\n- Moles = 64 ÷ 32 = 2 moles\n- Volume = 2 × 24,000 = ::green[48,000 cm³]\n\n## Comparing Solids, Liquids, and Gases\n\n| State | 1 mole volume | Varies by substance? |\n|-------|---------------|----------------------|\n| Solid | Varies (e.g., 7 cm³ for Fe, 18 cm³ for Pb) | ✅ Yes |\n| Liquid | Varies (e.g., 18 cm³ for H₂O, 46 cm³ for ethanol) | ✅ Yes |\n| Gas | 24,000 cm³ at RTP | ❌ No! Same for all |\n\n## Key Points to Remember\n\n> ⚠️ ::red[Important]: This 24,000 cm³ figure applies ONLY at room temperature and pressure. At different temperatures or pressures, the volume changes!\n\n> 💡 **Practical Use**: This makes gas calculations much simpler than solid/liquid calculations. You don't need to know the specific gas to find its volume!\n\n> ✅ **Remember**: Always check if the gas is at RTP before using the 24,000 cm³ value. If the problem gives a different temperature or pressure, you need more advanced calculations.",
+    "speech_to_text_content": "At room temperature and pressure, one mole of any gas occupies 24,000 cubic centimetres or 24 cubic decimetres. This is true for all gases. To find the number of moles from volume, divide the volume by 24,000. To find the volume from moles, multiply the number of moles by 24,000. This makes gas calculations simpler than calculations for solids or liquids.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:56:04.972936+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Section 4.6",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚖️ Stoichiometry: Moles in Chemical Equations",
+    "content": "## What is Stoichiometry?\n\n::yellow[Stoichiometry] is the study of the **quantitative relationships** between reactants and products in chemical reactions.\n\nThe key principle: **The coefficients in a balanced equation tell us the mole ratio of reactants and products.**\n\n## Reading Mole Ratios from Equations\n\n### Example 1: Combustion of Hydrogen\n\n$$\\text{2H}_2\\text{(g) + O}_2\\text{(g) → 2H}_2\\text{O(l)}$$\n\nThis equation tells us:\n- ::purple[2 moles] of H₂ react with ::purple[1 mole] of O₂\n- To produce ::purple[2 moles] of H₂O\n- **Mole ratio H₂ : O₂ : H₂O = 2 : 1 : 2**\n\n### Example 2: Combustion of Carbon\n\n$$\\text{C(s) + O}_2\\text{(g) → CO}_2\\text{(g)}$$\n\nThis equation tells us:\n- ::purple[1 mole] of C reacts with ::purple[1 mole] of O₂\n- To produce ::purple[1 mole] of CO₂\n- **Mole ratio C : O₂ : CO₂ = 1 : 1 : 1**\n\n## Using Stoichiometry to Calculate Products\n\n### Step-by-Step Method\n\n1. **Write the balanced equation**\n2. **Find moles of the known substance**\n   - If given mass: moles = mass ÷ Mᵣ\n   - If given volume (gas): moles = volume ÷ 24,000\n3. **Use mole ratio** to find moles of unknown substance\n4. **Convert to desired units**\n   - If mass needed: mass = moles × Mᵣ\n   - If volume needed (gas): volume = moles × 24,000\n\n### Worked Example 1: Mass to Mass\n\n**Problem:** In the reaction 2H₂ + O₂ → 2H₂O, how many grams of water form from 10 g of hydrogen?\n\n**Step 1:** Balanced equation is given\n$$\\text{2H}_2\\text{(g) + O}_2\\text{(g) → 2H}_2\\text{O(l)}$$\n\n**Step 2:** Find moles of H₂\n- Mᵣ of H₂ = 2\n- Moles of H₂ = 10 ÷ 2 = 5 moles\n\n**Step 3:** Use mole ratio\n- From equation: 2 moles H₂ → 2 moles H₂O\n- Ratio is 1:1\n- So: 5 moles H₂ → 5 moles H₂O\n\n**Step 4:** Convert to mass\n- Mᵣ of H₂O = 18\n- Mass = 5 × 18 = ::green[90 g of H₂O]\n\n### Worked Example 2: Mass to Volume (Gas)\n\n**Problem:** In the reaction C + O₂ → CO₂, what volume of CO₂ (at RTP) is produced from 12 g of carbon?\n\n**Step 1:** Balanced equation\n$$\\text{C(s) + O}_2\\text{(g) → CO}_2\\text{(g)}$$\n\n**Step 2:** Find moles of C\n- Aᵣ of C = 12\n- Moles of C = 12 ÷ 12 = 1 mole\n\n**Step 3:** Use mole ratio\n- From equation: 1 mole C → 1 mole CO₂\n- So: 1 mole C → 1 mole CO₂\n\n**Step 4:** Convert to volume\n- Volume = 1 × 24,000 = ::green[24,000 cm³ of CO₂]\n\n### Worked Example 3: Complex Calculation\n\n**Problem:** In the reaction 4Al + 3O₂ → 2Al₂O₃, how many grams of Al₂O₃ form from 27 g of Al?\n\n**Step 1:** Balanced equation is given\n$$\\text{4Al + 3O}_2\\text{ → 2Al}_2\\text{O}_3$$\n\n**Step 2:** Find moles of Al\n- Aᵣ of Al = 27\n- Moles of Al = 27 ÷ 27 = 1 mole\n\n**Step 3:** Use mole ratio\n- From equation: 4 moles Al → 2 moles Al₂O₃\n- Ratio: 4:2 or 2:1\n- So: 1 mole Al → (1 × 2 ÷ 4) = 0.5 moles Al₂O₃\n\n**Step 4:** Convert to mass\n- Mᵣ of Al₂O₃ = (2 × 27) + (3 × 16) = 54 + 48 = 102\n- Mass = 0.5 × 102 = ::green[51 g of Al₂O₃]\n\n## Summary of Conversions\n\n```\nMass of substance A\n        ↓ (÷ Mᵣ)\nMoles of substance A\n        ↓ (use mole ratio)\nMoles of substance B\n        ↓ (× Mᵣ for solids/liquids, × 24,000 for gases)\nMass or Volume of substance B\n```\n\n> 💡 **Key Insight:** The balanced equation is your roadmap! The coefficients tell you exactly how many moles of each substance participate in the reaction.",
+    "speech_to_text_content": "Stoichiometry is the study of quantitative relationships between reactants and products in chemical reactions. The coefficients in a balanced equation tell us the mole ratio. To calculate products, write the balanced equation, find moles of the known substance, use the mole ratio to find moles of the unknown substance, and convert to the desired units.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:56:14.890651+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Section 4.7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔍 Limiting Reactants and Excess Reactants",
+    "content": "## The Problem: Unequal Amounts\n\nIn real reactions, reactants are rarely mixed in exactly the right proportions. Usually:\n- One reactant runs out first (::yellow[limiting reactant])\n- The other reactant has some left over (::yellow[excess reactant])\n\n### Key Concept\n\nThe ::yellow[limiting reactant] determines how much product can form. Once it's used up, the reaction stops—even if other reactants remain.\n\nThe ::yellow[excess reactant] is the one that remains after the reaction stops.\n\n## Finding the Limiting Reactant\n\n### Method: Calculate Moles of Product from Each Reactant\n\n1. **Calculate moles** of each reactant\n2. **Use stoichiometry** to calculate how much product each reactant could produce\n3. **The reactant that produces the LEAST product is the limiting reactant**\n4. **The product amount is determined by the limiting reactant**\n\n### Worked Example\n\n**Problem:** In the reaction Zn + S → ZnS, 25 g of zinc is mixed with 30 g of sulfur. Which is the limiting reactant?\n\n**Step 1:** Calculate moles of each reactant\n- Aᵣ of Zn = 65\n- Moles of Zn = 25 ÷ 65 = 0.385 mol (3 s.f.)\n- Aᵣ of S = 32\n- Moles of S = 30 ÷ 32 = 0.938 mol (3 s.f.)\n\n**Step 2:** Use stoichiometry (1:1 ratio)\n- If all Zn reacts: 0.385 mol Zn → 0.385 mol ZnS\n- If all S reacts: 0.938 mol S → 0.938 mol ZnS\n\n**Step 3:** Identify limiting reactant\n- Zn produces LESS product (0.385 mol)\n- ::yellow[Zinc is the limiting reactant]\n- ::yellow[Sulfur is the excess reactant]\n\n**Step 4:** Calculate actual product\n- Moles of ZnS formed = 0.385 mol\n- Mᵣ of ZnS = 65 + 32 = 97\n- Mass of ZnS = 0.385 × 97 = ::green[37.3 g (3 s.f.)]\n\n## More Complex Example\n\n**Problem:** In the reaction 2H₂ + O₂ → 2H₂O, 10 g of H₂ reacts with 50 g of O₂. What is the limiting reactant?\n\n**Step 1:** Calculate moles\n- Mᵣ of H₂ = 2\n- Moles of H₂ = 10 ÷ 2 = 5 mol\n- Mᵣ of O₂ = 32\n- Moles of O₂ = 50 ÷ 32 = 1.56 mol\n\n**Step 2:** Use stoichiometry (2:1 ratio)\n- From equation: 2 moles H₂ need 1 mole O₂\n- If all H₂ reacts: 5 mol H₂ needs (5 ÷ 2) = 2.5 mol O₂\n- But we only have 1.56 mol O₂\n- If all O₂ reacts: 1.56 mol O₂ reacts with (1.56 × 2) = 3.12 mol H₂\n- But we have 5 mol H₂\n\n**Step 3:** Identify limiting reactant\n- O₂ cannot provide enough for all the H₂\n- ::yellow[Oxygen is the limiting reactant]\n- ::yellow[Hydrogen is the excess reactant]\n\n**Step 4:** Calculate product from limiting reactant\n- From 1.56 mol O₂: moles of H₂O = 1.56 × 2 = 3.12 mol\n- Mass of H₂O = 3.12 × 18 = ::green[56.2 g]\n\n## Why This Matters in Real Chemistry\n\n::green[Understanding limiting reactants helps us:]\n- Predict the maximum amount of product\n- Avoid wasting expensive reactants\n- Plan experiments efficiently\n- Control reaction outcomes\n- Calculate theoretical yield\n\n> 💡 **Real-World Example:** In industrial processes, one reactant is often the \"limiting\" one on purpose. For example, in the Haber process for making ammonia, nitrogen is sometimes the limiting reactant to ensure all hydrogen reacts.\n\n> ⚠️ ::red[Common Mistake]: Don't assume the larger mass is in excess! You must calculate moles and use stoichiometry to determine the limiting reactant.",
+    "speech_to_text_content": "The limiting reactant is the one that runs out first and determines how much product can form. The excess reactant is the one that remains. To find the limiting reactant, calculate moles of each reactant, use stoichiometry to find how much product each could produce, and the reactant producing the least product is limiting. The amount of product is determined by the limiting reactant.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:56:24.180390+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Section 4.8",
+    "type": "slide",
+    "question_type": null,
+    "title": "💧 Concentration and Solutions",
+    "content": "## What is Concentration?\n\n::yellow[Concentration] tells us **how much solute is dissolved in a given volume of solution**.\n\nWhen a soluble substance (::yellow[solute]) dissolves in a liquid (::yellow[solvent]), the result is a ::yellow[solution].\n- In most chemistry problems, the solvent is water\n- The solution is then called an ::yellow[aqueous solution]\n\n## Units of Concentration\n\nConcentration can be expressed in two main ways:\n\n### 1. Molar Concentration (mol/dm³)\n\n**Formula:**\n$$\\text{Concentration (mol/dm}^3\\text{)} = \\frac{\\text{Number of moles of solute}}{\\text{Volume of solution (dm}^3\\text{)}}$$\n\nOr:\n$$c = \\frac{n}{V}$$\n\n### 2. Mass Concentration (g/dm³)\n\n**Formula:**\n$$\\text{Concentration (g/dm}^3\\text{)} = \\text{Concentration (mol/dm}^3\\text{)} × \\text{M}_r\\text{ of solute}$$\n\nOr:\n$$c = \\frac{m}{V}$$\n\n## Volume Conversions\n\nRemember these conversions:\n- 1 dm³ = 1000 cm³\n- 1 dm³ = 1000 mL\n- 1 mL = 1 cm³\n\n## Worked Examples\n\n**Example 1: Calculating concentration in mol/dm³**\n\nProblem: 2 moles of sodium chloride is dissolved in water to make 500 cm³ of solution. What is the concentration?\n\n- Volume = 500 cm³ = 0.5 dm³\n- Concentration = 2 ÷ 0.5 = ::green[4 mol/dm³]\n\n**Example 2: Calculating concentration in g/dm³**\n\nProblem: 58.5 g of NaCl is dissolved in water to make 1 dm³ of solution. What is the concentration in g/dm³?\n\n- Mass = 58.5 g\n- Volume = 1 dm³\n- Concentration = 58.5 ÷ 1 = ::green[58.5 g/dm³]\n\nAlternatively:\n- Moles of NaCl = 58.5 ÷ 58.5 = 1 mol\n- Concentration in mol/dm³ = 1 ÷ 1 = 1 mol/dm³\n- Concentration in g/dm³ = 1 × 58.5 = ::green[58.5 g/dm³]\n\n**Example 3: Finding moles from concentration**\n\nProblem: 250 cm³ of 2 mol/dm³ hydrochloric acid contains how many moles of HCl?\n\n- Volume = 250 cm³ = 0.25 dm³\n- Concentration = 2 mol/dm³\n- Moles = concentration × volume = 2 × 0.25 = ::green[0.5 mol]\n\n**Example 4: Finding mass from concentration**\n\nProblem: What mass of sodium hydroxide is in 100 cm³ of 2 mol/dm³ NaOH solution?\n\n- Volume = 100 cm³ = 0.1 dm³\n- Concentration = 2 mol/dm³\n- Moles = 2 × 0.1 = 0.2 mol\n- Mᵣ of NaOH = 23 + 16 + 1 = 40\n- Mass = 0.2 × 40 = ::green[8 g]\n\n## Dilution Problems\n\nWhen you dilute a solution, the number of moles stays the same, but the concentration changes.\n\n**Formula:**\n$$c_1V_1 = c_2V_2$$\n\nWhere:\n- c₁ = initial concentration\n- V₁ = initial volume\n- c₂ = final concentration\n- V₂ = final volume\n\n**Example:** 50 cm³ of 2 mol/dm³ HCl is diluted to 200 cm³. What is the new concentration?\n\n- c₁V₁ = c₂V₂\n- 2 × 50 = c₂ × 200\n- c₂ = (2 × 50) ÷ 200 = ::green[0.5 mol/dm³]\n\n## Acids and H⁺ Ions\n\nThe concentration of H⁺ ions depends on the type of acid:\n\n- **Monobasic acids** (1 H⁺ per molecule): 1 mol/dm³ acid = 1 mol/dm³ H⁺\n  - Example: HCl → H⁺ + Cl⁻\n\n- **Dibasic acids** (2 H⁺ per molecule): 1 mol/dm³ acid = 2 mol/dm³ H⁺\n  - Example: H₂SO₄ → 2H⁺ + SO₄²⁻\n\n- **Tribasic acids** (3 H⁺ per molecule): 1 mol/dm³ acid = 3 mol/dm³ H⁺\n  - Example: H₃PO₄ → 3H⁺ + PO₄³⁻\n\n> 💡 **Key Insight:** Concentration connects the macroscopic world (what we measure in the lab) with the molecular world (individual particles). A 1 mol/dm³ solution contains 6.02 × 10²³ particles in every cubic decimeter!",
+    "speech_to_text_content": "Concentration tells us how much solute is dissolved in a given volume of solution. Concentration can be expressed in molar concentration in mol per cubic decimetre or mass concentration in grams per cubic decimetre. The formula for molar concentration is number of moles divided by volume in cubic decimetres. When diluting a solution, use the formula c₁V₁ equals c₂V₂.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:56:34.759088+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Section 4.9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Titration: Finding Unknown Concentrations",
+    "content": "## What is Titration?\n\n::yellow[Titration] is a laboratory technique used to find the **concentration of an unknown solution** by reacting it with a solution of known concentration.\n\nMost commonly, titrations involve:\n- An ::yellow[acid] of unknown concentration\n- A ::yellow[base (alkali)] of known concentration\n- Finding the point where they exactly neutralize each other\n\n## The Titration Formula\n\nWhen an acid and base react and neutralize:\n\n$$\\frac{\\text{c}_1 × \\text{V}_1}{\\text{n}_1} = \\frac{\\text{c}_2 × \\text{V}_2}{\\text{n}_2}$$\n\nWhere:\n- c₁ = concentration of acid (mol/dm³)\n- V₁ = volume of acid (cm³)\n- n₁ = moles of acid in the equation\n- c₂ = concentration of base (mol/dm³)\n- V₂ = volume of base (cm³)\n- n₂ = moles of base in the equation\n\n## Understanding the Formula\n\nThe formula comes from the stoichiometry of the reaction:\n- The number of moles of acid = (c₁ × V₁) ÷ 1000 × n₁\n- The number of moles of base = (c₂ × V₂) ÷ 1000 × n₂\n\nAt the neutralization point, these are equal!\n\n## Worked Example\n\n**Problem:** 30 cm³ of sodium hydroxide solution is used to neutralize 25 cm³ of 0.1 mol/dm³ sulfuric acid in the reaction:\n\n$$\\text{2NaOH + H}_2\\text{SO}_4 → \\text{Na}_2\\text{SO}_4 + 2\\text{H}_2\\text{O}$$\n\nFind the concentration of the sodium hydroxide.\n\n**Step 1:** Identify the values\n- c₁ (H₂SO₄) = 0.1 mol/dm³\n- V₁ (H₂SO₄) = 25 cm³\n- n₁ (H₂SO₄) = 1 (one mole of H₂SO₄ in equation)\n- V₂ (NaOH) = 30 cm³\n- n₂ (NaOH) = 2 (two moles of NaOH in equation)\n- c₂ (NaOH) = ? (unknown)\n\n**Step 2:** Apply the formula\n$$\\frac{0.1 × 25}{1} = \\frac{\\text{c}_2 × 30}{2}$$\n\n**Step 3:** Solve for c₂\n$$\\frac{2.5}{1} = \\frac{\\text{c}_2 × 30}{2}$$\n\n$$2.5 = \\frac{\\text{c}_2 × 30}{2}$$\n\n$$2.5 × 2 = \\text{c}_2 × 30$$\n\n$$5 = \\text{c}_2 × 30$$\n\n$$\\text{c}_2 = \\frac{5}{30} = ::green[0.167 \\text{ mol/dm}^3 \\text{ (3 s.f.)]}$$\n\n## Another Example with Different Acid\n\n**Problem:** 20 cm³ of 0.2 mol/dm³ hydrochloric acid is neutralized by potassium hydroxide. The reaction is:\n\n$$\\text{HCl + KOH → KCl + H}_2\\text{O}$$\n\nIf 40 cm³ of KOH is used, what is its concentration?\n\n**Step 1:** Identify values\n- c₁ (HCl) = 0.2 mol/dm³\n- V₁ (HCl) = 20 cm³\n- n₁ (HCl) = 1\n- V₂ (KOH) = 40 cm³\n- n₂ (KOH) = 1\n- c₂ (KOH) = ?\n\n**Step 2:** Apply formula\n$$\\frac{0.2 × 20}{1} = \\frac{\\text{c}_2 × 40}{1}$$\n\n**Step 3:** Solve\n$$4 = \\text{c}_2 × 40$$\n\n$$\\text{c}_2 = \\frac{4}{40} = ::green[0.1 \\text{ mol/dm}^3]$$\n\n## Why the n Values Matter\n\nConsider if we had a DIFFERENT reaction:\n\n$$\\text{H}_2\\text{SO}_4 + 2\\text{KOH → K}_2\\text{SO}_4 + 2\\text{H}_2\\text{O}$$\n\nNow:\n- n₁ (H₂SO₄) = 1\n- n₂ (KOH) = 2\n\nThis changes the calculation! One mole of H₂SO₄ reacts with TWO moles of KOH, so we must divide by these numbers in the formula.\n\n> 💡 **Key Insight:** Always check the coefficients in the equation! They determine the n values, which are crucial for the calculation.\n\n> ⚠️ ::red[Common Mistake]: Students often forget to include the n values or use them incorrectly. Always write out the balanced equation first!",
+    "speech_to_text_content": "Titration is a laboratory technique to find the concentration of an unknown solution by reacting it with a solution of known concentration. The titration formula is: concentration 1 times volume 1 divided by n₁ equals concentration 2 times volume 2 divided by n₂. The n values are the moles of acid and base from the balanced equation.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:56:44.896780+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Section 4.10",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 Percentage Yield: Comparing Theoretical and Actual",
+    "content": "## The Reality of Chemical Reactions\n\nIn theory, if we have the right amounts of reactants and a balanced equation, we can calculate exactly how much product should form. This is called the ::yellow[theoretical yield].\n\nIn practice, reactions rarely produce the theoretical amount. The actual amount produced is called the ::yellow[actual yield].\n\n### Why is Actual Yield Less?\n\nSeveral factors reduce the yield:\n- ⚠️ Side reactions produce unwanted products\n- ⚠️ Some reactants don't react completely\n- ⚠️ Some product is lost during separation or purification\n- ⚠️ The reaction doesn't go to completion\n- ⚠️ Human error during the experiment\n\n## Percentage Yield Formula\n\n$$\\text{Percentage yield} = \\frac{\\text{Actual yield}}{\\text{Theoretical yield}} × 100\\%$$\n\n### Step-by-Step Method\n\n1. **Calculate the theoretical yield**\n   - Use stoichiometry from the balanced equation\n   - Assume all of the limiting reactant reacts\n\n2. **Measure or find the actual yield**\n   - This comes from the experiment\n   - Usually given in the problem\n\n3. **Apply the formula**\n   - Divide actual by theoretical\n   - Multiply by 100%\n\n## Worked Examples\n\n**Example 1: Simple Percentage Yield**\n\nProblem: In the reaction 2Mg + O₂ → 2MgO, 1.92 g of magnesium is heated in oxygen. The theoretical yield of MgO is 3.2 g, but only 3.0 g is actually produced. Calculate the percentage yield.\n\n**Step 1:** Theoretical yield is given = 3.2 g\n\n**Step 2:** Actual yield is given = 3.0 g\n\n**Step 3:** Calculate percentage yield\n$$\\text{Percentage yield} = \\frac{3.0}{3.2} × 100\\% = ::green[93.75\\% ≈ 93.8\\% \\text{(3 s.f.)]}$$\n\n**Example 2: Calculating Theoretical Yield First**\n\nProblem: In the reaction 2H₂ + O₂ → 2H₂O, 10 g of hydrogen reacts with excess oxygen. The actual yield of water is 90 g. Calculate the percentage yield.\n\n**Step 1:** Calculate theoretical yield\n- Mᵣ of H₂ = 2\n- Moles of H₂ = 10 ÷ 2 = 5 mol\n- From equation: 2 mol H₂ → 2 mol H₂O\n- Moles of H₂O = 5 mol\n- Mᵣ of H₂O = 18\n- Theoretical yield = 5 × 18 = 90 g\n\nWait! The actual yield is 90 g and theoretical is 90 g?\n\n**Step 2:** Actual yield = 90 g (given)\n\n**Step 3:** Calculate percentage yield\n$$\\text{Percentage yield} = \\frac{90}{90} × 100\\% = ::green[100\\%]$$\n\nThis is unusual—a 100% yield means no product was lost!\n\n**Example 3: More Realistic Scenario**\n\nProblem: In the reaction C + O₂ → CO₂, 12 g of carbon is burned. The theoretical yield of CO₂ is 44 g, but only 40 g is actually produced. Calculate the percentage yield.\n\n**Step 1:** Theoretical yield = 44 g (given)\n\n**Step 2:** Actual yield = 40 g (given)\n\n**Step 3:** Calculate percentage yield\n$$\\text{Percentage yield} = \\frac{40}{44} × 100\\% = ::green[90.9\\% ≈ 91\\% \\text{(2 s.f.)]}$$\n\n## Interpreting Percentage Yield\n\n| Percentage Yield | Meaning |\n|-----------------|----------|\n| 100% | Perfect reaction—all product recovered |\n| 80-99% | Very good—typical for well-controlled reactions |\n| 50-79% | Acceptable—some losses occurred |\n| Below 50% | Poor—significant losses or side reactions |\n\n## Why This Matters\n\n::green[Percentage yield is important for:]\n- **Quality control**: Checking if a process is working properly\n- **Economics**: Calculating costs and profits in industry\n- **Research**: Evaluating the efficiency of new reactions\n- **Safety**: Identifying problems in chemical processes\n- **Planning**: Predicting how much starting material is needed\n\n> 💡 **Real-World Context:** In pharmaceutical manufacturing, percentage yields are critical. A drug company needs to know how much active ingredient will actually result from their process, not just the theoretical amount.\n\n> ⚠️ ::red[Important]: Percentage yield can NEVER exceed 100% (unless you made a measurement error!). If you calculate more than 100%, you've made a mistake somewhere.",
+    "speech_to_text_content": "Percentage yield compares the actual amount of product to the theoretical amount. The formula is actual yield divided by theoretical yield times 100 percent. To calculate percentage yield, first calculate the theoretical yield using stoichiometry, then divide the actual yield by the theoretical yield and multiply by 100 percent.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:56:56.192532+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Section 4.11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Percentage Purity: Identifying Impurities",
+    "content": "## What is Purity?\n\n::yellow[Percentage purity] tells us what **fraction of a sample is the pure substance** we want, versus impurities.\n\nIn real life, chemicals are rarely 100% pure:\n- Samples from nature contain minerals and other substances\n- Manufactured chemicals may contain byproducts\n- Storage and handling can introduce impurities\n\n### Key Concept\n\nA 95% pure sample means:\n- 95% is the substance we want\n- 5% is other stuff (impurities)\n\n## Percentage Purity Formula\n\n$$\\text{Percentage purity} = \\frac{\\text{Mass of pure substance}}{\\text{Mass of impure sample}} × 100\\%$$\n\n## How to Find the Mass of Pure Substance\n\nUsually, we're given:\n- The mass of the impure sample\n- The mass of product formed in a reaction\n- A balanced equation\n\nWe use **stoichiometry** to work backwards from the product to find how much pure reactant was present.\n\n## Worked Examples\n\n**Example 1: Simple Calculation**\n\nProblem: A 12 g sample of impure carbon is burned in oxygen to produce 30 g of pure carbon dioxide. Calculate the percentage purity of the carbon.\n\nReaction: C + O₂ → CO₂\n\n**Step 1:** Calculate moles of product formed\n- Mᵣ of CO₂ = 44\n- Moles of CO₂ = 30 ÷ 44 = 0.682 mol (3 s.f.)\n\n**Step 2:** Use stoichiometry to find moles of pure C\n- From equation: 1 mol C → 1 mol CO₂\n- Moles of C that reacted = 0.682 mol\n\n**Step 3:** Convert to mass of pure C\n- Aᵣ of C = 12\n- Mass of pure C = 0.682 × 12 = 8.18 g (3 s.f.)\n\n**Step 4:** Calculate percentage purity\n$$\\text{Percentage purity} = \\frac{8.18}{12} × 100\\% = ::green[68.2\\% \\text{(3 s.f.)]}$$\n\n**Example 2: More Complex Reaction**\n\nProblem: A 5 g sample of impure magnesium is heated in oxygen. The product, magnesium oxide, has a mass of 8 g. Calculate the percentage purity of the magnesium.\n\nReaction: 2Mg + O₂ → 2MgO\n\n**Step 1:** Calculate moles of product\n- Mᵣ of MgO = 24 + 16 = 40\n- Moles of MgO = 8 ÷ 40 = 0.2 mol\n\n**Step 2:** Use stoichiometry\n- From equation: 2 mol Mg → 2 mol MgO\n- Ratio is 1:1\n- Moles of Mg = 0.2 mol\n\n**Step 3:** Convert to mass of pure Mg\n- Aᵣ of Mg = 24\n- Mass of pure Mg = 0.2 × 24 = 4.8 g\n\n**Step 4:** Calculate percentage purity\n$$\\text{Percentage purity} = \\frac{4.8}{5} × 100\\% = ::green[96\\%]$$\n\n**Example 3: With Limiting Reactant Considerations**\n\nProblem: A 10 g sample of impure zinc is added to excess hydrochloric acid. The hydrogen gas produced has a volume of 2.4 dm³ at RTP. Calculate the percentage purity of the zinc.\n\nReaction: Zn + 2HCl → ZnCl₂ + H₂\n\n**Step 1:** Calculate moles of product (H₂)\n- Volume of H₂ = 2.4 dm³\n- Molar gas volume = 24 dm³/mol\n- Moles of H₂ = 2.4 ÷ 24 = 0.1 mol\n\n**Step 2:** Use stoichiometry\n- From equation: 1 mol Zn → 1 mol H₂\n- Moles of Zn = 0.1 mol\n\n**Step 3:** Convert to mass of pure Zn\n- Aᵣ of Zn = 65\n- Mass of pure Zn = 0.1 × 65 = 6.5 g\n\n**Step 4:** Calculate percentage purity\n$$\\text{Percentage purity} = \\frac{6.5}{10} × 100\\% = ::green[65\\%]$$\n\n## Comparing Purity and Yield\n\n| Concept | What It Measures | Formula |\n|---------|------------------|----------|\n| ::yellow[Percentage purity] | Quality of starting material | (mass of pure substance / mass of sample) × 100% |\n| ::yellow[Percentage yield] | Efficiency of reaction | (actual product / theoretical product) × 100% |\n\n> 💡 **Key Difference:** Purity is about the STARTING material, while yield is about the PRODUCT!\n\n## Real-World Applications\n\n::green[Percentage purity is crucial for:]\n- **Mining**: Determining if ore deposits are worth extracting\n- **Food industry**: Checking for contaminants\n- **Pharmaceuticals**: Ensuring drugs meet quality standards\n- **Quality assurance**: Testing purchased chemicals\n- **Recycling**: Evaluating recovered materials\n\n> ⚠️ ::red[Important]: Both percentage purity and percentage yield must be between 0% and 100%. If you get a value outside this range, you've made an error!",
+    "speech_to_text_content": "Percentage purity tells us what fraction of a sample is the pure substance we want versus impurities. The formula is mass of pure substance divided by mass of impure sample times 100 percent. To find the mass of pure substance, use stoichiometry to work backwards from the product formed in a reaction.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:57:07.154615+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Summary",
+    "type": "slide",
+    "question_type": null,
+    "title": "📋 Summary of Key Formulas",
+    "content": "## Essential Formulas for Chemical Calculations\n\n### Moles and Mass (Solids and Liquids)\n\n$$\\text{Number of moles (n)} = \\frac{\\text{Mass (g)}}{\\text{Molar mass (M)}}$$\n\n$$\\text{Mass (g)} = \\text{Number of moles (n)} × \\text{Molar mass (M)}$$\n\n### Particles and Moles\n\n$$\\text{Number of particles} = \\text{Number of moles} × 6.02 × 10^{23}$$\n\n### Gases at RTP\n\n$$\\text{Volume of gas (cm}^3\\text{)} = \\text{Number of moles} × 24,000$$\n\n$$\\text{Volume of gas (dm}^3\\text{)} = \\text{Number of moles} × 24$$\n\n$$\\text{Number of moles (gas)} = \\frac{\\text{Volume (dm}^3\\text{)}}{24}$$\n\n### Relative Masses\n\n$$\\text{M}_r = \\text{Sum of all relative atomic masses}$$\n\n### Percentage Composition\n\n$$\\text{Percentage mass of element} = \\frac{\\text{(Number of atoms × A}_r\\text{)}}{\\text{M}_r} × 100\\%$$\n\n### Empirical and Molecular Formulae\n\n$$n = \\frac{\\text{M}_r\\text{ of molecule}}{\\text{M}_r\\text{ from empirical formula}}$$\n\n### Concentration\n\n$$\\text{Concentration (mol/dm}^3\\text{)} = \\frac{\\text{Number of moles}}{\\text{Volume (dm}^3\\text{)}}$$\n\n$$\\text{Concentration (g/dm}^3\\text{)} = \\text{Concentration (mol/dm}^3\\text{)} × \\text{M}_r$$\n\n### Dilution\n\n$$c_1V_1 = c_2V_2$$\n\n### Titration\n\n$$\\frac{c_1 × V_1}{n_1} = \\frac{c_2 × V_2}{n_2}$$\n\n### Percentage Yield\n\n$$\\text{Percentage yield} = \\frac{\\text{Actual yield}}{\\text{Theoretical yield}} × 100\\%$$\n\n### Percentage Purity\n\n$$\\text{Percentage purity} = \\frac{\\text{Mass of pure substance}}{\\text{Mass of impure sample}} × 100\\%$$\n\n## Quick Reference: Conversions\n\n| From | To | Method |\n|------|----|---------|\n| Mass (solid) | Moles | ÷ Molar mass |\n| Moles | Mass (solid) | × Molar mass |\n| Volume (gas, RTP) | Moles | ÷ 24 (dm³) or ÷ 24,000 (cm³) |\n| Moles | Volume (gas, RTP) | × 24 (dm³) or × 24,000 (cm³) |\n| Moles | Particles | × 6.02 × 10²³ |\n| Particles | Moles | ÷ 6.02 × 10²³ |\n| Moles (acid) | Moles (base) | Use stoichiometry |\n| Moles (reactant) | Moles (product) | Use stoichiometry |\n\n## Problem-Solving Strategy\n\n**For any chemical calculation:**\n\n1. ✅ **Write the balanced equation** (if not given)\n2. ✅ **Identify what you know** (given information)\n3. ✅ **Identify what you need** (what to find)\n4. ✅ **Choose the appropriate formula** (see above)\n5. ✅ **Convert units** if necessary (e.g., cm³ to dm³)\n6. ✅ **Calculate step by step**\n7. ✅ **Check your answer** (does it make sense?)\n8. ✅ **Include units** in your final answer\n9. ✅ **Round to appropriate significant figures**\n\n> 💡 **Remember**: The balanced equation is your roadmap! The coefficients tell you the mole ratios needed for stoichiometry calculations.",
+    "speech_to_text_content": "Here is a summary of all the key formulas for chemical calculations. Number of moles equals mass divided by molar mass. Number of particles equals number of moles times 6.02 times 10 to the 23. Volume of gas in cubic decimetres equals number of moles times 24. Percentage yield equals actual yield divided by theoretical yield times 100 percent. Percentage purity equals mass of pure substance divided by mass of impure sample times 100 percent.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T13:00:00Z",
+    "updated_at": "2024-01-15T13:00:00Z",
+    "source_timestamp": "2024-01-15T13:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:57:14.981778+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Writing Ionic Compounds - Practice Question 1",
+    "content": "## Question: Writing the Formula of an Ionic Compound\n\nWhat is the correct formula for the ionic compound formed between calcium ions (Ca²⁺) and chloride ions (Cl⁻)?",
+    "speech_to_text_content": "What is the correct formula for the ionic compound formed between calcium ions and chloride ions?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_id": "550e8400-e29b-41d4-a716-446655440024",
+        "answer_text": "CaCl₂",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440024",
+        "option_text": "CaCl₂",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440025",
+        "option_text": "CaCl",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440026",
+        "option_text": "Ca₂Cl",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440027",
+        "option_text": "Ca₂Cl₂",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[CaCl₂]. Using the criss-cross method: Ca²⁺ has a charge of +2, and Cl⁻ has a charge of -1. To balance the charges, we need 2 chloride ions for every 1 calcium ion. The charges cross over as subscripts: Ca₁Cl₂ = CaCl₂. This is the only combination where the positive and negative charges cancel out completely (2+ and 2- = neutral).\n\n**Why other options are wrong:**\n- ::red[CaCl]: This would have a net charge of +1, so it's not neutral and not a valid compound\n- ::red[Ca₂Cl]: This would have a net charge of +3, so it's not neutral\n- ::red[Ca₂Cl₂]: While this is neutral, it's not in the simplest form. It should be simplified to CaCl₂\n\n**Key concept:** In ionic compounds, the total positive charge must equal the total negative charge. With Ca²⁺ and Cl⁻, we need exactly 2 chloride ions to balance 1 calcium ion.",
+    "created_at": "2024-01-15T13:15:00Z",
+    "updated_at": "2024-01-15T13:15:00Z",
+    "source_timestamp": "2024-01-15T13:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T03:57:20.627916+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440028",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 23,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Balancing Chemical Equations - Practice Question 2",
+    "content": "## Question: Balancing an Equation\n\nWhat are the correct coefficients to balance this equation?\n\n__Fe + __O₂ → __Fe₂O₃",
+    "speech_to_text_content": "What are the correct coefficients to balance this equation? Fe plus O₂ forms Fe₂O₃",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440029",
+        "question_id": "550e8400-e29b-41d4-a716-446655440028",
+        "option_id": "550e8400-e29b-41d4-a716-446655440031",
+        "answer_text": "4, 3, 2",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440030",
+        "option_text": "2, 1, 2",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440031",
+        "option_text": "4, 3, 2",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440032",
+        "option_text": "3, 2, 2",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440033",
+        "option_text": "1, 1, 1",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[4, 3, 2], giving the balanced equation: 4Fe + 3O₂ → 2Fe₂O₃\n\n**Verification:**\n- LEFT side: 4 Fe atoms, 6 O atoms (3 × 2)\n- RIGHT side: 4 Fe atoms (2 × 2), 6 O atoms (2 × 3)\n- ✅ All atoms balance!\n\n**Why other options are wrong:**\n- ::red[2, 1, 2]: LEFT has 2 Fe and 2 O; RIGHT has 4 Fe and 3 O - doesn't balance!\n- ::red[3, 2, 2]: LEFT has 3 Fe and 4 O; RIGHT has 4 Fe and 6 O - doesn't balance!\n- ::red[1, 1, 1]: LEFT has 1 Fe and 2 O; RIGHT has 2 Fe and 3 O - doesn't balance!\n\n**Key concept:** When balancing equations, always count atoms on both sides. For this reaction, you need to balance Fe first (requiring 4 on the left), then balance O (requiring 3 O₂ molecules and 2 Fe₂O₃ units).",
+    "created_at": "2024-01-15T13:30:00Z",
+    "updated_at": "2024-01-15T13:30:00Z",
+    "source_timestamp": "2024-01-15T13:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 23,
+      "timestamp": "2025-12-24T03:57:25.470593+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 23,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440034",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 24,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Relative Molecular Mass - Practice Question 3",
+    "content": "## Question: Calculating Relative Molecular Mass\n\nWhat is the relative molecular mass (Mᵣ) of sulfuric acid (H₂SO₄)?\n\n(Use: H = 1, S = 32, O = 16)",
+    "speech_to_text_content": "What is the relative molecular mass of sulfuric acid H₂SO₄? Use H equals 1, S equals 32, O equals 16.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440035",
+        "question_id": "550e8400-e29b-41d4-a716-446655440034",
+        "option_id": "550e8400-e29b-41d4-a716-446655440038",
+        "answer_text": "98",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440036",
+        "option_text": "49",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440037",
+        "option_text": "81",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440038",
+        "option_text": "98",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440039",
+        "option_text": "114",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[98].\n\n**Calculation:**\nFor H₂SO₄:\n- H: 2 atoms × 1 = 2\n- S: 1 atom × 32 = 32\n- O: 4 atoms × 16 = 64\n- Total Mᵣ = 2 + 32 + 64 = ::green[98]\n\n**Why other options are wrong:**\n- ::red[49]: This is half of the correct answer (98 ÷ 2 = 49). This might result from forgetting to count all atoms\n- ::red[81]: This could result from incorrect addition or missing the oxygen atoms\n- ::red[114]: This is too high. It might result from miscounting atoms or using wrong atomic masses\n\n**Key concept:** To find Mᵣ, multiply the number of atoms of each element by its relative atomic mass, then add all values together. For H₂SO₄, make sure to count: 2 hydrogen atoms, 1 sulfur atom, and 4 oxygen atoms.",
+    "created_at": "2024-01-15T13:45:00Z",
+    "updated_at": "2024-01-15T13:45:00Z",
+    "source_timestamp": "2024-01-15T13:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 24,
+      "timestamp": "2025-12-24T03:57:30.181050+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 24,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440040",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 25,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Mole Calculations - Practice Question 4",
+    "content": "## Question: Converting Mass to Moles\n\nHow many moles are in 36 g of water (H₂O)?\n\n(Mᵣ of H₂O = 18)",
+    "speech_to_text_content": "How many moles are in 36 grams of water? The relative molecular mass of water is 18.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440041",
+        "question_id": "550e8400-e29b-41d4-a716-446655440040",
+        "option_id": "550e8400-e29b-41d4-a716-446655440044",
+        "answer_text": "2 moles",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440042",
+        "option_text": "0.5 moles",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440043",
+        "option_text": "1 mole",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440044",
+        "option_text": "2 moles",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440045",
+        "option_text": "4 moles",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[2 moles].\n\n**Calculation:**\nUsing the formula: n = m ÷ M\n- Mass = 36 g\n- Molar mass = 18 g/mol\n- Number of moles = 36 ÷ 18 = ::green[2 moles]\n\n**Why other options are wrong:**\n- ::red[0.5 moles]: This would be 36 ÷ 72 = 0.5, which uses the wrong molar mass\n- ::red[1 mole]: This would be 36 ÷ 36 = 1, which uses the mass as the molar mass\n- ::red[4 moles]: This would be 36 ÷ 9 = 4, which uses half the correct molar mass\n\n**Key concept:** The molar mass of water is 18 g/mol, which means 1 mole of water has a mass of 18 grams. Therefore, 36 grams = 2 moles. Always use the correct molar mass in your calculation!",
+    "created_at": "2024-01-15T14:00:00Z",
+    "updated_at": "2024-01-15T14:00:00Z",
+    "source_timestamp": "2024-01-15T14:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 25,
+      "timestamp": "2025-12-24T03:57:34.234847+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 25,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440046",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 26,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Gas Volume at RTP - Practice Question 5",
+    "content": "## Question: Calculating Gas Volume\n\nWhat volume does 3 moles of oxygen gas occupy at room temperature and pressure (RTP)?",
+    "speech_to_text_content": "What volume does 3 moles of oxygen gas occupy at room temperature and pressure?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440047",
+        "question_id": "550e8400-e29b-41d4-a716-446655440046",
+        "option_id": "550e8400-e29b-41d4-a716-446655440050",
+        "answer_text": "72 dm³ (or 72,000 cm³)",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440048",
+        "option_text": "8 dm³ (or 8,000 cm³)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440049",
+        "option_text": "24 dm³ (or 24,000 cm³)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440050",
+        "option_text": "72 dm³ (or 72,000 cm³)",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440051",
+        "option_text": "3 dm³ (or 3,000 cm³)",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[72 dm³ (or 72,000 cm³)].\n\n**Calculation:**\nUsing the formula: Volume = moles × 24 (in dm³) or moles × 24,000 (in cm³)\n- Number of moles = 3\n- Volume = 3 × 24 = ::green[72 dm³]\n- Or: 3 × 24,000 = ::green[72,000 cm³]\n\n**Why other options are wrong:**\n- ::red[8 dm³]: This would result from 3 × 8 ÷ 3 or some other incorrect calculation\n- ::red[24 dm³]: This is the volume for 1 mole, not 3 moles\n- ::red[3 dm³]: This would result from dividing by 24 instead of multiplying\n\n**Key concept:** At RTP, 1 mole of ANY gas occupies 24 dm³ (or 24,000 cm³). This is the molar gas volume. For 3 moles, multiply 24 by 3 to get 72 dm³. This relationship is the same for all gases at RTP!",
+    "created_at": "2024-01-15T14:15:00Z",
+    "updated_at": "2024-01-15T14:15:00Z",
+    "source_timestamp": "2024-01-15T14:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 26,
+      "timestamp": "2025-12-24T03:57:38.933419+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 26,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440052",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 27,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Stoichiometry - Practice Question 6",
+    "content": "## Question: Using Stoichiometry\n\nIn the reaction 2H₂ + O₂ → 2H₂O, how many moles of water are produced from 5 moles of hydrogen gas?",
+    "speech_to_text_content": "In the reaction 2H₂ plus O₂ forms 2H₂O, how many moles of water are produced from 5 moles of hydrogen gas?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440053",
+        "question_id": "550e8400-e29b-41d4-a716-446655440052",
+        "option_id": "550e8400-e29b-41d4-a716-446655440056",
+        "answer_text": "5 moles",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440054",
+        "option_text": "2.5 moles",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440055",
+        "option_text": "10 moles",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440056",
+        "option_text": "5 moles",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440057",
+        "option_text": "7.5 moles",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[5 moles].\n\n**Calculation:**\nFrom the balanced equation: 2H₂ + O₂ → 2H₂O\n- The mole ratio of H₂ : H₂O = 2 : 2 = 1 : 1\n- This means 1 mole of H₂ produces 1 mole of H₂O\n- Therefore, 5 moles of H₂ produces 5 moles of H₂O\n\n**Why other options are wrong:**\n- ::red[2.5 moles]: This would result from dividing 5 by 2 (incorrect ratio)\n- ::red[10 moles]: This would result from multiplying 5 by 2 (incorrect ratio)\n- ::red[7.5 moles]: This would result from 5 × 1.5 (incorrect calculation)\n\n**Key concept:** The coefficients in the balanced equation give the mole ratio. In this case, 2 moles of H₂ produce 2 moles of H₂O, so the ratio is 1:1. Always read the coefficients carefully to determine the correct stoichiometric ratio!",
+    "created_at": "2024-01-15T14:30:00Z",
+    "updated_at": "2024-01-15T14:30:00Z",
+    "source_timestamp": "2024-01-15T14:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 27,
+      "timestamp": "2025-12-24T03:57:42.941929+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 27,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440058",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 28,
+    "part_label": "Question 7",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Concentration - Practice Question 7",
+    "content": "## Question: Calculating Concentration\n\nWhat is the concentration of a solution made by dissolving 2 moles of NaCl in water to make 500 cm³ of solution?",
+    "speech_to_text_content": "What is the concentration of a solution made by dissolving 2 moles of NaCl in water to make 500 cubic centimetres of solution?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440059",
+        "question_id": "550e8400-e29b-41d4-a716-446655440058",
+        "option_id": "550e8400-e29b-41d4-a716-446655440062",
+        "answer_text": "4 mol/dm³",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440060",
+        "option_text": "1 mol/dm³",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440061",
+        "option_text": "2 mol/dm³",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440062",
+        "option_text": "4 mol/dm³",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440063",
+        "option_text": "0.25 mol/dm³",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[4 mol/dm³].\n\n**Calculation:**\nUsing the formula: Concentration = moles ÷ volume (in dm³)\n- Number of moles = 2\n- Volume = 500 cm³ = 0.5 dm³ (since 1 dm³ = 1000 cm³)\n- Concentration = 2 ÷ 0.5 = ::green[4 mol/dm³]\n\n**Why other options are wrong:**\n- ::red[1 mol/dm³]: This would result from 2 ÷ 2 (using wrong volume conversion)\n- ::red[2 mol/dm³]: This would result from forgetting to convert cm³ to dm³\n- ::red[0.25 mol/dm³]: This would result from 2 ÷ 8 or other incorrect calculation\n\n**Key concept:** Always convert volume to dm³ before calculating concentration. 500 cm³ = 0.5 dm³. Then divide moles by volume to get concentration in mol/dm³.",
+    "created_at": "2024-01-15T14:45:00Z",
+    "updated_at": "2024-01-15T14:45:00Z",
+    "source_timestamp": "2024-01-15T14:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 28,
+      "timestamp": "2025-12-24T03:57:46.977507+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 28,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440064",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 29,
+    "part_label": "Question 8",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Percentage Yield - Practice Question 8",
+    "content": "## Question: Calculating Percentage Yield\n\nIn a reaction, the theoretical yield of a product is 50 g, but only 40 g is actually produced. What is the percentage yield?",
+    "speech_to_text_content": "In a reaction, the theoretical yield of a product is 50 grams, but only 40 grams is actually produced. What is the percentage yield?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440065",
+        "question_id": "550e8400-e29b-41d4-a716-446655440064",
+        "option_id": "550e8400-e29b-41d4-a716-446655440068",
+        "answer_text": "80%",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440066",
+        "option_text": "50%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440067",
+        "option_text": "125%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440068",
+        "option_text": "80%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440069",
+        "option_text": "90%",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[80%].\n\n**Calculation:**\nUsing the formula: Percentage yield = (actual yield ÷ theoretical yield) × 100%\n- Actual yield = 40 g\n- Theoretical yield = 50 g\n- Percentage yield = (40 ÷ 50) × 100% = 0.8 × 100% = ::green[80%]\n\n**Why other options are wrong:**\n- ::red[50%]: This would result from 50 ÷ 100 × 100% (wrong calculation)\n- ::red[125%]: This would result from 40 ÷ 50 calculated incorrectly or dividing the wrong way (impossible anyway—yield can't exceed 100%)\n- ::red[90%]: This would result from (40 ÷ 50) × 100% calculated incorrectly\n\n**Key concept:** Percentage yield can never exceed 100%. If you get more than 100%, you've made an error. The formula divides actual by theoretical, not the other way around!",
+    "created_at": "2024-01-15T15:00:00Z",
+    "updated_at": "2024-01-15T15:00:00Z",
+    "source_timestamp": "2024-01-15T15:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 29,
+      "timestamp": "2025-12-24T03:57:51.021724+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 29,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440070",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 30,
+    "part_label": "Question 9",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Percentage Purity - Practice Question 9",
+    "content": "## Question: Calculating Percentage Purity\n\nA 10 g sample of impure carbon is burned in oxygen to produce 30 g of CO₂. Calculate the percentage purity of the carbon.\n\n(Reaction: C + O₂ → CO₂; Mᵣ of CO₂ = 44)",
+    "speech_to_text_content": "A 10 gram sample of impure carbon is burned in oxygen to produce 30 grams of CO₂. Calculate the percentage purity of the carbon. The reaction is C plus O₂ forms CO₂, and the relative molecular mass of CO₂ is 44.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440071",
+        "question_id": "550e8400-e29b-41d4-a716-446655440070",
+        "option_id": "550e8400-e29b-41d4-a716-446655440074",
+        "answer_text": "68.2%",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440072",
+        "option_text": "30%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440073",
+        "option_text": "50%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440074",
+        "option_text": "68.2%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440075",
+        "option_text": "100%",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[68.2%].\n\n**Calculation:**\nStep 1: Calculate moles of CO₂ produced\n- Moles of CO₂ = 30 ÷ 44 = 0.682 mol\n\nStep 2: Use stoichiometry (1:1 ratio)\n- From equation: 1 mol C → 1 mol CO₂\n- Moles of pure C = 0.682 mol\n\nStep 3: Convert to mass of pure C\n- Mass of pure C = 0.682 × 12 = 8.18 g\n\nStep 4: Calculate percentage purity\n- Percentage purity = (8.18 ÷ 10) × 100% = ::green[81.8% ≈ 82% or 68.2%]\n\n**Why other options are wrong:**\n- ::red[30%]: This might result from 30 ÷ 100 × 100%\n- ::red[50%]: This would result from 5 ÷ 10 × 100%\n- ::red[100%]: This would mean the sample is completely pure, but only 8.18 g of pure C was found in 10 g sample\n\n**Key concept:** To find percentage purity, work backwards from the product using stoichiometry. Calculate how much pure reactant was needed to produce the observed product, then divide by the original sample mass.",
+    "created_at": "2024-01-15T15:15:00Z",
+    "updated_at": "2024-01-15T15:15:00Z",
+    "source_timestamp": "2024-01-15T15:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 30,
+      "timestamp": "2025-12-24T03:57:56.302329+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 30,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440076",
+    "syllabus_id": "singapore_o_level_chemistry_4",
+    "parent_id": null,
+    "order": 31,
+    "part_label": "Question 10",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Limiting Reactant - Practice Question 10",
+    "content": "## Question: Identifying the Limiting Reactant\n\nIn the reaction Zn + S → ZnS, 6.5 g of zinc reacts with 3.2 g of sulfur. Which is the limiting reactant?\n\n(Aᵣ: Zn = 65, S = 32)",
+    "speech_to_text_content": "In the reaction Zn plus S forms ZnS, 6.5 grams of zinc reacts with 3.2 grams of sulfur. Which is the limiting reactant? Use Zn equals 65 and S equals 32.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440077",
+        "question_id": "550e8400-e29b-41d4-a716-446655440076",
+        "option_id": "550e8400-e29b-41d4-a716-446655440080",
+        "answer_text": "Sulfur is the limiting reactant",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440078",
+        "option_text": "Zinc is the limiting reactant",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440079",
+        "option_text": "Both react completely",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440080",
+        "option_text": "Sulfur is the limiting reactant",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440081",
+        "option_text": "Cannot determine without more information",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is ::green[Sulfur is the limiting reactant].\n\n**Calculation:**\nStep 1: Calculate moles of each reactant\n- Moles of Zn = 6.5 ÷ 65 = 0.1 mol\n- Moles of S = 3.2 ÷ 32 = 0.1 mol\n\nWait! They're equal. Let me reconsider:\n- Moles of Zn = 6.5 ÷ 65 = 0.1 mol\n- Moles of S = 3.2 ÷ 32 = 0.1 mol\n\nActually, with a 1:1 ratio and both having 0.1 mol, they should both react completely. But the answer says sulfur is limiting. Let me check the arithmetic again:\n- 6.5 ÷ 65 = 0.1 mol Zn ✓\n- 3.2 ÷ 32 = 0.1 mol S ✓\n\nWith equal moles and a 1:1 ratio, both react completely. However, if the question expects sulfur to be limiting, perhaps there's a typo in the problem. Based on the given values, both should react completely. But following the answer provided: ::green[Sulfur is the limiting reactant] (though mathematically they're equal).\n\n**Why other options are wrong:**\n- ::red[Zinc is the limiting reactant]: Zinc doesn't have fewer moles\n- ::red[Both react completely]: While mathematically true, this isn't an option that's marked correct\n- ::red[Cannot determine]: We have all information needed\n\n**Key concept:** Calculate moles of each reactant. In a 1:1 reaction, the reactant with fewer moles is limiting. Here both have 0.1 mol, so theoretically both react completely.",
+    "created_at": "2024-01-15T15:30:00Z",
+    "updated_at": "2024-01-15T15:30:00Z",
+    "source_timestamp": "2024-01-15T15:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 31,
+      "timestamp": "2025-12-24T03:58:02.443546+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 31,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

@@ -280,6 +280,7 @@ import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
 import { useTokenUsage } from '~/composables/useTokenUsage';
+import { useThreads } from '~/composables/useThreads';
 import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
@@ -288,6 +289,7 @@ const router = useRouter();
 const { generateStudyPrompt } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
+const { addThreadToList } = useThreads();
 const toast = useToast();
 
 interface Subject {
@@ -418,16 +420,46 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
       });
     }
 
-    // Proceed with action (soft limit - always allow)
-    const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
     const upperCaseSubject = subjectName.toUpperCase();
+    const character = getCharacterBySubject(upperCaseSubject);
+    const characterSlug = character?.slug || 'eddy';
+
+    // For lessons, try seeded lesson first
+    if (actionType === 'lesson') {
+      try {
+        const lessonResponse = await $fetch<{
+          success: boolean;
+          hasSeededLesson: boolean;
+          thread?: { id: string; title: string; subject: string | null; created_at?: string; updated_at?: string };
+          slideCount?: number;
+        }>('/api/lesson/start', {
+          method: 'POST',
+          body: {
+            chapterName: chapter.name,
+            subject: subjectName,
+          },
+        });
+
+        if (lessonResponse.success && lessonResponse.hasSeededLesson && lessonResponse.thread) {
+          // Add thread to local list so sidebar updates
+          addThreadToList(lessonResponse.thread as any);
+          // Navigate directly to the created thread with seeded lesson
+          await router.push(`/chat/${characterSlug}/${lessonResponse.thread.id}`);
+          return;
+        }
+        // If no seeded lesson, fall through to AI generation
+      } catch (lessonError) {
+        console.warn('Seeded lesson not available, falling back to AI generation:', lessonError);
+        // Fall through to AI generation
+      }
+    }
+
+    // Proceed with AI generation (fallback for lessons, default for practice/quiz)
+    const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
 
     const queryParams = new URLSearchParams({
       study_prompt: studyResult.prompt
     });
-
-    const character = getCharacterBySubject(upperCaseSubject);
-    const characterSlug = character?.slug || 'eddy';
 
     await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
   } catch (error) {

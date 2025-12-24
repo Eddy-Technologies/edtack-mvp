@@ -1,0 +1,826 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌍 Movement of Substances: Why It Matters",
+    "content": "## Understanding How Organisms Exchange Materials\n\nLiving organisms constantly need to exchange materials with their environment to survive. This includes:\n\n- 🥗 **Nutrients** - food molecules needed for growth and energy\n- 💧 **Water** - essential for all life processes\n- 🗑️ **Waste products** - harmful substances that must be removed\n\n### The Big Question\n\n::yellow[How do living organisms regulate the exchange of materials within themselves and with their environment?]\n\nThe answer lies in understanding three main transport processes:\n\n1. ::green[**Diffusion**] - passive movement down concentration gradients\n2. ::green[**Osmosis**] - passive movement of water molecules\n3. ::green[**Active Transport**] - energy-powered movement against gradients\n\n### Real-World Impact\n\nUnderstanding these processes has led to important medical solutions:\n\n- 🏥 **Kidney dialysis** - removes waste when kidneys fail\n- 💧 **NEWater technology** - Singapore's innovative solution to water shortage by purifying water through selective membrane processes\n\n> 💡 **Key Insight:** These transport processes are not just theoretical - they directly impact human health and environmental solutions!",
+    "speech_to_text_content": "Movement of Substances: Why It Matters. Living organisms constantly need to exchange materials with their environment to survive. This includes nutrients, water, and waste products. The big question is: How do living organisms regulate the exchange of materials within themselves and with their environment? The answer lies in understanding three main transport processes: Diffusion, Osmosis, and Active Transport. Understanding these processes has led to important medical solutions like kidney dialysis and Singapore's innovative NEWater technology.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:41:20.922245+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Section 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 Understanding Concentration and Gradients",
+    "content": "## What is Concentration?\n\n::yellow[**Concentration**] is the amount of a substance (such as salt, sugar, or oxygen) within a fixed volume of solution or space.\n\n### Think of It This Way\n\nImagine a glass of juice:\n- If you add 2 teaspoons of juice powder to 100 mL of water, the concentration is LOW\n- If you add 10 teaspoons of juice powder to 100 mL of water, the concentration is HIGH\n\nThe more solute (dissolved substance) in the same volume, the higher the concentration!\n\n## What is a Concentration Gradient?\n\n::yellow[**Concentration Gradient**] is the difference in concentration between two regions or areas.\n\n### Visual Example\n\n```\nHigh Concentration    Low Concentration\n    [●●●●●●]  ←→  [●●]\n    (Dark)         (Light)\n    GRADIENT →\n```\n\nA ::red[steep gradient] means a big difference between the two areas.\nA ::green[shallow gradient] means only a small difference.\n\n## Why Gradients Matter\n\nConcentration gradients are the \"driving force\" for substance movement:\n\n- 🚀 **Steep gradients** = faster movement of substances\n- 🐌 **Shallow gradients** = slower movement of substances\n- ⚖️ **No gradient** = no net movement\n\n> ⚠️ **Important:** Particles naturally move from where there are MORE of them to where there are FEWER of them, trying to even things out!",
+    "speech_to_text_content": "Understanding Concentration and Gradients. Concentration is the amount of a substance within a fixed volume of solution or space. A concentration gradient is the difference in concentration between two regions or areas. Steep gradients mean faster movement of substances, while shallow gradients mean slower movement. Particles naturally move from where there are more of them to where there are fewer of them.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:05:00Z",
+    "updated_at": "2024-01-15T08:05:00Z",
+    "source_timestamp": "2024-01-15T08:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:41:25.681563+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Section 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔄 Diffusion: The Fundamental Transport Process",
+    "content": "## What is Diffusion?\n\n::yellow[**Diffusion**] is the net movement of particles (atoms, molecules, or ions) from a region of ::green[higher concentration] to a region of ::green[lower concentration], down a concentration gradient.\n\n### Key Word: \"Net Movement\"\n\nParticles move in ALL directions randomly, but there's a NET movement toward the low-concentration area because there are more particles moving that direction than the opposite direction.\n\n## How Does Diffusion Work?\n\n### The Mechanism\n\n1. **Particles have kinetic energy** - All particles in fluids (liquids and gases) are constantly moving randomly due to heat energy\n\n2. **Random motion spreads particles** - Because particles move randomly in all directions, they gradually spread out from crowded areas to less crowded areas\n\n3. **Equilibrium is reached** - Eventually, particles become evenly distributed, and diffusion stops\n\n### Real-World Analogy\n\nImagine a crowded room:\n- People naturally spread out from the doorway (high concentration) to the rest of the room (low concentration)\n- They're not following a rule - they're just moving randomly\n- But the NET effect is spreading out evenly\n\n## Diffusion Across Membranes\n\n::yellow[**Partially permeable membranes**] allow:\n- ✅ Small solute molecules to pass through\n- ✅ Solvent molecules (water) to pass through\n- ❌ Large molecules to pass through\n\nOver time, diffusion causes equal concentration of small particles on both sides of the membrane.\n\n> 💡 **Key Point:** Diffusion is ::green[PASSIVE] - it requires NO energy from the cell!",
+    "speech_to_text_content": "Diffusion: The Fundamental Transport Process. Diffusion is the net movement of particles from a region of higher concentration to a region of lower concentration, down a concentration gradient. Particles have kinetic energy and move randomly, but the net effect is spreading out from crowded areas to less crowded areas. Diffusion works across partially permeable membranes and requires no energy from the cell.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:10:00Z",
+    "updated_at": "2024-01-15T08:10:00Z",
+    "source_timestamp": "2024-01-15T08:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:41:30.488423+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Section 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚡ Factors That Speed Up or Slow Down Diffusion",
+    "content": "## Factor 1: Concentration Gradient\n\n### The Steeper the Gradient, the Faster the Diffusion\n\n::yellow[**Greater concentration difference**] = ::green[**faster diffusion rate**]\n\n```\nSteep Gradient (Fast)     Shallow Gradient (Slow)\n[●●●●●●] → [●]          [●●●●●] → [●●●●]\n  Big difference            Small difference\n```\n\n**Why?** More particles are moving from high to low concentration than the reverse.\n\n**Example:** Oxygen diffuses faster into a cell when the oxygen concentration outside is very high compared to inside.\n\n---\n\n## Factor 2: Diffusion Distance\n\n### The Shorter the Distance, the Faster the Diffusion\n\n::yellow[**Diffusion distance**] is the distance through which a substance must diffuse.\n\n::red[**Shorter distance = Higher rate of diffusion**]\n\n### Why This Matters for Living Organisms\n\nCells and tissues are organized to MINIMIZE diffusion distances:\n\n**Example 1: Gas Exchange in Lungs**\n- Alveoli (air sacs) are tiny and close to blood capillaries\n- Oxygen only needs to diffuse a very short distance\n- This allows rapid oxygen uptake\n\n**Example 2: Nutrient Absorption in Small Intestine**\n- The intestinal lining is only one cell thick\n- Nutrients diffuse quickly from the intestinal lumen to the blood\n- Longer distance = slower absorption\n\n**Example 3: Gas Exchange in Plant Leaves**\n- Stomata open to allow CO₂ to diffuse into the leaf\n- Mesophyll cells are close to the stomata\n- Chloroplasts inside cells can quickly receive CO₂\n\n> 💡 **Biological Principle:** Organisms are designed to keep diffusion distances SHORT for efficient substance exchange!\n\n---\n\n## Factor 3: Surface Area to Volume Ratio\n\n### What is Surface Area to Volume Ratio?\n\n::yellow[**Surface Area to Volume Ratio**] is the ratio between how much surface a cell or structure has compared to its volume.\n\n::green[**Greater surface area to volume ratio = Higher rate of diffusion**]\n\n### Why This Matters\n\nA larger surface area allows MORE particles to diffuse through at the same time!\n\n### Biological Adaptations for Large Surface Area\n\n**1. Root Hair Cells** 🌱\n- Have long, narrow projections called root hairs\n- Greatly increase surface area for absorbing water and mineral ions from soil\n- More surface = faster mineral uptake\n\n**2. Small Intestine Villi** 🥗\n- Finger-like projections that increase surface area\n- Allow faster nutrient absorption from food\n- Each villus contains microvilli for even more surface area!\n\n**3. Lung Alveoli** 💨\n- Millions of tiny air sacs create HUGE surface area\n- Allows rapid oxygen diffusion into blood\n- Efficient gas exchange even though oxygen only diffuses a short distance\n\n**4. Fish Gills** 🐠\n- Thin, feathery structures with enormous surface area\n- Water flows over them, allowing rapid oxygen diffusion\n- Much more efficient than lungs for underwater breathing\n\n### The Mathematical Relationship\n\n```\nSmall cell with high SA:V ratio\n    ┌───┐\n    │   │  More surface per unit volume\n    └───┘  = Faster diffusion\n\nLarge cell with low SA:V ratio\n    ┌─────────┐\n    │         │  Less surface per unit volume\n    │         │  = Slower diffusion\n    └─────────┘\n```\n\n> ⚠️ **Important:** This is why cells stay relatively small - a giant cell would have diffusion problems!",
+    "speech_to_text_content": "Factors That Speed Up or Slow Down Diffusion. Factor 1: Concentration Gradient - the steeper the gradient, the faster diffusion occurs. Factor 2: Diffusion Distance - the shorter the distance, the faster diffusion occurs. Factor 3: Surface Area to Volume Ratio - greater surface area to volume ratio means higher rate of diffusion. Organisms have biological adaptations like root hairs, intestinal villi, lung alveoli, and fish gills to increase surface area for faster diffusion.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:41:40.718025+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Section 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🫁 Diffusion in Animals: Nutrient Uptake and Gas Exchange",
+    "content": "## Diffusion in the Lungs: Oxygen Uptake\n\n### How Oxygen Enters the Blood\n\n1. **Air enters the lungs** through the trachea and bronchioles\n2. **Oxygen concentration is HIGH** in the alveoli (air sacs)\n3. **Oxygen concentration is LOW** in the blood surrounding the alveoli\n4. **Diffusion occurs** - oxygen moves from alveoli into the blood\n5. **Red blood cells** carry oxygen to body cells\n\n### Why the Lungs are Perfectly Designed for Diffusion\n\n- ✅ **Short diffusion distance** - alveolar wall is only one cell thick\n- ✅ **Large surface area** - millions of alveoli create huge surface\n- ✅ **Steep gradient** - high oxygen in air, low in blood\n- ✅ **Good blood flow** - keeps oxygen concentration low in blood\n\n---\n\n## Diffusion in the Lungs: Carbon Dioxide Removal\n\n### How Carbon Dioxide Leaves the Blood\n\n1. **CO₂ concentration is HIGH** in the blood (waste from respiration)\n2. **CO₂ concentration is LOW** in the alveolar air\n3. **Diffusion occurs** - CO₂ moves from blood into alveoli\n4. **CO₂ is exhaled** when you breathe out\n\n> 💡 **Key Point:** The same alveoli handle BOTH oxygen uptake AND carbon dioxide removal!\n\n---\n\n## Diffusion in the Digestive System: Nutrient Absorption\n\n### The Small Intestine\n\nThe small intestine is where most nutrient absorption happens through diffusion:\n\n**Structure for Efficient Diffusion:**\n- ::yellow[**Villi**] - finger-like projections increase surface area\n- ::yellow[**Microvilli**] - even smaller projections on villi increase surface further\n- ::yellow[**Single-cell thick wall**] - short diffusion distance\n- ::yellow[**Rich blood supply**] - keeps concentration gradient steep\n\n**Nutrients Absorbed by Diffusion:**\n- 🥗 **Glucose** - simple sugar from carbohydrates\n- 🥚 **Amino acids** - building blocks from proteins\n- 💧 **Vitamins and minerals** - essential micronutrients\n- 💧 **Water** - essential solvent\n\n### The Process\n\n```\nFood (high nutrient concentration)\n           ↓\n    Small intestine lumen\n           ↓\nVilli absorb nutrients by diffusion\n           ↓\nNutrients enter blood capillaries\n           ↓\nBlood carries nutrients to body cells\n```\n\n> ⚠️ **Important:** Even though nutrients are absorbed by diffusion, some also use ::green[active transport] for more efficient uptake (covered later)!\n\n---\n\n## Diffusion in Body Cells: Oxygen and Nutrient Delivery\n\n### Inside Every Cell\n\nOnce nutrients reach body cells:\n\n1. **Oxygen diffuses** from blood into mitochondria (powerhouses)\n2. **Glucose diffuses** into cells for energy production\n3. **CO₂ diffuses out** from mitochondria into blood\n4. **Waste products diffuse out** of cells\n\n### The Gradient Cycle\n\n```\nCell respiration uses oxygen and glucose\n        ↓\nProduces CO₂ and other waste\n        ↓\nCreates steep concentration gradients\n        ↓\nDiffusion removes waste and brings fresh supplies\n```\n\n> 💡 **Summary:** Diffusion is the primary mechanism for delivering nutrients and oxygen to cells and removing waste products!",
+    "speech_to_text_content": "Diffusion in Animals: Nutrient Uptake and Gas Exchange. In the lungs, oxygen diffuses from the alveoli into the blood, while carbon dioxide diffuses from the blood into the alveoli for exhalation. In the small intestine, nutrients like glucose and amino acids diffuse from the intestinal lumen into the blood through villi and microvilli. In body cells, oxygen and glucose diffuse in while carbon dioxide and waste diffuse out.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:20:00Z",
+    "updated_at": "2024-01-15T08:20:00Z",
+    "source_timestamp": "2024-01-15T08:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:41:49.875166+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Section 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌿 Diffusion in Plants: Gas Exchange and Nutrient Uptake",
+    "content": "## Gas Exchange Through Stomata\n\n### What are Stomata?\n\n::yellow[**Stomata**] (singular: stoma) are tiny pores on the leaves of plants that open and close to allow gas exchange.\n\n### How Gas Exchange Works\n\n**Carbon Dioxide Uptake:**\n1. **CO₂ concentration is HIGH** in the atmosphere\n2. **CO₂ concentration is LOW** inside the leaf\n3. **Stomata open** to create a pathway\n4. **Diffusion occurs** - CO₂ moves into the leaf\n5. **CO₂ is used** in photosynthesis\n\n**Oxygen Release:**\n1. **Photosynthesis produces oxygen** inside leaf cells\n2. **O₂ concentration is HIGH** inside the leaf\n3. **O₂ concentration is LOW** in the atmosphere\n4. **Diffusion occurs** - O₂ moves out through stomata\n5. **Oxygen is released** to the atmosphere\n\n### Why Stomata are Perfectly Designed\n\n- ✅ **Steep gradient** - atmospheric CO₂ vs. leaf CO₂\n- ✅ **Short diffusion distance** - stomata open directly to photosynthetic cells\n- ✅ **Controllable** - plants can open/close stomata to conserve water\n\n---\n\n## Nutrient Uptake by Root Hair Cells\n\n### What are Root Hair Cells?\n\n::yellow[**Root hair cells**] are specialized cells in plant roots with long, thin projections called root hairs that absorb water and mineral ions from soil.\n\n### Structure for Diffusion\n\n```\nRoot Hair Cell\n    ║\n    ║─ Long, thin projection\n    ║  increases surface area\n    ║\n    ║─ Thin cell wall\n    ║  short diffusion distance\n    ║\n    ║─ Many mitochondria\n    ║  provides energy for active transport\n```\n\n### Water Uptake by Diffusion\n\n1. **Soil solution** has water and dissolved minerals (lower water potential)\n2. **Root hair cell sap** has high concentration of minerals (lower water potential)\n3. **Water diffuses** from soil into root hair cell\n4. **Water moves up** the plant through xylem vessels\n\n### Mineral Ion Uptake\n\n⚠️ **Important Note:** While some minerals diffuse into root cells, MOST mineral uptake uses ::red[**active transport**] (covered later) because:\n- Mineral concentration in soil is often LOWER than in root cells\n- Plants need to accumulate minerals against the gradient\n- This requires energy (ATP) from respiration\n\n---\n\n## Distribution of Substances Within Plant Tissues\n\n### Movement Inside the Plant\n\nOnce substances enter the plant:\n\n**Xylem Transport:**\n- ::yellow[**Water and mineral ions**] move up from roots to leaves\n- Movement is mostly passive (uses root pressure and transpiration)\n- Diffusion helps distribute minerals to cells along the way\n\n**Phloem Transport:**\n- ::yellow[**Sugars (glucose)**] move from leaves to all parts of plant\n- Made in leaves during photosynthesis\n- Transported to roots, flowers, fruits for growth and energy\n- Uses active transport to load sugars into phloem\n- Then diffusion helps distribute sugars to cells\n\n### Cell-to-Cell Distribution\n\nWithin plant tissues, diffusion:\n- Moves oxygen to respiring cells\n- Distributes glucose for energy\n- Removes CO₂ from respiring cells\n- Spreads growth hormones\n- Distributes other signaling molecules\n\n> 💡 **Key Insight:** Plants rely on diffusion for both external gas exchange (through stomata) and internal distribution of substances (through tissues)!",
+    "speech_to_text_content": "Diffusion in Plants: Gas Exchange and Nutrient Uptake. Plants exchange gases through stomata on their leaves. Carbon dioxide diffuses into the leaf for photosynthesis, and oxygen diffuses out. Root hair cells absorb water by diffusion from the soil. Mineral ions are mostly absorbed by active transport. Within the plant, diffusion helps distribute oxygen, glucose, and other substances throughout the tissues.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:25:00Z",
+    "updated_at": "2024-01-15T08:25:00Z",
+    "source_timestamp": "2024-01-15T08:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:41:58.953880+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Section 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "💧 Osmosis: Water Movement Across Membranes",
+    "content": "## What is Water Potential?\n\n::yellow[**Water Potential**] is a measure of the tendency of water molecules to move from one place to another.\n\n### Understanding Water Potential\n\n**Key Principle:**\n- ::green[**Dilute solutions have HIGHER water potential**] (more water, fewer solutes)\n- ::red[**Concentrated solutions have LOWER water potential**] (less water, more solutes)\n- **Water moves from HIGH to LOW water potential**\n\n### Think of It This Way\n\nImagine a crowded room (high solute concentration = low water potential):\n- Water molecules \"want\" to escape to less crowded areas\n- They move toward areas with fewer dissolved particles\n- This creates a tendency for water to move\n\n---\n\n## What is Osmosis?\n\n::yellow[**Osmosis**] is the movement of water molecules from a region of ::green[**higher water potential**] to a region of ::green[**lower water potential**] through a partially permeable membrane.\n\n### Key Differences from Diffusion\n\n| Feature | Diffusion | Osmosis |\n|---------|-----------|----------|\n| What moves? | Solute particles | ::blue[Water molecules] |\n| Direction | High → Low concentration | High → Low water potential |\n| Membrane | Any permeable membrane | ::blue[Partially permeable only] |\n| Examples | Gas exchange | Water in cells |\n\n---\n\n## How Osmosis Works: The Mechanism\n\n### Step-by-Step Process\n\n1. **Partially permeable membrane** separates two solutions\n   - Allows water through ✅\n   - Blocks large solute molecules ❌\n\n2. **Concentration difference exists**\n   - One side has more dissolved solutes (lower water potential)\n   - Other side has fewer dissolved solutes (higher water potential)\n\n3. **Water molecules move randomly** in all directions\n   - More water molecules hit the membrane from the dilute side\n   - Fewer water molecules hit the membrane from the concentrated side\n   - NET movement is toward the concentrated side\n\n4. **Water accumulates** on the concentrated side\n   - Dilutes the solution\n   - Continues until water potential is equal on both sides\n   - Then osmosis stops (equilibrium reached)\n\n### Why This Happens\n\nSolute molecules \"occupy space\" that water molecules would fill:\n- In concentrated solutions, solute molecules block water from escaping\n- In dilute solutions, water molecules are more free to move\n- More water ends up moving toward the concentrated side\n\n> 💡 **Key Concept:** Osmosis is essentially diffusion of WATER molecules, driven by the difference in water potential created by dissolved solutes!",
+    "speech_to_text_content": "Osmosis: Water Movement Across Membranes. Water potential is a measure of the tendency of water molecules to move. Dilute solutions have higher water potential, concentrated solutions have lower water potential. Water moves from high to low water potential. Osmosis is the movement of water molecules from a region of higher water potential to a region of lower water potential through a partially permeable membrane.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:42:05.849156+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Section 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌱 Effects of Osmosis on Plant Cells",
+    "content": "## Plant Cells in Distilled Water (Hypotonic Solution)\n\n### What Happens?\n\n**Hypotonic solution** = dilute solution with HIGH water potential\n\n1. **Water concentration is HIGH** outside the cell\n2. **Water concentration is LOW** inside the cell (due to solutes)\n3. **Osmosis occurs** - water enters the cell\n4. **Cell becomes turgid** - swollen and rigid\n\n### The Turgid State\n\n```\nBefore osmosis:        After osmosis (Turgid):\n┌─────────────┐       ┌─────────────┐\n│  Cell wall  │       │  Cell wall  │\n│┌───────────┐│       │┌───────────┐│\n││ Membrane  ││       ││ Membrane  ││\n││ Cytoplasm ││  →    ││ Cytoplasm ││  (Pressed against wall)\n││ Vacuole   ││       ││ Vacuole   ││  (Swollen with water)\n│└───────────┘│       │└───────────┘│\n└─────────────┘       └─────────────┘\n```\n\n### Why Turgor Pressure is Important\n\n::green[**Turgor pressure**] is the pressure of the cell contents pushing against the cell wall.\n\n**Functions:**\n- ✅ Keeps plant cells rigid and firm\n- ✅ Provides structural support to leaves and stems\n- ✅ Keeps plants upright and crisp\n- ✅ Allows plants to maintain shape without a skeleton\n\n**Real-World Example:** Fresh, crisp lettuce leaves are turgid. When lettuce wilts, it has lost turgor pressure.\n\n---\n\n## Plant Cells in Concentrated Salt Solution (Hypertonic Solution)\n\n### What Happens?\n\n**Hypertonic solution** = concentrated solution with LOW water potential\n\n1. **Water concentration is LOW** outside the cell\n2. **Water concentration is HIGH** inside the cell\n3. **Osmosis occurs** - water leaves the cell\n4. **Cell becomes plasmolyzed** - cell membrane pulls away from cell wall\n\n### The Plasmolyzed State\n\n```\nBefore osmosis:        After osmosis (Plasmolyzed):\n┌─────────────┐       ┌─────────────┐\n│  Cell wall  │       │  Cell wall  │\n│┌───────────┐│       │             │  (Membrane pulled away)\n││ Membrane  ││       │  ┌─────────┐│\n││ Cytoplasm ││  →    │  │ Membrane││\n││ Vacuole   ││       │  │ Cytoplasm││ (Shrunken)\n│└───────────┘│       │  │ Vacuole ││\n└─────────────┘       │  └─────────┘│\n                      └─────────────┘\n```\n\n### Consequences of Plasmolysis\n\n- ❌ Cell loses turgor pressure\n- ❌ Plant wilts and droops\n- ❌ Leaves become soft and limp\n- ❌ Plant appears dead (but may recover if water is provided)\n- ⚠️ Prolonged plasmolysis can damage or kill the cell\n\n**Real-World Example:** Plants in very salty soil (like coastal areas) may become plasmolyzed because the soil solution has lower water potential than the plant cells.\n\n### Recovery from Plasmolysis\n\nIf the plant is given fresh water:\n1. Water re-enters the cell\n2. Vacuole expands\n3. Membrane pushes back against cell wall\n4. ::green[**Deplasmolysis**] occurs - cell returns to normal\n5. Plant becomes turgid again\n\n---\n\n## Plant Cells in Isotonic Solution\n\n### What Happens?\n\n**Isotonic solution** = solution with same water potential as the cell\n\n1. **Water concentration is EQUAL** inside and outside\n2. **No net water movement** - osmosis doesn't occur\n3. **Cell remains normal** - neither turgid nor plasmolyzed\n4. **Cell maintains its state** - water moves in and out equally\n\n### Biological Significance\n\nIsotonic solutions are important in medicine:\n- ::blue[**Saline (0.9% salt)**] is isotonic with blood\n- Used in IV fluids to avoid damaging red blood cells\n- Prevents hemolysis (bursting) or crenation (shrinking)\n\n---\n\n## Summary: Plant Cell Responses to Different Solutions\n\n| Solution Type | Water Potential | Effect on Cell | Plant Response |\n|---|---|---|---|\n| ::green[Hypotonic] | HIGH | Turgid (swollen) | ::green[Crisp, firm, upright] |\n| ::red[Hypertonic] | LOW | Plasmolyzed (shrunken) | ::red[Wilted, drooping] |\n| ::blue[Isotonic] | EQUAL | Normal (unchanged) | ::blue[Stable, no change] |\n\n> 💡 **Key Insight:** Plant cell rigidity depends on osmosis! Without water entering by osmosis, plants cannot maintain their shape.",
+    "speech_to_text_content": "Effects of Osmosis on Plant Cells. In distilled water (hypotonic solution), water enters the plant cell by osmosis, making it turgid or swollen. Turgor pressure keeps the plant firm and upright. In concentrated salt solution (hypertonic solution), water leaves the plant cell, causing plasmolysis where the cell membrane pulls away from the cell wall. The plant wilts. In isotonic solution, there is no net water movement and the cell remains normal.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:35:00Z",
+    "updated_at": "2024-01-15T08:35:00Z",
+    "source_timestamp": "2024-01-15T08:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:42:17.532140+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Section 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔴 Effects of Osmosis on Animal Cells",
+    "content": "## Animal Cells in Distilled Water (Hypotonic Solution)\n\n### What Happens?\n\n**Hypotonic solution** = dilute solution with HIGH water potential\n\n1. **Water concentration is HIGH** outside the cell\n2. **Water concentration is LOW** inside the cell\n3. **Osmosis occurs** - water enters the cell\n4. **Cell swells** - volume increases\n\n### The Problem: No Cell Wall!\n\n⚠️ **Critical Difference:** Animal cells have NO cell wall!\n\n```\nAnimal Cell in Hypotonic Solution:\n\n    Water enters\n         ↓\n    Cell swells\n         ↓\n    Membrane stretches\n         ↓\n    Cell may burst!\n```\n\n### Hemolysis: Red Blood Cell Bursting\n\n::yellow[**Hemolysis**] is the bursting of red blood cells due to water entering by osmosis.\n\n**What happens:**\n1. Red blood cells placed in distilled water\n2. Water enters by osmosis (distilled water has high water potential)\n3. Cell volume increases\n4. Cell membrane cannot stretch further\n5. **Cell membrane ruptures** - cell bursts\n6. **Hemoglobin leaks out** - red color spreads into solution\n\n**Consequences:**\n- ❌ Red blood cells destroyed\n- ❌ Cannot carry oxygen\n- ❌ Can cause serious health problems\n- ⚠️ This is why distilled water is DANGEROUS to inject into bloodstream!\n\n---\n\n## Animal Cells in Concentrated Salt Solution (Hypertonic Solution)\n\n### What Happens?\n\n**Hypertonic solution** = concentrated solution with LOW water potential\n\n1. **Water concentration is LOW** outside the cell\n2. **Water concentration is HIGH** inside the cell\n3. **Osmosis occurs** - water leaves the cell\n4. **Cell shrinks** - volume decreases\n\n### Crenation: Red Blood Cell Shrinking\n\n::yellow[**Crenation**] is the shrinking of red blood cells due to water leaving by osmosis.\n\n**What happens:**\n1. Red blood cells placed in concentrated salt solution\n2. Water leaves by osmosis (salt solution has low water potential)\n3. Cell volume decreases\n4. Cell membrane wrinkles and develops spiky edges\n5. **Cell becomes crenated** - shriveled appearance\n\n**Consequences:**\n- ❌ Red blood cells shrink\n- ❌ Cannot function properly\n- ❌ Cannot carry oxygen efficiently\n- ❌ Cell may die if water loss is too severe\n\n### Comparison: Hemolysis vs. Crenation\n\n```\nHemolysis (Hypotonic):    Normal:              Crenation (Hypertonic):\n    ◉ ← Burst           ◯ ← Healthy          ◉ ← Shriveled\n    (Swollen)           (Normal)             (Shrunken)\n```\n\n---\n\n## Animal Cells in Isotonic Solution\n\n### What Happens?\n\n**Isotonic solution** = solution with same water potential as the cell\n\n1. **Water concentration is EQUAL** inside and outside\n2. **No net water movement** - osmosis doesn't occur\n3. **Cell remains normal** - maintains shape and volume\n4. **Cell functions properly** - water moves in and out equally\n\n### Why Isotonic Solutions are Important in Medicine\n\n::green[**Saline (0.9% NaCl solution)**] is isotonic with blood plasma.\n\n**Uses:**\n- ✅ IV (intravenous) fluids for patients\n- ✅ Rinses for wounds\n- ✅ Contact lens solution\n- ✅ Prevents hemolysis or crenation of blood cells\n\n**Why not distilled water?**\n- ❌ Distilled water is hypotonic\n- ❌ Would cause hemolysis\n- ❌ Would damage red blood cells\n- ❌ Could cause serious harm or death\n\n---\n\n## Summary: Animal Cell Responses to Different Solutions\n\n| Solution Type | Water Potential | What Happens | Effect on Cells |\n|---|---|---|---|\n| ::green[Hypotonic] | HIGH | Water enters | ::red[Hemolysis - cell bursts] |\n| ::red[Hypertonic] | LOW | Water leaves | ::red[Crenation - cell shrinks] |\n| ::blue[Isotonic] | EQUAL | No net movement | ::green[Normal - cell healthy] |\n\n---\n\n## Key Differences: Plant vs. Animal Cells\n\n| Feature | Plant Cell | Animal Cell |\n|---------|-----------|------------|\n| Cell wall | ✅ Has cell wall | ❌ No cell wall |\n| In hypotonic | Turgid (stays intact) | ::red[Hemolysis (bursts)] |\n| In hypertonic | Plasmolyzed (survives) | ::red[Crenation (damaged)] |\n| In isotonic | Normal | ::green[Normal] |\n\n> ⚠️ **Critical Point:** Animal cells are much more sensitive to osmotic changes because they lack the protective cell wall! This is why medical solutions must be carefully balanced to be isotonic with blood.",
+    "speech_to_text_content": "Effects of Osmosis on Animal Cells. In distilled water (hypotonic solution), water enters animal cells by osmosis, causing them to swell and burst in a process called hemolysis. In concentrated salt solution (hypertonic solution), water leaves animal cells, causing them to shrink in a process called crenation. In isotonic solution, there is no net water movement and cells remain normal. This is why isotonic saline is used in medical treatments.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:40:00Z",
+    "updated_at": "2024-01-15T08:40:00Z",
+    "source_timestamp": "2024-01-15T08:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:42:27.303520+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Section 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚡ Active Transport: Moving Against the Gradient",
+    "content": "## What is Active Transport?\n\n::yellow[**Active Transport**] is the movement of substances ::red[**AGAINST a concentration gradient**] (from low to high concentration) using energy from cellular respiration.\n\n### The Key Difference from Passive Transport\n\n| Feature | Diffusion/Osmosis | Active Transport |\n|---------|-----------|---|\n| Energy needed | ❌ NO (Passive) | ✅ YES (Active) |\n| Direction | High → Low concentration | ::red[Low → High concentration] |\n| Gradient | Down the gradient | ::red[Against the gradient] |\n| Examples | Gas exchange | Mineral uptake |\n\n### Why Active Transport is Needed\n\nSometimes cells need to accumulate substances that are MORE concentrated INSIDE the cell than outside:\n\n**Example:** Root cells absorb mineral ions from soil\n- Soil solution has LOW mineral concentration\n- Root cells have HIGH mineral concentration\n- Diffusion would move minerals OUT of the cell\n- But plants NEED minerals, so they use active transport to move them IN\n\n> 💡 **Key Concept:** Active transport allows cells to move substances \"uphill\" against the natural concentration gradient!\n\n---\n\n## How Active Transport Works: The Mechanism\n\n### Step-by-Step Process\n\n1. **Carrier proteins** in the cell membrane recognize and bind to target substances\n   - Each carrier protein is specific to certain molecules\n   - Like a lock and key system\n\n2. **Energy from ATP** (Adenosine Triphosphate) is used\n   - ATP is the energy currency of cells\n   - Produced during cellular respiration in mitochondria\n   - Energy breaks the phosphate bonds in ATP\n\n3. **Carrier protein changes shape** using the energy\n   - Conformational change helps transport the substance\n   - Substance is moved from low to high concentration\n\n4. **Substance is released** on the other side of the membrane\n   - Now on the side where it's needed\n   - Concentration increases on that side\n\n5. **Carrier protein returns to original shape**\n   - Ready to transport another molecule\n   - Process repeats\n\n### Visual Representation\n\n```\n        Outside (Low concentration)\n             ↓\n    ┌─────────────────────┐\n    │                     │\n    │  Carrier protein    │\n    │  (Empty)            │\n    │                     │\n    └─────────────────────┘\n             ↓\n    Substance binds to carrier\n    (Uses ATP energy!)\n             ↓\n    ┌─────────────────────┐\n    │   ●                 │  Carrier changes shape\n    │  (Substance bound)  │  and moves substance across\n    │                     │\n    └─────────────────────┘\n             ↓\n        Inside (High concentration)\n    Substance released\n```\n\n---\n\n## Energy Requirements: Why Mitochondria Matter\n\n### Active Transport Requires Lots of ATP\n\n**ATP is produced in mitochondria through respiration:**\n\n```\nGlucose + Oxygen → CO₂ + Water + ENERGY (ATP)\n```\n\n### Why Cells Doing Active Transport Have Many Mitochondria\n\nCells that actively transport substances have LOTS of mitochondria:\n- 🔬 **Root hair cells** - absorb minerals (many mitochondria)\n- 🧬 **Intestinal epithelial cells** - absorb nutrients (many mitochondria)\n- 🫀 **Kidney tubule cells** - reabsorb useful substances (many mitochondria)\n- 🧠 **Nerve cells** - maintain ion gradients (many mitochondria)\n\n> ⚠️ **Important:** Without enough ATP, active transport stops! This is why cells cannot survive without oxygen and food.\n\n---\n\n## Importance: Why Cells Use Active Transport\n\n### 1. Accumulating Needed Substances\n\nCells can build up high concentrations of substances they need:\n- Minerals for growth\n- Glucose for energy\n- Amino acids for protein synthesis\n\n### 2. Removing Harmful Substances\n\nCells can pump out toxins and waste:\n- Even when concentration is high\n- Maintains a safe internal environment\n\n### 3. Maintaining Ion Gradients\n\nCritical for nerve and muscle function:\n- Sodium-potassium pump maintains electrical gradients\n- Essential for nerve impulses and muscle contraction\n\n### 4. Selective Absorption\n\nCells can choose what to absorb:\n- Absorb useful substances\n- Reject harmful substances\n- Control what enters and leaves\n\n> 💡 **Key Insight:** Active transport gives cells CONTROL over their internal environment!",
+    "speech_to_text_content": "Active Transport: Moving Against the Gradient. Active transport is the movement of substances against a concentration gradient using energy from cellular respiration. Carrier proteins in the cell membrane bind to substances and use ATP energy to move them from low to high concentration. This requires many mitochondria to produce ATP. Active transport allows cells to accumulate needed substances, remove waste, maintain ion gradients, and selectively control what enters and leaves.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:42:38.636065+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Section 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌱 Active Transport in Root Hair Cells: Mineral Ion Uptake",
+    "content": "## The Challenge: Absorbing Minerals from Soil\n\n### The Problem\n\nMost mineral ions in soil solution have a LOWER concentration than inside root cells:\n\n```\nSoil solution:     Root hair cell:\n[Mineral ions]     [Mineral ions]\n    LOW                HIGH\n        ↓\n    Diffusion would move ions OUT, not IN!\n```\n\nBut plants NEED minerals for:\n- 🥗 Building proteins (need nitrogen)\n- 🦴 Building cell walls (need calcium)\n- 💚 Making chlorophyll (need magnesium)\n- 🔋 Energy production (need phosphorus)\n\n**Solution:** ::green[**Active Transport!**]\n\n---\n\n## How Root Hair Cells Absorb Minerals\n\n### Structure of Root Hair Cells\n\n```\nRoot Hair Cell\n┌──────────────────────┐\n│ Thin cell wall       │  ← Short diffusion distance\n│ Cell membrane        │  ← Contains carrier proteins\n│ Cytoplasm            │\n│ Many mitochondria    │  ← Produce ATP for active transport\n│ Large vacuole        │  ← Stores absorbed minerals\n│                      │\n└──────────────────────┘\n      ↓\n   Root hair\n(Long projection increases\n surface area for absorption)\n```\n\n### The Active Transport Process\n\n**Step 1: Mineral ions in soil**\n- Mineral ions (like K⁺, NO₃⁻, PO₄³⁻) are in soil solution\n- Concentration is LOW\n\n**Step 2: Carrier proteins recognize minerals**\n- Specific carrier proteins in cell membrane\n- Bind to mineral ions\n\n**Step 3: ATP provides energy**\n- Mitochondria produce ATP\n- ATP energy powers the carrier proteins\n\n**Step 4: Minerals transported against gradient**\n- Carrier proteins move ions from soil (low) into cell (high)\n- Requires continuous ATP supply\n\n**Step 5: Minerals accumulate in vacuole**\n- Transported minerals stored in large vacuole\n- Concentration builds up inside root cell\n\n### Why Root Cells Have Many Mitochondria\n\n✅ Active transport requires LOTS of ATP\n✅ Root cells are constantly absorbing minerals\n✅ Many mitochondria = constant ATP production\n✅ Without enough mitochondria, mineral uptake would stop\n\n---\n\n## The Consequence: Water Follows by Osmosis\n\n### The Chain Reaction\n\n```\nMineral ions absorbed by active transport\n        ↓\nMineral concentration increases in root cell\n        ↓\nWater potential decreases in root cell\n        ↓\nWater enters by osmosis\n        ↓\nRoot pressure builds up\n        ↓\nWater moves up the xylem to the shoots\n```\n\n### Root Pressure\n\n::yellow[**Root pressure**] is the pressure that builds up in roots due to water entering by osmosis.\n\n**Function:**\n- Helps push water and minerals UP the plant\n- Especially important at night (when transpiration is low)\n- Can cause \"guttation\" - water droplets on leaf tips\n\n> 💡 **Key Connection:** Active transport of minerals INDIRECTLY causes water uptake by creating an osmotic gradient!\n\n---\n\n## Real-World Significance for Plants\n\n### Nutrient Deficiency Problems\n\nIf root cells cannot perform active transport:\n- ❌ Cannot absorb enough minerals\n- ❌ Plants become stunted\n- ❌ Leaves show deficiency symptoms\n- ❌ Reduced growth and reproduction\n\n**Causes of transport failure:**\n- Lack of oxygen → mitochondria cannot respire → no ATP\n- Cold temperatures → slower respiration → less ATP\n- Toxic substances → damage mitochondria → no ATP\n- Acidic soil → affects carrier proteins\n\n### Agricultural Applications\n\nFarmers consider active transport when:\n- 🌾 Choosing soil pH (affects carrier proteins)\n- 🌾 Ensuring good soil aeration (oxygen for respiration)\n- 🌾 Controlling soil temperature (affects respiration rate)\n- 🌾 Adding fertilizers (provides mineral ions)\n\n> ✅ **Summary:** Root hair cells use active transport to accumulate minerals against the concentration gradient, powered by ATP from mitochondrial respiration!",
+    "speech_to_text_content": "Active Transport in Root Hair Cells: Mineral Ion Uptake. Root hair cells absorb mineral ions from soil using active transport. Although mineral concentration is lower in soil than in root cells, plants need these minerals for growth. Carrier proteins use ATP energy from mitochondria to move mineral ions from the soil into the root cell against the concentration gradient. Minerals accumulate in the vacuole. The absorbed minerals lower the water potential, causing water to enter by osmosis.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:50:00Z",
+    "updated_at": "2024-01-15T08:50:00Z",
+    "source_timestamp": "2024-01-15T08:50:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:42:50.322292+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Section 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🍽️ Active Transport in the Small Intestine: Nutrient Absorption",
+    "content": "## The Challenge: Absorbing Nutrients Efficiently\n\n### The Problem\n\nNutrient concentrations in the intestinal lumen are often LOWER than in blood:\n\n```\nIntestinal lumen:    Blood in capillaries:\n[Glucose]            [Glucose]\n  LOW                  HIGH\n        ↓\n    Diffusion alone would be too slow!\n```\n\nBut the body needs to absorb nutrients QUICKLY and COMPLETELY:\n- 🥗 Glucose from carbohydrates\n- 🥚 Amino acids from proteins\n- 💧 Vitamins and minerals\n\n**Solution:** ::green[**Active Transport + Diffusion!**]\n\n---\n\n## The Small Intestine Structure\n\n### Adaptations for Absorption\n\n```\nSmall Intestine Wall\n┌─────────────────────────────────┐\n│ Intestinal lumen (food)          │\n├─────────────────────────────────┤\n│ ┌─────────────────────────────┐ │\n│ │ Villus (finger-like)        │ │  Increases surface area\n│ │ ┌─────────────────────────┐ │ │\n│ │ │ Microvilli (tiny)       │ │ │  Further increases surface\n│ │ │ ┌───────────────────┐   │ │ │\n│ │ │ │ Epithelial cell   │   │ │ │  One cell thick\n│ │ │ │ Many mitochondria │   │ │ │  For active transport\n│ │ │ │ Carrier proteins  │   │ │ │  For nutrient uptake\n│ │ │ └───────────────────┘   │ │ │\n│ │ │ Blood capillary   ←───┐ │ │ │  Close to nutrients\n│ │ └─────────────────────────┘ │ │\n│ └─────────────────────────────┘ │\n└─────────────────────────────────┘\n```\n\n### Why This Structure is Perfect for Absorption\n\n✅ **Large surface area** - villi and microvilli\n✅ **Short diffusion distance** - single cell layer\n✅ **Rich blood supply** - keeps concentration gradient steep\n✅ **Many mitochondria** - provides ATP for active transport\n✅ **Carrier proteins** - transport specific nutrients\n\n---\n\n## Glucose Absorption: A Two-Stage Process\n\n### Stage 1: Active Transport (Primary)\n\n**Location:** Epithelial cells of small intestine\n\n**Process:**\n1. Glucose molecules in lumen bind to carrier proteins\n2. ATP energy powers carrier proteins\n3. Glucose moves AGAINST concentration gradient\n4. Glucose transported into epithelial cell (even when concentration is low in lumen)\n5. Glucose accumulates inside epithelial cell\n\n**Why active transport?**\n- Ensures complete absorption even when glucose concentration is low\n- Maintains steep gradient for further transport\n- Allows rapid uptake\n\n### Stage 2: Diffusion (Secondary)\n\n**Location:** From epithelial cell to blood capillary\n\n**Process:**\n1. High glucose concentration inside epithelial cell\n2. Lower glucose concentration in blood capillary\n3. Glucose diffuses from epithelial cell into blood\n4. Blood carries glucose to liver and body cells\n\n### The Two-Stage Advantage\n\n```\nIntestinal lumen (LOW glucose)\n        ↓\n    ACTIVE TRANSPORT\n        ↓\nEpithelial cell (HIGH glucose)\n        ↓\n    DIFFUSION\n        ↓\nBlood capillary (MEDIUM glucose)\n```\n\n> 💡 **Key Insight:** Active transport creates the high concentration gradient needed for efficient diffusion into blood!\n\n---\n\n## Amino Acid Absorption\n\n### Similar to Glucose\n\nAmino acids (from protein digestion) are absorbed by the same two-stage process:\n\n**Stage 1:** Active transport into epithelial cells\n- Carrier proteins specific to amino acids\n- Uses ATP energy\n- Moves amino acids AGAINST concentration gradient\n\n**Stage 2:** Diffusion into blood capillaries\n- Amino acids diffuse from epithelial cell to blood\n- Blood carries amino acids to liver and body cells\n\n### Why Active Transport is Essential\n\n✅ Ensures complete absorption of proteins\n✅ Rapid uptake even when concentration is low\n✅ Prevents loss of nutrients\n✅ Maintains efficient nutrient supply to body\n\n---\n\n## Vitamins and Minerals\n\n### Some Use Active Transport\n\n**Vitamin B12:**\n- Requires specific carrier proteins\n- Needs ATP energy\n- Absorbed by active transport\n\n**Iron:**\n- Actively transported in small intestine\n- Stored in liver\n- Critical for oxygen transport in blood\n\n**Calcium:**\n- Partially absorbed by active transport\n- Needs vitamin D for efficient absorption\n- Important for bone health\n\n### Others Use Diffusion\n\n**Fat-soluble vitamins (A, D, E, K):**\n- Dissolve in fats\n- Absorbed by diffusion with fats\n- Stored in body fat\n\n---\n\n## Energy Cost of Nutrient Absorption\n\n### Why the Small Intestine Uses So Much ATP\n\n```\nMitochondria in epithelial cells\n        ↓\nConstantly produce ATP\n        ↓\nPowers carrier proteins\n        ↓\nActive transport of glucose and amino acids\n        ↓\nEnsures complete nutrient absorption\n```\n\n### Consequence: High Oxygen Demand\n\n- 🫀 Small intestine has rich blood supply\n- 🫀 Brings oxygen for aerobic respiration\n- 🫀 Allows continuous ATP production\n- 🫀 Enables continuous nutrient absorption\n\n> ⚠️ **Important:** If blood flow to intestines is reduced (shock, severe illness), nutrient absorption fails and the patient becomes malnourished!\n\n---\n\n## Real-World Application: Lactose Intolerance\n\n### What Goes Wrong?\n\nLactose (milk sugar) is normally broken down into glucose and galactose, then absorbed by active transport.\n\nIn lactose intolerance:\n- ❌ Lactase enzyme is missing or reduced\n- ❌ Lactose cannot be broken down\n- ❌ Lactose cannot be absorbed\n- ❌ Causes bloating, gas, diarrhea\n\n### Why Active Transport Cannot Help\n\nActive transport requires:\n- ✅ Small molecules that fit carrier proteins\n- ❌ Lactose is too large\n- ❌ No carrier proteins for lactose\n- ❌ Cannot be actively transported\n\n> 💡 **Summary:** The small intestine uses both active transport and diffusion to absorb nutrients efficiently and completely!",
+    "speech_to_text_content": "Active Transport in the Small Intestine: Nutrient Absorption. The small intestine absorbs nutrients through villi and microvilli that increase surface area. Glucose and amino acids are absorbed by active transport into epithelial cells, then diffuse into blood capillaries. Active transport ensures complete absorption even when nutrient concentration is low in the intestinal lumen. Epithelial cells have many mitochondria to produce ATP for this energy-intensive process.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:55:00Z",
+    "updated_at": "2024-01-15T08:55:00Z",
+    "source_timestamp": "2024-01-15T08:55:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:43:04.953036+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Section 12",
+    "type": "slide",
+    "question_type": null,
+    "title": "🫀 Active Transport in Kidney Tubules: Selective Reabsorption",
+    "content": "## The Kidney's Challenge: Recovering Useful Substances\n\n### What Happens in the Kidney\n\n**Filtration Process:**\n1. Blood is filtered at the glomerulus\n2. Small molecules pass into the Bowman's capsule\n3. Forms filtrate containing:\n   - ✅ Glucose (useful)\n   - ✅ Amino acids (useful)\n   - ✅ Ions (useful)\n   - ✅ Water (useful)\n   - ❌ Urea (waste)\n   - ❌ Excess ions (waste)\n\n### The Problem\n\n**We lose valuable substances in filtrate!**\n\nIf glucose, amino acids, and ions are not recovered:\n- ❌ Malnutrition\n- ❌ Dehydration\n- ❌ Electrolyte imbalance\n- ❌ Death\n\n**Solution:** ::green[**Selective Reabsorption by Active Transport!**]\n\n---\n\n## Selective Reabsorption in the Proximal Convoluted Tubule\n\n### Location and Structure\n\n```\nFiltrate in tubule\n        ↓\n    ┌──────────────────────────┐\n    │ Proximal Convoluted      │\n    │ Tubule (PCT)             │\n    │ ┌────────────────────┐   │\n    │ │ Epithelial cell    │   │  Many mitochondria\n    │ │ Carrier proteins   │   │  Carrier proteins\n    │ │ Many folds         │   │  Increases surface area\n    │ └────────────────────┘   │\n    │ ↓                        │\n    │ Blood capillary          │\n    └──────────────────────────┘\n        ↓\n    Reabsorbed substances\n    return to blood\n```\n\n### What Gets Reabsorbed?\n\n**By Active Transport (Energy Required):**\n- ✅ ::yellow[**Glucose**] - 100% reabsorbed (all recovered)\n- ✅ ::yellow[**Amino acids**] - 100% reabsorbed (all recovered)\n- ✅ ::yellow[**Useful ions**] (Na⁺, K⁺, Cl⁻) - selectively reabsorbed\n\n**By Diffusion (Passive):**\n- ✅ Water - follows ions by osmosis\n- ✅ Other small molecules\n\n**Not Reabsorbed (Remains in Filtrate):**\n- ❌ ::red[**Urea**] - waste product (mostly excreted)\n- ❌ Excess ions\n- ❌ Other wastes\n\n---\n\n## How Active Transport Works in Kidney Tubules\n\n### Stage 1: Active Transport into Epithelial Cell\n\n**For Glucose:**\n1. Glucose in filtrate binds to carrier proteins\n2. ATP energy powers carrier proteins\n3. Glucose transported into epithelial cell\n4. Glucose accumulates inside cell\n\n**For Amino Acids:**\n- Similar process with different carrier proteins\n- Different carriers for different amino acids\n- Ensures specific amino acids are recovered\n\n**For Ions:**\n- Selective reabsorption based on body needs\n- If body needs more sodium → more reabsorbed\n- If body has enough potassium → less reabsorbed\n- Regulated by hormones (aldosterone, ADH)\n\n### Stage 2: Diffusion into Blood Capillary\n\n1. High concentration of glucose/amino acids in epithelial cell\n2. Lower concentration in blood capillary\n3. Substances diffuse from epithelial cell into blood\n4. Blood carries them to liver and body cells\n\n---\n\n## Why Kidney Tubule Cells Need Many Mitochondria\n\n### Continuous Active Transport\n\n✅ Kidney tubules are constantly filtering blood\n✅ Constantly reabsorbing glucose and amino acids\n✅ Continuously adjusting ion reabsorption\n✅ Requires ENORMOUS amounts of ATP\n✅ Many mitochondria needed for continuous ATP production\n\n### Energy Cost\n\n```\nActive reabsorption of glucose and amino acids\n        ↓\nRequires continuous ATP supply\n        ↓\nKidney tubule cells have MANY mitochondria\n        ↓\nKidneys consume ~25% of body's oxygen\n        ↓\nKidneys are metabolically very active!\n```\n\n---\n\n## Regulation of Reabsorption: Hormonal Control\n\n### Aldosterone: Controls Sodium Reabsorption\n\n**When body needs more sodium:**\n- Aldosterone hormone released\n- Increases active transport of sodium\n- More sodium reabsorbed into blood\n- Maintains blood pressure and electrolyte balance\n\n**When body has excess sodium:**\n- Less aldosterone\n- Less active transport of sodium\n- More sodium excreted in urine\n\n### ADH (Antidiuretic Hormone): Controls Water Reabsorption\n\n**When body needs more water:**\n- ADH released\n- Increases aquaporins (water channels) in tubule cells\n- More water reabsorbed by osmosis\n- Produces concentrated urine\n\n**When body has excess water:**\n- Less ADH\n- Fewer aquaporins\n- Less water reabsorbed\n- Produces dilute urine\n\n> 💡 **Key Concept:** Active transport of ions creates the osmotic gradient that controls water reabsorption!\n\n---\n\n## Real-World Significance\n\n### Kidney Disease and Protein Loss\n\n**In healthy kidneys:**\n- ✅ All glucose reabsorbed (none in urine)\n- ✅ All amino acids reabsorbed (none in urine)\n- ✅ Small amount of urea in urine (waste)\n\n**In kidney disease:**\n- ❌ Glucose appears in urine (diabetes)\n- ❌ Proteins/amino acids appear in urine (proteinuria)\n- ❌ Cannot reabsorb properly\n- ❌ Leads to malnutrition\n\n### Dialysis: Replacing Kidney Function\n\nArtificial kidney dialysis works because it:\n- Removes waste (urea) by diffusion\n- Maintains useful substances (glucose, amino acids) in dialysate\n- Allows selective reabsorption of what body needs\n- Mimics kidney's selective reabsorption\n\n> ✅ **Summary:** Kidney tubules use active transport to selectively reabsorb glucose, amino acids, and ions, recovering valuable substances while excreting wastes!",
+    "speech_to_text_content": "Active Transport in Kidney Tubules: Selective Reabsorption. Kidney tubules selectively reabsorb useful substances like glucose, amino acids, and ions from the filtrate back into the blood using active transport. Kidney tubule cells have many mitochondria to produce ATP for this energy-intensive process. Hormones like aldosterone and ADH regulate how much of each substance is reabsorbed based on the body's needs.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:43:18.991587+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Section 13",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧠 Active Transport in Nerve Cells: The Sodium-Potassium Pump",
+    "content": "## Why Nerve Cells Need Active Transport\n\n### The Challenge: Maintaining Ion Gradients\n\nNerve cells must maintain specific ion concentrations:\n\n```\nInside nerve cell:     Outside nerve cell:\nHIGH K⁺ (potassium)    LOW K⁺\nLOW Na⁺ (sodium)       HIGH Na⁺\n```\n\n### Why This Matters\n\nThese ion gradients are ESSENTIAL for:\n- 🧠 Generating nerve impulses\n- 🧠 Transmitting signals between neurons\n- 🧠 Muscle contraction\n- 🧠 Brain function\n- 🫀 Heart rhythm\n\n**Problem:** Ions constantly leak across the membrane, trying to equalize!\n**Solution:** ::green[**Active Transport - The Sodium-Potassium Pump!**]\n\n---\n\n## The Sodium-Potassium Pump Mechanism\n\n### What is It?\n\n::yellow[**Sodium-Potassium Pump**] is an active transport mechanism that:\n- Pumps sodium OUT of the cell\n- Pumps potassium INTO the cell\n- Uses ATP energy\n- Maintains the ion gradient\n\n### How It Works: Step-by-Step\n\n**Step 1: Sodium Binds**\n```\nInside cell: 3 Na⁺ ions bind to carrier protein\n(High concentration of Na⁺ inside)\n```\n\n**Step 2: ATP Provides Energy**\n```\nATP releases energy\n        ↓\nCarrier protein changes shape\n        ↓\nPumps 3 Na⁺ OUT of cell\n```\n\n**Step 3: Potassium Binds**\n```\nOutside cell: 2 K⁺ ions bind to carrier protein\n(High concentration of K⁺ outside)\n```\n\n**Step 4: Potassium Enters**\n```\nCarrier protein changes shape\n        ↓\nPumps 2 K⁺ INTO cell\n        ↓\nCycle repeats\n```\n\n### The Ratio: 3 Na⁺ OUT : 2 K⁺ IN\n\n```\n        ┌─────────────────────────┐\n        │   OUTSIDE CELL          │\n        │   (HIGH Na⁺, LOW K⁺)    │\n        │                         │\n    3 Na⁺ →                       │\n        │   ┌─────────────────┐   │\n        │   │ Pump protein    │   │\n        │   │ (Uses ATP!)     │   │\n        │   └─────────────────┘   │\n        │         ← 2 K⁺           │\n        │                         │\n        ├─────────────────────────┤\n        │   INSIDE CELL           │\n        │   (LOW Na⁺, HIGH K⁺)    │\n        └─────────────────────────┘\n```\n\n---\n\n## The Resting Membrane Potential\n\n### What is It?\n\n::yellow[**Resting Membrane Potential**] is the electrical difference across a nerve cell membrane at rest, approximately -70 millivolts.\n\n**Negative inside, positive outside**\n\n### How the Pump Creates It\n\n1. **Sodium-potassium pump removes more positive charge from inside**\n   - 3 Na⁺ out (3 positive charges leave)\n   - 2 K⁺ in (2 positive charges enter)\n   - NET: 1 positive charge removed\n\n2. **Inside becomes negative relative to outside**\n   - Creates electrical gradient\n   - Negative inside, positive outside\n\n3. **This electrical gradient is essential for nerve function**\n   - Allows rapid depolarization during nerve impulse\n   - Allows repolarization after impulse\n\n> 💡 **Key Concept:** The sodium-potassium pump creates BOTH the concentration gradient AND the electrical gradient needed for nerve impulses!\n\n---\n\n## How Nerve Impulses Depend on the Gradient\n\n### Normal Nerve Impulse Transmission\n\n```\nResting state (maintained by pump):\nInside: LOW Na⁺, HIGH K⁺, NEGATIVE charge\nOutside: HIGH Na⁺, LOW K⁺, POSITIVE charge\n\n        ↓\n\nStimulation occurs\n        ↓\n        \nSodium channels open (passive)\nNa⁺ RUSHES IN (down gradient)\nInside becomes POSITIVE (depolarization)\n        ↓\n        \nPotassium channels open (passive)\nK⁺ RUSHES OUT (down gradient)\nInside becomes NEGATIVE again (repolarization)\n        ↓\n        \nSodium-potassium pump restores original gradient\n```\n\n### Why the Pump Must Run Continuously\n\nWithout the pump:\n- ❌ Na⁺ would accumulate inside\n- ❌ K⁺ would accumulate outside\n- ❌ Gradients would disappear\n- ❌ Nerve impulses would stop\n- ❌ Nervous system would fail\n- ❌ Death\n\n---\n\n## Energy Cost: Why Nerve Cells Use So Much ATP\n\n### Enormous Energy Demand\n\n```\nSodium-potassium pump runs continuously\n        ↓\nEach nerve impulse uses the gradient\n        ↓\nPump must restore the gradient\n        ↓\nRequires continuous ATP production\n        ↓\nNerve cells have many mitochondria\n        ↓\nBrain uses ~20% of body's oxygen!\n```\n\n### Why This is Worth the Cost\n\n✅ Enables rapid nerve impulse transmission\n✅ Allows complex thoughts and memories\n✅ Controls all body functions\n✅ Enables consciousness and behavior\n✅ Worth the enormous energy cost!\n\n---\n\n## Clinical Significance\n\n### Drugs That Affect the Pump\n\n**Digitalis (heart medication):**\n- Blocks sodium-potassium pump slightly\n- Increases intracellular Ca²⁺\n- Strengthens heart contractions\n- Used to treat heart failure\n\n**Ouabain (poison):**\n- Completely blocks sodium-potassium pump\n- Ion gradients collapse\n- Nerve and heart function fails\n- Fatal in high doses\n\n### Anesthetics\n\nLocal anesthetics work by:\n- Blocking sodium channels\n- Preventing Na⁺ entry\n- Preventing depolarization\n- Blocking nerve impulses\n- Results in numbness\n\n### Lack of Oxygen\n\n**Hypoxia (low oxygen):**\n- ❌ Mitochondria cannot produce ATP\n- ❌ Sodium-potassium pump stops\n- ❌ Ion gradients collapse\n- ❌ Nerve impulses stop\n- ❌ Brain damage in minutes\n- ⚠️ This is why oxygen is critical!\n\n> ⚠️ **Critical Point:** Brain cells can only survive a few minutes without oxygen because the sodium-potassium pump must run continuously!\n\n---\n\n## Summary: The Pump's Importance\n\n```\nSodium-Potassium Pump\n        ↓\nMaintains ion gradients\n        ↓\nCreates resting membrane potential\n        ↓\nEnables nerve impulses\n        ↓\nEnables nervous system function\n        ↓\nEnables life itself!\n```\n\n> 💡 **Final Insight:** The sodium-potassium pump is one of the most important active transport mechanisms in your body - it literally keeps your brain and heart working!",
+    "speech_to_text_content": "Active Transport in Nerve Cells: The Sodium-Potassium Pump. Nerve cells use the sodium-potassium pump to maintain ion gradients essential for nerve impulse transmission. The pump uses ATP to pump 3 sodium ions out and 2 potassium ions in, maintaining high potassium inside and high sodium outside. This creates the resting membrane potential of negative 70 millivolts. Without this pump, nerve impulses could not occur and the nervous system would fail.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:05:00Z",
+    "updated_at": "2024-01-15T09:05:00Z",
+    "source_timestamp": "2024-01-15T09:05:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:43:35.513018+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Section 14",
+    "type": "slide",
+    "question_type": null,
+    "title": "📊 Comparing All Three Transport Processes",
+    "content": "## Side-by-Side Comparison Table\n\n| Feature | ::yellow[Diffusion] | ::yellow[Osmosis] | ::yellow[Active Transport] |\n|---------|---------|---------|----------|\n| **What moves?** | Solute particles | ::blue[Water molecules] | Any substance |\n| **Energy needed** | ❌ NO (Passive) | ❌ NO (Passive) | ✅ YES (ATP) |\n| **Direction** | High → Low concentration | High → Low water potential | ::red[Low → High concentration] |\n| **Type of gradient** | Concentration | Water potential | ::red[Against gradient] |\n| **Membrane type** | Any permeable | ::blue[Partially permeable only] | Cell membrane |\n| **Speed** | Depends on gradient | Depends on gradient | Controllable |\n| **Examples** | Gas exchange, nutrient absorption | Water in cells | Mineral uptake, glucose absorption |\n| **Requires mitochondria** | ❌ NO | ❌ NO | ✅ YES (for ATP) |\n\n---\n\n## When Each Process is Used\n\n### Diffusion: The Workhorse\n\n**Used for:**\n- 🫁 Oxygen uptake in lungs\n- 🫁 CO₂ removal from lungs\n- 🥗 Some nutrient absorption\n- 💧 Distribution within tissues\n- 🌿 Gas exchange in plants\n\n**Advantages:**\n- ✅ No energy cost\n- ✅ Fast and efficient\n- ✅ Passive process\n\n**Limitations:**\n- ❌ Only works down gradient\n- ❌ Cannot accumulate substances\n- ❌ Cannot move against gradient\n\n---\n\n### Osmosis: Water Management\n\n**Used for:**\n- 💧 Water uptake by cells\n- 🌱 Turgor pressure in plants\n- 🔴 Hemolysis/crenation in animals\n- 💧 Kidney function\n- 🧠 Brain cell function\n\n**Advantages:**\n- ✅ No energy cost\n- ✅ Essential for cell function\n- ✅ Automatic process\n\n**Limitations:**\n- ❌ Only moves water\n- ❌ Only works across partially permeable membranes\n- ❌ Can damage cells if uncontrolled\n\n---\n\n### Active Transport: The Selective Pump\n\n**Used for:**\n- 🌱 Mineral uptake in root cells\n- 🥗 Glucose and amino acid absorption in intestine\n- 🫀 Ion reabsorption in kidney\n- 🧠 Sodium-potassium pump in nerves\n- 💡 Accumulating needed substances\n\n**Advantages:**\n- ✅ Moves substances against gradient\n- ✅ Selective and controllable\n- ✅ Allows accumulation\n- ✅ Maintains cellular function\n\n**Limitations:**\n- ❌ Requires ATP (energy cost)\n- ❌ Requires mitochondria\n- ❌ Slows if oxygen is low\n- ❌ Carrier proteins can be damaged\n\n---\n\n## How Organisms Use All Three Together\n\n### Example 1: Nutrient Absorption in Small Intestine\n\n```\n1. DIFFUSION (passive)\n   Nutrients diffuse from lumen toward epithelial cell\n   ↓\n2. ACTIVE TRANSPORT (energy-dependent)\n   Glucose and amino acids actively transported INTO epithelial cell\n   ↓\n3. DIFFUSION (passive)\n   Nutrients diffuse from epithelial cell INTO blood capillary\n   ↓\n4. OSMOSIS (passive)\n   Water follows by osmosis\n```\n\n**Result:** Complete and efficient nutrient absorption!\n\n---\n\n### Example 2: Gas Exchange in Lungs\n\n```\n1. DIFFUSION (passive)\n   Oxygen diffuses from alveolus → blood\n   (High O₂ in air, low O₂ in blood)\n   ↓\n2. ACTIVE TRANSPORT (energy-dependent)\n   Red blood cells use ATP to bind oxygen\n   (Hemoglobin actively takes up oxygen)\n   ↓\n3. DIFFUSION (passive)\n   CO₂ diffuses from blood → alveolus\n   (High CO₂ in blood, low CO₂ in air)\n```\n\n**Result:** Efficient gas exchange!\n\n---\n\n### Example 3: Water and Mineral Uptake in Roots\n\n```\n1. ACTIVE TRANSPORT (energy-dependent)\n   Root hair cells actively transport mineral ions from soil\n   (Against concentration gradient)\n   ↓\n2. OSMOSIS (passive)\n   Water enters root cell by osmosis\n   (Following mineral ions)\n   ↓\n3. DIFFUSION (passive)\n   Water and minerals diffuse through root tissues\n   ↓\n4. ROOT PRESSURE + TRANSPIRATION\n   Water moves up xylem to shoots\n```\n\n**Result:** Complete water and mineral uptake!\n\n---\n\n## Energy Efficiency: The Big Picture\n\n### Why Use Passive Transport When Possible?\n\n```\nDiffusion and Osmosis\n    ↓\n    No ATP needed\n    ↓\n    Saves energy\n    ↓\n    Organism can use energy for growth, reproduction, etc.\n```\n\n### Why Use Active Transport When Necessary?\n\n```\nActive Transport\n    ↓\n    Requires ATP\n    ↓\n    Costs energy\n    ↓\n    But allows:\n    - Nutrient accumulation\n    - Ion gradient maintenance\n    - Cell control\n    - Survival\n    ↓\n    Worth the energy cost!\n```\n\n> 💡 **Key Principle:** Organisms use the LEAST energy-intensive process that accomplishes the task. When passive transport cannot work, active transport is essential!\n\n---\n\n## Factors Affecting All Three Processes\n\n### Temperature\n\n**Effect:**\n- Higher temperature → faster particle movement → faster diffusion and osmosis\n- Higher temperature → more ATP production → faster active transport\n- ::red[Too high] → proteins denature → processes stop\n- ::red[Too low] → slow processes\n\n### Oxygen Availability\n\n**Effect:**\n- ✅ Oxygen available → aerobic respiration → lots of ATP → active transport works\n- ❌ No oxygen → no ATP → active transport stops (but diffusion and osmosis continue)\n- ⚠️ This is why oxygen is critical for nerve and heart function!\n\n### pH\n\n**Effect:**\n- Affects enzyme and carrier protein function\n- Wrong pH → proteins denature → all processes slow\n- Optimal pH varies by tissue\n\n### Concentration Gradient\n\n**Effect:**\n- Steeper gradient → faster diffusion and osmosis\n- Active transport is independent of gradient (works against it!)\n\n> ✅ **Summary:** Understanding all three transport processes reveals how organisms maintain life through selective, efficient movement of substances!",
+    "speech_to_text_content": "Comparing All Three Transport Processes. Diffusion moves solute particles down concentration gradient without energy. Osmosis moves water molecules down water potential gradient without energy. Active transport moves substances against concentration gradient using ATP energy. Organisms use all three processes together for efficient nutrient absorption, gas exchange, and water uptake. Passive processes save energy when possible, but active transport is essential for maintaining cellular function.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:10:00Z",
+    "updated_at": "2024-01-15T09:10:00Z",
+    "source_timestamp": "2024-01-15T09:10:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:43:51.589161+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Review Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Understanding Diffusion: Concentration Gradients",
+    "content": "## Question 1\n\nWhich of the following BEST describes why diffusion occurs in living organisms?\n\nA) Particles move from areas of low concentration to areas of high concentration to balance the system\n\nB) Particles have kinetic energy and move randomly, resulting in net movement from high to low concentration\n\nC) The cell membrane actively pumps particles from low to high concentration\n\nD) Water molecules move to equalize the water potential across the membrane",
+    "speech_to_text_content": "Question 1: Which of the following best describes why diffusion occurs in living organisms? Option A: Particles move from areas of low concentration to areas of high concentration to balance the system. Option B: Particles have kinetic energy and move randomly, resulting in net movement from high to low concentration. Option C: The cell membrane actively pumps particles from low to high concentration. Option D: Water molecules move to equalize the water potential across the membrane.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440050",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440051",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440052",
+        "option_text": "A",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440051",
+        "option_text": "B",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440053",
+        "option_text": "C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440054",
+        "option_text": "D",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n::green[Particles have kinetic energy and move randomly, resulting in net movement from high to low concentration]\n\n**Why this is correct:**\nDiffusion occurs because:\n1. All particles in fluids possess kinetic energy from heat\n2. This causes them to move randomly in all directions\n3. Although individual particle movements are random, the NET result is movement from high to low concentration\n4. This is because more particles hit the membrane from the high-concentration side than from the low-concentration side\n5. Over time, this results in a net movement toward the low-concentration area\n\n**Why other options are incorrect:**\n\n**Option A:** WRONG - This is backwards! Diffusion moves particles from HIGH to LOW concentration, not low to high. This would be active transport.\n\n**Option C:** WRONG - Diffusion is PASSIVE (does not use energy). The membrane does not actively pump particles. This describes active transport, which uses ATP energy.\n\n**Option D:** WRONG - This describes osmosis, not diffusion. Osmosis is the movement of WATER molecules, not solute particles. While osmosis also moves down a gradient (water potential), it's a different process from diffusion.\n\n**Key Concept from Chapter:**\n::yellow[Diffusion] is the net movement of particles from a region of higher concentration to a region of lower concentration, down a concentration gradient. It is passive and requires no energy.\n\n**Related Content:**\n- Diffusion occurs in lungs (oxygen uptake), small intestine (nutrient absorption), and plant leaves (gas exchange)\n- The rate of diffusion depends on: concentration gradient, diffusion distance, and surface area to volume ratio",
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:43:59.719058+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Review Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Factors Affecting Diffusion Rate",
+    "content": "## Question 2\n\nA student observes that root hair cells have long, thin projections. Which of the following BEST explains the biological significance of this adaptation?\n\nA) The projections increase the surface area for mineral ion absorption by diffusion and active transport\n\nB) The projections decrease the diffusion distance, allowing faster nutrient uptake\n\nC) The projections contain chloroplasts for photosynthesis\n\nD) The projections prevent water loss from the plant",
+    "speech_to_text_content": "Question 2: A student observes that root hair cells have long thin projections. Which of the following best explains the biological significance of this adaptation? Option A: The projections increase the surface area for mineral ion absorption by diffusion and active transport. Option B: The projections decrease the diffusion distance, allowing faster nutrient uptake. Option C: The projections contain chloroplasts for photosynthesis. Option D: The projections prevent water loss from the plant.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440060",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440061",
+        "answer_text": "A",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440061",
+        "option_text": "A",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440062",
+        "option_text": "B",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440063",
+        "option_text": "C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440064",
+        "option_text": "D",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: A**\n\n::green[The projections increase the surface area for mineral ion absorption by diffusion and active transport]\n\n**Why this is correct:**\nRoot hair cell projections (root hairs) are adaptations that:\n1. INCREASE SURFACE AREA - The long, thin projections greatly increase the surface area of the cell\n2. ALLOW MORE ABSORPTION - Larger surface area means more contact with soil solution\n3. ENABLE FASTER TRANSPORT - Both diffusion (for some minerals) and active transport (for most minerals) are faster across larger surface areas\n4. MAXIMIZE NUTRIENT UPTAKE - The plant can absorb more minerals per unit time\n\n**From Chapter Content:**\n\"Root hair cells have long, narrow projections. Greatly increase surface area for absorbing water and mineral ions from soil.\"\n\n**Why other options are incorrect:**\n\n**Option B:** INCOMPLETE - While it's true that root hairs don't significantly decrease diffusion distance (the distance is already short in the root), this is not the PRIMARY significance. The main advantage is increased surface area, not decreased distance. The chapter emphasizes that surface area to volume ratio is a key factor in diffusion rates.\n\n**Option C:** WRONG - Root hair cells do NOT contain chloroplasts! They are underground and do not photosynthesize. Only above-ground green cells (mesophyll cells) contain chloroplasts. Root cells are colorless.\n\n**Option D:** WRONG - Root hair cells are underground in soil, so water loss is not a concern. This function is important for aerial leaves (which have a waxy cuticle), not roots.\n\n**Key Concepts from Chapter:**\n- ::yellow[Surface Area to Volume Ratio] - Greater surface area to volume ratio = higher rate of diffusion\n- Biological adaptations include: root hair cells, intestinal villi, lung alveoli, and fish gills\n- These adaptations increase surface area for faster substance exchange\n\n**Related Content:**\nOther examples of surface area adaptations:\n- Small intestine villi and microvilli - increase nutrient absorption\n- Lung alveoli - increase gas exchange\n- Fish gills - increase oxygen absorption from water",
+    "created_at": "2024-01-15T09:20:00Z",
+    "updated_at": "2024-01-15T09:20:00Z",
+    "source_timestamp": "2024-01-15T09:20:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:44:08.006593+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Review Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Osmosis and Plant Cell Responses",
+    "content": "## Question 3\n\nA plant cell is placed in distilled water. Which of the following sequences of events will occur?\n\nA) Water enters the cell by osmosis → cell becomes turgid → turgor pressure supports the plant\n\nB) Water leaves the cell by osmosis → cell becomes plasmolyzed → plant wilts\n\nC) Solutes diffuse out of the cell → water follows by osmosis → cell shrinks\n\nD) The cell membrane actively pumps water into the vacuole → cell becomes rigid",
+    "speech_to_text_content": "Question 3: A plant cell is placed in distilled water. Which of the following sequences of events will occur? Option A: Water enters the cell by osmosis, cell becomes turgid, turgor pressure supports the plant. Option B: Water leaves the cell by osmosis, cell becomes plasmolyzed, plant wilts. Option C: Solutes diffuse out of the cell, water follows by osmosis, cell shrinks. Option D: The cell membrane actively pumps water into the vacuole, cell becomes rigid.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440070",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440071",
+        "answer_text": "A",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440071",
+        "option_text": "A",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440072",
+        "option_text": "B",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440073",
+        "option_text": "C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440074",
+        "option_text": "D",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: A**\n\n::green[Water enters the cell by osmosis → cell becomes turgid → turgor pressure supports the plant]\n\n**Why this is correct:**\n\n**Step 1: Water concentration differences**\n- Distilled water has HIGH water potential (very dilute, no solutes)\n- Plant cell sap has LOW water potential (contains dissolved solutes)\n- Water moves from high to low water potential\n\n**Step 2: Osmosis occurs**\n- Water molecules move across the partially permeable cell membrane\n- Water enters the cell (moves into the cell)\n- The vacuole expands with water\n\n**Step 3: Cell becomes turgid**\n- The cell fills with water\n- The cell membrane presses against the cell wall\n- The cell becomes swollen and rigid\n- This is called the ::yellow[**TURGID STATE**]\n\n**Step 4: Turgor pressure supports the plant**\n- ::yellow[Turgor pressure] is the pressure of cell contents pushing against the cell wall\n- This pressure keeps plant cells rigid and firm\n- Provides structural support to leaves and stems\n- Keeps plants upright and crisp\n\n**From Chapter Content:**\n\"In Distilled Water (Hypotonic Solution): Water enters cell by osmosis. Cell becomes turgid (swollen but not burst due to cell wall). Turgor pressure provides structural support.\"\n\n**Why other options are incorrect:**\n\n**Option B:** WRONG - This describes what happens in a HYPERTONIC (concentrated salt) solution, NOT distilled water!\n- Distilled water is hypotonic (high water potential)\n- Hypertonic solution is concentrated (low water potential)\n- In hypertonic: water LEAVES the cell, cell becomes PLASMOLYZED, plant WILTS\n- In hypotonic (distilled water): water ENTERS the cell, cell becomes TURGID, plant stays firm\n\n**Option C:** WRONG - Solutes do NOT diffuse out of the cell in this scenario\n- The cell membrane is selectively permeable\n- Large solute molecules (like sugars and proteins) cannot easily cross the membrane\n- Only water molecules cross the membrane in osmosis\n- The solutes remain inside, creating the osmotic gradient\n\n**Option D:** WRONG - Water movement is PASSIVE (osmosis), not active\n- Osmosis does NOT require energy or ATP\n- Water molecules move passively down the water potential gradient\n- No carrier proteins or pumps are involved in osmosis\n- The cell wall provides the rigidity, not active pumping\n\n**Key Concepts from Chapter:**\n\n::yellow[**Osmosis**] - The movement of water molecules from a region of higher water potential to a region of lower water potential through a partially permeable membrane.\n\n::yellow[**Water Potential**] - The measure of the tendency of water molecules to move from one place to another\n- Dilute solutions have HIGHER water potential\n- Concentrated solutions have LOWER water potential\n\n::yellow[**Hypotonic Solution**] - Dilute solution with high water potential\n- Water enters plant cells\n- Cells become turgid\n- Plant remains firm and upright\n\n::yellow[**Turgid**] - Swollen and rigid due to water pressure\n- Cell is full of water\n- Membrane presses against cell wall\n- Cell maintains its shape\n\n**Related Content:**\nComparison of plant cell responses:\n- Hypotonic (distilled water) → Turgid → Plant firm and upright\n- Hypertonic (salt solution) → Plasmolyzed → Plant wilts\n- Isotonic → Normal → No change",
+    "created_at": "2024-01-15T09:25:00Z",
+    "updated_at": "2024-01-15T09:25:00Z",
+    "source_timestamp": "2024-01-15T09:25:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:44:18.775945+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Review Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Active Transport: Energy-Dependent Movement",
+    "content": "## Question 4\n\nRoot hair cells absorb mineral ions from soil solution using active transport. Which of the following statements is TRUE about this process?\n\nA) Mineral ions move down the concentration gradient without requiring energy\n\nB) Mineral ions move against the concentration gradient using ATP energy from mitochondria\n\nC) Mineral ions are absorbed only when the soil solution has a higher mineral concentration than the root cell\n\nD) The process does not require carrier proteins in the cell membrane",
+    "speech_to_text_content": "Question 4: Root hair cells absorb mineral ions from soil solution using active transport. Which of the following statements is true about this process? Option A: Mineral ions move down the concentration gradient without requiring energy. Option B: Mineral ions move against the concentration gradient using ATP energy from mitochondria. Option C: Mineral ions are absorbed only when the soil solution has a higher mineral concentration than the root cell. Option D: The process does not require carrier proteins in the cell membrane.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440080",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440081",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440082",
+        "option_text": "A",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440081",
+        "option_text": "B",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440083",
+        "option_text": "C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440084",
+        "option_text": "D",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n::green[Mineral ions move against the concentration gradient using ATP energy from mitochondria]\n\n**Why this is correct:**\n\n**Understanding the Problem:**\n- Soil solution has LOW mineral ion concentration\n- Root cells have HIGH mineral ion concentration\n- Plants NEED minerals for growth (nitrogen for proteins, phosphorus for energy, etc.)\n- Diffusion would move ions OUT of the cell (wrong direction!)\n- Solution: Use active transport to move ions IN against the gradient\n\n**The Active Transport Process:**\n\n1. **Mineral ions bind to carrier proteins** in the cell membrane\n2. **ATP provides energy** from mitochondrial respiration\n3. **Carrier proteins change shape** using the ATP energy\n4. **Mineral ions are transported** from soil (low concentration) into root cell (high concentration)\n5. **Ions accumulate** in the vacuole\n6. **Water follows by osmosis** (creating root pressure)\n\n**Key Features of Active Transport:**\n- ✅ Moves AGAINST concentration gradient (low → high)\n- ✅ Requires ATP energy\n- ✅ Uses carrier proteins\n- ✅ Allows cells to accumulate substances\n- ✅ Is selective (different ions absorbed at different rates)\n\n**From Chapter Content:**\n\"Active Transport: The movement of substances against a concentration gradient (from low to high concentration) using energy from cellular respiration.\"\n\n\"Root Hair Cells: Active uptake of mineral ions from soil solution. Mineral concentration in plant often higher than in soil. Energy from mitochondria powers this process.\"\n\n**Why other options are incorrect:**\n\n**Option A:** WRONG - This describes DIFFUSION, not active transport!\n- Diffusion moves DOWN the gradient (high → low) WITHOUT energy\n- Active transport moves AGAINST the gradient (low → high) WITH energy\n- Active transport is the OPPOSITE of diffusion\n\n**Option C:** WRONG - This is actually FALSE!\n- The soil solution usually has LOWER mineral concentration than root cells\n- This is WHY active transport is needed\n- If soil had higher concentration, diffusion alone would work\n- Active transport allows absorption even when soil concentration is low\n\n**Option D:** WRONG - Carrier proteins are ESSENTIAL for active transport!\n- Carrier proteins are specific proteins in the cell membrane\n- They recognize and bind to target substances\n- They use ATP energy to change shape\n- They transport the substance across the membrane\n- Without carrier proteins, active transport cannot occur\n\n**Key Concepts from Chapter:**\n\n::yellow[**Active Transport**] - The movement of substances against a concentration gradient (from low to high concentration) using energy from cellular respiration.\n\n**Key Features:**\n- Requires ATP energy\n- Uses carrier proteins\n- Moves substances against gradient\n- Allows accumulation of needed substances\n- Selective (specific substances transported)\n\n**Why Root Cells Have Many Mitochondria:**\n- Active transport requires CONTINUOUS ATP production\n- Root cells are constantly absorbing minerals\n- Many mitochondria = constant ATP supply\n- Without enough mitochondria, mineral uptake would stop\n\n**Consequence: Water Uptake**\n```\nMineral ions absorbed by active transport\n        ↓\nMineral concentration increases in root cell\n        ↓\nWater potential decreases in root cell\n        ↓\nWater enters by osmosis (passive)\n        ↓\nRoot pressure builds up\n        ↓\nWater moves up xylem to shoots\n```\n\n**Real-World Significance:**\nIf root cells cannot perform active transport:\n- ❌ Cannot absorb minerals efficiently\n- ❌ Plants become stunted\n- ❌ Reduced growth and reproduction\n- Causes: lack of oxygen, cold temperature, toxic substances, wrong soil pH\n\n**Comparison of Transport Processes:**\n\n| Process | Direction | Energy | Example |\n|---------|-----------|--------|----------|\n| Diffusion | High → Low | NO | Gas exchange |\n| Osmosis | High → Low water potential | NO | Water in cells |\n| Active Transport | Low → High | YES (ATP) | Mineral uptake |",
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:44:30.801973+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Review Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Osmosis in Animal Cells: Hemolysis and Crenation",
+    "content": "## Question 5\n\nRed blood cells are placed in distilled water. What will happen to the cells and why?\n\nA) Cells will shrivel because water leaves by osmosis in the hypotonic solution\n\nB) Cells will swell and burst (hemolysis) because water enters by osmosis in the hypotonic solution\n\nC) Cells will remain unchanged because they have a cell membrane that prevents osmosis\n\nD) Cells will become crenated because the salt concentration outside is too high",
+    "speech_to_text_content": "Question 5: Red blood cells are placed in distilled water. What will happen to the cells and why? Option A: Cells will shrivel because water leaves by osmosis in the hypotonic solution. Option B: Cells will swell and burst (hemolysis) because water enters by osmosis in the hypotonic solution. Option C: Cells will remain unchanged because they have a cell membrane that prevents osmosis. Option D: Cells will become crenated because the salt concentration outside is too high.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440090",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440091",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440092",
+        "option_text": "A",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440091",
+        "option_text": "B",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440093",
+        "option_text": "C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440094",
+        "option_text": "D",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n::green[Cells will swell and burst (hemolysis) because water enters by osmosis in the hypotonic solution]\n\n**Why this is correct:**\n\n**Understanding the Solution:**\n- Distilled water is HYPOTONIC (very dilute, no solutes)\n- Hypotonic = HIGH water potential\n- Red blood cell interior has dissolved proteins and ions\n- Red blood cell interior = LOW water potential (relative to distilled water)\n- Water moves from HIGH to LOW water potential\n- Therefore, water moves INTO the red blood cell\n\n**What Happens Step-by-Step:**\n\n1. **Water enters the cell by osmosis**\n   - Water molecules move from distilled water into the cell\n   - Cell volume increases\n\n2. **Cell swells**\n   - The cell fills with water\n   - Cell membrane stretches\n\n3. **Cell membrane ruptures**\n   - The cell membrane cannot stretch indefinitely\n   - Eventually the membrane breaks\n   - Cell contents leak out\n\n4. **Hemolysis occurs**\n   - ::yellow[**Hemolysis**] = bursting of red blood cells\n   - Hemoglobin (red protein) leaks out\n   - Solution turns red\n   - Red blood cells are destroyed\n\n**Why Animal Cells Are Different from Plant Cells:**\n\n| Cell Type | In Hypotonic Solution | Why? |\n|-----------|---------|-------|\n| Plant cell | Becomes TURGID (survives) | Has cell wall to protect |\n| Animal cell | HEMOLYSIS (bursts) | NO cell wall - membrane ruptures |\n\n**From Chapter Content:**\n\"In Distilled Water (Hypotonic Solution): Water enters cell by osmosis. Cell swells and may burst (no cell wall for protection). Red blood cells undergo hemolysis.\"\n\n**Why other options are incorrect:**\n\n**Option A:** WRONG - This describes what happens in HYPERTONIC solution, not hypotonic!\n- Hypertonic = concentrated solution = LOW water potential\n- In hypertonic: water LEAVES the cell\n- Cell shrivels in a process called ::yellow[**CRENATION**]\n- Red blood cells become shriveled with spiky edges\n- Distilled water is the OPPOSITE (hypotonic)\n\n**Option C:** WRONG - The cell membrane DOES allow osmosis!\n- The cell membrane is selectively/partially permeable\n- Water molecules CAN pass through the membrane\n- Osmosis DOES occur across cell membranes\n- This is precisely why hemolysis happens\n- The membrane does NOT prevent water movement\n\n**Option D:** WRONG - Distilled water has LOW salt concentration, not high!\n- Distilled water = pure water = NO dissolved solutes\n- Crenation occurs in HYPERTONIC (HIGH salt) solutions\n- Hemolysis occurs in HYPOTONIC (LOW salt) solutions\n- These are opposite conditions\n\n**Key Concepts from Chapter:**\n\n::yellow[**Hemolysis**] - The bursting of red blood cells due to water entering by osmosis in a hypotonic solution\n\n::yellow[**Crenation**] - The shrinking of red blood cells due to water leaving by osmosis in a hypertonic solution\n\n::yellow[**Hypotonic Solution**] - Dilute solution with HIGH water potential\n- Water concentration is HIGH\n- Solute concentration is LOW\n- Water enters cells\n- In animals: hemolysis (bursting)\n- In plants: turgor (cell stays intact due to cell wall)\n\n::yellow[**Hypertonic Solution**] - Concentrated solution with LOW water potential\n- Water concentration is LOW\n- Solute concentration is HIGH\n- Water leaves cells\n- In animals: crenation (shrinking)\n- In plants: plasmolysis (cell membrane pulls away from wall)\n\n::yellow[**Isotonic Solution**] - Solution with same water potential as cell\n- No net water movement\n- Cells remain normal\n- Example: 0.9% saline solution (used in medical treatment)\n\n**Medical Importance:**\n\n⚠️ **Why Distilled Water is DANGEROUS to Inject:**\n- If distilled water enters bloodstream\n- Red blood cells undergo hemolysis\n- Hemoglobin is released\n- Cannot carry oxygen\n- Can cause serious harm or death\n\n✅ **Why Saline Solution is Used:**\n- 0.9% salt solution is ISOTONIC\n- Same water potential as blood\n- No net water movement\n- Red blood cells remain normal\n- Safe for IV (intravenous) fluids\n\n**Comparison of Solutions:**\n\n| Solution | Water Potential | Effect on RBC | Medical Use |\n|----------|---------|---------|----------|\n| Distilled water | HIGH | ::red[Hemolysis (bursts)] | ❌ DANGEROUS |\n| Hypotonic | HIGH | ::red[Hemolysis (bursts)] | ❌ Not used |\n| Isotonic (0.9% saline) | EQUAL | ::green[Normal (survives)] | ✅ IV fluids |\n| Hypertonic | LOW | ::red[Crenation (shrinks)] | ❌ Not used |\n\n**Real-World Application:**\nThis is why:\n- Hospitals use isotonic saline for IV fluids\n- Contact lens solution is isotonic\n- Wound rinses use isotonic solution\n- All medical solutions are carefully balanced to be isotonic with blood",
+    "created_at": "2024-01-15T09:35:00Z",
+    "updated_at": "2024-01-15T09:35:00Z",
+    "source_timestamp": "2024-01-15T09:35:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:44:44.585101+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Review Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Comparing Transport Processes",
+    "content": "## Question 6\n\nWhich of the following statements CORRECTLY compares diffusion and active transport?\n\nA) Both diffusion and active transport move substances against the concentration gradient and require ATP energy\n\nB) Diffusion is passive and moves substances down the concentration gradient, while active transport is active and moves substances against the concentration gradient\n\nC) Active transport is faster than diffusion because it does not require carrier proteins\n\nD) Both processes require a partially permeable membrane and move water molecules only",
+    "speech_to_text_content": "Question 6: Which of the following statements correctly compares diffusion and active transport? Option A: Both diffusion and active transport move substances against the concentration gradient and require ATP energy. Option B: Diffusion is passive and moves substances down the concentration gradient, while active transport is active and moves substances against the concentration gradient. Option C: Active transport is faster than diffusion because it does not require carrier proteins. Option D: Both processes require a partially permeable membrane and move water molecules only.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440100",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": "550e8400-e29b-41d4-a716-446655440101",
+        "answer_text": "B",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440102",
+        "option_text": "A",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440101",
+        "option_text": "B",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440103",
+        "option_text": "C",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440104",
+        "option_text": "D",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "**Correct Answer: B**\n\n::green[Diffusion is passive and moves substances down the concentration gradient, while active transport is active and moves substances against the concentration gradient]\n\n**Why this is correct:**\n\nThis statement accurately describes the KEY DIFFERENCE between diffusion and active transport:\n\n**Diffusion (Passive Transport):**\n- ❌ Does NOT require energy (ATP)\n- ✅ Moves DOWN the concentration gradient (high → low)\n- ✅ Substances move naturally toward equilibrium\n- ✅ No carrier proteins needed\n- ✅ Examples: oxygen uptake in lungs, gas exchange in plants\n\n**Active Transport (Active Transport):**\n- ✅ REQUIRES energy (ATP from mitochondria)\n- ✅ Moves AGAINST the concentration gradient (low → high)\n- ✅ Substances move away from equilibrium\n- ✅ Uses carrier proteins in cell membrane\n- ✅ Examples: mineral uptake in roots, glucose absorption in intestines\n\n**From Chapter Content:**\n\n\"Diffusion: The net movement of particles from a region of higher concentration to a region of lower concentration, down a concentration gradient.\"\n\n\"Active Transport: The movement of substances against a concentration gradient (from low to high concentration) using energy from cellular respiration.\"\n\n**Why other options are incorrect:**\n\n**Option A:** WRONG - This statement is completely backwards!\n- ::red[WRONG:] Both move against the gradient - NO! Diffusion moves DOWN the gradient, active transport moves AGAINST the gradient\n- ::red[WRONG:] Both require ATP - NO! Diffusion requires NO energy, active transport requires ATP\n- This is the OPPOSITE of what actually happens\n\n**Option C:** WRONG - This contains multiple false claims!\n- ::red[WRONG:] Active transport is faster - NOT necessarily! Speed depends on many factors\n- ::red[WRONG:] Active transport doesn't require carrier proteins - FALSE! Carrier proteins are ESSENTIAL for active transport\n- Active transport DOES use carrier proteins to move substances across the membrane\n- Without carrier proteins, active transport cannot occur\n\n**Option D:** WRONG - This is inaccurate!\n- ::red[WRONG:] Both require partially permeable membrane - Only osmosis specifically requires this!\n- Diffusion can occur across any permeable membrane\n- Active transport occurs across the cell membrane (which is selectively permeable)\n- ::red[WRONG:] Both move water molecules only - FALSE!\n- Diffusion moves any solute particles (gases, nutrients, ions)\n- Osmosis moves water molecules\n- Active transport moves any substance with carrier proteins\n- These are different processes!\n\n**Comprehensive Comparison Table:**\n\n| Feature | Diffusion | Osmosis | Active Transport |\n|---------|-----------|---------|----------|\n| **Energy required** | ❌ NO | ❌ NO | ✅ YES (ATP) |\n| **Direction** | High → Low | High → Low water potential | ::red[Low → High] |\n| **What moves** | Solute particles | Water molecules | Any substance |\n| **Membrane type** | Any permeable | Partially permeable | Cell membrane |\n| **Carrier proteins** | ❌ Not needed | ❌ Not needed | ✅ Required |\n| **Speed** | Depends on gradient | Depends on gradient | Controllable |\n| **Examples** | Gas exchange, nutrient absorption | Water in cells | Mineral uptake, glucose absorption |\n| **Requires mitochondria** | ❌ NO | ❌ NO | ✅ YES (for ATP) |\n\n**Key Concepts from Chapter:**\n\n::yellow[**Passive Transport:**]\n- Includes diffusion and osmosis\n- Does NOT require energy\n- Moves DOWN concentration/water potential gradient\n- Particles move naturally due to kinetic energy\n\n::yellow[**Active Transport:**]\n- Requires ATP energy from mitochondria\n- Moves AGAINST concentration gradient\n- Uses carrier proteins\n- Allows cells to accumulate substances\n- Essential for cell function\n\n**Why This Distinction Matters:**\n\n✅ **Passive Transport (Diffusion/Osmosis):**\n- Saves energy for the organism\n- Used when substances need to move down gradient\n- Fast and efficient for equilibration\n- Examples: oxygen entering blood, water entering cells\n\n✅ **Active Transport:**\n- Costs energy but provides control\n- Used when substances need to accumulate against gradient\n- Selective - only specific substances transported\n- Essential for maintaining cellular function\n- Examples: mineral accumulation, ion gradients for nerves\n\n**Organisms use the LEAST energy-intensive process that accomplishes the task!**",
+    "created_at": "2024-01-15T09:40:00Z",
+    "updated_at": "2024-01-15T09:40:00Z",
+    "source_timestamp": "2024-01-15T09:40:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:44:56.532127+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "bio_movement_substances_o_level",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "Summary & Key Takeaways",
+    "type": "slide",
+    "question_type": null,
+    "title": "🎯 Chapter Summary: Movement of Substances",
+    "content": "## Three Essential Transport Processes\n\nAll living organisms depend on three fundamental mechanisms to exchange materials:\n\n### 1. ::yellow[Diffusion] - Passive Movement\n\n**Definition:** Net movement of particles from high to low concentration\n\n**Key Features:**\n- ❌ No energy required (passive)\n- ✅ Moves DOWN concentration gradient\n- ✅ Driven by random particle movement\n- ✅ Affected by: concentration gradient, diffusion distance, surface area\n\n**Real-World Examples:**\n- 🫁 Oxygen enters blood in lungs\n- 🌿 CO₂ enters leaves through stomata\n- 🥗 Some nutrients absorbed in small intestine\n\n---\n\n### 2. ::yellow[Osmosis] - Water Movement\n\n**Definition:** Movement of water molecules from high to low water potential through partially permeable membrane\n\n**Key Features:**\n- ❌ No energy required (passive)\n- ✅ Moves DOWN water potential gradient\n- ✅ Only across partially permeable membranes\n- ✅ Driven by solute concentration differences\n\n**Effects on Cells:**\n- **Plant cells in hypotonic solution:** Turgid (firm, supported by turgor pressure)\n- **Animal cells in hypotonic solution:** Hemolysis (burst)\n- **Plant cells in hypertonic solution:** Plasmolyzed (wilted)\n- **Animal cells in hypertonic solution:** Crenated (shriveled)\n\n---\n\n### 3. ::yellow[Active Transport] - Energy-Powered Movement\n\n**Definition:** Movement of substances against concentration gradient using ATP energy\n\n**Key Features:**\n- ✅ Requires ATP energy from mitochondria\n- ✅ Moves AGAINST concentration gradient\n- ✅ Uses specific carrier proteins\n- ✅ Selective and controllable\n- ✅ Allows substance accumulation\n\n**Real-World Examples:**\n- 🌱 Mineral uptake in root hair cells\n- 🥗 Glucose and amino acid absorption in small intestine\n- 🫀 Ion reabsorption in kidney tubules\n- 🧠 Sodium-potassium pump in nerve cells\n\n---\n\n## Factors Affecting Diffusion\n\n### 1. Concentration Gradient\n- ::green[Steeper gradient] = Faster diffusion\n- More particles moving from high to low area\n\n### 2. Diffusion Distance\n- ::green[Shorter distance] = Faster diffusion\n- Organisms minimize distances:\n  - Lungs: alveoli close to blood\n  - Intestines: single cell layer\n  - Leaves: stomata near photosynthetic cells\n\n### 3. Surface Area to Volume Ratio\n- ::green[Larger surface area] = Faster diffusion\n- Biological adaptations:\n  - Root hairs (roots)\n  - Intestinal villi and microvilli (small intestine)\n  - Lung alveoli (lungs)\n  - Fish gills (gills)\n\n---\n\n## Water Potential Concept\n\n### Understanding Water Potential\n\n::yellow[**Water Potential**] = measure of tendency of water to move\n\n- ::green[HIGH water potential] = dilute solution (more water, fewer solutes)\n- ::red[LOW water potential] = concentrated solution (less water, more solutes)\n- Water moves from HIGH → LOW water potential\n\n### Solution Types\n\n| Type | Water Potential | Effect on Plant Cell | Effect on Animal Cell |\n|------|---------|---------|----------|\n| ::green[Hypotonic] | HIGH | Turgid (survives) | ::red[Hemolysis (bursts)] |\n| ::blue[Isotonic] | EQUAL | Normal | ::green[Normal] |\n| ::red[Hypertonic] | LOW | Plasmolyzed (wilts) | ::red[Crenation (shrinks)] |\n\n---\n\n## Biological Applications\n\n### In Animals\n\n**Lungs:**\n- Oxygen diffuses from alveoli into blood\n- CO₂ diffuses from blood into alveoli\n\n**Small Intestine:**\n- Glucose and amino acids actively transported INTO epithelial cells\n- Then diffuse INTO blood capillaries\n- Water follows by osmosis\n\n**Kidneys:**\n- Glucose and amino acids actively reabsorbed\n- Ions selectively reabsorbed (regulated by hormones)\n- Wastes (urea) remain in filtrate\n\n**Nerves:**\n- Sodium-potassium pump maintains ion gradients\n- Essential for nerve impulse transmission\n- Requires continuous ATP supply\n\n### In Plants\n\n**Gas Exchange:**\n- CO₂ diffuses into leaves through stomata\n- O₂ diffuses out through stomata\n\n**Root Absorption:**\n- Mineral ions actively transported from soil\n- Water enters by osmosis\n- Creates root pressure\n\n**Internal Distribution:**\n- Water and minerals move up xylem\n- Sugars move down phloem\n- Diffusion distributes within tissues\n\n---\n\n## Why Mitochondria Matter\n\n::red[**Active transport requires LOTS of ATP!**]\n\n**Cells doing active transport have many mitochondria:**\n- 🌱 Root hair cells (mineral uptake)\n- 🥗 Intestinal epithelial cells (nutrient absorption)\n- 🫀 Kidney tubule cells (selective reabsorption)\n- 🧠 Nerve cells (ion pump maintenance)\n\n**Without enough mitochondria:**\n- ❌ Cannot produce enough ATP\n- ❌ Active transport fails\n- ❌ Cells cannot accumulate needed substances\n- ❌ Organism cannot survive\n\n---\n\n## Practical Implications\n\n### Medical Applications\n\n✅ **Kidney Dialysis** - removes waste by diffusion\n✅ **IV Fluids** - must be isotonic (0.9% saline)\n✅ **Anesthetics** - block ion channels (prevent nerve impulses)\n✅ **Heart Medications** - affect sodium-potassium pump\n\n### Environmental Solutions\n\n✅ **NEWater Technology** (Singapore) - purifies water through selective membranes\n✅ **Water Purification** - uses osmosis and diffusion principles\n✅ **Soil Management** - considers osmosis and ion transport\n\n### Agricultural Practices\n\n✅ **Soil Aeration** - ensures oxygen for root respiration\n✅ **Soil pH** - affects carrier protein function\n✅ **Fertilizers** - provides mineral ions for uptake\n✅ **Irrigation** - manages water potential in soil\n\n---\n\n## Key Principles to Remember\n\n### Principle 1: Energy Efficiency\n**Organisms use the LEAST energy-intensive process that works:**\n- Passive transport when possible (saves energy)\n- Active transport only when necessary (costs energy but provides control)\n\n### Principle 2: Structure Matches Function\n**Cells and tissues are organized for efficient transport:**\n- Large surface areas for faster exchange\n- Short diffusion distances\n- Rich blood supplies to maintain gradients\n- Many mitochondria for energy production\n\n### Principle 3: Gradients Drive Movement\n**All transport depends on gradients:**\n- Concentration gradients (diffusion)\n- Water potential gradients (osmosis)\n- Energy gradients (active transport)\n\n### Principle 4: Balance is Essential\n**Cells maintain careful balance:**\n- Isotonic solutions prevent cell damage\n- Ion gradients enable nerve function\n- Nutrient accumulation supports growth\n- Waste removal prevents toxicity\n\n---\n\n## Exam Tips\n\n✅ **Remember the direction:**\n- Diffusion: High → Low (DOWN gradient)\n- Osmosis: High → Low water potential (DOWN gradient)\n- Active Transport: Low → High (AGAINST gradient)\n\n✅ **Remember the energy:**\n- Diffusion: NO energy\n- Osmosis: NO energy\n- Active Transport: YES energy (ATP)\n\n✅ **Remember the adaptations:**\n- Large surface area for faster transport\n- Short distances for efficient exchange\n- Many mitochondria for active transport\n- Rich blood supply to maintain gradients\n\n✅ **Remember the consequences:**\n- Hypotonic: water enters (turgid in plants, hemolysis in animals)\n- Hypertonic: water leaves (plasmolyzed in plants, crenated in animals)\n- Isotonic: no change (normal cell function)\n\n> 💡 **Final Thought:** Understanding movement of substances is understanding life itself! Every moment, your cells are exchanging materials to keep you alive. The three transport processes - diffusion, osmosis, and active transport - work together in perfect coordination to maintain the internal environment your cells need to survive and thrive.",
+    "speech_to_text_content": "Chapter Summary: Movement of Substances. Three essential transport processes: Diffusion (passive, down gradient), Osmosis (water movement, passive), and Active Transport (against gradient, requires ATP). Factors affecting diffusion: concentration gradient, diffusion distance, and surface area. Water potential determines osmosis direction. Biological applications include gas exchange in lungs, nutrient absorption in intestines, selective reabsorption in kidneys, and ion gradient maintenance in nerves. Mitochondria are essential for active transport.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T03:45:15.271728+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

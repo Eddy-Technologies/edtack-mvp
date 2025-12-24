@@ -102,6 +102,16 @@ export function useThreads() {
     }
   };
 
+  // Add thread to local list (for threads created outside of createThread)
+  const addThreadToList = (thread: Thread) => {
+    // Only add if not already in list
+    if (!threads.value.find((t) => t.id === thread.id)) {
+      threads.value.unshift(thread);
+    }
+    // Cache for use after navigation
+    createdThreadCache.value = thread;
+  };
+
   // Add message to current thread (handles all message types)
   const addMessage = async ({ thread_id, content, type, isUser, uuid }: PostMessageReq) => {
     const body: PostMessageReq = { thread_id, content, type, isUser, uuid };
@@ -172,6 +182,7 @@ export function useThreads() {
     fetchThreads,
     fetchThread,
     createThread,
+    addThreadToList,
     addMessage,
     reset,
 

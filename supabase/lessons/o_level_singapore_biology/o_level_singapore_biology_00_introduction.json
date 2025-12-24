@@ -1,0 +1,928 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Lesson 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 What is Biology? Understanding Life Science",
+    "content": "## Welcome to Biology!\n\n::yellow[Biology] is the scientific study of ::green[living organisms] and the ::blue[processes] that sustain life. The word comes from two Greek terms: *bio* (life) and *logos* (study of).\n\n### Why Study Biology?\n\nBiology helps us understand:\n- 🧬 How living things are structured and function\n- 🌍 How organisms interact with their environment\n- 💪 How our bodies work and stay healthy\n- 🌱 How life evolves and adapts over time\n- 🔄 How energy flows through ecosystems\n\n### The Scope of Biology\n\nBiology is an incredibly broad subject that includes:\n\n| Level | Focus |\n|-------|-------|\n| ::yellow[Molecular Biology] | ::blue[DNA, proteins, and chemical processes] |\n| ::yellow[Cell Biology] | ::blue[Cell structure and function] |\n| ::yellow[Organism Biology] | ::blue[How individual organisms work] |\n| ::yellow[Ecology] | ::blue[Interactions between organisms and environment] |\n\n> 💡 **Key Insight:** All living things, from tiny bacteria to massive whales, share fundamental biological principles that we'll explore together.\n\n::red[Important:] Biology is not just about memorizing facts—it's about understanding the *why* and *how* of life itself.",
+    "speech_to_text_content": "Biology is the scientific study of living organisms and the processes that sustain life. The word comes from two Greek terms: bio meaning life and logos meaning study of. Biology helps us understand how living things are structured and function, how organisms interact with their environment, how our bodies work and stay healthy, how life evolves and adapts over time, and how energy flows through ecosystems. Biology includes molecular biology which focuses on DNA and proteins, cell biology which studies cell structure and function, organism biology which examines how individual organisms work, and ecology which looks at interactions between organisms and their environment.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2025-12-24T03:34:32.322189+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Lesson 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌍 The Characteristics of Living Things",
+    "content": "## What Makes Something \"Alive\"?\n\nAll living organisms share certain ::yellow[characteristics] that distinguish them from non-living things. These features are what we use to define life itself.\n\n### Seven Key Characteristics of Life\n\n1. **🔄 Organization** - Living things have a highly ordered structure. The smallest unit of life is the ::blue[cell], which is organized and complex.\n\n2. **⚡ Metabolism** - Living organisms perform ::yellow[chemical reactions] to obtain and use energy. This includes breaking down food and building new structures.\n\n3. **📈 Growth and Development** - All living things grow, either by increasing in size or by increasing the number of cells. Development involves becoming more complex.\n\n4. **🔁 Reproduction** - Living things produce offspring through either ::yellow[sexual reproduction] (two parents) or ::yellow[asexual reproduction] (one parent).\n\n5. **🎯 Response to Environment** - Organisms detect and respond to changes in their surroundings. This is called ::blue[stimulus and response]. A stimulus might be light, heat, or touch.\n\n6. **🏠 Homeostasis** - Living things maintain a stable internal environment despite changes outside. For example, your body maintains a constant temperature of about 37°C.\n\n7. **🧬 Heredity** - Organisms pass genetic information to their offspring through ::yellow[DNA]. This is why children resemble their parents.\n\n### Why These Characteristics Matter\n\n::green[These seven characteristics help us classify what is alive and what is not.] For instance, a virus has some of these characteristics but not all, which is why scientists debate whether viruses are truly alive.\n\n> ⚠️ **Important Note:** Not every living thing displays every characteristic at all times. For example, a mule cannot reproduce, yet it is still considered alive.",
+    "speech_to_text_content": "All living organisms share certain characteristics that distinguish them from non-living things. The seven key characteristics of life are: organization, where living things have highly ordered structures with the cell as the smallest unit of life; metabolism, where organisms perform chemical reactions to obtain and use energy; growth and development, where all living things grow and become more complex; reproduction, where organisms produce offspring through sexual or asexual reproduction; response to environment, where organisms detect and respond to changes in their surroundings through stimulus and response; homeostasis, where living things maintain a stable internal environment despite external changes; and heredity, where organisms pass genetic information to offspring through DNA. These characteristics help us classify what is alive and what is not.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2025-12-24T03:34:38.124434+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Which characteristic of life is best demonstrated by a plant turning towards the sun?",
+    "content": "Which characteristic of life is best demonstrated by a plant turning towards the sun?",
+    "speech_to_text_content": "Which characteristic of life is best demonstrated by a plant turning towards the sun?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440003-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440003",
+        "option_id": "550e8400-e29b-41d4-a716-446655440003-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440003-opt1",
+        "option_text": "Metabolism",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440003-opt2",
+        "option_text": "Response to environment",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440003-opt3",
+        "option_text": "Homeostasis",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440003-opt4",
+        "option_text": "Growth and development",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Response to environment**. When a plant turns towards the sun, it is detecting a stimulus (light from the sun) and responding to it by growing in that direction. This demonstrates the characteristic of ::yellow[response to environment], where organisms detect changes in their surroundings and react accordingly. \n\n**Why the other options are incorrect:**\n- ::red[Metabolism] refers to chemical reactions that obtain and use energy, not directional movement\n- ::red[Homeostasis] is maintaining a stable internal environment, not responding to external light\n- ::red[Growth and development] refers to increasing in size or complexity, though growth is involved, the key characteristic being tested is the response to the stimulus",
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2025-12-24T03:34:42.343282+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Lesson 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 The Scientific Method: How Biologists Study Life",
+    "content": "## What is the Scientific Method?\n\nThe ::yellow[scientific method] is a systematic approach that biologists and all scientists use to investigate questions about the natural world. It's the foundation of all scientific knowledge and ensures that conclusions are based on evidence rather than opinion.\n\n### The Steps of the Scientific Method\n\n#### 1. **Observation** 🔍\n- Begin by observing something in nature that interests you\n- Use your senses or instruments to gather information\n- ::blue[Example:] You notice that plants near a window grow differently than plants in the corner\n\n#### 2. **Question** ❓\n- Ask a specific, testable question based on your observation\n- The question should be clear and focused\n- ::blue[Example:] \"Does the amount of light affect how fast plants grow?\"\n\n#### 3. **Hypothesis** 💭\n- Form a ::yellow[hypothesis], which is an educated guess or proposed explanation\n- Must be testable and based on existing knowledge\n- Usually written as an \"If...then...\" statement\n- ::blue[Example:] \"If plants receive more light, then they will grow taller because light is needed for photosynthesis\"\n\n#### 4. **Prediction** 🎯\n- Make a specific prediction about what will happen in your experiment\n- This is what you expect to observe if your hypothesis is correct\n- ::blue[Example:] \"Plants in bright light will grow 5 cm taller than plants in dim light after 4 weeks\"\n\n#### 5. **Experiment** ⚗️\n- Design and conduct a controlled experiment to test your hypothesis\n- An experiment must have:\n  - ::yellow[Independent variable] - what you change (e.g., amount of light)\n  - ::yellow[Dependent variable] - what you measure (e.g., plant height)\n  - ::yellow[Control group] - plants with normal light\n  - ::yellow[Experimental group] - plants with different light levels\n  - ::yellow[Constants] - everything else kept the same (water, temperature, soil type)\n\n#### 6. **Results** 📊\n- Carefully record and organize all data from your experiment\n- Use tables, graphs, and charts to display your findings\n- Be objective—record what actually happened, not what you expected\n\n#### 7. **Conclusion** ✅\n- Analyze your results and determine if they support your hypothesis\n- Explain what your findings mean\n- Discuss any sources of error or limitations\n- ::yellow[Do not] claim your hypothesis was \"proven\"—instead say it was \"supported\" or \"not supported\"\n\n#### 8. **Communication** 📢\n- Share your findings with other scientists through reports, presentations, or publications\n- Other scientists can then repeat your experiment to verify your results\n- This peer review process ensures scientific accuracy\n\n### Why the Scientific Method Matters\n\n> 💡 **Key Insight:** The scientific method removes personal bias and ensures that conclusions are based on ::green[evidence and testing], not just opinion or intuition.\n\n::red[Important:] Science is not about proving yourself right—it's about discovering truth through careful observation and testing.",
+    "speech_to_text_content": "The scientific method is a systematic approach that biologists use to investigate questions about the natural world. It has eight main steps. First is observation, where you observe something in nature that interests you using your senses or instruments. Second is asking a specific testable question based on your observation. Third is forming a hypothesis, which is an educated guess or proposed explanation that must be testable and based on existing knowledge, usually written as an if-then statement. Fourth is making a prediction about what will happen in your experiment. Fifth is designing and conducting a controlled experiment with an independent variable that you change, a dependent variable that you measure, a control group, an experimental group, and constants that remain the same. Sixth is carefully recording and organizing all data. Seventh is analyzing your results to determine if they support your hypothesis. Eighth is communicating your findings with other scientists through reports or publications. The scientific method removes personal bias and ensures conclusions are based on evidence and testing.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2025-12-24T03:34:50.685948+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Lesson 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Variables and Controls: The Heart of Experimental Design",
+    "content": "## Understanding Variables\n\nIn any scientific experiment, it's crucial to understand what you're testing and what you're measuring. This is where ::yellow[variables] come in.\n\n### Types of Variables\n\n#### **Independent Variable** 🔧\n- This is the variable that ::yellow[YOU change] in your experiment\n- It's the factor you're testing to see if it causes an effect\n- There should be only ONE independent variable in a well-designed experiment\n- ::blue[Example:] In a plant growth experiment, the independent variable might be the amount of light (none, low, medium, or high)\n\n#### **Dependent Variable** 📏\n- This is the variable that ::yellow[YOU MEASURE] in your experiment\n- It's the outcome or result you're observing\n- It depends on changes to the independent variable\n- ::blue[Example:] The height of the plant after 4 weeks would be the dependent variable\n\n#### **Control Variables** 🔒\n- These are all the other factors that could affect your results but that you must ::yellow[KEEP THE SAME]\n- Also called \"constants,\" they ensure your experiment is fair\n- ::blue[Examples:] temperature, type of soil, amount of water, pot size, type of plant species\n\n### The Control Group vs. Experimental Group\n\n| Aspect | Control Group | Experimental Group |\n|--------|---------------|-------------------|\n| ::yellow[Independent Variable] | ::blue[Kept at normal/standard level] | ::blue[Changed/manipulated] |\n| ::yellow[Purpose] | ::blue[Provides baseline for comparison] | ::blue[Tests the effect of the change] |\n| ::yellow[Example] | ::blue[Plants with normal light] | ::blue[Plants with extra light] |\n| ::yellow[Result] | ::blue[Shows what happens without the change] | ::blue[Shows what happens with the change] |\n\n### Why Controls Are Essential\n\n> 💡 **Key Insight:** Without a control group, you cannot determine if your results are due to the independent variable or to some other factor. The control group is your \"baseline for comparison.\"\n\n::red[Common Mistake:] Forgetting to keep control variables constant. If you change the light AND the water AND the temperature, you won't know which factor caused the results!\n\n### Example: A Well-Designed Experiment\n\n**Question:** Does temperature affect the rate of enzyme activity?\n\n- ::yellow[Independent Variable:] Temperature (5°C, 25°C, 37°C, 50°C)\n- ::yellow[Dependent Variable:] Rate of enzyme activity (measured in time taken for reaction)\n- ::yellow[Control Variables:] \n  - Same enzyme concentration\n  - Same substrate concentration\n  - Same pH\n  - Same volume of solution\n  - Same time duration\n\n> ✅ **Remember:** A fair test requires that you change only ONE variable while keeping all others constant!",
+    "speech_to_text_content": "In any scientific experiment, you must understand variables. The independent variable is what you change in your experiment. It is the factor you are testing to see if it causes an effect, and there should be only one independent variable in a well-designed experiment. The dependent variable is what you measure in your experiment. It is the outcome or result you are observing, and it depends on changes to the independent variable. Control variables are all the other factors that could affect your results but that you must keep the same. They are also called constants and ensure your experiment is fair. The control group is kept at normal or standard level and provides a baseline for comparison, while the experimental group has the independent variable changed or manipulated. Without a control group, you cannot determine if your results are due to the independent variable or to some other factor.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2025-12-24T03:34:58.396310+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "In an experiment testing if fertilizer affects plant growth, what is the control variable?",
+    "content": "In an experiment testing if fertilizer affects plant growth, which of the following would be a control variable?",
+    "speech_to_text_content": "In an experiment testing if fertilizer affects plant growth, which of the following would be a control variable?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440006-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440006",
+        "option_id": "550e8400-e29b-41d4-a716-446655440006-opt3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440006-opt1",
+        "option_text": "The amount of fertilizer applied",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440006-opt2",
+        "option_text": "The height of the plant measured",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440006-opt3",
+        "option_text": "The amount of water given to each plant",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440006-opt4",
+        "option_text": "The type of plant species used",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **The amount of water given to each plant**. \n\nControl variables are factors that must be ::yellow[kept the same] throughout the experiment to ensure a fair test. Water is essential for plant growth, so if different plants received different amounts of water, this would affect the results and you wouldn't know if changes in growth were due to the fertilizer or the water.\n\n**Why the other options are incorrect:**\n- ::red[The amount of fertilizer applied] is the ::blue[independent variable] - this is what you deliberately change to test its effect\n- ::red[The height of the plant measured] is the ::blue[dependent variable] - this is what you measure as the outcome\n- ::red[The type of plant species used] should also be kept constant, but the question asks which one would be a control variable, and water is the most critical control for plant growth experiments\n\nAll control variables must remain constant to ensure that any differences in plant growth are due only to the fertilizer, not other factors.",
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2025-12-24T03:35:03.080094+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Lesson 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Biological Organization: From Atoms to Ecosystems",
+    "content": "## The Hierarchy of Life\n\nBiology is organized into different levels, from the smallest components to the largest systems. Understanding this hierarchy helps us see how all living things are interconnected.\n\n### Levels of Biological Organization (from smallest to largest)\n\n#### 1. **Atoms** ⚛️\n- The smallest units of matter\n- Examples: Carbon (C), Hydrogen (H), Oxygen (O), Nitrogen (N)\n- Atoms combine to form molecules\n\n#### 2. **Molecules** 🧬\n- Groups of atoms bonded together\n- Important biological molecules include:\n  - ::yellow[Proteins] - for structure and function\n  - ::yellow[Carbohydrates] - for energy\n  - ::yellow[Lipids] - for energy storage and cell membranes\n  - ::yellow[Nucleic acids] - for storing genetic information (DNA and RNA)\n\n#### 3. **Organelles** 🔷\n- Specialized structures within cells\n- Examples: ::blue[nucleus], ::blue[mitochondria], ::blue[chloroplast], ::blue[ribosome]\n- Each organelle has a specific function\n\n#### 4. **Cells** 🟡\n- The ::yellow[basic unit of life]\n- All living organisms are made of one or more cells\n- Two main types: ::blue[prokaryotic] (bacteria, no nucleus) and ::blue[eukaryotic] (animals, plants, fungi, with nucleus)\n\n#### 5. **Tissues** 🧵\n- Groups of similar cells that work together\n- Examples in animals: ::blue[epithelial tissue], ::blue[muscle tissue], ::blue[nervous tissue], ::blue[connective tissue]\n- Examples in plants: ::blue[dermal tissue], ::blue[vascular tissue], ::blue[ground tissue]\n\n#### 6. **Organs** ❤️\n- Structures made of different tissues working together\n- Examples: ::blue[heart], ::blue[brain], ::blue[leaf], ::blue[root]\n- Each organ has a specific function\n\n#### 7. **Organ Systems** 🫀\n- Groups of organs that work together to perform major functions\n- Examples in animals:\n  - ::yellow[Circulatory system] - transports nutrients and oxygen\n  - ::yellow[Respiratory system] - exchanges gases\n  - ::yellow[Digestive system] - breaks down food\n  - ::yellow[Nervous system] - controls body functions\n  - ::yellow[Skeletal system] - provides support and protection\n\n#### 8. **Organisms** 🦁\n- Individual living things that can survive independently\n- Can be single-celled (bacteria) or multicellular (plants, animals)\n\n#### 9. **Population** 👥\n- All members of one species living in the same area at the same time\n- Example: All the rabbits in a forest\n\n#### 10. **Community** 🌲\n- All different populations of species living and interacting in the same area\n- Example: Rabbits, foxes, plants, insects, and birds all living in a forest\n\n#### 11. **Ecosystem** 🏞️\n- A community plus the physical environment (soil, water, atmosphere)\n- Includes both living (biotic) and non-living (abiotic) components\n- Example: A forest ecosystem includes all organisms plus soil, water, and air\n\n#### 12. **Biosphere** 🌍\n- All ecosystems on Earth combined\n- The entire region of Earth that supports life\n- Extends from the deepest oceans to the highest mountains\n\n### Visual Summary\n\n```\nAtoms → Molecules → Organelles → Cells → Tissues → Organs → Organ Systems → Organisms → Population → Community → Ecosystem → Biosphere\n```\n\n> 💡 **Key Insight:** Each level of organization has ::green[emergent properties] - characteristics that appear at that level but weren't present at lower levels. For example, consciousness emerges at the organism level but doesn't exist in individual cells.\n\n::red[Important:] Understanding these levels helps us see that life is organized in a nested, hierarchical way, with each level depending on and influencing the levels below and above it.",
+    "speech_to_text_content": "Biology is organized into different levels from the smallest components to the largest systems. The hierarchy includes atoms, which are the smallest units of matter; molecules, which are groups of atoms bonded together including proteins, carbohydrates, lipids, and nucleic acids; organelles, which are specialized structures within cells like the nucleus and mitochondria; cells, which are the basic unit of life and can be prokaryotic or eukaryotic; tissues, which are groups of similar cells working together; organs, which are structures made of different tissues; organ systems, which are groups of organs working together such as the circulatory, respiratory, digestive, nervous, and skeletal systems; organisms, which are individual living things; populations, which are all members of one species in the same area; communities, which are all different populations living together; ecosystems, which include the community plus the physical environment; and the biosphere, which is all ecosystems on Earth combined.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2025-12-24T03:35:11.998680+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Which level of biological organization includes all the different species of organisms in a forest?",
+    "content": "Which level of biological organization includes all the different species of organisms in a forest?",
+    "speech_to_text_content": "Which level of biological organization includes all the different species of organisms in a forest?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440008",
+        "option_id": "550e8400-e29b-41d4-a716-446655440008-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt1",
+        "option_text": "Population",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt2",
+        "option_text": "Community",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt3",
+        "option_text": "Ecosystem",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440008-opt4",
+        "option_text": "Biosphere",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Community**.\n\nA ::yellow[community] is defined as all the ::green[different populations of species] living and interacting in the same area. In a forest, this would include all the trees, rabbits, foxes, insects, birds, fungi, and other organisms—essentially all the different species living together.\n\n**Why the other options are incorrect:**\n- ::red[Population] refers to all members of ONE species in an area (e.g., just the rabbits in the forest)\n- ::red[Ecosystem] includes the community PLUS the physical environment (soil, water, air), so it's larger than just the organisms\n- ::red[Biosphere] is all ecosystems on Earth combined, which is much larger than just one forest\n\n**Key Distinction:** \n- Population = one species in one area\n- Community = all species in one area\n- Ecosystem = all species plus the physical environment in one area",
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2025-12-24T03:35:15.918534+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Lesson 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧬 Diversity of Life: Classification of Living Things",
+    "content": "## Why Classify Life?\n\nWith millions of species on Earth, scientists needed a system to organize and name organisms. This system is called ::yellow[taxonomy], and it helps us understand relationships between organisms and communicate clearly about different species.\n\n### The Classification System\n\nOrganisms are classified into groups based on shared characteristics. The main categories, from broadest to most specific, are:\n\n| Category | Example (Human) | Example (Dog) | Example (Tomato Plant) |\n|----------|-----------------|---------------|------------------------|\n| ::yellow[Kingdom] | Animalia | Animalia | Plantae |\n| ::yellow[Phylum] | Chordata | Chordata | Magnoliophyta |\n| ::yellow[Class] | Mammalia | Mammalia | Eudicots |\n| ::yellow[Order] | Primates | Carnivora | Solanales |\n| ::yellow[Family] | Hominidae | Canidae | Solanaceae |\n| ::yellow[Genus] | Homo | Canis | Solanum |\n| ::yellow[Species] | sapiens | familiaris | lycopersicum |\n\n> 💡 **Memory Trick:** \"King Phillip Came Over For Good Soup\" = Kingdom, Phylum, Class, Order, Family, Genus, Species\n\n### The Five Kingdoms\n\n#### 1. **Kingdom Monera** 🦠\n- ::blue[Prokaryotic] organisms (no nucleus)\n- Includes bacteria and archaea\n- Single-celled\n- Found everywhere - soil, water, air, inside other organisms\n- Some are helpful (gut bacteria), some are harmful (disease-causing)\n\n#### 2. **Kingdom Protista** 🌊\n- ::blue[Eukaryotic] organisms (have nucleus)\n- Mostly single-celled\n- Examples: amoeba, paramecium, algae\n- Found mainly in water\n- Some are animal-like, some are plant-like, some are fungus-like\n\n#### 3. **Kingdom Fungi** 🍄\n- ::blue[Eukaryotic] organisms\n- Include mushrooms, molds, and yeasts\n- Get energy by breaking down dead organic matter (decomposers)\n- Cell walls made of ::blue[chitin] (not cellulose like plants)\n- Important for recycling nutrients in ecosystems\n\n#### 4. **Kingdom Plantae** 🌱\n- ::blue[Eukaryotic] organisms\n- Multicellular\n- Make their own food through ::yellow[photosynthesis]\n- Have cell walls made of ::blue[cellulose]\n- Examples: mosses, ferns, flowering plants, trees\n- Provide oxygen and food for other organisms\n\n#### 5. **Kingdom Animalia** 🦁\n- ::blue[Eukaryotic] organisms\n- Multicellular\n- Cannot make their own food; must eat other organisms\n- No cell walls; have cell membranes\n- Examples: insects, fish, amphibians, reptiles, birds, mammals\n- Includes humans\n\n### Key Characteristics Used for Classification\n\nOrganisms are classified based on:\n\n- **Cell Type:** Prokaryotic vs. eukaryotic\n- **Number of Cells:** Single-celled vs. multicellular\n- **How They Get Energy:** Photosynthesis, eating plants, eating other animals, decomposing\n- **Body Structure:** Presence of backbone, type of limbs, body symmetry\n- **Reproduction:** Sexual vs. asexual\n- **DNA Similarities:** Modern classification increasingly uses genetic information\n\n### Scientific Names\n\nEach organism has a ::yellow[scientific name] consisting of two parts:\n\n1. **Genus** (capitalized) - the broader group\n2. **Species** (lowercase) - the specific type\n\nExamples:\n- Humans: *Homo sapiens*\n- Dogs: *Canis familiaris*\n- Tomato: *Solanum lycopersicum*\n- Lion: *Panthera leo*\n\n> ✅ **Why Scientific Names?** Common names vary by location and language, but scientific names are universal, allowing scientists worldwide to communicate clearly about organisms.\n\n::red[Important:] Species is the most specific level of classification. Organisms of the same species can breed together and produce fertile offspring.",
+    "speech_to_text_content": "Scientists classify organisms into groups based on shared characteristics using a system called taxonomy. The main categories from broadest to most specific are kingdom, phylum, class, order, family, genus, and species. The five kingdoms are Monera, which are prokaryotic organisms including bacteria; Protista, which are eukaryotic mostly single-celled organisms found mainly in water; Fungi, which are eukaryotic organisms like mushrooms that break down dead matter; Plantae, which are eukaryotic multicellular organisms that make their own food through photosynthesis; and Animalia, which are eukaryotic multicellular organisms that cannot make their own food. Organisms are classified based on cell type, number of cells, how they get energy, body structure, reproduction method, and DNA similarities. Each organism has a scientific name consisting of genus and species, such as Homo sapiens for humans.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2025-12-24T03:35:26.206913+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Which kingdom contains organisms that break down dead organic matter and have cell walls made of chitin?",
+    "content": "Which kingdom contains organisms that break down dead organic matter and have cell walls made of chitin?",
+    "speech_to_text_content": "Which kingdom contains organisms that break down dead organic matter and have cell walls made of chitin?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440010-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440010",
+        "option_id": "550e8400-e29b-41d4-a716-446655440010-opt3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440010-opt1",
+        "option_text": "Monera",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440010-opt2",
+        "option_text": "Protista",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440010-opt3",
+        "option_text": "Fungi",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440010-opt4",
+        "option_text": "Plantae",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Fungi**.\n\nFungi are ::yellow[decomposers] that break down dead organic matter, and they have cell walls made of ::blue[chitin], which is a unique structural material. Examples include mushrooms, molds, and yeasts.\n\n**Why the other options are incorrect:**\n- ::red[Monera] (bacteria) are prokaryotic and break down dead matter, but their cell walls are made of peptidoglycan, not chitin\n- ::red[Protista] are mostly single-celled and do not have chitin cell walls\n- ::red[Plantae] have cell walls made of ::blue[cellulose], not chitin, and they make their own food through photosynthesis rather than breaking down dead matter\n\n**Key Distinction:** Fungi are the only kingdom with cell walls made of chitin. This is one of the key characteristics that distinguishes them from plants (which have cellulose cell walls) and from bacteria (which have peptidoglycan cell walls).",
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2025-12-24T03:35:30.175597+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Lesson 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌍 Biotic and Abiotic Factors: Components of Ecosystems",
+    "content": "## Understanding Ecosystems\n\nAn ecosystem is a complex system where living organisms interact with each other and with their physical environment. To understand ecosystems, we need to recognize two main components: ::yellow[biotic] and ::yellow[abiotic] factors.\n\n### Biotic Factors 🦁🌿\n\n::yellow[Biotic factors] are all the ::green[living components] of an ecosystem.\n\n**Examples include:**\n- **Organisms:** Animals, plants, fungi, bacteria, protists\n- **Interactions:** Predation, competition, symbiosis, parasitism\n- **Decomposers:** Bacteria and fungi that break down dead matter\n- **Producers:** Plants that make food through photosynthesis\n- **Consumers:** Animals that eat plants or other animals\n\n### Abiotic Factors 🌡️💧☀️\n\n::yellow[Abiotic factors] are all the ::blue[non-living components] of an ecosystem.\n\n**Key abiotic factors include:**\n\n| Factor | Description | Impact on Life |\n|--------|-------------|----------------|\n| ::yellow[Temperature] | Degree of heat/cold | Affects metabolism, enzyme activity, survival |\n| ::yellow[Light] | Solar radiation | Essential for photosynthesis, affects behavior |\n| ::yellow[Water] | Moisture and precipitation | Essential for all life processes |\n| ::yellow[Humidity] | Amount of water vapor in air | Affects transpiration, comfort of organisms |\n| ::yellow[Soil] | Substrate for plants | Provides nutrients, water retention |\n| ::yellow[Oxygen] | Gas in air and water | Essential for aerobic respiration |\n| ::yellow[Carbon Dioxide] | Gas in atmosphere | Essential for photosynthesis |\n| ::yellow[pH] | Acidity or alkalinity | Affects enzyme activity, organism distribution |\n| ::yellow[Pressure] | Force exerted by atmosphere | Affects deep-sea and high-altitude organisms |\n| ::yellow[Salinity] | Salt concentration | Critical in marine ecosystems |\n\n### How Biotic and Abiotic Factors Interact\n\n> 💡 **Key Insight:** Biotic and abiotic factors are ::green[interdependent]. Changes in abiotic factors affect biotic factors, and vice versa.\n\n**Examples of Interaction:**\n\n1. **Temperature & Plant Growth**\n   - ::red[Low temperature] → Slow enzyme activity → Slow growth\n   - ::green[Optimal temperature] → Maximum enzyme activity → Rapid growth\n   - ::red[High temperature] → Enzyme denaturation → Slow or no growth\n\n2. **Light & Photosynthesis**\n   - Plants need light for photosynthesis\n   - More light → More food production → Support more consumers\n   - Less light → Less food → Fewer organisms can survive\n\n3. **Water & Organism Distribution**\n   - Desert animals have adaptations to conserve water\n   - Aquatic organisms require water to survive\n   - Changes in rainfall affect entire ecosystems\n\n4. **Soil & Plant Nutrition**\n   - Plants absorb minerals from soil\n   - Soil pH affects which nutrients are available\n   - Different plants thrive in different soil types\n\n### Limiting Factors\n\nA ::yellow[limiting factor] is an abiotic factor that restricts the growth or distribution of organisms in an ecosystem.\n\n**Examples:**\n- In a desert, water is the limiting factor (scarce)\n- In a cave, light is the limiting factor (absent)\n- In the ocean, nitrogen or phosphorus might be limiting factors\n- Temperature can be limiting at high altitudes or polar regions\n\n> ✅ **Remember:** The factor in shortest supply is usually the limiting factor. Even if all other conditions are perfect, if one essential factor is missing or low, organisms cannot survive or grow well.\n\n### Adaptations to Abiotic Factors\n\nOrganisms have evolved ::yellow[adaptations] - traits that help them survive in their specific environment.\n\n**Examples:**\n- **Desert plants:** Thick waxy coating to reduce water loss, deep roots to find water\n- **Arctic animals:** Thick fur for insulation, white color for camouflage\n- **Aquatic plants:** Floating leaves, air chambers for buoyancy\n- **Nocturnal animals:** Large eyes for night vision, sensitive hearing\n\n::red[Important:] Understanding biotic and abiotic factors is crucial for managing ecosystems and predicting how environmental changes affect organisms.",
+    "speech_to_text_content": "An ecosystem is a complex system where living organisms interact with each other and with their physical environment. Biotic factors are all the living components of an ecosystem including organisms, interactions, decomposers, producers, and consumers. Abiotic factors are all the non-living components including temperature, light, water, humidity, soil, oxygen, carbon dioxide, pH, pressure, and salinity. Biotic and abiotic factors are interdependent, with changes in abiotic factors affecting biotic factors and vice versa. A limiting factor is an abiotic factor that restricts the growth or distribution of organisms. Organisms have evolved adaptations that help them survive in their specific environment, such as thick waxy coatings on desert plants to reduce water loss or thick fur on arctic animals for insulation.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2025-12-24T03:35:40.419156+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Which of the following is an abiotic factor in a forest ecosystem?",
+    "content": "Which of the following is an abiotic factor in a forest ecosystem?",
+    "speech_to_text_content": "Which of the following is an abiotic factor in a forest ecosystem?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440012",
+        "option_id": "550e8400-e29b-41d4-a716-446655440012-opt3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt1",
+        "option_text": "Deer eating grass",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt2",
+        "option_text": "Fungi decomposing leaves",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt3",
+        "option_text": "Soil temperature and moisture",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440012-opt4",
+        "option_text": "Trees producing oxygen",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Soil temperature and moisture**.\n\n::yellow[Abiotic factors] are the ::blue[non-living components] of an ecosystem. Soil temperature and moisture are physical, non-living characteristics of the environment that affect organisms but are not themselves alive.\n\n**Why the other options are incorrect:**\n- ::red[Deer eating grass] involves living organisms (deer and grass), making it a ::yellow[biotic factor]\n- ::red[Fungi decomposing leaves] involves living organisms (fungi), making it a ::yellow[biotic factor]\n- ::red[Trees producing oxygen] involves living organisms (trees), making it a ::yellow[biotic factor]\n\n**Key Distinction:**\n- ::green[Biotic factors] = living things and their interactions\n- ::blue[Abiotic factors] = non-living physical and chemical components like temperature, light, water, soil, humidity, pH, oxygen, and carbon dioxide\n\nOther correct examples of abiotic factors would include rainfall, sunlight, atmospheric pressure, or soil pH.",
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2025-12-24T03:35:44.654874+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Lesson 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔗 Energy Flow and Food Chains: How Life is Sustained",
+    "content": "## The Flow of Energy Through Life\n\nAll living organisms need energy to survive. In ecosystems, energy flows from one organism to another in a specific direction. Understanding this flow is essential to understanding how ecosystems work.\n\n### Producers: The Foundation of Energy Flow ☀️\n\n::yellow[Producers] are organisms that make their own food using energy from the sun. They are the foundation of almost all ecosystems.\n\n**Examples:**\n- Green plants (trees, grasses, shrubs)\n- Algae\n- Some bacteria (photosynthetic bacteria)\n\n**How they work:** Through ::blue[photosynthesis], producers convert solar energy into chemical energy stored in glucose (sugar). The equation is:\n\n$$6CO_2 + 6H_2O + light → C_6H_{12}O_6 + 6O_2$$\n\n> 💡 **Key Insight:** Producers are the only organisms that can capture energy directly from the sun. All other organisms depend on them.\n\n### Consumers: Eating to Get Energy 🦁\n\n::yellow[Consumers] are organisms that cannot make their own food and must eat other organisms.\n\n**Types of Consumers:**\n\n1. **Primary Consumers** 🐰\n   - Herbivores that eat plants\n   - Examples: rabbits, deer, grasshoppers, caterpillars\n   - They convert plant energy into animal energy\n\n2. **Secondary Consumers** 🐺\n   - Carnivores that eat primary consumers\n   - Examples: foxes, snakes, hawks\n   - They get energy from eating herbivores\n\n3. **Tertiary Consumers** 🦅\n   - Carnivores that eat secondary consumers\n   - Examples: eagles, lions, killer whales\n   - They are at the top of many food chains\n\n4. **Omnivores** 🐻\n   - Eat both plants and animals\n   - Examples: bears, humans, pigs, chickens\n   - Can be primary, secondary, or tertiary consumers depending on what they eat\n\n### Decomposers: Recycling Energy 🍄\n\n::yellow[Decomposers] break down dead organisms and waste products, returning nutrients to the soil.\n\n**Examples:**\n- Bacteria\n- Fungi (mushrooms, molds)\n- Earthworms\n- Insects\n\n**Why they're important:**\n- Return nutrients to soil for plants to use\n- Break down complex molecules into simpler forms\n- Prevent accumulation of dead matter\n\n### Food Chains\n\nA ::yellow[food chain] shows the linear path of energy transfer from one organism to the next.\n\n**Basic structure:**\n\n```\nProducer → Primary Consumer → Secondary Consumer → Tertiary Consumer\n```\n\n**Real Examples:**\n\n1. **Grassland Food Chain:**\n   ```\n   Grass → Rabbit → Fox\n   ```\n   - Grass (producer) makes food from sunlight\n   - Rabbit (primary consumer) eats grass\n   - Fox (secondary consumer) eats rabbit\n\n2. **Aquatic Food Chain:**\n   ```\n   Algae → Small Fish → Large Fish → Eagle\n   ```\n   - Algae (producer) makes food from sunlight\n   - Small fish (primary consumer) eats algae\n   - Large fish (secondary consumer) eats small fish\n   - Eagle (tertiary consumer) eats large fish\n\n3. **Forest Food Chain:**\n   ```\n   Oak Tree → Caterpillar → Bird → Hawk\n   ```\n\n### Energy Loss Through Food Chains\n\nOne crucial concept: ::red[Energy is LOST at each step of the food chain.] Only about ::yellow[10%] of energy is transferred from one level to the next.\n\n**Why energy is lost:**\n- Some energy is used for movement, growth, and body heat\n- Some energy is lost as waste\n- Some energy is stored in parts we don't eat (bones, skin, etc.)\n\n**The 10% Rule:**\n- If a plant has 1000 units of energy\n- Primary consumers get about 100 units\n- Secondary consumers get about 10 units\n- Tertiary consumers get about 1 unit\n\n> ⚠️ **Important Consequence:** This is why there are fewer organisms at the top of the food chain. There simply isn't enough energy to support many large predators!\n\n### Food Webs: A More Realistic Picture\n\nIn real ecosystems, organisms eat multiple types of food, creating a ::yellow[food web] - a network of interconnected food chains.\n\n**Why food webs are more realistic:**\n- Foxes don't just eat rabbits; they also eat mice, birds, and insects\n- Rabbits don't just eat grass; they eat clover and other plants\n- Plants are eaten by many different herbivores\n\n> 💡 **Key Insight:** Food webs show the complexity of real ecosystems. Removing one organism can have cascading effects throughout the entire web.\n\n### Trophic Levels\n\nOrganisms can be organized by their position in the food chain:\n\n| Trophic Level | What They Are | Examples |\n|---------------|---------------|----------|\n| ::yellow[1st] | Producers | Plants, algae |\n| ::yellow[2nd] | Primary consumers | Herbivores |\n| ::yellow[3rd] | Secondary consumers | Carnivores eating herbivores |\n| ::yellow[4th] | Tertiary consumers | Carnivores eating carnivores |\n\n::red[Important:] An organism's trophic level depends on what it eats. An omnivore like a human can occupy multiple trophic levels.",
+    "speech_to_text_content": "All living organisms need energy to survive. In ecosystems, energy flows from one organism to another. Producers are organisms that make their own food using energy from the sun through photosynthesis, and they are the foundation of almost all ecosystems. Examples include green plants, algae, and photosynthetic bacteria. Consumers are organisms that cannot make their own food and must eat other organisms. Primary consumers are herbivores that eat plants, secondary consumers are carnivores that eat primary consumers, tertiary consumers are carnivores that eat secondary consumers, and omnivores eat both plants and animals. Decomposers break down dead organisms and waste products. A food chain shows the linear path of energy transfer. Energy is lost at each step of the food chain, with only about ten percent transferred from one level to the next. Food webs are networks of interconnected food chains that show the complexity of real ecosystems. Organisms are organized by trophic levels based on their position in the food chain.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2025-12-24T03:35:57.104917+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "In a food chain: Grass → Rabbit → Fox, what percentage of energy is available to the fox?",
+    "content": "In a food chain: Grass → Rabbit → Fox, approximately what percentage of the grass's energy is available to the fox?",
+    "speech_to_text_content": "In a food chain: Grass → Rabbit → Fox, approximately what percentage of the grass's energy is available to the fox?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
+        "option_text": "100%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "option_text": "1%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
+        "option_text": "10%",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
+        "option_text": "50%",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **1%**.\n\nThis is based on the ::yellow[10% Rule] - only about 10% of energy is transferred from one trophic level to the next.\n\n**Calculation:**\n- Grass (producer) = 100% of energy\n- Rabbit (primary consumer) = 10% of grass's energy\n- Fox (secondary consumer) = 10% of rabbit's energy = 10% of 10% = 1% of original grass energy\n\n**Why energy is lost:**\n- Some energy is used for movement, growth, and maintaining body temperature\n- Some energy is lost as waste and heat\n- Some energy is in parts of the organism that aren't eaten (bones, fur, etc.)\n\n**Why the other options are incorrect:**\n- ::red[100%] would mean no energy is lost, which is not realistic\n- ::red[10%] would only account for one energy transfer, not two\n- ::red[50%] is not supported by the 10% rule\n\n> 💡 **Key Insight:** This explains why there are fewer organisms at the top of food chains. There's simply not enough energy available to support large populations of top predators!",
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2025-12-24T03:36:01.728513+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Lesson 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "♻️ Nutrient Cycles: Recycling Materials in Ecosystems",
+    "content": "## Why Nutrient Cycles Matter\n\nWhile energy flows through ecosystems (and is eventually lost as heat), ::yellow[nutrients] like carbon, nitrogen, and phosphorus are recycled continuously. These ::yellow[nutrient cycles] are essential because organisms need these elements to build proteins, DNA, and other vital molecules.\n\n### The Carbon Cycle 🌍\n\nCarbon is a key element in all living things. It cycles between the atmosphere, organisms, and the Earth.\n\n**Steps in the Carbon Cycle:**\n\n1. **Photosynthesis** 🌱\n   - Plants take ::blue[CO₂] from the atmosphere\n   - Use it to make glucose and other organic compounds\n   - Carbon becomes part of the plant's body\n\n2. **Consumption** 🦁\n   - Animals eat plants (or other animals that ate plants)\n   - Carbon becomes part of the animal's body\n\n3. **Respiration** 💨\n   - All organisms (plants and animals) perform respiration\n   - This breaks down organic compounds and releases ::blue[CO₂] back to the atmosphere\n   - Equation: $$C_6H_{12}O_6 + 6O_2 → 6CO_2 + 6H_2O + energy$$\n\n4. **Decomposition** 🍄\n   - When organisms die, decomposers break down their bodies\n   - This releases carbon back to the soil and atmosphere\n\n5. **Fossil Fuel Formation & Combustion** ⛽\n   - Over millions of years, dead organisms form fossil fuels (coal, oil, gas)\n   - When humans burn fossil fuels, carbon is released as CO₂\n   - This is a major contributor to atmospheric CO₂ increase\n\n> ⚠️ **Important Note:** The carbon cycle has been disrupted by human activities. Burning fossil fuels releases carbon that was stored underground, increasing atmospheric CO₂ and contributing to climate change.\n\n### The Nitrogen Cycle 🌾\n\nNitrogen is essential for making proteins and nucleic acids (DNA/RNA). Although the atmosphere is 78% nitrogen, most organisms cannot use it directly.\n\n**Steps in the Nitrogen Cycle:**\n\n1. **Nitrogen Fixation** ⚡\n   - ::yellow[Nitrogen-fixing bacteria] convert atmospheric N₂ into ::blue[ammonia (NH₃)] that plants can use\n   - These bacteria live in soil and in the root nodules of legumes (peas, beans, clover)\n   - Equation: $$N_2 → 2NH_3$$\n\n2. **Nitrification** 🔄\n   - Other bacteria convert ammonia into ::blue[nitrates (NO₃⁻)] and ::blue[nitrites (NO₂⁻)]\n   - Plants can absorb these forms of nitrogen through their roots\n\n3. **Assimilation** 🌱\n   - Plants absorb nitrates and use them to make proteins and nucleic acids\n   - Animals eat plants and incorporate nitrogen into their own proteins\n\n4. **Decomposition** 🍄\n   - When organisms die or produce waste, decomposers break down proteins\n   - This releases ammonia back into the soil\n\n5. **Denitrification** 💨\n   - Some bacteria break down nitrates and release nitrogen gas (N₂) back to the atmosphere\n   - This completes the cycle\n\n> 💡 **Key Insight:** Nitrogen-fixing bacteria are crucial because they are the only organisms that can convert atmospheric nitrogen into a usable form.\n\n### The Phosphorus Cycle 🪨\n\nPhosphorus is essential for energy transfer (ATP) and for building nucleic acids and cell membranes.\n\n**Steps in the Phosphorus Cycle:**\n\n1. **Weathering** 🏔️\n   - Phosphorus is released from rocks through weathering\n   - It dissolves in water and becomes available to organisms\n\n2. **Plant Absorption** 🌱\n   - Plants absorb phosphate ions (PO₄³⁻) from soil through their roots\n   - Use it to make ATP and nucleic acids\n\n3. **Consumption** 🦁\n   - Animals eat plants and incorporate phosphorus into their bodies\n\n4. **Decomposition** 🍄\n   - Decomposers break down dead organisms and return phosphorus to soil\n\n5. **Sedimentation** 🌊\n   - Some phosphorus washes into water bodies\n   - Settles on the ocean floor as sediment\n   - Over geological time, becomes part of rocks again\n\n> ⚠️ **Important Difference:** Unlike carbon and nitrogen, phosphorus has NO atmospheric phase. It cycles between organisms, soil, and water, eventually settling in sediments.\n\n### Comparison of the Three Cycles\n\n| Feature | Carbon Cycle | Nitrogen Cycle | Phosphorus Cycle |\n|---------|--------------|----------------|------------------|\n| ::yellow[Atmospheric Phase?] | ::green[Yes (CO₂)] | ::green[Yes (N₂)] | ::red[No] |\n| ::yellow[Key Organisms] | ::blue[All organisms] | ::blue[Nitrogen-fixing bacteria] | ::blue[All organisms] |\n| ::yellow[Human Impact] | ::green[High (fossil fuels)] | ::green[High (fertilizers)] | ::green[High (fertilizers)] |\n| ::yellow[Key Compound] | ::blue[CO₂, Glucose] | ::blue[NH₃, NO₃⁻] | ::blue[PO₄³⁻] |\n\n### Human Impact on Nutrient Cycles\n\n**Carbon Cycle:**\n- Burning fossil fuels releases stored carbon\n- Deforestation removes carbon-absorbing plants\n- Result: Increased atmospheric CO₂ and climate change\n\n**Nitrogen Cycle:**\n- Agricultural fertilizers add excess nitrogen to soil\n- Runoff pollutes water bodies, causing eutrophication\n- Some bacteria are being destroyed by pollution\n\n**Phosphorus Cycle:**\n- Mining and fertilizer use release phosphorus\n- Runoff pollutes water bodies\n- Phosphorus is being depleted from some soils\n\n> ✅ **Remember:** Understanding nutrient cycles helps us appreciate how ecosystems are interconnected and why human activities can have far-reaching consequences.",
+    "speech_to_text_content": "While energy flows through ecosystems, nutrients like carbon, nitrogen, and phosphorus are recycled continuously. The carbon cycle involves photosynthesis where plants take carbon dioxide from the atmosphere, consumption where animals eat plants, respiration where organisms release carbon dioxide back, decomposition where decomposers break down dead organisms, and fossil fuel combustion. The nitrogen cycle involves nitrogen fixation where bacteria convert atmospheric nitrogen into ammonia, nitrification where bacteria convert ammonia into nitrates, assimilation where plants absorb nitrates, decomposition, and denitrification where bacteria release nitrogen gas. The phosphorus cycle involves weathering where phosphorus is released from rocks, plant absorption, consumption, decomposition, and sedimentation. Unlike carbon and nitrogen, phosphorus has no atmospheric phase. Human activities impact all three cycles through burning fossil fuels, using fertilizers, deforestation, and mining.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2025-12-24T03:36:15.524586+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Question 7",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Which organisms are responsible for nitrogen fixation in the nitrogen cycle?",
+    "content": "Which organisms are responsible for converting atmospheric nitrogen (N₂) into ammonia (NH₃) in the nitrogen cycle?",
+    "speech_to_text_content": "Which organisms are responsible for converting atmospheric nitrogen into ammonia in the nitrogen cycle?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016-opt1",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
+        "option_text": "Nitrogen-fixing bacteria",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "option_text": "Nitrifying bacteria",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
+        "option_text": "Denitrifying bacteria",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
+        "option_text": "Decomposing bacteria",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Nitrogen-fixing bacteria**.\n\n::yellow[Nitrogen-fixing bacteria] are the only organisms capable of converting atmospheric N₂ into ::blue[ammonia (NH₃)] that plants can use. This process is called ::yellow[nitrogen fixation].\n\n**Why the other options are incorrect:**\n- ::red[Nitrifying bacteria] convert ammonia into nitrates and nitrites (nitrification), not nitrogen fixation\n- ::red[Denitrifying bacteria] convert nitrates back into nitrogen gas (denitrification), the opposite of nitrogen fixation\n- ::red[Decomposing bacteria] break down dead organisms and release ammonia, but do not fix atmospheric nitrogen\n\n**Key Facts About Nitrogen-Fixing Bacteria:**\n- They live in soil and in root nodules of legumes (peas, beans, clover)\n- They are the ONLY organisms that can perform nitrogen fixation\n- This makes them crucial to the nitrogen cycle\n- Without them, plants could not get usable nitrogen from the atmosphere\n\n> 💡 **Why This Matters:** Nitrogen-fixing bacteria are so important that farmers often plant legumes to naturally replenish soil nitrogen, a practice called crop rotation.",
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2025-12-24T03:36:20.155414+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Lesson 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🧪 Scientific Investigation and Data: Collecting and Analyzing Evidence",
+    "content": "## The Importance of Data in Biology\n\nBiology is an experimental science. To understand living things, we must collect evidence through careful observation and measurement. This evidence is called ::yellow[data], and learning to collect, organize, and analyze data is a crucial skill.\n\n### Types of Data\n\n#### **Quantitative Data** 📊\n- Data that can be measured and expressed as numbers\n- Examples:\n  - Plant height (cm)\n  - Temperature (°C)\n  - Number of organisms\n  - Time (seconds, hours)\n  - Mass (grams)\n  - pH value\n\n**Advantages:**\n- ::green[Objective] - not influenced by personal opinion\n- Can be analyzed mathematically\n- Easy to compare between experiments\n\n#### **Qualitative Data** 📝\n- Data that describes qualities or characteristics\n- Examples:\n  - Color of a flower\n  - Texture of soil\n  - Behavior of an animal\n  - Shape of a leaf\n  - Appearance of bacteria under microscope\n\n**Advantages:**\n- ::green[Detailed] - captures nuances that numbers might miss\n- Useful for initial observations\n- Helps generate hypotheses\n\n> 💡 **Key Insight:** Good scientific investigations often use BOTH quantitative and qualitative data together for a complete picture.\n\n### Organizing Data: Tables and Charts\n\n#### **Data Tables**\n\nData should be organized in clear tables with:\n- Descriptive headers\n- Units of measurement\n- Organized rows and columns\n\n**Example: Plant Growth Experiment**\n\n| Time (days) | Plant A Height (cm) | Plant B Height (cm) | Plant C Height (cm) |\n|-------------|-------------------|-------------------|-------------------|\n| 0 | 5.0 | 5.0 | 5.0 |\n| 7 | 8.5 | 7.2 | 6.8 |\n| 14 | 12.0 | 9.5 | 8.2 |\n| 21 | 15.5 | 11.8 | 9.6 |\n| 28 | 19.0 | 14.2 | 11.0 |\n\n#### **Graphs and Charts**\n\nGraphs help visualize patterns in data. Common types include:\n\n**Line Graphs** 📈\n- Show how variables change over time\n- Good for showing trends\n- Each point represents a measurement\n- Points are connected with lines\n- Used for continuous data\n\n**Bar Charts** 📊\n- Compare quantities between different groups\n- Good for categorical data\n- Each bar represents a different category\n- Height shows the value\n\n**Scatter Plots** 🔵\n- Show the relationship between two variables\n- Each point represents one observation\n- Points are NOT connected\n- Used to see if variables are correlated\n\n### Calculating Averages and Ranges\n\n#### **Mean (Average)** 📐\n\nThe mean is the sum of all values divided by the number of values.\n\n**Formula:** $$Mean = \\frac{Sum\\ of\\ all\\ values}{Number\\ of\\ values}$$\n\n**Example:** If three plants grew to heights of 10 cm, 12 cm, and 14 cm:\n$$Mean = \\frac{10 + 12 + 14}{3} = \\frac{36}{3} = 12\\ cm$$\n\n#### **Range** 📏\n\nThe range shows how spread out the data is.\n\n**Formula:** $$Range = Highest\\ value - Lowest\\ value$$\n\n**Example:** \n$$Range = 14 - 10 = 4\\ cm$$\n\n> ✅ **Why Calculate These?** The mean tells you the typical value, while the range tells you how much variation there was.\n\n### Accuracy and Precision\n\nThese are two different concepts that are often confused:\n\n#### **Accuracy** 🎯\n- How close a measurement is to the TRUE value\n- Depends on the quality of your equipment and technique\n- Example: A thermometer that reads 25°C when the true temperature is 24.8°C is accurate\n\n#### **Precision** 📍\n- How close repeated measurements are to each other\n- Depends on the sensitivity of your equipment\n- Example: A thermometer that consistently reads 25.0°C, 25.0°C, 25.0°C is precise (even if the true value is 24.8°C)\n\n| Scenario | Accurate? | Precise? |\n|----------|-----------|----------|\n| Measurements: 9.9, 10.0, 10.1 (true value: 10) | ::green[Yes] | ::green[Yes] |\n| Measurements: 8.5, 8.6, 8.7 (true value: 10) | ::red[No] | ::green[Yes] |\n| Measurements: 9.8, 10.2, 10.5 (true value: 10) | ::green[Yes] | ::red[No] |\n| Measurements: 7.0, 9.5, 12.0 (true value: 10) | ::red[No] | ::red[No] |\n\n### Sources of Error\n\nIn any experiment, errors can occur. Understanding them helps improve your investigation.\n\n#### **Systematic Errors** ⚠️\n- Consistently bias results in one direction\n- Often due to faulty equipment or incorrect technique\n- Examples:\n  - A scale that always reads 0.5 g too high\n  - A thermometer that is always 2°C too low\n  - Parallax error when reading a scale\n\n**How to reduce:** Calibrate equipment, use proper technique, check equipment before use\n\n#### **Random Errors** 🎲\n- Vary unpredictably and affect measurements in both directions\n- Cannot be completely eliminated but can be minimized\n- Examples:\n  - Slight vibrations affecting measurements\n  - Slight variations in timing\n  - Difficulty reading a scale precisely\n\n**How to reduce:** Take multiple measurements and calculate the mean, use sensitive equipment, repeat experiments\n\n> ✅ **Remember:** Good scientists acknowledge and try to minimize errors. Reporting errors shows scientific honesty and understanding.\n\n### Drawing Conclusions from Data\n\nWhen analyzing your results, ask:\n\n1. **Do the results support your hypothesis?**\n   - Did the data show the expected relationship?\n   - Were the results statistically significant?\n\n2. **What patterns do you see?**\n   - Are there trends over time?\n   - Are there differences between groups?\n   - Are there any outliers (unusual values)?\n\n3. **What might explain the results?**\n   - Why did you get these results?\n   - What biological processes are involved?\n   - Do the results make sense given what you know?\n\n4. **What are the limitations?**\n   - What sources of error might have affected results?\n   - What was the sample size?\n   - Could you have done anything differently?\n\n5. **What are the implications?**\n   - What do these results mean?\n   - How do they apply to the real world?\n   - What further investigations would be useful?\n\n> 💡 **Key Insight:** The ability to collect, organize, analyze, and interpret data is what separates scientific knowledge from opinion.",
+    "speech_to_text_content": "Biology is an experimental science that requires collecting evidence through careful observation and measurement. Quantitative data can be measured and expressed as numbers, such as plant height or temperature. Qualitative data describes qualities or characteristics, such as color or texture. Data should be organized in clear tables with descriptive headers and units of measurement. Graphs help visualize patterns in data, including line graphs for showing trends over time, bar charts for comparing quantities, and scatter plots for showing relationships between variables. The mean is the average calculated by dividing the sum of all values by the number of values. The range shows how spread out data is by subtracting the lowest value from the highest. Accuracy is how close a measurement is to the true value, while precision is how close repeated measurements are to each other. Systematic errors consistently bias results in one direction, while random errors vary unpredictably. When drawing conclusions, scientists should determine if results support the hypothesis, identify patterns, explain results, acknowledge limitations, and discuss implications.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2025-12-24T03:36:36.499311+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Question 8",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "What is the difference between accuracy and precision?",
+    "content": "A student measures the boiling point of water three times and gets: 99.5°C, 99.6°C, and 99.7°C. The true boiling point is 100°C. Which statement best describes these measurements?",
+    "speech_to_text_content": "A student measures the boiling point of water three times and gets 99.5 degrees Celsius, 99.6 degrees Celsius, and 99.7 degrees Celsius. The true boiling point is 100 degrees Celsius. Which statement best describes these measurements?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt1",
+        "option_text": "The measurements are both accurate and precise",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "option_text": "The measurements are precise but not accurate",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt3",
+        "option_text": "The measurements are accurate but not precise",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt4",
+        "option_text": "The measurements are neither accurate nor precise",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **The measurements are precise but not accurate**.\n\n**Analysis:**\n\n::yellow[Precision] refers to how close repeated measurements are to each other.\n- The three measurements are 99.5°C, 99.6°C, and 99.7°C\n- These values are very close to each other (range of only 0.2°C)\n- ::green[Therefore, the measurements ARE precise]\n\n::yellow[Accuracy] refers to how close measurements are to the true value.\n- The true boiling point of water is 100°C\n- All three measurements are below 100°C\n- The mean is about 99.6°C, which is 0.4°C away from the true value\n- ::red[Therefore, the measurements are NOT accurate]\n\n**Why the other options are incorrect:**\n- ::red[Both accurate and precise] - No, they are not close to the true value (100°C)\n- ::red[Accurate but not precise] - No, the measurements are not scattered; they are very close to each other\n- ::red[Neither accurate nor precise] - No, they are precise; they just aren't accurate\n\n> 💡 **Key Insight:** This scenario might indicate a systematic error, such as a thermometer that consistently reads 0.4°C too low. The equipment is working precisely, but it needs calibration to be accurate.",
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2025-12-24T03:36:42.288856+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Lesson 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "🌿 Biodiversity: The Variety of Life on Earth",
+    "content": "## What is Biodiversity?\n\n::yellow[Biodiversity] refers to the variety of all living organisms on Earth, including the different species, genes, and ecosystems. It's one of the most important characteristics of our planet and is essential for ecosystem stability and human survival.\n\n### Levels of Biodiversity\n\n#### **1. Genetic Diversity** 🧬\n- The variation of genes within a single species\n- Different individuals have different genetic makeup\n- Examples:\n  - Different eye colors in humans\n  - Different dog breeds (all the same species)\n  - Different varieties of tomatoes\n\n**Why it matters:**\n- ::green[Genetic diversity] allows populations to adapt to environmental changes\n- Without it, species become vulnerable to diseases\n- Maintains the health of populations\n\n#### **2. Species Diversity** 🦁🌿🐠\n- The number of different species in an area\n- Measured by counting how many different species are present\n- Examples:\n  - A rainforest might have thousands of species\n  - A desert might have hundreds of species\n  - The deep ocean has many unique species\n\n**Factors affecting species diversity:**\n- Climate and temperature\n- Rainfall and water availability\n- Soil type and nutrients\n- Predation and competition\n- Human activities\n\n#### **3. Ecosystem Diversity** 🏞️\n- The variety of different ecosystems on Earth\n- Different ecosystems have different characteristics\n- Examples:\n  - Rainforests (high rainfall, high biodiversity)\n  - Deserts (low rainfall, adapted species)\n  - Coral reefs (high biodiversity, marine)\n  - Tundra (low temperature, specialized species)\n  - Grasslands (moderate rainfall, grazing animals)\n\n**Why it matters:**\n- Different ecosystems provide different services\n- Each ecosystem has unique species found nowhere else\n- Losing one ecosystem type means losing all its species\n\n### Biodiversity Hotspots\n\nSome regions of Earth have exceptionally high biodiversity. These are called ::yellow[biodiversity hotspots].\n\n**Characteristics:**\n- High number of endemic species (found nowhere else)\n- High threat of habitat loss\n- Require urgent conservation efforts\n\n**Examples of biodiversity hotspots:**\n- **Tropical Rainforests** - Amazon, Congo Basin, Southeast Asia\n- **Coral Reefs** - Great Barrier Reef, Southeast Asian reefs\n- **Madagascar** - Unique species found nowhere else\n- **Andes Mountains** - High altitude unique species\n- **Mediterranean Region** - Diverse plant species\n\n> 💡 **Key Insight:** Although tropical rainforests cover only about 6% of Earth's land, they contain about 50% of all species!\n\n### Why Biodiversity Matters\n\n#### **Ecological Functions** 🌍\n- **Nutrient cycling** - Different organisms break down matter and recycle nutrients\n- **Energy flow** - Diverse food webs are more stable\n- **Pollination** - Insects and animals pollinate plants\n- **Pest control** - Predators control pest populations\n- **Soil formation** - Decomposers create fertile soil\n\n#### **Human Benefits** 👥\n- **Medicine** - Many drugs come from plants and animals (e.g., aspirin from willow bark, anticancer drugs from rainforest plants)\n- **Food** - Crops depend on pollinating insects and genetic diversity\n- **Materials** - Wood, cotton, leather, etc.\n- **Recreation** - Ecotourism, wildlife watching, outdoor activities\n- **Psychological** - Nature reduces stress and improves mental health\n\n#### **Economic Value** 💰\n- Ecosystem services worth trillions of dollars annually\n- Pollination alone worth $15-20 billion per year\n- Genetic resources for agriculture and medicine\n- Sustainable industries like ecotourism\n\n### Threats to Biodiversity\n\n::red[Human activities are causing biodiversity loss at an alarming rate.] Threats include:\n\n#### **Habitat Loss** 🏭\n- Deforestation for agriculture and development\n- Wetland drainage for farming\n- Urban sprawl\n- **Impact:** Most serious threat to biodiversity\n\n#### **Pollution** 💨\n- Air pollution from factories and vehicles\n- Water pollution from chemicals and plastic\n- Soil contamination from pesticides\n- **Impact:** Poisons organisms and disrupts ecosystems\n\n#### **Climate Change** 🌡️\n- Rising temperatures shift habitats\n- Changing rainfall patterns\n- Ocean acidification\n- **Impact:** Organisms cannot migrate fast enough to adapt\n\n#### **Overexploitation** 🎣\n- Overhunting of animals\n- Overfishing in oceans\n- Harvesting of endangered plants\n- **Impact:** Populations decline to extinction\n\n#### **Invasive Species** 🐀\n- Non-native species introduced to new areas\n- Often outcompete native species\n- Can devastate local ecosystems\n- **Example:** Cane toads in Australia, zebra mussels in North America\n\n### Conservation Efforts\n\nTo protect biodiversity, we need:\n\n1. **Protected Areas** 🏞️\n   - National parks and reserves\n   - Marine protected areas\n   - Wildlife corridors for migration\n\n2. **Sustainable Practices** ♻️\n   - Sustainable agriculture\n   - Sustainable fishing\n   - Responsible forestry\n\n3. **Breeding Programs** 🦁\n   - Captive breeding of endangered species\n   - Genetic management to maintain diversity\n   - Reintroduction programs\n\n4. **Habitat Restoration** 🌱\n   - Replanting forests\n   - Restoring wetlands\n   - Creating green corridors\n\n5. **Education and Awareness** 📚\n   - Public education about biodiversity\n   - Sustainable consumer choices\n   - Support for conservation organizations\n\n> ✅ **Remember:** Biodiversity loss is reversible if we act now. Every species saved is a victory for our planet and future generations.",
+    "speech_to_text_content": "Biodiversity refers to the variety of all living organisms on Earth, including different species, genes, and ecosystems. There are three levels of biodiversity: genetic diversity, which is the variation of genes within a single species; species diversity, which is the number of different species in an area; and ecosystem diversity, which is the variety of different ecosystems on Earth. Some regions have exceptionally high biodiversity called biodiversity hotspots, such as tropical rainforests, coral reefs, Madagascar, and the Andes Mountains. Biodiversity matters because it provides ecological functions like nutrient cycling and energy flow, human benefits like medicine and food, and economic value through ecosystem services. Threats to biodiversity include habitat loss from deforestation, pollution from factories and chemicals, climate change causing rising temperatures, overexploitation through hunting and fishing, and invasive species. Conservation efforts include protected areas, sustainable practices, breeding programs, habitat restoration, and education.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2025-12-24T03:36:55.657434+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Question 9",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "What does genetic diversity refer to?",
+    "content": "What does genetic diversity refer to?",
+    "speech_to_text_content": "What does genetic diversity refer to?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": "550e8400-e29b-41d4-a716-446655440020-opt1",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt1",
+        "option_text": "The variation of genes within a single species",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt2",
+        "option_text": "The number of different species in an area",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt3",
+        "option_text": "The variety of different ecosystems on Earth",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt4",
+        "option_text": "The total number of organisms in an ecosystem",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **The variation of genes within a single species**.\n\n::yellow[Genetic diversity] is the variation of genes within a single species. This means different individuals of the same species have different genetic makeup. Examples include different eye colors in humans or different dog breeds.\n\n**Why the other options are incorrect:**\n- ::red[The number of different species in an area] is ::yellow[species diversity], not genetic diversity\n- ::red[The variety of different ecosystems on Earth] is ::yellow[ecosystem diversity], not genetic diversity\n- ::red[The total number of organisms in an ecosystem] is population size, not biodiversity\n\n**Key Distinctions Between Types of Biodiversity:**\n| Type | Definition | Example |\n|------|-----------|----------|\n| ::yellow[Genetic] | Variation within a species | Different eye colors in humans |\n| ::yellow[Species] | Number of different species | Count of species in a forest |\n| ::yellow[Ecosystem] | Variety of different ecosystems | Rainforests, deserts, coral reefs |\n\n> 💡 **Why Genetic Diversity Matters:** It allows populations to adapt to environmental changes and resist diseases. Without genetic diversity, species become vulnerable to extinction.",
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2025-12-24T03:36:59.709279+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Lesson 12",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔬 Chapter Summary: Introduction to Biology",
+    "content": "## Key Concepts Review\n\nLet's review the most important concepts from this Introduction to Biology chapter:\n\n### 1. **What is Biology?** 🧬\n- The scientific study of living organisms and life processes\n- Covers everything from molecules to ecosystems\n- Built on observation, experimentation, and evidence\n\n### 2. **Characteristics of Life** ✨\nAll living things share seven key characteristics:\n1. ::yellow[Organization] - highly ordered structure\n2. ::yellow[Metabolism] - chemical reactions for energy\n3. ::yellow[Growth and development] - increase in size and complexity\n4. ::yellow[Reproduction] - producing offspring\n5. ::yellow[Response to environment] - stimulus and response\n6. ::yellow[Homeostasis] - maintaining stable internal conditions\n7. ::yellow[Heredity] - passing genes to offspring\n\n### 3. **The Scientific Method** 🔬\nA systematic approach with 8 steps:\n1. Observation\n2. Question\n3. Hypothesis\n4. Prediction\n5. Experiment\n6. Results\n7. Conclusion\n8. Communication\n\n> 💡 **Key Point:** The scientific method removes bias and ensures conclusions are based on evidence.\n\n### 4. **Variables and Controls** 🔧\n- ::yellow[Independent variable] = what you change\n- ::yellow[Dependent variable] = what you measure\n- ::yellow[Control variables] = what you keep the same\n- ::yellow[Control group] = baseline for comparison\n\n### 5. **Biological Organization** 🏗️\nFrom smallest to largest:\n```\nAtoms → Molecules → Organelles → Cells → Tissues → Organs → \nOrgan Systems → Organisms → Populations → Communities → \nEcosystems → Biosphere\n```\n\n### 6. **Classification of Life** 🦁\nThe five kingdoms:\n1. ::yellow[Monera] - prokaryotic bacteria\n2. ::yellow[Protista] - eukaryotic, mostly single-celled\n3. ::yellow[Fungi] - decomposers with chitin cell walls\n4. ::yellow[Plantae] - make food through photosynthesis\n5. ::yellow[Animalia] - must eat other organisms\n\n### 7. **Ecosystem Components** 🌍\n- ::yellow[Biotic factors] = living components\n- ::yellow[Abiotic factors] = non-living components (temperature, light, water, soil, pH, etc.)\n- ::yellow[Limiting factors] = factors in shortest supply\n\n### 8. **Energy Flow** ⚡\n- ::yellow[Producers] - make food from sunlight\n- ::yellow[Consumers] - eat other organisms\n  - Primary (herbivores)\n  - Secondary (carnivores eating herbivores)\n  - Tertiary (carnivores eating carnivores)\n- ::yellow[Decomposers] - break down dead matter\n\n**The 10% Rule:** Only ~10% of energy transfers between trophic levels\n\n### 9. **Nutrient Cycles** ♻️\nThree important cycles:\n\n| Cycle | Key Process | Important Organisms |\n|-------|-------------|---------------------|\n| ::yellow[Carbon] | Photosynthesis, respiration, decomposition | All organisms |\n| ::yellow[Nitrogen] | Nitrogen fixation, nitrification, denitrification | Nitrogen-fixing bacteria |\n| ::yellow[Phosphorus] | Weathering, absorption, decomposition | All organisms |\n\n### 10. **Data Collection and Analysis** 📊\n- ::yellow[Quantitative data] = numbers (measurements)\n- ::yellow[Qualitative data] = descriptions\n- ::yellow[Accuracy] = closeness to true value\n- ::yellow[Precision] = closeness of repeated measurements\n- Calculate mean and range to summarize data\n\n### 11. **Biodiversity** 🌿\nThree levels:\n1. ::yellow[Genetic diversity] - variation within species\n2. ::yellow[Species diversity] - number of different species\n3. ::yellow[Ecosystem diversity] - variety of ecosystems\n\n**Threats:** Habitat loss, pollution, climate change, overexploitation, invasive species\n\n**Solutions:** Protected areas, sustainable practices, breeding programs, habitat restoration\n\n## Why This Introduction Matters\n\n> 💡 **Key Insight:** Understanding these foundational concepts prepares you for deeper study of biology. Whether you study cells, organisms, or ecosystems, these principles apply everywhere.\n\nBiology is the science of life itself. By understanding how living things are organized, how they interact with their environment, how energy flows through ecosystems, and how to study life scientifically, you're equipped to understand the living world and make informed decisions about environmental and health issues.\n\n## Next Steps in Your Biology Journey 🚀\n\nNow that you understand these introductory concepts, you're ready to explore:\n- Cell structure and function\n- Genetics and inheritance\n- Evolution and natural selection\n- Human body systems\n- Ecology and conservation\n- And much more!\n\n::green[Well done on completing this introduction to biology!] You now have the foundation to understand the incredible diversity and complexity of life on Earth.",
+    "speech_to_text_content": "This is a comprehensive summary of the Introduction to Biology chapter. Biology is the scientific study of living organisms and life processes. All living things share seven characteristics: organization, metabolism, growth and development, reproduction, response to environment, homeostasis, and heredity. The scientific method is a systematic approach with eight steps: observation, question, hypothesis, prediction, experiment, results, conclusion, and communication. Variables include the independent variable which you change, the dependent variable which you measure, and control variables which you keep the same. Biological organization ranges from atoms to the biosphere. The five kingdoms are Monera, Protista, Fungi, Plantae, and Animalia. Ecosystems contain biotic factors which are living and abiotic factors which are non-living. Energy flows from producers through consumers to decomposers, with only ten percent transferred between levels. Nutrient cycles include the carbon, nitrogen, and phosphorus cycles. Data can be quantitative or qualitative, with accuracy and precision being important concepts. Biodiversity has three levels: genetic diversity, species diversity, and ecosystem diversity. Threats to biodiversity include habitat loss, pollution, climate change, overexploitation, and invasive species.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T13:00:00Z",
+    "updated_at": "2024-01-15T13:00:00Z",
+    "source_timestamp": "2024-01-15T13:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2025-12-24T03:37:11.630660+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "bio_o_level_singapore",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "Question 10",
+    "type": "question",
+    "question_type": "open",
+    "title": "Explain how energy and nutrients differ in their movement through ecosystems",
+    "content": "Explain how energy and nutrients differ in their movement through ecosystems. In your answer, consider the direction of flow, whether they are recycled, and provide at least one example for each.",
+    "speech_to_text_content": "Explain how energy and nutrients differ in their movement through ecosystems. In your answer, consider the direction of flow, whether they are recycled, and provide at least one example for each.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "answer_text": "A complete answer should include: Energy flows in one direction (sun → producers → consumers → heat loss), while nutrients cycle between organisms and the environment. Energy is not recycled - it enters as sunlight and leaves as heat. Nutrients are recycled through biogeochemical cycles. Example for energy: A plant captures solar energy through photosynthesis, a rabbit eats the plant and uses the energy, a fox eats the rabbit, and at each step energy is lost as heat. Example for nutrients: Carbon cycles through photosynthesis, respiration, and decomposition, returning to the atmosphere and soil repeatedly. The key difference is that energy flows one way and is eventually lost, while nutrients cycle continuously.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "This is an open-ended question that tests understanding of energy flow and nutrient cycling in ecosystems.\n\n**Key points that should be included in a complete answer:**\n\n1. **Direction of Flow:**\n   - ::yellow[Energy] flows in ONE direction: Sun → Producers → Consumers → Lost as heat\n   - ::yellow[Nutrients] cycle in a LOOP: Organisms ↔ Environment ↔ Organisms\n\n2. **Recycling:**\n   - ::yellow[Energy] is NOT recycled. Once it's lost as heat, it's gone from the ecosystem\n   - ::yellow[Nutrients] ARE recycled continuously through biogeochemical cycles\n\n3. **Energy Example:**\n   - Plant captures solar energy through ::blue[photosynthesis]\n   - Herbivore eats plant and uses energy (some lost as heat and movement)\n   - Carnivore eats herbivore (more energy lost)\n   - At each step, ::red[only ~10% of energy transfers] to the next level\n   - Remaining energy is lost as heat\n\n4. **Nutrient Example:**\n   - ::yellow[Carbon cycle]: CO₂ in atmosphere → plants → animals → decomposers → back to atmosphere\n   - ::yellow[Nitrogen cycle]: Nitrogen in atmosphere → nitrogen-fixing bacteria → plants → animals → decomposers → back to atmosphere\n   - The same atoms cycle repeatedly\n\n5. **Why the Difference:**\n   - Energy comes from the sun and is ultimately lost as heat (follows the laws of thermodynamics)\n   - Nutrients are chemical elements that can be rearranged but not created or destroyed\n\n**Marking Criteria:**\n- ✅ Mentions one-way flow of energy vs. cyclic flow of nutrients\n- ✅ Explains energy loss vs. nutrient recycling\n- ✅ Provides specific examples for both\n- ✅ Shows understanding of the 10% rule or energy loss between trophic levels\n- ✅ Mentions specific biogeochemical cycles or processes",
+    "created_at": "2024-01-15T13:15:00Z",
+    "updated_at": "2024-01-15T13:15:00Z",
+    "source_timestamp": "2024-01-15T13:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2025-12-24T03:37:19.316446+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]
