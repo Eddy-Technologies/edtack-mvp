@@ -13,48 +13,96 @@
       @mousedown="startResize"
     />
 
-    <div class="p-6 pb-24">
-      <!-- Close Button -->
-      <button
-        class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors p-1"
-        title="Close slides"
-        @click="$emit('close-split-view')"
-      >
-        <Icon name="i-heroicons-x-mark" size="20" />
-      </button>
-      <!-- Slide Navigation Header -->
-      <div class="mb-4 flex items-center justify-between">
-        <h3 class="text-lg font-semibold text-gray-800">
-          {{ currentSlide?.part_label || 'Slide' }}
-        </h3>
-        <div class="flex items-center gap-2">
-          <button
-            v-if="currentSlideIndex > 0"
-            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
-            :disabled="currentSlideIndex === 0"
-            @click="previousSlide"
-          >
-            ←
+    <div class="p-4 h-full flex flex-col">
+      <!-- Top Navigation Bar - Inline -->
+      <div class="flex items-center gap-2 mb-4 flex-shrink-0">
+        <!-- Close Button -->
+        <button
+          class="text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors p-1.5"
+          title="Close slides"
+          @click="$emit('close-split-view')"
+        >
+          <Icon name="i-heroicons-x-mark" size="20" />
+        </button>
+
+        <!-- Previous Button -->
+        <button
+          class="p-1.5 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full disabled:opacity-30 disabled:cursor-not-allowed"
+          :disabled="currentSlideIndex === 0"
+          @click="previousSlide"
+        >
+          <Icon name="i-heroicons-chevron-left" size="20" />
+        </button>
+
+        <!-- Title Dropdown -->
+        <UPopover :popper="{ placement: 'bottom-start' }" class="flex-1 min-w-0">
+          <button class="w-full flex items-center justify-between gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <div class="flex-1 min-w-0 text-left">
+              <div class="text-sm font-semibold text-gray-800 truncate">
+                {{ currentSlide?.part_label || 'Slide' }}
+              </div>
+              <div class="text-xs text-gray-500 truncate">
+                {{ currentSlide?.title || '' }}
+              </div>
+            </div>
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <span class="text-xs text-gray-400">{{ currentSlideIndex + 1 }}/{{ totalSlides }}</span>
+              <Icon name="i-heroicons-chevron-down" size="16" class="text-gray-400" />
+            </div>
           </button>
-          <span class="text-sm text-gray-600">
-            {{ currentSlideIndex + 1 }} / {{ totalSlides }}
-          </span>
-          <button
-            v-if="currentSlideIndex < totalSlides - 1"
-            class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full"
-            :disabled="currentSlideIndex === totalSlides - 1"
-            @click="nextSlide"
-          >
-            →
-          </button>
-        </div>
+
+          <template #panel="{ close }">
+            <div class="max-h-96 overflow-y-auto bg-white rounded-lg shadow-lg border border-gray-200" :style="{ width: dropdownWidth }" @vue:mounted="scrollToSelectedSlide">
+              <div
+                v-for="(slide, index) in slides"
+                :key="slide.id"
+                :ref="(el) => { if (index === currentSlideIndex) selectedSlideRef = el as HTMLElement }"
+                :class="[
+                  'px-3 py-2 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors',
+                  index === currentSlideIndex ? 'bg-primary-50' : 'hover:bg-gray-50'
+                ]"
+                @click="jumpToSlide(index); close()"
+              >
+                <div class="flex items-center gap-2">
+                  <Icon
+                    v-if="index === currentSlideIndex"
+                    name="i-heroicons-check"
+                    size="16"
+                    class="text-primary-600 flex-shrink-0"
+                  />
+                  <div v-else class="w-4 flex-shrink-0" />
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-gray-800 truncate">
+                      {{ slide.part_label || `Slide ${index + 1}` }}
+                    </div>
+                    <div v-if="slide.title" class="text-xs text-gray-500 truncate">
+                      {{ slide.title }}
+                    </div>
+                  </div>
+                  <span
+                    v-if="isSlideNew(index)"
+                    class="px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full"
+                  >
+                    NEW
+                  </span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </UPopover>
+
+        <!-- Next Button -->
+        <button
+          class="p-1.5 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full disabled:opacity-30 disabled:cursor-not-allowed"
+          :disabled="currentSlideIndex === totalSlides - 1"
+          @click="nextSlide"
+        >
+          <Icon name="i-heroicons-chevron-right" size="20" />
+        </button>
       </div>
 
-      <!-- Current Slide Display -->
-      <div v-if="currentSlide" class="bg-white rounded-lg p-4 shadow-sm">
-        <h2 v-if="currentSlide.title" class="text-sm text-gray-400 mb-3">
-          {{ currentSlide.title }}
-        </h2>
+      <!-- Current Slide Display - Fit content, scroll if needed -->
+      <div v-if="currentSlide" ref="slideContentRef" class="bg-white rounded-lg p-4 shadow-sm min-h-0 overflow-y-auto">
         <MDCRenderer
           v-if="slideMarkdownBody"
           :body="slideMarkdownBody"
@@ -366,44 +414,12 @@
           </p>
         </div>
       </div>
-
-      <!-- Slide Thumbnail Overview -->
-      <div v-if="showThumbnails" class="mt-6">
-        <h4 class="text-sm font-medium text-gray-700 mb-3">All Slides</h4>
-        <TransitionGroup
-          name="slide-list"
-          tag="div"
-          class="grid grid-cols-2 gap-2"
-        >
-          <div
-            v-for="(slide, index) in slides"
-            :key="slide.id"
-            :class="[
-              'p-2 border rounded cursor-pointer text-xs transition-all duration-300',
-              index === currentSlideIndex
-                ? 'border-primary-500 bg-primary-50 scale-105'
-                : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-            ]"
-            @click="jumpToSlide(index)"
-          >
-            <div class="font-medium">{{ slide.part_label }}</div>
-            <div class="text-gray-600 truncate">{{ slide.title }}</div>
-            <!-- NEW: Badge for newly added slides -->
-            <span
-              v-if="isSlideNew(index)"
-              class="inline-block mt-1 px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full animate-pulse"
-            >
-              NEW
-            </span>
-          </div>
-        </TransitionGroup>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watchEffect, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect, watch, nextTick } from 'vue';
 import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import { useToast } from '#imports';
 import { convertHighlights, convertImages } from '~/utils/markdownUtils';
@@ -466,6 +482,15 @@ const panelWidth = ref(480); // Default width in pixels
 const currentSlideIndex = ref(props.initialSlideIndex || 0);
 const showExplanation = ref(false);
 
+// Watch for initialSlideIndex prop changes (when user clicks a specific thumbnail)
+watch(() => props.initialSlideIndex, (newIndex) => {
+  if (newIndex !== undefined && newIndex !== currentSlideIndex.value) {
+    currentSlideIndex.value = newIndex;
+    showExplanation.value = false;
+    scrollContentToTop();
+  }
+});
+
 // Question and answer state
 const selectedOptions = ref<Record<string, any>>({});
 const answeredQuestions = ref<Record<string, { markingStatus: string; feedback: string }>>({});
@@ -479,6 +504,29 @@ const isSubmitting = ref<Record<string, boolean>>({});
 // Refs
 const slidesPanel = ref<HTMLElement>();
 const resizeHandle = ref<HTMLElement>();
+const selectedSlideRef = ref<HTMLElement | null>(null);
+const slideContentRef = ref<HTMLElement | null>(null);
+
+// Scroll content to top (called on slide change)
+function scrollContentToTop() {
+  nextTick(() => {
+    if (slideContentRef.value) {
+      slideContentRef.value.scrollTop = 0;
+    }
+  });
+}
+
+// Scroll to selected slide when dropdown opens
+function scrollToSelectedSlide() {
+  // Use setTimeout instead of nextTick - ensures v-for items are fully rendered
+  setTimeout(() => {
+    selectedSlideRef.value?.scrollIntoView({ block: 'center' });
+  }, 0);
+}
+
+// Dropdown width matches trigger button (panelWidth - padding - buttons - gaps)
+// Buttons: 3 x 36px = 108, gaps: 4 x 8px = 32, padding: 2 x 16px = 32
+const dropdownWidth = computed(() => `${panelWidth.value - 32 - 108 - 32}px`);
 
 // Track newly added slides for animation
 const newSlideIndices = ref<Set<number>>(new Set());
@@ -570,6 +618,7 @@ function previousSlide() {
   if (currentSlideIndex.value > 0) {
     currentSlideIndex.value--;
     showExplanation.value = false;
+    scrollContentToTop();
     emit('slide-changed', currentSlideIndex.value);
   }
 }
@@ -586,6 +635,7 @@ function nextSlide() {
   if (currentSlideIndex.value < totalSlides.value - 1) {
     currentSlideIndex.value++;
     showExplanation.value = false;
+    scrollContentToTop();
     emit('slide-changed', currentSlideIndex.value);
   }
 }
@@ -601,6 +651,7 @@ function jumpToSlide(index: number) {
   }
   currentSlideIndex.value = index;
   showExplanation.value = false;
+  scrollContentToTop();
   emit('slide-changed', index);
 }
 

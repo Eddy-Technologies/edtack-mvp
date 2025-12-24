@@ -13,7 +13,7 @@
           v-bind="unit.props"
           :start-playback="currentPlaybackIndex === index"
           @finish="handleFinish"
-          @open-split-view="(slides) => handleOpenSplitView(slides, unit.props.messageId)"
+          @open-split-view="(slides, startIndex) => handleOpenSplitView(slides, unit.props.messageId, startIndex)"
           @cancel="handleCancelRequest"
         />
       </div>
@@ -53,7 +53,7 @@ const props = defineProps<ChatContentProps>();
 // Component events
 const emit = defineEmits<{
   (e: 'responseReceived'): void;
-  (e: 'openSlides', slides: any[], messageId?: string): void;
+  (e: 'openSlides', slides: any[], messageId?: string, startIndex?: number): void;
 }>();
 
 // Use global thread state instead of local state
@@ -621,8 +621,6 @@ const flattenedPlaybackUnits = computed(() => {
         component: SlidesPlaceholderCard,
         props: {
           slides: block.slides,
-          slidesTitle: `${block.slides.length} Learning Slides`,
-          showThumbnails: true,
           startPlayback: false,
           messageId: block.id?.toString(),
           isStreaming: activeStreamingMessage.value?.id === block.id,
@@ -690,9 +688,9 @@ const handleCancelRequest = async () => {
   }
 };
 
-const handleOpenSplitView = (slides: any[], messageId?: string) => {
+const handleOpenSplitView = (slides: any[], messageId?: string, startIndex?: number) => {
   // Emit to parent to open slides panel with messageId for marking persistence
-  emit('openSlides', slides, messageId);
+  emit('openSlides', slides, messageId, startIndex);
   nextTick(() => {
     if (typeof messageId === 'string') {
       // Scroll to the specific message that contains the slides

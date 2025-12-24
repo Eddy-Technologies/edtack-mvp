@@ -1,30 +1,24 @@
 <template>
-  <div class="min-w-0 text-left">
-    <!-- Simple Slides Button -->
-    <button
-      class="w-full bg-primary-50 hover:bg-primary-100 border border-primary-200 hover:border-primary-300 rounded-lg p-4 mb-4 text-left group"
-      @click="openSplitView"
-    >
-      <div class="flex items-center justify-between">
-        <!-- Left side: Icon and content info -->
+  <div class="min-w-0 text-left @container">
+    <!-- Slides Card with Thumbnails -->
+    <div class="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-4">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
-          <div class="flex-shrink-0 w-12 h-12 bg-primary-100 group-hover:bg-primary-200 rounded-xl flex items-center justify-center">
-            <Icon name="i-heroicons-academic-cap" class="w-6 h-6 text-primary-600" />
+          <div class="flex-shrink-0 w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center">
+            <Icon name="i-heroicons-academic-cap" class="w-5 h-5 text-primary-600" />
           </div>
-          <div>
-            <h3 class="font-semibold text-gray-800 text-base flex items-center gap-2">
-              {{ slides.length }} {{ slides.length === 1 ? 'Slide' : 'Slides' }}
-              <Icon
-                v-if="isStreaming"
-                name="i-heroicons-arrow-path"
-                class="w-4 h-4 text-primary-600 animate-spin"
-              />
-            </h3>
-          </div>
+          <h3 class="font-semibold text-gray-800 text-base flex items-center gap-2">
+            {{ slides.length }} {{ slides.length === 1 ? 'Slide' : 'Slides' }}
+            <Icon
+              v-if="isStreaming"
+              name="i-heroicons-arrow-path"
+              class="w-4 h-4 text-primary-600 animate-spin"
+            />
+          </h3>
         </div>
 
-        <!-- Right side: Action indicator and stop button -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
           <!-- Stop button when streaming -->
           <button
             v-if="isStreaming"
@@ -34,13 +28,40 @@
             <UIcon name="i-lucide-stop-circle" class="w-4 h-4" />
             <span class="hidden sm:inline">Stop</span>
           </button>
-          <div class="flex items-center gap-2 text-primary-600">
-            <span class="text-sm font-medium hidden sm:block">View Slides</span>
-            <Icon name="i-heroicons-arrow-right" class="w-5 h-5" />
-          </div>
         </div>
       </div>
-    </button>
+
+      <!-- Thumbnail Grid - responsive to container width -->
+      <div class="grid grid-cols-2 @xs:grid-cols-3 @sm:grid-cols-4 @md:grid-cols-5 gap-2">
+        <div
+          v-for="(slide, index) in displayedSlides"
+          :key="slide.id"
+          class="p-2 bg-white border border-gray-200 rounded cursor-pointer text-xs hover:border-primary-300 hover:bg-primary-50 transition-all"
+          @click="openSlideAt(index)"
+        >
+          <div class="font-medium text-gray-800 truncate">{{ slide.part_label || `Slide ${index + 1}` }}</div>
+          <div class="text-gray-500 truncate">{{ slide.title }}</div>
+        </div>
+        <!-- Show more button (when collapsed) -->
+        <div
+          v-if="!isExpanded && hiddenCount > 0"
+          class="p-2 bg-white border border-gray-200 rounded cursor-pointer text-xs hover:border-primary-300 hover:bg-primary-50 transition-all flex items-center justify-center"
+          @click="isExpanded = true"
+        >
+          <span class="font-medium text-gray-600">+{{ hiddenCount }} more</span>
+        </div>
+      </div>
+
+      <!-- Show less button (when expanded) -->
+      <Button
+        v-if="isExpanded && slides.length > MAX_VISIBLE"
+        variant="secondary"
+        size="sm"
+        text="Show less"
+        extra-classes="w-full mt-2"
+        @clicked="isExpanded = false"
+      />
+    </div>
 
     <!-- Message Actions (for copying, etc.) -->
     <MessageActions
@@ -51,8 +72,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import MessageActions from '../chat/MessageActions.vue';
+import Button from '../common/Button.vue';
 
 interface SlideData {
   id: string;
@@ -65,7 +87,6 @@ interface SlideData {
 
 const props = defineProps<{
   slides: SlideData[];
-  slidesTitle?: string;
   startPlayback?: boolean;
   messageId?: string;
   isStreaming?: boolean;
@@ -73,15 +94,34 @@ const props = defineProps<{
 
 const emit = defineEmits(['finish', 'open-split-view', 'cancel']);
 
+// Max visible slides (2 rows * 5 columns - 1 for "+more" button = 9)
+const MAX_VISIBLE = 9;
+
+// Expand/collapse state
+const isExpanded = ref(false);
+
 // Computed properties
+const displayedSlides = computed(() => {
+  if (isExpanded.value) return props.slides;
+  if (props.slides.length <= MAX_VISIBLE + 1) return props.slides;
+  return props.slides.slice(0, MAX_VISIBLE);
+});
+
+const hiddenCount = computed(() => {
+  if (props.slides.length <= MAX_VISIBLE + 1) {
+    return 0;
+  }
+  return props.slides.length - MAX_VISIBLE;
+});
+
 const slidesPreviewText = computed(() => {
   const titles = props.slides.map((slide) => slide.title || slide.part_label || 'Untitled').join(', ');
   return `Learning slides: ${titles}`;
 });
 
 // Methods
-function openSplitView() {
-  emit('open-split-view', props.slides);
+function openSlideAt(index: number) {
+  emit('open-split-view', props.slides, index);
 }
 
 // Auto-finish when component loads (for playback flow)

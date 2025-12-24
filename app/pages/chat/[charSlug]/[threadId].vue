@@ -152,6 +152,7 @@
           ref="slideContainerRef"
           :slides="selectedSlides"
           :message-id="selectedMessageId"
+          :initial-slide-index="selectedSlideIndex"
           :show-thumbnails="true"
           @close-split-view="handleCloseSlides"
         />
@@ -208,6 +209,7 @@ const connectionStatus = ref({
 // Slide state management (lifted from ChatContent)
 const selectedSlides = ref<any[]>([]);
 const selectedMessageId = ref<string | null>(null);
+const selectedSlideIndex = ref<number>(0);
 const showSlides = computed(() => selectedSlides.value.length > 0);
 
 const router = useRouter();
@@ -460,14 +462,16 @@ const handleResponseReceived = () => {
 };
 
 // Slide event handlers
-const handleOpenSlides = (slides: any[], messageId?: string) => {
+const handleOpenSlides = (slides: any[], messageId?: string, startIndex?: number) => {
   selectedSlides.value = slides;
   selectedMessageId.value = messageId || null;
+  selectedSlideIndex.value = startIndex || 0;
 };
 
 const handleCloseSlides = () => {
   selectedSlides.value = [];
   selectedMessageId.value = null;
+  selectedSlideIndex.value = 0;
 };
 
 const handleStudyPromptInjection = async () => {
