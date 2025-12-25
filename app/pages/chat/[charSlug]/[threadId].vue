@@ -354,6 +354,15 @@ watch(threadId, async (newThreadId, oldThreadId) => {
     selectedSlides.value = [];
     selectedMessageId.value = null;
 
+    // Reset connection status immediately to prevent stale error showing on new thread
+    connectionStatus.value = {
+      isConnected: false,
+      isConnecting: true,
+      hasError: false,
+      isWaitingForResponse: false,
+      responsePhase: '',
+    };
+
     // If switching to existing thread, load messages
     if (newThreadId && newThreadId !== 'new') {
       // Check if we have cached thread from createThread (skip redundant fetch)

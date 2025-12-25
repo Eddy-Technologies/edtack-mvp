@@ -85,6 +85,9 @@ const streamingProgress = ref<{
 // Message refs for scrolling
 const messageRefs = ref<Record<string, HTMLElement>>({});
 
+// Flag to track when syncing from threadData (prevents slides auto-open on thread switch)
+const isSyncingFromThreadData = ref(false);
+
 // Chat integration (supports both WebSocket and SSE modes via env config)
 // CRITICAL: Must use shallowRef here. Using ref() causes Vue to auto-unwrap nested refs,
 // so chat.value?.isConnected returns a boolean instead of a Ref, breaking .value access.
@@ -296,6 +299,10 @@ onMounted(() => {
   watch(
     () => messageStream.value,
     (newMessages, oldMessages) => {
+      // Skip auto-open during initial thread data sync (prevents slides opening on thread switch)
+      if (isSyncingFromThreadData.value) {
+        return;
+      }
       // Check if new messages were added
       if (newMessages?.length > (oldMessages?.length || 0)) {
         // Check the latest message for slides
@@ -339,11 +346,17 @@ onMounted(() => {
     (newThreadData) => {
       if (newThreadData?.thread_messages && props.threadId !== 'new') {
         console.log('[ChatContent] Syncing messageStream from threadData prop');
+        // Set flag to prevent slides auto-open during sync
+        isSyncingFromThreadData.value = true;
         messageStream.value = newThreadData.thread_messages.map((msg: any) => {
           if (!msg.sender) {
             return { ...JSON.parse(msg.content), isUser: false, id: msg.id };
           }
           return { text: msg.content, isUser: true, id: msg.id };
+        });
+        // Reset flag after sync completes (next tick to ensure watcher runs first)
+        nextTick(() => {
+          isSyncingFromThreadData.value = false;
         });
       }
     },
