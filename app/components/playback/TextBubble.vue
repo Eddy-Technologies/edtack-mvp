@@ -45,6 +45,16 @@
             Retry
           </button>
         </template>
+        <template v-else-if="status === 'cancelled'">
+          <Icon name="i-heroicons-x-circle" class="w-3 h-3 text-gray-400" />
+          <span class="text-gray-400">Cancelled</span>
+          <button
+            class="ml-2 text-primary-600 hover:text-primary-700 hover:underline font-medium"
+            @click="$emit('retry', text)"
+          >
+            Retry
+          </button>
+        </template>
       </div>
     </div>
 
@@ -79,7 +89,7 @@ const props = defineProps<{
   startPlayback: boolean;
   isUser: boolean;
   messageId?: string;
-  status?: 'queued' | 'sending' | 'sent' | 'failed';
+  status?: 'queued' | 'sending' | 'sent' | 'failed' | 'cancelled';
 }>();
 
 defineEmits(['finish', 'retry']);

@@ -38,6 +38,7 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
   let connectionPromise: Promise<void> | null = null;
   let connectionResolver: (() => void) | null = null;
   let connectionRejecter: ((reason?: any) => void) | null = null;
+  let intentionalClose = false; // Track intentional disconnect vs connection failure
 
   const clearReconnectTimer = () => {
     if (reconnectTimeout) {
@@ -64,6 +65,7 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
 
     // Reset reconnect attempts on manual connect (allows retry after failure)
     reconnectAttempts = 0;
+    intentionalClose = false; // Reset intentional close flag on new connection
     console.log('[WebSocketChat] Reset reconnectAttempts to 0, proceeding with connection');
 
     isConnecting.value = true;
@@ -141,9 +143,15 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
       };
 
       ws.value.onclose = (event) => {
-        console.log('[WebSocketChat] Connection closed, code:', event.code, 'reason:', event.reason, 'wasClean:', event.wasClean);
+        console.log('[WebSocketChat] Connection closed, code:', event.code, 'reason:', event.reason, 'wasClean:', event.wasClean, 'intentional:', intentionalClose);
         isConnected.value = false;
         isConnecting.value = false;
+
+        // If this was an intentional disconnect, don't set error or reconnect
+        if (intentionalClose) {
+          console.log('[WebSocketChat] Intentional disconnect - skipping error/reconnect');
+          return;
+        }
 
         // Reset waiting state - if we were waiting for a response, the connection loss means it won't arrive
         if (isWaitingForResponse.value) {
@@ -184,6 +192,9 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
 
   const disconnect = () => {
     clearReconnectTimer();
+
+    // Mark as intentional close to prevent error state on onclose
+    intentionalClose = true;
 
     // Reject any pending connection promise
     if (connectionRejecter) {

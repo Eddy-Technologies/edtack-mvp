@@ -201,6 +201,13 @@ const connectionDotClass = computed(() => {
   if (props.isConnected) return 'bg-green-500';
   if (props.isConnecting) return 'bg-yellow-500 animate-pulse';
   if (props.hasError) return 'bg-red-500';
+
+  // Check thread state from store for accurate dot color
+  const threadState = props.activeThreadId ? messageQueueStore.getThreadState(props.activeThreadId) : null;
+  if (threadState?.status === 'cancelled') return 'bg-gray-400';
+  if (threadState?.status === 'error') return 'bg-red-500';
+  if (threadState?.status === 'completed' || threadState?.status === 'idle') return 'bg-green-500';
+
   return 'bg-gray-400';
 });
 
@@ -209,6 +216,13 @@ const connectionText = computed(() => {
   if (props.isConnected) return 'Connected';
   if (props.isConnecting) return 'Connecting...';
   if (props.hasError) return 'Error';
+
+  // Check thread state from store for more accurate status when not connected
+  const threadState = props.activeThreadId ? messageQueueStore.getThreadState(props.activeThreadId) : null;
+  if (threadState?.status === 'cancelled') return 'Cancelled';
+  if (threadState?.status === 'error') return 'Error';
+  if (threadState?.status === 'completed' || threadState?.status === 'idle') return 'Ready';
+
   return 'Offline';
 });
 
@@ -217,6 +231,13 @@ const connectionTextClass = computed(() => {
   if (props.isConnected) return 'text-green-600';
   if (props.isConnecting) return 'text-yellow-600';
   if (props.hasError) return 'text-red-600';
+
+  // Check thread state from store for accurate styling
+  const threadState = props.activeThreadId ? messageQueueStore.getThreadState(props.activeThreadId) : null;
+  if (threadState?.status === 'cancelled') return 'text-gray-500';
+  if (threadState?.status === 'error') return 'text-red-600';
+  if (threadState?.status === 'completed' || threadState?.status === 'idle') return 'text-green-600';
+
   return 'text-gray-500';
 });
 

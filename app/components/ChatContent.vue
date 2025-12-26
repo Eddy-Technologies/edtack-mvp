@@ -695,15 +695,15 @@ const handleWebSocketMessage = (message: any) => {
     isPlayingAllowed.value = true;
     isWaitingForResponse.value = false;
 
-    // Mark user message as failed for error/timeout (allows retry)
-    // This handles: SSE connection failures, RAG timeouts, network errors
-    // Note: 'cancelled' is user-initiated so don't mark as failed
-    if (message.status === 'error' || message.status === 'timeout') {
+    // Mark user message status for error/timeout/cancelled (allows retry)
+    // This handles: SSE connection failures, RAG timeouts, network errors, user cancellation
+    if (message.status === 'error' || message.status === 'timeout' || message.status === 'cancelled') {
+      const newStatus = message.status === 'cancelled' ? 'cancelled' : 'failed';
       for (let i = messageStream.value.length - 1; i >= 0; i--) {
         const msg = messageStream.value[i];
         if (msg.isUser && ['sending', 'queued', 'sent'].includes(msg.status)) {
-          console.log('[ChatContent] Marking message as failed due to', message.status);
-          messageStream.value[i] = { ...msg, status: 'failed' };
+          console.log('[ChatContent] Marking message as', newStatus, 'due to', message.status);
+          messageStream.value[i] = { ...msg, status: newStatus };
           messageStream.value = [...messageStream.value];
           break;
         }

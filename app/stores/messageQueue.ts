@@ -551,7 +551,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         await conn.chat.waitForConnection(5000);
         console.log('[MessageQueue] Connection established successfully');
 
-        this.setThreadState(threadId, { status: 'idle' });
+        this.setThreadState(threadId, { status: 'idle', error: undefined });
         return true;
       } catch (err) {
         console.error('[MessageQueue] Connection failed:', err);
