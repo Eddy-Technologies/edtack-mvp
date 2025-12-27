@@ -128,6 +128,7 @@
                     ref="chatInputRef"
                     :show-suggestions="!hasStartedChat && isNewChat"
                     :subject="selectedCharacter?.subject || 'GENERAL'"
+                    :is-processing="connectionStatus.isWaitingForResponse"
                     @send="handleChatSend"
                   />
                 </div>
@@ -140,6 +141,7 @@
                 ref="chatInputRef"
                 :show-suggestions="!hasStartedChat && isNewChat"
                 :subject="selectedCharacter?.subject || 'GENERAL'"
+                :is-processing="connectionStatus.isWaitingForResponse"
                 @send="handleChatSend"
               />
             </div>
