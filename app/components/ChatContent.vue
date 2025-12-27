@@ -29,6 +29,18 @@
 
       <div ref="bottomAnchor" />
     </div>
+
+    <!-- Scroll to bottom button -->
+    <Transition name="fade">
+      <button
+        v-if="!isAtBottom && flattenedPlaybackUnits.length > 0"
+        class="absolute bottom-32 left-1/2 -translate-x-1/2 bg-white/60 backdrop-blur-sm shadow-lg rounded-full p-3 hover:bg-white/90 transition-colors border border-gray-200/50 z-10"
+        title="Scroll to bottom"
+        @click="scrollToBottom"
+      >
+        <Icon name="i-heroicons-arrow-down" class="w-5 h-5 text-gray-600" />
+      </button>
+    </Transition>
   </div>
 </template>
 
@@ -63,6 +75,8 @@ const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = u
 const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
+const scrollArea = ref<HTMLElement | null>(null);
+const isAtBottom = ref(true);
 const isPlayingAllowed = ref(false);
 const currentPlaybackIndex = ref(0);
 const tokenCount = ref(0);
@@ -156,11 +170,19 @@ const initializeChat = async () => {
     chat.value = useChat(props.threadId);
 
     // Populate messageStream even when reusing connection (fixes empty messages on thread switch)
+    // Preserve existing statuses (failed, cancelled, etc.)
+    const existingStatuses = new Map<string, string>();
+    for (const msg of messageStream.value) {
+      if (msg.id && msg.status) {
+        existingStatuses.set(msg.id, msg.status);
+      }
+    }
     messageStream.value = messageHistory.value.map(({ content, id, sender }) => {
+      const preservedStatus = existingStatuses.get(id);
       if (!sender) {
         return { ...JSON.parse(content), isUser: false, id };
       }
-      return { text: content, isUser: true, id };
+      return { text: content, isUser: true, id, ...(preservedStatus && { status: preservedStatus }) };
     });
 
     return;
@@ -251,6 +273,18 @@ const initializeChat = async () => {
 };
 
 onMounted(() => {
+  // Track scroll position to show/hide scroll-to-bottom button
+  const handleScroll = () => {
+    if (!scrollArea.value) return;
+    const { scrollTop, scrollHeight, clientHeight } = scrollArea.value;
+    // Consider "at bottom" if within 100px of bottom
+    isAtBottom.value = scrollHeight - scrollTop - clientHeight < 100;
+  };
+
+  if (scrollArea.value) {
+    scrollArea.value.addEventListener('scroll', handleScroll);
+  }
+
   // Single watcher for chat responses (WebSocket and SSE)
   // Note: Must watch response.value (the array), not response (the Ref),
   // otherwise .length check fails since Refs don't have a length property
@@ -348,15 +382,28 @@ onMounted(() => {
         console.log('[ChatContent] Syncing messageStream from threadData prop');
         // Set flag to prevent slides auto-open during sync
         isSyncingFromThreadData.value = true;
+
+        // Build a map of existing message statuses to preserve them
+        const existingStatuses = new Map<string, string>();
+        for (const msg of messageStream.value) {
+          if (msg.id && msg.status) {
+            existingStatuses.set(msg.id, msg.status);
+          }
+        }
+
         messageStream.value = newThreadData.thread_messages.map((msg: any) => {
+          const preservedStatus = existingStatuses.get(msg.id);
           if (!msg.sender) {
             return { ...JSON.parse(msg.content), isUser: false, id: msg.id };
           }
-          return { text: msg.content, isUser: true, id: msg.id };
+          // Preserve status for user messages (failed, cancelled, etc.)
+          return { text: msg.content, isUser: true, id: msg.id, ...(preservedStatus && { status: preservedStatus }) };
         });
-        // Reset flag after sync completes (next tick to ensure watcher runs first)
+        // Reset flag after sync completes and scroll to bottom
         nextTick(() => {
           isSyncingFromThreadData.value = false;
+          // Scroll to bottom on initial load with instant behavior
+          bottomAnchor.value?.scrollIntoView({ behavior: 'instant' });
         });
       }
     },
@@ -956,6 +1003,11 @@ const scrollToMessage = (messageId: string) => {
   }
 };
 
+// Scroll to the bottom of the chat
+const scrollToBottom = () => {
+  bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+};
+
 // Clear chat method to reset all chat state
 const clearChat = () => {
   messageStream.value = [];
@@ -991,6 +1043,7 @@ const clearChat = () => {
 defineExpose({
   handleSend,
   clearChat,
+  scrollToBottom,
   chat,
   isWaitingForResponse,
   // Connection status computed properties for parent
@@ -1018,3 +1071,15 @@ onUnmounted(() => {
   streamingProgress.value = null;
 });
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
