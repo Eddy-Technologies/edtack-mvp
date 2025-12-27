@@ -18,16 +18,16 @@
         <button
           :class="[
             'p-3 rounded-lg transition-colors duration-200 flex items-center justify-center',
-            isSending
+            isDisabled
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-primary hover:bg-blue-700 text-white'
           ]"
-          :disabled="isSending"
+          :disabled="isDisabled"
           @click="emitMessage"
         >
           <Icon
-            :name="isSending ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
-            :class="['w-5 h-5', isSending ? 'animate-spin text-white' : '']"
+            :name="isDisabled ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
+            :class="['w-5 h-5', isDisabled ? 'animate-spin text-white' : '']"
           />
         </button>
       </div>
@@ -108,6 +108,10 @@ const props = defineProps({
     type: String,
     default: 'GENERAL',
   },
+  isProcessing: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['send']);
@@ -118,6 +122,9 @@ const toast = useToast();
 const shouldShowPills = computed(() => input.value.length < 5 && !input.value.includes('\n'));
 const isSending = ref(false);
 const DEBOUNCE_MS = 2000; // 2 second cooldown to prevent spam
+
+// Combined disabled state: local debounce OR parent processing state
+const isDisabled = computed(() => isSending.value || props.isProcessing);
 
 const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
 
@@ -224,7 +231,7 @@ const handleEnterKey = (event: KeyboardEvent) => {
 };
 
 const emitMessage = async () => {
-  if (!input.value.trim() || isSending.value) return;
+  if (!input.value.trim() || isDisabled.value) return;
 
   // Check token limit - show toast if exceeded but allow action (soft limit)
   await fetchTokenUsage();

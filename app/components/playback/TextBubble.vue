@@ -39,8 +39,9 @@
           <Icon name="i-heroicons-exclamation-triangle" class="w-3 h-3 text-red-500" />
           <span class="text-red-500">Unable to complete</span>
           <button
+            v-if="showRetry"
             class="ml-2 text-primary-600 hover:text-primary-700 hover:underline font-medium"
-            @click="$emit('retry', text)"
+            @click="$emit('retry', { messageId, text })"
           >
             Retry
           </button>
@@ -49,11 +50,16 @@
           <Icon name="i-heroicons-x-circle" class="w-3 h-3 text-gray-400" />
           <span class="text-gray-400">Cancelled</span>
           <button
+            v-if="showRetry"
             class="ml-2 text-primary-600 hover:text-primary-700 hover:underline font-medium"
-            @click="$emit('retry', text)"
+            @click="$emit('retry', { messageId, text })"
           >
             Retry
           </button>
+        </template>
+        <template v-else-if="status === 'retried'">
+          <Icon name="i-heroicons-arrow-path" class="w-3 h-3 text-gray-400" />
+          <span class="text-gray-400">Retried below</span>
         </template>
       </div>
     </div>
@@ -89,7 +95,8 @@ const props = defineProps<{
   startPlayback: boolean;
   isUser: boolean;
   messageId?: string;
-  status?: 'queued' | 'sending' | 'sent' | 'failed' | 'cancelled';
+  status?: 'queued' | 'sending' | 'sent' | 'failed' | 'cancelled' | 'retried';
+  showRetry?: boolean; // Only show retry for most recent failed/cancelled message
 }>();
 
 defineEmits(['finish', 'retry']);

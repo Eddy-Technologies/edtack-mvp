@@ -329,30 +329,47 @@ onMounted(() => {
     }
   );
 
-  // Watch for new slides being added to messageStream - emit to parent
+  // Watch for new messages being added to messageStream - auto-scroll and emit slides
   watch(
-    () => messageStream.value,
-    (newMessages, oldMessages) => {
-      // Skip auto-open during initial thread data sync (prevents slides opening on thread switch)
+    () => messageStream.value.length,
+    (newLength: number, oldLength: number | undefined) => {
+      // Skip during initial thread data sync
       if (isSyncingFromThreadData.value) {
         return;
       }
-      // Check if new messages were added
-      if (newMessages?.length > (oldMessages?.length || 0)) {
-        // Check the latest message for slides
-        const latestMessage = newMessages[newMessages.length - 1];
-        if (latestMessage?.slides && Array.isArray(latestMessage.slides) && latestMessage.slides.length > 0) {
-          // Emit to parent to open slides panel with messageId for marking persistence
-          emit('openSlides', latestMessage.slides, latestMessage.id);
 
-          // Scroll to the message with slides
+      // Check if new messages were added
+      if (newLength > (oldLength || 0)) {
+        const latestMessage = messageStream.value[newLength - 1];
+
+        // Auto-scroll to bottom when new messages arrive (if user was already at bottom)
+        if (isAtBottom.value) {
+          nextTick(() => {
+            bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+          });
+        }
+
+        // Check the latest message for slides - emit to parent to open slides panel
+        if (latestMessage?.slides && Array.isArray(latestMessage.slides) && latestMessage.slides.length > 0) {
+          emit('openSlides', latestMessage.slides, latestMessage.id);
           nextTick(() => {
             scrollToMessage(latestMessage.id);
           });
         }
       }
-    },
-    { deep: true }
+    }
+  );
+
+  // Auto-scroll when loading indicator appears (ensures it's visible)
+  watch(
+    () => chatIsWaitingForResponse.value,
+    (isWaiting: boolean) => {
+      if (isWaiting && isAtBottom.value) {
+        nextTick(() => {
+          bottomAnchor.value?.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    }
   );
 
   // Initialize when all prerequisites are met
@@ -383,6 +400,14 @@ onMounted(() => {
         // Set flag to prevent slides auto-open during sync
         isSyncingFromThreadData.value = true;
 
+        // Build a set of DB message IDs for quick lookup
+        const dbMessageIds = new Set(newThreadData.thread_messages.map((m: any) => m.id));
+
+        // Collect local-only messages (failed/retried/cancelled that never made it to DB)
+        const localOnlyMessages = messageStream.value.filter(
+          (msg: any) => msg.isUser && ['failed', 'retried', 'cancelled'].includes(msg.status) && !dbMessageIds.has(msg.id)
+        );
+
         // Build a map of existing message statuses to preserve them
         const existingStatuses = new Map<string, string>();
         for (const msg of messageStream.value) {
@@ -391,7 +416,8 @@ onMounted(() => {
           }
         }
 
-        messageStream.value = newThreadData.thread_messages.map((msg: any) => {
+        // Map DB messages
+        const dbMessages = newThreadData.thread_messages.map((msg: any) => {
           const preservedStatus = existingStatuses.get(msg.id);
           if (!msg.sender) {
             return { ...JSON.parse(msg.content), isUser: false, id: msg.id };
@@ -399,6 +425,11 @@ onMounted(() => {
           // Preserve status for user messages (failed, cancelled, etc.)
           return { text: msg.content, isUser: true, id: msg.id, ...(preservedStatus && { status: preservedStatus }) };
         });
+
+        // Merge: local-only failed messages first (in order), then DB messages
+        // This keeps retry history visible above the successful retry
+        messageStream.value = [...localOnlyMessages, ...dbMessages];
+
         // Reset flag after sync completes and scroll to bottom
         nextTick(() => {
           isSyncingFromThreadData.value = false;
@@ -779,12 +810,27 @@ const handleWebSocketMessage = (message: any) => {
   }
 };
 
+// Find the index of the last user message with failed or cancelled status (for showRetry logic)
+const lastRetryableIndex = computed(() => {
+  for (let i = messageStream.value.length - 1; i >= 0; i--) {
+    const msg = messageStream.value[i];
+    if (msg.isUser && (msg.status === 'failed' || msg.status === 'cancelled')) {
+      return i;
+    }
+  }
+  return -1;
+});
+
 // Flatten the entire messageStream into an ordered array of playback units
 const flattenedPlaybackUnits = computed(() => {
   const units: any[] = [];
+  const retryableIdx = lastRetryableIndex.value;
+
   messageStream.value.forEach((block, blockIndex) => {
     // Add text messages
     if (block.text) {
+      // Only show retry button for the most recent failed/cancelled message
+      const showRetry = blockIndex === retryableIdx;
       units.push({
         component: TextBubble,
         props: {
@@ -793,6 +839,7 @@ const flattenedPlaybackUnits = computed(() => {
           isUser: !!block.isUser,
           messageId: block.id?.toString(),
           status: block.status, // Pass message status for visual indicators
+          showRetry, // Only true for most recent retryable message
         },
       });
     }
@@ -849,9 +896,19 @@ function handleFinish() {
 }
 
 // Handle user sending a message or lesson request
-const handleSend = async (text: string) => {
-  console.log('[ChatContent] handleSend called, text:', text.substring(0, 50));
+const handleSend = async (text: string, isRetryCall = false) => {
+  console.log('[ChatContent] handleSend called, text:', text.substring(0, 50), 'isRetry:', isRetryCall);
   if (!text.trim()) return;
+
+  // Guard: Prevent sending new messages while one is being processed
+  // Exception: retry calls are allowed as they replace failed messages
+  if (!isRetryCall && (isWaitingForResponse.value || isSendingMessage.value)) {
+    console.log('[ChatContent] Blocked send - already processing:', {
+      isWaitingForResponse: isWaitingForResponse.value,
+      isSendingMessage: isSendingMessage.value
+    });
+    return;
+  }
 
   // Set flag to prevent initializeChat from interfering during reconnection
   isSendingMessage.value = true;
@@ -944,24 +1001,55 @@ const handleCancelRequest = async () => {
   if (chat.value?.cancelRequest) {
     await chat.value.cancelRequest();
     isWaitingForResponse.value = false;
+
+    // Directly mark the last user message as cancelled (for SSE, the response may not come back reliably)
+    for (let i = messageStream.value.length - 1; i >= 0; i--) {
+      const msg = messageStream.value[i];
+      if (msg.isUser && ['sending', 'queued', 'sent'].includes(msg.status)) {
+        console.log('[ChatContent] Marking message as cancelled via handleCancelRequest');
+        messageStream.value[i] = { ...msg, status: 'cancelled' };
+        messageStream.value = [...messageStream.value];
+        break;
+      }
+    }
   }
 };
 
-// Handle retry for failed messages
-const handleRetry = async (text: string) => {
-  // Find and remove the failed message from stream (will be re-added by handleSend)
+// Handle retry for failed or cancelled messages
+const handleRetry = async (payload: { messageId?: string; text: string }) => {
+  const { messageId, text } = payload;
+  console.log('[ChatContent] handleRetry called, messageId:', messageId, 'text:', text?.substring(0, 30));
+  console.log('[ChatContent] Current messageStream:', messageStream.value.map((m: any) => ({ id: m.id, status: m.status, isUser: m.isUser, text: m.text?.substring(0, 20) })));
+
+  // Mark the failed/cancelled message as 'retried' to show user attempted retry
+  // Find by messageId AND status, or fallback to text matching
   const failedIndex = messageStream.value.findIndex(
-    (m: { isUser?: boolean; text?: string; status?: string }) => m.isUser && m.text === text && m.status === 'failed'
+    (m: { id?: string; isUser?: boolean; text?: string; status?: string }) => {
+      const isFailed = m.status === 'failed' || m.status === 'cancelled';
+      // Match by messageId + failed status
+      if (messageId && m.id === messageId && isFailed) return true;
+      // Fallback: match by text + user + failed status
+      return m.isUser && m.text === text && isFailed;
+    }
   );
+
+  console.log('[ChatContent] failedIndex:', failedIndex);
   if (failedIndex !== -1) {
-    messageStream.value.splice(failedIndex, 1);
+    const oldMsg = messageStream.value[failedIndex];
+    console.log('[ChatContent] Marking message as retried at index:', failedIndex, 'oldStatus:', oldMsg.status);
+    messageStream.value[failedIndex] = { ...oldMsg, status: 'retried' };
+    messageStream.value = [...messageStream.value]; // Force reactivity
+    console.log('[ChatContent] After update, message status:', messageStream.value[failedIndex].status);
+  } else {
+    console.warn('[ChatContent] Could not find failed message to mark as retried! messageId:', messageId, 'text:', text);
   }
 
   // Clear error state from store before retrying
   messageQueueStore.setThreadState(props.threadId, { status: 'idle', error: undefined });
 
-  // Resend the message
-  await handleSend(text);
+  // Send a new message (the retried one stays visible showing retry history)
+  // Pass isRetryCall=true to bypass the concurrent send guard
+  await handleSend(text, true);
 };
 
 const handleOpenSplitView = (slides: any[], messageId?: string, startIndex?: number) => {
