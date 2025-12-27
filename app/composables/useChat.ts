@@ -329,7 +329,7 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
 
     // Send via WebSocket/SSE
     console.log('[useChat] Calling currentConn.chat.startChat...');
-    const success = currentConn.chat.startChat(message, userInfo);
+    const success = await currentConn.chat.startChat(message, userInfo);
     console.log('[useChat] startChat result:', success);
 
     if (success) {
@@ -401,7 +401,7 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
 
     store.setThreadState(tid, { status: 'processing' });
 
-    const success = currentConn.chat.sendUserResponse(responseText, userInfo);
+    const success = await currentConn.chat.sendUserResponse(responseText, userInfo);
 
     if (success) {
       store.updatePendingMessage(tid, uuid, { status: 'sent' });

@@ -379,9 +379,11 @@ watch(threadId, async (newThreadId, oldThreadId) => {
         isLoading.value = true;
 
         try {
+          console.log('[ThreadPage] Fetching thread from DB:', newThreadId);
           const response = await fetchThread(newThreadId);
           if (!response) return;
           const { thread } = response;
+          console.log('[ThreadPage] Thread fetched, messages count:', thread?.thread_messages?.length || 0);
           // Store thread data for use in ChatContent
           threadData.value = thread || null;
         } catch (err) {

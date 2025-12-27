@@ -53,6 +53,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     // Trigger for connection reactivity (increment to force re-render)
     connectionVersion: 0,
 
+    // Trigger for response reactivity per thread (increment when responses arrive)
+    // Key is threadId, value is version counter
+    responseVersions: {} as Record<string, number>,
+
     // Track locally-sent message UUIDs for deduplication (non-reactive, internal use)
     localMessageIds: new Set<string>(),
 
@@ -451,6 +455,9 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Handle chat response from WebSocket/SSE
      */
     handleChatResponse(threadId: string, response: ChatResponse) {
+      // Increment response version to trigger reactivity for watchers
+      this.responseVersions[threadId] = (this.responseVersions[threadId] || 0) + 1;
+
       const currentState = this.threadStates[threadId];
 
       // Check if this is a late response during grace period (error recovery)

@@ -26,6 +26,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
   let currentAuthToken = options.authToken;
   let abortController: AbortController | null = null;
+  let hasReceivedTerminalEvent = false; // Track if we've received a terminal event (completed, error, cancelled)
 
   const setAuthToken = (token: string) => {
     currentAuthToken = token;
@@ -45,36 +46,43 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   };
 
   /**
-   * Parse SSE data from a chunk of text
+   * Parse SSE data from a chunk of text.
+   * SSE format: event: <type>\ndata: <json>\n\n
    */
   const parseSSEChunk = (chunk: string): { eventType: string; data: any }[] => {
     const events: { eventType: string; data: any }[] = [];
-    const lines = chunk.split('\n');
 
-    let currentEventType = '';
-    let currentData = '';
+    // Split by double newlines to get complete events
+    const eventBlocks = chunk.split('\n\n');
 
-    for (const line of lines) {
-      if (line.startsWith('event: ')) {
-        currentEventType = line.slice(7).trim();
-      } else if (line.startsWith('data: ')) {
-        currentData = line.slice(6);
+    for (const block of eventBlocks) {
+      if (!block.trim()) continue;
 
-        if (currentEventType && currentData) {
-          try {
-            const parsedData = JSON.parse(currentData);
-            events.push({ eventType: currentEventType, data: parsedData });
-          } catch {
-            // If JSON parse fails, treat as string data
-            events.push({ eventType: currentEventType, data: currentData });
-          }
-          currentEventType = '';
-          currentData = '';
+      const lines = block.split('\n');
+      let eventType = '';
+      const dataLines: string[] = [];
+
+      for (const line of lines) {
+        if (line.startsWith('event: ')) {
+          eventType = line.slice(7).trim();
+        } else if (line.startsWith('data: ')) {
+          dataLines.push(line.slice(6));
+        } else if (line.startsWith('data:')) {
+          // Handle "data:" without space
+          dataLines.push(line.slice(5));
         }
-      } else if (line === '' && currentData) {
-        // Empty line signals end of event
-        currentEventType = '';
-        currentData = '';
+      }
+
+      // Combine multi-line data and parse
+      if (eventType && dataLines.length > 0) {
+        const rawData = dataLines.join('\n');
+        try {
+          const parsedData = JSON.parse(rawData);
+          events.push({ eventType, data: parsedData });
+        } catch {
+          // If JSON parse fails, treat as string data
+          events.push({ eventType, data: rawData });
+        }
       }
     }
 
@@ -85,6 +93,8 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
    * Handle parsed SSE events
    */
   const handleSSEEvent = (eventType: string, data: any) => {
+    console.log('[SSEChat] handleSSEEvent:', eventType, 'response.length before:', response.value.length);
+
     // Handle heartbeat - don't add to messages
     if (eventType === 'heartbeat') {
       return;
@@ -104,6 +114,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         timestamp: data.timestamp,
       };
       response.value.push(responseData);
+      console.log('[SSEChat] Pushed status_update, response.length:', response.value.length);
       return;
     }
 
@@ -154,6 +165,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     // Handle completion
     if (eventType === 'completed') {
+      hasReceivedTerminalEvent = true;
       isWaitingForResponse.value = false;
       isStreaming.value = false;
       responsePhase.value = '';
@@ -168,6 +180,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     // Handle cancellation
     if (eventType === 'cancelled') {
+      hasReceivedTerminalEvent = true;
       isWaitingForResponse.value = false;
       isStreaming.value = false;
       responsePhase.value = '';
@@ -182,6 +195,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     // Handle errors
     if (eventType === 'error') {
+      hasReceivedTerminalEvent = true;
       isWaitingForResponse.value = false;
       isStreaming.value = false;
       error.value = data.message || 'Unknown error occurred';
@@ -224,22 +238,37 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     isWaitingForResponse.value = true;
     isStreaming.value = true;
     isConnected.value = true;
+    hasReceivedTerminalEvent = false; // Reset for new request
 
     // Create new abort controller for this request
     abortController = new AbortController();
 
     const apiUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}`;
+    const INITIAL_TIMEOUT_MS = 30 * 1000; // 30 seconds for initial connection
 
     try {
-      const fetchResponse = await fetch(apiUrl, {
-        method: 'POST',
-        headers: buildHeaders(),
-        body: JSON.stringify({
-          input: initialMessage,
-          user_info: userInfo,
-        }),
-        signal: abortController.signal,
-      });
+      // Set up initial connection timeout
+      const timeoutId = setTimeout(() => {
+        if (abortController) {
+          console.warn('[SSEChat] Initial connection timeout after', INITIAL_TIMEOUT_MS / 1000, 'seconds');
+          abortController.abort();
+        }
+      }, INITIAL_TIMEOUT_MS);
+
+      let fetchResponse: Response;
+      try {
+        fetchResponse = await fetch(apiUrl, {
+          method: 'POST',
+          headers: buildHeaders(),
+          body: JSON.stringify({
+            input: initialMessage,
+            user_info: userInfo,
+          }),
+          signal: abortController.signal,
+        });
+      } finally {
+        clearTimeout(timeoutId);
+      }
 
       if (fetchResponse.status === 401) {
         // Try refreshing token once
@@ -271,19 +300,64 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         return false;
       }
 
-      // Read the stream
+      // Read the stream with timeout protection
       const reader = fetchResponse.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
+      let lastActivityTime = Date.now();
+      const STREAM_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes without activity
 
       while (true) {
-        const { value, done } = await reader.read();
+        // Check for stream timeout (no data received for too long)
+        const timeSinceLastActivity = Date.now() - lastActivityTime;
+        if (timeSinceLastActivity > STREAM_TIMEOUT_MS) {
+          console.warn('[SSEChat] Stream timeout - no data received for', STREAM_TIMEOUT_MS / 1000, 'seconds');
+          error.value = 'Stream timeout - no response from server';
 
-        if (done) {
+          // Push timeout event so ChatContent.vue gets notified
+          const timeoutResponse: ChatResponse = {
+            status: 'timeout',
+            error: 'Stream timeout - no response from server',
+            timestamp: Date.now(),
+          };
+          response.value.push(timeoutResponse);
+
           isStreaming.value = false;
           isWaitingForResponse.value = false;
           break;
         }
+
+        const { value, done } = await reader.read();
+
+        if (done) {
+          // Process any remaining data in the buffer before ending
+          if (buffer.trim()) {
+            console.log('[SSEChat] Processing remaining buffer on stream end:', buffer.substring(0, 100));
+            const finalEvents = parseSSEChunk(buffer);
+            for (const event of finalEvents) {
+              handleSSEEvent(event.eventType, event.data);
+            }
+          }
+
+          // If no terminal event was received (completed, error, cancelled),
+          // push a synthetic 'completed' event so ChatContent.vue gets notified
+          // This fixes the bug where ChatContent's isWaitingForResponse stays true
+          if (!hasReceivedTerminalEvent) {
+            console.log('[SSEChat] Stream ended without terminal event - pushing synthetic completed');
+            const syntheticCompleted: ChatResponse = {
+              status: 'completed',
+              timestamp: Date.now(),
+            };
+            response.value.push(syntheticCompleted);
+          }
+
+          isStreaming.value = false;
+          isWaitingForResponse.value = false;
+          break;
+        }
+
+        // Update activity timestamp
+        lastActivityTime = Date.now();
 
         buffer += decoder.decode(value, { stream: true });
 
@@ -294,7 +368,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           handleSSEEvent(event.eventType, event.data);
         }
 
-        // Keep incomplete data in buffer
+        // Keep incomplete data in buffer (data after last double newline)
         const lastNewline = buffer.lastIndexOf('\n\n');
         if (lastNewline !== -1) {
           buffer = buffer.slice(lastNewline + 2);
@@ -304,13 +378,30 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       return true;
     } catch (err: any) {
       if (err.name === 'AbortError') {
-        // Request was cancelled
-        const responseData: ChatResponse = {
-          status: 'cancelled',
-          timestamp: Date.now(),
-        };
-        response.value.push(responseData);
+        // Check if this was a timeout abort or user cancellation
+        // Timeout aborts happen when we call abortController.abort() from timeout handler
+        // If abortController is null, it was manually cancelled via cancelRequest()
+        const wasTimeout = abortController !== null;
+
+        if (wasTimeout) {
+          console.warn('[SSEChat] Request aborted due to timeout');
+          error.value = 'Connection timeout - server did not respond in time';
+          const responseData: ChatResponse = {
+            status: 'error',
+            error: 'Connection timeout - server did not respond in time',
+            timestamp: Date.now(),
+          };
+          response.value.push(responseData);
+        } else {
+          // User cancelled
+          const responseData: ChatResponse = {
+            status: 'cancelled',
+            timestamp: Date.now(),
+          };
+          response.value.push(responseData);
+        }
       } else {
+        console.error('[SSEChat] Request failed:', err);
         error.value = err.message || 'Failed to start chat';
         const responseData: ChatResponse = {
           status: 'error',
