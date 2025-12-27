@@ -39,9 +39,9 @@
       />
 
       <!-- Main Content Area -->
-      <div class="flex flex-1 h-full overflow-hidden">
+      <div :class="['flex flex-1 h-full overflow-hidden', isMobile && collapsed ? 'ml-[80px]' : '']">
         <!-- Chat Column -->
-        <div class="flex-1 flex flex-col h-full relative">
+        <div class="flex-1 flex flex-col h-full relative min-w-0">
           <!-- Chat Content Area - takes remaining space -->
           <div class="flex-1 overflow-hidden relative">
             <!-- Loading state during thread creation or loading -->
@@ -190,7 +190,7 @@ definePageMeta({
 const isLoading = ref(true);
 const isCreatingThread = ref(false);
 const collapsed = ref(true);
-const isMobile = ref(true);
+const isMobile = ref(false);
 const currentCharacter = ref(null);
 const showContentTransitions = ref(true);
 const hasStartedChat = ref(false);
