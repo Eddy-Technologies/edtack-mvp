@@ -927,18 +927,16 @@ const handleWebSocketMessage = (message: any) => {
     // Reset for next conversation - allows new messages to use startChat
     isFirstMessage.value = true;
 
-    // Close the WebSocket connection - RAG cleans up task after terminal states,
-    // so we need a fresh connection for the next message
-    // IMPORTANT: Don't disconnect while a send is in progress (isSendingMessage=true).
-    // For SSE mode, disconnect() aborts the ongoing fetch via abortController.abort(),
-    // which would cause the sendMessage to fail even though the stream completed successfully.
-    // The connection will be closed naturally when SSE finishes or on next send attempt.
-    if (chat.value && !isSendingMessage.value) {
-      console.log('[ChatContent] Disconnecting stale connection after terminal state');
-      chat.value.disconnect();
-    } else if (isSendingMessage.value) {
-      console.log('[ChatContent] Skipping disconnect - send in progress (SSE will complete naturally)');
-    }
+    // NOTE: We do NOT disconnect here anymore. The old approach caused a race condition:
+    // Vue watchers are deferred (flush: 'pre'), so by the time this terminal state handler runs,
+    // isSendingMessage may already be false even though the SSE stream just completed.
+    // Calling disconnect() would abort the SSE fetch mid-stream, losing the response.
+    //
+    // Instead, the connection stays open and will be:
+    // 1. Reused for the next message (isFirstMessage=true will call startChat)
+    // 2. Cleaned up by idle timeout (CONNECTION_IDLE_TIMEOUT_MS)
+    // 3. Closed when user navigates away
+    console.log('[ChatContent] Terminal state received, keeping connection open for reuse');
 
     // Update global thread state
     // If content was received, treat as completed even if error/timeout occurred after

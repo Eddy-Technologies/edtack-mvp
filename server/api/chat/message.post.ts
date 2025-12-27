@@ -16,8 +16,20 @@ export default defineEventHandler(async (event) => {
     const { thread_id, content, isUser, type, uuid } = await readBody<PostMessageReq>(event);
 
     if (!thread_id || !content) {
+      console.error('Missing required fields:', { thread_id: !!thread_id, content: !!content });
       throw createError({ statusCode: 400, statusMessage: 'thread_id and content are required' });
     }
+
+    // Serialize content if it's an object (e.g., slides data)
+    const serializedContent = typeof content === 'object' ? JSON.stringify(content) : content;
+
+    console.log('Inserting message:', {
+      thread_id,
+      type: type || (isUser ? 'text' : 'json'),
+      contentLength: serializedContent.length,
+      isUser,
+      uuid
+    });
 
     const { data, error } = await supabase
       .from('thread_messages')
@@ -25,22 +37,33 @@ export default defineEventHandler(async (event) => {
         id: uuid,
         thread_id,
         sender: isUser ? userInfo.id : null,
-        content,
+        content: serializedContent,
         type: type ? type : isUser ? 'text' : 'json'
       }, { onConflict: 'id' })
       .select('*')
       .single();
 
     if (error) {
+      console.error('Supabase insert error:', {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint
+      });
       throw createError({
         statusCode: 500,
         statusMessage: `Failed to send message: ${error.message}`,
       });
     }
 
+    console.log('Message inserted successfully:', { id: data?.id, thread_id });
     return { success: true, data };
   } catch (err: any) {
-    console.error('Send message API error:', err);
+    console.error('Send message API error:', {
+      message: err.message,
+      statusCode: err.statusCode,
+      stack: err.stack
+    });
     if (err.statusCode) throw err;
     throw createError({ statusCode: 500, statusMessage: 'Failed to send message' });
   }
