@@ -1,6 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { serverSupabaseUser } from '#supabase/server';
-import { createStripeCustomer } from '~~/server/utils/stripe';
+import { createStripeCustomer, createFreeSubscription } from '~~/server/utils/stripe';
 import { USER_ROLE } from '~/constants/User';
 
 export default defineEventHandler(async (event) => {
@@ -100,6 +100,11 @@ export default defineEventHandler(async (event) => {
           statusCode: 500,
           statusMessage: 'Failed to create user profile'
         });
+      }
+
+      // Create subscription AFTER DB has payment_customer_id (avoids webhook race condition)
+      if (stripeCustomerId) {
+        await createFreeSubscription(stripeCustomerId, userInfoId);
       }
 
       // Set userInfo from RPC result

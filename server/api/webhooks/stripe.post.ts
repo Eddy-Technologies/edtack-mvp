@@ -117,16 +117,15 @@ async function handleCustomerEvent(supabase: SupabaseClient, event: Stripe.Event
 
   // Find user by email and update payment_customer_id
   const { data: userInfo, error } = await supabase
-    .from('all_users')
+    .from('user_infos')
     .select('id, payment_customer_id')
     .eq('email', customer.email)
     .single();
 
   if (error || !userInfo) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: `[StripeWebhook] No user found with email ${customer.email}`
-    });
+    // Graceful return - user may not exist yet during registration flow
+    console.log(`[StripeWebhook] No user found with email ${customer.email}, skipping customer sync`);
+    return;
   }
 
   if (userInfo.payment_customer_id) {

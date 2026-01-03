@@ -2,7 +2,7 @@ import { getSupabaseClient } from '~~/server/utils/authConfig';
 import type { SignUpReq } from '~~/app/composables/useAuth';
 import { USER_ROLE } from '~~/app/constants/User';
 import { validateEmail, validatePassword } from '~~/shared/utils/validation';
-import { createStripeCustomer } from '~~/server/utils/stripe';
+import { createStripeCustomer, createFreeSubscription } from '~~/server/utils/stripe';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
@@ -91,6 +91,11 @@ export default defineEventHandler(async (event) => {
         statusCode: 500,
         statusMessage: 'Failed to create user profile'
       });
+    }
+
+    // Create subscription AFTER DB has payment_customer_id (avoids webhook race condition)
+    if (paymentCustomerId) {
+      await createFreeSubscription(paymentCustomerId, uuid);
     }
 
     return { user };
