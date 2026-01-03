@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Get user's user_info_id from all_users view
+    // Get user's user_info_id from user_infos table
     const { data: userInfo, error: userError } = await supabase
       .from('user_infos')
       .select('id, user_roles(role_id, roles(role_name))')

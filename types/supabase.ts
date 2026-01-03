@@ -17,10 +17,10 @@ export type Database = {
     Functions: {
       graphql: {
         Args: {
+          extensions?: Json;
           operationName?: string;
           query?: string;
           variables?: Json;
-          extensions?: Json;
         };
         Returns: Json;
       };
@@ -154,20 +154,9 @@ export type Database = {
         };
         Relationships: [];
       };
-      checkpoint_migrations: {
-        Row: {
-          v: number;
-        };
-        Insert: {
-          v: number;
-        };
-        Update: {
-          v?: number;
-        };
-        Relationships: [];
-      };
       checkpoint_writes: {
         Row: {
+          blob: string | null;
           channel: string;
           checkpoint_id: string;
           checkpoint_ns: string;
@@ -177,9 +166,9 @@ export type Database = {
           task_path: string;
           thread_id: string;
           type: string | null;
-          value: Json | null;
         };
         Insert: {
+          blob?: string | null;
           channel: string;
           checkpoint_id: string;
           checkpoint_ns?: string;
@@ -189,9 +178,9 @@ export type Database = {
           task_path?: string;
           thread_id: string;
           type?: string | null;
-          value?: Json | null;
         };
         Update: {
+          blob?: string | null;
           channel?: string;
           checkpoint_id?: string;
           checkpoint_ns?: string;
@@ -201,7 +190,6 @@ export type Database = {
           task_path?: string;
           thread_id?: string;
           type?: string | null;
-          value?: Json | null;
         };
         Relationships: [];
       };
@@ -495,100 +483,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      mark_responses: {
-        Row: {
-          assessment: string;
-          created_at: string | null;
-          id: string;
-          key_concepts: string[] | null;
-          processing_time_ms: number | null;
-          proposed_answer: string | null;
-          score: Json | null;
-          status: string | null;
-          submission_id: string;
-        };
-        Insert: {
-          assessment: string;
-          created_at?: string | null;
-          id?: string;
-          key_concepts?: string[] | null;
-          processing_time_ms?: number | null;
-          proposed_answer?: string | null;
-          score?: Json | null;
-          status?: string | null;
-          submission_id: string;
-        };
-        Update: {
-          assessment?: string;
-          created_at?: string | null;
-          id?: string;
-          key_concepts?: string[] | null;
-          processing_time_ms?: number | null;
-          proposed_answer?: string | null;
-          score?: Json | null;
-          status?: string | null;
-          submission_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'mark_responses_submission_id_fkey';
-            columns: ['submission_id'];
-            isOneToOne: false;
-            referencedRelation: 'mark_submissions';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      mark_submissions: {
-        Row: {
-          content_text: string | null;
-          created_at: string | null;
-          file_name: string | null;
-          file_size: number | null;
-          file_type: string | null;
-          file_url: string | null;
-          id: string;
-          status: string;
-          submission_type: string;
-          updated_at: string | null;
-          user_info_id: string;
-        };
-        Insert: {
-          content_text?: string | null;
-          created_at?: string | null;
-          file_name?: string | null;
-          file_size?: number | null;
-          file_type?: string | null;
-          file_url?: string | null;
-          id?: string;
-          status?: string;
-          submission_type: string;
-          updated_at?: string | null;
-          user_info_id: string;
-        };
-        Update: {
-          content_text?: string | null;
-          created_at?: string | null;
-          file_name?: string | null;
-          file_size?: number | null;
-          file_type?: string | null;
-          file_url?: string | null;
-          id?: string;
-          status?: string;
-          submission_type?: string;
-          updated_at?: string | null;
-          user_info_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'mark_submissions_user_info_id_fkey';
-            columns: ['user_info_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_infos';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       message_feedback: {
         Row: {
           category: string | null;
@@ -830,7 +724,7 @@ export type Database = {
           id: string;
           image_url: string | null;
           option_id: string | null;
-          order_index: number;
+          order_index: number | null;
           question_id: string;
         };
         Insert: {
@@ -840,7 +734,7 @@ export type Database = {
           id: string;
           image_url?: string | null;
           option_id?: string | null;
-          order_index: number;
+          order_index?: number | null;
           question_id: string;
         };
         Update: {
@@ -850,7 +744,7 @@ export type Database = {
           id?: string;
           image_url?: string | null;
           option_id?: string | null;
-          order_index?: number;
+          order_index?: number | null;
           question_id?: string;
         };
         Relationships: [
@@ -1015,6 +909,7 @@ export type Database = {
           country_code: string | null;
           description: string | null;
           display_name: string;
+          is_active: boolean;
           name: string;
           subject_name: string;
         };
@@ -1022,6 +917,7 @@ export type Database = {
           country_code?: string | null;
           description?: string | null;
           display_name: string;
+          is_active?: boolean;
           name: string;
           subject_name: string;
         };
@@ -1029,8 +925,39 @@ export type Database = {
           country_code?: string | null;
           description?: string | null;
           display_name?: string;
+          is_active?: boolean;
           name?: string;
           subject_name?: string;
+        };
+        Relationships: [];
+      };
+      subscription_tier_limits: {
+        Row: {
+          created_at: string | null;
+          display_name: string;
+          id: string;
+          is_active: boolean | null;
+          tier_lookup_key: string;
+          token_limit_monthly: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          display_name: string;
+          id?: string;
+          is_active?: boolean | null;
+          tier_lookup_key: string;
+          token_limit_monthly?: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          display_name?: string;
+          id?: string;
+          is_active?: boolean | null;
+          tier_lookup_key?: string;
+          token_limit_monthly?: number;
+          updated_at?: string | null;
         };
         Relationships: [];
       };
@@ -1091,69 +1018,10 @@ export type Database = {
         };
         Relationships: [];
       };
-      task_threads: {
-        Row: {
-          chapter: string;
-          created_at: string | null;
-          due_date: string;
-          generated_content: Json | null;
-          id: string;
-          init_prompt: Json | null;
-          status: string;
-          thread_id: string;
-          user_task_id: string;
-        };
-        Insert: {
-          chapter: string;
-          created_at?: string | null;
-          due_date: string;
-          generated_content?: Json | null;
-          id?: string;
-          init_prompt?: Json | null;
-          status?: string;
-          thread_id: string;
-          user_task_id: string;
-        };
-        Update: {
-          chapter?: string;
-          created_at?: string | null;
-          due_date?: string;
-          generated_content?: Json | null;
-          id?: string;
-          init_prompt?: Json | null;
-          status?: string;
-          thread_id?: string;
-          user_task_id?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'task_threads_chapter_fkey';
-            columns: ['chapter'];
-            isOneToOne: false;
-            referencedRelation: 'chapters';
-            referencedColumns: ['name'];
-          },
-          {
-            foreignKeyName: 'task_threads_thread_id_fkey';
-            columns: ['thread_id'];
-            isOneToOne: true;
-            referencedRelation: 'threads';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'task_threads_user_task_id_fkey';
-            columns: ['user_task_id'];
-            isOneToOne: false;
-            referencedRelation: 'user_tasks';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       thread_messages: {
         Row: {
           content: string;
           created_at: string | null;
-          has_slides: boolean | null;
           id: string;
           sender: string | null;
           thread_id: string;
@@ -1162,7 +1030,6 @@ export type Database = {
         Insert: {
           content: string;
           created_at?: string | null;
-          has_slides?: boolean | null;
           id?: string;
           sender?: string | null;
           thread_id: string;
@@ -1171,7 +1038,6 @@ export type Database = {
         Update: {
           content?: string;
           created_at?: string | null;
-          has_slides?: boolean | null;
           id?: string;
           sender?: string | null;
           thread_id?: string;
@@ -1279,6 +1145,56 @@ export type Database = {
           {
             foreignKeyName: 'token_history_user_infos_id_fkey';
             columns: ['user_infos_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      token_usage_summary: {
+        Row: {
+          created_at: string | null;
+          id: string;
+          input_tokens: number;
+          last_aggregated_at: string;
+          last_token_history_id: number | null;
+          output_tokens: number;
+          period_end: string;
+          period_start: string;
+          total_tokens: number;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: string;
+          input_tokens?: number;
+          last_aggregated_at: string;
+          last_token_history_id?: number | null;
+          output_tokens?: number;
+          period_end: string;
+          period_start: string;
+          total_tokens?: number;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: string;
+          input_tokens?: number;
+          last_aggregated_at?: string;
+          last_token_history_id?: number | null;
+          output_tokens?: number;
+          period_end?: string;
+          period_start?: string;
+          total_tokens?: number;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'token_usage_summary_user_info_id_fkey';
+            columns: ['user_info_id'];
             isOneToOne: false;
             referencedRelation: 'user_infos';
             referencedColumns: ['id'];
@@ -1404,10 +1320,10 @@ export type Database = {
           answer_draw_file: string | null;
           answer_text: string | null;
           id: string;
-          option_id: string;
+          option_id: string | null;
           option_image: string | null;
           option_text: string | null;
-          order_index: number;
+          order_index: number | null;
           user_question_attempts_id: string;
         };
         Insert: {
@@ -1415,10 +1331,10 @@ export type Database = {
           answer_draw_file?: string | null;
           answer_text?: string | null;
           id?: string;
-          option_id: string;
+          option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
-          order_index: number;
+          order_index?: number | null;
           user_question_attempts_id: string;
         };
         Update: {
@@ -1426,10 +1342,10 @@ export type Database = {
           answer_draw_file?: string | null;
           answer_text?: string | null;
           id?: string;
-          option_id?: string;
+          option_id?: string | null;
           option_image?: string | null;
           option_text?: string | null;
-          order_index?: number;
+          order_index?: number | null;
           user_question_attempts_id?: string;
         };
         Relationships: [
@@ -1453,8 +1369,14 @@ export type Database = {
         Row: {
           attempt_number: number | null;
           duration_seconds: number;
+          feedback_gaps: string | null;
+          feedback_improvement: string | null;
+          feedback_positive: string | null;
           id: string;
-          is_correct: boolean | null;
+          key_concepts_assessed: string[] | null;
+          marking_rationale: string | null;
+          marking_status: string | null;
+          max_score: number | null;
           question_id: string;
           score: number | null;
           submitted_at: string;
@@ -1463,8 +1385,14 @@ export type Database = {
         Insert: {
           attempt_number?: number | null;
           duration_seconds: number;
+          feedback_gaps?: string | null;
+          feedback_improvement?: string | null;
+          feedback_positive?: string | null;
           id?: string;
-          is_correct?: boolean | null;
+          key_concepts_assessed?: string[] | null;
+          marking_rationale?: string | null;
+          marking_status?: string | null;
+          max_score?: number | null;
           question_id: string;
           score?: number | null;
           submitted_at: string;
@@ -1473,8 +1401,14 @@ export type Database = {
         Update: {
           attempt_number?: number | null;
           duration_seconds?: number;
+          feedback_gaps?: string | null;
+          feedback_improvement?: string | null;
+          feedback_positive?: string | null;
           id?: string;
-          is_correct?: boolean | null;
+          key_concepts_assessed?: string[] | null;
+          marking_rationale?: string | null;
+          marking_status?: string | null;
+          max_score?: number | null;
           question_id?: string;
           score?: number | null;
           submitted_at?: string;
@@ -1533,6 +1467,63 @@ export type Database = {
           },
         ];
       };
+      user_subscriptions: {
+        Row: {
+          billing_interval: string;
+          created_at: string | null;
+          current_period_end: string;
+          current_period_start: string;
+          id: string;
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          tier_lookup_key: string;
+          updated_at: string | null;
+          user_info_id: string;
+        };
+        Insert: {
+          billing_interval: string;
+          created_at?: string | null;
+          current_period_end: string;
+          current_period_start: string;
+          id?: string;
+          status: string;
+          stripe_customer_id: string;
+          stripe_subscription_id: string;
+          tier_lookup_key: string;
+          updated_at?: string | null;
+          user_info_id: string;
+        };
+        Update: {
+          billing_interval?: string;
+          created_at?: string | null;
+          current_period_end?: string;
+          current_period_start?: string;
+          id?: string;
+          status?: string;
+          stripe_customer_id?: string;
+          stripe_subscription_id?: string;
+          tier_lookup_key?: string;
+          updated_at?: string | null;
+          user_info_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_subscriptions_tier_lookup_key_fkey';
+            columns: ['tier_lookup_key'];
+            isOneToOne: false;
+            referencedRelation: 'subscription_tier_limits';
+            referencedColumns: ['tier_lookup_key'];
+          },
+          {
+            foreignKeyName: 'user_subscriptions_user_info_id_fkey';
+            columns: ['user_info_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_infos';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       user_tasks: {
         Row: {
           assignee_user_info_id: string;
@@ -1544,7 +1535,6 @@ export type Database = {
           lesson_generation_type: string;
           name: string;
           questions_per_quiz: number | null;
-          recurrence_frequency: string | null;
           required_score: number | null;
           status: string;
           subject: string;
@@ -1560,7 +1550,6 @@ export type Database = {
           lesson_generation_type: string;
           name: string;
           questions_per_quiz?: number | null;
-          recurrence_frequency?: string | null;
           required_score?: number | null;
           status: string;
           subject: string;
@@ -1576,7 +1565,6 @@ export type Database = {
           lesson_generation_type?: string;
           name?: string;
           questions_per_quiz?: number | null;
-          recurrence_frequency?: string | null;
           required_score?: number | null;
           status?: string;
           subject?: string;
@@ -1609,20 +1597,35 @@ export type Database = {
       user_tasks_chapters: {
         Row: {
           chapter_name: string;
+          completed_at: string | null;
           created_at: string | null;
           id: string;
+          score: number | null;
+          status: string;
+          total_score: number | null;
+          updated_at: string | null;
           user_task_id: string;
         };
         Insert: {
           chapter_name: string;
+          completed_at?: string | null;
           created_at?: string | null;
           id?: string;
+          score?: number | null;
+          status?: string;
+          total_score?: number | null;
+          updated_at?: string | null;
           user_task_id: string;
         };
         Update: {
           chapter_name?: string;
+          completed_at?: string | null;
           created_at?: string | null;
           id?: string;
+          score?: number | null;
+          status?: string;
+          total_score?: number | null;
+          updated_at?: string | null;
           user_task_id?: string;
         };
         Relationships: [
@@ -1638,6 +1641,45 @@ export type Database = {
             columns: ['user_task_id'];
             isOneToOne: false;
             referencedRelation: 'user_tasks';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      user_tasks_chapters_questions: {
+        Row: {
+          created_at: string | null;
+          display_order: number;
+          id: string;
+          question_id: string;
+          user_tasks_chapters_id: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          display_order?: number;
+          id?: string;
+          question_id: string;
+          user_tasks_chapters_id: string;
+        };
+        Update: {
+          created_at?: string | null;
+          display_order?: number;
+          id?: string;
+          question_id?: string;
+          user_tasks_chapters_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_tasks_chapters_questions_question_id_fkey';
+            columns: ['question_id'];
+            isOneToOne: false;
+            referencedRelation: 'questions';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'user_tasks_chapters_questions_user_tasks_chapters_id_fkey';
+            columns: ['user_tasks_chapters_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_tasks_chapters';
             referencedColumns: ['id'];
           },
         ];
@@ -1686,36 +1728,41 @@ export type Database = {
       [_ in never]: never
     };
     Functions: {
+      rollup_token_usage: {
+        Args: never;
+        Returns: {
+          errors: number;
+          processed: number;
+        }[];
+      };
+      transfer_credits_atomic: {
+        Args: {
+          p_amount: number;
+          p_description_from: string;
+          p_description_to: string;
+          p_from_user_info_id: string;
+          p_metadata_from?: Json;
+          p_metadata_to?: Json;
+          p_to_user_info_id: string;
+        };
+        Returns: Json;
+      };
       update_user_info_with_relations: {
-        Args:
-          | {
-            p_user_info_id: string;
-            p_user_id: string;
-            p_first_name: string;
-            p_last_name: string;
-            p_payment_customer_id: string;
-            p_is_active: boolean;
-            p_onboarding_completed: boolean;
-            p_role_name: string;
-            p_email: string;
-            p_level_type?: string;
-            p_syllabus_type?: string;
-          }
-          | {
-            p_user_info_id: string;
-            p_user_id: string;
-            p_first_name: string;
-            p_last_name: string;
-            p_payment_customer_id: string;
-            p_is_active: boolean;
-            p_onboarding_completed: boolean;
-            p_role_name: string;
-            p_email: string;
-            p_level_type?: string;
-            p_syllabus_type?: string;
-            p_date_of_birth?: string;
-            p_school?: string;
-          };
+        Args: {
+          p_date_of_birth?: string;
+          p_email: string;
+          p_first_name: string;
+          p_is_active: boolean;
+          p_last_name: string;
+          p_level_type?: string;
+          p_onboarding_completed: boolean;
+          p_payment_customer_id: string;
+          p_role_name: string;
+          p_school?: string;
+          p_syllabus_type?: string;
+          p_user_id: string;
+          p_user_info_id: string;
+        };
         Returns: Json;
       };
     };

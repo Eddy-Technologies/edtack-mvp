@@ -23,12 +23,12 @@ export default defineEventHandler(async (event) => {
     }
 
     const { data: allUser } = await supabase
-      .from('all_users')
-      .select('email, user_info_id, level_type')
+      .from('user_infos')
+      .select('email, id, level_type')
       .eq('email', email)
       .single();
 
-    if (!allUser || !allUser.user_info_id || !allUser.level_type || allUser.email === user.email) {
+    if (!allUser || !allUser.id || !allUser.level_type || allUser.email === user.email) {
       return;
     }
     return email;
