@@ -13,18 +13,13 @@
     </NuxtLayout>
     <UNotifications />
 
-    <!-- Feedback Components -->
-    <FeedbackButton @open-feedback="openFeedbackModal" />
-    <!-- End Feedback Components -->
-    <FeedbackModal v-if="showFeedbackModal" @close="closeFeedbackModal" />
+    <FeedbackButton />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
-// Import feedback components
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
-import FeedbackModal from '~/components/feedback/FeedbackModal.vue';
 import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
 import { useCodesStore } from '~/stores/codes';
 
@@ -122,17 +117,6 @@ const onLoadingComplete = () => {
   // Any cleanup after loading animation completes
   console.log('App loading animation completed');
 };
-
-// Reactive state for feedback modal visibility
-const showFeedbackModal = ref(false);
-
-function openFeedbackModal() {
-  showFeedbackModal.value = true;
-}
-
-function closeFeedbackModal() {
-  showFeedbackModal.value = false;
-}
 </script>
 
 <style scoped></style>
