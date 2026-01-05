@@ -175,6 +175,7 @@ import SlideContainer from '@/components/chat/SlideContainer.vue';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { useMessageQueueStore } from '~/stores/messageQueue';
+import { useAnalytics } from '~/composables/useAnalytics';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import type { _height } from '#tailwind-config/theme';
 
@@ -221,7 +222,12 @@ const route = useRoute();
 const supabaseUser = useSupabaseUser();
 const toast = useToast();
 const messageQueueStore = useMessageQueueStore();
+const analytics = useAnalytics();
 const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread, isLoadingThread } = useThreads();
+
+// Analytics tracking state
+const sessionMessageCount = ref(0);
+const sessionSlideCount = ref(0);
 
 const {
   selectedCharacter,
@@ -296,6 +302,15 @@ onMounted(async () => {
   if (isNewChat.value && route.query.study_prompt) {
     await handleStudyPromptInjection();
   }
+
+  // Track chat session start
+  if (!isNewChat.value && threadId.value) {
+    analytics.chat.sessionStart({
+      threadId: threadId.value,
+      subject: selectedCharacter.value?.subject || 'unknown',
+      isNewThread: false,
+    });
+  }
 });
 
 // Connection status polling interval
@@ -346,6 +361,15 @@ onBeforeUnmount(() => {
   if (connectionStatusInterval) {
     clearInterval(connectionStatusInterval);
     connectionStatusInterval = null;
+  }
+
+  // Track chat session end
+  if (threadId.value && threadId.value !== 'new') {
+    analytics.chat.sessionEnd({
+      threadId: threadId.value,
+      messageCount: sessionMessageCount.value,
+      slideCount: sessionSlideCount.value,
+    });
   }
 });
 

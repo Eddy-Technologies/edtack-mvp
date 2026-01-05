@@ -283,6 +283,7 @@ import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
 import { useTokenUsage } from '~/composables/useTokenUsage';
 import { useThreads } from '~/composables/useThreads';
+import { useAnalytics } from '~/composables/useAnalytics';
 import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
@@ -293,6 +294,7 @@ const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
 const { addThreadToList } = useThreads();
 const toast = useToast();
+const analytics = useAnalytics();
 
 interface Subject {
   name: string;
@@ -449,6 +451,12 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
         });
 
         if (lessonResponse.success && lessonResponse.hasSeededLesson && lessonResponse.thread) {
+          // Track lesson start
+          analytics.learning.lessonStart({
+            chapterId: chapter.name,
+            subjectId: subjectName,
+            lessonType: 'seeded',
+          });
           // Add thread to local list so sidebar updates
           addThreadToList(lessonResponse.thread as any);
           // Navigate directly to the created thread with seeded lesson
@@ -470,6 +478,15 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
 
     // Proceed with AI generation (fallback for lessons, default for practice/quiz)
     const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
+
+    // Track AI-generated lesson/practice start
+    if (actionType === 'lesson') {
+      analytics.learning.lessonStart({
+        chapterId: chapter.name,
+        subjectId: subjectName,
+        lessonType: 'ai',
+      });
+    }
 
     const queryParams = new URLSearchParams({
       study_prompt: studyResult.prompt

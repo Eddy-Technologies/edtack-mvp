@@ -34,10 +34,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Layout from '~/components/dashboard/Layout.vue';
 import { useMeStore } from '~/stores/me';
+import { useAnalytics } from '~/composables/useAnalytics';
 
 // Unified Components
 import OverviewTab from '~/components/dashboard/OverviewTab.vue';
@@ -66,6 +67,9 @@ const user = useMeStore();
 
 // Get feature flags
 const { subscriptionPlans } = useFeatureFlags();
+
+// Analytics
+const analytics = useAnalytics();
 
 // Cart state management
 const cart = ref<any[]>([]);
@@ -194,4 +198,14 @@ useHead({
 onMounted(() => {
   loadCartFromStorage();
 });
+
+// Track tab changes for analytics
+const previousTab = ref<string | null>(null);
+watch(currentTab, (newTab, oldTab) => {
+  analytics.feature.tabView({
+    tabName: newTab,
+    previousTab: oldTab || undefined,
+  });
+  previousTab.value = newTab;
+}, { immediate: true });
 </script>

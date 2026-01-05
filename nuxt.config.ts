@@ -99,6 +99,7 @@ export default defineNuxtConfig({
       // Feature flags - control feature availability per environment
       features: {
         subscriptionPlans: process.env.NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS === 'true',
+        analytics: process.env.NUXT_PUBLIC_FEATURES_ANALYTICS !== 'false', // Default enabled
       },
     },
     private: {

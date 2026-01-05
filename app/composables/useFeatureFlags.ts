@@ -11,5 +11,6 @@ export const useFeatureFlags = () => {
     isEnabled,
     // Convenience getters for specific flags
     subscriptionPlans: computed(() => isEnabled('subscriptionPlans')),
+    analytics: computed(() => isEnabled('analytics')),
   };
 };

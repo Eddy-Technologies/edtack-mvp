@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade-scale">
     <div
-      v-if="visible"
+      v-if="props.visible"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
       tabindex="0"
       @keydown.esc="emitClose"
@@ -67,11 +67,8 @@ const sizeClass = {
   lg: 'w-[600px]',
 }[props.size];
 
-const visible = ref(props.visible);
-
 onMounted(() => {
   document.addEventListener('keydown', handleKey);
-  visible.value = true;
 });
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKey);
