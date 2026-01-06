@@ -16,25 +16,51 @@ export interface SignUpReq {
 
 export const useAuth = () => {
   const supabase = useSupabaseClient();
-  const { resetMe } = useMeStore();
+  const meStore = useMeStore();
   const baseUrl = useRuntimeConfig().public.baseUrl;
 
   const signUp = async (input: SignUpReq) => {
-    const data = await $fetch('/api/auth/register', {
+    const response = await $fetch('/api/auth/register', {
       method: 'POST',
       body: input
     });
-    console.log('Sign up response:', data);
-    return data;
+
+    // Check if session was created (email verification off)
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (session) {
+      // Set session on client - triggers onAuthStateChange
+      await supabase.auth.setSession({
+        access_token: session.access_token,
+        refresh_token: session.refresh_token,
+      });
+      // Wait for meStore to be populated before returning
+      await meStore.refreshMe();
+    }
+
+    console.log('Sign up response:', response);
+    return { ...response, hasSession: !!session };
   };
 
   const signIn = async (email_val: string, password_val: string) => {
-    const data = await $fetch('/api/auth/login', {
+    const response = await $fetch<{ data: { session: { access_token: string; refresh_token: string } } }>('/api/auth/login', {
       method: 'POST',
       body: { email: email_val, password: password_val }
     });
-    console.log('Sign in response:', data);
-    return data;
+
+    // Set session on client - triggers onAuthStateChange
+    if (response.data?.session) {
+      await supabase.auth.setSession({
+        access_token: response.data.session.access_token,
+        refresh_token: response.data.session.refresh_token,
+      });
+    }
+
+    // Wait for meStore to be populated before returning
+    await meStore.refreshMe();
+
+    console.log('Sign in response:', response);
+    return response;
   };
 
   const signOut = async () => {
@@ -43,7 +69,7 @@ export const useAuth = () => {
     });
     // Sign out from Supabase client side
     await supabase.auth.signOut();
-    resetMe();
+    meStore.resetMe();
     console.log('User signed out');
     return;
   };

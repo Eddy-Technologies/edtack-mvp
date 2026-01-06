@@ -164,7 +164,6 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { USER_ROLE } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import AppIcon from '~/components/AppIcon.vue';
@@ -177,7 +176,6 @@ definePageMeta({
   middleware: ['auth']
 });
 
-const router = useRouter();
 const toast = useToast();
 const me = useMeStore();
 
@@ -234,7 +232,7 @@ onMounted(async () => {
 
     // Check AFTER refreshMe - redirect if already onboarded
     if (me.onboarding_completed) {
-      router.push('/dashboard');
+      await navigateTo('/dashboard');
       return;
     }
 
@@ -302,7 +300,7 @@ const completeOnboarding = async () => {
     });
 
     await me.refreshMe();
-    router.push('/dashboard');
+    await navigateTo('/dashboard');
   } catch (error: any) {
     console.error('Onboarding failed:', error);
     errorMessage.value = error.data?.message || 'Failed to complete setup. Please try again.';
