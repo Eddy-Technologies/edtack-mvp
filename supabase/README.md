@@ -116,6 +116,29 @@ node supabase/scripts/upload-assets.js
 | parent@test.com | Test123! | PARENT (PRO) |
 | student@test.com | Test123! | STUDENT |
 
+## Email Verification (Local Testing)
+
+### Enable Email Verification
+Add to `config.toml`:
+```toml
+[auth]
+site_url = "http://localhost:3000"
+
+[auth.email]
+enable_confirmations = true
+```
+
+Then restart: `supabase stop && supabase start`
+
+### View Verification Emails
+Open Inbucket at: http://localhost:54324
+
+### Disable Email Verification
+```toml
+[auth.email]
+enable_confirmations = false
+```
+
 ## Key Concepts
 
 - **schemas/** = Source of truth (edit these)

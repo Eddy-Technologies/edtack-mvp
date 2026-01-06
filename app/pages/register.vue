@@ -280,7 +280,6 @@ onMounted(async () => {
 });
 
 const toast = useToast();
-const router = useRouter();
 
 // Auth composable
 const { signUp, signInWithGoogle } = useAuth();
@@ -336,7 +335,7 @@ const handleRegister = async () => {
 
   try {
     // Only email registration is supported
-    await signUp({
+    const result = await signUp({
       email: email.value.trim(),
       password: password.value,
       firstName: firstName.value.trim(),
@@ -348,18 +347,27 @@ const handleRegister = async () => {
       school: school.value.trim() || undefined,
       acceptTerms: acceptTerms.value,
     });
-    const successMessage = 'Registration successful! Please check your email to confirm your account.';
-    toast.add({
-      title: 'Registration Successful',
-      description: 'You can now log in with your new account after you have confirmed your email.',
-      color: 'green'
-    });
 
-    // Redirect to login with success message
-    router.push({
-      path: '/login',
-      query: { message: successMessage }
-    });
+    if (result.hasSession) {
+      // Email verification is OFF - user is auto-logged in
+      toast.add({
+        title: 'Registration Successful',
+        description: 'Welcome! Your account has been created.',
+        color: 'green'
+      });
+      await navigateTo('/dashboard');
+    } else {
+      // Email verification is ON - redirect to login
+      toast.add({
+        title: 'Registration Successful',
+        description: 'Please check your email to confirm your account.',
+        color: 'green'
+      });
+      await navigateTo({
+        path: '/login',
+        query: { message: 'Registration successful! Please check your email to confirm your account.' }
+      });
+    }
   } catch (error: any) {
     console.error('Registration failed:', error);
     // Use error message from server if available, error.message does not display correctly

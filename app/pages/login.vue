@@ -138,7 +138,6 @@ definePageMeta({
 });
 
 const toast = useToast();
-const router = useRouter();
 const route = useRoute();
 
 // Get success message from query params (from registration redirect)
@@ -179,7 +178,7 @@ const handleLogin = async () => {
 
     // Redirect to intended destination or dashboard
     const redirectTo = route.query.redirect as string || '/dashboard';
-    router.push(redirectTo);
+    await navigateTo(redirectTo);
   } catch (error: any) {
     // Use error message from server if available, cannot use error.message directly
     errorMessage.value = error.data.message || 'Login failed. Please try again.';
