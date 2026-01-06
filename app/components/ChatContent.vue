@@ -123,6 +123,13 @@ const isTerminalStatus = computed(() => ['error', 'completed', 'cancelled', 'tim
 const chatIsWaitingForResponse = computed(() => {
   // Hide loading if thread reached terminal state (e.g., timeout)
   if (isTerminalStatus.value) return false;
+
+  // CRITICAL: Show loading if thread is in 'processing' state (from store).
+  // This ensures loading shows even when returning to a thread that's still processing,
+  // because the SSE connection's isWaitingForResponse might be false (stream ended but
+  // backend still generating) and local state might not be set yet.
+  if (threadStatus.value === 'processing') return true;
+
   return chat.value?.isWaitingForResponse.value || isWaitingForResponse.value;
 });
 const currentThreadId = ref<string>(''); // Track initialized thread to prevent re-init
@@ -166,34 +173,50 @@ const processPendingResponses = () => {
     return;
   }
 
-  // If messageStream already has non-user messages (AI responses loaded from DB),
-  // the responses were likely already processed and saved before user navigated away.
-  // In this case, just update the index to prevent re-processing.
-  const hasExistingAIMessages = messageStream.value.some((msg: any) => !msg.isUser);
-  if (hasExistingAIMessages && lastProcessedResponseIndex.value === -1) {
-    console.log('[ChatContent] messageStream has AI messages from DB - skipping re-processing');
-    lastProcessedResponseIndex.value = responses.length - 1;
-    return;
-  }
+  // Collect timestamps of AI messages already in messageStream (loaded from DB)
+  // This allows us to skip only responses that were already saved and displayed,
+  // while still processing NEW responses that arrived during navigation
+  const existingTimestamps = new Set(
+    messageStream.value
+      .filter((m: any) => !m.isUser && m.timestamp)
+      .map((m: any) => m.timestamp?.toString())
+  );
 
-  // Process all responses from where we left off
+  console.log('[ChatContent] Existing message timestamps:', existingTimestamps.size);
+
+  // Process responses from where we left off, but skip any already in messageStream
   const startIndex = lastProcessedResponseIndex.value + 1;
   if (startIndex >= responses.length) {
     console.log('[ChatContent] All responses already processed');
     return;
   }
 
-  console.log('[ChatContent] Processing pending responses:', {
+  let processedCount = 0;
+  for (let i = startIndex; i < responses.length; i++) {
+    const resp = responses[i];
+    if (!resp) continue;
+
+    const respTimestamp = resp.timestamp?.toString();
+
+    // Skip responses already displayed (by timestamp match)
+    if (respTimestamp && existingTimestamps.has(respTimestamp)) {
+      console.log('[ChatContent] Skipping response with existing timestamp:', respTimestamp);
+      continue;
+    }
+
+    // Process this response
+    handleWebSocketMessage(resp);
+    processedCount++;
+  }
+
+  lastProcessedResponseIndex.value = responses.length - 1;
+
+  console.log('[ChatContent] Processed pending responses:', {
     startIndex,
     totalResponses: responses.length,
-    pendingCount: responses.length - startIndex,
-    responseTypes: responses.slice(startIndex).map((r: any) => r.status || r.type),
+    processedCount,
+    skipped: responses.length - startIndex - processedCount,
   });
-
-  for (let i = startIndex; i < responses.length; i++) {
-    handleWebSocketMessage(responses[i]);
-  }
-  lastProcessedResponseIndex.value = responses.length - 1;
 };
 
 // Initialize chat - simplified approach
@@ -308,11 +331,10 @@ const initializeChat = async () => {
     return { text: content, isUser: true, id };
   });
 
-  // Only disconnect if switching to a different thread
-  // Don't disconnect if we're re-initializing the same thread (e.g., from token refresh)
+  // When switching to a different thread, just release our local reference
+  // Do NOT disconnect - the old thread's connection stays in the pool for background processing
   if (chat.value && currentThreadId.value !== props.threadId) {
-    console.log('[ChatContent] Switching threads, disconnecting old connection');
-    chat.value.disconnect();
+    console.log('[ChatContent] Switching threads, releasing local chat reference (NOT disconnecting)');
     chat.value = null;
     // Reset response tracking for new thread
     lastProcessedResponseIndex.value = -1;
@@ -326,6 +348,12 @@ const initializeChat = async () => {
     // Use useChat which manages the store connection internally
     // This ensures the connection is stored in the pool and accessible via getConnection
     try {
+      // Check thread state BEFORE connecting - this tells us if background processing is ongoing
+      // (State might change during async connect call, so capture it early)
+      const threadStateBefore = messageQueueStore.getThreadState(props.threadId);
+      const wasProcessing = threadStateBefore?.status === 'processing';
+      console.log('[ChatContent] initializeChat - thread state before connect:', threadStateBefore?.status);
+
       chat.value = useChat(props.threadId);
       // store.connect() already waits for connection internally via doConnect()
       // so we don't need to call waitForConnection() separately
@@ -334,8 +362,12 @@ const initializeChat = async () => {
 
       // Check if thread was processing in background (user returning to active thread)
       // If so, resume the loading state so user sees the indicator
-      const threadState = messageQueueStore.getThreadState(props.threadId);
-      if (threadState?.status === 'processing') {
+      // Use the state we captured BEFORE connect, as state might have changed during async call
+      const threadStateAfter = messageQueueStore.getThreadState(props.threadId);
+      const isProcessing = wasProcessing || threadStateAfter?.status === 'processing';
+      console.log('[ChatContent] initializeChat - thread state after connect:', threadStateAfter?.status, 'wasProcessing:', wasProcessing);
+
+      if (isProcessing) {
         console.log('[ChatContent] Resuming processing state - backend may still be generating');
         isWaitingForResponse.value = true;
         isPlayingAllowed.value = false;
@@ -834,12 +866,6 @@ const handleWebSocketMessage = (message: any) => {
 
   // Display summary message from user_message status
   if (message.status === 'user_message') {
-    // NOTE: Save only the message text, ignore slides array
-    // The slides were already saved via handleStreamingComplete()
-    const newUuid = crypto.randomUUID();
-    // Track this UUID locally for deduplication with Realtime
-    messageQueueStore.trackLocalMessage(newUuid);
-
     // Create clean message object WITHOUT slides for database
     const cleanMessage = {
       message: message.message,
@@ -848,18 +874,39 @@ const handleWebSocketMessage = (message: any) => {
       // Explicitly exclude slides - they're already saved
     };
 
-    // Save clean message to database (text only, no slides)
-    const addMessageObj = {
-      thread_id: props.threadId,
-      content: cleanMessage,
-      type: 'json',
-      isUser: false,
-      uuid: newUuid
-    };
-    addMessage(addMessageObj);
+    // CRITICAL: Use markResponseAsSaving() to atomically check-and-mark before saving.
+    // This prevents race conditions where both store watcher and ChatContent watcher
+    // try to save the same response simultaneously.
+    //
+    // markResponseAsSaving() returns:
+    // - true: We successfully claimed this response, proceed with save
+    // - false: Already claimed by store (or previous call), skip save
+    const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, message.timestamp);
 
-    // Display in UI
-    messageStream.value.push({ ...cleanMessage, id: newUuid });
+    if (!shouldSave) {
+      console.log('[ChatContent] Response already marked for saving, skipping DB save');
+      // Still add to UI with a generated UUID (store already has the actual UUID)
+      const displayUuid = crypto.randomUUID();
+      messageStream.value.push({ ...cleanMessage, id: displayUuid });
+    } else {
+      // We claimed this response - save it to database
+      console.log('[ChatContent] Claimed response, saving to DB');
+      const newUuid = crypto.randomUUID();
+      // Track this UUID locally for deduplication with Realtime
+      messageQueueStore.trackLocalMessage(newUuid);
+
+      const addMessageObj = {
+        thread_id: props.threadId,
+        content: JSON.stringify(cleanMessage),
+        type: 'json',
+        isUser: false,
+        uuid: newUuid
+      };
+      addMessage(addMessageObj);
+
+      // Display in UI
+      messageStream.value.push({ ...cleanMessage, id: newUuid });
+    }
 
     // Update state flags
     isPlayingAllowed.value = true;
@@ -1282,17 +1329,14 @@ const clearChat = () => {
   // Reset response tracking
   lastProcessedResponseIndex.value = -1;
 
-  // Clear thread state from global store
-  if (currentThreadId.value) {
-    messageQueueStore.clearThreadState(currentThreadId.value);
-    messageQueueStore.clearMessageCache(currentThreadId.value);
-  }
+  // NOTE: We intentionally do NOT clear thread state or disconnect here.
+  // When switching threads or starting new chat, the old thread's connection
+  // should stay alive in the pool for background processing.
+  // The connection pool handles cleanup via idle timeout.
+  // Thread state is preserved so user can return and see processing status.
 
-  // Disconnect current WebSocket (only on explicit clear, not on navigation)
-  if (chat.value) {
-    chat.value.disconnect();
-    chat.value = null;
-  }
+  // Just reset the local chat reference (don't disconnect - pool manages it)
+  chat.value = null;
 
   // Reset flags
   isFirstMessage.value = true;

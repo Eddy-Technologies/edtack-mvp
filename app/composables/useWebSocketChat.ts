@@ -266,11 +266,35 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
     return success;
   };
 
-  const cancelRequest = () => {
+  const cancelRequest = async (): Promise<boolean> => {
     responsePhase.value = '';
-    return sendMessage({
+
+    // Send cancel message over WebSocket
+    const wsSent = sendMessage({
       type: 'cancel',
     });
+
+    // Also call the stop endpoint to ensure server-side processing stops
+    // This matches SSE behavior and ensures tokens are not wasted
+    const stopUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}/stop`;
+    try {
+      const headers: Record<string, string> = {};
+      if (currentAuthToken && config.public.chatAuthEnabled) {
+        headers['Authorization'] = `Bearer ${currentAuthToken}`;
+      }
+
+      await fetch(stopUrl, {
+        method: 'POST',
+        headers,
+      });
+      console.log('[WebSocketChat] Stop endpoint called successfully');
+    } catch (err) {
+      // Ignore errors - best effort to stop server-side processing
+      console.warn('[WebSocketChat] Failed to call stop endpoint:', err);
+    }
+
+    isWaitingForResponse.value = false;
+    return wsSent;
   };
 
   const clearMessages = () => {
