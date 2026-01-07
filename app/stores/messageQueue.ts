@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { watch, effectScope, type EffectScope } from 'vue';
 import { useChatConnection } from '~/composables/useChat';
+import { getSupabaseAccessToken } from '~/utils/authToken';
 import type { ChatResponse } from '~/composables/chat.types';
 import {
   type ThreadState,
@@ -74,6 +75,14 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     // Track saved AI response UUIDs per thread to prevent duplicate saves
     // Key is threadId, value is Set of response timestamps (as strings)
     savedResponseUuids: {} as Record<string, Set<string>>,
+
+    // Track threads that need a fresh start (after cancel/timeout/error)
+    // When true, next message should use startChat instead of sendUserResponse
+    needsFreshStart: {} as Record<string, boolean>,
+
+    // Track current query ID per thread for slide deduplication
+    // Each new message gets a unique UUID, used to ensure slides are saved per-query
+    currentQueryIds: {} as Record<string, string>,
 
     // Initialization flag
     initialized: false,
@@ -205,12 +214,25 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       console.warn(`[MessageQueue] Processing timeout for thread ${threadId}`);
 
+      // CRITICAL: Reset the chat composable's isWaitingForResponse
+      // Without this, the loading indicator stays visible even after timeout
+      const conn = connectionPool[threadId];
+      if (conn) {
+        console.log('[MessageQueue] Resetting isWaitingForResponse for timed out thread');
+        conn.chat.isWaitingForResponse.value = false;
+        conn.chat.responsePhase.value = '';
+      }
+
+      // Mark that next message needs fresh start (task context is gone after timeout)
+      this.setNeedsFreshStart(threadId, true);
+
       // Set error state with grace deadline for late response recovery
       const graceDeadline = Date.now() + GRACE_PERIOD_MS;
       this.setThreadState(threadId, {
         status: 'error',
         error: 'Request timed out - no response received',
         errorGraceDeadline: graceDeadline,
+        responsePhase: '', // Clear the response phase too
       });
 
       // Clean up timeout reference
@@ -261,6 +283,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       console.log(`[MessageQueue] Sending cancel health check for thread ${threadId}`);
 
+      // Reset isWaitingForResponse in case it's still true
+      conn.chat.isWaitingForResponse.value = false;
+      conn.chat.responsePhase.value = '';
+
       // Send cancel request
       conn.chat.cancelRequest();
 
@@ -274,6 +300,9 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
           // Close the dead connection
           this.closeConnection(threadId);
+
+          // Mark that next message needs fresh start (task context is gone)
+          this.setNeedsFreshStart(threadId, true);
 
           // Update error message to indicate connection loss
           this.setThreadState(threadId, {
@@ -436,6 +465,91 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     },
 
     /**
+     * Save slides from the response buffer before clearing.
+     * Called on terminal state to ensure slides aren't lost when user navigated away.
+     *
+     * DEDUPLICATION: Uses first slide's ID as dedup key. If slides were already saved
+     * by ChatContent (which uses the same slide IDs), we skip saving here.
+     */
+    async saveSlidesFromBuffer(threadId: string): Promise<boolean> {
+      const conn = connectionPool[threadId];
+      if (!conn) return false;
+
+      const responses = conn.chat.response.value;
+      if (!responses || responses.length === 0) return false;
+
+      // Collect all slides from slide_batch_ready messages
+      const allSlides: any[] = [];
+      let contentType: 'lesson' | 'quiz' | null = null;
+
+      for (const resp of responses) {
+        if (resp.type === 'slide_batch_ready' && resp.batch?.slides) {
+          allSlides.push(...resp.batch.slides);
+          // Detect content type from first slide
+          if (!contentType && resp.batch.slides[0]) {
+            contentType = resp.batch.slides[0].type === 'question' ? 'quiz' : 'lesson';
+          }
+        }
+      }
+
+      if (allSlides.length === 0) {
+        console.log('[MessageQueue] No slides in buffer to save');
+        return true; // Nothing to save is not an error
+      }
+
+      // DEDUPLICATION: Use currentQueryId (unique per message) as the dedup key.
+      // This ensures each user query can save its slides, even if RAG returns
+      // the same slide IDs (slide IDs are not unique per query).
+      const queryId = this.currentQueryIds[threadId];
+      if (!queryId) {
+        console.log('[MessageQueue] No currentQueryId, cannot deduplicate safely - skipping save');
+        return true; // Skip to avoid potential duplicates
+      }
+
+      const dedupKey = `slides_${threadId}_${queryId}`;
+      if (!this.savedResponseUuids[threadId]) {
+        this.savedResponseUuids[threadId] = new Set();
+      }
+      if (this.savedResponseUuids[threadId].has(dedupKey)) {
+        console.log('[MessageQueue] Slides already saved for this query, skipping:', dedupKey);
+        return true;
+      }
+
+      this.savedResponseUuids[threadId].add(dedupKey);
+
+      console.log('[MessageQueue] Saving slides from buffer (ChatContent not mounted):', { threadId, slideCount: allSlides.length });
+
+      // Generate UUID for the database record
+      const uuid = crypto.randomUUID();
+      this.trackLocalMessage(uuid);
+
+      const content = {
+        slides: allSlides,
+        contentType,
+        status: 'completed',
+        isStreaming: false,
+        timestamp: Date.now(),
+      };
+
+      const result = await saveMessageToDB({
+        thread_id: threadId,
+        content,
+        type: 'json',
+        isUser: false,
+        uuid,
+      });
+
+      if (!result.success) {
+        this.savedResponseUuids[threadId].delete(dedupKey);
+        console.error('[MessageQueue] Failed to save slides from buffer:', result.error);
+        return false;
+      }
+
+      console.log('[MessageQueue] Slides saved from buffer successfully:', { threadId, slideCount: allSlides.length });
+      return true;
+    },
+
+    /**
      * Mark pending user messages as 'sent' for a thread.
      * Called when we receive a meaningful response (slides or AI message).
      */
@@ -495,6 +609,40 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       this.savedResponseUuids[threadId].add(key);
       console.log('[MessageQueue] markResponseAsSaving: marked for:', key);
       return true;
+    },
+
+    /**
+     * Set the current query ID for a thread.
+     * Called when a new message is sent. This ID is used for slide deduplication
+     * to ensure each query's slides are saved separately.
+     */
+    setCurrentQueryId(threadId: string, queryId: string) {
+      this.currentQueryIds[threadId] = queryId;
+      console.log('[MessageQueue] Set currentQueryId:', { threadId, queryId });
+    },
+
+    /**
+     * Get the current query ID for a thread.
+     */
+    getCurrentQueryId(threadId: string): string | undefined {
+      return this.currentQueryIds[threadId];
+    },
+
+    /**
+     * Set whether a thread needs a fresh start on next message.
+     * Called after cancel/timeout/error to ensure next message uses startChat instead of sendUserResponse.
+     */
+    setNeedsFreshStart(threadId: string, value: boolean) {
+      this.needsFreshStart[threadId] = value;
+      console.log('[MessageQueue] setNeedsFreshStart:', { threadId, value });
+    },
+
+    /**
+     * Get whether a thread needs a fresh start on next message.
+     * Used by ChatContent to determine if startChat or sendUserResponse should be called.
+     */
+    getNeedsFreshStart(threadId: string): boolean {
+      return this.needsFreshStart[threadId] || false;
     },
 
     /**
@@ -677,6 +825,34 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         // Clear grace check timeout on any terminal state
         this.clearGraceCheckTimeout(threadId);
 
+        // CRITICAL: Reset the chat composable's isWaitingForResponse on ANY terminal state
+        // Without this, the loading indicator stays visible even after response completes
+        const conn = connectionPool[threadId];
+        if (conn) {
+          console.log('[MessageQueue] Resetting isWaitingForResponse for terminal state:', response.status);
+          conn.chat.isWaitingForResponse.value = false;
+          conn.chat.responsePhase.value = '';
+
+          // CRITICAL: Save any slides from buffer before clearing.
+          // When user navigates away, ChatContent unmounts and can't save slides.
+          // This ensures slides are saved to DB even when user is on a different page.
+          // Use .then() since handleChatResponse is not async (called from watcher)
+          this.saveSlidesFromBuffer(threadId).then(() => {
+            // CRITICAL: Clear the response buffer after terminal state to prevent old slides
+            // from reappearing when user navigates away and returns.
+            // This runs even when ChatContent is unmounted (store watcher is detached from component lifecycle).
+            console.log('[MessageQueue] Clearing response buffer on terminal state');
+            conn.chat.clearMessages();
+          });
+        }
+
+        // On error, timeout, or cancel: Mark that next message needs fresh start
+        // This ensures the next message uses startChat instead of sendUserResponse,
+        // because the server task context is gone after cancel/timeout/error
+        if (response.status === 'error' || response.status === 'timeout' || response.status === 'cancelled') {
+          this.setNeedsFreshStart(threadId, true);
+        }
+
         // On error or timeout: Stop RAG processing to conserve tokens
         if (response.status === 'error' || response.status === 'timeout') {
           console.log('[MessageQueue] Error/timeout detected, stopping RAG to conserve tokens');
@@ -734,9 +910,19 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         const conn = await this.getOrCreateConnection(threadId);
         console.log('[MessageQueue] Connection obtained, mode:', conn.mode);
 
-        // Connect (useChatConnection handles auth token fetching internally)
+        // Fetch fresh auth token before connecting
+        // This ensures WebSocket connects with a valid token (avoids auth failure)
+        const config = useRuntimeConfig();
+        let authToken: string | undefined;
+        if (config.public.chatAuthEnabled) {
+          console.log('[MessageQueue] Fetching fresh auth token...');
+          authToken = await getSupabaseAccessToken() || undefined;
+          console.log('[MessageQueue] Auth token fetched:', authToken ? 'present' : 'missing');
+        }
+
+        // Connect with the fresh token
         console.log('[MessageQueue] Calling conn.chat.connect()...');
-        await conn.chat.connect();
+        await conn.chat.connect(authToken);
         console.log('[MessageQueue] conn.chat.connect() completed');
 
         // Wait for connection

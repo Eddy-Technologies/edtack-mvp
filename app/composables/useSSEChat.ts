@@ -1,6 +1,6 @@
 import { ref, onUnmounted, getCurrentInstance } from 'vue';
 import type { ChatResponse, ChatOptions, ChatUserInfo } from './chat.types';
-import { getSupabaseAccessToken } from './useChat';
+import { getSupabaseAccessToken } from '~/utils/authToken';
 
 export interface UseSSEChatOptions extends ChatOptions {
   /**
@@ -97,6 +97,28 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     // Handle heartbeat - don't add to messages
     if (eventType === 'heartbeat') {
+      return;
+    }
+
+    // Handle slide generation start - signals beginning of new slide session
+    if (eventType === 'slide_generation_start') {
+      const responseData: ChatResponse = {
+        type: 'slide_generation_start',
+        timestamp: data.timestamp,
+      };
+      response.value.push(responseData);
+      console.log('[SSEChat] Pushed slide_generation_start');
+      return;
+    }
+
+    // Handle slide generation complete - signals end of slide session
+    if (eventType === 'slide_generation_complete') {
+      const responseData: ChatResponse = {
+        type: 'slide_generation_complete',
+        timestamp: data.timestamp,
+      };
+      response.value.push(responseData);
+      console.log('[SSEChat] Pushed slide_generation_complete');
       return;
     }
 
@@ -270,9 +292,10 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         clearTimeout(timeoutId);
       }
 
+      // Handle 401 Unauthorized - could be expired token, try refresh first
       if (fetchResponse.status === 401) {
-        // Try refreshing token once
         if (!isRetry && config.public.chatAuthEnabled) {
+          console.log('[SSEChat] 401 Unauthorized - token may be expired, attempting refresh');
           const freshToken = await getSupabaseAccessToken();
           if (freshToken) {
             currentAuthToken = freshToken;
@@ -280,7 +303,18 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
             return startChatInternal(initialMessage, userInfo, true);
           }
         }
-        error.value = 'Authentication failed';
+        // Refresh failed or already retried - user needs to login
+        console.log('[SSEChat] 401 - refresh failed, user needs to login');
+        error.value = 'Please log in to continue';
+        isWaitingForResponse.value = false;
+        isStreaming.value = false;
+        return false;
+      }
+
+      // Handle 403 Forbidden - permission denied (not an auth issue)
+      if (fetchResponse.status === 403) {
+        console.log('[SSEChat] 403 Forbidden - permission denied');
+        error.value = 'Access denied - you do not have permission';
         isWaitingForResponse.value = false;
         isStreaming.value = false;
         return false;

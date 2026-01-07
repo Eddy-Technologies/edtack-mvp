@@ -32,6 +32,10 @@ export interface ChatResponse {
   data?: any;
   phase?: string;
 
+  // Cancellation response fields
+  ready_for_new_message?: boolean;
+  tokens_saved?: boolean;
+
   // Streaming support
   type?: 'slide_batch_ready' | 'quiz_batch_ready';
   slides?: any[];

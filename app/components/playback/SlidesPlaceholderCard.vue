@@ -61,6 +61,19 @@
         extra-classes="w-full mt-2"
         @clicked="isExpanded = false"
       />
+
+      <!-- Loading indicator when more slides are being generated -->
+      <div
+        v-if="isStreaming"
+        class="mt-3 flex items-center justify-center gap-2 py-2 px-3 bg-primary-100/50 rounded-lg"
+      >
+        <div class="flex gap-1">
+          <span class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms" />
+          <span class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 150ms" />
+          <span class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 300ms" />
+        </div>
+        <span class="text-sm text-primary-700">Generating more slides...</span>
+      </div>
     </div>
 
     <!-- Message Actions (for copying, etc.) -->

@@ -1,5 +1,6 @@
 import { ref, onUnmounted, getCurrentInstance } from 'vue';
 import type { ChatMessage, ChatResponse, ChatOptions, ChatUserInfo } from './chat.types';
+import { getSupabaseAccessToken } from '~/utils/authToken';
 
 export interface UseWebSocketChatOptions extends ChatOptions {
   /**
@@ -8,6 +9,9 @@ export interface UseWebSocketChatOptions extends ChatOptions {
    */
   autoCleanup?: boolean;
 }
+
+// Track if token refresh is in progress to prevent duplicate refresh attempts
+let isRefreshingToken = false;
 
 export function useWebSocketChat(threadId: string, options: UseWebSocketChatOptions = {}) {
   const config = useRuntimeConfig();
@@ -49,6 +53,46 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
 
   const setAuthToken = (token: string) => {
     currentAuthToken = token;
+  };
+
+  /**
+   * Refresh the Supabase auth token and retry connection.
+   * Called when WebSocket connection fails due to expired/invalid token.
+   */
+  const refreshTokenAndRetry = async (): Promise<boolean> => {
+    if (isRefreshingToken) {
+      console.log('[WebSocketChat] Token refresh already in progress, waiting...');
+      return false;
+    }
+
+    isRefreshingToken = true;
+    console.log('[WebSocketChat] Attempting token refresh...');
+
+    try {
+      // Use getSupabaseAccessToken which properly handles refresh
+      const freshToken = await getSupabaseAccessToken();
+
+      if (!freshToken) {
+        console.error('[WebSocketChat] Token refresh failed - no token returned');
+        error.value = 'Session expired - please log in again';
+        isRefreshingToken = false;
+        return false;
+      }
+
+      console.log('[WebSocketChat] Token refreshed successfully, retrying connection');
+      currentAuthToken = freshToken;
+      isRefreshingToken = false;
+
+      // Reset reconnect attempts and retry
+      reconnectAttempts = 0;
+      connect();
+      return true;
+    } catch (err) {
+      console.error('[WebSocketChat] Token refresh error:', err);
+      error.value = 'Session expired - please log in again';
+      isRefreshingToken = false;
+      return false;
+    }
   };
 
   const connect = (token?: string) => {
@@ -165,6 +209,33 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
           connectionRejecter(new Error('Connection closed'));
           connectionResolver = null;
           connectionRejecter = null;
+        }
+
+        // Handle 4002: Auth required - no token provided, user needs to login
+        if (event.code === 4002) {
+          console.log('[WebSocketChat] 4002 Auth required - no token provided');
+          error.value = 'Please log in to continue';
+          return;
+        }
+
+        // Handle 4001: Token error - try refresh first (could be expired)
+        if (event.code === 4001 && config.public.chatAuthEnabled) {
+          console.log('[WebSocketChat] 4001 Token error - attempting refresh');
+          refreshTokenAndRetry();
+          return;
+        }
+
+        // Detect other potential auth failures on first connection attempt:
+        // - Code 1006: Abnormal closure (often used for rejected connections)
+        // - Code 1008: Policy violation (auth failure)
+        const isAuthFailure = (event.code === 1006 || event.code === 1008) &&
+          reconnectAttempts === 0 &&
+          config.public.chatAuthEnabled;
+
+        if (isAuthFailure) {
+          console.log('[WebSocketChat] Potential auth failure detected, attempting token refresh');
+          refreshTokenAndRetry();
+          return;
         }
 
         if (reconnectAttempts < maxReconnectAttempts) {
@@ -294,6 +365,14 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
     }
 
     isWaitingForResponse.value = false;
+
+    // CRITICAL: Close the WebSocket connection after cancel.
+    // The server closes its session after /stop, so any subsequent messages
+    // on this connection will fail (server returns code 1012).
+    // By closing here, the next message will create a fresh connection.
+    console.log('[WebSocketChat] Closing connection after cancel to ensure fresh start');
+    disconnect();
+
     return wsSent;
   };
 
