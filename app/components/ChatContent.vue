@@ -4,7 +4,7 @@
     <div ref="scrollArea" class="flex-1 overflow-y-auto pt-8 py-6 px-24 pb-32 space-y-8">
       <div
         v-for="(unit, index) in flattenedPlaybackUnits"
-        :key="index"
+        :key="unit.props.messageId || `unit-${index}`"
         :ref="(el) => setMessageRef(el, unit.props.messageId)"
         :data-message-id="unit.props.messageId"
       >
@@ -685,55 +685,81 @@ const handleSlideBatch = (batchMessage: any) => {
 
   // Case 1: First batch - initialize streaming message
   if (!activeStreamingMessage.value) {
-    // Detect content type from first slide
-    const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
+    // Check if slides already exist (e.g., loaded from DB when returning to chat)
+    const existingSlideMessage = messageStream.value.find(
+      (msg: any) => Array.isArray(msg.slides) && msg.slides.length > 0 && !msg.isUser
+    );
 
-    // Create the streaming message structure
-    const newMessageId = crypto.randomUUID();
-    // Track this UUID locally for deduplication with Realtime
-    messageQueueStore.trackLocalMessage(newMessageId);
-    const newMessage = {
-      status: 'streaming',
-      slides: [...slides],
-      contentType,
-      isStreaming: true,
-      id: newMessageId,
-    };
+    if (existingSlideMessage) {
+      // Skip if this batch's slides are already in the existing message
+      if (existingSlideMessage.slides.length >= total_slides_so_far) {
+        console.log('[ChatContent] Skipping old batch - already have', existingSlideMessage.slides.length, 'slides, batch has', total_slides_so_far);
+        return;
+      }
 
-    // Add to message stream
-    messageStream.value.push(newMessage);
-    const messageIndex = messageStream.value.length - 1;
+      // Resume streaming to existing message for new slides
+      const existingIndex = messageStream.value.indexOf(existingSlideMessage);
+      const contentType = existingSlideMessage.contentType || (slides[0]?.type === 'question' ? 'quiz' : 'lesson');
+      activeStreamingMessage.value = {
+        id: existingSlideMessage.id,
+        messageIndex: existingIndex,
+        totalSlides: existingSlideMessage.slides.length,
+        contentType,
+        startTime: Date.now(),
+      };
+      console.log('[ChatContent] Resuming streaming to existing message with', existingSlideMessage.slides.length, 'slides');
+      // Fall through to Case 2 to append new slides
+    } else {
+      // No existing slides - create new streaming message
+      const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
 
-    // Initialize streaming state
-    activeStreamingMessage.value = {
-      id: newMessageId,
-      messageIndex,
-      totalSlides: total_slides_so_far,
-      contentType,
-      startTime: Date.now(),
-    };
+      // Create the streaming message structure
+      const newMessageId = crypto.randomUUID();
+      // Track this UUID locally for deduplication with Realtime
+      messageQueueStore.trackLocalMessage(newMessageId);
+      const newMessage = {
+        status: 'streaming',
+        slides: [...slides],
+        contentType,
+        isStreaming: true,
+        id: newMessageId,
+      };
 
-    streamingProgress.value = {
-      slidesReceived: total_slides_so_far,
-      totalExpected: null, // Unknown until completion
-      estimatedTimeRemaining: null,
-    };
+      // Add to message stream
+      messageStream.value.push(newMessage);
+      const messageIndex = messageStream.value.length - 1;
 
-    // Emit to parent to open slides panel with messageId for marking persistence
-    emit('openSlides', [...slides], newMessageId);
+      // Initialize streaming state
+      activeStreamingMessage.value = {
+        id: newMessageId,
+        messageIndex,
+        totalSlides: total_slides_so_far,
+        contentType,
+        startTime: Date.now(),
+      };
 
-    isWaitingForResponse.value = true;
+      streamingProgress.value = {
+        slidesReceived: total_slides_so_far,
+        totalExpected: null, // Unknown until completion
+        estimatedTimeRemaining: null,
+      };
 
-    // SAVE immediately (incremental save pattern)
-    saveMessageAsync({
-      thread_id: props.threadId,
-      content: newMessage,
-      type: 'json',
-      isUser: false,
-      uuid: newMessageId
-    });
+      // Emit to parent to open slides panel with messageId for marking persistence
+      emit('openSlides', [...slides], newMessageId);
 
-    return;
+      isWaitingForResponse.value = true;
+
+      // SAVE immediately (incremental save pattern)
+      saveMessageAsync({
+        thread_id: props.threadId,
+        content: newMessage,
+        type: 'json',
+        isUser: false,
+        uuid: newMessageId
+      });
+
+      return;
+    }
   }
 
   // Case 2: Subsequent batches - append to existing message
