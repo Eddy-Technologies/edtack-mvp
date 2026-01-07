@@ -246,7 +246,28 @@ const initializeChat = async () => {
 
   // Also check store-level connection status (connected OR connecting)
   const storeConnection = messageQueueStore.getConnection(props.threadId);
-  if (storeConnection?.chat.isConnected.value || storeConnection?.chat.isConnecting?.value) {
+  const threadStateForReuse = messageQueueStore.getThreadState(props.threadId);
+  console.log('[ChatContent] initializeChat - checking reuse:', {
+    threadId: props.threadId,
+    hasStoreConnection: !!storeConnection,
+    isConnected: storeConnection?.chat.isConnected?.value,
+    isConnecting: storeConnection?.chat.isConnecting?.value,
+    threadStatus: threadStateForReuse?.status,
+    needsFreshStart: messageQueueStore.getNeedsFreshStart(props.threadId),
+  });
+
+  // Clean up stale connection if thread is in error state
+  // This ensures fresh reconnection after timeout/error
+  // NOTE: Don't clear error state here - preserve it so message shows as 'failed'
+  // Error state will be cleared when user clicks retry
+  if (threadStateForReuse?.status === 'error' && storeConnection && !storeConnection.chat.isConnected.value) {
+    console.log('[ChatContent] Thread in error state with stale connection - cleaning up');
+    await messageQueueStore.closeConnection(props.threadId);
+  }
+
+  // Re-check connection after potential cleanup
+  const currentStoreConnection = messageQueueStore.getConnection(props.threadId);
+  if (currentStoreConnection?.chat.isConnected.value || currentStoreConnection?.chat.isConnecting?.value) {
     console.log('[ChatContent] Store has active connection, reusing');
     currentThreadId.value = props.threadId;
     chat.value = useChat(props.threadId);
@@ -261,18 +282,27 @@ const initializeChat = async () => {
         existingStatuses.set(msg.id, msg.status);
       }
     }
-    // Check if thread was processing in background
+    // Check thread state - processing, error, etc.
     const threadState = messageQueueStore.getThreadState(props.threadId);
     const isThreadProcessing = threadState?.status === 'processing';
+    const isThreadError = threadState?.status === 'error';
 
     messageStream.value = messageHistory.value.map(({ content, id, sender }, index: number) => {
       const preservedStatus = existingStatuses.get(id);
       if (!sender) {
         return { ...JSON.parse(content), isUser: false, id };
       }
-      // For user messages: use preserved status, or 'sent' if this is the last message and thread is processing
+      // For user messages: determine status based on thread state
       const isLastUserMessage = index === messageHistory.value.length - 1 && sender;
-      const status = preservedStatus || (isLastUserMessage && isThreadProcessing ? 'sent' : undefined);
+      let status = preservedStatus;
+      if (!status && isLastUserMessage) {
+        if (isThreadProcessing) {
+          status = 'sent';
+        } else if (isThreadError) {
+          // Thread is in error state (timeout, etc.) - show failed status with retry option
+          status = 'failed';
+        }
+      }
       return { text: content, isUser: true, id, ...(status && { status }) };
     });
 
@@ -281,13 +311,38 @@ const initializeChat = async () => {
       console.log('[ChatContent] Synced thread data while processing - resuming loading state');
       isWaitingForResponse.value = true;
       isPlayingAllowed.value = false;
+      // NOTE: Do NOT restore activeStreamingMessage from DB slides here.
+      // The slide_generation_start event from RAG will reset it when a new
+      // slide session begins, ensuring new slides don't merge with old ones.
     }
 
     // Process any responses that arrived while user was away (e.g., slide batches)
     // This ensures messages received during background processing are displayed
-    nextTick(() => {
-      processPendingResponses();
-    });
+    // If threadData has messages, the threadData watcher will sync them instead.
+    // This avoids the race condition where processPendingResponses runs in nextTick
+    // but threadData watcher has already synced the messages.
+    const hasThreadData = props.threadData?.thread_messages?.length > 0;
+    if (!hasThreadData) {
+      console.log('[ChatContent] No threadData yet, processing pending responses');
+      nextTick(() => {
+        processPendingResponses();
+      });
+    } else if (isThreadProcessing) {
+      // Thread is still processing - there might be NEW slide batches in chat.response
+      // that aren't in DB yet. processPendingResponses() uses timestamp deduplication
+      // to skip responses already in messageStream while processing new ones.
+      console.log('[ChatContent] threadData available but thread still processing, checking for new responses');
+      nextTick(() => {
+        processPendingResponses();
+      });
+    } else {
+      // Thread is complete and we have all messages from DB - skip processing
+      // Set lastProcessedResponseIndex to prevent the response watcher from
+      // re-processing ALL historical responses.
+      const responseCount = storeConnection?.chat.response.value?.length || 0;
+      lastProcessedResponseIndex.value = responseCount - 1;
+      console.log('[ChatContent] Thread complete with threadData, skipping processPendingResponses. Set lastProcessedResponseIndex to:', lastProcessedResponseIndex.value);
+    }
 
     return;
   }
@@ -323,12 +378,27 @@ const initializeChat = async () => {
   // Always treat as new chat since we have no history
   isFirstMessage.value = true;
 
-  // Insert messageHistory to messageStream
-  messageStream.value = messageHistory.value.map(({ content, id, sender }) => {
+  // Check thread state early - this affects how we display messages
+  const threadStateBefore = messageQueueStore.getThreadState(props.threadId);
+  const isThreadError = threadStateBefore?.status === 'error';
+  const isThreadProcessing = threadStateBefore?.status === 'processing';
+
+  // Insert messageHistory to messageStream with proper status
+  messageStream.value = messageHistory.value.map(({ content, id, sender }, index: number) => {
     if (!sender) {
       return { ...JSON.parse(content), isUser: false, id };
     }
-    return { text: content, isUser: true, id };
+    // For user messages: determine status based on thread state
+    const isLastUserMessage = index === messageHistory.value.length - 1 && sender;
+    let status: string | undefined;
+    if (isLastUserMessage) {
+      if (isThreadProcessing) {
+        status = 'sent';
+      } else if (isThreadError) {
+        status = 'failed';
+      }
+    }
+    return { text: content, isUser: true, id, ...(status && { status }) };
   });
 
   // When switching to a different thread, just release our local reference
@@ -348,10 +418,7 @@ const initializeChat = async () => {
     // Use useChat which manages the store connection internally
     // This ensures the connection is stored in the pool and accessible via getConnection
     try {
-      // Check thread state BEFORE connecting - this tells us if background processing is ongoing
-      // (State might change during async connect call, so capture it early)
-      const threadStateBefore = messageQueueStore.getThreadState(props.threadId);
-      const wasProcessing = threadStateBefore?.status === 'processing';
+      // threadStateBefore and isThreadProcessing already captured above
       console.log('[ChatContent] initializeChat - thread state before connect:', threadStateBefore?.status);
 
       chat.value = useChat(props.threadId);
@@ -360,12 +427,21 @@ const initializeChat = async () => {
       const connected = await chat.value.connect();
       console.log('[ChatContent] initializeChat connect() result:', connected);
 
+      // CRITICAL: If connection failed, don't process old buffer from previous session
+      // This prevents showing old slides when auth fails (expired JWT)
+      // The buffer is preserved - it will be processed when connection eventually succeeds
+      if (!connected) {
+        console.log('[ChatContent] Connection failed, NOT processing pending responses (buffer preserved)');
+        // Thread state already set to error by store's doConnect()
+        return;
+      }
+
       // Check if thread was processing in background (user returning to active thread)
       // If so, resume the loading state so user sees the indicator
       // Use the state we captured BEFORE connect, as state might have changed during async call
       const threadStateAfter = messageQueueStore.getThreadState(props.threadId);
-      const isProcessing = wasProcessing || threadStateAfter?.status === 'processing';
-      console.log('[ChatContent] initializeChat - thread state after connect:', threadStateAfter?.status, 'wasProcessing:', wasProcessing);
+      const isProcessing = isThreadProcessing || threadStateAfter?.status === 'processing';
+      console.log('[ChatContent] initializeChat - thread state after connect:', threadStateAfter?.status, 'wasProcessing:', isThreadProcessing);
 
       if (isProcessing) {
         console.log('[ChatContent] Resuming processing state - backend may still be generating');
@@ -465,6 +541,21 @@ onMounted(() => {
     }
   );
 
+  // CRITICAL: Watch for thread state changes from the store (e.g., timeout, error)
+  // This ensures the local isWaitingForResponse is reset when the store detects an error,
+  // allowing the user to retry after a timeout instead of being stuck.
+  watch(
+    () => messageQueueStore.getThreadState(props.threadId),
+    (newState: { status?: string } | undefined) => {
+      if (newState?.status === 'error' && isWaitingForResponse.value) {
+        console.log('[ChatContent] Thread state changed to error, resetting isWaitingForResponse');
+        isWaitingForResponse.value = false;
+        isPlayingAllowed.value = true;
+      }
+    },
+    { deep: true }
+  );
+
   // Watch for new messages being added to messageStream - auto-scroll and emit slides
   watch(
     () => messageStream.value.length,
@@ -528,6 +619,8 @@ onMounted(() => {
   // Watch threadData prop for changes - syncs messageStream when switching threads
   // This fixes the issue where initializeChat() returns early (reusing connection)
   // but messageStream is never populated with the new thread's messages
+  // This handles edge cases where processPendingResponses adds a message before
+  // threadData arrives, preventing the watcher from losing that message.
   watch(
     () => props.threadData,
     (newThreadData) => {
@@ -539,10 +632,33 @@ onMounted(() => {
         // Build a set of DB message IDs for quick lookup
         const dbMessageIds = new Set(newThreadData.thread_messages.map((m: any) => m.id));
 
+        // Build a set of DB timestamps for AI messages (to detect duplicates by timestamp)
+        const dbTimestamps = new Set(
+          newThreadData.thread_messages
+            .filter((m: any) => !m.sender) // AI messages only
+            .map((m: any) => {
+              try {
+                const content = JSON.parse(m.content);
+                return content.timestamp?.toString();
+              } catch { return null; }
+            })
+            .filter(Boolean)
+        );
+
         // Collect local-only messages (failed/retried/cancelled that never made it to DB)
         const localOnlyMessages = messageStream.value.filter(
           (msg: any) => msg.isUser && ['failed', 'retried', 'cancelled'].includes(msg.status) && !dbMessageIds.has(msg.id)
         );
+
+        // Find AI messages added by processPendingResponses that aren't in DB yet
+        // These could be from chat.response but not yet persisted to DB
+        const pendingAiMessages = messageStream.value.filter((msg: any) => {
+          if (msg.isUser) return false; // Only AI messages
+          if (dbMessageIds.has(msg.id)) return false; // Already in DB by ID
+          const msgTimestamp = msg.timestamp?.toString();
+          if (msgTimestamp && dbTimestamps.has(msgTimestamp)) return false; // Already in DB by timestamp
+          return true; // Keep this message - it's from chat.response but not in DB yet
+        });
 
         // Build a map of existing message statuses to preserve them
         const existingStatuses = new Map<string, string>();
@@ -562,9 +678,13 @@ onMounted(() => {
           return { text: msg.content, isUser: true, id: msg.id, ...(preservedStatus && { status: preservedStatus }) };
         });
 
-        // Merge: local-only failed messages first (in order), then DB messages
-        // This keeps retry history visible above the successful retry
-        messageStream.value = [...localOnlyMessages, ...dbMessages];
+        // Merge: local-only failed messages + DB messages + pending AI messages
+        // Order: local failures first, then DB messages, then pending AI at end (newest)
+        messageStream.value = [...localOnlyMessages, ...dbMessages, ...pendingAiMessages];
+
+        if (pendingAiMessages.length > 0) {
+          console.log('[ChatContent] Preserved', pendingAiMessages.length, 'AI messages not yet in DB');
+        }
 
         // Reset flag after sync completes and scroll to bottom
         nextTick(() => {
@@ -605,9 +725,35 @@ const sendMessage = async (text: string, skipConnectionCheck = false) => {
   // reset isWaitingForResponse to false. Setting it after would re-enable it incorrectly.
   isWaitingForResponse.value = true;
 
+  // CRITICAL: Reset activeStreamingMessage when sending a NEW message.
+  // This ensures new slide batches create a fresh card instead of merging with old slides.
+  activeStreamingMessage.value = null;
+
+  // Check if we need a fresh start (after cancel/timeout/error).
+  // The server task context is gone after these states, so we must use startChat
+  // to create a new task instead of sendUserResponse which assumes task exists.
+  const needsFreshStart = messageQueueStore.getNeedsFreshStart(props.threadId);
+  const shouldUseStart = isFirstMessage.value || needsFreshStart;
+  const threadState = messageQueueStore.getThreadState(props.threadId);
+  const storeConn = messageQueueStore.getConnection(props.threadId);
+
+  console.log('[ChatContent] sendMessage debug:', {
+    threadId: props.threadId,
+    needsFreshStart,
+    isFirstMessage: isFirstMessage.value,
+    shouldUseStart,
+    threadState: threadState?.status,
+    isConnected: storeConn?.chat.isConnected.value,
+    isConnecting: storeConn?.chat.isConnecting?.value,
+  });
+
   let success: boolean;
-  if (isFirstMessage.value) {
-    console.log('[ChatContent] Calling startChat (isFirstMessage=true)');
+  if (shouldUseStart) {
+    console.log('[ChatContent] Calling startChat (isFirstMessage=true OR needsFreshStart=true)');
+    // Clear the needsFreshStart flag before sending
+    if (needsFreshStart) {
+      messageQueueStore.setNeedsFreshStart(props.threadId, false);
+    }
     success = await chat.value.startChat(text, userInfo);
     isFirstMessage.value = false;
   } else {
@@ -620,6 +766,10 @@ const sendMessage = async (text: string, skipConnectionCheck = false) => {
   // If send failed, reset the waiting state since no response will come
   if (!success) {
     isWaitingForResponse.value = false;
+  } else {
+    // CRITICAL: Set thread state to 'processing' when message is successfully sent.
+    // This persists across navigation so loading indicator shows when user returns.
+    messageQueueStore.setThreadState(props.threadId, { status: 'processing' });
   }
   // If success, the response handlers will reset isWaitingForResponse
   // when a terminal state is received. Don't set it again here -
@@ -724,14 +874,6 @@ const handleSlideBatch = (batchMessage: any) => {
 
     isWaitingForResponse.value = true;
 
-    // SAVE immediately (incremental save pattern)
-    saveMessageAsync({
-      thread_id: props.threadId,
-      content: newMessage,
-      type: 'json',
-      isUser: false,
-      uuid: newMessageId
-    });
 
     return;
   }
@@ -770,14 +912,6 @@ const handleSlideBatch = (batchMessage: any) => {
   // Trigger reactivity
   messageStream.value = [...messageStream.value];
 
-  // SAVE updated message (upsert - incremental save pattern)
-  saveMessageAsync({
-    thread_id: props.threadId,
-    content: existingMessage,
-    type: 'json',
-    isUser: false,
-    uuid: existingMessage.id
-  });
 };
 
 // Handle streaming completion
@@ -847,13 +981,79 @@ const handleWebSocketMessage = (message: any) => {
   console.log('[ChatContent] handleWebSocketMessage:', message.status || message.type, 'isSendingMessage:', isSendingMessage.value);
 
   // Any valid response means our message was received - mark as sent and notify parent
-  if (message.status && !['heartbeat', 'status_update'].includes(message.status)) {
+  // Include status_update because it proves the server received our message and is processing
+  if (message.status && message.status !== 'heartbeat') {
     markLastUserMessageSent();
     emit('responseReceived');
   }
 
+  // Handle slide generation start - reset streaming state for new session
+  // Since slides are only saved to DB on completion, no need to delete anything.
+  // Just reset the activeStreamingMessage so new batches create a fresh card.
+  if (message.type === 'slide_generation_start') {
+    console.log('[ChatContent] New slide generation session starting');
+    activeStreamingMessage.value = null;
+    isWaitingForResponse.value = true;
+    return;
+  }
+
+  // Handle slide generation complete - mark streaming as done and save to DB
+  if (message.type === 'slide_generation_complete') {
+    console.log('[ChatContent] Slide generation complete');
+
+    // Mark active streaming message as complete and SAVE to DB (bundled)
+    if (activeStreamingMessage.value) {
+      const messageIndex = activeStreamingMessage.value.messageIndex;
+      const streamingMessage = messageStream.value[messageIndex];
+      if (streamingMessage) {
+        streamingMessage.isStreaming = false;
+        streamingMessage.status = 'completed';
+
+        // Save the bundled slides to DB (only on completion)
+        console.log('[ChatContent] Saving bundled slides to DB:', streamingMessage.id, 'slides:', streamingMessage.slides?.length);
+        saveMessageAsync({
+          thread_id: props.threadId,
+          content: streamingMessage,
+          type: 'json',
+          isUser: false,
+          uuid: streamingMessage.id
+        });
+
+        messageStream.value = [...messageStream.value]; // Trigger reactivity
+      }
+    }
+
+    return;
+  }
+
   // Route slide batch messages
   if (message.type === 'slide_batch_ready') {
+    // Determine if this batch should be processed or skipped.
+    // We skip ONLY if it's truly a historical replay of already-displayed slides.
+    const isActivelyProcessing = isWaitingForResponse.value || activeStreamingMessage.value;
+
+    if (!isActivelyProcessing) {
+      // Not actively processing - check if this batch's slides already exist
+      const batchSlides = message.batch?.slides || [];
+      const firstSlideId = batchSlides[0]?.id;
+
+      // Check if this slide is already in messageStream
+      const slideAlreadyExists = firstSlideId && messageStream.value.some(
+        (m: any) => m.slides?.some((s: any) => s.id === firstSlideId)
+      );
+
+      if (slideAlreadyExists) {
+        console.log('[ChatContent] Skipping historical slide_batch_ready - slide already in messageStream:', firstSlideId);
+        return;
+      }
+
+      // New slides arriving while not "actively processing" - this can happen when
+      // returning to a thread where a second request is still processing on backend.
+      // Process these slides and set isWaitingForResponse to show loading indicator.
+      console.log('[ChatContent] Processing NEW slide batch (not actively processing but slides are new)');
+      isWaitingForResponse.value = true;
+    }
+
     handleSlideBatch(message);
     return;
   }
@@ -866,46 +1066,66 @@ const handleWebSocketMessage = (message: any) => {
 
   // Display summary message from user_message status
   if (message.status === 'user_message') {
-    // Create clean message object WITHOUT slides for database
-    const cleanMessage = {
-      message: message.message,
-      status: 'user_message',
-      timestamp: message.timestamp
-      // Explicitly exclude slides - they're already saved
-    };
-
     // CRITICAL: Use markResponseAsSaving() to atomically check-and-mark before saving.
     // This prevents race conditions where both store watcher and ChatContent watcher
     // try to save the same response simultaneously.
-    //
-    // markResponseAsSaving() returns:
-    // - true: We successfully claimed this response, proceed with save
-    // - false: Already claimed by store (or previous call), skip save
     const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, message.timestamp);
 
     if (!shouldSave) {
       console.log('[ChatContent] Response already marked for saving, skipping DB save');
-      // Still add to UI with a generated UUID (store already has the actual UUID)
-      const displayUuid = crypto.randomUUID();
-      messageStream.value.push({ ...cleanMessage, id: displayUuid });
+    }
+
+    // MERGE summary text into existing slides message (if any) to keep them as one DB row.
+    // This prevents slides from appearing as separate cards when reloading the chat.
+    const existingSlidesMessage = messageStream.value.findLast(
+      (msg: any) => !msg.isUser && Array.isArray(msg.slides) && msg.slides.length > 0
+    );
+
+    if (existingSlidesMessage && existingSlidesMessage.id) {
+      // Merge: add summary text to existing slides message
+      console.log('[ChatContent] Merging user_message into existing slides message:', existingSlidesMessage.id);
+      existingSlidesMessage.message = message.message;
+      existingSlidesMessage.status = 'user_message';
+      existingSlidesMessage.timestamp = message.timestamp;
+
+      // Trigger reactivity
+      messageStream.value = [...messageStream.value];
+
+      // Update the existing DB record with the merged content (upsert by id)
+      if (shouldSave) {
+        saveMessageAsync({
+          thread_id: props.threadId,
+          content: existingSlidesMessage,
+          type: 'json',
+          isUser: false,
+          uuid: existingSlidesMessage.id
+        });
+      }
     } else {
-      // We claimed this response - save it to database
-      console.log('[ChatContent] Claimed response, saving to DB');
-      const newUuid = crypto.randomUUID();
-      // Track this UUID locally for deduplication with Realtime
-      messageQueueStore.trackLocalMessage(newUuid);
-
-      const addMessageObj = {
-        thread_id: props.threadId,
-        content: JSON.stringify(cleanMessage),
-        type: 'json',
-        isUser: false,
-        uuid: newUuid
+      // No slides message to merge with - create standalone text message
+      console.log('[ChatContent] No slides message found, creating standalone text message');
+      const cleanMessage = {
+        message: message.message,
+        status: 'user_message',
+        timestamp: message.timestamp
       };
-      addMessage(addMessageObj);
 
-      // Display in UI
-      messageStream.value.push({ ...cleanMessage, id: newUuid });
+      if (shouldSave) {
+        const newUuid = crypto.randomUUID();
+        messageQueueStore.trackLocalMessage(newUuid);
+
+        addMessage({
+          thread_id: props.threadId,
+          content: JSON.stringify(cleanMessage),
+          type: 'json',
+          isUser: false,
+          uuid: newUuid
+        });
+        messageStream.value.push({ ...cleanMessage, id: newUuid });
+      } else {
+        const displayUuid = crypto.randomUUID();
+        messageStream.value.push({ ...cleanMessage, id: displayUuid });
+      }
     }
 
     // Update state flags
@@ -921,14 +1141,28 @@ const handleWebSocketMessage = (message: any) => {
   }
 
   if (['completed', 'timeout', 'cancelled', 'error'].includes(message.status)) {
-    console.log('[ChatContent] Terminal state received:', message.status, '- resetting isFirstMessage and closing connection');
-    // Clear streaming state - slides already saved incrementally, no error message needed
+    console.log('[ChatContent] Terminal state received:', message.status, '- resetting isFirstMessage and closing connection', {
+      ready_for_new_message: message.ready_for_new_message,
+      tokens_saved: message.tokens_saved,
+    });
+    // If we have streaming slides, mark as complete and SAVE to DB
+    // This handles the case where slides were received but slide_generation_complete never arrived
     if (activeStreamingMessage.value) {
       const messageIndex = activeStreamingMessage.value.messageIndex;
       const streamingMessage = messageStream.value[messageIndex];
-      if (streamingMessage) {
+      if (streamingMessage && streamingMessage.slides?.length > 0) {
         streamingMessage.status = 'completed';
         streamingMessage.isStreaming = false;
+
+        // Save bundled slides on terminal state (timeout, error, etc.)
+        console.log('[ChatContent] Saving slides on terminal state:', streamingMessage.id, 'slides:', streamingMessage.slides.length);
+        saveMessageAsync({
+          thread_id: props.threadId,
+          content: streamingMessage,
+          type: 'json',
+          isUser: false,
+          uuid: streamingMessage.id
+        });
       }
       activeStreamingMessage.value = null;
       streamingProgress.value = null;
@@ -974,16 +1208,14 @@ const handleWebSocketMessage = (message: any) => {
     // Reset for next conversation - allows new messages to use startChat
     isFirstMessage.value = true;
 
-    // NOTE: We do NOT disconnect here anymore. The old approach caused a race condition:
-    // Vue watchers are deferred (flush: 'pre'), so by the time this terminal state handler runs,
-    // isSendingMessage may already be false even though the SSE stream just completed.
-    // Calling disconnect() would abort the SSE fetch mid-stream, losing the response.
-    //
-    // Instead, the connection stays open and will be:
-    // 1. Reused for the next message (isFirstMessage=true will call startChat)
-    // 2. Cleaned up by idle timeout (CONNECTION_IDLE_TIMEOUT_MS)
-    // 3. Closed when user navigates away
-    console.log('[ChatContent] Terminal state received, keeping connection open for reuse');
+    // CRITICAL: Close the WebSocket connection on terminal state.
+    // The server closes its end after sending terminal status (completed/cancelled/timeout/error).
+    // If we don't close the client side, the WebSocket enters a "half-open" state where
+    // ws.readyState === OPEN but the server won't receive any messages we send.
+    // By closing here, the next message will create a fresh connection.
+    console.log('[ChatContent] Terminal state received, closing connection to prevent zombie state');
+    messageQueueStore.closeConnection(props.threadId);
+    chat.value = null;
 
     // Update global thread state
     // If content was received, treat as completed even if error/timeout occurred after
@@ -1004,6 +1236,10 @@ const handleWebSocketMessage = (message: any) => {
       responsePhase: '',
       error: contentReceived ? null : message.error, // Clear error if content received
     });
+
+    // Reset lastProcessedResponseIndex so future responses can be processed
+    // Note: Response buffer is cleared when connection is closed above
+    lastProcessedResponseIndex.value = -1;
     return;
   }
 };
@@ -1098,6 +1334,17 @@ const handleSend = async (text: string, isRetryCall = false) => {
   console.log('[ChatContent] handleSend called, text:', text.substring(0, 50), 'isRetry:', isRetryCall);
   if (!text.trim()) return;
 
+  // SAFETY: If thread is in a terminal state, reset stuck flags before the guard.
+  // This handles cases where the watcher didn't trigger (e.g., hot reload, race conditions).
+  const currentThreadState = messageQueueStore.getThreadState(props.threadId);
+  if (currentThreadState?.status && ['error', 'completed', 'cancelled'].includes(currentThreadState.status)) {
+    if (isWaitingForResponse.value || isSendingMessage.value) {
+      console.log('[ChatContent] Thread in terminal state, resetting stuck flags:', currentThreadState.status);
+      isWaitingForResponse.value = false;
+      isSendingMessage.value = false;
+    }
+  }
+
   // Guard: Prevent sending new messages while one is being processed
   // Exception: retry calls are allowed as they replace failed messages
   if (!isRetryCall && (isWaitingForResponse.value || isSendingMessage.value)) {
@@ -1152,12 +1399,33 @@ const handleSend = async (text: string, isRetryCall = false) => {
   // Try to send, reconnecting if needed
   if (isConnectedNow) {
     console.log('[ChatContent] Already connected, sending directly');
-    const sendResult = await sendMessage(text);
+    let sendResult = await sendMessage(text);
     console.log('[ChatContent] sendMessage result:', sendResult);
+
+    // If send failed, connection might be stale - try to reconnect and resend
     if (!sendResult && !wasAlreadyCancelled()) {
-      updateStatus('failed');
-      isPlayingAllowed.value = true;
-      isWaitingForResponse.value = false;
+      console.log('[ChatContent] Send failed, connection might be stale - trying reconnect');
+      try {
+        // Close stale connection and recreate
+        await messageQueueStore.closeConnection(props.threadId);
+        chat.value = null;
+        chat.value = useChat(props.threadId);
+
+        const reconnected = await chat.value?.connect();
+        if (reconnected) {
+          console.log('[ChatContent] Reconnected, retrying send');
+          sendResult = await sendMessage(text, true);
+        }
+      } catch (err) {
+        console.error('[ChatContent] Reconnect attempt failed:', err);
+      }
+
+      // If still failed after reconnect attempt
+      if (!sendResult && !wasAlreadyCancelled()) {
+        updateStatus('failed');
+        isPlayingAllowed.value = true;
+        isWaitingForResponse.value = false;
+      }
     }
     // IMPORTANT: Wait for Vue watchers to process SSE responses before resetting isSendingMessage.
     // Vue watchers use flush: 'pre' (deferred), so they're scheduled as microtasks.
@@ -1169,6 +1437,19 @@ const handleSend = async (text: string, isRetryCall = false) => {
     console.log('[ChatContent] Not connected, attempting reconnection...');
     updateStatus('sending'); // Show as sending while reconnecting
     try {
+      // If thread is in terminal state (error, cancelled, completed), close old connection first
+      // to ensure fresh reconnect. Without this, stale WebSocket connections block new messages.
+      const threadState = messageQueueStore.getThreadState(props.threadId);
+      const staleConn = messageQueueStore.getConnection(props.threadId);
+      const isTerminalState = threadState?.status && ['error', 'cancelled', 'completed'].includes(threadState.status);
+      if (isTerminalState && staleConn && !staleConn.chat.isConnected.value) {
+        console.log('[ChatContent] Closing stale connection before reconnect (thread in terminal state):', threadState?.status);
+        await messageQueueStore.closeConnection(props.threadId);
+        chat.value = null;
+        // Recreate chat reference
+        chat.value = useChat(props.threadId);
+      }
+
       console.log('[ChatContent] Calling chat.value?.connect()...');
       // store.connect() already waits for connection internally via doConnect()
       // so we don't need to call waitForConnection() separately
@@ -1226,7 +1507,50 @@ const handleCancelRequest = async () => {
   // Reset loading state immediately
   isWaitingForResponse.value = false;
 
-  // Then call the actual cancel on the chat connection
+  // CRITICAL: Reset activeStreamingMessage immediately to stop "generating more slides" indicator.
+  // The server may close the WebSocket before the 'cancelled' response arrives,
+  // so we can't rely on handleWebSocketMessage to reset this.
+  if (activeStreamingMessage.value) {
+    const messageIndex = activeStreamingMessage.value.messageIndex;
+    const streamingMessage = messageStream.value[messageIndex];
+    if (streamingMessage) {
+      // Mark as cancelled (not completed) and stop streaming indicator
+      streamingMessage.isStreaming = false;
+      streamingMessage.status = 'cancelled';
+      messageStream.value = [...messageStream.value]; // Trigger reactivity
+
+      // CRITICAL: Save any slides that were already generated to DB
+      // Without this, slides are lost when user navigates away after cancel
+      if (streamingMessage.slides?.length > 0) {
+        console.log('[ChatContent] Saving cancelled slides to DB:', streamingMessage.id, 'slides:', streamingMessage.slides.length);
+        saveMessageAsync({
+          thread_id: props.threadId,
+          content: streamingMessage,
+          type: 'json',
+          isUser: false,
+          uuid: streamingMessage.id
+        });
+      }
+    }
+    activeStreamingMessage.value = null;
+    streamingProgress.value = null;
+  }
+
+  // CRITICAL: Update thread state to 'cancelled' IMMEDIATELY
+  // This ensures the state persists even if:
+  // 1. User navigates away before cancel response arrives
+  // 2. WebSocket closes before cancel response arrives
+  // 3. HMR/page reload happens
+  // Without this, returning to the thread would show "processing" forever
+  messageQueueStore.setThreadState(props.threadId, {
+    status: 'cancelled',
+    responsePhase: '',
+  });
+
+  // Mark that next message needs fresh start (task context is gone after cancel)
+  messageQueueStore.setNeedsFreshStart(props.threadId, true);
+
+  // Then call the actual cancel on the chat connection (best effort)
   if (chat.value?.cancelRequest) {
     await chat.value.cancelRequest();
   }
@@ -1263,6 +1587,23 @@ const handleRetry = async (payload: { messageId?: string; text: string }) => {
 
   // Clear error state from store before retrying
   messageQueueStore.setThreadState(props.threadId, { status: 'idle', error: undefined });
+
+  // IMPORTANT: Close the old connection before retrying to ensure fresh reconnect
+  // After timeout/error, the old connection may be in a bad state
+  const existingConn = messageQueueStore.getConnection(props.threadId);
+  if (existingConn && !existingConn.chat.isConnected.value) {
+    console.log('[ChatContent] Closing stale connection before retry');
+    await messageQueueStore.closeConnection(props.threadId);
+    chat.value = null;
+  }
+
+  // CRITICAL: Recreate chat reference before calling handleSend
+  // If chat.value is null (we just closed stale connection), handleSend's
+  // chat.value?.connect() would fail since chat.value is null
+  if (!chat.value) {
+    console.log('[ChatContent] Recreating chat reference for retry');
+    chat.value = useChat(props.threadId);
+  }
 
   // Send a new message (the retried one stays visible showing retry history)
   // Pass isRetryCall=true to bypass the concurrent send guard

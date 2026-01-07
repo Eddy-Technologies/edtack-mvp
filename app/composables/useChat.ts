@@ -1,39 +1,15 @@
 import { computed, type MaybeRef, toValue } from 'vue';
 import { useWebSocketChat, type UseWebSocketChatOptions } from './useWebSocketChat';
 import { useSSEChat, type UseSSEChatOptions } from './useSSEChat';
-import { useSupabaseClient } from '#imports';
 import { useMessageQueueStore, type ThreadStatus, type QueuedMessage } from '~/stores/messageQueue';
 import { useGlobalRealtimeSync } from '~/composables/useRealtimeSync';
 import type { ChatUserInfo, ChatResponse } from '~/composables/chat.types';
+import { getSupabaseAccessToken } from '~/utils/authToken';
 
 export type ChatMode = 'websocket' | 'sse';
 
 export interface UseChatOptions {
   authToken?: string;
-}
-
-/**
- * Get a fresh Supabase access token for authentication.
- * Uses refreshSession() to ensure the token is valid, since getSession()
- * only returns the cached token which may be expired.
- */
-export async function getSupabaseAccessToken(): Promise<string | null> {
-  const supabase = useSupabaseClient();
-
-  try {
-    // refreshSession() ensures we get a valid token, unlike getSession() which
-    // just returns the cached token from localStorage (potentially expired)
-    const { data, error } = await supabase.auth.refreshSession();
-    if (error) {
-      // If refresh fails (e.g., refresh token expired), fall back to cached session
-      const { data: { session } } = await supabase.auth.getSession();
-      return session?.access_token || null;
-    }
-    return data.session?.access_token || null;
-  } catch (error) {
-    console.error('Failed to get Supabase access token:', error);
-    return null;
-  }
 }
 
 /**
@@ -275,6 +251,12 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     const tid = resolvedThreadId.value;
     console.log('[useChat] startChat called for threadId:', tid);
 
+    // Generate UUID early for deduplication tracking
+    const uuid = crypto.randomUUID();
+
+    // Set current query ID for slide deduplication (each query is unique)
+    store.setCurrentQueryId(tid, uuid);
+
     let currentConn = store.getConnection(tid);
     console.log('[useChat] Current connection:', !!currentConn, 'isConnected:', currentConn?.chat.isConnected.value);
 
@@ -307,8 +289,7 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
       }
     }
 
-    // Generate UUID for deduplication
-    const uuid = crypto.randomUUID();
+    // Track UUID for local message deduplication
     store.trackLocalMessage(uuid);
 
     // Enqueue message for retry support
@@ -366,6 +347,13 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function sendUserResponse(responseText: string, userInfo?: ChatUserInfo): Promise<boolean> {
     const tid = resolvedThreadId.value;
+
+    // Generate UUID early for deduplication tracking
+    const uuid = crypto.randomUUID();
+
+    // Set current query ID for slide deduplication (each query is unique)
+    store.setCurrentQueryId(tid, uuid);
+
     let currentConn = store.getConnection(tid);
 
     if (!currentConn || !currentConn.chat.isConnected.value) {
@@ -382,8 +370,7 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
       if (!currentConn) return false;
     }
 
-    // Generate UUID for deduplication
-    const uuid = crypto.randomUUID();
+    // Track UUID for local message deduplication
     store.trackLocalMessage(uuid);
 
     // Enqueue message
