@@ -1544,7 +1544,12 @@ const handleSend = async (text: string, isRetryCall = false) => {
         console.log('[ChatContent] Closing stale connection before reconnect (thread in terminal state):', threadState?.status);
         await messageQueueStore.closeConnection(props.threadId);
         chat.value = null;
-        // Recreate chat reference
+      }
+
+      // CRITICAL: Recreate chat reference if it's null/falsy
+      // This happens after first message completes and connection is closed
+      if (!chat.value) {
+        console.log('[ChatContent] Recreating chat reference (was null after connection closed)');
         chat.value = useChat(props.threadId);
       }
 
