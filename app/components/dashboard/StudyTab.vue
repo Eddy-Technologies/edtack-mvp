@@ -8,6 +8,12 @@
       </div>
     </div>
 
+    <!-- Info notification -->
+    <div class="flex items-center gap-2 px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">
+      <UIcon name="i-lucide-info" class="w-4 h-4 shrink-0" />
+      <span>Lessons are free and do not use any tokens.</span>
+    </div>
+
     <!-- Filters -->
     <div class="bg-white rounded-xl border border-gray-200 p-4">
       <div class="flex flex-wrap items-end gap-4">

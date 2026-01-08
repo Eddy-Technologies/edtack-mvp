@@ -22,14 +22,14 @@
       </div>
 
       <!-- Information Banner -->
-      <div class="mb-8 bg-amber-50/80 backdrop-blur-sm border border-amber-200/60 rounded-xl p-5 transition-all hover:shadow-sm">
+      <div class="mb-8 bg-blue-50/80 backdrop-blur-sm border border-blue-200/60 rounded-xl p-5 transition-all hover:shadow-sm">
         <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
-            <UIcon name="i-lucide-lightbulb" class="text-amber-600" size="20" />
+          <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+            <UIcon name="i-lucide-lightbulb" class="text-blue-600" size="20" />
           </div>
           <div class="flex-1">
-            <h3 class="text-sm font-semibold text-amber-800 mb-1.5">How Credits Work ($1 = 100 credits)</h3>
-            <p class="text-sm text-amber-700 leading-relaxed">
+            <h3 class="text-sm font-semibold text-blue-800 mb-1.5">How Credits Work ($1 = 100 credits)</h3>
+            <p class="text-sm text-blue-700 leading-relaxed">
               This is a internal credit system which parents/teachers can pledge to distribute to their children/students. Think of credits as a point system.
               After students have accumulated credits, they can use the credits to check out their items from the shop, orders will be then be sent to parents to pay through stripe payment.
               StudyWithEddy will not store money or credits nor request for you to transfer money to us.
