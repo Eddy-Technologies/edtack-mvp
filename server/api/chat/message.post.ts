@@ -7,13 +7,14 @@ export interface PostMessageReq {
   isUser: boolean;
   type?: string;
   uuid?: string;
+  status?: 'sending' | 'sent' | 'failed' | 'cancelled';
 }
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const userInfo = await getUserInfo(event);
-    const { thread_id, content, isUser, type, uuid } = await readBody<PostMessageReq>(event);
+    const { thread_id, content, isUser, type, uuid, status } = await readBody<PostMessageReq>(event);
 
     if (!thread_id || !content) {
       console.error('Missing required fields:', { thread_id: !!thread_id, content: !!content });
@@ -38,7 +39,8 @@ export default defineEventHandler(async (event) => {
         thread_id,
         sender: isUser ? userInfo.id : null,
         content: serializedContent,
-        type: type ? type : isUser ? 'text' : 'json'
+        type: type ? type : isUser ? 'text' : 'json',
+        status: status || null
       }, { onConflict: 'id' })
       .select('*')
       .single();

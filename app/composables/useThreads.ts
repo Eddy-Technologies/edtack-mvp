@@ -162,8 +162,8 @@ export function useThreads() {
   };
 
   // Add message to current thread (handles all message types)
-  const addMessage = async ({ thread_id, content, type, isUser, uuid }: PostMessageReq) => {
-    const body: PostMessageReq = { thread_id, content, type, isUser, uuid };
+  const addMessage = async ({ thread_id, content, type, isUser, uuid, status }: PostMessageReq) => {
+    const body: PostMessageReq = { thread_id, content, type, isUser, uuid, status };
 
     // Track the UUID in the message queue store for deduplication with Realtime
     if (uuid) {
@@ -181,6 +181,32 @@ export function useThreads() {
     }
 
     messageHistory.value.push(response.data);
+  };
+
+  // Update message status (for marking messages as failed/sent)
+  const updateMessageStatus = async (messageId: string, status: 'sending' | 'sent' | 'failed' | 'cancelled') => {
+    try {
+      const response = await $fetch(`/api/chat/message/${messageId}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.success) {
+        console.error('Failed to update message status');
+        return false;
+      }
+
+      // Update local state
+      const msgIndex = messageHistory.value.findIndex((m) => m.id === messageId);
+      if (msgIndex !== -1) {
+        messageHistory.value[msgIndex] = { ...messageHistory.value[msgIndex], status };
+      }
+
+      return true;
+    } catch (err) {
+      console.error('Error updating message status:', err);
+      return false;
+    }
   };
 
   // Reset all state
@@ -239,6 +265,7 @@ export function useThreads() {
     createThread,
     addThreadToList,
     addMessage,
+    updateMessageStatus,
     reset,
 
     // Pending message management

@@ -71,7 +71,7 @@ const emit = defineEmits<{
 }>();
 
 // Use global thread state instead of local state
-const { messageHistory, addMessage, getPendingMessage, clearPendingMessage } = useThreads();
+const { messageHistory, addMessage, updateMessageStatus: persistMessageStatus, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
@@ -700,11 +700,12 @@ onMounted(() => {
 
         // Map DB messages
         const dbMessages = newThreadData.thread_messages.map((msg: any) => {
-          const preservedStatus = existingStatuses.get(msg.id);
+          // Priority: local status > DB status (local might be more recent)
+          const preservedStatus = existingStatuses.get(msg.id) || msg.status;
           if (!msg.sender) {
             return { ...JSON.parse(msg.content), isUser: false, id: msg.id };
           }
-          // Preserve status for user messages (failed, cancelled, etc.)
+          // Include status from DB or local state for user messages
           return { text: msg.content, isUser: true, id: msg.id, ...(preservedStatus && { status: preservedStatus }) };
         });
 
@@ -1469,7 +1470,8 @@ const handleSend = async (text: string, isRetryCall = false) => {
     content: text,
     type: 'text',
     isUser: true,
-    uuid: messageUuid
+    uuid: messageUuid,
+    status: 'sending' as const
   };
   addMessage(addMessageObj);
 
@@ -1480,11 +1482,17 @@ const handleSend = async (text: string, isRetryCall = false) => {
   const initialStatus = isConnectedNow ? 'sending' : 'queued';
   messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
 
-  // Helper to update message status by index
+  // Helper to update message status by index (also persists to DB for failed status)
   const updateStatus = (status: 'sending' | 'sent' | 'failed') => {
     const idx = messageStream.value.findIndex((m: { id?: string }) => m.id === messageUuid);
     if (idx !== -1) {
       messageStream.value[idx] = { ...messageStream.value[idx], status };
+    }
+    // Persist failed status to database so it shows after page refresh
+    if (status === 'failed') {
+      persistMessageStatus(messageUuid, 'failed').catch((err: Error) => {
+        console.error('[ChatContent] Failed to persist message status:', err);
+      });
     }
   };
 
