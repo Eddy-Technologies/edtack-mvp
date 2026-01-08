@@ -154,6 +154,18 @@ export type Database = {
         };
         Relationships: [];
       };
+      checkpoint_migrations: {
+        Row: {
+          v: number;
+        };
+        Insert: {
+          v: number;
+        };
+        Update: {
+          v?: number;
+        };
+        Relationships: [];
+      };
       checkpoint_writes: {
         Row: {
           blob: string | null;
