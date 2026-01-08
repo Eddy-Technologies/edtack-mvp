@@ -52,4 +52,9 @@ export interface ChatResponse {
 
 export interface ChatOptions {
   authToken?: string;
+  /**
+   * Direct callback for terminal events (completed, cancelled, error, timeout).
+   * Bypasses the unreliable watcher chain for more reliable end-state detection.
+   */
+  onTerminalEvent?: (status: string, response: ChatResponse) => void;
 }

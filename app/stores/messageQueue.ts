@@ -473,10 +473,18 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      */
     async saveSlidesFromBuffer(threadId: string): Promise<boolean> {
       const conn = connectionPool[threadId];
-      if (!conn) return false;
+      if (!conn) {
+        console.log('[MessageQueue] saveSlidesFromBuffer: No connection for thread:', threadId);
+        return false;
+      }
 
       const responses = conn.chat.response.value;
-      if (!responses || responses.length === 0) return false;
+      console.log('[MessageQueue] saveSlidesFromBuffer: responses count:', responses?.length || 0);
+
+      if (!responses || responses.length === 0) {
+        console.log('[MessageQueue] saveSlidesFromBuffer: No responses in buffer');
+        return false;
+      }
 
       // Collect all slides from slide_batch_ready messages
       const allSlides: any[] = [];
@@ -484,8 +492,8 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       for (const resp of responses) {
         if (resp.type === 'slide_batch_ready' && resp.batch?.slides) {
+          console.log('[MessageQueue] saveSlidesFromBuffer: Found slide batch with', resp.batch.slides.length, 'slides');
           allSlides.push(...resp.batch.slides);
-          // Detect content type from first slide
           if (!contentType && resp.batch.slides[0]) {
             contentType = resp.batch.slides[0].type === 'question' ? 'quiz' : 'lesson';
           }
@@ -493,8 +501,8 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       }
 
       if (allSlides.length === 0) {
-        console.log('[MessageQueue] No slides in buffer to save');
-        return true; // Nothing to save is not an error
+        console.log('[MessageQueue] saveSlidesFromBuffer: No slides in buffer to save');
+        return true;
       }
 
       // DEDUPLICATION: Use currentQueryId (unique per message) as the dedup key.
@@ -519,8 +527,9 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       console.log('[MessageQueue] Saving slides from buffer (ChatContent not mounted):', { threadId, slideCount: allSlides.length });
 
-      // Generate UUID for the database record
-      const uuid = crypto.randomUUID();
+      // CRITICAL: Use queryId as the UUID (same as ChatContent uses).
+      // This ensures both paths upsert the same DB row (no duplicates).
+      const uuid = queryId;
       this.trackLocalMessage(uuid);
 
       const content = {
@@ -693,7 +702,15 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       // Create new connection using useChatConnection (handles mode selection internally)
       const config = useRuntimeConfig();
       const mode = (config.public.chatMode as 'websocket' | 'sse') || 'websocket';
-      const chat = useChatConnection(threadId, {});
+
+      // DIRECT CALLBACK: Handle terminal events directly, bypassing unreliable watcher chain.
+      // This ensures thread state is updated immediately when SSE/WebSocket receives terminal events.
+      const onTerminalEvent = (status: string, response: ChatResponse) => {
+        console.log('[MessageQueue] onTerminalEvent callback received:', status, 'for thread:', threadId);
+        this.handleChatResponse(threadId, response);
+      };
+
+      const chat = useChatConnection(threadId, { onTerminalEvent });
 
       conn = {
         threadId,
@@ -719,8 +736,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * component that created the connection unmounts (e.g., user navigates away)
      */
     setupMessageHandler(threadId: string, chat: ReturnType<typeof useChatConnection>) {
+      console.log('[MessageQueue] setupMessageHandler called for thread:', threadId);
       // Stop any existing watcher scope for this thread
       if (watcherScopes[threadId]) {
+        console.log('[MessageQueue] Stopping existing watcher scope for thread:', threadId);
         watcherScopes[threadId].stop();
       }
 
@@ -728,19 +747,28 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       // This ensures watchers continue running even when ChatContent unmounts
       const scope = effectScope(true);
       watcherScopes[threadId] = scope;
+      console.log('[MessageQueue] Created new watcher scope for thread:', threadId);
 
       scope.run(() => {
-        // Watch for responses
+        // Watch for responses - watch array length to ensure we detect new elements
+        // Note: Using array length is more reliable than deep watching the array reference
         watch(
-          () => chat.response.value,
-          (responses) => {
+          () => chat.response.value.length,
+          (newLength, oldLength) => {
+            console.log('[MessageQueue] Watcher triggered, length changed from', oldLength, 'to', newLength);
+            const responses = chat.response.value;
             if (!responses.length) return;
 
-            const latest = responses[responses.length - 1];
-            if (!latest) return;
-            this.handleChatResponse(threadId, latest);
-          },
-          { deep: true }
+            // Process new responses since last update
+            const startIdx = oldLength || 0;
+            for (let i = startIdx; i < newLength; i++) {
+              const response = responses[i];
+              console.log('[MessageQueue] Processing response at index', i, ':', response?.status || response?.type);
+              if (response) {
+                this.handleChatResponse(threadId, response);
+              }
+            }
+          }
         );
 
         // Watch for phase updates
@@ -772,8 +800,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Handle chat response from WebSocket/SSE
      */
     handleChatResponse(threadId: string, response: ChatResponse) {
+      console.log('[MessageQueue] handleChatResponse called:', response.status || response.type, 'thread:', threadId);
       // Increment response version to trigger reactivity for watchers
       this.responseVersions[threadId] = (this.responseVersions[threadId] || 0) + 1;
+      console.log('[MessageQueue] responseVersions incremented to:', this.responseVersions[threadId]);
 
       const currentState = this.threadStates[threadId];
 
@@ -816,6 +846,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       // Handle completion states
       if (['completed', 'timeout', 'cancelled', 'error', 'validation_error'].includes(response.status)) {
+        console.log('[MessageQueue] handleChatResponse: Terminal state received:', response.status, 'for thread:', threadId);
         const status: ThreadStatus = response.status === 'completed' ?
           'completed' :
           response.status === 'cancelled' ?

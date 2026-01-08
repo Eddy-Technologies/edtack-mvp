@@ -8,6 +8,11 @@ export interface UseSSEChatOptions extends ChatOptions {
    * Set to false when using in a Pinia store to prevent lifecycle interference.
    */
   autoCleanup?: boolean;
+  /**
+   * Direct callback for terminal events (completed, cancelled, error, timeout).
+   * Bypasses the unreliable watcher chain for more reliable end-state detection.
+   */
+  onTerminalEvent?: (status: string, response: ChatResponse) => void;
 }
 
 /**
@@ -27,6 +32,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   let currentAuthToken = options.authToken;
   let abortController: AbortController | null = null;
   let hasReceivedTerminalEvent = false; // Track if we've received a terminal event (completed, error, cancelled)
+  const onTerminalEvent = options.onTerminalEvent; // Direct callback for terminal events
 
   const setAuthToken = (token: string) => {
     currentAuthToken = token;
@@ -196,7 +202,15 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         status: 'completed',
         timestamp: data.timestamp,
       };
+      console.log('[SSEChat] Pushing terminal event: completed, response.length before:', response.value.length);
       response.value.push(responseData);
+      console.log('[SSEChat] Terminal event pushed, response.length after:', response.value.length);
+
+      // DIRECT CALLBACK: Notify store immediately, bypassing unreliable watcher chain
+      if (onTerminalEvent) {
+        console.log('[SSEChat] Calling onTerminalEvent callback for: completed');
+        onTerminalEvent('completed', responseData);
+      }
       return;
     }
 
@@ -211,7 +225,15 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         status: 'cancelled',
         timestamp: data.timestamp,
       };
+      console.log('[SSEChat] Pushing terminal event: cancelled, response.length before:', response.value.length);
       response.value.push(responseData);
+      console.log('[SSEChat] Terminal event pushed, response.length after:', response.value.length);
+
+      // DIRECT CALLBACK: Notify store immediately, bypassing unreliable watcher chain
+      if (onTerminalEvent) {
+        console.log('[SSEChat] Calling onTerminalEvent callback for: cancelled');
+        onTerminalEvent('cancelled', responseData);
+      }
       return;
     }
 
@@ -227,7 +249,15 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         error: data.message,
         timestamp: data.timestamp,
       };
+      console.log('[SSEChat] Pushing terminal event: error, response.length before:', response.value.length);
       response.value.push(responseData);
+      console.log('[SSEChat] Terminal event pushed, response.length after:', response.value.length);
+
+      // DIRECT CALLBACK: Notify store immediately, bypassing unreliable watcher chain
+      if (onTerminalEvent) {
+        console.log('[SSEChat] Calling onTerminalEvent callback for: error');
+        onTerminalEvent('error', responseData);
+      }
       return;
     }
 
@@ -356,6 +386,12 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           };
           response.value.push(timeoutResponse);
 
+          // DIRECT CALLBACK: Notify store immediately
+          if (onTerminalEvent) {
+            console.log('[SSEChat] Calling onTerminalEvent callback for: timeout');
+            onTerminalEvent('timeout', timeoutResponse);
+          }
+
           isStreaming.value = false;
           isWaitingForResponse.value = false;
           break;
@@ -383,6 +419,12 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
               timestamp: Date.now(),
             };
             response.value.push(syntheticCompleted);
+
+            // DIRECT CALLBACK: Notify store immediately
+            if (onTerminalEvent) {
+              console.log('[SSEChat] Calling onTerminalEvent callback for: synthetic completed');
+              onTerminalEvent('completed', syntheticCompleted);
+            }
           }
 
           isStreaming.value = false;
@@ -426,13 +468,27 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
             timestamp: Date.now(),
           };
           response.value.push(responseData);
+
+          // DIRECT CALLBACK: Notify store immediately
+          if (onTerminalEvent) {
+            console.log('[SSEChat] Calling onTerminalEvent callback for: timeout error');
+            onTerminalEvent('error', responseData);
+          }
         } else {
           // User cancelled
+          console.log('[SSEChat] User cancelled - pushing cancelled response');
           const responseData: ChatResponse = {
             status: 'cancelled',
             timestamp: Date.now(),
           };
           response.value.push(responseData);
+          console.log('[SSEChat] Cancelled response pushed, response.length:', response.value.length);
+
+          // DIRECT CALLBACK: Notify store immediately
+          if (onTerminalEvent) {
+            console.log('[SSEChat] Calling onTerminalEvent callback for: user cancelled');
+            onTerminalEvent('cancelled', responseData);
+          }
         }
       } else {
         console.error('[SSEChat] Request failed:', err);
@@ -440,8 +496,15 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         const responseData: ChatResponse = {
           status: 'error',
           error: err.message,
+          timestamp: Date.now(),
         };
         response.value.push(responseData);
+
+        // DIRECT CALLBACK: Notify store immediately
+        if (onTerminalEvent) {
+          console.log('[SSEChat] Calling onTerminalEvent callback for: request error');
+          onTerminalEvent('error', responseData);
+        }
       }
 
       isWaitingForResponse.value = false;
@@ -476,14 +539,18 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
    * Cancel the current streaming request
    */
   const cancelRequest = async (): Promise<boolean> => {
+    console.log('[SSEChat] cancelRequest called for threadId:', threadId);
+
     // Abort the fetch request
     if (abortController) {
+      console.log('[SSEChat] Aborting fetch request');
       abortController.abort();
       abortController = null;
     }
 
     // Also call the stop endpoint to stop server-side processing
     const stopUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}/stop`;
+    console.log('[SSEChat] Calling stop endpoint:', stopUrl);
 
     try {
       const stopResponse = await fetch(stopUrl, {
@@ -491,12 +558,15 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         headers: buildHeaders(),
       });
 
+      console.log('[SSEChat] Stop response status:', stopResponse.status, 'ok:', stopResponse.ok);
+
       responsePhase.value = '';
       isWaitingForResponse.value = false;
       isStreaming.value = false;
 
       return stopResponse.ok;
-    } catch {
+    } catch (err) {
+      console.error('[SSEChat] Stop endpoint error:', err);
       responsePhase.value = '';
       isWaitingForResponse.value = false;
       isStreaming.value = false;

@@ -306,14 +306,29 @@ const initializeChat = async () => {
       return { text: content, isUser: true, id, ...(status && { status }) };
     });
 
-    // If thread was processing, resume the loading state
+    // If thread was processing, check if SSE is still active before resuming loading state
     if (isThreadProcessing) {
-      console.log('[ChatContent] Synced thread data while processing - resuming loading state');
-      isWaitingForResponse.value = true;
-      isPlayingAllowed.value = false;
-      // NOTE: Do NOT restore activeStreamingMessage from DB slides here.
-      // The slide_generation_start event from RAG will reset it when a new
-      // slide session begins, ensuring new slides don't merge with old ones.
+      const conn = messageQueueStore.getConnection(props.threadId);
+      const isStillStreaming = conn?.chat.isWaitingForResponse?.value || conn?.chat.isStreaming?.value;
+
+      if (isStillStreaming) {
+        console.log('[ChatContent] Synced thread data while processing - SSE still active, resuming loading state');
+        isWaitingForResponse.value = true;
+        isPlayingAllowed.value = false;
+        // NOTE: Do NOT restore activeStreamingMessage from DB slides here.
+        // The slide_generation_start event from RAG will reset it when a new
+        // slide session begins, ensuring new slides don't merge with old ones.
+      } else {
+        // SSE stream ended but thread state wasn't updated (stale state)
+        // Reset to idle/completed to avoid stuck loading indicator
+        console.log('[ChatContent] Thread marked as processing but SSE not active - resetting to completed');
+        messageQueueStore.setThreadState(props.threadId, {
+          status: 'completed',
+          responsePhase: '',
+        });
+        isWaitingForResponse.value = false;
+        isPlayingAllowed.value = true;
+      }
     }
 
     // Process any responses that arrived while user was away (e.g., slide batches)
@@ -501,9 +516,16 @@ onMounted(() => {
       const resp = conn?.chat.response.value;
       // Log for debugging
       console.log('[ChatContent] Watcher getter called, version:', version, 'responses:', resp?.length || 0);
-      return { responses: resp, version };
+      return { responses: resp, version, length: resp?.length || 0 };
     },
-    ({ responses: newMessages }: { responses: any[] | undefined; version: number }) => {
+    ({ responses: newMessages, length: newLength }: { responses: any[] | undefined; version: number; length: number }) => {
+      // Detect buffer reset: if array is smaller than expected, reset tracking
+      // This happens when clearMessages() is called before a new request
+      if (newLength <= lastProcessedResponseIndex.value) {
+        console.log('[ChatContent] Buffer was reset (length', newLength, '<= lastProcessedIndex', lastProcessedResponseIndex.value, '), resetting index');
+        lastProcessedResponseIndex.value = -1;
+      }
+
       if (newMessages && newMessages.length > 0) {
         // Process only messages we haven't processed yet
         const startIndex = lastProcessedResponseIndex.value + 1;
@@ -511,8 +533,10 @@ onMounted(() => {
           console.log('[ChatContent] Processing messages from index:', startIndex, 'to:', newMessages.length - 1);
           for (let i = startIndex; i < newMessages.length; i++) {
             handleWebSocketMessage(newMessages[i]);
+            // CRITICAL: Update index IMMEDIATELY after each message to prevent duplicates.
+            // If watcher triggers again mid-loop, we won't reprocess already-handled messages.
+            lastProcessedResponseIndex.value = i;
           }
-          lastProcessedResponseIndex.value = newMessages.length - 1;
         }
       }
     },
@@ -541,16 +565,22 @@ onMounted(() => {
     }
   );
 
-  // CRITICAL: Watch for thread state changes from the store (e.g., timeout, error)
-  // This ensures the local isWaitingForResponse is reset when the store detects an error,
+  // CRITICAL: Watch for thread state changes from the store (e.g., timeout, error, completed, cancelled)
+  // This ensures the local isWaitingForResponse is reset when the store detects a terminal state,
   // allowing the user to retry after a timeout instead of being stuck.
   watch(
     () => messageQueueStore.getThreadState(props.threadId),
     (newState: { status?: string } | undefined) => {
-      if (newState?.status === 'error' && isWaitingForResponse.value) {
-        console.log('[ChatContent] Thread state changed to error, resetting isWaitingForResponse');
+      const terminalStates = ['error', 'completed', 'cancelled'];
+      if (newState?.status && terminalStates.includes(newState.status) && isWaitingForResponse.value) {
+        console.log('[ChatContent] Thread state changed to terminal state:', newState.status, '- resetting isWaitingForResponse');
         isWaitingForResponse.value = false;
         isPlayingAllowed.value = true;
+        // Also reset activeStreamingMessage if still set
+        if (activeStreamingMessage.value) {
+          activeStreamingMessage.value = null;
+          streamingProgress.value = null;
+        }
       }
     },
     { deep: true }
@@ -838,8 +868,11 @@ const handleSlideBatch = (batchMessage: any) => {
     // Detect content type from first slide
     const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
 
-    // Create the streaming message structure
-    const newMessageId = crypto.randomUUID();
+    // CRITICAL: Use queryId as the message ID (set when user sends message).
+    // This ensures ChatContent and messageQueue.saveSlidesFromBuffer use the SAME UUID,
+    // so if both try to save, they upsert the same DB row (no duplicates).
+    const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
+    const newMessageId = queryId || crypto.randomUUID(); // Fallback to random if no queryId
     // Track this UUID locally for deduplication with Realtime
     messageQueueStore.trackLocalMessage(newMessageId);
     const newMessage = {
@@ -873,7 +906,6 @@ const handleSlideBatch = (batchMessage: any) => {
     emit('openSlides', [...slides], newMessageId);
 
     isWaitingForResponse.value = true;
-
 
     return;
   }
@@ -911,7 +943,6 @@ const handleSlideBatch = (batchMessage: any) => {
 
   // Trigger reactivity
   messageStream.value = [...messageStream.value];
-
 };
 
 // Handle streaming completion
@@ -933,14 +964,34 @@ const handleStreamingComplete = (completionMessage: any) => {
     // Trigger final update
     messageStream.value = [...messageStream.value];
 
-    // Final save with updated status (slides already saved incrementally)
-    saveMessageAsync({
-      thread_id: props.threadId,
-      content: streamingMessage,
-      type: 'json',
-      isUser: false,
-      uuid: streamingMessage.id
-    });
+    // Check dedup before saving - slides may have been saved by slide_generation_complete
+    const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
+    if (queryId) {
+      const dedupKey = `slides_${props.threadId}_${queryId}`;
+      const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, dedupKey);
+      if (!shouldSave) {
+        console.log('[ChatContent] handleStreamingComplete: Slides already saved, skipping');
+      } else {
+        // Save with updated status (slides already saved incrementally)
+        saveMessageAsync({
+          thread_id: props.threadId,
+          content: streamingMessage,
+          type: 'json',
+          isUser: false,
+          uuid: streamingMessage.id
+        });
+      }
+    } else {
+      // No queryId - fallback save (shouldn't happen normally)
+      console.warn('[ChatContent] handleStreamingComplete: No queryId, saving anyway');
+      saveMessageAsync({
+        thread_id: props.threadId,
+        content: streamingMessage,
+        type: 'json',
+        isUser: false,
+        uuid: streamingMessage.id
+      });
+    }
   }
 
   // Clear streaming state
@@ -1009,6 +1060,17 @@ const handleWebSocketMessage = (message: any) => {
         streamingMessage.isStreaming = false;
         streamingMessage.status = 'completed';
 
+        // CRITICAL: Mark slides as saved BEFORE saving to prevent duplicates from:
+        // 1. The 'completed' status handler (handleStreamingComplete)
+        // 2. messageQueue.saveSlidesFromBuffer (background save)
+        // Use the current queryId as dedup key (same as messageQueue uses)
+        const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
+        if (queryId) {
+          const dedupKey = `slides_${props.threadId}_${queryId}`;
+          messageQueueStore.markResponseAsSaving(props.threadId, dedupKey);
+          console.log('[ChatContent] Marked slides as saved with dedupKey:', dedupKey);
+        }
+
         // Save the bundled slides to DB (only on completion)
         console.log('[ChatContent] Saving bundled slides to DB:', streamingMessage.id, 'slides:', streamingMessage.slides?.length);
         saveMessageAsync({
@@ -1021,6 +1083,10 @@ const handleWebSocketMessage = (message: any) => {
 
         messageStream.value = [...messageStream.value]; // Trigger reactivity
       }
+
+      // CRITICAL: Clear streaming state so 'completed' handler doesn't save again
+      activeStreamingMessage.value = null;
+      streamingProgress.value = null;
     }
 
     return;
@@ -1154,15 +1220,34 @@ const handleWebSocketMessage = (message: any) => {
         streamingMessage.status = 'completed';
         streamingMessage.isStreaming = false;
 
-        // Save bundled slides on terminal state (timeout, error, etc.)
-        console.log('[ChatContent] Saving slides on terminal state:', streamingMessage.id, 'slides:', streamingMessage.slides.length);
-        saveMessageAsync({
-          thread_id: props.threadId,
-          content: streamingMessage,
-          type: 'json',
-          isUser: false,
-          uuid: streamingMessage.id
-        });
+        // Check dedup before saving - slides may have been saved by slide_generation_complete
+        const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
+        if (queryId) {
+          const dedupKey = `slides_${props.threadId}_${queryId}`;
+          const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, dedupKey);
+          if (!shouldSave) {
+            console.log('[ChatContent] Terminal state: Slides already saved, skipping');
+          } else {
+            console.log('[ChatContent] Saving slides on terminal state:', streamingMessage.id, 'slides:', streamingMessage.slides.length);
+            saveMessageAsync({
+              thread_id: props.threadId,
+              content: streamingMessage,
+              type: 'json',
+              isUser: false,
+              uuid: streamingMessage.id
+            });
+          }
+        } else {
+          // No queryId - fallback save
+          console.log('[ChatContent] Saving slides on terminal state (no queryId):', streamingMessage.id, 'slides:', streamingMessage.slides.length);
+          saveMessageAsync({
+            thread_id: props.threadId,
+            content: streamingMessage,
+            type: 'json',
+            isUser: false,
+            uuid: streamingMessage.id
+          });
+        }
       }
       activeStreamingMessage.value = null;
       streamingProgress.value = null;
@@ -1236,6 +1321,11 @@ const handleWebSocketMessage = (message: any) => {
       responsePhase: '',
       error: contentReceived ? null : message.error, // Clear error if content received
     });
+
+    // CRITICAL: Reset local isWaitingForResponse so loading indicator stops.
+    // The showLoading computed checks this local ref, not just the store's state.
+    isWaitingForResponse.value = false;
+    isPlayingAllowed.value = true;
 
     // Reset lastProcessedResponseIndex so future responses can be processed
     // Note: Response buffer is cleared when connection is closed above

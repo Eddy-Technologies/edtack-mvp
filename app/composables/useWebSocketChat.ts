@@ -8,6 +8,11 @@ export interface UseWebSocketChatOptions extends ChatOptions {
    * Set to false when using in a Pinia store to prevent lifecycle interference.
    */
   autoCleanup?: boolean;
+  /**
+   * Direct callback for terminal events (completed, cancelled, error, timeout).
+   * Bypasses the unreliable watcher chain for more reliable end-state detection.
+   */
+  onTerminalEvent?: (status: string, response: ChatResponse) => void;
 }
 
 // Track if token refresh is in progress to prevent duplicate refresh attempts
@@ -43,6 +48,7 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
   let connectionResolver: (() => void) | null = null;
   let connectionRejecter: ((reason?: any) => void) | null = null;
   let intentionalClose = false; // Track intentional disconnect vs connection failure
+  const onTerminalEvent = options.onTerminalEvent; // Direct callback for terminal events
 
   const clearReconnectTimer = () => {
     if (reconnectTimeout) {
@@ -162,6 +168,12 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
           if (['completed', 'timeout', 'cancelled', 'error', 'validation_error'].includes(data.status)) {
             isWaitingForResponse.value = false;
             responsePhase.value = '';
+
+            // DIRECT CALLBACK: Notify store immediately, bypassing unreliable watcher chain
+            if (onTerminalEvent) {
+              console.log('[WebSocketChat] Calling onTerminalEvent callback for:', data.status);
+              onTerminalEvent(data.status, data);
+            }
           }
 
           // Add all messages to the array

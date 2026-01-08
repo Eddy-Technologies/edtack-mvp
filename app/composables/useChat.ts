@@ -10,6 +10,11 @@ export type ChatMode = 'websocket' | 'sse';
 
 export interface UseChatOptions {
   authToken?: string;
+  /**
+   * Direct callback for terminal events (completed, cancelled, error, timeout).
+   * Bypasses the unreliable watcher chain for more reliable end-state detection.
+   */
+  onTerminalEvent?: (status: string, response: ChatResponse) => void;
 }
 
 /**
@@ -45,6 +50,7 @@ export function useChatConnection(threadId: string, options: UseChatOptions = {}
     const sseOptions: UseSSEChatOptions = {
       authToken: options.authToken,
       autoCleanup: false,
+      onTerminalEvent: options.onTerminalEvent,
     };
     const sseChat = useSSEChat(threadId, sseOptions);
 
@@ -73,6 +79,7 @@ export function useChatConnection(threadId: string, options: UseChatOptions = {}
   const wsOptions: UseWebSocketChatOptions = {
     authToken: options.authToken,
     autoCleanup: false,
+    onTerminalEvent: options.onTerminalEvent,
   };
   const wsChat = useWebSocketChat(threadId, wsOptions);
 
@@ -123,7 +130,7 @@ export interface UseChatReturn {
   startChat: (message: string, userInfo?: ChatUserInfo) => Promise<boolean>;
   continueChat: () => Promise<boolean>;
   sendUserResponse: (response: string, userInfo?: ChatUserInfo) => Promise<boolean>;
-  cancelRequest: () => boolean;
+  cancelRequest: () => Promise<boolean>;
   clearMessages: () => void;
   waitForConnection: (timeout?: number) => Promise<void>;
 }
@@ -251,13 +258,31 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     const tid = resolvedThreadId.value;
     console.log('[useChat] startChat called for threadId:', tid);
 
+    // GUARD: Prevent duplicate sends when thread is already processing.
+    // This guard uses store state which persists across HMR, unlike component local state.
+    const currentState = store.getThreadState(tid);
+    if (currentState?.status === 'processing') {
+      console.log('[useChat] startChat blocked - thread already processing');
+      return false;
+    }
+
+    // CRITICAL: Set processing state IMMEDIATELY after guard check, BEFORE any async operations.
+    // This prevents race conditions where two calls both pass the guard before either sets state.
+    store.setThreadState(tid, { status: 'processing' });
+
     // Generate UUID early for deduplication tracking
     const uuid = crypto.randomUUID();
 
     // Set current query ID for slide deduplication (each query is unique)
     store.setCurrentQueryId(tid, uuid);
 
+    // CRITICAL: Clear response buffer before starting new request to prevent old responses
+    // from mixing with new ones. The terminal state handler also clears, but that's async.
     let currentConn = store.getConnection(tid);
+    if (currentConn) {
+      console.log('[useChat] Clearing response buffer before new request');
+      currentConn.chat.clearMessages();
+    }
     console.log('[useChat] Current connection:', !!currentConn, 'isConnected:', currentConn?.chat.isConnected.value);
 
     if (!currentConn || !currentConn.chat.isConnected.value) {
@@ -265,6 +290,7 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
       const connected = await connect();
       if (!connected) {
         console.log('[useChat] Connection failed, returning false');
+        store.setThreadState(tid, { status: 'error', error: 'Connection failed' });
         return false;
       }
       // Re-fetch connection after successful connect
@@ -279,12 +305,14 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
       const retryConnected = await connect();
       if (!retryConnected) {
         console.log('[useChat] Retry connection failed, returning false');
+        store.setThreadState(tid, { status: 'error', error: 'Connection failed' });
         return false;
       }
       currentConn = store.getConnection(tid);
       console.log('[useChat] After retry, currentConn:', !!currentConn);
       if (!currentConn) {
         console.log('[useChat] Connection still null after retry, returning false');
+        store.setThreadState(tid, { status: 'error', error: 'Connection failed' });
         return false;
       }
     }
@@ -304,9 +332,6 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
       createdAt: Date.now(),
     };
     store.enqueuePendingMessage(queuedMessage);
-
-    // Set processing state (isWaitingForResponse computed from this)
-    store.setThreadState(tid, { status: 'processing' });
 
     // Send via WebSocket/SSE
     console.log('[useChat] Calling currentConn.chat.startChat...');
@@ -347,6 +372,19 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function sendUserResponse(responseText: string, userInfo?: ChatUserInfo): Promise<boolean> {
     const tid = resolvedThreadId.value;
+    console.log('[useChat] sendUserResponse called for threadId:', tid);
+
+    // GUARD: Prevent duplicate sends when thread is already processing.
+    // This guard uses store state which persists across HMR, unlike component local state.
+    const currentState = store.getThreadState(tid);
+    if (currentState?.status === 'processing') {
+      console.log('[useChat] sendUserResponse blocked - thread already processing');
+      return false;
+    }
+
+    // CRITICAL: Set processing state IMMEDIATELY after guard check, BEFORE any async operations.
+    // This prevents race conditions where two calls both pass the guard before either sets state.
+    store.setThreadState(tid, { status: 'processing' });
 
     // Generate UUID early for deduplication tracking
     const uuid = crypto.randomUUID();
@@ -354,20 +392,35 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     // Set current query ID for slide deduplication (each query is unique)
     store.setCurrentQueryId(tid, uuid);
 
+    // CRITICAL: Clear response buffer before starting new request to prevent old responses
+    // from mixing with new ones. The terminal state handler also clears, but that's async.
     let currentConn = store.getConnection(tid);
+    if (currentConn) {
+      console.log('[useChat] Clearing response buffer before new request (sendUserResponse)');
+      currentConn.chat.clearMessages();
+    }
 
     if (!currentConn || !currentConn.chat.isConnected.value) {
       const connected = await connect();
-      if (!connected) return false;
+      if (!connected) {
+        store.setThreadState(tid, { status: 'error', error: 'Connection failed' });
+        return false;
+      }
       currentConn = store.getConnection(tid);
     }
 
     // Retry once if connection was lost due to race condition
     if (!currentConn) {
       const retryConnected = await connect();
-      if (!retryConnected) return false;
+      if (!retryConnected) {
+        store.setThreadState(tid, { status: 'error', error: 'Connection failed' });
+        return false;
+      }
       currentConn = store.getConnection(tid);
-      if (!currentConn) return false;
+      if (!currentConn) {
+        store.setThreadState(tid, { status: 'error', error: 'Connection failed' });
+        return false;
+      }
     }
 
     // Track UUID for local message deduplication
@@ -386,8 +439,6 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     };
     store.enqueuePendingMessage(queuedMessage);
 
-    store.setThreadState(tid, { status: 'processing' });
-
     const success = await currentConn.chat.sendUserResponse(responseText, userInfo);
 
     if (success) {
@@ -403,19 +454,32 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
   /**
    * Cancel current request
    */
-  function cancelRequest(): boolean {
+  async function cancelRequest(): Promise<boolean> {
     const tid = resolvedThreadId.value;
     const conn = store.getConnection(tid);
 
     if (!conn) return false;
 
-    const success = conn.chat.cancelRequest();
+    // NOTE: Don't call saveSlidesFromBuffer here - ChatContent.handleCancelRequest
+    // already saves slides from activeStreamingMessage before calling this.
+    // saveSlidesFromBuffer is only for background scenarios (ChatContent not mounted).
+
+    // Call the actual cancel (async for SSE, sync for WebSocket)
+    const result = conn.chat.cancelRequest();
+    const success = result instanceof Promise ? await result : result;
 
     if (success) {
       store.setThreadState(tid, {
         status: 'cancelled',
         responsePhase: '',
       });
+
+      // CRITICAL: Remove connection from pool after cancel.
+      // disconnect() in useWebSocketChat/useSSEChat closes the connection but doesn't
+      // remove it from connectionPool. This causes getOrCreateConnection to return
+      // the old (disconnected) chat object with potentially stale state/watchers.
+      // By removing it here, the next message will get a completely fresh connection.
+      store.closeConnection(tid);
     }
 
     return success;
