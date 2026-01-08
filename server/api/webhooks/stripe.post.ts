@@ -4,26 +4,12 @@ import { getOperationTypes } from '~~/server/services/codeService';
 import { ORDER_STATUS, OPERATION_TYPE, STRIPE_LOOKUP_KEYS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
-  console.log('[StripeWebhook] Handler started');
-
   try {
-    console.log('[StripeWebhook] Initializing Stripe...');
     const stripe = getStripe();
-
-    console.log('[StripeWebhook] Reading raw body...');
     const body = await readRawBody(event);
-    console.log('[StripeWebhook] Body length:', body?.length || 0);
-
     const signature = getHeader(event, 'stripe-signature');
-    console.log('[StripeWebhook] Signature present:', !!signature);
-
     const webhookSecret = useRuntimeConfig().private.stripeWebhookSecret;
-    console.log('[StripeWebhook] Webhook secret present:', !!webhookSecret);
-    console.log('[StripeWebhook] Webhook secret starts with:', webhookSecret?.substring(0, 10));
-
-    console.log('[StripeWebhook] Getting privileged Supabase client...');
     const privilegedSupabase = await getPrivilegedSupabaseClient(event);
-    console.log('[StripeWebhook] Supabase client obtained');
 
     if (!signature || !webhookSecret) {
       throw createError({
@@ -34,7 +20,6 @@ export default defineEventHandler(async (event) => {
 
     // Verify webhook signature
     let stripeEvent: Stripe.Event;
-    console.log('[StripeWebhook] Verifying signature...');
     try {
       stripeEvent = await stripe.webhooks.constructEventAsync(
         body!,
@@ -43,9 +28,8 @@ export default defineEventHandler(async (event) => {
         undefined,
         Stripe.createSubtleCryptoProvider()
       );
-      console.log('[StripeWebhook] Signature verified, event type:', stripeEvent.type);
     } catch (err) {
-      console.error('[StripeWebhook] Signature verification failed:', err);
+      console.error('Webhook signature verification failed:', err);
       throw createError({
         statusCode: 400,
         statusMessage: 'Invalid signature'
@@ -113,15 +97,7 @@ export default defineEventHandler(async (event) => {
       });
     }
   } catch (error) {
-    console.error('[StripeWebhook] Error:', error);
-    console.error('[StripeWebhook] Error message:', error instanceof Error ? error.message : String(error));
-    console.error('[StripeWebhook] Error stack:', error instanceof Error ? error.stack : 'no stack');
-
-    // Re-throw H3 errors as-is (they already have proper status codes)
-    if (error && typeof error === 'object' && 'statusCode' in error) {
-      throw error;
-    }
-
+    console.error('Webhook processing error:', error);
     throw createError({
       statusCode: 500,
       statusMessage: 'Webhook processing failed'
