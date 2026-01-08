@@ -12,17 +12,12 @@ export default defineEventHandler(async (event) => {
     const syllabusType = query.syllabus_type as string;
     const subjectFilter = query.subject as string;
     const hasCreditsOnly = query.has_credits === 'true';
+    // Role is passed from frontend (already available in meStore) to avoid extra DB query
+    const role = query.role as string;
 
-    // Get user's role to determine task filtering
-    const { data: roleData } = await supabase
-      .from('user_infos')
-      .select('user_roles!inner(roles!inner(role_name))')
-      .eq('id', userInfo.id)
-      .single();
+    const isParent = role === 'PARENT';
 
-    const isParent = roleData?.user_roles?.roles?.role_name === 'PARENT';
-
-    // Build the base query
+    // Query 1: Get subjects with curriculum info and chapters (no deeply nested task data)
     let subjectsQuery = supabase
       .from('subjects')
       .select(`
@@ -43,77 +38,109 @@ export default defineEventHandler(async (event) => {
           name,
           display_name,
           description,
-          sort_order,
-          user_tasks_chapters(
-            id,
-            user_task_id,
-            chapter_name,
-            status,
-            score,
-            total_score,
-            completed_at,
-            user_tasks!inner(
-              id,
-              name,
-              creator_user_info_id,
-              assignee_user_info_id,
-              status,
-              credit,
-              required_score,
-              questions_per_quiz,
-              lesson_generation_type
-            )
-          )
+          sort_order
         )
       `)
       .eq('is_active', true)
       .order('display_name')
       .order('sort_order', { referencedTable: 'chapters' });
 
-    // Apply role-based filtering for tasks
-    // Parents see tasks they created, Students see tasks assigned to them
-    if (isParent) {
-      subjectsQuery = subjectsQuery.eq('chapters.user_tasks_chapters.user_tasks.creator_user_info_id', userInfo.id);
-    } else {
-      subjectsQuery = subjectsQuery.eq('chapters.user_tasks_chapters.user_tasks.assignee_user_info_id', userInfo.id);
-    }
-
-    // Exclude EXPIRED tasks from Study Tab
-    subjectsQuery = subjectsQuery.neq('chapters.user_tasks_chapters.user_tasks.status', TASK_STATUS.EXPIRED);
-
-    // Apply filters
+    // Apply syllabus and subject filters
     if (syllabusType) {
       subjectsQuery = subjectsQuery.eq('curriculum_subjects.syllabus_type', syllabusType);
     }
     if (subjectFilter) {
       subjectsQuery = subjectsQuery.eq('name', subjectFilter);
     }
-    const { data: subjectsData, error: subjectsError } = await subjectsQuery;
 
-    if (subjectsError) {
-      console.error('Error fetching subjects:', subjectsError);
+    // Query 2: Get user's tasks with chapters - focused query on just user's data
+    let userTasksQuery = supabase
+      .from('user_tasks_chapters')
+      .select(`
+        id,
+        user_task_id,
+        chapter_name,
+        status,
+        score,
+        total_score,
+        completed_at,
+        user_tasks!inner(
+          id,
+          name,
+          creator_user_info_id,
+          assignee_user_info_id,
+          status,
+          credit,
+          required_score,
+          questions_per_quiz,
+          lesson_generation_type
+        )
+      `)
+      .neq('user_tasks.status', TASK_STATUS.EXPIRED);
+
+    // Apply role-based filtering
+    if (isParent) {
+      userTasksQuery = userTasksQuery.eq('user_tasks.creator_user_info_id', userInfo.id);
+    } else {
+      userTasksQuery = userTasksQuery.eq('user_tasks.assignee_user_info_id', userInfo.id);
+    }
+
+    // Apply credits filter at database level (if hasCreditsOnly)
+    if (hasCreditsOnly) {
+      userTasksQuery = userTasksQuery.gt('user_tasks.credit', 0);
+    }
+
+    // Execute both queries in parallel
+    const [subjectsResult, userTasksResult] = await Promise.all([
+      subjectsQuery,
+      userTasksQuery,
+    ]);
+
+    if (subjectsResult.error) {
+      console.error('Error fetching subjects:', subjectsResult.error);
       throw createError({
         statusCode: 500,
         statusMessage: 'Failed to fetch subjects'
       });
     }
 
-    // Post-filter for subjects with credits > 0
-    // Note: PostgREST .gt() doesn't work on deeply nested relationships
-    let subjects = subjectsData || [];
-    if (hasCreditsOnly) {
-      subjects = subjects.filter((subject: any) => {
-        return subject.chapters?.some((chapter: any) =>
-          chapter.user_tasks_chapters?.some((utc: any) =>
-            utc.user_tasks?.credit > 0
-          )
-        );
+    if (userTasksResult.error) {
+      console.error('Error fetching user tasks:', userTasksResult.error);
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to fetch user tasks'
       });
+    }
+
+    // Build a map of chapter_name -> user_tasks_chapters for O(1) lookup
+    const tasksByChapter = new Map<string, any[]>();
+    for (const utc of userTasksResult.data || []) {
+      if (!tasksByChapter.has(utc.chapter_name)) {
+        tasksByChapter.set(utc.chapter_name, []);
+      }
+      tasksByChapter.get(utc.chapter_name)!.push(utc);
+    }
+
+    // Merge tasks into subjects (fast in-memory operation)
+    const subjects = (subjectsResult.data || []).map((subject: any) => ({
+      ...subject,
+      chapters: subject.chapters.map((chapter: any) => ({
+        ...chapter,
+        user_tasks_chapters: tasksByChapter.get(chapter.name) || [],
+      })),
+    }));
+
+    // Filter subjects that have no tasks when hasCreditsOnly is true
+    let filteredSubjects = subjects;
+    if (hasCreditsOnly) {
+      filteredSubjects = subjects.filter((subject: any) =>
+        subject.chapters.some((chapter: any) => chapter.user_tasks_chapters.length > 0)
+      );
     }
 
     return {
       success: true,
-      subjects,
+      subjects: filteredSubjects,
     };
   } catch (error: any) {
     console.error('Error in study subjects endpoint:', error);

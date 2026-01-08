@@ -91,15 +91,15 @@
           <div class="flex items-start justify-between gap-2">
             <h3 class="font-semibold text-gray-900">{{ subject.display_name }}</h3>
             <span
-              v-if="getSubjectCredits(subject) > 0"
+              v-if="(subjectStats.get(subject.name)?.credits || 0) > 0"
               class="px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 shrink-0"
             >
-              {{ getSubjectCredits(subject) }} credits
+              {{ subjectStats.get(subject.name)?.credits }} credits
             </span>
           </div>
           <div class="flex items-center gap-3 text-sm text-gray-500 mt-1">
             <span>{{ subject.chapters.length }} {{ subject.chapters.length === 1 ? 'chapter' : 'chapters' }}</span>
-            <span v-if="getQuizCount(subject) > 0">{{ getQuizCount(subject) }} {{ getQuizCount(subject) === 1 ? 'quiz' : 'quizzes' }}</span>
+            <span v-if="(subjectStats.get(subject.name)?.quizCount || 0) > 0">{{ subjectStats.get(subject.name)?.quizCount }} {{ (subjectStats.get(subject.name)?.quizCount || 0) === 1 ? 'quiz' : 'quizzes' }}</span>
           </div>
         </button>
       </div>
@@ -327,28 +327,25 @@ const selectedSubjectData = computed(() => {
   return subjects.value.find((s) => s.name === selectedSubject.value) || null;
 });
 
-// Helper: Get quiz count for a subject (only OPEN tasks)
-const getQuizCount = (subject: Subject) => {
-  return subject.chapters.reduce((total, chapter) => {
-    // Only count quizzes from OPEN tasks
-    const openQuizzes = chapter.user_tasks_chapters?.filter(
-      (tc: any) => tc.user_tasks?.status !== 'CLOSED'
-    ) || [];
-    return total + openQuizzes.length;
-  }, 0);
-};
-
-// Helper: Get total credits available for a subject (only OPEN tasks)
-const getSubjectCredits = (subject: Subject) => {
-  return subject.chapters.reduce((total, chapter) => {
-    const chapterCredits = chapter.user_tasks_chapters?.reduce((sum: number, tc: any) => {
-      // Only count credits from OPEN tasks
-      if (tc.user_tasks?.status === 'CLOSED') return sum;
-      return sum + (tc.user_tasks?.credit || 0);
-    }, 0) || 0;
-    return total + chapterCredits;
-  }, 0);
-};
+// Computed: Memoized subject stats (quiz count and credits) - O(n) instead of O(n²)
+const subjectStats = computed(() => {
+  const stats = new Map<string, { quizCount: number; credits: number }>();
+  for (const subject of subjects.value) {
+    let quizCount = 0;
+    let credits = 0;
+    for (const chapter of subject.chapters) {
+      for (const tc of chapter.user_tasks_chapters || []) {
+        // Only count OPEN tasks (not CLOSED)
+        if (tc.user_tasks?.status !== 'CLOSED') {
+          quizCount++;
+          credits += tc.user_tasks?.credit || 0;
+        }
+      }
+    }
+    stats.set(subject.name, { quizCount, credits });
+  }
+  return stats;
+});
 
 // Quiz modal state
 const isQuizModalOpen = ref(false);
@@ -394,6 +391,8 @@ const fetchSubjects = async () => {
     if (filters.syllabusType) queryParams.append('syllabus_type', filters.syllabusType);
     if (filters.subject) queryParams.append('subject', filters.subject);
     if (filters.hasCreditsOnly) queryParams.append('has_credits', 'true');
+    // Pass role to avoid redundant DB query on backend
+    if (meStore.user_role) queryParams.append('role', meStore.user_role);
 
     const response = await $fetch(`/api/study/subjects?${queryParams.toString()}`);
 
@@ -789,18 +788,18 @@ const handleQuizSubmitted = async (score: number, totalScore: number) => {
 
 // Initialize with user defaults
 onMounted(async () => {
-  // Load characters first to ensure getCharacterBySubject works
-  await fetchCharacters();
-
-  // Fetch filter options from database tables
-  await fetchFilterOptions();
+  // Load characters and filter options in parallel (independent data)
+  await Promise.all([
+    fetchCharacters(),
+    fetchFilterOptions(),
+  ]);
 
   // Set user's default syllabus if available
   if (meStore.syllabus_type) {
     filters.syllabusType = meStore.syllabus_type;
   }
 
-  // Fetch subjects with applied filters
+  // Fetch subjects with applied filters (depends on filters being set)
   await fetchSubjects();
 });
 
