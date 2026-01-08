@@ -385,7 +385,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Periodic Trends",
-    "content": "## Question: Periodic Trends\n\nWhich of the following correctly describes the trend in metallic character across a period?\n\n**A)** Metallic character increases from left to right across a period\n\n**B)** Metallic character decreases from left to right across a period\n\n**C)** Metallic character remains constant across a period\n\n**D)** Metallic character increases then decreases across a period",
+    "content": "## Question: Periodic Trends\n\nWhich of the following correctly describes the trend in metallic character across a period?",
     "speech_to_text_content": "Which of the following correctly describes the trend in metallic character across a period? Option A: Metallic character increases from left to right across a period. Option B: Metallic character decreases from left to right across a period. Option C: Metallic character remains constant across a period. Option D: Metallic character increases then decreases across a period.",
     "answer": [
       {
@@ -445,7 +445,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Group 1 Reactivity",
-    "content": "## Question: Alkali Metal Reactivity\n\nWhich statement correctly explains why potassium is more reactive than sodium?\n\n**A)** Potassium has more valence electrons than sodium\n\n**B)** Potassium atoms are smaller than sodium atoms\n\n**C)** Potassium atoms are larger than sodium atoms, so valence electrons are farther from the nucleus and easier to lose\n\n**D)** Potassium forms stronger metallic bonds than sodium",
+    "content": "## Question: Alkali Metal Reactivity\n\nWhich statement correctly explains why potassium is more reactive than sodium?",
     "speech_to_text_content": "Which statement correctly explains why potassium is more reactive than sodium? Option A: Potassium has more valence electrons than sodium. Option B: Potassium atoms are smaller than sodium atoms. Option C: Potassium atoms are larger than sodium atoms, so valence electrons are farther from the nucleus and easier to lose. Option D: Potassium forms stronger metallic bonds than sodium.",
     "answer": [
       {
@@ -505,7 +505,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Halogen Displacement",
-    "content": "## Question: Halogen Displacement Reactions\n\nWhen chlorine water is added to a solution of potassium iodide, the solution turns brown. What does this observation indicate?\n\n**A)** Chlorine is less reactive than iodine\n\n**B)** Chlorine is more reactive than iodine and has displaced the iodide ions\n\n**C)** Iodine is more reactive than chlorine and has been formed\n\n**D)** Both chlorine and iodine are equally reactive",
+    "content": "## Question: Halogen Displacement Reactions\n\nWhen chlorine water is added to a solution of potassium iodide, the solution turns brown. What does this observation indicate?",
     "speech_to_text_content": "When chlorine water is added to a solution of potassium iodide, the solution turns brown. What does this observation indicate? Option A: Chlorine is less reactive than iodine. Option B: Chlorine is more reactive than iodine and has displaced the iodide ions. Option C: Iodine is more reactive than chlorine and has been formed. Option D: Both chlorine and iodine are equally reactive.",
     "answer": [
       {
@@ -565,7 +565,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Transition Metal Properties",
-    "content": "## Question: Transition Metal Characteristics\n\nWhich of the following is NOT a typical property of transition metals?\n\n**A)** They form colored compounds\n\n**B)** They have variable oxidation states\n\n**C)** They have high melting points\n\n**D)** They form white ionic compounds with a single positive charge",
+    "content": "## Question: Transition Metal Characteristics\n\nWhich of the following is NOT a typical property of transition metals?",
     "speech_to_text_content": "Which of the following is NOT a typical property of transition metals? Option A: They form colored compounds. Option B: They have variable oxidation states. Option C: They have high melting points. Option D: They form white ionic compounds with a single positive charge.",
     "answer": [
       {
@@ -625,7 +625,7 @@
     "type": "question",
     "question_type": "mcq",
     "title": "Test Your Understanding: Metal Extraction",
-    "content": "## Question: Metal Extraction Methods\n\nWhy is magnesium extracted by electrolysis of molten magnesium oxide rather than by carbon reduction?\n\n**A)** Carbon reduction is too dangerous\n\n**B)** Magnesium oxide is too stable to be reduced by carbon at reasonable temperatures\n\n**C)** Electrolysis is cheaper than carbon reduction\n\n**D)** Magnesium reacts with carbon at high temperatures",
+    "content": "## Question: Metal Extraction Methods\n\nWhy is magnesium extracted by electrolysis of molten magnesium oxide rather than by carbon reduction?",
     "speech_to_text_content": "Why is magnesium extracted by electrolysis of molten magnesium oxide rather than by carbon reduction? Option A: Carbon reduction is too dangerous. Option B: Magnesium oxide is too stable to be reduced by carbon at reasonable temperatures. Option C: Electrolysis is cheaper than carbon reduction. Option D: Magnesium reacts with carbon at high temperatures.",
     "answer": [
       {
