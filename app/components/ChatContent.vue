@@ -1147,11 +1147,13 @@ const handleWebSocketMessage = (message: any) => {
       console.log('[ChatContent] Response already marked for saving, skipping DB save');
     }
 
-    // MERGE summary text into existing slides message (if any) to keep them as one DB row.
-    // This prevents slides from appearing as separate cards when reloading the chat.
-    const existingSlidesMessage = messageStream.value.findLast(
-      (msg: any) => !msg.isUser && Array.isArray(msg.slides) && msg.slides.length > 0
-    );
+    // MERGE summary text into slides message from CURRENT streaming session only.
+    // Only merge if we have an active streaming session - this prevents overwriting
+    // seeded lesson messages when the AI responds with just text (no new slides).
+    const activeId = activeStreamingMessage.value?.id;
+    const existingSlidesMessage = activeId ?
+        messageStream.value.find((msg: any) => msg.id === activeId) :
+      null;
 
     if (existingSlidesMessage && existingSlidesMessage.id) {
       // Merge: add summary text to existing slides message
