@@ -37,7 +37,7 @@ export interface ChatResponse {
   tokens_saved?: boolean;
 
   // Streaming support
-  type?: 'slide_batch_ready' | 'quiz_batch_ready';
+  type?: 'slide_batch_ready' | 'quiz_batch_ready' | 'slide_generation_start' | 'slide_generation_complete';
   slides?: any[];
   quiz_items?: any[];
   batch_index?: number;

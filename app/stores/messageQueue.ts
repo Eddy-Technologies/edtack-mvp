@@ -136,7 +136,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       // Load cached messages for threads that are processing
       for (const threadId of Object.keys(persistedStates)) {
         const state = persistedStates[threadId];
-        if (state.status === 'processing') {
+        if (state?.status === 'processing') {
           this.messageCache[threadId] = getCachedMessages(threadId);
         }
       }
@@ -939,12 +939,23 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
     /**
      * Internal connect implementation
+     * IMPORTANT: Preserves 'processing' status to avoid losing state on page refresh
      */
     async doConnect(threadId: string): Promise<boolean> {
       try {
-        this.setThreadState(threadId, { status: 'connecting' });
+        // CRITICAL FIX: Capture original status BEFORE any state changes
+        // This prevents the bug where 'processing' gets overwritten to 'connecting'
+        // and then incorrectly reset to 'idle' on reconnect
+        const originalStatus = this.threadStates[threadId]?.status;
+        const wasProcessing = originalStatus === 'processing';
 
-        console.log('[MessageQueue] Getting or creating connection...');
+        // Only set to 'connecting' if NOT already processing
+        // This preserves the processing state for page refresh recovery
+        if (!wasProcessing) {
+          this.setThreadState(threadId, { status: 'connecting' });
+        }
+
+        console.log('[MessageQueue] Getting or creating connection...', { originalStatus, wasProcessing });
         const conn = await this.getOrCreateConnection(threadId);
         console.log('[MessageQueue] Connection obtained, mode:', conn.mode);
 
@@ -968,17 +979,17 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         await conn.chat.waitForConnection(5000);
         console.log('[MessageQueue] Connection established successfully');
 
-        // IMPORTANT: Only reset to 'idle' if not already 'processing'.
-        // When user returns to a thread that's still processing in background,
-        // we must preserve the 'processing' state so the loading indicator shows.
-        const currentState = this.threadStates[threadId];
-        if (currentState?.status !== 'processing') {
-          this.setThreadState(threadId, { status: 'idle', error: undefined });
+        // Use captured originalStatus to determine final state
+        if (wasProcessing) {
+          // Thread was processing - try to reconnect to stream
+          console.log('[MessageQueue] Thread was processing, attempting stream recovery');
+          this.setThreadState(threadId, { error: undefined }); // Clear error but keep processing
+          this.recoverProcessingThread(threadId);
         } else {
-          // Clear any error but preserve processing status
-          console.log('[MessageQueue] Preserving processing state for thread:', threadId);
-          this.setThreadState(threadId, { error: undefined });
+          // Normal case - reset to idle
+          this.setThreadState(threadId, { status: 'idle', error: undefined });
         }
+
         return true;
       } catch (err) {
         console.error('[MessageQueue] Connection failed:', err);
@@ -986,6 +997,53 @@ export const useMessageQueueStore = defineStore('messageQueue', {
           status: 'error',
           error: 'Failed to connect',
         });
+        return false;
+      }
+    },
+
+    /**
+     * Recover a processing thread after page refresh
+     * Uses the Nuxt SSE proxy which buffers events and maintains connection to Python backend
+     * Only works in SSE mode - WebSocket mode doesn't support reconnection to existing streams
+     */
+    async recoverProcessingThread(threadId: string): Promise<boolean> {
+      console.log('[MessageQueue] Attempting to recover processing thread:', threadId);
+
+      const conn = connectionPool[threadId];
+      if (!conn) {
+        console.log('[MessageQueue] No connection found for recovery');
+        this.setThreadState(threadId, { status: 'idle' });
+        return false;
+      }
+
+      // Only SSE mode supports stream reconnection
+      if (conn.mode !== 'sse') {
+        console.log('[MessageQueue] WebSocket mode does not support stream recovery, resetting to idle');
+        this.setThreadState(threadId, { status: 'idle' });
+        return false;
+      }
+
+      try {
+        // Use reconnectToStream to resume the SSE connection
+        // The Nuxt server will send buffered events first, then continue streaming
+        // Type assertion needed because TypeScript doesn't narrow the union type properly
+        const sseChat = conn.chat as ReturnType<typeof import('~/composables/useSSEChat').useSSEChat>;
+        const reconnected = await sseChat.reconnectToStream();
+
+        if (reconnected) {
+          console.log('[MessageQueue] Successfully reconnected to stream');
+          // Keep status as 'processing' - the stream handler will update on completion
+          return true;
+        } else {
+          // No active stream on server - check if it completed while we were away
+          console.log('[MessageQueue] No active stream to reconnect to, stream may have completed');
+          // Reset to idle - user will see completed content from DB
+          this.setThreadState(threadId, { status: 'idle' });
+          return false;
+        }
+      } catch (err) {
+        console.error('[MessageQueue] Stream recovery failed:', err);
+        this.setThreadState(threadId, { status: 'error', error: 'Failed to recover stream' });
         return false;
       }
     },

@@ -183,3 +183,109 @@ NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS=true
 # Production - don't set (defaults to false) or set explicitly
 # NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS=false
 ```
+
+## Chat Streaming Architecture
+
+### Overview
+Chat messages are streamed through Nuxt server which acts as a proxy to the Python RAG backend. This architecture enables:
+- **Reconnection**: Clients can refresh the page and reconnect without losing content
+- **Buffering**: Events are buffered in memory on the Nuxt server
+- **Resilience**: Multiple fallback layers ensure content is never lost
+
+### Architecture Diagram
+```
+Browser ←──SSE──→ Nuxt Server ←──SSE──→ Python RAG Backend
+                      ↓                         ↓
+               In-memory buffer          /status, /state
+               (fast path)               (fallback)
+```
+
+### Key Files
+- [server/utils/chatStreamManager.ts](server/utils/chatStreamManager.ts) - Stream manager singleton that maintains SSE connections and buffers
+- [server/api/chat/[threadId]/stream.get.ts](server/api/chat/[threadId]/stream.get.ts) - SSE endpoint for clients
+- [server/api/chat/[threadId]/start.post.ts](server/api/chat/[threadId]/start.post.ts) - Start chat stream
+- [server/api/chat/[threadId]/stop.post.ts](server/api/chat/[threadId]/stop.post.ts) - Stop chat stream
+- [server/api/chat/[threadId]/status.get.ts](server/api/chat/[threadId]/status.get.ts) - Check stream status
+- [app/composables/useSSEChat.ts](app/composables/useSSEChat.ts) - Frontend SSE client composable
+- [app/stores/messageQueue.ts](app/stores/messageQueue.ts) - Thread state management with recovery
+
+### API Endpoints
+
+#### `POST /api/chat/[threadId]/start`
+Start a new chat stream. Nuxt server connects to Python backend and maintains the connection.
+
+**Request:**
+```json
+{
+  "message": "User's message",
+  "userInfo": { /* optional context */ }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "threadId": "abc-123",
+  "message": "Stream started"
+}
+```
+
+#### `GET /api/chat/[threadId]/stream`
+SSE endpoint for receiving chat events. Reconnecting clients receive buffered events first.
+
+**Headers:**
+- `Authorization: Bearer <token>` (if auth enabled)
+- `Accept: text/event-stream`
+
+**Query params:**
+- `fromIndex` - Start from this event index (for resuming)
+
+**Response:** SSE stream with events like:
+```
+event: slide_batch_ready
+data: {"type": "slide_batch_ready", "batch": {...}}
+
+event: status
+data: {"type": "status", "phase": "generating"}
+
+event: completed
+data: {"type": "completed"}
+```
+
+#### `GET /api/chat/[threadId]/status`
+Check if a stream is active on this Nuxt instance.
+
+**Response:**
+```json
+{
+  "active": true,
+  "status": "active",
+  "bufferedEvents": 15,
+  "connectedClients": 2
+}
+```
+
+#### `POST /api/chat/[threadId]/stop`
+Stop an active stream.
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Stream stopped"
+}
+```
+
+### Recovery Flow
+When a client refreshes the page during streaming:
+1. Client connects to `GET /api/chat/{threadId}/stream`
+2. Nuxt server sends buffered events immediately
+3. Client subscribes to new events
+4. If no active stream, Nuxt falls back to Python `/state` API
+
+### Configuration
+Constants in `chatStreamManager.ts`:
+- `MAX_BUFFER_SIZE`: 1000 events per thread
+- `BUFFER_TTL_MS`: 1 hour TTL for inactive streams
+- `CLEANUP_INTERVAL_MS`: 5 minute cleanup interval

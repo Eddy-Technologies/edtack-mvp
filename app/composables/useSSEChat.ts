@@ -109,6 +109,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     // Handle slide generation start - signals beginning of new slide session
     if (eventType === 'slide_generation_start') {
       const responseData: ChatResponse = {
+        status: 'slide_generation_start',
         type: 'slide_generation_start',
         timestamp: data.timestamp,
       };
@@ -120,6 +121,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     // Handle slide generation complete - signals end of slide session
     if (eventType === 'slide_generation_complete') {
       const responseData: ChatResponse = {
+        status: 'slide_generation_complete',
         type: 'slide_generation_complete',
         timestamp: data.timestamp,
       };
@@ -275,6 +277,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
   /**
    * Internal implementation of startChat with retry support
+   * Uses Nuxt server proxy for resilient streaming (survives page refresh)
    */
   const startChatInternal = async (
     initialMessage: string,
@@ -295,31 +298,70 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     // Create new abort controller for this request
     abortController = new AbortController();
 
-    const apiUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}`;
+    // Use Nuxt proxy endpoints for resilient streaming
+    const startUrl = `/api/chat/${threadId}/start`;
+    const streamUrl = `/api/chat/${threadId}/stream`;
     const INITIAL_TIMEOUT_MS = 30 * 1000; // 30 seconds for initial connection
 
     try {
-      // Set up initial connection timeout
-      const timeoutId = setTimeout(() => {
+      // Step 1: Tell Nuxt server to start the stream to Python backend
+      console.log('[SSEChat] Starting stream via Nuxt proxy:', startUrl);
+
+      const startTimeoutId = setTimeout(() => {
         if (abortController) {
-          console.warn('[SSEChat] Initial connection timeout after', INITIAL_TIMEOUT_MS / 1000, 'seconds');
+          console.warn('[SSEChat] Start request timeout after', INITIAL_TIMEOUT_MS / 1000, 'seconds');
+          abortController.abort();
+        }
+      }, INITIAL_TIMEOUT_MS);
+
+      let startResponse: Response;
+      try {
+        startResponse = await fetch(startUrl, {
+          method: 'POST',
+          headers: buildHeaders(),
+          body: JSON.stringify({
+            message: initialMessage,
+            userInfo: userInfo,
+          }),
+          signal: abortController.signal,
+        });
+      } finally {
+        clearTimeout(startTimeoutId);
+      }
+
+      if (!startResponse.ok) {
+        const errorText = await startResponse.text();
+        throw new Error(`Failed to start stream: ${startResponse.status} - ${errorText}`);
+      }
+
+      const startResult = await startResponse.json();
+      console.log('[SSEChat] Stream started:', startResult);
+
+      // Step 2: Connect to SSE stream to receive events
+      console.log('[SSEChat] Connecting to SSE stream:', streamUrl);
+
+      // Create new abort controller for the stream (separate from start request)
+      abortController = new AbortController();
+
+      const streamTimeoutId = setTimeout(() => {
+        if (abortController) {
+          console.warn('[SSEChat] Stream connection timeout after', INITIAL_TIMEOUT_MS / 1000, 'seconds');
           abortController.abort();
         }
       }, INITIAL_TIMEOUT_MS);
 
       let fetchResponse: Response;
       try {
-        fetchResponse = await fetch(apiUrl, {
-          method: 'POST',
-          headers: buildHeaders(),
-          body: JSON.stringify({
-            input: initialMessage,
-            user_info: userInfo,
-          }),
+        fetchResponse = await fetch(streamUrl, {
+          method: 'GET',
+          headers: {
+            ...buildHeaders(),
+            'Accept': 'text/event-stream',
+          },
           signal: abortController.signal,
         });
       } finally {
-        clearTimeout(timeoutId);
+        clearTimeout(streamTimeoutId);
       }
 
       // Handle 401 Unauthorized - could be expired token, try refresh first
@@ -549,6 +591,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
   /**
    * Cancel the current streaming request
+   * Uses Nuxt proxy endpoint which handles both Nuxt stream cleanup and Python backend stop
    */
   const cancelRequest = async (): Promise<boolean> => {
     console.log('[SSEChat] cancelRequest called for threadId:', threadId);
@@ -560,8 +603,8 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       abortController = null;
     }
 
-    // Also call the stop endpoint to stop server-side processing
-    const stopUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}/stop`;
+    // Call Nuxt stop endpoint (which also stops Python backend)
+    const stopUrl = `/api/chat/${threadId}/stop`;
     console.log('[SSEChat] Calling stop endpoint:', stopUrl);
 
     try {
@@ -587,10 +630,16 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   };
 
   /**
-   * Get chat status
+   * Get chat status from Nuxt server
+   * Returns stream info including active status and buffered events count
    */
-  const getStatus = async (): Promise<{ status: string; is_cancelled: boolean } | null> => {
-    const statusUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}/status`;
+  const getStatus = async (): Promise<{
+    active: boolean;
+    status: string;
+    bufferedEvents: number;
+    connectedClients: number;
+  } | null> => {
+    const statusUrl = `/api/chat/${threadId}/status`;
 
     try {
       const statusResponse = await fetch(statusUrl, {
@@ -604,6 +653,143 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       return null;
     } catch {
       return null;
+    }
+  };
+
+  /**
+   * Reconnect to an existing stream (for page refresh recovery)
+   * Simply connects to the stream endpoint - Nuxt server sends buffered events
+   */
+  const reconnectToStream = async (): Promise<boolean> => {
+    console.log('[SSEChat] Reconnecting to stream:', threadId);
+
+    // Check if there's an active stream to reconnect to
+    const status = await getStatus();
+    if (!status || status.status === 'not_found') {
+      console.log('[SSEChat] No active stream to reconnect to');
+      return false;
+    }
+
+    // Reset state for reconnection
+    error.value = null;
+    isWaitingForResponse.value = true;
+    isStreaming.value = true;
+    isConnected.value = true;
+    hasReceivedTerminalEvent = false;
+
+    abortController = new AbortController();
+
+    const streamUrl = `/api/chat/${threadId}/stream`;
+    const INITIAL_TIMEOUT_MS = 30 * 1000;
+
+    try {
+      console.log('[SSEChat] Connecting to SSE stream for reconnection:', streamUrl);
+
+      const streamTimeoutId = setTimeout(() => {
+        if (abortController) {
+          console.warn('[SSEChat] Stream reconnection timeout');
+          abortController.abort();
+        }
+      }, INITIAL_TIMEOUT_MS);
+
+      let fetchResponse: Response;
+      try {
+        fetchResponse = await fetch(streamUrl, {
+          method: 'GET',
+          headers: {
+            ...buildHeaders(),
+            'Accept': 'text/event-stream',
+          },
+          signal: abortController.signal,
+        });
+      } finally {
+        clearTimeout(streamTimeoutId);
+      }
+
+      if (!fetchResponse.ok) {
+        console.error('[SSEChat] Reconnection failed:', fetchResponse.status);
+        isWaitingForResponse.value = false;
+        isStreaming.value = false;
+        return false;
+      }
+
+      if (!fetchResponse.body) {
+        console.error('[SSEChat] No response body on reconnection');
+        isWaitingForResponse.value = false;
+        isStreaming.value = false;
+        return false;
+      }
+
+      // Read the stream
+      const reader = fetchResponse.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let lastActivityTime = Date.now();
+      const STREAM_TIMEOUT_MS = 5 * 60 * 1000;
+
+      while (true) {
+        const timeSinceLastActivity = Date.now() - lastActivityTime;
+        if (timeSinceLastActivity > STREAM_TIMEOUT_MS) {
+          console.warn('[SSEChat] Reconnection stream timeout');
+          isStreaming.value = false;
+          isWaitingForResponse.value = false;
+          break;
+        }
+
+        const { value, done } = await reader.read();
+
+        if (done) {
+          if (buffer.trim()) {
+            const finalEvents = parseSSEChunk(buffer);
+            for (const event of finalEvents) {
+              handleSSEEvent(event.eventType, event.data);
+            }
+          }
+
+          if (!hasReceivedTerminalEvent) {
+            console.log('[SSEChat] Reconnection stream ended - pushing synthetic completed');
+            const syntheticCompleted: ChatResponse = {
+              status: 'completed',
+              timestamp: Date.now(),
+            };
+            response.value.push(syntheticCompleted);
+            if (onTerminalEvent) {
+              onTerminalEvent('completed', syntheticCompleted);
+            }
+          }
+
+          isStreaming.value = false;
+          isWaitingForResponse.value = false;
+          break;
+        }
+
+        lastActivityTime = Date.now();
+        buffer += decoder.decode(value, { stream: true });
+
+        const events = parseSSEChunk(buffer);
+        for (const event of events) {
+          handleSSEEvent(event.eventType, event.data);
+        }
+
+        const lastNewline = buffer.lastIndexOf('\n\n');
+        if (lastNewline !== -1) {
+          buffer = buffer.slice(lastNewline + 2);
+        }
+      }
+
+      return true;
+    } catch (err: any) {
+      if (hasReceivedTerminalEvent) {
+        console.log('[SSEChat] AbortError after terminal event on reconnection - ignoring');
+        isWaitingForResponse.value = false;
+        isStreaming.value = false;
+        return true;
+      }
+
+      console.error('[SSEChat] Reconnection error:', err);
+      isWaitingForResponse.value = false;
+      isStreaming.value = false;
+      return false;
     }
   };
 
@@ -663,6 +849,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     cancelRequest,
     clearMessages,
     getStatus,
+    reconnectToStream,
     response,
     isConnected,
     isConnecting,
