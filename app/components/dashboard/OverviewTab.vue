@@ -6,7 +6,9 @@
     <!-- Parent View: Family Overview -->
     <template v-if="isParent">
       <!-- Token Usage Summary -->
-      <TokenUsageCard />
+      <div class="w-full">
+        <TokenUsageCard />
+      </div>
 
       <!-- Pending Order Requests -->
       <div v-if="pendingOrders.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
@@ -199,7 +201,9 @@
       </div>
 
       <!-- Token Usage Summary -->
-      <TokenUsageCard />
+      <div class="w-full">
+        <TokenUsageCard />
+      </div>
 
       <!-- My Pending Orders -->
       <div v-if="myPendingOrders.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
