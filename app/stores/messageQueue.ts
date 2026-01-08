@@ -175,10 +175,13 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     manageProcessingTimeout(threadId: string, oldStatus: ThreadStatus, newStatus: ThreadStatus) {
       const endStates: ThreadStatus[] = ['idle', 'completed', 'cancelled', 'error'];
 
+      console.log(`[MessageQueue] manageProcessingTimeout: ${oldStatus} -> ${newStatus}, hasTimeout: ${!!this.processingTimeouts[threadId]}`);
+
       // Clear existing timeout if moving to end state
       if (endStates.includes(newStatus)) {
         const existingTimeout = this.processingTimeouts[threadId];
         if (existingTimeout) {
+          console.log(`[MessageQueue] Clearing processing timeout for ${newStatus}`);
           clearTimeout(existingTimeout);
           Reflect.deleteProperty(this.processingTimeouts, threadId);
         }
@@ -190,10 +193,12 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         // Clear any existing timeout first
         const existingTimeout = this.processingTimeouts[threadId];
         if (existingTimeout) {
+          console.log('[MessageQueue] Clearing existing timeout before starting new one');
           clearTimeout(existingTimeout);
         }
 
         // Start new timeout
+        console.log('[MessageQueue] Starting processing timeout (5 min)');
         const timeoutId = setTimeout(() => {
           this.handleProcessingTimeout(threadId);
         }, PROCESSING_TIMEOUT_MS);
@@ -207,8 +212,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      */
     handleProcessingTimeout(threadId: string) {
       const state = this.threadStates[threadId];
+      console.log(`[MessageQueue] handleProcessingTimeout fired - current status: ${state?.status || 'no state'}`);
       if (!state || state.status !== 'processing') {
         // Already completed or not processing
+        console.log('[MessageQueue] Timeout ignored - not in processing state');
         return;
       }
 

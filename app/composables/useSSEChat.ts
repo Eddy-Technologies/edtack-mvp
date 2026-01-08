@@ -453,6 +453,18 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
       return true;
     } catch (err: any) {
+      // CRITICAL FIX: If we already received a proper terminal event (completed, error, cancelled),
+      // don't push another one. This happens when ChatContent closes the connection after
+      // receiving 'completed', which triggers an AbortError that we should ignore.
+      // Without this check, we'd push a duplicate 'cancelled' event which triggers
+      // ChatContent's retry logic and causes duplicate RAG API calls.
+      if (hasReceivedTerminalEvent) {
+        console.log('[SSEChat] AbortError after terminal event received - ignoring (already handled)');
+        isWaitingForResponse.value = false;
+        isStreaming.value = false;
+        return true; // Return success since we completed normally
+      }
+
       if (err.name === 'AbortError') {
         // Check if this was a timeout abort or user cancellation
         // Timeout aborts happen when we call abortController.abort() from timeout handler

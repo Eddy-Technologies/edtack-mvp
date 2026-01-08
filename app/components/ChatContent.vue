@@ -797,9 +797,15 @@ const sendMessage = async (text: string, skipConnectionCheck = false) => {
   if (!success) {
     isWaitingForResponse.value = false;
   } else {
-    // CRITICAL: Set thread state to 'processing' when message is successfully sent.
-    // This persists across navigation so loading indicator shows when user returns.
-    messageQueueStore.setThreadState(props.threadId, { status: 'processing' });
+    // CRITICAL: Only set 'processing' if not already in a terminal state.
+    // SSE mode processes synchronously during await, so by the time startChat returns,
+    // the terminal state may already be set (completed/cancelled/error).
+    // Don't overwrite it with 'processing' or the loading indicator will stay visible.
+    const currentState = messageQueueStore.getThreadState(props.threadId);
+    const isTerminal = currentState?.status && ['completed', 'cancelled', 'error', 'timeout'].includes(currentState.status);
+    if (!isTerminal) {
+      messageQueueStore.setThreadState(props.threadId, { status: 'processing' });
+    }
   }
   // If success, the response handlers will reset isWaitingForResponse
   // when a terminal state is received. Don't set it again here -
