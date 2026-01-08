@@ -340,9 +340,9 @@ class ChatStreamManager {
         batch: {
           slides: event.slides || [],
           batch_size: event.slides?.length || 0,
-          total_slides_so_far: event.batch_index !== undefined
-            ? (event.batch_index + 1) * (event.slides?.length || 0)
-            : event.slides?.length || 0,
+          total_slides_so_far: event.batch_index !== undefined ?
+              (event.batch_index + 1) * (event.slides?.length || 0) :
+            event.slides?.length || 0,
         },
       };
     }
@@ -355,9 +355,9 @@ class ChatStreamManager {
         batch: {
           slides: event.quiz_items || [],
           batch_size: event.quiz_items?.length || 0,
-          total_slides_so_far: event.batch_index !== undefined
-            ? (event.batch_index + 1) * (event.quiz_items?.length || 0)
-            : event.quiz_items?.length || 0,
+          total_slides_so_far: event.batch_index !== undefined ?
+              (event.batch_index + 1) * (event.quiz_items?.length || 0) :
+            event.quiz_items?.length || 0,
         },
       };
     }
@@ -405,7 +405,7 @@ class ChatStreamManager {
     for (const [clientId, client] of stream.clients) {
       try {
         client.controller.enqueue(sseData);
-      } catch (err) {
+      } catch {
         console.log(`[ChatStreamManager] Client ${clientId} disconnected, removing`);
         stream.clients.delete(clientId);
       }

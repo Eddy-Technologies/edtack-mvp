@@ -176,8 +176,8 @@ const handleLogin = async () => {
       color: 'green'
     });
 
-    // Redirect to intended destination or dashboard
-    const redirectTo = route.query.redirect as string || '/dashboard';
+    // Redirect to intended destination or chat
+    const redirectTo = route.query.redirect as string || '/chat/eddy/new';
     await navigateTo(redirectTo);
   } catch (error: any) {
     // Use error message from server if available, cannot use error.message directly

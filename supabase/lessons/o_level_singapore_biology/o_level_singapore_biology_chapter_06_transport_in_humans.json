@@ -1,1 +1,937 @@
-[]
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 1,
+    "part_label": "Introduction",
+    "type": "slide",
+    "question_type": null,
+    "title": "🫀 Transport in Humans: Why Your Body Needs a Circulatory System",
+    "content": "## Why Do We Need Transport?\n\nYour body is made up of **trillions of cells** that need constant supplies to survive. Every single cell requires:\n\n- 💨 **Oxygen** - for energy production through respiration\n- 🍎 **Nutrients** - glucose, amino acids, and other food substances\n- 💧 **Water and ions** - to maintain proper cell function\n- 🧬 **Hormones** - chemical messengers for body regulation\n\nAt the same time, cells produce **waste products** that must be removed:\n\n- ☁️ **Carbon dioxide** - from cellular respiration\n- 🚫 **Urea** - from protein breakdown\n\n## The Challenge of Being Multicellular\n\nUnlike single-celled organisms that simply exchange substances through **diffusion and osmosis** with their environment, humans are **complex multicellular organisms**. Most of your cells are far from the external environment (lungs and digestive system), so we need a special delivery system.\n\n> 💡 **Key Insight:** The **circulatory system** is like your body's highway network, delivering supplies and removing waste from every cell!\n\n## The Three Essential Components\n\nYour circulatory system has three main parts working together:\n\n1. **❤️ Heart** - The pump that pushes blood around\n2. **🛣️ Blood vessels** - The pipes carrying blood (arteries, veins, capillaries)\n3. **🩸 Blood** - The transport medium carrying everything",
+    "speech_to_text_content": "Transport in Humans: Why Your Body Needs a Circulatory System. Your body is made up of trillions of cells that need constant supplies to survive. Every single cell requires oxygen for energy production through respiration, nutrients like glucose and amino acids, water and ions to maintain proper cell function, and hormones which are chemical messengers for body regulation. At the same time, cells produce waste products that must be removed including carbon dioxide from cellular respiration and urea from protein breakdown. Unlike single-celled organisms that simply exchange substances through diffusion and osmosis with their environment, humans are complex multicellular organisms. Most of your cells are far from the external environment in the lungs and digestive system, so we need a special delivery system. The circulatory system is like your body's highway network, delivering supplies and removing waste from every cell. Your circulatory system has three main parts working together: the heart which is the pump that pushes blood around, blood vessels which are the pipes carrying blood including arteries, veins, and capillaries, and blood which is the transport medium carrying everything.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:00:00Z",
+    "updated_at": "2024-01-15T08:00:00Z",
+    "source_timestamp": "2024-01-15T08:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 1,
+      "timestamp": "2026-01-08T09:34:59.082535+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 1,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 2,
+    "part_label": "Slide 1",
+    "type": "slide",
+    "question_type": null,
+    "title": "🩸 Blood Composition: What Makes Blood Work?",
+    "content": "## Understanding Blood as a Transport Medium\n\nBlood is a **fluid connective tissue** - it's not just a simple liquid! It contains multiple components, each with specific jobs.\n\n### The Two Main Parts of Blood\n\n| Component | Percentage | What It Is |\n|-----------|-----------|----------|\n| **Plasma** | ~55% | The liquid portion |\n| **Blood Cells & Fragments** | ~45% | Red blood cells, white blood cells, platelets |\n\n## 💧 Plasma: The Liquid Highway\n\n**Plasma** is the yellowish liquid that makes up just over half of your blood volume.\n\n### Composition of Plasma\n- **Water**: About 90% of plasma\n- **Dissolved substances**: The remaining 10% includes proteins, nutrients, hormones, and waste\n\n### What Plasma Transports\n\n1. **🔴 Blood cells themselves** - carries red blood cells, white blood cells, and platelets throughout the body\n2. **🍎 Nutrients** - glucose from digested food, amino acids, fatty acids, vitamins, and mineral salts\n3. **☁️ Waste products** - urea from the liver heading to the kidneys for excretion\n4. **🧬 Hormones** - chemical messengers traveling from endocrine glands to target organs\n5. **🧬 Proteins** - fibrinogen (for clotting), prothrombin (for clotting), and antibodies (for defense)\n6. **🌡️ Heat distribution** - helps maintain your body temperature by spreading heat around\n\n> ⚠️ **Important:** Plasma is so important that without it, blood cells couldn't move around your body!",
+    "speech_to_text_content": "Blood Composition: What Makes Blood Work? Blood is a fluid connective tissue, not just a simple liquid. It contains multiple components, each with specific jobs. Blood has two main parts: plasma which makes up approximately 55 percent of blood volume and is the liquid portion, and blood cells and fragments which make up approximately 45 percent and include red blood cells, white blood cells, and platelets. Plasma is the yellowish liquid that makes up just over half of your blood volume. Plasma is approximately 90 percent water, with the remaining 10 percent including proteins, nutrients, hormones, and waste. Plasma transports blood cells themselves throughout the body, nutrients including glucose from digested food, amino acids, fatty acids, vitamins, and mineral salts, waste products like urea from the liver heading to the kidneys for excretion, hormones which are chemical messengers traveling from endocrine glands to target organs, proteins including fibrinogen and prothrombin for clotting and antibodies for defense, and heat distribution to help maintain your body temperature.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:15:00Z",
+    "updated_at": "2024-01-15T08:15:00Z",
+    "source_timestamp": "2024-01-15T08:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 2,
+      "timestamp": "2026-01-08T09:35:05.042838+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 2,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 3,
+    "part_label": "Slide 2",
+    "type": "slide",
+    "question_type": null,
+    "title": "🔴 Red Blood Cells: Oxygen Delivery Specialists",
+    "content": "## Structure of Red Blood Cells\n\n**Red blood cells** (also called **erythrocytes**) are specially shaped cells designed for one main job: **carrying oxygen**.\n\n### What Do They Look Like?\n\n- **Shape**: Circular, biconcave discs (like tiny doughnuts without the hole)\n- **Nucleus**: They have **NO nucleus** - this is unusual for cells!\n- **Color**: Red due to a special protein called **hemoglobin**\n- **Size**: Tiny - about 7-8 micrometers in diameter\n\n### Why This Shape and Structure?\n\nThe biconcave shape is **perfectly adapted** for oxygen transport:\n\n1. **Increased surface area** - The indented shape creates more surface area compared to the volume, allowing faster oxygen pickup and release\n2. **Flexibility** - The flexible shape allows red blood cells to squeeze through tiny capillaries (blood vessels so narrow that cells barely fit!)\n3. **No nucleus = more space** - Without a nucleus taking up space, there's room for **massive amounts of hemoglobin**\n\n## 🧬 Hemoglobin: The Oxygen Carrier\n\n**Hemoglobin** is a special red protein found inside red blood cells. It's the key to oxygen transport!\n\n### How Hemoglobin Works\n\nHemoglobin binds to oxygen **reversibly** - meaning it can pick it up and release it:\n\n**In the lungs** (high oxygen concentration):\n- Hemoglobin + Oxygen → **Oxyhemoglobin** (hemoglobin loaded with oxygen)\n- The blood becomes bright red\n\n**In body tissues** (low oxygen concentration):\n- Oxyhemoglobin → Hemoglobin + Oxygen\n- Oxygen is released to cells that need it\n- The blood becomes darker red\n\n> 💡 **Key Insight:** This reversible binding is crucial - hemoglobin picks up oxygen where it's abundant (lungs) and releases it where it's needed (working cells)!\n\n## 🏔️ Adaptation to High Altitude\n\nWhen people live at high altitudes where oxygen is scarce:\n- Their bodies produce **more red blood cells**\n- **Hemoglobin concentration increases**\n- This ensures adequate oxygen delivery despite lower oxygen availability\n\n**Example**: Athletes training at altitude develop better oxygen-carrying capacity!",
+    "speech_to_text_content": "Red Blood Cells: Oxygen Delivery Specialists. Red blood cells, also called erythrocytes, are specially shaped cells designed for one main job: carrying oxygen. Red blood cells look like circular, biconcave discs like tiny doughnuts without the hole. They have no nucleus, which is unusual for cells. They are red due to a special protein called hemoglobin, and are tiny, about 7 to 8 micrometers in diameter. The biconcave shape is perfectly adapted for oxygen transport. The indented shape creates more surface area compared to the volume, allowing faster oxygen pickup and release. The flexible shape allows red blood cells to squeeze through tiny capillaries, which are blood vessels so narrow that cells barely fit. Without a nucleus taking up space, there is room for massive amounts of hemoglobin. Hemoglobin is a special red protein found inside red blood cells and is the key to oxygen transport. Hemoglobin binds to oxygen reversibly, meaning it can pick it up and release it. In the lungs where oxygen concentration is high, hemoglobin plus oxygen becomes oxyhemoglobin, which is hemoglobin loaded with oxygen, and the blood becomes bright red. In body tissues where oxygen concentration is low, oxyhemoglobin becomes hemoglobin plus oxygen, oxygen is released to cells that need it, and the blood becomes darker red. This reversible binding is crucial because hemoglobin picks up oxygen where it is abundant in the lungs and releases it where it is needed in working cells. When people live at high altitudes where oxygen is scarce, their bodies produce more red blood cells and hemoglobin concentration increases to ensure adequate oxygen delivery despite lower oxygen availability.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:30:00Z",
+    "updated_at": "2024-01-15T08:30:00Z",
+    "source_timestamp": "2024-01-15T08:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 3,
+      "timestamp": "2026-01-08T09:35:12.944596+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 3,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 4,
+    "part_label": "Slide 3",
+    "type": "slide",
+    "question_type": null,
+    "title": "☁️ Carbon Dioxide Transport: The Return Journey",
+    "content": "## The Problem: How Does CO₂ Get Out?\n\nWhile red blood cells are busy delivering oxygen, they also need to pick up **carbon dioxide** produced by respiring cells and carry it back to the lungs for removal.\n\n### Why This Is Tricky\n\n- Carbon dioxide is only **slightly soluble** in blood plasma\n- We produce **large amounts** of CO₂ during respiration\n- We need an **efficient transport system** to remove it\n\n## The Solution: Carbonic Anhydrase\n\n**Carbonic anhydrase** is an enzyme (a biological catalyst) inside red blood cells that solves this problem!\n\n### The Carbon Dioxide Transport Process\n\nFollow these steps to see how CO₂ gets transported:\n\n**Step 1: CO₂ enters red blood cells**\n- Carbon dioxide produced by respiring cells diffuses into the blood\n- CO₂ dissolves and enters red blood cells\n\n**Step 2: Carbonic anhydrase catalyzes a reaction**\n- Inside the red blood cell: CO₂ + H₂O → **H₂CO₃** (carbonic acid)\n- The enzyme **carbonic anhydrase** speeds up this reaction dramatically\n- Without this enzyme, the reaction would be too slow!\n\n**Step 3: Carbonic acid breaks down**\n- H₂CO₃ → **HCO₃⁻** (hydrogen carbonate ions) + H⁺ (hydrogen ions)\n- The hydrogen carbonate ions are much more soluble than CO₂\n\n**Step 4: Transport in plasma**\n- Most CO₂ is transported as **hydrogen carbonate ions (HCO₃⁻) in the plasma**\n- These ions travel safely through the bloodstream\n- Some CO₂ binds directly to hemoglobin (called carbaminohemoglobin)\n\n**Step 5: Release in the lungs**\n- When blood reaches the lungs, the process reverses\n- HCO₃⁻ → CO₂ + H₂O\n- CO₂ is exhaled as waste\n\n> 💡 **Why Carbonic Anhydrase Matters:** This enzyme is one of the fastest enzymes in your body! It allows your blood to transport CO₂ efficiently - without it, CO₂ would build up to toxic levels.\n\n## 🧪 The Chemistry Summary\n\n| Location | Process | Result |\n|----------|---------|--------|\n| **Respiring tissues** | CO₂ produced → enters RBC | CO₂ concentration increases |\n| **Inside RBC** | CO₂ + H₂O → H₂CO₃ (via carbonic anhydrase) | Carbonic acid forms |\n| **RBC & Plasma** | H₂CO₃ → HCO₃⁻ + H⁺ | Soluble form for transport |\n| **Lungs** | HCO₃⁻ → CO₂ + H₂O | CO₂ ready to exhale |",
+    "speech_to_text_content": "Carbon Dioxide Transport: The Return Journey. While red blood cells are busy delivering oxygen, they also need to pick up carbon dioxide produced by respiring cells and carry it back to the lungs for removal. Carbon dioxide is only slightly soluble in blood plasma. We produce large amounts of carbon dioxide during respiration. We need an efficient transport system to remove it. Carbonic anhydrase is an enzyme, a biological catalyst, inside red blood cells that solves this problem. Follow these steps to see how carbon dioxide gets transported. Step 1: Carbon dioxide enters red blood cells. Carbon dioxide produced by respiring cells diffuses into the blood and enters red blood cells. Step 2: Carbonic anhydrase catalyzes a reaction. Inside the red blood cell, carbon dioxide plus water becomes H two C O three, which is carbonic acid. The enzyme carbonic anhydrase speeds up this reaction dramatically. Without this enzyme, the reaction would be too slow. Step 3: Carbonic acid breaks down. H two C O three becomes H C O three minus, which is hydrogen carbonate ions, plus H plus, hydrogen ions. The hydrogen carbonate ions are much more soluble than carbon dioxide. Step 4: Transport in plasma. Most carbon dioxide is transported as hydrogen carbonate ions in the plasma. These ions travel safely through the bloodstream. Some carbon dioxide binds directly to hemoglobin, called carbaminohemoglobin. Step 5: Release in the lungs. When blood reaches the lungs, the process reverses. H C O three minus becomes carbon dioxide plus water. Carbon dioxide is exhaled as waste. Carbonic anhydrase is one of the fastest enzymes in your body, allowing your blood to transport carbon dioxide efficiently. Without it, carbon dioxide would build up to toxic levels.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T08:45:00Z",
+    "updated_at": "2024-01-15T08:45:00Z",
+    "source_timestamp": "2024-01-15T08:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 4,
+      "timestamp": "2026-01-08T09:35:21.357793+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 4,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440005",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 5,
+    "part_label": "Slide 4",
+    "type": "slide",
+    "question_type": null,
+    "title": "⚪ White Blood Cells: Your Body's Defense Force",
+    "content": "## What Are White Blood Cells?\n\n**White blood cells** (also called **leukocytes**) are part of your immune system. Unlike red blood cells which transport oxygen, white blood cells **protect your body** from harmful invaders and clean up debris.\n\n### Key Differences from Red Blood Cells\n\n| Feature | Red Blood Cells | White Blood Cells |\n|---------|-----------------|-------------------|\n| **Nucleus** | No nucleus | Have a nucleus |\n| **Color** | Red | Colorless/white |\n| **Main job** | Oxygen transport | Defense & immunity |\n| **Number** | ~25 trillion | ~25-40 billion (much fewer) |\n| **Lifespan** | 120 days | Days to weeks |\n\n## 🛡️ Type 1: Phagocytes - The Cleanup Crew\n\n**Phagocytes** are white blood cells that work like tiny vacuum cleaners!\n\n### What They Do: Phagocytosis\n\n**Phagocytosis** is the process where phagocytes **engulf and destroy** harmful particles:\n\n1. **Detection** - The phagocyte detects bacteria, dead cells, or foreign matter\n2. **Engulfing** - The cell membrane surrounds the invader\n3. **Trapping** - The invader is pulled inside the cell\n4. **Digestion** - Enzymes inside the phagocyte break down and destroy the invader\n5. **Removal** - The harmless waste is expelled\n\n> 💡 **Think of it like:** A white blood cell is a security guard that eats the bad guys!\n\n### Where Phagocytes Work\n\n- **In the blood** - patrolling for invaders\n- **In tissues** - stationed at vulnerable areas\n- **In the lymph** - protecting tissue fluid\n\n## 🧬 Type 2: Lymphocytes - The Immune Specialists\n\n**Lymphocytes** are white blood cells that produce **antibodies** - special proteins that fight disease.\n\n### What Lymphocytes Do\n\n1. **Recognize invaders** - They identify foreign antigens (markers on bacteria, viruses, etc.)\n2. **Produce antibodies** - They make specific antibodies matched to each invader\n3. **Attack pathogens** - Antibodies work in several ways:\n   - **Destroy** disease-causing organisms directly\n   - **Agglutinate** (clump) bacteria together, making them easier to destroy\n   - **Neutralize toxins** - block poisons produced by pathogens\n   - **Mark for removal** - tag invaders so phagocytes can find and destroy them\n\n### How Antibodies Work\n\nEach antibody is like a **specific key** that fits only one **specific lock** (antigen):\n\n- Measles antibody attacks measles virus\n- Flu antibody attacks flu virus\n- Your body makes different antibodies for different invaders\n\n> ⚠️ **Important:** This is why you can get chickenpox only once - your lymphocytes \"remember\" the virus and make antibodies immediately if it returns!\n\n## 🔄 Complete Defense System\n\n**Working together:**\n\n1. **Lymphocytes** recognize a new invader and make antibodies\n2. **Antibodies** mark the invader and weaken it\n3. **Phagocytes** are attracted to the marked invader\n4. **Phagocytes** engulf and destroy the weakened invader\n5. **Result**: You stay healthy!\n\n## 🧬 White Blood Cells and Organ Transplants\n\nWhite blood cells also cause **tissue rejection** during organ transplants:\n\n- **Recognition** - White blood cells identify transplanted organs as \"foreign\"\n- **Antibody production** - They make antibodies against the new organ\n- **Attack** - Antibodies attack and damage the transplanted tissue\n- **Prevention** - Doctors give **immunosuppressive drugs** to reduce this immune response\n\n> 💡 **Why This Happens:** Your immune system is very good at distinguishing \"self\" from \"not-self\" - even organs from another person are seen as invaders!",
+    "speech_to_text_content": "White Blood Cells: Your Body's Defense Force. White blood cells, also called leukocytes, are part of your immune system. Unlike red blood cells which transport oxygen, white blood cells protect your body from harmful invaders and clean up debris. Red blood cells have no nucleus and are red in color, while white blood cells have a nucleus and are colorless or white. Red blood cells main job is oxygen transport while white blood cells main job is defense and immunity. There are approximately 25 trillion red blood cells but only 25 to 40 billion white blood cells, much fewer. Red blood cells live 120 days while white blood cells live days to weeks. Phagocytes are white blood cells that work like tiny vacuum cleaners. Phagocytosis is the process where phagocytes engulf and destroy harmful particles. First, the phagocyte detects bacteria, dead cells, or foreign matter. Second, the cell membrane surrounds the invader. Third, the invader is pulled inside the cell. Fourth, enzymes inside the phagocyte break down and destroy the invader. Fifth, the harmless waste is expelled. Phagocytes work in the blood patrolling for invaders, in tissues stationed at vulnerable areas, and in the lymph protecting tissue fluid. Lymphocytes are white blood cells that produce antibodies, special proteins that fight disease. Lymphocytes recognize foreign antigens, which are markers on bacteria and viruses. They produce specific antibodies matched to each invader. Antibodies work in several ways: they destroy disease-causing organisms directly, agglutinate or clump bacteria together making them easier to destroy, neutralize toxins by blocking poisons produced by pathogens, and mark invaders for removal so phagocytes can find and destroy them. Each antibody is like a specific key that fits only one specific lock, which is the antigen. Your body makes different antibodies for different invaders. This is why you can get chickenpox only once because your lymphocytes remember the virus and make antibodies immediately if it returns. Working together, lymphocytes recognize a new invader and make antibodies. Antibodies mark the invader and weaken it. Phagocytes are attracted to the marked invader. Phagocytes engulf and destroy the weakened invader. The result is you stay healthy. White blood cells also cause tissue rejection during organ transplants. They recognize transplanted organs as foreign. They make antibodies against the new organ. Antibodies attack and damage the transplanted tissue. Doctors give immunosuppressive drugs to reduce this immune response. Your immune system is very good at distinguishing self from not-self, even organs from another person are seen as invaders.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z",
+    "source_timestamp": "2024-01-15T09:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 5,
+      "timestamp": "2026-01-08T09:35:33.745748+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 5,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440006",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 6,
+    "part_label": "Slide 5",
+    "type": "slide",
+    "question_type": null,
+    "title": "🩸 Platelets and Blood Clotting: Sealing the Leak",
+    "content": "## What Are Platelets?\n\n**Platelets** (also called **thrombocytes**) are tiny **cell fragments** without nuclei. They're like emergency repair kits floating in your blood!\n\n### Key Facts About Platelets\n\n- **Structure**: Small fragments of cells (not complete cells)\n- **Nucleus**: No nucleus\n- **Size**: Even smaller than red blood cells\n- **Number**: About 150,000-400,000 per microliter of blood\n- **Lifespan**: About 8-10 days\n- **Main job**: Starting the blood clotting process\n\n## 🩹 Why Blood Clotting Matters\n\nWhen you get a cut or wound:\n\n1. **Without clotting** - You would bleed to death from even small injuries\n2. **With clotting** - A protective seal forms, stopping blood loss\n3. **Prevents infection** - The clot seals the wound, keeping bacteria out\n4. **Enables healing** - The clot provides a framework for tissue repair\n\n> 💡 **Think of it like:** Platelets are like emergency response teams that arrive at a wound and seal it up!\n\n## 🧬 The Blood Clotting Process: Step by Step\n\n### Step 1: Injury and Platelet Activation\n\n- **Blood vessel is damaged** (you get a cut)\n- **Platelets detect the damage** immediately\n- **Platelets adhere** (stick) to the damaged tissue\n- **More platelets arrive** and stick to the first platelets, forming a **platelet plug**\n\n### Step 2: Release of Clotting Factors\n\n**Both damaged tissue and platelets release important chemicals:**\n\n- **Thrombokinase** - an enzyme that triggers the clotting cascade\n- Other clotting factors that start a chain reaction\n\n### Step 3: Prothrombin Activation (Requires Calcium)\n\n- **Thrombokinase** + **Prothrombin** (a protein in plasma) + **Calcium ions** → **Thrombin**\n- Thrombin is an enzyme that catalyzes the next crucial step\n- **Calcium is essential** - without it, clotting fails!\n\n> ⚠️ **Important:** This is why calcium is vital for health and why some people take calcium supplements!\n\n### Step 4: Fibrin Formation - The Final Seal\n\n- **Thrombin** acts on **fibrinogen** (a soluble protein in plasma)\n- **Fibrinogen** → **Fibrin** (insoluble protein threads)\n- Fibrin forms a **mesh-like network** at the wound site\n\n### Step 5: Clot Formation\n\n- **Fibrin threads** trap red blood cells and platelets\n- A solid **blood clot** forms, sealing the wound\n- The clot is initially soft and sticky\n- Over time, it dries and hardens into a **scab**\n\n## 📊 The Clotting Cascade Summary\n\n```\nInjury to blood vessel\n        ↓\nPlatelets adhere + Thrombokinase released\n        ↓\nProthrombin + Thrombokinase + Calcium → Thrombin\n        ↓\nFibrinogen + Thrombin → Fibrin (insoluble threads)\n        ↓\nFibrin threads trap cells → Blood clot forms\n        ↓\nWound sealed ✓\n```\n\n## 🔄 What Happens Next?\n\n**After the clot forms:**\n\n1. **Bleeding stops** - The seal prevents further blood loss\n2. **White blood cells arrive** - They clean up dead cells and bacteria\n3. **Fibroblasts work** - Connective tissue cells rebuild the tissue\n4. **Clot dissolves** - Gradually, the clot is broken down and removed\n5. **Tissue heals** - New skin or tissue replaces the damaged area\n\n## ⚠️ When Clotting Goes Wrong\n\n### Too Little Clotting\n- **Hemophilia** - genetic disorder where clotting factors are missing\n- **Result**: Excessive bleeding from minor injuries\n- **Treatment**: Transfusions of clotting factors\n\n### Too Much Clotting\n- **Thrombosis** - unwanted clots form inside blood vessels\n- **Result**: Blocked blood vessels, heart attacks, strokes\n- **Prevention**: Blood-thinning medications like aspirin\n\n> 💡 **Key Insight:** Blood clotting is a carefully balanced process - too much or too little is dangerous!",
+    "speech_to_text_content": "Platelets and Blood Clotting: Sealing the Leak. Platelets, also called thrombocytes, are tiny cell fragments without nuclei. They are like emergency repair kits floating in your blood. Platelets are small fragments of cells, not complete cells. They have no nucleus. They are even smaller than red blood cells. There are about 150,000 to 400,000 per microliter of blood. They live about 8 to 10 days. Their main job is starting the blood clotting process. When you get a cut or wound, without clotting you would bleed to death from even small injuries. With clotting, a protective seal forms, stopping blood loss. The clot prevents infection by sealing the wound and keeping bacteria out. The clot enables healing by providing a framework for tissue repair. Platelets are like emergency response teams that arrive at a wound and seal it up. The blood clotting process happens in steps. Step 1 is injury and platelet activation. The blood vessel is damaged when you get a cut. Platelets detect the damage immediately. Platelets adhere or stick to the damaged tissue. More platelets arrive and stick to the first platelets, forming a platelet plug. Step 2 is release of clotting factors. Both damaged tissue and platelets release important chemicals including thrombokinase, an enzyme that triggers the clotting cascade, and other clotting factors that start a chain reaction. Step 3 is prothrombin activation, which requires calcium. Thrombokinase plus prothrombin, a protein in plasma, plus calcium ions becomes thrombin. Thrombin is an enzyme that catalyzes the next crucial step. Calcium is essential. Without it, clotting fails. Calcium is vital for health and why some people take calcium supplements. Step 4 is fibrin formation, the final seal. Thrombin acts on fibrinogen, a soluble protein in plasma. Fibrinogen becomes fibrin, an insoluble protein thread. Fibrin forms a mesh-like network at the wound site. Step 5 is clot formation. Fibrin threads trap red blood cells and platelets. A solid blood clot forms, sealing the wound. The clot is initially soft and sticky. Over time, it dries and hardens into a scab. After the clot forms, bleeding stops. The seal prevents further blood loss. White blood cells arrive to clean up dead cells and bacteria. Fibroblasts work, which are connective tissue cells that rebuild the tissue. The clot dissolves gradually and is broken down and removed. New skin or tissue replaces the damaged area. Blood clotting is a carefully balanced process where too much or too little is dangerous.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:15:00Z",
+    "updated_at": "2024-01-15T09:15:00Z",
+    "source_timestamp": "2024-01-15T09:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 6,
+      "timestamp": "2026-01-08T09:35:47.168881+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 6,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440007",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 7,
+    "part_label": "Slide 6",
+    "type": "slide",
+    "question_type": null,
+    "title": "🩸 Blood Groups: Why Transfusions Matter",
+    "content": "## What Are Blood Groups?\n\n**Blood groups** are determined by specific **antigens** (protein markers) on the surface of red blood cells and corresponding **antibodies** in the plasma.\n\n### Why Blood Groups Exist\n\n- Your immune system uses antigens to identify \"self\" vs. \"foreign\"\n- Different people have different antigens on their red blood cells\n- If you receive incompatible blood, your antibodies attack the foreign blood cells\n- This causes **agglutination** (clumping) and **hemolysis** (cell bursting)\n\n> 💡 **Think of it like:** Antigens are like ID cards on blood cells, and antibodies are like security guards that check those ID cards!\n\n## 🔴 The ABO Blood Group System\n\nThe most important blood group system is **ABO**, which divides blood into four types:\n\n### Blood Type A\n\n| Feature | Details |\n|---------|----------|\n| **Antigens on RBC** | A antigen |\n| **Antibodies in plasma** | Anti-B antibodies |\n| **Can donate to** | A and AB |\n| **Can receive from** | A and O |\n| **Frequency in Singapore** | ~27% of population |\n\n**What this means**: Type A blood has the A antigen, so it will cause a reaction if mixed with B or AB antibodies.\n\n### Blood Type B\n\n| Feature | Details |\n|---------|----------|\n| **Antigens on RBC** | B antigen |\n| **Antibodies in plasma** | Anti-A antibodies |\n| **Can donate to** | B and AB |\n| **Can receive from** | B and O |\n| **Frequency in Singapore** | ~26% of population |\n\n**What this means**: Type B blood has the B antigen, so it will cause a reaction if mixed with A or AB antibodies.\n\n### Blood Type AB - The Universal Recipient\n\n| Feature | Details |\n|---------|----------|\n| **Antigens on RBC** | A and B antigens |\n| **Antibodies in plasma** | No antibodies (neither anti-A nor anti-B) |\n| **Can donate to** | AB only |\n| **Can receive from** | A, B, AB, and O (all types!) |\n| **Frequency in Singapore** | ~11% of population |\n\n**Why they're special**: Type AB has both A and B antigens, so their plasma has no antibodies. They can safely receive blood from anyone!\n\n> 💡 **Key Insight:** AB is the universal recipient - they need blood from others but can't donate to most people.\n\n### Blood Type O - The Universal Donor\n\n| Feature | Details |\n|---------|----------|\n| **Antigens on RBC** | No antigens |\n| **Antibodies in plasma** | Anti-A and Anti-B antibodies |\n| **Can donate to** | A, B, AB, and O (all types!) |\n| **Can receive from** | O only |\n| **Frequency in Singapore** | ~36% of population (most common) |\n\n**Why they're special**: Type O has no antigens on the red blood cells, so no antibodies will attack them. They can donate to everyone!\n\n> ⚠️ **Important:** Type O individuals have both anti-A and anti-B antibodies, so they can only receive type O blood.\n\n## 🧬 How Transfusion Compatibility Works\n\n### The Rule: Match Donor Antigens with Recipient Antibodies\n\nWhen giving a blood transfusion:\n\n1. **Look at donor's RBCs** - What antigens are present?\n2. **Look at recipient's plasma** - What antibodies are present?\n3. **Check compatibility** - Will the recipient's antibodies attack the donor's blood?\n\n### Example 1: Type A Recipient Receives Type B Blood ❌\n\n- **Donor blood** has B antigen on RBCs\n- **Recipient plasma** has anti-B antibodies\n- **Result**: Antibodies attack the B antigens → **Agglutination** → Dangerous!\n\n### Example 2: Type A Recipient Receives Type O Blood ✓\n\n- **Donor blood** has no antigens\n- **Recipient plasma** has anti-B antibodies (but no targets!)\n- **Result**: No reaction → **Safe transfusion**\n\n### Example 3: Type AB Recipient Receives Type B Blood ✓\n\n- **Donor blood** has B antigen\n- **Recipient plasma** has no antibodies\n- **Result**: No attack → **Safe transfusion**\n\n## 📊 Complete Transfusion Compatibility Chart\n\n| Recipient | Can Receive From | Cannot Receive From |\n|-----------|-----------------|--------------------|\n| **A** | A, O | B, AB |\n| **B** | B, O | A, AB |\n| **AB** | A, B, AB, O (Universal!) | None |\n| **O** | O only | A, B, AB |\n\n## 🏥 Blood Donation in Singapore\n\nSingapore has a critical need for blood:\n\n- **~200 liters** of blood needed daily for:\n  - Medical emergencies\n  - Surgical procedures\n  - Treating life-threatening illnesses\n\n**The Singapore Red Cross:**\n- Organizes blood donation drives\n- Appeals for donors of specific blood groups when supply is low\n- Maintains steady blood supply for hospitals\n\n> 💡 **Why This Matters:** Type O donors are especially valuable because their blood can help anyone! In emergencies, type O is often used.\n\n## ⚠️ What Happens During Incompatible Transfusion?\n\n### Agglutination (Clumping)\n- Antibodies in recipient's plasma bind to antigens on donor's RBCs\n- Red blood cells clump together\n- Blood vessels become blocked\n- Oxygen delivery stops → Organ damage\n\n### Hemolysis (Cell Bursting)\n- Antibodies damage the cell membrane of donor's RBCs\n- Cells burst and release hemoglobin\n- Hemoglobin damages kidneys\n- Can be fatal if severe\n\n### Symptoms\n- Fever, chills\n- Back pain, chest pain\n- Shortness of breath\n- Dark urine (from hemoglobin)\n\n> ⚠️ **Critical:** This is why blood type matching is absolutely essential before any transfusion!",
+    "speech_to_text_content": "Blood Groups: Why Transfusions Matter. Blood groups are determined by specific antigens, which are protein markers, on the surface of red blood cells and corresponding antibodies in the plasma. Your immune system uses antigens to identify self versus foreign. Different people have different antigens on their red blood cells. If you receive incompatible blood, your antibodies attack the foreign blood cells. This causes agglutination, which is clumping, and hemolysis, which is cell bursting. Antigens are like ID cards on blood cells, and antibodies are like security guards that check those ID cards. The most important blood group system is ABO, which divides blood into four types. Type A blood has the A antigen on red blood cells and anti-B antibodies in plasma. Type A can donate to A and AB. Type A can receive from A and O. Type A frequency in Singapore is approximately 27 percent of the population. Type B blood has the B antigen on red blood cells and anti-A antibodies in plasma. Type B can donate to B and AB. Type B can receive from B and O. Type B frequency in Singapore is approximately 26 percent of the population. Type AB blood has A and B antigens on red blood cells and no antibodies in plasma, neither anti-A nor anti-B. Type AB can donate to AB only. Type AB can receive from A, B, AB, and O, which is all types. Type AB frequency in Singapore is approximately 11 percent of the population. Type AB is special because it has both A and B antigens, so their plasma has no antibodies. They can safely receive blood from anyone. Type O blood has no antigens on red blood cells and anti-A and anti-B antibodies in plasma. Type O can donate to A, B, AB, and O, which is all types. Type O can receive from O only. Type O frequency in Singapore is approximately 36 percent of the population, making it the most common. Type O is special because it has no antigens on the red blood cells, so no antibodies will attack them. They can donate to everyone. Type O individuals have both anti-A and anti-B antibodies, so they can only receive type O blood. When giving a blood transfusion, look at the donor's red blood cells to see what antigens are present. Look at the recipient's plasma to see what antibodies are present. Check compatibility to see if the recipient's antibodies will attack the donor's blood. If a type A recipient receives type B blood, the donor blood has B antigen on red blood cells. The recipient plasma has anti-B antibodies. The antibodies attack the B antigens, causing agglutination, which is dangerous. If a type A recipient receives type O blood, the donor blood has no antigens. The recipient plasma has anti-B antibodies but no targets. There is no reaction, so it is a safe transfusion. If a type AB recipient receives type B blood, the donor blood has B antigen. The recipient plasma has no antibodies. There is no attack, so it is a safe transfusion. Singapore has a critical need for blood. Approximately 200 liters of blood is needed daily for medical emergencies, surgical procedures, and treating life-threatening illnesses. The Singapore Red Cross organizes blood donation drives and appeals for donors of specific blood groups when supply is low, and maintains steady blood supply for hospitals. Type O donors are especially valuable because their blood can help anyone. In emergencies, type O is often used. During incompatible transfusion, antibodies in the recipient's plasma bind to antigens on the donor's red blood cells. Red blood cells clump together. Blood vessels become blocked. Oxygen delivery stops, causing organ damage. Antibodies damage the cell membrane of the donor's red blood cells. Cells burst and release hemoglobin. Hemoglobin damages kidneys and can be fatal if severe. Symptoms include fever and chills, back pain and chest pain, shortness of breath, and dark urine from hemoglobin. Blood type matching is absolutely essential before any transfusion.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:30:00Z",
+    "updated_at": "2024-01-15T09:30:00Z",
+    "source_timestamp": "2024-01-15T09:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 7,
+      "timestamp": "2026-01-08T09:36:04.814697+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 7,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440008",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 8,
+    "part_label": "Slide 7",
+    "type": "slide",
+    "question_type": null,
+    "title": "🫀 The Heart: Structure and Function",
+    "content": "## Overview: The Heart as a Pump\n\nThe **heart** is a muscular organ about the size of your fist. Its job is simple but vital: **pump blood around your body** continuously, 24/7.\n\n### Basic Facts\n\n- **Weight**: About 250-350 grams (less than 1 pound!)\n- **Location**: In the chest, slightly left of center\n- **Beats per minute**: 60-100 beats at rest (faster during exercise)\n- **Lifespan**: Beats about 100,000 times per day\n- **Power**: Strong enough to pump blood 60,000+ miles of blood vessels\n\n> 💡 **Think of it like:** Your heart is a double pump - it's actually two pumps working together!\n\n## 🫀 Heart Structure: The Four Chambers\n\n### The Two Sides of the Heart\n\nThe heart is divided into **left and right sides** by a wall called the **septum**.\n\n**Right side**: Receives deoxygenated blood from the body\n**Left side**: Receives oxygenated blood from the lungs\n\n### The Four Chambers\n\n#### Upper Chambers: Atria (Plural of Atrium)\n\n**Right Atrium**\n- Receives **deoxygenated blood** from the body\n- Blood comes from the **superior vena cava** (upper body) and **inferior vena cava** (lower body)\n- Thin-walled because it only receives blood, not pumping hard\n\n**Left Atrium**\n- Receives **oxygenated blood** from the lungs\n- Blood comes from the **pulmonary veins**\n- Also thin-walled\n\n#### Lower Chambers: Ventricles\n\n**Right Ventricle**\n- Pumps **deoxygenated blood** to the **lungs**\n- Blood exits through the **pulmonary artery**\n- Thicker wall than atrium but thinner than left ventricle\n\n**Left Ventricle**\n- Pumps **oxygenated blood** to the **whole body**\n- Blood exits through the **aorta** (largest artery)\n- **Thickest wall** of all chambers - needs power to pump blood everywhere!\n\n## 🔄 Blood Vessels Connected to the Heart\n\n### Arteries (Carry blood AWAY from heart)\n\n| Artery | Carries | Destination |\n|--------|---------|-------------|\n| **Pulmonary artery** | Deoxygenated blood | Lungs |\n| **Aorta** | Oxygenated blood | Whole body |\n\n### Veins (Carry blood TO the heart)\n\n| Vein | Carries | Source |\n|------|---------|--------|\n| **Superior vena cava** | Deoxygenated blood | Upper body |\n| **Inferior vena cava** | Deoxygenated blood | Lower body |\n| **Pulmonary veins** | Oxygenated blood | Lungs |\n\n## 🔐 Heart Valves: One-Way Doors\n\n**Valves** are one-way doors that ensure blood flows in only one direction.\n\n### The Four Valves\n\n#### 1. Tricuspid Valve\n- **Location**: Between right atrium and right ventricle\n- **Function**: Prevents backflow of blood into the atrium when ventricle contracts\n- **Name meaning**: \"Tri\" = three flaps\n\n#### 2. Pulmonary Valve (Semilunar Valve)\n- **Location**: Between right ventricle and pulmonary artery\n- **Function**: Prevents backflow from pulmonary artery into ventricle\n- **Opens**: When right ventricle contracts\n- **Closes**: When ventricle relaxes\n\n#### 3. Mitral Valve (Bicuspid Valve)\n- **Location**: Between left atrium and left ventricle\n- **Function**: Prevents backflow into atrium\n- **Name meaning**: Shaped like a bishop's mitre (hat)\n- **Name meaning**: \"Bi\" = two flaps\n\n#### 4. Aortic Valve (Semilunar Valve)\n- **Location**: Between left ventricle and aorta\n- **Function**: Prevents backflow from aorta into ventricle\n- **Opens**: When left ventricle contracts\n- **Closes**: When ventricle relaxes\n\n### How Valves Work\n\n```\nBlood pushes valve open → Blood flows through → \nBlood tries to flow backward → Valve flaps close → \nBackflow prevented ✓\n```\n\n> 💡 **Think of it like:** Valves are like turnstiles in a subway - they let people (blood) through one way but prevent them from going backward!\n\n## 💪 Heart Wall Structure\n\nThe heart wall has three layers:\n\n1. **Epicardium** (outer layer) - Protective covering\n2. **Myocardium** (middle layer) - **Cardiac muscle** that contracts to pump blood\n3. **Endocardium** (inner layer) - Smooth lining that reduces friction\n\n**The Myocardium** is the working muscle:\n- Made of **cardiac muscle fibers** (special type of muscle)\n- Contracts involuntarily (you don't have to think about it!)\n- Incredibly strong and never gets tired\n\n## 🔄 Blood Flow Through the Heart: The Path\n\nFollow the blood journey through one heartbeat:\n\n1. **Deoxygenated blood arrives** from body via superior and inferior vena cava → **Right atrium**\n2. **Right atrium contracts** → Blood pushed through tricuspid valve → **Right ventricle**\n3. **Right ventricle contracts** → Blood pushed through pulmonary valve → **Pulmonary artery** → **Lungs**\n4. **Oxygenated blood returns** from lungs via pulmonary veins → **Left atrium**\n5. **Left atrium contracts** → Blood pushed through mitral valve → **Left ventricle**\n6. **Left ventricle contracts** (most powerful!) → Blood pushed through aortic valve → **Aorta** → **Whole body**\n7. **Cycle repeats** about 70 times per minute!\n\n## 📊 Chamber Wall Thickness\n\n| Chamber | Wall Thickness | Reason |\n|---------|--------------|--------|\n| **Right atrium** | Thin | Only receives blood |\n| **Left atrium** | Thin | Only receives blood |\n| **Right ventricle** | Medium | Pumps to nearby lungs |\n| **Left ventricle** | **Thickest** | Pumps to entire body - needs power! |\n\n> 💡 **Key Insight:** The left ventricle is thickest because it has to do the most work - pumping oxygen-rich blood to every cell in your body!",
+    "speech_to_text_content": "The Heart: Structure and Function. The heart is a muscular organ about the size of your fist. Its job is simple but vital: pump blood around your body continuously, 24 per 7. The heart weighs about 250 to 350 grams, less than 1 pound. It is located in the chest, slightly left of center. It beats 60 to 100 times per minute at rest, faster during exercise. It beats about 100,000 times per day. It is strong enough to pump blood through 60,000 plus miles of blood vessels. Your heart is a double pump, actually two pumps working together. The heart is divided into left and right sides by a wall called the septum. The right side receives deoxygenated blood from the body. The left side receives oxygenated blood from the lungs. The heart has four chambers. The upper chambers are atria, plural of atrium. The right atrium receives deoxygenated blood from the body. Blood comes from the superior vena cava from the upper body and inferior vena cava from the lower body. The right atrium is thin-walled because it only receives blood, not pumping hard. The left atrium receives oxygenated blood from the lungs. Blood comes from the pulmonary veins. The left atrium is also thin-walled. The lower chambers are ventricles. The right ventricle pumps deoxygenated blood to the lungs. Blood exits through the pulmonary artery. The right ventricle has a thicker wall than the atrium but thinner than the left ventricle. The left ventricle pumps oxygenated blood to the whole body. Blood exits through the aorta, the largest artery. The left ventricle has the thickest wall of all chambers because it needs power to pump blood everywhere. Blood vessels connected to the heart include arteries that carry blood away from the heart. The pulmonary artery carries deoxygenated blood to the lungs. The aorta carries oxygenated blood to the whole body. Veins carry blood to the heart. The superior vena cava carries deoxygenated blood from the upper body. The inferior vena cava carries deoxygenated blood from the lower body. The pulmonary veins carry oxygenated blood from the lungs. Valves are one-way doors that ensure blood flows in only one direction. The tricuspid valve is located between the right atrium and right ventricle. It prevents backflow of blood into the atrium when the ventricle contracts. The name tricuspid means tri equals three flaps. The pulmonary valve, also called a semilunar valve, is located between the right ventricle and pulmonary artery. It prevents backflow from the pulmonary artery into the ventricle. It opens when the right ventricle contracts. It closes when the ventricle relaxes. The mitral valve, also called the bicuspid valve, is located between the left atrium and left ventricle. It prevents backflow into the atrium. The name mitral means it is shaped like a bishop's mitre or hat. The name bicuspid means bi equals two flaps. The aortic valve, also called a semilunar valve, is located between the left ventricle and aorta. It prevents backflow from the aorta into the ventricle. It opens when the left ventricle contracts. It closes when the ventricle relaxes. Valves work by blood pushing the valve open, blood flows through, blood tries to flow backward, the valve flaps close, and backflow is prevented. Valves are like turnstiles in a subway that let people or blood through one way but prevent them from going backward. The heart wall has three layers. The epicardium is the outer layer and is a protective covering. The myocardium is the middle layer and is cardiac muscle that contracts to pump blood. The endocardium is the inner layer and is a smooth lining that reduces friction. The myocardium is the working muscle made of cardiac muscle fibers, which is a special type of muscle. It contracts involuntarily, you don't have to think about it. It is incredibly strong and never gets tired. Follow the blood journey through one heartbeat. Deoxygenated blood arrives from the body via superior and inferior vena cava to the right atrium. The right atrium contracts and blood is pushed through the tricuspid valve to the right ventricle. The right ventricle contracts and blood is pushed through the pulmonary valve to the pulmonary artery to the lungs. Oxygenated blood returns from the lungs via pulmonary veins to the left atrium. The left atrium contracts and blood is pushed through the mitral valve to the left ventricle. The left ventricle contracts, the most powerful, and blood is pushed through the aortic valve to the aorta to the whole body. The cycle repeats about 70 times per minute. The right atrium has a thin wall because it only receives blood. The left atrium has a thin wall because it only receives blood. The right ventricle has a medium wall because it pumps to nearby lungs. The left ventricle has the thickest wall because it pumps to the entire body and needs power. The left ventricle is thickest because it has to do the most work, pumping oxygen-rich blood to every cell in your body.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T09:45:00Z",
+    "updated_at": "2024-01-15T09:45:00Z",
+    "source_timestamp": "2024-01-15T09:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 8,
+      "timestamp": "2026-01-08T09:36:24.175324+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 8,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440009",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 9,
+    "part_label": "Slide 8",
+    "type": "slide",
+    "question_type": null,
+    "title": "💓 The Cardiac Cycle: Systole and Diastole",
+    "content": "## What Is the Cardiac Cycle?\n\nThe **cardiac cycle** is the sequence of events that happens during one complete heartbeat. It takes about 0.8 seconds at rest and involves the **contraction and relaxation** of the heart chambers.\n\n### Two Main Phases\n\nThe cardiac cycle has two main phases:\n\n1. **Systole** (SIS-tuh-lee) - **Contraction phase** - chambers squeeze\n2. **Diastole** (die-AS-tuh-lee) - **Relaxation phase** - chambers fill\n\n> 💡 **Memory trick:** **Systole = Squeeze**, **Diastole = Dilate (open/relax)**\n\n## 🔄 Phase 1: Atrial Systole (Atria Contract)\n\n### What Happens\n\n1. **Atria contract** - Both right and left atria squeeze simultaneously\n2. **Blood is pushed down** - Atrial contraction forces blood through the tricuspid and mitral valves\n3. **Ventricles fill** - Blood enters the right and left ventricles\n4. **Valves open** - Tricuspid and mitral valves are open\n5. **Semilunar valves close** - Pulmonary and aortic valves are closed\n\n### Duration\n- About 0.1 seconds\n\n### What You Hear\n- Usually silent (you can't hear atrial contraction)\n\n## 🔄 Phase 2: Ventricular Systole (Ventricles Contract)\n\n### What Happens\n\n1. **Ventricles contract** - Both right and left ventricles squeeze powerfully\n2. **Pressure increases** - Blood pressure inside ventricles rises dramatically\n3. **AV valves close** - Tricuspid and mitral valves slam shut (this prevents backflow)\n4. **Semilunar valves open** - Pulmonary and aortic valves open\n5. **Blood is ejected** - Blood is forced out:\n   - Right ventricle → Pulmonary artery → Lungs\n   - Left ventricle → Aorta → Whole body\n\n### Duration\n- About 0.3 seconds\n\n### What You Hear\n- **First heart sound** (\"LUB\") - caused by AV valves closing\n- This is the \"lub\" in \"lub-dub\"\n\n### The Power Difference\n\n- **Right ventricle** - Moderate force (only pumps to nearby lungs)\n- **Left ventricle** - Maximum force (pumps to entire body)\n- **Result** - Left ventricle wall is much thicker!\n\n## 🔄 Phase 3: Ventricular Diastole (Ventricles Relax)\n\n### What Happens\n\n1. **Ventricles relax** - Both ventricles stop contracting and expand\n2. **Pressure drops** - Blood pressure inside ventricles falls\n3. **Semilunar valves close** - Pulmonary and aortic valves slam shut\n4. **AV valves open** - Tricuspid and mitral valves open\n5. **Ventricles fill** - Blood from atria flows into ventricles\n6. **Atria fill** - Atria receive blood from veins (vena cava and pulmonary veins)\n\n### Duration\n- About 0.4 seconds\n\n### What You Hear\n- **Second heart sound** (\"DUB\") - caused by semilunar valves closing\n- This is the \"dub\" in \"lub-dub\"\n\n## 🎵 Heart Sounds: \"Lub-Dub\"\n\n### What You Hear When You Listen to a Heartbeat\n\n```\nLUB-DUB... LUB-DUB... LUB-DUB...\n```\n\n### What Causes These Sounds\n\n| Sound | When | Cause | Valves |\n|-------|------|-------|--------|\n| **LUB** (First sound) | Early systole | AV valves close | Tricuspid & mitral |\n| **DUB** (Second sound) | Early diastole | Semilunar valves close | Pulmonary & aortic |\n\n> 💡 **Important:** The sounds are caused by valves slamming shut, not by blood flowing!\n\n## 📊 Complete Cardiac Cycle Timeline\n\n```\nTIMELINE OF ONE HEARTBEAT (0.8 seconds at rest)\n\n0.0s - 0.1s: ATRIAL SYSTOLE\n        Atria contract → Blood flows into ventricles\n        Sound: Silent\n        Valves: AV open, semilunar closed\n\n0.1s - 0.4s: VENTRICULAR SYSTOLE\n        Ventricles contract → Blood ejected to lungs & body\n        Sound: \"LUB\" (AV valves close)\n        Valves: AV closed, semilunar open\n\n0.4s - 0.8s: VENTRICULAR DIASTOLE (Relaxation)\n        Ventricles relax → Blood flows in from atria\n        Sound: \"DUB\" (semilunar valves close)\n        Valves: AV open, semilunar closed\n\n0.8s: CYCLE REPEATS\n```\n\n## 💪 Pressure Changes During the Cycle\n\n### Left Ventricle Pressure\n\n| Phase | Pressure | What's Happening |\n|-------|----------|------------------|\n| **Diastole (filling)** | ~5 mmHg | Low - ventricle relaxed |\n| **Early systole** | Rises rapidly | Ventricle contracting |\n| **Peak systole** | ~120 mmHg | Maximum pressure - blood ejected |\n| **Relaxation** | Falls rapidly | Ventricle relaxing |\n\n### Why Pressure Changes Matter\n\n- **High pressure during systole** - Forces semilunar valves open\n- **Low pressure during diastole** - Allows AV valves to open\n- **Pressure gradients** - Create the \"push\" that moves blood\n\n> 💡 **Key Insight:** The whole system works because of pressure differences created by muscle contraction!\n\n## 🔄 Coordination: Why Timing Matters\n\n### The Perfect Sequence\n\n1. **Atria contract first** - Fills ventricles completely\n2. **Pause** - Brief moment before ventricles contract\n3. **Ventricles contract** - Ejects blood powerfully\n4. **All relax** - Chambers refill\n\n### What If Timing Goes Wrong?\n\n- **Atrial fibrillation** - Atria quiver instead of contracting properly\n- **Result** - Ventricles don't fill completely → Less blood pumped\n- **Consequence** - Reduced oxygen delivery to body\n\n## 📈 Heart Rate and the Cardiac Cycle\n\n### At Rest (60-100 beats per minute)\n- One cycle takes about 0.6-1.0 seconds\n\n### During Exercise (up to 200 beats per minute)\n- One cycle takes about 0.3 seconds\n- Systole and diastole both shorten\n- Diastole shortens more than systole\n- Heart still gets time to fill!\n\n## ⚠️ Valve Problems\n\n### Valve Leakage (Regurgitation)\n- **Problem** - Valve doesn't close completely\n- **Result** - Blood flows backward\n- **Sound** - Abnormal \"whooshing\" sound (heart murmur)\n\n### Valve Stenosis (Narrowing)\n- **Problem** - Valve opening is too narrow\n- **Result** - Blood can't flow through easily\n- **Sound** - Abnormal sound as blood turbulently flows through\n\n### Mitral Valve Prolapse\n- **Problem** - Mitral valve bulges backward during systole\n- **Result** - Usually harmless but can cause symptoms\n- **Sound** - Click during systole",
+    "speech_to_text_content": "The Cardiac Cycle: Systole and Diastole. The cardiac cycle is the sequence of events that happens during one complete heartbeat. It takes about 0.8 seconds at rest and involves the contraction and relaxation of the heart chambers. The cardiac cycle has two main phases. Systole is the contraction phase when chambers squeeze. Diastole is the relaxation phase when chambers fill. Systole means squeeze. Diastole means dilate or open or relax. Phase 1 is atrial systole when atria contract. Both right and left atria squeeze simultaneously. Blood is pushed down. Atrial contraction forces blood through the tricuspid and mitral valves. Ventricles fill as blood enters the right and left ventricles. Tricuspid and mitral valves are open. Pulmonary and aortic valves are closed. Atrial systole lasts about 0.1 seconds. It is usually silent because you cannot hear atrial contraction. Phase 2 is ventricular systole when ventricles contract. Both right and left ventricles squeeze powerfully. Blood pressure inside ventricles rises dramatically. Tricuspid and mitral valves slam shut, which prevents backflow. Pulmonary and aortic valves open. Blood is forced out. The right ventricle pumps to the pulmonary artery to the lungs. The left ventricle pumps to the aorta to the whole body. Ventricular systole lasts about 0.3 seconds. The first heart sound, called LUB, is caused by AV valves closing. This is the lub in lub-dub. The right ventricle has moderate force because it only pumps to nearby lungs. The left ventricle has maximum force because it pumps to the entire body. The result is the left ventricle wall is much thicker. Phase 3 is ventricular diastole when ventricles relax. Both ventricles stop contracting and expand. Blood pressure inside ventricles falls. Pulmonary and aortic valves slam shut. Tricuspid and mitral valves open. Blood from atria flows into ventricles. Atria receive blood from veins, the vena cava and pulmonary veins. Ventricular diastole lasts about 0.4 seconds. The second heart sound, called DUB, is caused by semilunar valves closing. This is the dub in lub-dub. When you listen to a heartbeat, you hear lub-dub, lub-dub, lub-dub. The lub or first sound happens during early systole when AV valves close, including the tricuspid and mitral valves. The dub or second sound happens during early diastole when semilunar valves close, including the pulmonary and aortic valves. The sounds are caused by valves slamming shut, not by blood flowing. The timeline of one heartbeat at 0.8 seconds at rest is: 0.0 to 0.1 seconds is atrial systole when atria contract and blood flows into ventricles. It is silent. AV valves are open and semilunar valves are closed. 0.1 to 0.4 seconds is ventricular systole when ventricles contract and blood is ejected to lungs and body. The sound is lub when AV valves close. AV valves are closed and semilunar valves are open. 0.4 to 0.8 seconds is ventricular diastole or relaxation when ventricles relax and blood flows in from atria. The sound is dub when semilunar valves close. AV valves are open and semilunar valves are closed. At 0.8 seconds, the cycle repeats. Left ventricle pressure during diastole or filling is about 5 millimeters of mercury, which is low because the ventricle is relaxed. During early systole, the pressure rises rapidly as the ventricle contracts. At peak systole, the pressure is about 120 millimeters of mercury, which is maximum pressure when blood is ejected. During relaxation, the pressure falls rapidly as the ventricle relaxes. High pressure during systole forces semilunar valves open. Low pressure during diastole allows AV valves to open. Pressure gradients create the push that moves blood. The whole system works because of pressure differences created by muscle contraction. The perfect sequence is atria contract first to fill ventricles completely. There is a brief pause before ventricles contract. Ventricles contract to eject blood powerfully. All relax and chambers refill. If timing goes wrong, atrial fibrillation occurs when atria quiver instead of contracting properly. Ventricles do not fill completely, which results in less blood pumped. The consequence is reduced oxygen delivery to the body. At rest with 60 to 100 beats per minute, one cycle takes about 0.6 to 1.0 seconds. During exercise at up to 200 beats per minute, one cycle takes about 0.3 seconds. Systole and diastole both shorten. Diastole shortens more than systole. The heart still gets time to fill. Valve leakage or regurgitation is when a valve does not close completely. Blood flows backward. An abnormal whooshing sound occurs, called a heart murmur. Valve stenosis or narrowing is when the valve opening is too narrow. Blood cannot flow through easily. An abnormal sound occurs as blood turbulently flows through. Mitral valve prolapse is when the mitral valve bulges backward during systole. It is usually harmless but can cause symptoms. A click occurs during systole.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:00:00Z",
+    "updated_at": "2024-01-15T10:00:00Z",
+    "source_timestamp": "2024-01-15T10:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 9,
+      "timestamp": "2026-01-08T09:36:47.260625+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 9,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440010",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 10,
+    "part_label": "Slide 9",
+    "type": "slide",
+    "question_type": null,
+    "title": "🛣️ Blood Vessels: Arteries, Veins, and Capillaries",
+    "content": "## Overview: Three Types of Blood Vessels\n\nYour circulatory system uses three different types of blood vessels, each adapted for its specific job:\n\n1. **🔴 Arteries** - Carry blood AWAY from the heart\n2. **🔵 Veins** - Carry blood TO the heart\n3. **💫 Capillaries** - Tiny vessels where exchange happens\n\n> 💡 **Memory trick:** **A**rteries carry blood **A**way from heart\n\n## 🔴 Arteries: High-Pressure Pipelines\n\n### Structure of Arteries\n\nArteries have thick, muscular walls with three layers:\n\n1. **Outer layer (tunica adventitia)** - Tough connective tissue for support\n2. **Middle layer (tunica media)** - **Thick smooth muscle** that contracts and relaxes\n3. **Inner layer (tunica intima)** - Smooth endothelium that reduces friction\n\n### Key Features\n\n- **Thick walls** - Can withstand high pressure\n- **Muscular** - Muscle contracts to push blood forward\n- **Elastic fibers** - Stretch and recoil with each heartbeat\n- **Narrow lumen** - Small opening relative to wall thickness\n- **No valves** - One-way flow ensured by heart's pressure\n\n### Why This Structure?\n\n**Arteries face high pressure** because:\n- Blood is pumped directly from the heart\n- Pressure can exceed 120 mmHg during systole\n- Walls must be strong to withstand this force\n\n### Functions of Arterial Walls\n\n1. **Smooth muscle contracts** - Helps push blood forward (vasoconstriction)\n2. **Smooth muscle relaxes** - Allows more blood through (vasodilation)\n3. **Elastic fibers stretch** - Absorb the shock of each heartbeat\n4. **Elastic fibers recoil** - Help maintain pressure between heartbeats\n\n### Blood Pressure in Arteries\n\n- **Systolic pressure** (when heart contracts): ~120 mmHg\n- **Diastolic pressure** (when heart relaxes): ~80 mmHg\n- **Written as**: 120/80 mmHg\n\n> 💡 **Why This Matters:** Healthy blood pressure is essential for delivering oxygen to all cells!\n\n## 🔵 Veins: Low-Pressure Return Routes\n\n### Structure of Veins\n\nVeins have thinner walls than arteries, also with three layers but different proportions:\n\n1. **Outer layer** - Connective tissue (similar to arteries)\n2. **Middle layer** - **Thin smooth muscle** (much less than arteries!)\n3. **Inner layer** - Smooth endothelium (similar to arteries)\n\n### Key Features\n\n- **Thin walls** - Don't need to withstand high pressure\n- **Weak muscle** - Can't push blood strongly\n- **Large lumen** - Wide opening relative to wall thickness\n- **Valves** - One-way valves prevent backflow!\n- **Collapsible** - Flatten when empty\n\n### Why This Structure?\n\n**Veins face low pressure** because:\n- Blood has already given up its pressure in capillaries\n- Pressure is only 10-20 mmHg\n- Thin walls are sufficient\n\n### How Do Veins Return Blood to the Heart?\n\nSince veins are weak and blood pressure is low, veins use:\n\n1. **Muscle pump** - Skeletal muscles contract around veins and squeeze blood upward\n2. **Respiratory pump** - Breathing movements help push blood\n3. **Valves** - Prevent blood from flowing backward\n4. **Heart's pull** - Relaxing ventricles create negative pressure\n\n> 💡 **Why Exercise Helps:** When you exercise, muscles contract and squeeze veins, pushing blood back to the heart more effectively!\n\n### Varicose Veins\n\n**Problem**: Vein valves weaken or fail\n- Blood pools and veins bulge\n- Often painful\n- More common in legs\n- Can be genetic or from prolonged standing\n\n## 💫 Capillaries: Where Exchange Happens\n\n### Structure of Capillaries\n\n**Capillaries are TINY** - only about 5-10 micrometers in diameter (thinner than a human hair!)\n\n**Capillary wall structure**:\n- **Only ONE layer** - Single layer of endothelial cells\n- **No muscle** - Just thin cells\n- **No connective tissue** - Minimal support\n- **Extremely thin** - About 0.5 micrometers thick\n\n> 💡 **Key Insight:** Capillaries are the ONLY blood vessels where exchange occurs - this thin wall is essential!\n\n### Why This Simple Structure?\n\nThe one-cell-thick wall allows:\n- **Fast diffusion** of oxygen and nutrients out\n- **Fast diffusion** of waste products in\n- **Efficient exchange** with tissue fluid\n\n### Capillary Functions\n\n1. **Deliver oxygen** - O₂ diffuses from blood to cells\n2. **Deliver nutrients** - Glucose, amino acids, etc. diffuse out\n3. **Collect waste** - CO₂ and other wastes diffuse in\n4. **Exchange hormones** - Hormones delivered to target cells\n5. **Exchange ions** - Water and ions move in/out\n\n### How Blood Flows Through Capillaries\n\n```\nArtery → Arteriole → Capillary network → Venule → Vein\n                    (exchange here!)\n```\n\n- **Slow flow** in capillaries - Allows time for exchange\n- **Large total area** - Millions of capillaries create huge surface area\n- **Pressure drops** - From ~80 mmHg to ~20 mmHg\n\n## 📊 Comparison Table: Arteries vs. Veins vs. Capillaries\n\n| Feature | Artery | Vein | Capillary |\n|---------|--------|------|----------|\n| **Wall thickness** | Thick | Thin | Ultra-thin (1 cell) |\n| **Muscle layer** | Thick | Thin | None |\n| **Lumen size** | Small | Large | Tiny (5-10 μm) |\n| **Pressure** | High (120/80) | Low (10-20) | Medium (35→15) |\n| **Valves** | None | Yes | None |\n| **Blood flow** | Fast | Slow | Very slow |\n| **Function** | Transport away | Return to heart | Exchange |\n| **Elastic fibers** | Many | Few | None |\n\n## 🔄 Adaptation to Function\n\n### Arteries: Built for High Pressure\n- Thick muscular walls withstand pressure\n- Elastic fibers absorb shock\n- Muscular control adjusts blood flow\n\n### Veins: Built for Low Pressure\n- Thin walls adequate for low pressure\n- Valves prevent backflow\n- Collapsible design allows large volume\n\n### Capillaries: Built for Exchange\n- Ultra-thin walls allow diffusion\n- Huge surface area maximizes exchange\n- Slow flow allows time for exchange\n\n> 💡 **Key Principle:** Each vessel type's structure perfectly matches its function!",
+    "speech_to_text_content": "Blood Vessels: Arteries, Veins, and Capillaries. Your circulatory system uses three different types of blood vessels, each adapted for its specific job. Arteries carry blood away from the heart. Veins carry blood to the heart. Capillaries are tiny vessels where exchange happens. A memory trick is arteries carry blood away from heart. Arteries are high-pressure pipelines. Arteries have thick, muscular walls with three layers. The outer layer, called tunica adventitia, is tough connective tissue for support. The middle layer, called tunica media, is thick smooth muscle that contracts and relaxes. The inner layer, called tunica intima, is smooth endothelium that reduces friction. Arteries have thick walls that can withstand high pressure. They are muscular, and muscle contracts to push blood forward. They have elastic fibers that stretch and recoil with each heartbeat. They have a narrow lumen, which is a small opening relative to wall thickness. They have no valves because one-way flow is ensured by the heart's pressure. Arteries face high pressure because blood is pumped directly from the heart. Pressure can exceed 120 millimeters of mercury during systole. Walls must be strong to withstand this force. The smooth muscle in arterial walls contracts to help push blood forward, called vasoconstriction. Smooth muscle relaxes to allow more blood through, called vasodilation. Elastic fibers stretch to absorb the shock of each heartbeat. Elastic fibers recoil to help maintain pressure between heartbeats. Blood pressure in arteries is approximately 120 millimeters of mercury systolic pressure when the heart contracts. Diastolic pressure is approximately 80 millimeters of mercury when the heart relaxes. It is written as 120 per 80 millimeters of mercury. Healthy blood pressure is essential for delivering oxygen to all cells. Veins are low-pressure return routes. Veins have thinner walls than arteries, also with three layers but different proportions. The outer layer is connective tissue, similar to arteries. The middle layer is thin smooth muscle, much less than arteries. The inner layer is smooth endothelium, similar to arteries. Veins have thin walls because they don't need to withstand high pressure. They have weak muscle because they can't push blood strongly. They have a large lumen, which is a wide opening relative to wall thickness. They have valves, which are one-way valves that prevent backflow. They are collapsible and flatten when empty. Veins face low pressure because blood has already given up its pressure in capillaries. Pressure is only 10 to 20 millimeters of mercury. Thin walls are sufficient. Since veins are weak and blood pressure is low, veins use several mechanisms to return blood to the heart. The muscle pump occurs when skeletal muscles contract around veins and squeeze blood upward. The respiratory pump occurs when breathing movements help push blood. Valves prevent blood from flowing backward. The heart's pull occurs when relaxing ventricles create negative pressure. When you exercise, muscles contract and squeeze veins, pushing blood back to the heart more effectively. Varicose veins occur when vein valves weaken or fail. Blood pools and veins bulge. They are often painful. They are more common in legs. They can be genetic or from prolonged standing. Capillaries are where exchange happens. Capillaries are tiny, only about 5 to 10 micrometers in diameter, thinner than a human hair. The capillary wall structure has only one layer, which is a single layer of endothelial cells. It has no muscle, just thin cells. It has no connective tissue, minimal support. It is extremely thin, about 0.5 micrometers thick. Capillaries are the only blood vessels where exchange occurs. This thin wall is essential. The one-cell-thick wall allows fast diffusion of oxygen and nutrients out, fast diffusion of waste products in, and efficient exchange with tissue fluid. Capillaries deliver oxygen as oxygen diffuses from blood to cells. They deliver nutrients as glucose and amino acids diffuse out. They collect waste as carbon dioxide and other wastes diffuse in. They exchange hormones as hormones are delivered to target cells. They exchange ions as water and ions move in and out. Blood flows through an artery to an arteriole to a capillary network to a venule to a vein, with exchange happening in the capillary network. Flow is slow in capillaries, which allows time for exchange. There is a large total area because millions of capillaries create a huge surface area. Pressure drops from approximately 80 millimeters of mercury to approximately 20 millimeters of mercury. Arteries have thick walls, thick muscle layer, small lumen, high pressure, no valves, and fast blood flow. Veins have thin walls, thin muscle layer, large lumen, low pressure, yes valves, and slow blood flow. Capillaries have ultra-thin walls, no muscle layer, tiny lumen of 5 to 10 micrometers, medium pressure of 35 to 15, no valves, and very slow blood flow. Arteries are built for high pressure with thick muscular walls that withstand pressure, elastic fibers that absorb shock, and muscular control that adjusts blood flow. Veins are built for low pressure with thin walls adequate for low pressure, valves that prevent backflow, and collapsible design that allows large volume. Capillaries are built for exchange with ultra-thin walls that allow diffusion, huge surface area that maximizes exchange, and slow flow that allows time for exchange. Each vessel type's structure perfectly matches its function.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:15:00Z",
+    "updated_at": "2024-01-15T10:15:00Z",
+    "source_timestamp": "2024-01-15T10:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 10,
+      "timestamp": "2026-01-08T09:37:09.648794+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 10,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440011",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 11,
+    "part_label": "Slide 10",
+    "type": "slide",
+    "question_type": null,
+    "title": "🫀 Blood Vessels to and from Key Organs",
+    "content": "## The Main Blood Vessels\n\nLet's trace the major blood vessels that connect the heart to the lungs, liver, and kidneys - the organs that do most of the transport and filtering work.\n\n## 🫁 Lungs: Gas Exchange\n\n### Vessels to the Lungs\n\n**Pulmonary Artery**\n- Carries **deoxygenated blood** from the right ventricle\n- The **only artery** that carries deoxygenated blood (unusual!)\n- Splits into left and right branches to each lung\n- Blood is dark red/blue in color\n\n### Vessels from the Lungs\n\n**Pulmonary Veins**\n- Carry **oxygenated blood** from the lungs\n- The **only veins** that carry oxygenated blood (unusual!)\n- Four veins total (two from each lung)\n- Blood is bright red in color\n- Return blood to the left atrium\n\n### Why This Matters\n\n- **Gas exchange** occurs in the lungs\n- CO₂ is removed from blood and exhaled\n- O₂ is picked up from inhaled air\n- The lungs are the only organ where blood gets oxygenated\n\n## 🧠 Brain and Body: The Aorta\n\n### The Aorta: The Main Highway\n\n**Aorta**\n- The **largest artery** in the body\n- Carries **oxygenated blood** from the left ventricle\n- Branches into smaller arteries that supply the entire body\n- Pressure is highest here: ~120/80 mmHg\n\n### Branches of the Aorta\n\n1. **Coronary arteries** - Supply the heart muscle itself\n2. **Carotid arteries** - Supply the brain and head\n3. **Subclavian arteries** - Supply the arms\n4. **Celiac artery** - Supplies the stomach and liver\n5. **Superior mesenteric artery** - Supplies small intestine\n6. **Renal arteries** - Supply the kidneys\n7. **Iliac arteries** - Supply the legs\n\n> 💡 **Key Insight:** Every organ gets blood from the aorta - it's like the main distribution hub!\n\n## 🫀 Heart: Coronary Circulation\n\n### The Heart Needs Its Own Blood Supply!\n\nYou might think the heart is surrounded by blood, so it should get oxygen from there. **Wrong!** The heart muscle needs its own dedicated blood vessels.\n\n### Coronary Arteries\n\n**Left Coronary Artery**\n- Branches from the aorta just above the aortic valve\n- Supplies the left ventricle and left atrium\n- Carries oxygenated blood\n\n**Right Coronary Artery**\n- Also branches from the aorta\n- Supplies the right ventricle and right atrium\n- Carries oxygenated blood\n\n### Coronary Veins\n\n**Coronary Sinus**\n- Collects deoxygenated blood from the heart muscle\n- Drains directly into the right atrium\n- Returns blood for reoxygenation in the lungs\n\n### Why Coronary Circulation Matters\n\n- The heart is a **muscle** that needs oxygen to contract\n- Without blood supply, the heart cannot function\n- Even 1 minute without blood can cause damage!\n\n## 🫘 Liver: The Processing Center\n\n### Unique Feature: Double Blood Supply\n\nThe liver is unusual - it receives blood from TWO sources:\n\n### 1. Hepatic Artery\n\n- Carries **oxygenated blood** from the aorta\n- Provides oxygen for liver cells to function\n- Only 25% of liver's blood supply\n- High oxygen content\n\n### 2. Hepatic Portal Vein\n\n- Carries **nutrient-rich blood** from the digestive system\n- Blood comes from the small intestine (via superior mesenteric vein)\n- Contains absorbed glucose, amino acids, vitamins, etc.\n- 75% of liver's blood supply\n- Lower oxygen content but high in nutrients\n\n> 💡 **Why This Design:** The liver needs to process nutrients from food, so it gets blood directly from the digestive system!\n\n### Leaving the Liver\n\n**Hepatic Vein**\n- Carries processed blood from the liver\n- Blood now contains:\n  - Stored glucose (as glycogen)\n  - Synthesized proteins\n  - Detoxified substances\n- Drains into the inferior vena cava\n- Returns to the right atrium\n\n### Liver Functions via Blood\n\n1. **Nutrient processing** - Converts glucose to glycogen for storage\n2. **Protein synthesis** - Makes plasma proteins (like albumin)\n3. **Detoxification** - Removes poisons and drugs\n4. **Vitamin storage** - Stores fat-soluble vitamins (A, D, E, K)\n5. **Bile production** - Makes bile for fat digestion\n\n## 🫘 Kidneys: The Filtration Centers\n\n### Vessels to the Kidneys\n\n**Renal Arteries** (one to each kidney)\n- Branch from the aorta\n- Carry **oxygenated blood**\n- Blood enters the kidney at high pressure\n- This pressure is essential for filtration!\n\n### Filtration in the Kidney\n\nInside the kidney:\n\n1. **Afferent arteriole** - Carries blood INTO the glomerulus (filtering unit)\n2. **Glomerulus** - Tiny blood vessel network where filtration occurs\n   - Small molecules (glucose, ions, urea, water) filter out\n   - Large molecules (proteins, blood cells) stay in blood\n3. **Efferent arteriole** - Carries blood OUT of the glomerulus\n\n### Vessels from the Kidneys\n\n**Renal Veins** (one from each kidney)\n- Carry **deoxygenated blood** from the kidneys\n- Blood now contains:\n  - Urea (waste product)\n  - Excess ions\n  - Excess water\n- Drain into the inferior vena cava\n- Return to the right atrium\n\n### Why High Pressure in Kidneys?\n\n- **Filtration requires pressure** - Blood pressure pushes small molecules through capillary wall\n- **Pressure gradient** - Forces water and solutes out of blood\n- **Without pressure** - Filtration cannot occur\n\n### Kidney Functions via Blood\n\n1. **Filtration** - Removes urea and excess water\n2. **Reabsorption** - Returns useful substances (glucose, ions) to blood\n3. **Secretion** - Adds more waste to filtrate\n4. **Concentration** - Produces concentrated urine\n5. **Regulation** - Controls water and ion balance\n\n## 📊 Summary: Vessels to Major Organs\n\n| Organ | Artery In | Vein Out | Special Feature |\n|-------|-----------|----------|------------------|\n| **Lungs** | Pulmonary artery (deoxygenated) | Pulmonary veins (oxygenated) | Only gas exchange organ |\n| **Heart** | Coronary arteries | Coronary sinus | Heart muscles need own supply |\n| **Liver** | Hepatic artery + Portal vein | Hepatic vein | Double blood supply |\n| **Kidneys** | Renal arteries | Renal veins | High pressure needed |\n| **Body** | Aorta (branches) | Vena cava | Main distribution |\n\n## 🔄 Complete Circulation Path\n\n```\nRight Atrium ← Vena Cava (from body) + Coronary sinus\n    ↓\nRight Ventricle\n    ↓\nPulmonary Artery → LUNGS (gas exchange)\n    ↓\nPulmonary Veins → Left Atrium\n    ↓\nLeft Ventricle\n    ↓\nAorta → Branches to:\n    • Heart (coronary arteries)\n    • Brain (carotid arteries)\n    • Liver (hepatic artery)\n    • Kidneys (renal arteries)\n    • Rest of body\n    ↓\nCapillary beds in all organs (exchange)\n    ↓\nVeins return to Vena Cava\n    ↓\nRight Atrium (cycle repeats)\n```",
+    "speech_to_text_content": "Blood Vessels to and from Key Organs. Let's trace the major blood vessels that connect the heart to the lungs, liver, and kidneys, the organs that do most of the transport and filtering work. The lungs perform gas exchange. The pulmonary artery carries deoxygenated blood from the right ventricle. It is the only artery that carries deoxygenated blood, which is unusual. It splits into left and right branches to each lung. The blood is dark red or blue in color. Pulmonary veins carry oxygenated blood from the lungs. They are the only veins that carry oxygenated blood, which is unusual. There are four veins total, two from each lung. The blood is bright red in color. They return blood to the left atrium. Gas exchange occurs in the lungs. Carbon dioxide is removed from blood and exhaled. Oxygen is picked up from inhaled air. The lungs are the only organ where blood gets oxygenated. The aorta is the main highway. The aorta is the largest artery in the body. It carries oxygenated blood from the left ventricle. It branches into smaller arteries that supply the entire body. Pressure is highest here: approximately 120 per 80 millimeters of mercury. The branches of the aorta are: coronary arteries supply the heart muscle itself, carotid arteries supply the brain and head, subclavian arteries supply the arms, celiac artery supplies the stomach and liver, superior mesenteric artery supplies the small intestine, renal arteries supply the kidneys, and iliac arteries supply the legs. Every organ gets blood from the aorta, so it is like the main distribution hub. The heart needs its own blood supply. You might think the heart is surrounded by blood, so it should get oxygen from there, but that is wrong. The heart muscle needs its own dedicated blood vessels. The left coronary artery branches from the aorta just above the aortic valve. It supplies the left ventricle and left atrium. It carries oxygenated blood. The right coronary artery also branches from the aorta. It supplies the right ventricle and right atrium. It carries oxygenated blood. The coronary sinus collects deoxygenated blood from the heart muscle. It drains directly into the right atrium. It returns blood for reoxygenation in the lungs. The heart is a muscle that needs oxygen to contract. Without blood supply, the heart cannot function. Even 1 minute without blood can cause damage. The liver is the processing center and has a unique feature of double blood supply. It receives blood from two sources. The hepatic artery carries oxygenated blood from the aorta. It provides oxygen for liver cells to function. It is only 25 percent of the liver's blood supply. It has high oxygen content. The hepatic portal vein carries nutrient-rich blood from the digestive system. Blood comes from the small intestine via the superior mesenteric vein. It contains absorbed glucose, amino acids, vitamins, and so on. It is 75 percent of the liver's blood supply. It has lower oxygen content but is high in nutrients. The liver needs to process nutrients from food, so it gets blood directly from the digestive system. The hepatic vein carries processed blood from the liver. Blood now contains stored glucose as glycogen, synthesized proteins, and detoxified substances. It drains into the inferior vena cava. It returns to the right atrium. Liver functions via blood include nutrient processing as it converts glucose to glycogen for storage, protein synthesis as it makes plasma proteins like albumin, detoxification as it removes poisons and drugs, vitamin storage as it stores fat-soluble vitamins A, D, E, and K, and bile production as it makes bile for fat digestion. The kidneys are the filtration centers. Renal arteries, one to each kidney, branch from the aorta. They carry oxygenated blood. Blood enters the kidney at high pressure. This pressure is essential for filtration. Inside the kidney, the afferent arteriole carries blood into the glomerulus, which is the filtering unit. The glomerulus is a tiny blood vessel network where filtration occurs. Small molecules, including glucose, ions, urea, and water, filter out. Large molecules, including proteins and blood cells, stay in blood. The efferent arteriole carries blood out of the glomerulus. Renal veins, one from each kidney, carry deoxygenated blood from the kidneys. Blood now contains urea, which is a waste product, excess ions, and excess water. They drain into the inferior vena cava. They return to the right atrium. High pressure in kidneys is needed because filtration requires pressure. Blood pressure pushes small molecules through the capillary wall. A pressure gradient forces water and solutes out of blood. Without pressure, filtration cannot occur. Kidney functions via blood include filtration as it removes urea and excess water, reabsorption as it returns useful substances like glucose and ions to blood, secretion as it adds more waste to filtrate, concentration as it produces concentrated urine, and regulation as it controls water and ion balance. The complete circulation path is: right atrium receives blood from the vena cava from the body and the coronary sinus. Blood goes to the right ventricle. Blood goes to the pulmonary artery to the lungs for gas exchange. Blood goes to the pulmonary veins to the left atrium. Blood goes to the left ventricle. Blood goes to the aorta and branches to the heart via coronary arteries, to the brain via carotid arteries, to the liver via hepatic artery, to the kidneys via renal arteries, and to the rest of the body. Blood goes to capillary beds in all organs for exchange. Blood goes through veins back to the vena cava. Blood returns to the right atrium and the cycle repeats.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z",
+    "source_timestamp": "2024-01-15T10:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 11,
+      "timestamp": "2026-01-08T09:37:33.069394+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 11,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440012",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 12,
+    "part_label": "Slide 11",
+    "type": "slide",
+    "question_type": null,
+    "title": "💧 Capillaries and Tissue Fluid: The Exchange System",
+    "content": "## The Problem: How Do Cells Get Supplies?\n\nBlood vessels can't reach every single cell directly. Your body has **100 trillion cells**, but you can't have capillaries touching every one!\n\nSolution: **Tissue fluid** - a middleman between blood and cells!\n\n## 💧 What Is Tissue Fluid?\n\n**Tissue fluid** (also called **interstitial fluid**) is the fluid that bathes all your cells.\n\n### Composition\n\nTissue fluid is similar to plasma but with key differences:\n\n| Component | In Plasma | In Tissue Fluid |\n|-----------|-----------|------------------|\n| **Water** | 90% | 95% |\n| **Glucose** | Yes | Yes |\n| **Amino acids** | Yes | Yes |\n| **Ions** | Yes | Yes |\n| **Oxygen** | Yes | Yes |\n| **Hormones** | Yes | Yes |\n| **Large proteins** | Yes | **NO** |\n| **Red blood cells** | Yes | **NO** |\n| **White blood cells** | Yes | Few |\n\n> 💡 **Key Difference:** Large proteins and blood cells stay in blood - they're too big to squeeze through capillary walls!\n\n## 🔄 The Three-Step Exchange Process\n\n### Step 1: Filtration (at arterial end of capillary)\n\n**What happens**: Small molecules are pushed OUT of blood into tissue fluid\n\n**Why it happens**:\n- **Blood pressure** (35 mmHg) is HIGH at the arterial end\n- **Oncotic pressure** (25 mmHg) from proteins tries to pull water back in\n- **Net force** = 35 - 25 = 10 mmHg pushing outward\n\n**What gets filtered out**:\n- ✓ Oxygen\n- ✓ Glucose\n- ✓ Amino acids\n- ✓ Ions (sodium, potassium, etc.)\n- ✓ Water\n- ✓ Small hormones\n- ✗ Large proteins (stay in blood)\n- ✗ Red blood cells (stay in blood)\n\n### Step 2: Diffusion (throughout capillary)\n\n**What happens**: Cells take what they need from tissue fluid\n\n**Oxygen exchange**:\n- Cells respire and use oxygen\n- Oxygen concentration in tissue fluid drops\n- More oxygen diffuses from capillary blood\n- Gradient maintained: blood → tissue → cells\n\n**Nutrient exchange**:\n- Cells use glucose and amino acids\n- Concentration drops in tissue fluid\n- More nutrients diffuse from blood\n- Cells get continuous supply\n\n**Waste exchange**:\n- Cells produce CO₂ and other wastes\n- Waste concentration rises in tissue fluid\n- Wastes diffuse into capillary blood\n- Wastes carried away for removal\n\n> 💡 **Concentration Gradients Drive Exchange:** Diffusion continues as long as concentrations differ!\n\n### Step 3: Reabsorption (at venous end of capillary)\n\n**What happens**: Fluid is pulled BACK into blood\n\n**Why it happens**:\n- **Blood pressure** (15 mmHg) is LOW at the venous end\n- **Oncotic pressure** (25 mmHg) from proteins pulls water back in\n- **Net force** = 25 - 15 = 10 mmHg pulling inward\n\n**What gets reabsorbed**:\n- Water\n- Ions\n- Waste products (CO₂, urea)\n- Small molecules\n- Cells' waste products\n\n> 💡 **Balance:** About 85% of fluid filtered out is reabsorbed. What happens to the other 15%?\n\n## 🧴 The Lymphatic System: The Missing 15%\n\n### The Problem\n\n- Capillaries filter out 20 liters of fluid per day\n- Capillaries reabsorb 17 liters per day\n- **3 liters are LEFT in tissue spaces!**\n- If this accumulates, you get **edema** (swelling)\n\n### The Solution: Lymph and Lymph Vessels\n\n**Lymph** is tissue fluid that enters lymph vessels\n\n**Lymph vessels**:\n- Tiny, thin-walled vessels (like capillaries)\n- Start in tissue spaces\n- Collect excess tissue fluid\n- Transport it back to blood\n- Eventually return to venous system\n\n**How lymph moves**:\n- No pump (unlike blood with the heart)\n- Uses the same mechanisms as veins:\n  - Muscle pump (skeletal muscles squeeze)\n  - Respiratory pump (breathing movements)\n  - One-way valves (prevent backflow)\n\n### Lymph Nodes\n\n**Lymph nodes** are small organs along lymph vessels\n\n**Functions**:\n1. **Filter lymph** - Remove bacteria and dead cells\n2. **Immune defense** - White blood cells attack pathogens\n3. **Produce antibodies** - Lymphocytes make defense proteins\n4. **Trap antigens** - Foreign particles get stuck for immune response\n\n## 📊 Pressure Changes in Capillary Exchange\n\n```\nARTERIAL END (Filtration):\n    Blood pressure:    35 mmHg (outward)\n    Oncotic pressure: -25 mmHg (inward)\n    Net pressure:    = 10 mmHg outward\n    Result: FILTRATION ✓\n\nMIDDLE (Diffusion):\n    Exchange of O₂, nutrients, waste\n    No net fluid movement\n\nVENOUS END (Reabsorption):\n    Blood pressure:    15 mmHg (outward)\n    Oncotic pressure: -25 mmHg (inward)\n    Net pressure:    = 10 mmHg inward\n    Result: REABSORPTION ✓\n```\n\n## ⚠️ When Exchange Goes Wrong\n\n### Edema (Swelling)\n\n**Causes**:\n1. **Increased capillary pressure** - Blood backs up (heart failure, venous obstruction)\n2. **Decreased plasma proteins** - Malnutrition, liver disease, kidney disease\n3. **Blocked lymph vessels** - Cancer, surgery, infection\n4. **Increased capillary permeability** - Inflammation, allergies, burns\n\n**Result**: Too much fluid stays in tissue spaces → Swelling\n\n**Example**: \n- Swollen ankles after long flights (pressure backs up)\n- Swollen belly in severe malnutrition (low protein)\n- Swollen arm after lymph node removal (blocked drainage)\n\n### Dehydration\n\n**Causes**:\n1. **Decreased blood volume** - Hemorrhage, severe diarrhea\n2. **Increased plasma osmotic pressure** - Too much salt, dehydration\n3. **Decreased capillary pressure** - Shock, severe illness\n\n**Result**: Too much fluid reabsorbed → Cells shrivel\n\n## 🔄 Complete Exchange Cycle\n\n```\n1. Blood enters capillary at arterial end\n                ↓\n2. Filtration: Small molecules pushed out by blood pressure\n                ↓\n3. Tissue fluid bathes cells\n                ↓\n4. Diffusion: Oxygen and nutrients IN, waste OUT\n                ↓\n5. Venous end of capillary\n                ↓\n6. Reabsorption: Fluid pulled back by oncotic pressure\n                ↓\n7. Excess fluid enters lymph vessels\n                ↓\n8. Lymph returns to blood via lymph vessels\n                ↓\n9. Cycle continues!\n```\n\n## 💡 Why This System Is Brilliant\n\n1. **Efficient delivery** - All cells are close to tissue fluid\n2. **Flexible exchange** - Rates adjust to cell needs\n3. **Waste removal** - Toxins removed before they accumulate\n4. **Immune function** - Lymph nodes filter and mount immune response\n5. **Pressure regulation** - Prevents fluid accumulation\n\n> 💡 **Key Insight:** The capillary-tissue fluid-lymph system is a masterpiece of transport design - it gets supplies to every cell and removes all waste!",
+    "speech_to_text_content": "Capillaries and Tissue Fluid: The Exchange System. The problem is how do cells get supplies. Blood vessels cannot reach every single cell directly. Your body has 100 trillion cells, but you cannot have capillaries touching every one. The solution is tissue fluid, a middleman between blood and cells. Tissue fluid, also called interstitial fluid, is the fluid that bathes all your cells. Tissue fluid is similar to plasma but with key differences. Water makes up 90 percent of plasma and 95 percent of tissue fluid. Glucose, amino acids, ions, oxygen, and hormones are in both plasma and tissue fluid. Large proteins are in plasma but not in tissue fluid. Red blood cells are in plasma but not in tissue fluid. White blood cells are in plasma but few in tissue fluid. The key difference is that large proteins and blood cells stay in blood because they are too big to squeeze through capillary walls. The three-step exchange process starts with filtration at the arterial end of the capillary. Small molecules are pushed out of blood into tissue fluid. Blood pressure at 35 millimeters of mercury is high at the arterial end. Oncotic pressure from proteins at 25 millimeters of mercury tries to pull water back in. The net force equals 35 minus 25 equals 10 millimeters of mercury pushing outward. What gets filtered out includes oxygen, glucose, amino acids, ions like sodium and potassium, water, and small hormones. What stays in blood includes large proteins and red blood cells. Step 2 is diffusion throughout the capillary. Cells take what they need from tissue fluid. Cells respire and use oxygen, and the oxygen concentration in tissue fluid drops. More oxygen diffuses from capillary blood. The gradient is maintained from blood to tissue to cells. Cells use glucose and amino acids, and the concentration drops in tissue fluid. More nutrients diffuse from blood. Cells get a continuous supply. Cells produce carbon dioxide and other wastes, and waste concentration rises in tissue fluid. Wastes diffuse into capillary blood. Wastes are carried away for removal. Concentration gradients drive exchange as long as concentrations differ. Step 3 is reabsorption at the venous end of the capillary. Fluid is pulled back into blood. Blood pressure at 15 millimeters of mercury is low at the venous end. Oncotic pressure from proteins at 25 millimeters of mercury pulls water back in. The net force equals 25 minus 15 equals 10 millimeters of mercury pulling inward. What gets reabsorbed includes water, ions, waste products like carbon dioxide and urea, small molecules, and cells' waste products. About 85 percent of fluid filtered out is reabsorbed. What happens to the other 15 percent? The lymphatic system handles the missing 15 percent. Capillaries filter out 20 liters of fluid per day. Capillaries reabsorb 17 liters per day. 3 liters are left in tissue spaces. If this accumulates, you get edema, which is swelling. Lymph is tissue fluid that enters lymph vessels. Lymph vessels are tiny, thin-walled vessels like capillaries. They start in tissue spaces. They collect excess tissue fluid. They transport it back to blood. They eventually return to the venous system. Lymph moves without a pump, unlike blood with the heart. It uses the same mechanisms as veins: the muscle pump when skeletal muscles squeeze, the respiratory pump from breathing movements, and one-way valves that prevent backflow. Lymph nodes are small organs along lymph vessels. They filter lymph and remove bacteria and dead cells. White blood cells attack pathogens. Lymphocytes make defense proteins. Foreign particles get stuck for immune response. The pressure changes in capillary exchange are: at the arterial end, blood pressure is 35 millimeters of mercury outward, oncotic pressure is minus 25 millimeters of mercury inward, net pressure is 10 millimeters of mercury outward, and the result is filtration. In the middle, there is exchange of oxygen, nutrients, and waste with no net fluid movement. At the venous end, blood pressure is 15 millimeters of mercury outward, oncotic pressure is minus 25 millimeters of mercury inward, net pressure is 10 millimeters of mercury inward, and the result is reabsorption. Edema or swelling has causes including increased capillary pressure when blood backs up from heart failure or venous obstruction, decreased plasma proteins from malnutrition, liver disease, or kidney disease, blocked lymph vessels from cancer, surgery, or infection, and increased capillary permeability from inflammation, allergies, or burns. The result is too much fluid stays in tissue spaces, causing swelling. Examples include swollen ankles after long flights from pressure backing up, swollen belly in severe malnutrition from low protein, and swollen arm after lymph node removal from blocked drainage. Dehydration has causes including decreased blood volume from hemorrhage or severe diarrhea, increased plasma osmotic pressure from too much salt or dehydration, and decreased capillary pressure from shock or severe illness. The result is too much fluid is reabsorbed and cells shrivel.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T10:45:00Z",
+    "updated_at": "2024-01-15T10:45:00Z",
+    "source_timestamp": "2024-01-15T10:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 12,
+      "timestamp": "2026-01-08T09:37:57.205447+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 12,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440013",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 13,
+    "part_label": "Slide 12",
+    "type": "slide",
+    "question_type": null,
+    "title": "❤️ Coronary Heart Disease: When Blood Supply Fails",
+    "content": "## What Is Coronary Heart Disease?\n\n**Coronary heart disease (CHD)** occurs when the **coronary arteries** that supply the heart muscle become **blocked or narrowed**, reducing blood flow to the heart.\n\n### The Consequence\n\n- **Less oxygen reaches heart muscle**\n- **Heart cannot contract properly**\n- **Heart attack** if blood supply is completely cut off\n- **Can be fatal** - thousands of deaths annually in Singapore\n\n> ⚠️ **Critical:** Coronary heart disease is one of the leading causes of death worldwide!\n\n## 🛑 How Coronary Arteries Get Blocked\n\n### The Process: Atherosclerosis\n\n**Atherosclerosis** is the buildup of fatty deposits in artery walls.\n\n**Step 1: Damage to Artery Wall**\n- High blood pressure damages the endothelium (inner lining)\n- High cholesterol damages the lining\n- Smoking damages the lining\n- Inflammation damages the lining\n\n**Step 2: Plaque Formation**\n- **LDL cholesterol** (\"bad cholesterol\") enters the damaged area\n- **Macrophages** (white blood cells) engulf the cholesterol\n- **Fatty deposits** accumulate in the artery wall\n- Forms a **plaque** (fatty bump)\n\n**Step 3: Plaque Growth**\n- Plaque gradually gets bigger\n- Artery lumen (opening) gets smaller\n- Blood flow is restricted\n- Artery becomes stiff and less elastic\n\n**Step 4: Thrombosis (Clot Formation)**\n- Plaque ruptures (breaks open)\n- Blood platelets rush to repair the \"wound\"\n- A **blood clot** forms at the rupture site\n- **Clot completely blocks** the artery\n- Blood supply to heart muscle stops → **Heart attack!**\n\n## 💔 What Happens During a Heart Attack\n\n### Immediate Effects\n\n1. **Oxygen deprivation** - Heart muscle cells stop getting oxygen\n2. **Energy crisis** - Cells can't make ATP (energy) without oxygen\n3. **Cell death** - Heart muscle cells die within minutes\n4. **Scar tissue** - Dead cells are replaced with scar tissue\n5. **Reduced function** - Scarred area cannot contract properly\n\n### Symptoms\n\n- **Chest pain** - Severe, crushing pain (often described as \"elephant sitting on chest\")\n- **Shortness of breath** - Heart can't pump blood effectively\n- **Sweating** - Cold, clammy sweat\n- **Nausea** - Digestive symptoms\n- **Pain in arm, neck, jaw** - Referred pain from heart\n- **Sudden collapse** - In severe cases\n\n### Timeline\n\n- **First few minutes** - Reversible damage if blood flow restored\n- **After 20-30 minutes** - Permanent damage begins\n- **After 4-6 hours** - Extensive cell death\n- **After 24 hours** - Maximum damage done\n\n> ⚠️ **Critical:** Every minute counts in a heart attack! Call emergency services immediately!\n\n## 🔴 Risk Factors for Coronary Heart Disease\n\n### Modifiable Risk Factors (You Can Change!)\n\n#### 1. **Unhealthy Diet** ❌\n\n**High in**:\n- **Saturated fats** - Found in red meat, full-fat dairy, butter\n- **Trans fats** - Found in processed foods, fried foods\n- **Cholesterol** - Found in animal products\n- **Salt** - Increases blood pressure\n- **Sugar** - Increases weight and inflammation\n\n**Effects**:\n- Raises **LDL cholesterol** (bad cholesterol)\n- Increases blood pressure\n- Causes obesity\n- Promotes inflammation\n- Damages artery walls\n\n**Healthy alternatives**:\n- ✓ Unsaturated fats (olive oil, fish, nuts)\n- ✓ Whole grains instead of refined grains\n- ✓ Fruits and vegetables (high in fiber)\n- ✓ Lean proteins (fish, chicken, legumes)\n- ✓ Low salt intake\n\n#### 2. **Sedentary Lifestyle** (Not Exercising) ❌\n\n**Effects of inactivity**:\n- Weakens the heart muscle\n- Increases blood pressure\n- Raises cholesterol levels\n- Increases weight (obesity)\n- Reduces HDL cholesterol (good cholesterol)\n- Increases inflammation\n- Makes blood clot more easily\n\n**Exercise benefits** ✓:\n- **Strengthens heart** - More efficient pumping\n- **Lowers blood pressure** - Reduces artery stress\n- **Raises HDL cholesterol** - Clears bad cholesterol\n- **Reduces weight** - Less strain on heart\n- **Reduces inflammation** - Protects artery walls\n- **Improves circulation** - Better oxygen delivery\n\n**Recommended exercise**:\n- **150 minutes** of moderate aerobic activity per week\n- Examples: Brisk walking, jogging, swimming, cycling\n- **Strength training** 2+ times per week\n\n#### 3. **Smoking** ❌\n\n**How smoking damages the heart**:\n\n- **Carbon monoxide** in smoke reduces oxygen in blood\n- **Nicotine** increases heart rate and blood pressure\n- **Smoke chemicals** damage artery lining\n- **Increases inflammation** in arteries\n- **Makes blood clot more easily** (thicker blood)\n- **Reduces HDL cholesterol** (good cholesterol)\n- **Increases LDL cholesterol** (bad cholesterol)\n\n**Risk**:\n- Smokers have **2-4 times higher risk** of heart attack\n- Even **secondhand smoke** increases risk\n- **Quitting helps immediately** - Benefits start within hours\n\n#### 4. **Obesity** ❌\n\n**Effects**:\n- Increases blood pressure\n- Increases cholesterol\n- Increases blood sugar\n- Increases inflammation\n- Puts extra strain on heart\n\n**Healthy weight**:\n- BMI (Body Mass Index) of 18.5-24.9\n- Gradual weight loss through diet and exercise\n\n#### 5. **Stress and Poor Mental Health** ❌\n\n**Effects**:\n- Stress hormones increase blood pressure\n- Promotes inflammation\n- Increases heart rate\n- Makes blood clot more easily\n- Encourages unhealthy behaviors (smoking, overeating)\n\n**Management**:\n- ✓ Meditation and relaxation\n- ✓ Exercise\n- ✓ Social support\n- ✓ Adequate sleep\n- ✓ Professional help if needed\n\n### Non-Modifiable Risk Factors (You Can't Change)\n\n#### 1. **Age** ⏳\n- Risk increases with age\n- Men: Risk increases after age 45\n- Women: Risk increases after age 55 (menopause)\n\n#### 2. **Family History** 👨‍👩‍👦\n- Genetic predisposition to high cholesterol\n- Genetic predisposition to high blood pressure\n- If parents had heart disease, risk is higher\n\n#### 3. **Gender** ♂️♀️\n- Men have higher risk at younger ages\n- Women's risk increases after menopause (loss of estrogen protection)\n\n#### 4. **Ethnicity** 🌍\n- Some ethnic groups have higher risk\n- In Singapore: Higher risk in certain populations\n\n## 🛡️ Prevention Strategies\n\n### Lifestyle Changes (Most Important!)\n\n1. **Eat a heart-healthy diet**\n   - Low in saturated fat and salt\n   - High in fruits, vegetables, whole grains\n   - Include omega-3 fish oils\n   - Limit processed foods\n\n2. **Exercise regularly**\n   - At least 150 minutes per week\n   - Mix cardio and strength training\n   - Even small amounts help\n\n3. **Don't smoke**\n   - Quit immediately if you smoke\n   - Avoid secondhand smoke\n\n4. **Maintain healthy weight**\n   - Lose weight if overweight\n   - Gradual loss is best\n\n5. **Manage stress**\n   - Regular relaxation\n   - Good sleep (7-9 hours)\n   - Social support\n\n6. **Control blood pressure**\n   - Check regularly\n   - Keep below 120/80 mmHg\n   - Reduce salt intake\n\n7. **Control cholesterol**\n   - Know your numbers\n   - LDL (bad) should be low\n   - HDL (good) should be high\n\n### Medical Treatments\n\n1. **Medications**:\n   - **Statins** - Lower cholesterol\n   - **ACE inhibitors** - Lower blood pressure\n   - **Beta-blockers** - Slow heart rate\n   - **Aspirin** - Prevent clots\n\n2. **Surgical interventions**:\n   - **Angioplasty** - Inflate balloon to open blocked artery\n   - **Stent placement** - Insert tube to keep artery open\n   - **Bypass surgery** - Create new route for blood around blockage\n\n## 📊 Singapore's Health Challenge\n\n### Statistics\n\n- **Coronary heart disease** is a leading cause of death in Singapore\n- **Lifestyle diseases** increasing due to:\n  - Urbanization\n  - Sedentary work\n  - Processed food availability\n  - Stress\n\n### Public Health Response\n\n- **Health Promotion Board** campaigns\n- **Workplace wellness** programs\n- **Community screening** for risk factors\n- **Education** about prevention\n- **Access to cardiac care** and rehabilitation\n\n> 💡 **Key Message:** Most coronary heart disease is **preventable** through lifestyle changes! The power is in your hands!\n\n## 🎯 Your Personal Prevention Plan\n\n**Start today with:**\n\n1. ✅ Eat one healthy meal\n2. ✅ Exercise for 30 minutes\n3. ✅ Get 8 hours of sleep\n4. ✅ Manage one source of stress\n5. ✅ Avoid smoking and secondhand smoke\n\n**Remember**: Small changes add up to big health benefits!",
+    "speech_to_text_content": "Coronary Heart Disease: When Blood Supply Fails. Coronary heart disease, or CHD, occurs when the coronary arteries that supply the heart muscle become blocked or narrowed, reducing blood flow to the heart. The consequence is less oxygen reaches the heart muscle. The heart cannot contract properly. A heart attack occurs if blood supply is completely cut off. It can be fatal, with thousands of deaths annually in Singapore. Coronary heart disease is one of the leading causes of death worldwide. Atherosclerosis is the buildup of fatty deposits in artery walls. Step 1 is damage to artery wall. High blood pressure damages the endothelium, which is the inner lining. High cholesterol damages the lining. Smoking damages the lining. Inflammation damages the lining. Step 2 is plaque formation. LDL cholesterol, or bad cholesterol, enters the damaged area. Macrophages, which are white blood cells, engulf the cholesterol. Fatty deposits accumulate in the artery wall. A plaque, which is a fatty bump, forms. Step 3 is plaque growth. Plaque gradually gets bigger. The artery lumen, or opening, gets smaller. Blood flow is restricted. The artery becomes stiff and less elastic. Step 4 is thrombosis or clot formation. Plaque ruptures or breaks open. Blood platelets rush to repair the wound. A blood clot forms at the rupture site. The clot completely blocks the artery. Blood supply to the heart muscle stops, causing a heart attack. During a heart attack, the immediate effects are oxygen deprivation when the heart muscle cells stop getting oxygen. There is an energy crisis because cells cannot make ATP, which is energy, without oxygen. Heart muscle cells die within minutes. Dead cells are replaced with scar tissue. The scarred area cannot contract properly. Symptoms include chest pain, which is severe and crushing pain, often described as an elephant sitting on the chest. Shortness of breath occurs because the heart cannot pump blood effectively. Cold, clammy sweat occurs. Digestive symptoms like nausea occur. Pain in the arm, neck, and jaw occurs from referred pain from the heart. Sudden collapse occurs in severe cases. The timeline is: the first few minutes show reversible damage if blood flow is restored. After 20 to 30 minutes, permanent damage begins. After 4 to 6 hours, there is extensive cell death. After 24 hours, maximum damage is done. Every minute counts in a heart attack. Call emergency services immediately. Modifiable risk factors are factors you can change. Unhealthy diet is high in saturated fats found in red meat, full-fat dairy, and butter. It is high in trans fats found in processed foods and fried foods. It is high in cholesterol found in animal products. It is high in salt, which increases blood pressure. It is high in sugar, which increases weight and inflammation. Effects include raising LDL cholesterol, which is bad cholesterol. It increases blood pressure. It causes obesity. It promotes inflammation. It damages artery walls. Healthy alternatives include unsaturated fats like olive oil, fish, and nuts. Whole grains instead of refined grains. Fruits and vegetables, which are high in fiber. Lean proteins like fish, chicken, and legumes. Low salt intake. A sedentary lifestyle or not exercising has effects including weakening the heart muscle. It increases blood pressure. It raises cholesterol levels. It increases weight from obesity. It reduces HDL cholesterol, which is good cholesterol. It increases inflammation. It makes blood clot more easily. Exercise benefits include strengthening the heart for more efficient pumping. It lowers blood pressure, reducing artery stress. It raises HDL cholesterol to clear bad cholesterol. It reduces weight, reducing strain on the heart. It reduces inflammation, protecting artery walls. It improves circulation for better oxygen delivery. Recommended exercise is 150 minutes of moderate aerobic activity per week. Examples include brisk walking, jogging, swimming, and cycling. Strength training is 2 or more times per week. Smoking damages the heart in several ways. Carbon monoxide in smoke reduces oxygen in blood. Nicotine increases heart rate and blood pressure. Smoke chemicals damage the artery lining. It increases inflammation in arteries. It makes blood clot more easily, creating thicker blood. It reduces HDL cholesterol, which is good cholesterol. It increases LDL cholesterol, which is bad cholesterol. Smokers have 2 to 4 times higher risk of heart attack. Even secondhand smoke increases risk. Quitting helps immediately, with benefits starting within hours. Obesity has effects including increasing blood pressure. It increases cholesterol. It increases blood sugar. It increases inflammation. It puts extra strain on the heart. A healthy weight has a BMI of 18.5 to 24.9. Gradual weight loss through diet and exercise is recommended. Stress and poor mental health have effects including stress hormones increasing blood pressure. It promotes inflammation. It increases heart rate. It makes blood clot more easily. It encourages unhealthy behaviors like smoking and overeating. Management includes meditation and relaxation. Exercise. Social support. Adequate sleep. Professional help if needed. Non-modifiable risk factors are factors you cannot change. Age increases risk with age. For men, risk increases after age 45. For women, risk increases after age 55 at menopause. Family history includes genetic predisposition to high cholesterol and high blood pressure. If parents had heart disease, risk is higher. Gender: men have higher risk at younger ages. Women's risk increases after menopause from loss of estrogen protection. Ethnicity: some ethnic groups have higher risk. In Singapore, higher risk exists in certain populations. Prevention strategies include lifestyle changes, which are most important. Eat a heart-healthy diet that is low in saturated fat and salt and high in fruits, vegetables, and whole grains. Include omega-3 fish oils. Limit processed foods. Exercise regularly for at least 150 minutes per week. Mix cardio and strength training. Even small amounts help. Do not smoke. Quit immediately if you smoke. Avoid secondhand smoke. Maintain a healthy weight. Lose weight if overweight. Gradual loss is best. Manage stress with regular relaxation, good sleep of 7 to 9 hours, and social support. Control blood pressure by checking regularly and keeping it below 120 per 80 millimeters of mercury. Reduce salt intake. Control cholesterol by knowing your numbers. Low-density lipoprotein or bad cholesterol should be low. High-density lipoprotein or good cholesterol should be high. Medical treatments include medications. Statins lower cholesterol. ACE inhibitors lower blood pressure. Beta-blockers slow heart rate. Aspirin prevents clots. Surgical interventions include angioplasty, which inflates a balloon to open a blocked artery. Stent placement inserts a tube to keep the artery open. Bypass surgery creates a new route for blood around the blockage. Singapore's health challenge is that coronary heart disease is a leading cause of death in Singapore. Lifestyle diseases are increasing due to urbanization, sedentary work, processed food availability, and stress. The public health response includes Health Promotion Board campaigns, workplace wellness programs, community screening for risk factors, education about prevention, and access to cardiac care and rehabilitation. Most coronary heart disease is preventable through lifestyle changes. The power is in your hands. Start today with eating one healthy meal, exercising for 30 minutes, getting 8 hours of sleep, managing one source of stress, and avoiding smoking and secondhand smoke. Small changes add up to big health benefits.",
+    "answer": null,
+    "options": [],
+    "explanation": null,
+    "created_at": "2024-01-15T11:00:00Z",
+    "updated_at": "2024-01-15T11:00:00Z",
+    "source_timestamp": "2024-01-15T11:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 13,
+      "timestamp": "2026-01-08T09:38:27.096162+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 13,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440014",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 14,
+    "part_label": "Question 1",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Blood Composition and Function",
+    "content": "Which of the following components of blood is responsible for transporting oxygen throughout the body?",
+    "speech_to_text_content": "Which of the following components of blood is responsible for transporting oxygen throughout the body?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440014",
+        "option_id": "550e8400-e29b-41d4-a716-446655440014-opt1",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt1",
+        "option_text": "Red blood cells containing hemoglobin",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt2",
+        "option_text": "Plasma proteins",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt3",
+        "option_text": "White blood cells",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440014-opt4",
+        "option_text": "Platelets",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Red blood cells containing hemoglobin**. According to the chapter content, red blood cells contain the red pigment **hemoglobin**, which binds reversibly with oxygen. Hemoglobin picks up oxygen in the lungs (forming oxyhemoglobin) and releases it in body tissues where oxygen concentration is lower. This is the primary oxygen transport mechanism in the blood. The biconcave shape of red blood cells increases surface area for faster gas exchange, and the lack of a nucleus provides more space for hemoglobin storage. Plasma proteins transport other substances but not oxygen. White blood cells provide immune defense through phagocytosis and antibody formation. Platelets are involved in blood clotting. Therefore, red blood cells with hemoglobin are exclusively responsible for oxygen transport.",
+    "created_at": "2024-01-15T11:15:00Z",
+    "updated_at": "2024-01-15T11:15:00Z",
+    "source_timestamp": "2024-01-15T11:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 14,
+      "timestamp": "2026-01-08T09:38:31.597524+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 14,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440015",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 15,
+    "part_label": "Question 2",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Carbon Dioxide Transport",
+    "content": "In the tissues, carbon dioxide produced by respiring cells is transported in the blood mainly as:",
+    "speech_to_text_content": "In the tissues, carbon dioxide produced by respiring cells is transported in the blood mainly as:",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440015",
+        "option_id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt1",
+        "option_text": "Dissolved carbon dioxide gas in plasma",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt2",
+        "option_text": "Hydrogen carbonate ions (HCO₃⁻) in plasma",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt3",
+        "option_text": "Bound to hemoglobin in red blood cells",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440015-opt4",
+        "option_text": "As carbonic acid in red blood cells",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Hydrogen carbonate ions (HCO₃⁻) in plasma**. According to the chapter content on carbon dioxide transport, the process involves: (1) CO₂ enters red blood cells from respiring tissues, (2) Inside RBCs, the enzyme **carbonic anhydrase** catalyzes the reaction: CO₂ + H₂O → H₂CO₃ (carbonic acid), (3) Carbonic acid then breaks down: H₂CO₃ → HCO₃⁻ (hydrogen carbonate ions) + H⁺, (4) **Most CO₂ is transported as hydrogen carbonate ions in the plasma**. This is the most soluble form and allows efficient transport. While some CO₂ binds directly to hemoglobin (forming carbaminohemoglobin) and small amounts dissolve directly in plasma, the primary transport mechanism is as hydrogen carbonate ions. This system is so efficient because carbonic anhydrase is one of the fastest enzymes in the body, enabling rapid conversion and transport of CO₂ away from tissues.",
+    "created_at": "2024-01-15T11:30:00Z",
+    "updated_at": "2024-01-15T11:30:00Z",
+    "source_timestamp": "2024-01-15T11:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 15,
+      "timestamp": "2026-01-08T09:38:36.491266+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 15,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440016",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 16,
+    "part_label": "Question 3",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Blood Groups and Transfusion Compatibility",
+    "content": "A person with blood type AB is known as the universal recipient because:",
+    "speech_to_text_content": "A person with blood type AB is known as the universal recipient because:",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440016",
+        "option_id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt1",
+        "option_text": "Their red blood cells have no antigens",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt2",
+        "option_text": "Their plasma contains no anti-A or anti-B antibodies",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt3",
+        "option_text": "Their red blood cells contain both A and B antigens on the surface",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440016-opt4",
+        "option_text": "They can only receive blood from type AB donors",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Their plasma contains no anti-A or anti-B antibodies**. According to the chapter content, type AB blood has: (1) **A and B antigens on red blood cells**, (2) **No antibodies in plasma** (neither anti-A nor anti-B). During transfusion, the recipient's plasma antibodies attack donor red blood cells if they are incompatible. Since AB individuals have no antibodies, they will not attack any donor blood, regardless of whether it is type A, B, AB, or O. This makes them the universal recipient. Option 1 is incorrect because type O (not AB) has no antigens. Option 3 is true but is not the reason they are universal recipients - having both antigens is what matters for the donor's perspective, but what makes them universal recipients is the lack of antibodies. Option 4 is incorrect because AB can receive from all types. The key principle is: the recipient's plasma antibodies determine compatibility based on the donor's red blood cell antigens.",
+    "created_at": "2024-01-15T11:45:00Z",
+    "updated_at": "2024-01-15T11:45:00Z",
+    "source_timestamp": "2024-01-15T11:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 16,
+      "timestamp": "2026-01-08T09:38:41.489939+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 16,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440017",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 17,
+    "part_label": "Question 4",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Heart Structure and Chamber Function",
+    "content": "Which chamber of the heart has the thickest muscular wall and why?",
+    "speech_to_text_content": "Which chamber of the heart has the thickest muscular wall and why?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440017",
+        "option_id": "550e8400-e29b-41d4-a716-446655440017-opt3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt1",
+        "option_text": "Right atrium because it receives blood from the body",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt2",
+        "option_text": "Right ventricle because it pumps blood to the lungs",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt3",
+        "option_text": "Left ventricle because it pumps oxygenated blood to the entire body",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440017-opt4",
+        "option_text": "Left atrium because it receives oxygenated blood from the lungs",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Left ventricle because it pumps oxygenated blood to the entire body**. According to the chapter content, the left ventricle has the **thickest wall of all chambers**. The reason is that the left ventricle must pump blood with enough force to deliver oxygen-rich blood to every cell in the entire body through the aorta and its branches. This requires the most powerful contraction of any chamber. In contrast: atria (both right and left) are thin-walled because they only receive blood, not pump forcefully; the right ventricle has a medium-thickness wall because it only needs to pump blood to the nearby lungs. The structure of each chamber is perfectly adapted to its function - the more work required, the thicker the muscle. This is a fundamental principle: **Structure relates to function**. The left ventricle's thick myocardium enables the high pressure (~120 mmHg systolic) needed to distribute blood throughout the body.",
+    "created_at": "2024-01-15T12:00:00Z",
+    "updated_at": "2024-01-15T12:00:00Z",
+    "source_timestamp": "2024-01-15T12:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 17,
+      "timestamp": "2026-01-08T09:38:45.989880+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 17,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440018",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 18,
+    "part_label": "Question 5",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Cardiac Cycle - Valve Function",
+    "content": "During ventricular systole, which valves are open and which are closed?",
+    "speech_to_text_content": "During ventricular systole, which valves are open and which are closed?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440018",
+        "option_id": "550e8400-e29b-41d4-a716-446655440018-opt3",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt1",
+        "option_text": "AV valves open, semilunar valves closed",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt2",
+        "option_text": "AV valves closed, semilunar valves closed",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt3",
+        "option_text": "AV valves closed, semilunar valves open",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440018-opt4",
+        "option_text": "AV valves open, semilunar valves open",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **AV valves closed, semilunar valves open**. According to the chapter content on the cardiac cycle, during ventricular systole (when ventricles contract): (1) **AV valves (tricuspid and mitral) close** - This happens immediately when ventricular pressure rises, preventing backflow of blood into the atria. The closing of these valves creates the first heart sound (\"LUB\"). (2) **Semilunar valves (pulmonary and aortic) open** - As ventricular pressure continues to rise, it exceeds the pressure in the pulmonary artery and aorta, forcing these valves open. Blood is ejected from the right ventricle to the lungs and from the left ventricle to the body. This sequence ensures one-way blood flow: blood is pushed out of the ventricles while being prevented from flowing backward into the atria. The pressure gradients created by muscular contraction control valve opening and closing - it is a mechanical system requiring no active valve muscles.",
+    "created_at": "2024-01-15T12:15:00Z",
+    "updated_at": "2024-01-15T12:15:00Z",
+    "source_timestamp": "2024-01-15T12:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 18,
+      "timestamp": "2026-01-08T09:38:50.623188+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 18,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440019",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 19,
+    "part_label": "Question 6",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Blood Vessel Structure and Function",
+    "content": "Which of the following best explains why arteries have thick muscular walls while veins have thin walls?",
+    "speech_to_text_content": "Which of the following best explains why arteries have thick muscular walls while veins have thin walls?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440019",
+        "option_id": "550e8400-e29b-41d4-a716-446655440019-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt1",
+        "option_text": "Arteries need to be thicker to carry more blood volume than veins",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt2",
+        "option_text": "Arteries face high blood pressure from the heart and need strong walls to withstand it; veins face low pressure so thin walls are sufficient",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt3",
+        "option_text": "Arteries contain oxygenated blood while veins contain deoxygenated blood",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440019-opt4",
+        "option_text": "Arteries are longer than veins so they need thicker walls for support",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Arteries face high blood pressure from the heart and need strong walls to withstand it; veins face low pressure so thin walls are sufficient**. According to the chapter content on blood vessels: **Arteries** carry blood directly from the heart at high pressure (120/80 mmHg systolic/diastolic). They have thick muscular walls with elastic fibers that can: (1) withstand the high pressure without bursting, (2) contract to help push blood forward (vasoconstriction), (3) stretch and recoil to absorb the shock of each heartbeat. **Veins** carry blood back to the heart at low pressure (10-20 mmHg) because blood has already given up its pressure in the capillaries. They have thin walls because low pressure does not require thick, muscular support. Instead, veins use: (1) one-way valves to prevent backflow, (2) skeletal muscle pump (muscles squeezing veins), (3) respiratory pump (breathing movements). This is a perfect example of **structure-function relationship**: each vessel type's structure is adapted to the pressure it must handle. Option 1 is incorrect because veins actually have larger lumens (wider openings) than arteries. Option 3 is irrelevant to wall thickness. Option 4 is incorrect and unsupported.",
+    "created_at": "2024-01-15T12:30:00Z",
+    "updated_at": "2024-01-15T12:30:00Z",
+    "source_timestamp": "2024-01-15T12:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 19,
+      "timestamp": "2026-01-08T09:38:56.521778+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 19,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440020",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 20,
+    "part_label": "Question 7",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Capillary Exchange Process",
+    "content": "At the arterial end of a capillary, filtration occurs because:",
+    "speech_to_text_content": "At the arterial end of a capillary, filtration occurs because:",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440020",
+        "option_id": "550e8400-e29b-41d4-a716-446655440020-opt1",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt1",
+        "option_text": "Blood pressure (35 mmHg) exceeds oncotic pressure (25 mmHg), creating a net outward force",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt2",
+        "option_text": "Oncotic pressure (25 mmHg) exceeds blood pressure (35 mmHg), pulling fluid out",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt3",
+        "option_text": "Capillary walls are permeable to large proteins",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440020-opt4",
+        "option_text": "Red blood cells actively push fluid out of the capillary",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Blood pressure (35 mmHg) exceeds oncotic pressure (25 mmHg), creating a net outward force**. According to the chapter content on capillary exchange: **At the arterial end of the capillary:** - **Blood pressure** = 35 mmHg (pushing fluid outward) - **Oncotic pressure** (from proteins in plasma) = 25 mmHg (pulling fluid inward) - **Net pressure** = 35 - 25 = **10 mmHg outward** This net outward force pushes small molecules (oxygen, glucose, amino acids, ions, water) out of the blood and into tissue fluid. Large proteins and red blood cells cannot pass through the capillary wall, so they remain in the blood. This filtration is essential for delivering oxygen and nutrients to cells. Option 2 is incorrect because the numbers are reversed - blood pressure exceeds oncotic pressure. Option 3 is incorrect because capillary walls are NOT permeable to large proteins. Option 4 is incorrect because this is a passive pressure-driven process, not active transport. The pressure gradient is the driving force for filtration.",
+    "created_at": "2024-01-15T12:45:00Z",
+    "updated_at": "2024-01-15T12:45:00Z",
+    "source_timestamp": "2024-01-15T12:45:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 20,
+      "timestamp": "2026-01-08T09:39:01.335934+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 20,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440021",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 21,
+    "part_label": "Question 8",
+    "type": "question",
+    "question_type": "mcq",
+    "title": "Coronary Heart Disease Risk Factors",
+    "content": "Which of the following is a modifiable risk factor for coronary heart disease that can be controlled through lifestyle changes?",
+    "speech_to_text_content": "Which of the following is a modifiable risk factor for coronary heart disease that can be controlled through lifestyle changes?",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440021",
+        "option_id": "550e8400-e29b-41d4-a716-446655440021-opt2",
+        "answer_text": null,
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt1",
+        "option_text": "Age and family history",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt2",
+        "option_text": "Smoking and sedentary lifestyle",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt3",
+        "option_text": "Gender and ethnicity",
+        "imageUrl": null
+      },
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440021-opt4",
+        "option_text": "Age and gender",
+        "imageUrl": null
+      }
+    ],
+    "explanation": "The correct answer is **Smoking and sedentary lifestyle**. According to the chapter content on coronary heart disease risk factors: **Modifiable risk factors** (can be changed): - **Smoking**: Reduces oxygen in blood, increases heart rate and blood pressure, damages artery lining, increases inflammation, makes blood clot more easily. Smokers have 2-4 times higher risk. Quitting helps immediately. - **Sedentary lifestyle**: Weakens heart muscle, increases blood pressure, raises cholesterol, increases weight, reduces HDL (good cholesterol), increases inflammation, makes blood clot more easily. Exercise (150 minutes per week) reverses these effects. - **Unhealthy diet**: High in saturated fats, trans fats, cholesterol, salt, and sugar. - **Obesity**: Increases blood pressure, cholesterol, blood sugar, and inflammation. - **Stress**: Increases blood pressure, promotes inflammation, increases heart rate. **Non-modifiable risk factors** (cannot be changed): - **Age**: Risk increases with age - **Family history**: Genetic predisposition - **Gender**: Men have higher risk at younger ages; women's risk increases after menopause - **Ethnicity**: Some populations have higher risk Options 1, 3, and 4 all contain non-modifiable factors. The chapter emphasizes that most coronary heart disease is **preventable through lifestyle changes**, putting the power in individuals' hands.",
+    "created_at": "2024-01-15T13:00:00Z",
+    "updated_at": "2024-01-15T13:00:00Z",
+    "source_timestamp": "2024-01-15T13:00:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 21,
+      "timestamp": "2026-01-08T09:39:06.417958+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 21,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440022",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 22,
+    "part_label": "Question 9",
+    "type": "question",
+    "question_type": "open",
+    "title": "Blood Clotting Process",
+    "content": "Describe the blood clotting process, starting from when a blood vessel is damaged until a stable clot forms. Include the roles of platelets, thrombokinase, prothrombin, thrombin, fibrinogen, and fibrin.",
+    "speech_to_text_content": "Describe the blood clotting process, starting from when a blood vessel is damaged until a stable clot forms. Include the roles of platelets, thrombokinase, prothrombin, thrombin, fibrinogen, and fibrin.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440022-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440022",
+        "option_id": null,
+        "answer_text": "The blood clotting process occurs in the following steps: (1) Injury to blood vessel: Damage occurs to the blood vessel wall. (2) Platelet activation and adhesion: Platelets immediately detect the damage and adhere (stick) to the damaged tissue. More platelets arrive and stick to each other, forming a platelet plug. (3) Release of clotting factors: Both damaged tissue and activated platelets release thrombokinase, an enzyme that triggers the clotting cascade. (4) Prothrombin activation: Thrombokinase acts on prothrombin (a protein in plasma) in the presence of calcium ions to convert it into thrombin, which is an active enzyme. (5) Fibrin formation: Thrombin acts on fibrinogen (a soluble protein in plasma) and converts it into fibrin, which forms insoluble threads. (6) Clot formation: Fibrin threads form a mesh-like network that traps red blood cells and platelets, creating a solid blood clot that seals the wound. This prevents excessive blood loss, seals the wound to prevent bacterial entry, and provides a framework for tissue healing. The process requires calcium ions, which is why calcium is essential for health.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "A complete answer should include all of the following key points from the chapter content: (1) **Injury and platelet activation**: Blood vessel is damaged, platelets detect damage and adhere to damaged tissue, more platelets accumulate forming a platelet plug. (2) **Release of clotting factors**: Both damaged tissue and platelets release thrombokinase (an enzyme). (3) **Prothrombin activation**: Thrombokinase + Prothrombin + Calcium ions → Thrombin (enzyme). This step requires calcium, which is why calcium is essential. (4) **Fibrin formation**: Thrombin + Fibrinogen → Fibrin (insoluble threads). Fibrinogen is a soluble protein in plasma; fibrin is the insoluble product. (5) **Clot formation**: Fibrin threads trap red blood cells and platelets, forming a solid clot that seals the wound. (6) **Benefits**: Prevents excessive blood loss, seals wound to prevent bacterial entry, provides framework for healing. A good answer should explain the sequence clearly and explain what each component does. Students should understand that this is a cascade where each step triggers the next, and that calcium is essential. The answer should distinguish between soluble fibrinogen and insoluble fibrin.",
+    "created_at": "2024-01-15T13:15:00Z",
+    "updated_at": "2024-01-15T13:15:00Z",
+    "source_timestamp": "2024-01-15T13:15:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 22,
+      "timestamp": "2026-01-08T09:39:13.176618+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 22,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440023",
+    "syllabus_id": "bio_o_level_transport_humans",
+    "parent_id": null,
+    "order": 23,
+    "part_label": "Question 10",
+    "type": "question",
+    "question_type": "open",
+    "title": "Adaptation of Blood Vessels to Function",
+    "content": "Explain how the structures of arteries, veins, and capillaries are specifically adapted to their different functions in the circulatory system.",
+    "speech_to_text_content": "Explain how the structures of arteries, veins, and capillaries are specifically adapted to their different functions in the circulatory system.",
+    "answer": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440023-ans",
+        "question_id": "550e8400-e29b-41d4-a716-446655440023",
+        "option_id": null,
+        "answer_text": "**Arteries** are adapted for transporting blood away from the heart at high pressure: Thick muscular walls with elastic fibers withstand high blood pressure (120/80 mmHg). The thick smooth muscle layer (tunica media) contracts to help push blood forward and can control blood flow through vasoconstriction and vasodilation. Elastic fibers stretch to absorb the shock of each heartbeat and recoil to maintain pressure between beats. Narrow lumens relative to wall thickness maintain high pressure. No valves are needed because heart pressure ensures one-way flow. **Veins** are adapted for returning blood to the heart at low pressure: Thin walls are adequate for low pressure (10-20 mmHg) because blood has already given up its pressure in capillaries. Thin smooth muscle layer cannot push blood strongly but allows flexibility. Large lumens relative to wall thickness allow high volume storage. One-way valves prevent backflow of blood. Collapsible design allows veins to flatten when empty and accommodate varying blood volumes. Rely on muscle pump (skeletal muscle contractions), respiratory pump (breathing), and heart's pull for blood return. **Capillaries** are adapted for efficient exchange of materials: Ultra-thin walls (only one cell layer thick) allow rapid diffusion of oxygen, nutrients, and waste products. Extremely narrow diameter (5-10 micrometers) allows red blood cells to barely fit through, maximizing contact time with tissue. Huge total surface area from millions of capillaries maximizes exchange capacity. Slow blood flow allows time for diffusion of materials. No muscle or connective tissue reduces barriers to diffusion. Each structure is perfectly matched to its function: arteries handle high pressure, veins handle low pressure and volume, and capillaries maximize exchange.",
+        "answer_boolean": null,
+        "answer_draw_file": null,
+        "order_index": 1
+      }
+    ],
+    "options": [],
+    "explanation": "A complete answer should include structure-function relationships for all three vessel types: **Arteries:** Should mention thick muscular walls, elastic fibers, narrow lumens, no valves, and explain that these features allow them to withstand high pressure (120/80 mmHg) and help push blood forward. Should explain vasoconstriction and vasodilation. **Veins:** Should mention thin walls, thin muscle, large lumens, one-way valves, collapsibility, and explain that these features allow them to handle low pressure (10-20 mmHg), store large blood volumes, and prevent backflow. Should mention alternative pumping mechanisms (muscle pump, respiratory pump). **Capillaries:** Should mention ultra-thin one-cell-thick walls, tiny diameter (5-10 micrometers), large total surface area, and slow blood flow. Should explain that these features maximize diffusion of oxygen, nutrients, and waste products between blood and tissue fluid. The answer should emphasize the principle of **structure-function relationship** - that each vessel type's structure is perfectly adapted to its specific role. A good answer will explain WHY each structural feature is important, not just list the features. Students should understand that this is a system where different vessel types work together: arteries deliver blood, capillaries exchange materials, and veins return blood.",
+    "created_at": "2024-01-15T13:30:00Z",
+    "updated_at": "2024-01-15T13:30:00Z",
+    "source_timestamp": "2024-01-15T13:30:00Z",
+    "notes_url": null,
+    "_stream_meta": {
+      "order": 23,
+      "timestamp": "2026-01-08T09:39:21.240012+00:00",
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "progressive": true,
+      "node_order": 23,
+      "node_name": "GENERATE_TEACHING_MATERIALS_NODE",
+      "was_streamed": true
+    }
+  }
+]

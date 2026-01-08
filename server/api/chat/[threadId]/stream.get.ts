@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
         enqueue: (data: string) => {
           try {
             controller.enqueue(encoder.encode(data));
-          } catch (err) {
+          } catch {
             // Stream closed, will be cleaned up
           }
         },

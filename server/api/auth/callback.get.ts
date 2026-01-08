@@ -32,9 +32,9 @@ export default defineEventHandler(async (event) => {
       .single();
 
     // Set session cookies (this happens automatically with serverSupabaseClient)
-    // Redirect to protected page or dashboard
+    // Redirect to protected page or chat
     if (userInfo?.onboarding_completed) {
-      await sendRedirect(event, '/dashboard', 302);
+      await sendRedirect(event, '/chat/eddy/new', 302);
     } else {
       await sendRedirect(event, '/onboarding', 302);
     }

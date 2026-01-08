@@ -356,7 +356,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           method: 'GET',
           headers: {
             ...buildHeaders(),
-            'Accept': 'text/event-stream',
+            Accept: 'text/event-stream',
           },
           signal: abortController.signal,
         });
@@ -698,7 +698,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           method: 'GET',
           headers: {
             ...buildHeaders(),
-            'Accept': 'text/event-stream',
+            Accept: 'text/event-stream',
           },
           signal: abortController.signal,
         });
