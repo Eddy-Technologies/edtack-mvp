@@ -355,7 +355,7 @@ const handleRegister = async () => {
         description: 'Welcome! Your account has been created.',
         color: 'green'
       });
-      await navigateTo('/dashboard');
+      await navigateTo('/chat/eddy/new');
     } else {
       // Email verification is ON - redirect to login
       toast.add({
