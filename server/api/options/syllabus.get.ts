@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const { data: syllabusTypes, error } = await supabase
       .from('syllabus_types')
       .select('syllabus_type, description')
+      .in('syllabus_type', ['SG_O_LEVEL', 'SG_N_LEVEL'])
       .order('syllabus_type');
 
     if (error) {
