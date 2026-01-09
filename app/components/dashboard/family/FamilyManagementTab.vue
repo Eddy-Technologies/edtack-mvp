@@ -18,6 +18,9 @@
 
     <!-- Main Content -->
     <template v-else>
+      <!-- Instructions -->
+      <FamilyManagementInstructions :is-parent="isParent" />
+
       <!-- Header with Action -->
       <div class="flex items-center justify-between">
         <div>
@@ -349,6 +352,7 @@ import { ref, computed, onMounted } from 'vue';
 import InviteMemberModal from './InviteMemberModal.vue';
 import RemoveMemberModal from './RemoveMemberModal.vue';
 import TransferCreditsModal from './TransferCreditsModal.vue';
+import FamilyManagementInstructions from './FamilyManagementInstructions.vue';
 import Button from '~/components/common/Button.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 
