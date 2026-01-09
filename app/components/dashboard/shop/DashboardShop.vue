@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="space-y-6">
+    <!-- Instructions -->
+    <ShopInstructions :is-parent="isParent" />
+
     <!-- Search and Category Filter -->
-    <div class="mb-6 flex flex-col sm:flex-row gap-3">
+    <div class="flex flex-col sm:flex-row gap-3">
       <!-- Search Bar -->
       <div class="relative flex-1">
         <input
@@ -146,6 +149,7 @@ import { ref, computed, onMounted } from 'vue';
 import Button from '../../common/Button.vue';
 import DashboardSkeleton from '../../common/DashboardSkeleton.vue';
 import ProductModal from './ProductModal.vue';
+import ShopInstructions from './ShopInstructions.vue';
 
 const props = defineProps<{
   cart: Array<any>;
@@ -156,6 +160,10 @@ const emit = defineEmits<{
 }>();
 
 const toast = useToast();
+
+// Get user role
+const meStore = useMeStore();
+const { isParent } = storeToRefs(meStore);
 
 // Products data from database
 const items = ref<any[]>([]);

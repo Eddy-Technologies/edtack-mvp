@@ -8,6 +8,9 @@
       </div>
     </div>
 
+    <!-- How Study Works -->
+    <StudyInstructions />
+
     <!-- Filters -->
     <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4">
       <div class="flex flex-wrap items-end gap-4">
@@ -438,6 +441,7 @@ import { useResponsive } from '~/composables/useResponsive';
 import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
+import StudyInstructions from '~/components/dashboard/StudyInstructions.vue';
 
 const { isMobile } = useResponsive();
 

@@ -21,22 +21,9 @@
         </div>
       </div>
 
-      <!-- Information Banner -->
-      <div class="mb-4 sm:mb-8 bg-blue-50/80 backdrop-blur-sm border border-blue-200/60 rounded-xl p-3 sm:p-5 transition-all hover:shadow-sm">
-        <div class="flex items-start gap-3 sm:gap-4">
-          <div class="flex-shrink-0 w-8 sm:w-10 h-8 sm:h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-            <UIcon name="i-lucide-lightbulb" class="text-blue-600" size="20" />
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xs sm:text-sm font-semibold text-blue-800 mb-1 sm:mb-1.5">How Credits Work ($1 = 100 credits)</h3>
-            <p class="text-xs sm:text-sm text-blue-700 leading-relaxed">
-              This is a internal credit system which parents/teachers can pledge to distribute to their children/students. Think of credits as a point system.
-              After students have accumulated credits, they can use the credits to check out their items from the shop, orders will be then be sent to parents to pay through stripe payment.
-              StudyWithEddy will not store money or credits nor request for you to transfer money to us.
-              Please reach out to us if you have any questions at <a href="mailto:eddytech.ai@gmail.com" class="font-medium underline hover:no-underline">eddytech.ai@gmail.com</a>
-            </p>
-          </div>
-        </div>
+      <!-- Instructions -->
+      <div class="mb-4 sm:mb-8">
+        <CreditsInstructions :is-parent="isParent" />
       </div>
 
       <!-- Loading State -->
@@ -67,6 +54,7 @@ import { onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import CreditBalance from '~/components/credits/CreditBalance.vue';
+import CreditsInstructions from '~/components/credits/CreditsInstructions.vue';
 import TopUpSection from '~/components/credits/TopUpSection.vue';
 import TransferSection from '~/components/credits/TransferSection.vue';
 import ViewTransactions from '~/components/credits/ViewTransactions.vue';

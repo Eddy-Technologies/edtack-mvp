@@ -23,6 +23,11 @@
         </div>
       </div>
 
+      <!-- Instructions -->
+      <div class="mb-4 sm:mb-8">
+        <CartInstructions :is-parent="isParent" />
+      </div>
+
       <!-- Empty Cart State -->
       <div v-if="cart.length === 0" class="text-center py-10 sm:py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
@@ -271,6 +276,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
+import CartInstructions from './CartInstructions.vue';
 import { useFeatureFlags } from '~/composables/useFeatureFlags';
 
 const props = defineProps<{
