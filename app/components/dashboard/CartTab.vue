@@ -209,6 +209,17 @@
                   </p>
                 </div>
               </label>
+
+              <!-- No payment options for parents when subscriptionPlans is disabled -->
+              <div v-if="isParent && !subscriptionPlans" class="p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                <div class="flex items-start space-x-3">
+                  <UIcon name="i-lucide-info" class="text-gray-500 flex-shrink-0 mt-0.5" size="20" />
+                  <div>
+                    <p class="text-sm font-medium text-gray-700">Payment not available</p>
+                    <p class="text-sm text-gray-500 mt-1">Credit card payment is currently disabled as we are still testing the system.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -337,6 +348,7 @@ const hasEnoughCredits = computed(() => {
 const canCheckout = computed(() => {
   if (props.cart.length === 0) return false;
   if (isLoading.value) return false; // Disable while loading credit data
+  if (!paymentMethod.value) return false; // No payment method selected
   if (paymentMethod.value === 'credits' && !hasEnoughCredits.value) return false;
   return true;
 });
@@ -388,9 +400,10 @@ const goToShop = () => {
 onMounted(async () => {
   await fetchCredits();
 
-  // Set payment method based on user type
+  // Set payment method based on user type and feature flag
   if (isParent.value) {
-    paymentMethod.value = 'card'; // Parents can only pay with card
+    // Parents can only pay with card, which requires subscriptionPlans
+    paymentMethod.value = subscriptionPlans.value ? 'card' : '';
   } else {
     paymentMethod.value = 'credits'; // Children default to credits
   }
