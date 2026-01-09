@@ -34,6 +34,24 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   let hasReceivedTerminalEvent = false; // Track if we've received a terminal event (completed, error, cancelled)
   const onTerminalEvent = options.onTerminalEvent; // Direct callback for terminal events
 
+  // Track page unload to prevent treating AbortError as timeout
+  // When user refreshes, we don't want to stop the RAG stream - just silently disconnect
+  let isPageUnloading = false;
+  const handlePageHide = () => {
+    console.log('[SSEChat] Page hide detected, setting isPageUnloading=true');
+    isPageUnloading = true;
+  };
+  const handleBeforeUnload = () => {
+    console.log('[SSEChat] Before unload detected, setting isPageUnloading=true');
+    isPageUnloading = true;
+  };
+
+  // Only add listeners in browser context - use both events for maximum compatibility
+  if (typeof window !== 'undefined') {
+    window.addEventListener('pagehide', handlePageHide);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  }
+
   const setAuthToken = (token: string) => {
     currentAuthToken = token;
   };
@@ -534,6 +552,17 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       }
 
       if (err.name === 'AbortError') {
+        // Check if page is unloading (user refreshed or navigated away)
+        // In this case, silently end without pushing error - the Nuxt server keeps the stream alive
+        // and when the page reloads, client can reconnect and get buffered events
+        console.log('[SSEChat] AbortError caught, isPageUnloading:', isPageUnloading);
+        if (isPageUnloading) {
+          console.log('[SSEChat] AbortError due to page unload - silently ending (stream continues on server)');
+          isWaitingForResponse.value = false;
+          isStreaming.value = false;
+          return true; // Return success - stream is still alive on server
+        }
+
         // Check if this was a timeout abort or user cancellation
         // Timeout aborts happen when we call abortController.abort() from timeout handler
         // If abortController is null, it was manually cancelled via cancelRequest()
@@ -620,7 +649,19 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
    * Uses Nuxt proxy endpoint which handles both Nuxt stream cleanup and Python backend stop
    */
   const cancelRequest = async (): Promise<boolean> => {
-    console.log('[SSEChat] cancelRequest called for threadId:', threadId);
+    console.log('[SSEChat] cancelRequest called for threadId:', threadId, 'isPageUnloading:', isPageUnloading);
+
+    // Don't call stop endpoint if page is unloading
+    // The Nuxt server will keep the stream alive for reconnection
+    if (isPageUnloading) {
+      console.log('[SSEChat] Page is unloading, skipping stop endpoint call');
+      // Still abort the fetch to clean up resources
+      if (abortController) {
+        abortController.abort();
+        abortController = null;
+      }
+      return true;
+    }
 
     // Abort the fetch request
     if (abortController) {
@@ -855,11 +896,20 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     return true;
   };
 
+  // Cleanup function to remove event listeners
+  const cleanup = () => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('pagehide', handlePageHide);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
+  };
+
   // Only register cleanup hook if autoCleanup is enabled (default) AND we're in a component context.
   // When used in a Pinia store, autoCleanup should be false to prevent lifecycle interference.
   const autoCleanup = options.autoCleanup !== false;
   if (autoCleanup && getCurrentInstance()) {
     onUnmounted(() => {
+      cleanup();
       disconnect();
     });
   }

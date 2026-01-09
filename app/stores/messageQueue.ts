@@ -947,15 +947,17 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         // This prevents the bug where 'processing' gets overwritten to 'connecting'
         // and then incorrectly reset to 'idle' on reconnect
         const originalStatus = this.threadStates[threadId]?.status;
-        const wasProcessing = originalStatus === 'processing';
+        // Check for both 'processing' AND 'connecting' as active states
+        // 'connecting' can happen if page refreshes during the connection phase
+        const wasInProgress = originalStatus === 'processing' || originalStatus === 'connecting';
 
-        // Only set to 'connecting' if NOT already processing
-        // This preserves the processing state for page refresh recovery
-        if (!wasProcessing) {
+        // Only set to 'connecting' if NOT already in progress
+        // This preserves the active state for page refresh recovery
+        if (!wasInProgress) {
           this.setThreadState(threadId, { status: 'connecting' });
         }
 
-        console.log('[MessageQueue] Getting or creating connection...', { originalStatus, wasProcessing });
+        console.log('[MessageQueue] Getting or creating connection...', { originalStatus, wasInProgress });
         const conn = await this.getOrCreateConnection(threadId);
         console.log('[MessageQueue] Connection obtained, mode:', conn.mode);
 
@@ -980,10 +982,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         console.log('[MessageQueue] Connection established successfully');
 
         // Use captured originalStatus to determine final state
-        if (wasProcessing) {
-          // Thread was processing - try to reconnect to stream
-          console.log('[MessageQueue] Thread was processing, attempting stream recovery');
-          this.setThreadState(threadId, { error: undefined }); // Clear error but keep processing
+        if (wasInProgress) {
+          // Thread was processing/connecting - try to reconnect to stream
+          console.log('[MessageQueue] Thread was in progress, attempting stream recovery');
+          this.setThreadState(threadId, { status: 'processing', error: undefined }); // Set to processing during recovery
           this.recoverProcessingThread(threadId);
         } else {
           // Normal case - reset to idle

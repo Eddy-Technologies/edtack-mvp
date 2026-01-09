@@ -287,21 +287,32 @@ const initializeChat = async () => {
     const isThreadProcessing = threadState?.status === 'processing';
     const isThreadError = threadState?.status === 'error';
 
-    messageStream.value = messageHistory.value.map(({ content, id, sender }, index: number) => {
+    messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus }: { content: string; id: string; sender: string | null; status?: string }, index: number) => {
       const preservedStatus = existingStatuses.get(id);
       if (!sender) {
         return { ...JSON.parse(content), isUser: false, id };
       }
-      // For user messages: determine status based on thread state
-      const isLastUserMessage = index === messageHistory.value.length - 1 && sender;
-      let status = preservedStatus;
-      if (!status && isLastUserMessage) {
+      // For user messages: determine status based on:
+      // 1. Preserved status (local changes not yet in DB)
+      // 2. DB status (persisted from previous session - cancelled, failed, etc.)
+      // 3. If not last message, force 'sent' (has response after it = succeeded)
+      // 4. Thread state fallback for last user message (processing/error state)
+      const isLastMessage = index === messageHistory.value.length - 1;
+      let status = preservedStatus || dbStatus;
+
+      // If message is NOT last (has response after it), it definitely succeeded
+      // Override any stale 'sending'/'queued' status from DB
+      if (!isLastMessage) {
+        status = 'sent';
+      } else if (!status) {
+        // Last message without status - check thread state
         if (isThreadProcessing) {
           status = 'sent';
         } else if (isThreadError) {
           // Thread is in error state (timeout, etc.) - show failed status with retry option
           status = 'failed';
         }
+        // If none of the above, leave status undefined (shows no indicator)
       }
       return { text: content, isUser: true, id, ...(status && { status }) };
     });
@@ -393,25 +404,39 @@ const initializeChat = async () => {
   // Always treat as new chat since we have no history
   isFirstMessage.value = true;
 
+  // CRITICAL: Initialize store before reading thread state
+  // This loads persisted thread states from localStorage (including 'processing' status for page refresh recovery)
+  messageQueueStore.init();
+
   // Check thread state early - this affects how we display messages
   const threadStateBefore = messageQueueStore.getThreadState(props.threadId);
   const isThreadError = threadStateBefore?.status === 'error';
   const isThreadProcessing = threadStateBefore?.status === 'processing';
 
   // Insert messageHistory to messageStream with proper status
-  messageStream.value = messageHistory.value.map(({ content, id, sender }, index: number) => {
+  messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus }: { content: string; id: string; sender: string | null; status?: string }, index: number) => {
     if (!sender) {
       return { ...JSON.parse(content), isUser: false, id };
     }
-    // For user messages: determine status based on thread state
-    const isLastUserMessage = index === messageHistory.value.length - 1 && sender;
-    let status: string | undefined;
-    if (isLastUserMessage) {
+    // For user messages: determine status based on:
+    // 1. DB status (persisted from previous session - cancelled, failed, etc.)
+    // 2. If not last message, force 'sent' (has response after it = succeeded)
+    // 3. Thread state fallback for last user message (processing/error state)
+    const isLastMessage = index === messageHistory.value.length - 1;
+    let status: string | undefined = dbStatus;
+
+    // If message is NOT last (has response after it), it definitely succeeded
+    // Override any stale 'sending'/'queued' status from DB
+    if (!isLastMessage) {
+      status = 'sent';
+    } else if (!status) {
+      // Last message without status - check thread state
       if (isThreadProcessing) {
         status = 'sent';
       } else if (isThreadError) {
         status = 'failed';
       }
+      // If none of the above, leave status undefined (shows no indicator)
     }
     return { text: content, isUser: true, id, ...(status && { status }) };
   });
@@ -699,14 +724,21 @@ onMounted(() => {
         }
 
         // Map DB messages
-        const dbMessages = newThreadData.thread_messages.map((msg: any) => {
+        const dbMessages = newThreadData.thread_messages.map((msg: any, index: number) => {
           // Priority: local status > DB status (local might be more recent)
-          const preservedStatus = existingStatuses.get(msg.id) || msg.status;
+          let status = existingStatuses.get(msg.id) || msg.status;
           if (!msg.sender) {
             return { ...JSON.parse(msg.content), isUser: false, id: msg.id };
           }
+          // For user messages: force 'sent' for non-last messages (they have responses = succeeded)
+          // This overrides any stale 'sending'/'queued' status from DB
+          const isLastMessage = index === newThreadData.thread_messages.length - 1;
+          if (!isLastMessage) {
+            status = 'sent';
+          }
+          // Last message keeps its status (could be in progress, failed, etc.)
           // Include status from DB or local state for user messages
-          return { text: msg.content, isUser: true, id: msg.id, ...(preservedStatus && { status: preservedStatus }) };
+          return { text: msg.content, isUser: true, id: msg.id, ...(status && { status }) };
         });
 
         // Merge: local-only failed messages + DB messages + pending AI messages
@@ -1611,14 +1643,24 @@ const handleSend = async (text: string, isRetryCall = false) => {
 const handleCancelRequest = async () => {
   // Mark the message as 'cancelled' IMMEDIATELY (before async operations)
   // This prevents race conditions with the isConnected watcher marking it as 'failed'
+  let cancelledMessageId: string | null = null;
   for (let i = messageStream.value.length - 1; i >= 0; i--) {
     const msg = messageStream.value[i];
     if (msg.isUser && ['sending', 'queued', 'sent'].includes(msg.status)) {
-      console.log('[ChatContent] Marking message as cancelled via handleCancelRequest');
+      console.log('[ChatContent] Marking message as cancelled via handleCancelRequest, id:', msg.id);
       messageStream.value[i] = { ...msg, status: 'cancelled' };
       messageStream.value = [...messageStream.value];
+      cancelledMessageId = msg.id;
       break;
     }
+  }
+
+  // CRITICAL: Persist cancelled status to database so it survives page refresh
+  // Without this, returning to the chat shows "Sending..." forever
+  if (cancelledMessageId) {
+    persistMessageStatus(cancelledMessageId, 'cancelled').catch((err) => {
+      console.error('[ChatContent] Failed to persist cancelled status:', err);
+    });
   }
 
   // Reset loading state immediately
