@@ -295,12 +295,6 @@ const generatingStatus = reactive<Record<string, boolean>>({}); // Track which c
 const lessonButtonLoading = reactive<Record<string, boolean>>({}); // Track lesson button loading state
 const pollingIntervals = reactive<Record<string, ReturnType<typeof setInterval>>>({}); // Polling intervals
 
-// Computed: Get currently selected subject object
-const selectedSubjectData = computed(() => {
-  if (!selectedSubject.value) return null;
-  return subjects.value.find((s) => s.name === selectedSubject.value) || null;
-});
-
 // Computed: Memoized subject stats (quiz count and credits) - O(n) instead of O(n²)
 const subjectStats = computed(() => {
   const stats = new Map<string, { quizCount: number; credits: number }>();
