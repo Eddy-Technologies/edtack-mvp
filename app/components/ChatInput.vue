@@ -2,6 +2,12 @@
   <div class="flex flex-col gap-3 relative">
     <!-- Input container -->
     <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+      <!-- Keyword hint -->
+      <p class="text-sm text-gray-400 text-center mb-2">
+        Use keywords <span class="font-medium text-primary">"lesson"</span> or
+        <span class="font-medium text-secondary">"quiz"</span> to generate interactive content
+      </p>
+
       <div class="flex items-center gap-2">
         <UTextarea
           v-model="input"
@@ -37,7 +43,7 @@
     <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']">
       <!-- Lesson Pill -->
       <button
-        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 transition-colors flex items-center gap-1"
+        class="px-3 py-1.5 text-sm text-white bg-primary border border-gray-200 rounded-xl hover:bg-primary-400 hover:border-gray-300 transition-colors flex items-center gap-1"
         @click="toggleDropdown('lesson', $event)"
       >
         Give me a lesson on...
@@ -46,7 +52,7 @@
 
       <!-- Quiz Pill -->
       <button
-        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 transition-colors flex items-center gap-1"
+        class="px-3 py-1.5 text-sm text-white bg-secondary border border-gray-200 rounded-xl hover:bg-secondary-400 hover:border-gray-300 transition-colors flex items-center gap-1"
         @click="toggleDropdown('quiz', $event)"
       >
         Quiz me on...
