@@ -132,53 +132,79 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     // Handle status updates
     if (eventType === 'status') {
-      if (data.status) {
-        responsePhase.value = data.status;
+      // Check if already normalized (from Nuxt proxy) or raw (direct from Python)
+      // Normalized has { type: 'status', status: 'status_update', phase: '...' }
+      // Raw has { status: '...' } where status is the actual phase message
+      const phaseMessage = data.phase || data.status;
+      if (phaseMessage && phaseMessage !== 'status_update') {
+        responsePhase.value = phaseMessage;
       }
 
-      // Convert to response format compatible with WebSocket handler
-      const responseData: ChatResponse = {
-        status: 'status_update',
-        phase: data.status,
-        generation_intent_type: data.generation_intent_type,
-        timestamp: data.timestamp,
-      };
-      response.value.push(responseData);
-      console.log('[SSEChat] Pushed status_update, response.length:', response.value.length);
+      // Check if already normalized
+      if (data.status === 'status_update') {
+        // Already normalized by Nuxt proxy - use directly
+        response.value.push(data as ChatResponse);
+      } else {
+        // Raw from Python - normalize
+        const responseData: ChatResponse = {
+          status: 'status_update',
+          phase: data.status,
+          generation_intent_type: data.generation_intent_type,
+          timestamp: data.timestamp,
+        };
+        response.value.push(responseData);
+      }
+      console.log('[SSEChat] Pushed status_update, phase:', phaseMessage, 'response.length:', response.value.length);
       return;
     }
 
     // Handle slide batches - convert to WebSocket-compatible format
     if (eventType === 'slide_batch_ready') {
-      const responseData: ChatResponse = {
-        type: 'slide_batch_ready',
-        status: 'streaming',
-        batch: {
-          slides: data.slides || [],
-          batch_size: data.slides?.length || 0,
-          total_slides_so_far: data.batch_index !== undefined ?
-              (data.batch_index + 1) * (data.slides?.length || 0) :
-            data.slides?.length || 0,
-        },
-      };
-      response.value.push(responseData);
+      // Check if already normalized (from Nuxt proxy) or raw (direct from Python)
+      if (data.batch) {
+        // Already normalized by Nuxt proxy - use directly
+        console.log('[SSEChat] Using pre-normalized slide_batch_ready, slides:', data.batch.slides?.length);
+        response.value.push(data as ChatResponse);
+      } else {
+        // Raw from Python (legacy/direct connection) - normalize
+        const responseData: ChatResponse = {
+          type: 'slide_batch_ready',
+          status: 'streaming',
+          batch: {
+            slides: data.slides || [],
+            batch_size: data.slides?.length || 0,
+            total_slides_so_far: data.batch_index !== undefined ?
+                (data.batch_index + 1) * (data.slides?.length || 0) :
+              data.slides?.length || 0,
+          },
+        };
+        response.value.push(responseData);
+      }
       return;
     }
 
     // Handle quiz batches
     if (eventType === 'quiz_batch_ready') {
-      const responseData: ChatResponse = {
-        type: 'slide_batch_ready', // Use same type for compatibility
-        status: 'streaming',
-        batch: {
-          slides: data.quiz_items || [],
-          batch_size: data.quiz_items?.length || 0,
-          total_slides_so_far: data.batch_index !== undefined ?
-              (data.batch_index + 1) * (data.quiz_items?.length || 0) :
-            data.quiz_items?.length || 0,
-        },
-      };
-      response.value.push(responseData);
+      // Check if already normalized (from Nuxt proxy) or raw (direct from Python)
+      if (data.batch) {
+        // Already normalized by Nuxt proxy - use directly
+        console.log('[SSEChat] Using pre-normalized quiz_batch_ready, slides:', data.batch.slides?.length);
+        response.value.push(data as ChatResponse);
+      } else {
+        // Raw from Python (legacy/direct connection) - normalize
+        const responseData: ChatResponse = {
+          type: 'slide_batch_ready', // Use same type for compatibility
+          status: 'streaming',
+          batch: {
+            slides: data.quiz_items || [],
+            batch_size: data.quiz_items?.length || 0,
+            total_slides_so_far: data.batch_index !== undefined ?
+                (data.batch_index + 1) * (data.quiz_items?.length || 0) :
+              data.quiz_items?.length || 0,
+          },
+        };
+        response.value.push(responseData);
+      }
       return;
     }
 

@@ -858,12 +858,14 @@ const saveMessageAsync = (obj: { thread_id: string; content: any; type: string; 
 
 // Handle slide batch streaming
 const handleSlideBatch = (batchMessage: any) => {
+  console.log('[ChatContent] handleSlideBatch called with:', batchMessage);
   const { batch } = batchMessage;
 
   if (!batch || !batch.slides || !Array.isArray(batch.slides)) {
-    console.warn('Invalid batch message:', batchMessage);
+    console.warn('[ChatContent] Invalid batch message - missing batch or slides:', batchMessage);
     return;
   }
+  console.log('[ChatContent] handleSlideBatch - valid batch with', batch.slides.length, 'slides');
 
   const { slides, total_slides_so_far } = batch;
 
@@ -893,6 +895,7 @@ const handleSlideBatch = (batchMessage: any) => {
     // Add to message stream
     messageStream.value.push(newMessage);
     const messageIndex = messageStream.value.length - 1;
+    console.log('[ChatContent] Added new slide message to messageStream at index:', messageIndex, 'total messages:', messageStream.value.length, 'slides in message:', newMessage.slides.length);
 
     // Initialize streaming state
     activeStreamingMessage.value = {
@@ -1036,7 +1039,7 @@ const markLastUserMessageSent = () => {
 
 // Handle incoming WebSocket messages
 const handleWebSocketMessage = (message: any) => {
-  console.log('[ChatContent] handleWebSocketMessage:', message.status || message.type, 'isSendingMessage:', isSendingMessage.value);
+  console.log('[ChatContent] handleWebSocketMessage:', message.status || message.type, 'type:', message.type, 'status:', message.status, 'isSendingMessage:', isSendingMessage.value);
 
   // Any valid response means our message was received - mark as sent and notify parent
   // Include status_update because it proves the server received our message and is processing
@@ -1101,9 +1104,12 @@ const handleWebSocketMessage = (message: any) => {
 
   // Route slide batch messages
   if (message.type === 'slide_batch_ready') {
+    console.log('[ChatContent] slide_batch_ready received, batch:', message.batch, 'slides count:', message.batch?.slides?.length);
+
     // Determine if this batch should be processed or skipped.
     // We skip ONLY if it's truly a historical replay of already-displayed slides.
     const isActivelyProcessing = isWaitingForResponse.value || activeStreamingMessage.value;
+    console.log('[ChatContent] isActivelyProcessing:', isActivelyProcessing, 'isWaitingForResponse:', isWaitingForResponse.value, 'activeStreamingMessage:', !!activeStreamingMessage.value);
 
     if (!isActivelyProcessing) {
       // Not actively processing - check if this batch's slides already exist
