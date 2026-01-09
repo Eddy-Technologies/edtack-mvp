@@ -1,7 +1,7 @@
 <template>
   <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-lg shadow-xl max-w-7xl w-full max-h-[95vh] overflow-y-auto">
-      <div class="p-6">
+      <div class="p-4 sm:p-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-6">
           <div>
@@ -79,10 +79,10 @@
           <!-- Overall Score Card -->
           <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
             <!-- Score Summary -->
-            <div class="grid grid-cols-3 gap-4 mb-6">
-              <div class="text-center p-4 bg-white rounded-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+              <div class="text-center p-3 sm:p-4 bg-white rounded-lg">
                 <p class="text-sm text-gray-600 mb-1">Latest Attempt</p>
-                <div class="text-3xl font-bold" :class="(quizResults.latestPercentage ?? 0) >= quizResults.requiredScore ? 'text-green-600' : 'text-orange-600'">
+                <div class="text-2xl sm:text-3xl font-bold" :class="(quizResults.latestPercentage ?? 0) >= quizResults.requiredScore ? 'text-green-600' : 'text-orange-600'">
                   {{ quizResults.latestPercentage ?? 0 }}%
                 </div>
                 <p class="text-xs text-gray-500 mt-1">
@@ -90,9 +90,9 @@
                 </p>
               </div>
 
-              <div class="text-center p-4 bg-white rounded-lg border-2 border-blue-300">
+              <div class="text-center p-3 sm:p-4 bg-white rounded-lg border-2 border-blue-300">
                 <p class="text-sm text-gray-600 mb-1">Best Score</p>
-                <div class="text-3xl font-bold text-blue-600">
+                <div class="text-2xl sm:text-3xl font-bold text-blue-600">
                   {{ quizResults.bestPercentage }}%
                 </div>
                 <p class="text-xs text-gray-500 mt-1">
@@ -100,9 +100,9 @@
                 </p>
               </div>
 
-              <div class="text-center p-4 bg-white rounded-lg">
+              <div class="text-center p-3 sm:p-4 bg-white rounded-lg">
                 <p class="text-sm text-gray-600 mb-1">Required</p>
-                <div class="text-3xl font-bold text-gray-700">
+                <div class="text-2xl sm:text-3xl font-bold text-gray-700">
                   {{ quizResults.requiredScore }}%
                 </div>
                 <p class="text-xs text-gray-500 mt-1">
@@ -320,7 +320,7 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex justify-center gap-3 pt-4 border-t">
+          <div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 pt-4 border-t">
             <UButton
               color="gray"
               variant="outline"

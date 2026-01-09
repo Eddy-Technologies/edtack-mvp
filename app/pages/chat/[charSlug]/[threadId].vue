@@ -177,6 +177,7 @@ import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { useMessageQueueStore } from '~/stores/messageQueue';
 import { useAnalytics } from '~/composables/useAnalytics';
+import { useResponsive } from '~/composables/useResponsive';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import type { _height } from '#tailwind-config/theme';
 
@@ -194,7 +195,7 @@ definePageMeta({
 const isLoading = ref(true);
 const isCreatingThread = ref(false);
 const collapsed = ref(true);
-const isMobile = ref(false);
+const { isMobile } = useResponsive();
 const windowWidth = ref(768);
 const currentCharacter = ref(null);
 const showContentTransitions = ref(true);
@@ -569,7 +570,6 @@ const handleStudyPromptInjection = async () => {
 
 const handleResize = () => {
   windowWidth.value = window.innerWidth;
-  isMobile.value = windowWidth.value < 768;
   if (isMobile.value) collapsed.value = true;
 };
 

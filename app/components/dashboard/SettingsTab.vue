@@ -2,21 +2,22 @@
   <div class="space-y-6">
     <!-- Username & Password Section -->
     <div class="bg-white rounded-xl border border-gray-200">
-      <div class="p-6 border-b">
-        <h2 class="text-2xl font-bold text-gray-900">Account Settings</h2>
+      <div class="p-4 sm:p-6 border-b">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Account Settings</h2>
       </div>
 
-      <div class="p-6 space-y-6">
+      <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
         <!-- Email -->
-        <div class="flex items-center justify-between py-4 border-b">
-          <div>
-            <h3 class="text-lg font-medium text-gray-900">Email</h3>
-            <p class="text-gray-600">{{ userInfo.email }}</p>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-4 border-b gap-2 sm:gap-0">
+          <div class="min-w-0">
+            <h3 class="text-base sm:text-lg font-medium text-gray-900">Email</h3>
+            <p class="text-sm sm:text-base text-gray-600 truncate">{{ userInfo.email }}</p>
           </div>
           <Button
             v-if="user.auth_provider === 'email'"
             variant="secondary"
             text="Change"
+            class="self-start sm:self-auto"
             @clicked="editEmail"
           />
           <p v-else class="text-sm text-gray-500">
@@ -25,14 +26,15 @@
         </div>
 
         <!-- Password -->
-        <div v-if="user.auth_provider === 'email'" class="flex items-center justify-between py-4">
+        <div v-if="user.auth_provider === 'email'" class="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-4 gap-2 sm:gap-0">
           <div>
-            <h3 class="text-lg font-medium text-gray-900">Password</h3>
-            <p class="text-gray-600">••••••••••••</p>
+            <h3 class="text-base sm:text-lg font-medium text-gray-900">Password</h3>
+            <p class="text-sm sm:text-base text-gray-600">••••••••••••</p>
           </div>
           <Button
             variant="secondary"
             text="Change"
+            class="self-start sm:self-auto"
             @clicked="editPassword"
           />
         </div>

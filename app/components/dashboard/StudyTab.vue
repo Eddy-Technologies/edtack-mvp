@@ -3,13 +3,13 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Study</h1>
-        <p class="text-gray-600 mt-1">Access lessons, practice, and quizzes by subject</p>
+        <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Study</h1>
+        <p class="text-sm sm:text-base text-gray-600 mt-1">Access lessons, practice, and quizzes by subject</p>
       </div>
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-xl border border-gray-200 p-4">
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4">
       <div class="flex flex-wrap items-end gap-4">
         <!-- Syllabus Type Filter -->
         <div class="flex-1 min-w-[140px]">
@@ -75,12 +75,12 @@
       </div>
     </div>
 
-    <!-- Subject List with Inline Expansion -->
-    <div v-else-if="subjects.length > 0" class="space-y-2">
+    <!-- MOBILE: Accordion Layout -->
+    <div v-else-if="subjects.length > 0 && isMobile" class="space-y-2">
       <div v-for="subject in subjects" :key="subject.name" class="space-y-2">
         <!-- Subject Card (clickable header) -->
         <button
-          class="w-full text-left bg-white rounded-lg border p-3 transition-all"
+          class="w-full text-left bg-white rounded-lg border p-2 transition-all"
           :class="selectedSubject === subject.name
             ? 'border-primary bg-primary/5'
             : 'border-gray-200 hover:border-gray-300'"
@@ -106,7 +106,7 @@
           </div>
         </button>
 
-        <!-- Expanded Chapters - appears directly under THIS subject -->
+        <!-- Expanded Chapters - appears directly under THIS subject (Mobile accordion) -->
         <Transition
           enter-active-class="transition-all duration-200 ease-out"
           enter-from-class="opacity-0 -translate-y-1"
@@ -115,11 +115,11 @@
           leave-from-class="opacity-100 translate-y-0"
           leave-to-class="opacity-0 -translate-y-1"
         >
-          <div v-if="selectedSubject === subject.name" class="ml-4 space-y-1.5">
+          <div v-if="selectedSubject === subject.name" class="ml-2 space-y-1">
             <div
               v-for="chapter in subject.chapters"
               :key="chapter.name"
-              class="bg-stone-50 rounded-lg p-2.5 border border-gray-100"
+              class="bg-stone-50 rounded-lg p-2 border border-gray-100"
             >
               <!-- Chapter Row: Title + Action Icons -->
               <div class="flex items-start justify-between gap-2">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="flex gap-1 shrink-0">
                   <button
-                    class="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 active:bg-blue-200 transition-colors"
+                    class="p-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 active:bg-blue-200 transition-colors"
                     title="Lesson"
                     :disabled="lessonButtonLoading[chapter.name]"
                     @click.stop="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'lesson')"
@@ -140,7 +140,7 @@
                     <UIcon v-else name="i-lucide-book-open" class="w-4 h-4" />
                   </button>
                   <button
-                    class="p-2 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 active:bg-green-200 transition-colors"
+                    class="p-1.5 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 active:bg-green-200 transition-colors"
                     title="Practice"
                     @click.stop="handleStudyAction(chapter, subject.subject_name, subject.display_name, 'practice')"
                   >
@@ -225,6 +225,182 @@
       </div>
     </div>
 
+    <!-- DESKTOP: Grid + Expanded Section Layout -->
+    <div v-else-if="subjects.length > 0" class="space-y-6">
+      <!-- Grid of Subject Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <button
+          v-for="subject in subjects"
+          :key="subject.name"
+          class="text-left bg-white rounded-xl border p-5 transition-all"
+          :class="selectedSubject === subject.name
+            ? 'border-2 border-primary shadow-sm'
+            : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'"
+          @click="selectSubject(subject.name)"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <h3 class="font-semibold text-gray-900">{{ subject.display_name }}</h3>
+            <span
+              v-if="(subjectStats.get(subject.name)?.credits || 0) > 0"
+              class="px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 shrink-0"
+            >
+              {{ subjectStats.get(subject.name)?.credits }} credits
+            </span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-500 mt-1">
+            <span>{{ subject.chapters.length }} {{ subject.chapters.length === 1 ? 'chapter' : 'chapters' }}</span>
+            <span v-if="(subjectStats.get(subject.name)?.quizCount || 0) > 0">{{ subjectStats.get(subject.name)?.quizCount }} {{ (subjectStats.get(subject.name)?.quizCount || 0) === 1 ? 'quiz' : 'quizzes' }}</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Expanded Subject Section -->
+      <Transition
+        enter-active-class="transition-all duration-300 ease-out"
+        enter-from-class="opacity-0 -translate-y-2"
+        enter-to-class="opacity-100 translate-y-0"
+        leave-active-class="transition-all duration-200 ease-in"
+        leave-from-class="opacity-100 translate-y-0"
+        leave-to-class="opacity-0 -translate-y-2"
+      >
+        <div v-if="selectedSubjectData" class="bg-white rounded-xl border border-gray-200">
+          <!-- Section Header -->
+          <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <h3 class="text-lg font-semibold text-gray-900">{{ selectedSubjectData.display_name }}</h3>
+            <button
+              class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
+              @click="selectedSubject = null"
+            >
+              <UIcon name="i-lucide-x" class="w-4 h-4" />
+              Close
+            </button>
+          </div>
+
+          <!-- Chapters List -->
+          <div class="p-6 space-y-4">
+            <div
+              v-for="chapter in selectedSubjectData.chapters"
+              :key="chapter.name"
+              class="bg-stone-50 rounded-xl p-4"
+            >
+              <!-- Chapter Header Row: Title + Action Buttons -->
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-medium text-gray-900">{{ chapter.display_name }}</h4>
+                  <p v-if="chapter.description" class="text-sm text-gray-500 mt-0.5 line-clamp-1">
+                    {{ chapter.description }}
+                  </p>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                  <UButton
+                    size="sm"
+                    color="blue"
+                    variant="soft"
+                    :loading="lessonButtonLoading[chapter.name]"
+                    :disabled="lessonButtonLoading[chapter.name]"
+                    @click="handleStudyAction(chapter, selectedSubjectData.subject_name, selectedSubjectData.display_name, 'lesson')"
+                  >
+                    <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-1" />
+                    Lesson
+                  </UButton>
+                  <UButton
+                    size="sm"
+                    color="green"
+                    variant="soft"
+                    @click="handleStudyAction(chapter, selectedSubjectData.subject_name, selectedSubjectData.display_name, 'practice')"
+                  >
+                    <UIcon name="i-lucide-target" class="w-4 h-4 mr-1" />
+                    Practice
+                  </UButton>
+                </div>
+              </div>
+
+              <!-- Quiz Tasks Section -->
+              <div
+                v-if="chapter.user_tasks_chapters?.length > 0"
+                class="mt-3 pt-3 border-t border-gray-200 space-y-2"
+              >
+                <div
+                  v-for="taskChapter in chapter.user_tasks_chapters"
+                  :key="taskChapter.id"
+                  class="flex items-center justify-between bg-white rounded-lg p-3 border border-gray-100"
+                  :class="taskChapter.user_tasks?.status === 'CLOSED' ? 'opacity-60' : ''"
+                >
+                  <!-- Quiz Info -->
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <span class="font-medium text-gray-900 text-sm">
+                        {{ taskChapter.user_tasks?.name || 'Quiz' }}
+                      </span>
+                      <!-- Status Pills -->
+                      <span
+                        v-if="taskChapter.user_tasks?.status === 'CLOSED'"
+                        class="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-600"
+                      >
+                        Closed
+                      </span>
+                      <span
+                        v-else-if="quizMetadata[taskChapter.id]?.creditDisbursed"
+                        class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-700"
+                      >
+                        Earned
+                      </span>
+                      <span
+                        v-else-if="quizMetadata[taskChapter.id]?.isCompleted && quizMetadata[taskChapter.id]?.creditReward > 0"
+                        class="px-2 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700"
+                      >
+                        Pending
+                      </span>
+                    </div>
+                    <div class="text-xs text-gray-500 flex items-center gap-2">
+                      <!-- Only show credits for OPEN tasks -->
+                      <span v-if="taskChapter.user_tasks?.status !== 'CLOSED' && taskChapter.user_tasks?.credit > 0">{{ taskChapter.user_tasks.credit }} credits</span>
+                      <span v-if="taskChapter.user_tasks?.status !== 'CLOSED' && taskChapter.user_tasks?.required_score">· {{ taskChapter.user_tasks.required_score }}% required</span>
+                      <template v-if="quizMetadata[taskChapter.id]?.isCompleted">
+                        <span>· Best: {{ quizMetadata[taskChapter.id]?.bestPercentage || 0 }}%</span>
+                        <span>· {{ quizMetadata[taskChapter.id]?.attemptCount || 0 }} attempts</span>
+                      </template>
+                    </div>
+                  </div>
+
+                  <!-- Quiz Action Buttons -->
+                  <div class="flex gap-2">
+                    <!-- Review button - always available if quiz completed -->
+                    <UButton
+                      v-if="quizMetadata[taskChapter.id]?.isCompleted"
+                      size="sm"
+                      color="gray"
+                      variant="outline"
+                      :loading="quizButtonLoading[taskChapter.id]"
+                      @click="handleQuizReview(taskChapter, chapter, selectedSubjectData.subject_name)"
+                    >
+                      Review
+                    </UButton>
+                    <!-- Generate/Attempt/Reattempt - only for OPEN tasks -->
+                    <UButton
+                      v-if="taskChapter.user_tasks?.status !== 'CLOSED'"
+                      size="sm"
+                      :color="quizMetadata[taskChapter.id]?.isCompleted ? 'primary' : 'blue'"
+                      :loading="quizButtonLoading[taskChapter.id] || generatingStatus[taskChapter.id]"
+                      @click="handleQuizClick(taskChapter, chapter, selectedSubjectData.subject_name)"
+                    >
+                      {{
+                        generatingStatus[taskChapter.id]
+                          ? 'Generating...'
+                          : quizMetadata[taskChapter.id]?.isCompleted
+                            ? 'Reattempt'
+                            : (quizExists[taskChapter.id] ? 'Attempt' : 'Generate')
+                      }}
+                    </UButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </div>
+
     <!-- Empty State -->
     <div v-else class="text-center py-12">
       <UIcon name="i-lucide-book-open" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -258,9 +434,12 @@ import { useCharacters } from '~/composables/useCharacters';
 import { useTokenUsage } from '~/composables/useTokenUsage';
 import { useThreads } from '~/composables/useThreads';
 import { useAnalytics } from '~/composables/useAnalytics';
+import { useResponsive } from '~/composables/useResponsive';
 import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 import QuizAttemptModal from '~/components/dashboard/quiz/QuizAttemptModal.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
+
+const { isMobile } = useResponsive();
 
 const router = useRouter();
 const { generateStudyPrompt } = useStudy();
@@ -313,6 +492,12 @@ const subjectStats = computed(() => {
     stats.set(subject.name, { quizCount, credits });
   }
   return stats;
+});
+
+// Computed: Selected subject data for desktop expanded view
+const selectedSubjectData = computed(() => {
+  if (!selectedSubject.value) return null;
+  return subjects.value.find((s) => s.name === selectedSubject.value) || null;
 });
 
 // Quiz modal state

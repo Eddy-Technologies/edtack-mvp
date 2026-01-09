@@ -14,7 +14,7 @@
         @click="emit('toggle-sidebar')"
       >
         <Icon
-          :name="isMini ? 'i-heroicons-chevron-right' : 'i-heroicons-chevron-left'"
+          :name="props.collapsed ? 'i-heroicons-chevron-right' : 'i-heroicons-chevron-left'"
           class="w-4 h-4"
         />
       </button>

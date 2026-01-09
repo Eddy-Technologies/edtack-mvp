@@ -38,16 +38,18 @@
           />
         </div>
 
-        <div class="flex space-x-3">
+        <div class="flex flex-col-reverse sm:flex-row gap-3">
           <Button
             variant="secondary"
             text="Cancel"
+            class="w-full sm:w-auto"
             :disabled="isLoading"
             @clicked="$emit('close')"
           />
           <Button
             variant="primary"
             text="Send Invitation"
+            class="w-full sm:w-auto"
             :loading="isLoading"
             :disabled="!email || isLoading"
             @clicked="handleInvite"

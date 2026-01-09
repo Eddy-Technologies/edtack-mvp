@@ -72,19 +72,19 @@
         </div>
 
         <!-- Title Input -->
-        <div class="px-8 mb-6 flex-shrink-0">
+        <div class="px-4 sm:px-8 mb-4 sm:mb-6 flex-shrink-0">
           <input
             ref="titleInput"
             v-model="noteForm.title"
             type="text"
             placeholder="Note Title..."
-            class="w-full text-3xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-500 resize-none"
+            class="w-full text-xl sm:text-3xl font-bold text-gray-900 bg-transparent border-none outline-none placeholder-gray-500 resize-none"
             style="font-family: 'Inter', sans-serif;"
           >
         </div>
 
         <!-- Scrollable Content Area -->
-        <div class="px-8 flex-1 overflow-y-auto scrollbar-hide">
+        <div class="px-4 sm:px-8 flex-1 overflow-y-auto scrollbar-hide">
           <div
             ref="contentEditable"
             contenteditable="true"
@@ -100,7 +100,7 @@
 
         <!-- Text Formatting Tools -->
         <div class="border-t border-gray-900/20 bg-white/30 backdrop-blur-sm flex-shrink-0">
-          <div class="px-8 py-4">
+          <div class="px-4 sm:px-8 py-3 sm:py-4">
             <div class="flex flex-wrap items-center gap-3">
               <!-- Text Style -->
               <div class="flex items-center gap-1">
@@ -201,8 +201,8 @@
         </div>
 
         <!-- Bottom Controls Section -->
-        <div class="bg-white/50 backdrop-blur-sm rounded-b-xl p-6 border-t border-gray-200/50 flex-shrink-0">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white/50 backdrop-blur-sm rounded-b-xl p-4 sm:p-6 border-t border-gray-200/50 flex-shrink-0">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
             <!-- Subject Dropdown -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
@@ -286,15 +286,15 @@
             </button>
 
             <!-- Action Buttons -->
-            <div class="flex gap-3">
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
               <button
-                class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors order-2 sm:order-1"
                 @click="handleClose"
               >
                 Cancel
               </button>
               <button
-                class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors order-1 sm:order-2"
                 @click="saveNote"
               >
                 {{ editingNote ? 'Update Note' : 'Save Note' }}
