@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-4 sm:space-y-6">
     <!-- Overview Header -->
     <OverviewHeader />
 
@@ -12,13 +12,13 @@
 
       <!-- Pending Order Requests -->
       <div v-if="pendingOrders.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-amber-100 rounded-lg">
+              <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-amber-100 rounded-lg">
                 <UIcon name="i-lucide-shopping-cart" class="text-amber-600" size="16" />
               </div>
-              <h3 class="text-base font-semibold text-gray-900">Pending Order Requests</h3>
+              <h3 class="text-sm sm:text-base font-semibold text-gray-900">Pending Order Requests</h3>
             </div>
             <NuxtLink to="/dashboard?tab=family&subtab=order-requests">
               <Button variant="secondary" text="View More" size="sm" />
@@ -26,9 +26,9 @@
           </div>
         </div>
         <div class="divide-y divide-gray-100">
-          <div v-for="order in pendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-5 hover:bg-gray-50/50 transition-colors">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-10 h-10 bg-amber-50 rounded-xl">
+          <div v-for="order in pendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-3 sm:p-5 hover:bg-gray-50/50 transition-colors">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="hidden sm:flex items-center justify-center w-10 h-10 bg-amber-50 rounded-xl">
                 <UIcon name="i-lucide-shopping-cart" class="text-amber-600" size="18" />
               </div>
               <div>
@@ -52,13 +52,13 @@
 
       <!-- Pending Tasks -->
       <div v-if="pendingTasks.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg">
+              <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-blue-100 rounded-lg">
                 <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="16" />
               </div>
-              <h3 class="text-base font-semibold text-gray-900">Pending Tasks</h3>
+              <h3 class="text-sm sm:text-base font-semibold text-gray-900">Pending Tasks</h3>
             </div>
             <NuxtLink to="/dashboard?tab=family&subtab=tasks">
               <Button variant="secondary" text="View More" size="sm" />
@@ -66,9 +66,9 @@
           </div>
         </div>
         <div class="divide-y divide-gray-100">
-          <div v-for="task in pendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-5 hover:bg-gray-50/50 transition-colors">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-xl">
+          <div v-for="task in pendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-3 sm:p-5 hover:bg-gray-50/50 transition-colors">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="hidden sm:flex items-center justify-center w-10 h-10 bg-blue-50 rounded-xl">
                 <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="18" />
               </div>
               <div>
@@ -91,29 +91,29 @@
 
       <!-- Children Overview -->
       <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
-          <div class="flex items-center justify-between">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
             <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-lg">
+              <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-emerald-100 rounded-lg">
                 <UIcon name="i-lucide-users" class="text-emerald-600" size="16" />
               </div>
-              <h3 class="text-base font-semibold text-gray-900">Student Overview</h3>
+              <h3 class="text-sm sm:text-base font-semibold text-gray-900">Student Overview</h3>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-lg">
+              <div class="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-blue-50 rounded-lg">
                 <UIcon name="i-lucide-users" class="text-blue-600" size="14" />
-                <span class="text-sm font-semibold text-blue-700">{{ stats.totalChildren }}</span>
+                <span class="text-xs sm:text-sm font-semibold text-blue-700">{{ stats.totalChildren }}</span>
                 <span class="text-xs text-blue-600">Total</span>
               </div>
-              <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 rounded-lg">
+              <div class="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-emerald-50 rounded-lg">
                 <UIcon name="i-lucide-activity" class="text-emerald-600" size="14" />
-                <span class="text-sm font-semibold text-emerald-700">{{ stats.activeToday }}</span>
+                <span class="text-xs sm:text-sm font-semibold text-emerald-700">{{ stats.activeToday }}</span>
                 <span class="text-xs text-emerald-600">Active</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="p-6">
+        <div class="p-4 sm:p-6">
           <div v-if="familyMembers.length === 0" class="text-center py-16 px-6">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-2xl mb-6">
               <UIcon name="i-lucide-users" class="text-gray-400" size="32" />
@@ -124,12 +124,12 @@
               <Button variant="primary" text="Manage Family" icon="i-lucide-users" />
             </NuxtLink>
           </div>
-          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div v-for="student in familyMembers" :key="student.id" class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-              <div class="flex items-center gap-3 mb-4">
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            <div v-for="student in familyMembers" :key="student.id" class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+              <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <div class="relative flex-shrink-0">
-                  <div class="flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-xl">
-                    <span class="text-emerald-700 font-semibold text-base">{{ getInitials(student.userDisplayFullName || student.email) }}</span>
+                  <div class="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 bg-emerald-100 rounded-xl">
+                    <span class="text-emerald-700 font-semibold text-sm sm:text-base">{{ getInitials(student.userDisplayFullName || student.email) }}</span>
                   </div>
                   <div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white" :class="student.isActive ? 'bg-emerald-500' : 'bg-gray-300'" />
                 </div>
@@ -139,7 +139,7 @@
                 </div>
               </div>
 
-              <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400 mb-4">
+              <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-gray-400 mb-3 sm:mb-4">
                 <div class="flex items-center gap-1">
                   <UIcon name="i-lucide-coins" size="12" />
                   <span class="font-medium text-gray-600">{{ student.credits || 0 }}</span>
@@ -175,25 +175,25 @@
 
     <!-- Student View: Personal Overview -->
     <template v-else>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-emerald-50 rounded-lg">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-emerald-50 rounded-lg">
               <UIcon name="i-lucide-coins" class="text-emerald-600" size="20" />
             </div>
             <div>
-              <p class="text-2xl font-bold text-gray-900">{{ userCredits }}</p>
+              <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ userCredits }}</p>
               <p class="text-xs text-gray-500">Available Credits</p>
             </div>
           </div>
         </div>
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-lg">
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-blue-50 rounded-lg">
               <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="20" />
             </div>
             <div>
-              <p class="text-2xl font-bold text-gray-900">{{ activeTasks }}</p>
+              <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ activeTasks }}</p>
               <p class="text-xs text-gray-500">Active Tasks</p>
             </div>
           </div>
@@ -207,13 +207,13 @@
 
       <!-- My Pending Orders -->
       <div v-if="myPendingOrders.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-amber-100 rounded-lg">
+              <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-amber-100 rounded-lg">
                 <UIcon name="i-lucide-shopping-cart" class="text-amber-600" size="16" />
               </div>
-              <h3 class="text-base font-semibold text-gray-900">My Pending Orders</h3>
+              <h3 class="text-sm sm:text-base font-semibold text-gray-900">My Pending Orders</h3>
             </div>
             <NuxtLink to="/dashboard?tab=family&subtab=order-requests">
               <Button variant="secondary" text="View More" size="sm" />
@@ -221,15 +221,15 @@
           </div>
         </div>
         <div class="divide-y divide-gray-100">
-          <div v-for="order in myPendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-5 hover:bg-gray-50/50 transition-colors">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-10 h-10 bg-amber-50 rounded-xl">
+          <div v-for="order in myPendingOrders.slice(0, 5)" :key="order.id" class="flex items-center justify-between p-3 sm:p-5 hover:bg-gray-50/50 transition-colors">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="hidden sm:flex items-center justify-center w-10 h-10 bg-amber-50 rounded-xl">
                 <UIcon name="i-lucide-shopping-cart" class="text-amber-600" size="18" />
               </div>
               <div>
-                <h4 class="font-medium text-gray-900">Order #{{ order.orderNumber }}</h4>
+                <h4 class="font-medium text-gray-900 text-sm sm:text-base">Order #{{ order.orderNumber }}</h4>
                 <div class="flex items-center gap-2 mt-1">
-                  <span class="text-sm text-gray-500">{{ order.itemCount }} items</span>
+                  <span class="text-xs sm:text-sm text-gray-500">{{ order.itemCount }} items</span>
                   <span class="px-2 py-0.5 rounded-md text-xs font-medium" :class="getOrderStatusBadgeClass(order.status)">
                     {{ getStatusText(order.status) }}
                   </span>
@@ -247,13 +247,13 @@
 
       <!-- My Pending Tasks -->
       <div v-if="myPendingTasks.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg">
+              <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-blue-100 rounded-lg">
                 <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="16" />
               </div>
-              <h3 class="text-base font-semibold text-gray-900">My Pending Tasks</h3>
+              <h3 class="text-sm sm:text-base font-semibold text-gray-900">My Pending Tasks</h3>
             </div>
             <NuxtLink to="/dashboard?tab=family&subtab=tasks">
               <Button variant="secondary" text="View More" size="sm" />
@@ -261,13 +261,13 @@
           </div>
         </div>
         <div class="divide-y divide-gray-100">
-          <div v-for="task in myPendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-5 hover:bg-gray-50/50 transition-colors">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-xl">
+          <div v-for="task in myPendingTasks.slice(0, 5)" :key="task.id" class="flex items-center justify-between p-3 sm:p-5 hover:bg-gray-50/50 transition-colors">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="hidden sm:flex items-center justify-center w-10 h-10 bg-blue-50 rounded-xl">
                 <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="18" />
               </div>
               <div>
-                <h4 class="font-medium text-gray-900">{{ task.name }}</h4>
+                <h4 class="font-medium text-gray-900 text-sm sm:text-base">{{ task.name }}</h4>
                 <div class="flex items-center gap-2 mt-1">
                   <span class="px-2 py-0.5 rounded-md text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                     {{ task.status }}
@@ -284,29 +284,29 @@
       </div>
 
       <!-- Quick Actions -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         <NuxtLink to="/dashboard?tab=shop" class="block">
-          <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-10 h-10 bg-indigo-50 rounded-lg">
+          <div class="bg-white p-3 sm:p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-indigo-50 rounded-lg">
                 <UIcon name="i-lucide-shopping-bag" class="text-indigo-600" size="20" />
               </div>
               <div>
-                <h3 class="font-semibold text-gray-900">Visit Shop</h3>
-                <p class="text-sm text-gray-500">Spend your credits on rewards</p>
+                <h3 class="font-semibold text-gray-900 text-sm sm:text-base">Visit Shop</h3>
+                <p class="text-xs sm:text-sm text-gray-500">Spend your credits on rewards</p>
               </div>
             </div>
           </div>
         </NuxtLink>
         <NuxtLink to="/dashboard?tab=family" class="block">
-          <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-            <div class="flex items-center gap-4">
-              <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-lg">
+          <div class="bg-white p-3 sm:p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-blue-50 rounded-lg">
                 <UIcon name="i-lucide-users" class="text-blue-600" size="20" />
               </div>
               <div>
-                <h3 class="font-semibold text-gray-900">View Family</h3>
-                <p class="text-sm text-gray-500">See your family connections</p>
+                <h3 class="font-semibold text-gray-900 text-sm sm:text-base">View Family</h3>
+                <p class="text-xs sm:text-sm text-gray-500">See your family connections</p>
               </div>
             </div>
           </div>

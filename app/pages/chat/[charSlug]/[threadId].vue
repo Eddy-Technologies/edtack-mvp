@@ -14,11 +14,11 @@
           'flex-shrink-0 border-r flex flex-col z-30',
           isMobile ? 'fixed top-0 left-0 h-full shadow-lg' : '',
         ]"
-        :style="{ width: collapsed ? '80px' : '400px' }"
+        :style="{ width: collapsed ? '80px' : sidebarExpandedWidth }"
       >
         <Sidebar
           :collapsed="collapsed"
-          :sidebar-width="collapsed ? 80 : 400"
+          :sidebar-width="collapsed ? 80 : sidebarExpandedWidthNumber"
           :is-mobile="isMobile"
           :active-thread-id="threadId"
           :is-connected="connectionStatus.isConnected"
@@ -79,11 +79,12 @@
           >
             <!-- Centered layout: Single container with carousel and input -->
             <div v-if="isChatCentered" class="absolute inset-0 overflow-y-auto">
-              <div class="min-h-full flex flex-col items-center justify-start pt-[15vh] pb-8 px-4">
+              <div class="min-h-full flex flex-col items-center justify-start pt-6 sm:pt-[15vh] pb-8 px-4">
                 <div class="w-full max-w-4xl flex flex-col gap-6">
                   <!-- Character Carousel - fixed height -->
                   <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100">
+                    <!-- Header - hidden on mobile for cleaner look -->
+                    <div v-if="!isMobile" class="px-6 py-4 border-b border-gray-100">
                       <div class="flex items-center justify-between">
                         <div>
                           <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
@@ -113,7 +114,7 @@
                         </UTooltip>
                       </div>
                     </div>
-                    <div class="p-4">
+                    <div :class="isMobile ? 'p-2' : 'p-4'">
                       <CharacterCarousel
                         v-model="currentCharacter"
                         :initial-character-slug="charSlug"
@@ -194,6 +195,7 @@ const isLoading = ref(true);
 const isCreatingThread = ref(false);
 const collapsed = ref(true);
 const isMobile = ref(false);
+const windowWidth = ref(768);
 const currentCharacter = ref(null);
 const showContentTransitions = ref(true);
 const hasStartedChat = ref(false);
@@ -247,6 +249,19 @@ const isChatCentered = computed(() => {
 
 const shouldShowChatInput = computed(() => {
   return true;
+});
+
+// Responsive sidebar width - on mobile, fit within viewport with some margin
+const sidebarExpandedWidthNumber = computed(() => {
+  if (isMobile.value) {
+    // On mobile, use 85% of viewport width or 300px max
+    return Math.min(windowWidth.value * 0.85, 300);
+  }
+  return 400;
+});
+
+const sidebarExpandedWidth = computed(() => {
+  return `${sidebarExpandedWidthNumber.value}px`;
 });
 
 // Route update guard - prevent thread changes during WebSocket response
@@ -553,7 +568,8 @@ const handleStudyPromptInjection = async () => {
 };
 
 const handleResize = () => {
-  isMobile.value = window.innerWidth < 768;
+  windowWidth.value = window.innerWidth;
+  isMobile.value = windowWidth.value < 768;
   if (isMobile.value) collapsed.value = true;
 };
 

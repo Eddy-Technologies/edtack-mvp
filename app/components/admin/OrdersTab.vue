@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <!-- Orders Table -->
+    <!-- Orders Table/Cards -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       <!-- Loading State -->
       <div v-if="loading" class="flex justify-center items-center py-12">
@@ -113,7 +113,63 @@
         <p class="text-gray-600">Orders will appear here when customers make purchases.</p>
       </div>
 
-      <!-- Orders Table -->
+      <!-- Mobile Card View -->
+      <div v-else-if="isMobile" class="divide-y divide-gray-200">
+        <div
+          v-for="order in filteredOrders"
+          :key="order.id"
+          class="p-4 hover:bg-gray-50"
+        >
+          <!-- Card Header -->
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold text-gray-900">#{{ order.id.slice(-8).toUpperCase() }}</span>
+              <span :class="getStatusBadgeClass(order.status)">
+                {{ order.status.charAt(0).toUpperCase() + order.status.slice(1) }}
+              </span>
+            </div>
+            <div class="text-lg font-bold text-primary-600">${{ (order.total_amount_cents / 100).toFixed(2) }}</div>
+          </div>
+
+          <!-- Customer Info -->
+          <div class="text-sm text-gray-600 mb-2">
+            <span class="font-medium">{{ order.user_infos?.first_name }} {{ order.user_infos?.last_name }}</span>
+            <span v-if="order.user_infos?.email" class="block text-xs text-gray-500">{{ order.user_infos?.email }}</span>
+          </div>
+
+          <!-- Items Summary -->
+          <div class="text-sm text-gray-600 mb-2">
+            <span class="font-medium">{{ order.order_items?.length || 0 }} item(s):</span>
+            <span v-for="(item, idx) in order.order_items?.slice(0, 2)" :key="item.id" class="ml-1">
+              {{ item.quantity }}x {{ item.products?.name }}<span v-if="idx < Math.min(order.order_items.length, 2) - 1">,</span>
+            </span>
+            <span v-if="order.order_items?.length > 2" class="text-gray-500">+{{ order.order_items.length - 2 }} more</span>
+          </div>
+
+          <!-- Date -->
+          <div class="text-xs text-gray-500 mb-3">
+            {{ formatDate(order.created_at) }}
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2">
+            <button
+              class="flex-1 px-3 py-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-lg hover:bg-primary-100 active:bg-primary-200 transition-colors"
+              @click="updateOrderStatus(order)"
+            >
+              Update Status
+            </button>
+            <button
+              class="flex-1 px-3 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors"
+              @click="viewOrderDetails(order)"
+            >
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Table View -->
       <div v-else class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
@@ -217,6 +273,10 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useResponsive } from '~/composables/useResponsive';
+
+// Responsive state
+const { isMobile } = useResponsive();
 
 // State
 const orders = ref([]);
