@@ -26,7 +26,7 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
   // Client-side checks below
   if (to.path === '/onboarding') {
     if (meStore.onboarding_completed) {
-      return navigateTo('/dashboard');
+      return navigateTo('/chat/eddy/new');
     }
     return;
   }
