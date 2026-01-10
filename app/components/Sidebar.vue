@@ -82,6 +82,7 @@
     <div v-if="props.isMobile" class="px-3 py-3 border-t border-gray-200 space-y-1">
       <button
         class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        data-tour="mobile-profile"
         @click="routeTo('/dashboard?tab=overview')"
       >
         <Icon name="i-heroicons-user" class="w-4 h-4" />
@@ -96,6 +97,7 @@
       </button>
       <button
         class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        data-tour="mobile-study"
         @click="routeTo('/dashboard?tab=study')"
       >
         <Icon name="i-heroicons-book-open" class="w-4 h-4" />
@@ -181,7 +183,7 @@
 
     <!-- User Profile Section - Bottom (hidden on mobile since menu items are inline) -->
     <div v-if="!props.isMobile" class="px-3 py-2 border-t border-gray-200 overflow-visible">
-      <div class="flex justify-center overflow-visible">
+      <div class="flex justify-center overflow-visible" data-tour="auth-widget">
         <AuthenticationWidget
           variant="sidebar"
           :collapsed="isMini"

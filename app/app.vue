@@ -14,6 +14,9 @@
     <UNotifications />
 
     <FeedbackButton />
+
+    <!-- Onboarding Tour Overlay -->
+    <TourOverlay />
   </div>
 </template>
 
@@ -21,6 +24,7 @@
 import { ref, onMounted, watch } from 'vue';
 import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
+import TourOverlay from '~/components/tour/TourOverlay.vue';
 import { useCodesStore } from '~/stores/codes';
 
 // Loading state - always show initially, hide when stores are ready

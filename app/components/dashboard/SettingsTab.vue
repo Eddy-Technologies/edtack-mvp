@@ -41,6 +41,29 @@
       </div>
     </div>
 
+    <!-- Tour Section -->
+    <div class="bg-white rounded-xl border border-gray-200">
+      <div class="p-4 sm:p-6 border-b">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Help & Onboarding</h2>
+      </div>
+
+      <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-4 gap-2 sm:gap-0">
+          <div>
+            <h3 class="text-base sm:text-lg font-medium text-gray-900">Take the Tour</h3>
+            <p class="text-sm sm:text-base text-gray-600">Restart the onboarding tour to learn about features</p>
+          </div>
+          <Button
+            variant="secondary"
+            text="Restart Tour"
+            icon="i-heroicons-academic-cap"
+            class="self-start sm:self-auto"
+            @clicked="restartTours"
+          />
+        </div>
+      </div>
+    </div>
+
     <!-- Modals -->
 
     <ChangeEmailModal
@@ -61,6 +84,11 @@ import { ref, computed } from 'vue';
 import ChangeEmailModal from './common/ChangeEmailModal.vue';
 import ChangePasswordModal from './common/ChangePasswordModal.vue';
 import Button from '~/components/common/Button.vue';
+import { useTour } from '~/composables/useTour';
+import { useResponsive } from '~/composables/useResponsive';
+
+const { resetTour, startTour } = useTour();
+const { isMobile } = useResponsive();
 
 // Modal states
 const showEmailModal = ref(false);
@@ -88,6 +116,17 @@ const editEmail = () => {
 
 const editPassword = () => {
   showPasswordModal.value = true;
+};
+
+// Restart onboarding tours
+const restartTours = () => {
+  resetTour('chat-tour');
+  resetTour('dashboard-tour');
+
+  // Start dashboard tour immediately since we're on the dashboard
+  setTimeout(() => {
+    startTour('dashboard-tour', isMobile.value);
+  }, 500);
 };
 
 // Helper function to display provider names nicely

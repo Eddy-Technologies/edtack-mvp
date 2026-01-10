@@ -192,6 +192,8 @@ import { useThreads } from '~/composables/useThreads';
 import { useMessageQueueStore } from '~/stores/messageQueue';
 import { useAnalytics } from '~/composables/useAnalytics';
 import { useResponsive } from '~/composables/useResponsive';
+import { useTour } from '~/composables/useTour';
+import { useMeStore } from '~/stores/me';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import type { _height } from '#tailwind-config/theme';
 
@@ -241,6 +243,8 @@ const toast = useToast();
 const messageQueueStore = useMessageQueueStore();
 const analytics = useAnalytics();
 const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread, isLoadingThread } = useThreads();
+const { startTour, isTourCompleted } = useTour();
+const meStore = useMeStore();
 
 // Analytics tracking state
 const sessionMessageCount = ref(0);
@@ -315,6 +319,11 @@ const preventNavigation = () => {
   return true;
 };
 
+// Handler for tour to open sidebar (works for both mobile and desktop)
+const handleOpenSidebarForTour = () => {
+  collapsed.value = false;
+};
+
 // Initialize character based on route
 onMounted(async () => {
   // Initialize character store
@@ -322,6 +331,7 @@ onMounted(async () => {
 
   handleResize();
   window.addEventListener('resize', handleResize);
+  window.addEventListener('openChatSidebar', handleOpenSidebarForTour);
 
   // Set sidebar collapsed if user is logged in but hasn't started chatting
   if (supabaseUser.value && !hasStartedChat.value) {
@@ -340,6 +350,13 @@ onMounted(async () => {
       subject: selectedCharacter.value?.subject || 'unknown',
       isNewThread: false,
     });
+  }
+
+  // Start chat tour for new users who completed onboarding
+  if (meStore.onboarding_completed && !isTourCompleted('chat-tour')) {
+    setTimeout(() => {
+      startTour('chat-tour', isMobile.value);
+    }, 800);
   }
 });
 
@@ -589,5 +606,6 @@ const handleResize = () => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
+  window.removeEventListener('openChatSidebar', handleOpenSidebarForTour);
 });
 </script>

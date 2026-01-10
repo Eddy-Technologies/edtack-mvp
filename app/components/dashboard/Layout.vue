@@ -59,6 +59,7 @@
                   ? 'bg-primary-50 text-primary-700'
                   : 'text-gray-600 hover:bg-stone-100 active:bg-stone-200'
               ]"
+              :data-tour="item.name === 'Study' ? 'study-tab' : item.name === 'Credits' ? 'credits-tab' : item.name === 'Tasks' ? 'tasks-tab' : undefined"
               @click="handleMobileNavigate(item)"
             >
               <div class="flex items-center space-x-3">
@@ -188,6 +189,7 @@
                   ? 'bg-primary-50 text-primary-700'
                   : 'text-gray-600 hover:bg-stone-100 hover:text-gray-900'
               ]"
+              :data-tour="item.name === 'Study' ? 'study-tab' : item.name === 'Credits' ? 'credits-tab' : item.name === 'Tasks' ? 'tasks-tab' : undefined"
               @click="navigateToRoute(item)"
             >
               <div class="flex items-center space-x-3">
@@ -390,6 +392,7 @@ import { useAuth } from '~/composables/useAuth';
 import { useMeStore } from '~/stores/me';
 import { useFeatureFlags } from '~/composables/useFeatureFlags';
 import { useResponsive } from '~/composables/useResponsive';
+import { useTour } from '~/composables/useTour';
 
 interface NavigationItem {
   name: string;
@@ -701,6 +704,13 @@ const logout = async () => {
   }
 };
 
+// Handler for tour drawer open event
+const handleOpenDrawerForTour = () => {
+  if (isMobile.value) {
+    isDrawerOpen.value = true;
+  }
+};
+
 onMounted(() => {
   // Auto-expand sections with active children
   for (const item of navigationItems.value) {
@@ -720,6 +730,7 @@ onMounted(() => {
     window.addEventListener('orderRequestsUpdated', updatePendingOrderCount);
     window.addEventListener('wishlistUpdated', updateWishlistCount);
     window.addEventListener('ordersUpdated', updateCurrentOrdersCount);
+    window.addEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 
   // Load credit balance for sidebar
@@ -733,6 +744,14 @@ onMounted(() => {
 
   // Load wishlist count
   updateWishlistCount();
+
+  // Start dashboard tour for users who completed onboarding but haven't seen it
+  const { startTour, isTourCompleted } = useTour();
+  if (userStore.onboarding_completed && !isTourCompleted('dashboard-tour')) {
+    setTimeout(() => {
+      startTour('dashboard-tour', isMobile.value);
+    }, 800);
+  }
 });
 
 // Add cleanup for event listeners
@@ -743,6 +762,7 @@ onUnmounted(() => {
     window.removeEventListener('orderRequestsUpdated', updatePendingOrderCount);
     window.removeEventListener('wishlistUpdated', updateWishlistCount);
     window.removeEventListener('ordersUpdated', updateCurrentOrdersCount);
+    window.removeEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 });
 </script>

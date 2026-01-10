@@ -47,12 +47,14 @@
         >
           <div
             v-if="menuOpen"
-            class="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] overflow-hidden"
+            class="fixed bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden"
+            :class="isTourActive ? 'z-[10002]' : 'z-[9999]'"
             :style="{ bottom: `${dropdownPosition.bottom}px`, left: `${dropdownPosition.left}px`, width: `${dropdownPosition.width}px` }"
           >
             <div class="py-1">
               <button
                 class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                data-tour="desktop-profile"
                 @click="routeTo('/dashboard?tab=overview')"
               >
                 <Icon name="i-heroicons-user" class="w-4 h-4" />
@@ -67,6 +69,7 @@
               </button>
               <button
                 class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                data-tour="desktop-study"
                 @click="routeTo('/dashboard?tab=study')"
               >
                 <Icon name="i-heroicons-book-open" class="w-4 h-4" />
@@ -313,8 +316,12 @@ const handleLogout = async () => {
 
 // Click outside handler
 const menuContainer = ref<HTMLElement | null>(null);
+const isTourActive = ref(false); // Track if tour opened the menu
 
 const onClickOutside = (e: MouseEvent) => {
+  // Don't close menu if tour is active
+  if (isTourActive.value) return;
+
   const target = e.target as HTMLElement;
   // Check if click is outside the menu container
   if (menuContainer.value && !menuContainer.value.contains(target)) {
@@ -322,8 +329,32 @@ const onClickOutside = (e: MouseEvent) => {
   }
 };
 
+// Handler to open menu for tour
+const handleOpenMenuForTour = () => {
+  isTourActive.value = true;
+  if (triggerButton.value) {
+    const rect = triggerButton.value.getBoundingClientRect();
+    dropdownPosition.value = {
+      bottom: window.innerHeight - rect.top + 8,
+      left: rect.left,
+      width: Math.max(rect.width, 180),
+    };
+    menuOpen.value = true;
+  }
+};
+
+// Handler to close menu when tour ends
+const handleCloseMenuForTour = () => {
+  isTourActive.value = false;
+  menuOpen.value = false;
+};
+
 onMounted(() => {
   document.addEventListener('click', onClickOutside);
+  if (typeof window !== 'undefined') {
+    window.addEventListener('openAuthWidgetMenu', handleOpenMenuForTour);
+    window.addEventListener('closeAuthWidgetMenu', handleCloseMenuForTour);
+  }
   if (isLoggedIn.value) {
     fetchTokenUsage();
   }
@@ -331,5 +362,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', onClickOutside);
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('openAuthWidgetMenu', handleOpenMenuForTour);
+    window.removeEventListener('closeAuthWidgetMenu', handleCloseMenuForTour);
+  }
 });
 </script>

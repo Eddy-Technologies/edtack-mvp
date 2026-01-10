@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-3 relative">
+  <div class="flex flex-col gap-3 relative" data-tour="chat-input">
     <!-- Input container -->
     <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
       <!-- Keyword hint -->
