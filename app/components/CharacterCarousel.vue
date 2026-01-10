@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 flex items-center justify-center relative overflow-hidden py-4 md:py-6 min-h-[180px] md:min-h-[220px]">
+  <div class="flex-1 flex items-center justify-center relative overflow-hidden py-4 lg:py-6 min-h-[180px] lg:min-h-[220px]" data-tour="character-carousel">
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center items-center py-12">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
@@ -9,8 +9,8 @@
     <!-- Carousel Content -->
     <template v-else>
       <!-- Gradient overlays for blur effect (smaller on mobile) -->
-      <div class="absolute left-0 top-0 w-12 md:w-32 h-full z-10 pointer-events-none" />
-      <div class="absolute right-0 top-0 w-12 md:w-32 h-full z-10 pointer-events-none" />
+      <div class="absolute left-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
+      <div class="absolute right-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
 
       <!-- Carousel container -->
       <div
@@ -28,7 +28,7 @@
         <div
           v-for="(avatar, index) in infiniteAvatars"
           :key="`${avatar.id}-${Math.floor(index / allAvatars.length)}`"
-          class="flex-shrink-0 px-2 md:px-4 transition-all duration-500 ease-in-out"
+          class="flex-shrink-0 px-2 lg:px-4 transition-all duration-500 ease-in-out"
           :class="[
             index === adjustedIndex ? 'scale-100' : 'scale-95',
             index === adjustedIndex
@@ -39,7 +39,7 @@
         >
           <div class="cursor-pointer" @click="selectAvatar(avatar, index)">
             <div
-              class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[240px] md:h-[320px] flex flex-col"
+              class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[240px] lg:h-[320px] flex flex-col"
               :class="{
                 'ring-4 ring-primary-500 ring-opacity-75':
                   avatar.slug === props.initialCharacterSlug,
@@ -101,17 +101,17 @@
 
       <!-- Navigation buttons (responsive positioning, larger touch targets on mobile) -->
       <button
-        class="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 md:p-3 bg-white/80 md:bg-transparent rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
+        class="absolute left-1 lg:left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 lg:p-3 bg-white/80 lg:bg-transparent rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
         @click="previousCard"
       >
-        <UIcon name="i-lucide-chevron-left" class="w-5 h-5 md:w-6 md:h-6 text-gray-800" />
+        <UIcon name="i-lucide-chevron-left" class="w-5 h-5 lg:w-6 lg:h-6 text-gray-800" />
       </button>
 
       <button
-        class="absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 md:p-3 bg-white/80 md:bg-transparent rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
+        class="absolute right-1 lg:right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 lg:p-3 bg-white/80 lg:bg-transparent rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
         @click="nextCard"
       >
-        <UIcon name="i-lucide-chevron-right" class="w-5 h-5 md:w-6 md:h-6 text-gray-800" />
+        <UIcon name="i-lucide-chevron-right" class="w-5 h-5 lg:w-6 lg:h-6 text-gray-800" />
       </button>
     </template>
   </div>
@@ -154,11 +154,11 @@ const dragStartX = ref(0);
 const dragOffset = ref(0);
 const dragThreshold = 50; // Minimum distance to trigger card change
 
-// Responsive card width - smaller cards on mobile
+// Responsive card width - smaller cards on mobile/tablet
 const currentCardWidth = computed(() => {
-  // On mobile (< 768px), use smaller cards
-  if (windowWidth.value < 768) {
-    // Scale card width based on viewport, min 180px, max 220px on mobile
+  // Below lg breakpoint (1024px), use smaller cards
+  if (windowWidth.value < 1024) {
+    // Scale card width based on viewport, min 180px, max 220px
     return Math.max(180, Math.min(220, windowWidth.value * 0.55));
   }
   return baseCardWidth.value;
