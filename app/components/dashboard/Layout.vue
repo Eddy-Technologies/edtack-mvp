@@ -3,7 +3,7 @@
     <!-- Mobile Header with Hamburger -->
     <div
       v-if="isMobile"
-      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between md:hidden"
+      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between lg:hidden"
     >
       <button
         class="p-2.5 -ml-2 rounded-xl hover:bg-stone-100 active:bg-stone-200 transition-colors"
@@ -18,13 +18,13 @@
         </div>
         <span class="text-base font-semibold text-gray-900">StudyWithEddy</span>
       </NuxtLink>
-      <NuxtLink
-        to="/chat/eddy/new"
-        class="p-2.5 -mr-2 rounded-xl hover:bg-stone-100 active:bg-stone-200 transition-colors"
-        title="Back to Chat"
+      <Button
+        size="sm"
+        variant="secondary"
+        @click="router.push('/chat/eddy/new')"
       >
-        <UIcon name="i-lucide-message-circle" class="w-6 h-6 text-gray-700" />
-      </NuxtLink>
+        Back to Chat
+      </Button>
     </div>
 
     <!-- Mobile Drawer -->
@@ -157,7 +157,7 @@
     </MobileDrawer>
 
     <!-- Desktop Sidebar (hidden on mobile) -->
-    <div class="hidden md:flex w-72 bg-white border-r border-gray-200 flex-col overflow-hidden">
+    <div class="hidden lg:flex w-72 bg-white border-r border-gray-200 flex-col overflow-hidden">
       <!-- Header -->
       <div class="px-6 py-6 border-b border-gray-200">
         <div class="flex items-center space-x-3">

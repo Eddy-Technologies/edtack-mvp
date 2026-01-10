@@ -16,7 +16,8 @@ export const useResponsive = () => {
   const height = ref(0);
 
   // Computed breakpoint states
-  const isMobile = computed(() => width.value > 0 && width.value < BREAKPOINTS.md);
+  // isMobile includes tablet portrait (iPad) - uses lg breakpoint (1024px)
+  const isMobile = computed(() => width.value > 0 && width.value < BREAKPOINTS.lg);
   const isTablet = computed(
     () => width.value >= BREAKPOINTS.md && width.value < BREAKPOINTS.lg
   );

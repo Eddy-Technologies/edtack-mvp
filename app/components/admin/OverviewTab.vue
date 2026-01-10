@@ -7,7 +7,7 @@
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
       <!-- Total Users -->
       <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
         <div class="flex items-center justify-between">

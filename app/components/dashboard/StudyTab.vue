@@ -231,7 +231,7 @@
     <!-- DESKTOP: Grid + Expanded Section Layout -->
     <div v-else-if="subjects.length > 0" class="space-y-6">
       <!-- Grid of Subject Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         <button
           v-for="subject in subjects"
           :key="subject.name"

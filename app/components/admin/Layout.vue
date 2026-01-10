@@ -3,7 +3,7 @@
     <!-- Mobile Header with Hamburger -->
     <div
       v-if="isMobile"
-      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between md:hidden"
+      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between lg:hidden"
     >
       <button
         class="p-2.5 -ml-2 rounded-xl hover:bg-slate-100 active:bg-slate-200 transition-colors"
@@ -106,7 +106,7 @@
     </MobileDrawer>
 
     <!-- Desktop Sidebar (hidden on mobile) -->
-    <div class="hidden md:flex w-72 bg-white border-r border-slate-200 flex-col" style="background-color: #f8f9fa; min-height: 100vh;">
+    <div class="hidden lg:flex w-72 bg-white border-r border-slate-200 flex-col" style="background-color: #f8f9fa; min-height: 100vh;">
       <!-- Header -->
       <div class="px-6 py-6 border-b border-slate-200">
         <div class="flex items-center space-x-3">

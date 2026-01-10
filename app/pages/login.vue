@@ -8,14 +8,14 @@
     </div>
 
     <!-- Two-column layout: Hero on left (1/3), Login form on right (2/3) -->
-    <div class="min-h-screen grid md:grid-cols-3">
+    <div class="min-h-screen grid lg:grid-cols-3">
       <!-- Left Column: Marketing Hero (hidden on mobile) -->
-      <div class="hidden md:block md:col-span-1">
+      <div class="hidden lg:block lg:col-span-1">
         <LoginHero />
       </div>
 
       <!-- Right Column: Login Form -->
-      <div class="md:col-span-2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+      <div class="lg:col-span-2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
         <div class="mx-auto w-full max-w-sm lg:w-96">
           <div class="space-y-6">
             <!-- Header -->

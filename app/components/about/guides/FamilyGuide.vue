@@ -4,7 +4,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Family Account Overview</h3>
       <p class="text-slate-600 mb-6">StudyWithEddy's family system allows parents to manage multiple children's learning activities from one central account.</p>
-      <div class="grid md:grid-cols-3 gap-4">
+      <div class="grid lg:grid-cols-3 gap-4">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-2">Multi-Child Support</h4>
           <p class="text-sm text-slate-600">Manage multiple children from one parent account</p>
@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid lg:grid-cols-2 gap-6">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-3">Centralized Management</h5>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -88,7 +88,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Family Dashboard Features</h3>
       <div class="space-y-6">
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid lg:grid-cols-2 gap-6">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-3">Family Statistics</h5>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -109,7 +109,7 @@
           </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid lg:grid-cols-3 gap-4">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-2">Management Tab</h5>
             <p class="text-sm text-slate-600">Add members, edit profiles, remove members</p>
@@ -131,7 +131,7 @@
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Family Task Management</h3>
       <div class="rounded-xl bg-slate-50 p-5 mb-6">
         <h5 class="font-medium text-slate-800 mb-3">Quiz-Based Tasks</h5>
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <ul class="text-sm text-slate-600 space-y-2">
             <li>• Assign quiz tasks to individual children</li>
             <li>• Select subject and chapters</li>
@@ -155,7 +155,7 @@
     <!-- Best Practices -->
     <div class="rounded-2xl bg-slate-50 p-8 ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Family Management Best Practices</h3>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div>
           <h4 class="font-medium text-slate-800 mb-3">Setting Up for Success</h4>
           <ul class="text-sm text-slate-600 space-y-2">

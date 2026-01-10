@@ -24,7 +24,7 @@
           <strong>Tip:</strong> Tasks help motivate your children to learn by rewarding them with credits when they pass quizzes.
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <div class="rounded-xl bg-slate-50 p-4">
             <h4 class="font-medium text-slate-800 mb-3">How It Works</h4>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -60,7 +60,7 @@
 
         <div class="rounded-xl bg-slate-50 p-4">
           <h4 class="font-medium text-slate-800 mb-3">Task Statuses</h4>
-          <div class="grid md:grid-cols-3 gap-3 text-sm">
+          <div class="grid lg:grid-cols-3 gap-3 text-sm">
             <div>
               <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-1">Open</span>
               <p class="text-slate-600">Active task, child can take quizzes</p>
@@ -83,7 +83,7 @@
           <strong>Tip:</strong> Complete quizzes on your assigned tasks to earn credits you can use in the shop!
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <div class="rounded-xl bg-slate-50 p-4">
             <h4 class="font-medium text-slate-800 mb-3">How It Works</h4>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -119,7 +119,7 @@
 
         <div class="rounded-xl bg-slate-50 p-4">
           <h4 class="font-medium text-slate-800 mb-3">Task Statuses</h4>
-          <div class="grid md:grid-cols-3 gap-3 text-sm">
+          <div class="grid lg:grid-cols-3 gap-3 text-sm">
             <div>
               <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mb-1">Open</span>
               <p class="text-slate-600">You can take quizzes to complete this task</p>

@@ -8,7 +8,7 @@
       </div>
 
       <!-- Cards Skeleton -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         <div v-for="i in 3" :key="i" class="animate-pulse">
           <div class="bg-white rounded-2xl border border-gray-200 p-8 space-y-4">
             <!-- Badge skeleton -->
@@ -80,7 +80,7 @@
       <div
         :class="[
           'grid gap-6 max-w-6xl mx-auto',
-          sortedProducts.length === 1 ? 'grid-cols-1 max-w-md' : 'grid-cols-1 md:grid-cols-2'
+          sortedProducts.length === 1 ? 'grid-cols-1 max-w-md' : 'grid-cols-1 lg:grid-cols-2'
         ]"
       >
         <div

@@ -75,7 +75,7 @@
       </div>
 
       <!-- Characters Grid -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+      <div v-else class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
         <div
           v-for="character in filteredCharacters"
           :key="character.id"

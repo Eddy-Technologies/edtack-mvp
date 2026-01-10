@@ -39,7 +39,7 @@
       </div>
 
       <!-- Family Stats -->
-      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
           <div class="flex items-center gap-3">
             <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-lg">

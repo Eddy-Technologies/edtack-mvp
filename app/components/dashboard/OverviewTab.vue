@@ -124,7 +124,7 @@
               <Button variant="primary" text="Manage Family" icon="i-lucide-users" />
             </NuxtLink>
           </div>
-          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div v-else class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
             <div v-for="student in familyMembers" :key="student.id" class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
               <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <div class="relative flex-shrink-0">
@@ -175,7 +175,7 @@
 
     <!-- Student View: Personal Overview -->
     <template v-else>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
           <div class="flex items-center gap-2 sm:gap-3">
             <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-emerald-50 rounded-lg">
@@ -284,7 +284,7 @@
       </div>
 
       <!-- Quick Actions -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         <NuxtLink to="/dashboard?tab=shop" class="block">
           <div class="bg-white p-3 sm:p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
             <div class="flex items-center gap-3 sm:gap-4">

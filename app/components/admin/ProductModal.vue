@@ -25,7 +25,7 @@
       <form class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]" @submit.prevent="handleSubmit">
         <div class="space-y-6">
           <!-- Basic Information -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Product Name *
@@ -64,7 +64,7 @@
           </div>
 
           <!-- Product Type and Category -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Product Type *
@@ -95,7 +95,7 @@
           </div>
 
           <!-- Pricing -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Price (SGD) *
@@ -153,7 +153,7 @@
           <!-- Discount Settings -->
           <div class="border-t pt-6">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Discount Settings</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Discount Percentage (%)
@@ -182,7 +182,7 @@
                 >
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Discount Start Date

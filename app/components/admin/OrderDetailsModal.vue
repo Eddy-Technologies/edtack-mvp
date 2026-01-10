@@ -25,7 +25,7 @@
       <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
         <div v-if="order" class="space-y-6">
           <!-- Order Summary -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Order Info -->
             <div class="bg-gray-50 rounded-lg p-4">
               <h3 class="font-semibold text-gray-900 mb-3">Order Information</h3>

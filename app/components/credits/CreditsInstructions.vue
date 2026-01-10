@@ -24,7 +24,7 @@
           <strong>Tip:</strong> Credits are a pledge system - you set aside points to reward your children for learning.
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <div class="rounded-xl bg-slate-50 p-4">
             <h4 class="font-medium text-slate-800 mb-3">How It Works</h4>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -69,7 +69,7 @@
           <strong>Tip:</strong> Earn credits by completing quiz tasks, then spend them in the shop!
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <div class="rounded-xl bg-slate-50 p-4">
             <h4 class="font-medium text-slate-800 mb-3">How It Works</h4>
             <ul class="text-sm text-slate-600 space-y-2">

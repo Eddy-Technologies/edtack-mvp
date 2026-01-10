@@ -18,7 +18,7 @@
     </div>
 
     <!-- Survey Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
       <!-- Parent Survey Card -->
       <div class="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 hover:shadow-lg transition-all duration-300">
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 to-secondary-400" />

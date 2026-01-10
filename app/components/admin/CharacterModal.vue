@@ -25,7 +25,7 @@
       <form class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]" @submit.prevent="handleSubmit">
         <div class="space-y-6">
           <!-- Basic Information -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Character Name *
@@ -77,7 +77,7 @@
           </div>
 
           <!-- Image and Display -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Image URL

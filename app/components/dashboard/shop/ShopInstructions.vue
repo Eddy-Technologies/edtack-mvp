@@ -24,7 +24,7 @@
           <strong>Tip:</strong> Use your credits to shop - your parent will approve and pay for your order!
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <div class="rounded-xl bg-slate-50 p-4">
             <h4 class="font-medium text-slate-800 mb-3">How It Works</h4>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -65,7 +65,7 @@
           <strong>Tip:</strong> Your children can shop using their credits - you approve orders and pay securely via Stripe.
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid lg:grid-cols-2 gap-4">
           <div class="rounded-xl bg-slate-50 p-4">
             <h4 class="font-medium text-slate-800 mb-3">How It Works</h4>
             <ul class="text-sm text-slate-600 space-y-2">

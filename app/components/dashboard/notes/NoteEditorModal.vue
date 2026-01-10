@@ -202,7 +202,7 @@
 
         <!-- Bottom Controls Section -->
         <div class="bg-white/50 backdrop-blur-sm rounded-b-xl p-4 sm:p-6 border-t border-gray-200/50 flex-shrink-0">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-6">
             <!-- Subject Dropdown -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>

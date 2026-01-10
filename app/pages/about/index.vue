@@ -3,7 +3,7 @@
     <!-- Mobile Header with Hamburger -->
     <div
       v-if="isMobile"
-      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between md:hidden"
+      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between lg:hidden"
     >
       <button
         class="p-2.5 -ml-2 rounded-xl hover:bg-slate-100 active:bg-slate-200 transition-colors"
@@ -106,7 +106,7 @@
     </MobileDrawer>
 
     <!-- Desktop Sidebar Navigation (hidden on mobile) -->
-    <div class="hidden md:flex w-72 bg-white border-r border-slate-200/60 flex-col shadow-sm">
+    <div class="hidden lg:flex w-72 bg-white border-r border-slate-200/60 flex-col shadow-sm">
       <!-- Header -->
       <div class="px-6 py-5 border-b border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50">
         <NuxtLink to="/" class="flex items-center gap-3 group">
