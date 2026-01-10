@@ -33,12 +33,12 @@
       </div>
 
       <!-- Wishlist Items -->
-      <div v-else class="space-y-6">
+      <div v-else class="space-y-4 sm:space-y-6">
         <!-- Header -->
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Your Wishlist</h1>
-            <p class="text-gray-600">{{ wishlistItems.length }} {{ wishlistItems.length === 1 ? 'item' : 'items' }} saved</p>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Your Wishlist</h1>
+            <p class="text-sm sm:text-base text-gray-600">{{ wishlistItems.length }} {{ wishlistItems.length === 1 ? 'item' : 'items' }} saved</p>
           </div>
           <Button
             variant="secondary-gray"

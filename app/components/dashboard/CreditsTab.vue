@@ -5,7 +5,7 @@
       <div class="mb-4 sm:mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h1 class="text-xl sm:text-3xl font-bold text-gray-900 mb-1">Credit Management</h1>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Credit Management</h1>
             <p class="text-sm sm:text-base text-gray-500">Manage your family's credit balance and transfers</p>
           </div>
           <Button

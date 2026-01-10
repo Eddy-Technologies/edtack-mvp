@@ -22,10 +22,10 @@
       <FamilyManagementInstructions :is-parent="isParent" />
 
       <!-- Header with Action -->
-      <div class="flex items-center justify-between">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
         <div>
-          <h2 class="text-xl font-semibold text-gray-900">Family Members</h2>
-          <p class="text-sm text-gray-500 mt-1">
+          <h2 class="text-lg sm:text-xl font-semibold text-gray-900">Family Members</h2>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">
             {{ isParent ? 'Manage your family group and share credits' : 'View your family connections' }}
           </p>
         </div>
@@ -39,51 +39,51 @@
       </div>
 
       <!-- Family Stats -->
-      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-lg">
-              <UIcon name="i-lucide-users" class="text-blue-600" size="20" />
+      <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-blue-50 rounded-lg">
+              <UIcon name="i-lucide-users" class="text-blue-600" size="18" />
             </div>
             <div>
-              <p class="text-2xl font-bold text-gray-900">{{ activeMembers.length }}</p>
-              <p class="text-xs text-gray-500">Active Members</p>
+              <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ activeMembers.length }}</p>
+              <p class="text-xs text-gray-500">Active</p>
             </div>
           </div>
         </div>
 
-        <div v-if="isParent" class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-amber-50 rounded-lg">
-              <UIcon name="i-lucide-mail" class="text-amber-600" size="20" />
+        <div v-if="isParent" class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-amber-50 rounded-lg">
+              <UIcon name="i-lucide-mail" class="text-amber-600" size="18" />
             </div>
             <div>
-              <p class="text-2xl font-bold text-gray-900">{{ pendingInvitations.length }}</p>
+              <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ pendingInvitations.length }}</p>
               <p class="text-xs text-gray-500">Pending</p>
             </div>
           </div>
         </div>
 
-        <div v-if="isParent" class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-emerald-50 rounded-lg">
-              <UIcon name="i-lucide-coins" class="text-emerald-600" size="20" />
+        <div v-if="isParent" class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-emerald-50 rounded-lg">
+              <UIcon name="i-lucide-coins" class="text-emerald-600" size="18" />
             </div>
             <div>
-              <p class="text-2xl font-bold text-gray-900">{{ totalCredits }}</p>
-              <p class="text-xs text-gray-500">Total Credits</p>
+              <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ totalCredits }}</p>
+              <p class="text-xs text-gray-500">Credits</p>
             </div>
           </div>
         </div>
 
-        <div v-if="isParent" class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
-          <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center w-10 h-10 bg-violet-50 rounded-lg">
-              <UIcon name="i-lucide-list-checks" class="text-violet-600" size="20" />
+        <div v-if="isParent" class="bg-white rounded-xl border border-gray-100 shadow-sm p-3 sm:p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-violet-50 rounded-lg">
+              <UIcon name="i-lucide-list-checks" class="text-violet-600" size="18" />
             </div>
             <div>
-              <p class="text-2xl font-bold text-gray-900">{{ totalTasks }}</p>
-              <p class="text-xs text-gray-500">Active Tasks</p>
+              <p class="text-xl sm:text-2xl font-bold text-gray-900">{{ totalTasks }}</p>
+              <p class="text-xs text-gray-500">Tasks</p>
             </div>
           </div>
         </div>
@@ -91,12 +91,12 @@
 
       <!-- Student Pending Invitations Section -->
       <div v-if="!isParent && pendingInvitations.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center gap-2">
-            <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg">
+            <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-blue-100 rounded-lg">
               <UIcon name="i-lucide-mail-plus" class="text-blue-600" size="16" />
             </div>
-            <h2 class="text-base font-semibold text-gray-900">Your Family Invitations</h2>
+            <h2 class="text-sm sm:text-base font-semibold text-gray-900">Your Family Invitations</h2>
           </div>
         </div>
 
@@ -104,17 +104,17 @@
           <div
             v-for="invitation in pendingInvitations"
             :key="invitation.id"
-            class="p-5 bg-gradient-to-r from-blue-50/50 to-transparent"
+            class="p-3 sm:p-5 bg-gradient-to-r from-blue-50/50 to-transparent"
           >
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-xl flex-shrink-0">
-                  <UIcon name="i-lucide-users" class="text-blue-600" size="22" />
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <div class="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 bg-blue-100 rounded-xl flex-shrink-0">
+                  <UIcon name="i-lucide-users" class="text-blue-600" size="20" />
                 </div>
 
                 <div class="min-w-0">
-                  <h3 class="font-semibold text-gray-900">{{ invitation.group_name || 'Family Group' }}</h3>
-                  <p class="text-sm text-gray-500">You've been invited to join this family</p>
+                  <h3 class="font-semibold text-gray-900 text-sm sm:text-base">{{ invitation.group_name || 'Family Group' }}</h3>
+                  <p class="text-xs sm:text-sm text-gray-500">You've been invited to join this family</p>
                   <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
                     <UIcon name="i-lucide-clock" size="12" />
                     <span>{{ formatDate(invitation.invited_at) }}</span>
@@ -143,12 +143,12 @@
 
       <!-- Parent Pending Invitations Section -->
       <div v-if="isParent && pendingInvitations.length > 0" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center gap-2">
-            <div class="flex items-center justify-center w-8 h-8 bg-amber-100 rounded-lg">
+            <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-amber-100 rounded-lg">
               <UIcon name="i-lucide-clock" class="text-amber-600" size="16" />
             </div>
-            <h2 class="text-base font-semibold text-gray-900">Pending Invitations</h2>
+            <h2 class="text-sm sm:text-base font-semibold text-gray-900">Pending Invitations</h2>
           </div>
         </div>
 
@@ -156,20 +156,20 @@
           <div
             v-for="invitation in pendingInvitations"
             :key="invitation.id"
-            class="p-5 hover:bg-gray-50/50 transition-colors"
+            class="p-3 sm:p-5 hover:bg-gray-50/50 transition-colors"
           >
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-10 h-10 bg-amber-50 rounded-xl flex-shrink-0">
-                  <UIcon name="i-lucide-mail" class="text-amber-600" size="18" />
+            <div class="flex items-center justify-between gap-3 sm:gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
+                <div class="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-amber-50 rounded-xl flex-shrink-0">
+                  <UIcon name="i-lucide-mail" class="text-amber-600" size="16" />
                 </div>
 
                 <div class="min-w-0">
-                  <h3 class="font-medium text-gray-900">{{ invitation.email }}</h3>
-                  <div class="flex items-center gap-2 mt-0.5">
+                  <h3 class="font-medium text-gray-900 text-sm sm:text-base truncate">{{ invitation.email }}</h3>
+                  <div class="flex flex-wrap items-center gap-2 mt-0.5">
                     <span class="inline-flex items-center gap-1 text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium">
                       <UIcon name="i-lucide-loader-2" size="10" />
-                      Awaiting response
+                      Awaiting
                     </span>
                     <span class="text-xs text-gray-400">{{ formatDate(invitation.invited_at) }}</span>
                   </div>
@@ -177,7 +177,7 @@
               </div>
 
               <button
-                class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
                 title="Cancel invitation"
                 @click="cancelInvitation(invitation)"
               >
@@ -214,24 +214,24 @@
 
       <!-- Active Members List -->
       <div v-if="isParent || (!isParent && activeMembers.length > 0)" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100 bg-gray-50/50">
           <div class="flex items-center gap-2">
-            <div class="flex items-center justify-center w-8 h-8 bg-emerald-100 rounded-lg">
+            <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-emerald-100 rounded-lg">
               <UIcon name="i-lucide-users" class="text-emerald-600" size="16" />
             </div>
-            <h2 class="text-base font-semibold text-gray-900">
+            <h2 class="text-sm sm:text-base font-semibold text-gray-900">
               {{ isParent ? 'Active Members' : 'Family Members' }}
             </h2>
           </div>
         </div>
 
         <!-- Empty State -->
-        <div v-if="activeMembers.length === 0" class="text-center py-16 px-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-2xl mb-6">
-            <UIcon name="i-lucide-user-plus" class="text-gray-400" size="32" />
+        <div v-if="activeMembers.length === 0" class="text-center py-12 sm:py-16 px-4 sm:px-6">
+          <div class="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 bg-gray-100 rounded-2xl mb-4 sm:mb-6">
+            <UIcon name="i-lucide-user-plus" class="text-gray-400" size="28" />
           </div>
-          <h3 class="text-lg font-semibold text-gray-900 mb-2">No family members yet</h3>
-          <p class="text-gray-500 max-w-sm mx-auto mb-6">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">No family members yet</h3>
+          <p class="text-sm sm:text-base text-gray-500 max-w-sm mx-auto mb-4 sm:mb-6">
             Invite family members by email. Once they accept, they'll appear here.
           </p>
           <Button
@@ -248,40 +248,39 @@
           <div
             v-for="member in activeMembers"
             :key="member.id"
-            class="p-5 hover:bg-gray-50/50 transition-colors"
+            class="p-3 sm:p-5 hover:bg-gray-50/50 transition-colors"
           >
-            <div class="flex items-center justify-between gap-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
               <!-- Member Info -->
-              <div class="flex items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4">
                 <!-- Avatar -->
                 <div class="relative flex-shrink-0">
-                  <div :class="getAvatarClass(member.user_role)" class="flex items-center justify-center w-12 h-12 rounded-xl">
-                    <span class="font-semibold text-base">
+                  <div :class="getAvatarClass(member.user_role)" class="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 rounded-xl">
+                    <span class="font-semibold text-sm sm:text-base">
                       {{ getInitials(member.userDisplayFullName || member.email) }}
                     </span>
                   </div>
-                  <div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white" />
+                  <div class="absolute -bottom-0.5 -right-0.5 w-3 sm:w-3.5 h-3 sm:h-3.5 bg-emerald-500 rounded-full border-2 border-white" />
                 </div>
 
                 <!-- Details -->
                 <div class="min-w-0">
-                  <div class="flex items-center gap-2 mb-0.5">
-                    <h3 class="font-semibold text-gray-900 truncate">
+                  <div class="flex flex-wrap items-center gap-1 sm:gap-2 mb-0.5">
+                    <h3 class="font-semibold text-gray-900 text-sm sm:text-base truncate">
                       {{ member.userDisplayFullName || member.email }}
                     </h3>
-                    <span :class="getRoleBadgeClass(member.user_role)" class="px-2 py-0.5 rounded-md text-xs font-medium">
+                    <span :class="getRoleBadgeClass(member.user_role)" class="px-1.5 sm:px-2 py-0.5 rounded-md text-xs font-medium">
                       {{ formatRole(member.user_role) }}
                     </span>
                   </div>
 
-                  <p class="text-sm text-gray-500 truncate mb-1.5">{{ member.email }}</p>
+                  <p class="text-xs sm:text-sm text-gray-500 truncate mb-1 sm:mb-1.5">{{ member.email }}</p>
 
                   <!-- Stats -->
-                  <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400">
+                  <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-gray-400">
                     <div v-if="member.credits !== undefined" class="flex items-center gap-1">
                       <UIcon name="i-lucide-coins" size="12" />
                       <span class="font-medium text-gray-600">{{ member.credits || 0 }}</span>
-                      <span>credits</span>
                     </div>
 
                     <div v-if="member.activeTasks" class="flex items-center gap-1">
@@ -289,9 +288,9 @@
                       <span>{{ member.activeTasks }} tasks</span>
                     </div>
 
-                    <div class="flex items-center gap-1">
+                    <div class="hidden sm:flex items-center gap-1">
                       <UIcon name="i-lucide-calendar" size="12" />
-                      <span>Joined {{ formatDate(member.joined_at || member.created_at) }}</span>
+                      <span>{{ formatDate(member.joined_at || member.created_at) }}</span>
                     </div>
                   </div>
                 </div>
@@ -300,18 +299,19 @@
               <!-- Actions -->
               <div v-if="isParent" class="flex items-center gap-2 flex-shrink-0">
                 <button
-                  class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors"
+                  class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors"
                   @click="transferCredits(member)"
                 >
                   <UIcon name="i-lucide-send" size="14" />
-                  Transfer Credit
+                  <span class="hidden sm:inline">Transfer</span>
+                  <span class="sm:hidden">Send</span>
                 </button>
                 <button
-                  class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+                  class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
                   @click="removeMember(member)"
                 >
                   <UIcon name="i-lucide-user-minus" size="14" />
-                  Remove
+                  <span class="hidden sm:inline">Remove</span>
                 </button>
               </div>
             </div>
