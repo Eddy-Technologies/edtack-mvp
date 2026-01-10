@@ -92,7 +92,7 @@ const {
   nextStep,
   previousStep,
   skipTour,
-  completeTour,
+  closeTour,
 } = useTour();
 
 const tooltipRef = ref<HTMLElement | null>(null);
@@ -173,14 +173,10 @@ const updateTargetRect = async () => {
   if (validRect) {
     targetRect.value = validRect;
   } else {
-    console.warn(`Tour: Element not found or not visible for step "${currentStep.value.id}", skipping...`);
+    console.warn(`Tour: Element not found or not visible for step "${currentStep.value.id}"`);
     targetRect.value = null;
-    // Auto-skip to next step if element not found
-    if (isLastStep.value) {
-      completeTour();
-    } else {
-      nextStep();
-    }
+    // Close tour without marking as completed - user can restart from settings
+    closeTour();
   }
 };
 

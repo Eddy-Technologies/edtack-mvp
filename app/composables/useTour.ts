@@ -70,6 +70,16 @@ export const useTour = () => {
     saveTourState(rest);
   };
 
+  // Reset all tours (for new user registration)
+  const resetAllTours = () => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.removeItem(TOUR_STORAGE_KEY);
+    } catch {
+      // Ignore storage errors
+    }
+  };
+
   // Get the appropriate tour config based on device
   const getTourConfig = (tourId: string, isMobile: boolean): TourConfig | null => {
     if (tourId === 'chat-tour') {
@@ -165,5 +175,6 @@ export const useTour = () => {
     // Persistence
     isTourCompleted,
     resetTour,
+    resetAllTours,
   };
 };

@@ -223,6 +223,7 @@ import { USER_ROLE } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import LoginHero from '~/components/login/LoginHero.vue';
 import { useAuth } from '~/composables/useAuth';
+import { useTour } from '~/composables/useTour';
 import { useToast } from '#imports';
 
 useHead({
@@ -283,6 +284,9 @@ const toast = useToast();
 
 // Auth composable
 const { signUp, signInWithGoogle } = useAuth();
+
+// Tour composable
+const { resetAllTours } = useTour();
 
 // Form validation
 const canSubmit = computed(() => {
@@ -347,6 +351,9 @@ const handleRegister = async () => {
       school: school.value.trim() || undefined,
       acceptTerms: acceptTerms.value,
     });
+
+    // Clear tour state for fresh start on new registration
+    resetAllTours();
 
     if (result.hasSession) {
       // Email verification is OFF - user is auto-logged in
