@@ -40,7 +40,7 @@
     </div>
 
     <!-- Suggestions - only show on new chat, fade out when typing -->
-    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']">
+    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', isMobile ? 'justify-center' : '', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']">
       <!-- Lesson Pill -->
       <button
         :class="[

@@ -6,30 +6,7 @@
       <span class="ml-3 text-gray-600">Loading characters...</span>
     </div>
 
-    <!-- Mobile: 2-column grid -->
-    <div v-else-if="isMobile" class="grid grid-cols-2 gap-3 p-4 w-full max-w-md mx-auto">
-      <button
-        v-for="avatar in allAvatars"
-        :key="avatar.id"
-        :class="[
-          'flex flex-col items-center p-3 rounded-xl border-2 transition-all active:scale-95',
-          avatar.slug === props.initialCharacterSlug
-            ? 'border-primary bg-primary/5'
-            : 'border-gray-200 hover:border-gray-300 bg-white'
-        ]"
-        @click="selectAvatar(avatar, allAvatars.indexOf(avatar))"
-      >
-        <img
-          :src="avatar.image"
-          :alt="avatar.name"
-          class="w-16 h-16 rounded-full object-cover mb-2 shadow-sm"
-        >
-        <span class="text-sm font-medium text-gray-900 text-center leading-tight">{{ avatar.name }}</span>
-        <span class="text-xs text-gray-500">{{ constantCaseToTitleCase(avatar.subject) }}</span>
-      </button>
-    </div>
-
-    <!-- Desktop: Carousel Content -->
+    <!-- Carousel Content -->
     <template v-else>
       <!-- Gradient overlays for blur effect (smaller on mobile) -->
       <div class="absolute left-0 top-0 w-12 md:w-32 h-full z-10 pointer-events-none" />
@@ -37,9 +14,16 @@
 
       <!-- Carousel container -->
       <div
-        class="group flex ease-in-out"
-        :class="isTransitioning ? 'transition-transform duration-500' : ''"
-        :style="{ transform: `translateX(calc(50% - ${(adjustedIndex + 0.5) * currentCardWidth}px))` }"
+        class="group flex ease-in-out select-none"
+        :class="[
+          isTransitioning ? 'transition-transform duration-500' : '',
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        ]"
+        :style="{ transform: `translateX(calc(50% - ${(adjustedIndex + 0.5) * currentCardWidth}px + ${dragOffset}px))` }"
+        @mousedown="handleMouseDown"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
       >
         <div
           v-for="(avatar, index) in infiniteAvatars"
@@ -138,9 +122,6 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from '#vue-router';
 import { useCharacters } from '~/composables/useCharacters';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
-import { useResponsive } from '~/composables/useResponsive';
-
-const { isMobile } = useResponsive();
 
 const props = defineProps({
   modelValue: {
@@ -165,6 +146,13 @@ const currentIndex = ref(2); // Start from center (index 2 out of 8 cards)
 const baseCardWidth = ref(280);
 const windowWidth = ref(768);
 const isTransitioning = ref(false);
+
+// Drag/swipe state
+const isDragging = ref(false);
+const wasDragging = ref(false);
+const dragStartX = ref(0);
+const dragOffset = ref(0);
+const dragThreshold = 50; // Minimum distance to trigger card change
 
 // Responsive card width - smaller cards on mobile
 const currentCardWidth = computed(() => {
@@ -233,6 +221,9 @@ const loadCharacters = async () => {
 };
 
 const selectAvatar = (avatar, index) => {
+  // Ignore clicks that happened during drag
+  if (wasDragging.value) return;
+
   // Convert infinite array index back to original array index
   currentIndex.value = index % allAvatars.value.length;
 
@@ -281,6 +272,79 @@ const handleKeydown = (event) => {
   } else if (event.key === 'ArrowLeft') {
     previousCard();
   }
+};
+
+// Handle drag/swipe
+const handleDragStart = (clientX) => {
+  isDragging.value = true;
+  dragStartX.value = clientX;
+  dragOffset.value = 0;
+  isTransitioning.value = false;
+};
+
+const handleDragMove = (clientX) => {
+  if (!isDragging.value) return;
+  dragOffset.value = clientX - dragStartX.value;
+};
+
+const handleDragEnd = () => {
+  if (!isDragging.value) return;
+
+  isDragging.value = false;
+
+  // Mark as was dragging if there was significant movement (to prevent click)
+  if (Math.abs(dragOffset.value) > 5) {
+    wasDragging.value = true;
+    setTimeout(() => {
+      wasDragging.value = false;
+    }, 100);
+  }
+
+  // Determine if we should navigate
+  if (Math.abs(dragOffset.value) > dragThreshold) {
+    if (dragOffset.value < 0) {
+      nextCard();
+    } else {
+      previousCard();
+    }
+  } else {
+    // Snap back with animation
+    isTransitioning.value = true;
+  }
+
+  dragOffset.value = 0;
+};
+
+// Mouse events
+const handleMouseDown = (e) => {
+  e.preventDefault();
+  handleDragStart(e.clientX);
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+};
+
+const handleMouseMove = (e) => {
+  handleDragMove(e.clientX);
+};
+
+const handleMouseUp = () => {
+  handleDragEnd();
+  document.removeEventListener('mousemove', handleMouseMove);
+  document.removeEventListener('mouseup', handleMouseUp);
+};
+
+// Touch events
+const handleTouchStart = (e) => {
+  handleDragStart(e.touches[0].clientX);
+};
+
+const handleTouchMove = (e) => {
+  e.preventDefault();
+  handleDragMove(e.touches[0].clientX);
+};
+
+const handleTouchEnd = () => {
+  handleDragEnd();
 };
 
 // Handle window resize for responsive card width
