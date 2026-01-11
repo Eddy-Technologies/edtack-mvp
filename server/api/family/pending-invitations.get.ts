@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     // Get authenticated user info
     const userInfo = await getUserInfo(event);
 
-    // Get pending invitations for this user
+    // Get pending invitations for this user (by user_info_id OR by email for email-based invites)
     const { data: invitations, error: invitationsError } = await supabase
       .from('group_members')
       .select(`
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
           )
         )
       `)
-      .eq('user_info_id', userInfo.id)
+      .or(`user_info_id.eq.${userInfo.id},invited_email.ilike.${userInfo.email}`)
       .eq('status', 'pending')
       .order('invited_at', { ascending: false });
 

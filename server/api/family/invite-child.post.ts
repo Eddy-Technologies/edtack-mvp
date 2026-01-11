@@ -147,14 +147,63 @@ export default defineEventHandler(async (event) => {
         }
       };
     } else {
-      // For non-existing users, we'll create a placeholder invitation
-      // In a real implementation with email service, this would send an invitation email
-      // with a signup link that includes the family group ID
+      // For non-existing users, create email-based invitation
+      // Check if there's already a pending invitation for this email
+      const { data: existingEmailInvite } = await supabase
+        .from('group_members')
+        .select('id')
+        .eq('group_id', familyGroupId)
+        .eq('invited_email', email.toLowerCase())
+        .eq('status', 'pending')
+        .single();
 
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'User with this email does not exist. Please ask them to create an account first, then invite them.'
-      });
+      if (existingEmailInvite) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'An invitation is already pending for this email.'
+        });
+      }
+
+      // Create invitation with email only (no user_info_id)
+      const { data: invitation, error: inviteError } = await supabase
+        .from('group_members')
+        .insert({
+          group_id: familyGroupId,
+          user_info_id: null,
+          invited_email: email.toLowerCase(),
+          status: 'pending',
+          invited_by: parentInfo.id,
+          invited_at: new Date().toISOString()
+        })
+        .select('id')
+        .single();
+
+      if (inviteError || !invitation) {
+        console.error('Failed to create email invitation:', inviteError);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to create invitation'
+        });
+      }
+
+      // Generate invite link (just points to register page)
+      const config = useRuntimeConfig();
+      const baseUrl = config.public.baseUrl || 'http://localhost:3000';
+      const inviteLink = `${baseUrl}/register`;
+
+      return {
+        success: true,
+        message: `Invitation created for ${email}. Share the link with them to register.`,
+        inviteLink: inviteLink,
+        invite: {
+          id: invitation.id,
+          memberEmail: email,
+          parentName: parentInfo.first_name,
+          sentAt: new Date().toISOString(),
+          status: 'pending',
+          isEmailInvite: true
+        }
+      };
     }
   } catch (error) {
     console.error('Failed to send invite:', error);

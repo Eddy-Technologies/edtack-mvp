@@ -37,12 +37,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check if user has a pending invitation to this group
+    // Check if user has a pending invitation to this group (by user_info_id OR email)
     const { data: invitation, error: inviteError } = await supabase
       .from('group_members')
       .select(`
         id,
         group_id,
+        user_info_id,
+        invited_email,
         groups(
           name,
           group_type,
@@ -55,7 +57,7 @@ export default defineEventHandler(async (event) => {
         )
       `)
       .eq('group_id', groupId)
-      .eq('user_info_id', userInfo.id)
+      .or(`user_info_id.eq.${userInfo.id},invited_email.ilike.${userInfo.email}`)
       .eq('status', 'pending')
       .single();
 
@@ -66,12 +68,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Update the invitation status to active
+    // Update the invitation status to active and set user_info_id for email-based invites
     const { error: updateError } = await supabase
       .from('group_members')
       .update({
         status: 'active',
-        joined_at: new Date().toISOString()
+        joined_at: new Date().toISOString(),
+        user_info_id: userInfo.id,  // Set user_info_id for email-based invitations
+        invited_email: null         // Clear invited_email after linking
       })
       .eq('id', invitation.id);
 

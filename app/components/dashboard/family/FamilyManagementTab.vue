@@ -169,20 +169,30 @@
                   <div class="flex flex-wrap items-center gap-2 mt-0.5">
                     <span class="inline-flex items-center gap-1 text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium">
                       <UIcon name="i-lucide-loader-2" size="10" />
-                      Awaiting
+                      {{ invitation.isEmailInvite ? 'Not registered' : 'Awaiting response' }}
                     </span>
                     <span class="text-xs text-gray-400">{{ formatDate(invitation.invited_at) }}</span>
                   </div>
                 </div>
               </div>
 
-              <button
-                class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
-                title="Cancel invitation"
-                @click="cancelInvitation(invitation)"
-              >
-                <UIcon name="i-lucide-x" size="18" />
-              </button>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <button
+                  v-if="invitation.isEmailInvite"
+                  class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+                  @click="copyInviteLink(invitation)"
+                >
+                  <UIcon :name="copiedInviteId === invitation.id ? 'i-lucide-check' : 'i-lucide-copy'" size="14" />
+                  {{ copiedInviteId === invitation.id ? 'Copied!' : 'Copy invite link' }}
+                </button>
+                <button
+                  class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  title="Cancel invitation"
+                  @click="cancelInvitation(invitation)"
+                >
+                  <UIcon name="i-lucide-x" size="18" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -303,7 +313,7 @@
                   @click="transferCredits(member)"
                 >
                   <UIcon name="i-lucide-send" size="14" />
-                  <span class="hidden sm:inline">Transfer</span>
+                  <span class="hidden sm:inline">Transfer Credit</span>
                   <span class="sm:hidden">Send</span>
                 </button>
                 <button
@@ -377,6 +387,7 @@ const showRemoveModal = ref(false);
 const showTransferModal = ref(false);
 const selectedMember = ref<any>(null);
 const isTransferLoading = ref(false);
+const copiedInviteId = ref<string | null>(null);
 
 // Computed properties
 const activeMembers = computed(() => {
@@ -451,6 +462,20 @@ const cancelInvitation = async (invitation: any) => {
   } catch (err: any) {
     console.error('Failed to cancel invitation:', err);
     alert('Failed to cancel invitation. Please try again.');
+  }
+};
+
+const copyInviteLink = async (invitation: any) => {
+  try {
+    const baseUrl = window.location.origin;
+    const link = `${baseUrl}/register`;
+    await navigator.clipboard.writeText(link);
+    copiedInviteId.value = invitation.id;
+    setTimeout(() => {
+      copiedInviteId.value = null;
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy:', err);
   }
 };
 
