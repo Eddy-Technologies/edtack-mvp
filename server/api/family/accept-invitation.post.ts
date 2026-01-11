@@ -74,8 +74,8 @@ export default defineEventHandler(async (event) => {
       .update({
         status: 'active',
         joined_at: new Date().toISOString(),
-        user_info_id: userInfo.id,  // Set user_info_id for email-based invitations
-        invited_email: null         // Clear invited_email after linking
+        user_info_id: userInfo.id, // Set user_info_id for email-based invitations
+        invited_email: null // Clear invited_email after linking
       })
       .eq('id', invitation.id);
 
