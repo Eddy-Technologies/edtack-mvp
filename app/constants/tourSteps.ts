@@ -32,7 +32,7 @@ export const CHAT_TOUR_MOBILE: TourConfig = {
       id: 'chat-input',
       element: '[data-tour="chat-input"]',
       title: 'Start a Conversation',
-      description: 'Type your question here or use the quick prompts to get started by clicking on the buttons.',
+      description: 'Type your question here or use the quick prompts by clicking on the buttons.',
       position: 'top',
     },
     {
@@ -67,7 +67,7 @@ export const CHAT_TOUR_DESKTOP: TourConfig = {
       id: 'chat-input',
       element: '[data-tour="chat-input"]',
       title: 'Start a Conversation',
-      description: 'Type your question here or use the quick prompts to get started by clicking on the buttons.',
+      description: 'Type your question here or use the quick prompts by clicking on the buttons.',
       position: 'top',
     },
     {
@@ -116,7 +116,7 @@ export const DASHBOARD_TOUR: TourConfig = {
       id: 'tasks-tab',
       element: '[data-tour="tasks-tab"]',
       title: 'Tasks',
-      description: 'Track your assignments and tasks to stay on top of your learning. Completing tasks gives you credits.',
+      description: 'Track your tasks. Completing tasks such as quizzes gives you credits.',
       position: 'right',
     },
   ],
