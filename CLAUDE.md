@@ -27,7 +27,7 @@ This project uses **pnpm** as the package manager.
 | Env | Project ID | URL |
 |-----|------------|-----|
 | dev | `qfzqwbwwzqmacnhtihov` | https://qfzqwbwwzqmacnhtihov.supabase.co |
-| prod | `yxbebpfjblokjxvroebw` | https://yxbebpfjblokjxvroebw.supabase.co |
+| prod | `lqgsbofjkfduqcxbmdxn` | https://lqgsbofjkfduqcxbmdxn.supabase.co |
 
 ## Database Workflows
 
@@ -66,7 +66,7 @@ supabase link --project-ref qfzqwbwwzqmacnhtihov
 supabase db push
 
 # 3. Push to prod (when ready)
-supabase link --project-ref yxbebpfjblokjxvroebw
+supabase link --project-ref lqgsbofjkfduqcxbmdxn
 supabase db push
 ```
 
@@ -86,7 +86,7 @@ NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
 node supabase/scripts/init-admin.js
 
 # Prod
-NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
+NUXT_PUBLIC_SUPABASE_URL=https://lqgsbofjkfduqcxbmdxn.supabase.co \
 NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
 node supabase/scripts/init-admin.js
 ```
@@ -100,7 +100,7 @@ node supabase/scripts/upload-assets.js
 node supabase/scripts/upload-assets.js https://qfzqwbwwzqmacnhtihov.supabase.co <dev-service-role-key>
 
 # Prod
-node supabase/scripts/upload-assets.js https://yxbebpfjblokjxvroebw.supabase.co <prod-service-role-key>
+node supabase/scripts/upload-assets.js https://lqgsbofjkfduqcxbmdxn.supabase.co <prod-service-role-key>
 ```
 
 ### Test Users

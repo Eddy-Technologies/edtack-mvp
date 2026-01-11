@@ -59,7 +59,7 @@ NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
 node supabase/scripts/import-lessons.js
 
 # Prod
-NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
+NUXT_PUBLIC_SUPABASE_URL=https://lqgsbofjkfduqcxbmdxn.supabase.co \
 NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
 node supabase/scripts/import-lessons.js
 ```
