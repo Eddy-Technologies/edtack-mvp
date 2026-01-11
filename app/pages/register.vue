@@ -169,16 +169,17 @@
                 :disabled="isLoading"
               >
 
-              <input
-                v-if="userRole === USER_ROLE.STUDENT"
-                v-model="dateOfBirth"
-                type="date"
-                placeholder="Birthday (optional)"
-                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-                :disabled="isLoading"
-                min="1900-01-01"
-                @blur="enforceDobMin"
-              >
+              <div v-if="userRole === USER_ROLE.STUDENT" class="w-full">
+                <label class="block text-sm text-gray-500 mb-1">Birthday (optional)</label>
+                <input
+                  v-model="dateOfBirth"
+                  type="date"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                  :disabled="isLoading"
+                  min="1900-01-01"
+                  @blur="enforceDobMin"
+                >
+              </div>
 
               <!-- Terms and Conditions -->
               <div class="flex items-start space-x-3 text-left">
