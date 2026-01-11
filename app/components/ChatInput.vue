@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-3 relative" data-tour="chat-input">
+  <div class="flex flex-col gap-3 relative">
     <!-- Input container -->
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4" data-tour="chat-input">
       <!-- Keyword hint -->
       <p class="text-sm text-gray-400 text-center mb-2">
         Use keywords <span class="font-medium text-primary">"lesson"</span> or
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Suggestions - only show on new chat, fade out when typing -->
-    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', isMobile ? 'justify-center' : '', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']">
+    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', isMobile ? 'justify-center' : '', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']" data-tour="chat-suggestions">
       <!-- Lesson Pill -->
       <button
         :class="[

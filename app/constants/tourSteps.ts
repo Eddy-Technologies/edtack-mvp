@@ -32,7 +32,14 @@ export const CHAT_TOUR_MOBILE: TourConfig = {
       id: 'chat-input',
       element: '[data-tour="chat-input"]',
       title: 'Start a Conversation',
-      description: 'Type your question here or use the quick prompts by clicking on the buttons.',
+      description: 'Type your question here to chat with your AI tutor.',
+      position: 'top',
+    },
+    {
+      id: 'chat-suggestions',
+      element: '[data-tour="chat-suggestions"]',
+      title: 'Quick Prompts',
+      description: 'Click these buttons for lesson, quiz, or homework help suggestions.',
       position: 'top',
     },
     {
@@ -67,7 +74,14 @@ export const CHAT_TOUR_DESKTOP: TourConfig = {
       id: 'chat-input',
       element: '[data-tour="chat-input"]',
       title: 'Start a Conversation',
-      description: 'Type your question here or use the quick prompts by clicking on the buttons.',
+      description: 'Type your question here to chat with your AI tutor.',
+      position: 'top',
+    },
+    {
+      id: 'chat-suggestions',
+      element: '[data-tour="chat-suggestions"]',
+      title: 'Quick Prompts',
+      description: 'Click these buttons for lesson, quiz, or homework help suggestions.',
       position: 'top',
     },
     {
