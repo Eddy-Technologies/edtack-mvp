@@ -154,18 +154,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      checkpoint_migrations: {
-        Row: {
-          v: number;
-        };
-        Insert: {
-          v: number;
-        };
-        Update: {
-          v?: number;
-        };
-        Relationships: [];
-      };
       checkpoint_writes: {
         Row: {
           blob: string | null;
@@ -390,30 +378,33 @@ export type Database = {
           id: string;
           invited_at: string | null;
           invited_by: string | null;
+          invited_email: string | null;
           is_creator: boolean | null;
           joined_at: string | null;
           status: string;
-          user_info_id: string;
+          user_info_id: string | null;
         };
         Insert: {
           group_id: string;
           id?: string;
           invited_at?: string | null;
           invited_by?: string | null;
+          invited_email?: string | null;
           is_creator?: boolean | null;
           joined_at?: string | null;
           status: string;
-          user_info_id: string;
+          user_info_id?: string | null;
         };
         Update: {
           group_id?: string;
           id?: string;
           invited_at?: string | null;
           invited_by?: string | null;
+          invited_email?: string | null;
           is_creator?: boolean | null;
           joined_at?: string | null;
           status?: string;
-          user_info_id?: string;
+          user_info_id?: string | null;
         };
         Relationships: [
           {
