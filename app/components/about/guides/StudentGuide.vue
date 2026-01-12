@@ -4,7 +4,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Meet Your AI Tutors</h3>
       <p class="text-slate-600 mb-6">StudyWithEddy features multiple AI characters, each with unique personalities to match your learning style.</p>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid lg:grid-cols-2 xl:grid-cols-4 gap-4">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-2">Eddy (Default)</h4>
           <p class="text-sm text-slate-600">Friendly and encouraging, great for all subjects</p>
@@ -48,7 +48,7 @@
           </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid lg:grid-cols-2 gap-6">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-3">Subject Questions</h5>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -80,7 +80,7 @@
           Credits are virtual rewards you earn by completing learning activities. You can use them to "purchase" items from the shop, which your parents will then review and potentially buy for you in real life!
         </p>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid lg:grid-cols-2 gap-6">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-3">Interactive Quizzes</h5>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid lg:grid-cols-3 gap-4">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-3">Shopping Cart</h5>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -160,7 +160,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Subjects You Can Learn</h3>
       <p class="text-slate-600 mb-6">StudyWithEddy covers all major school subjects and adapts to your grade level.</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div v-for="subject in subjects" :key="subject" class="rounded-xl bg-slate-50 p-4 text-center">
           <span class="text-sm font-medium text-slate-700">{{ subject }}</span>
         </div>
@@ -170,7 +170,7 @@
     <!-- Tips for Success -->
     <div class="rounded-2xl bg-slate-50 p-8 ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Tips for Learning Success</h3>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div>
           <h4 class="font-medium text-slate-800 mb-3">Make Learning Fun</h4>
           <ul class="text-sm text-slate-600 space-y-2">

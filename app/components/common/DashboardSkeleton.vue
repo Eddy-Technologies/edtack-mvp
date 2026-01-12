@@ -1,7 +1,7 @@
 <template>
   <div class="py-8">
     <!-- Cards Variant -->
-    <div v-if="variant === 'cards'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div v-if="variant === 'cards'" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
       <div v-for="i in count" :key="i" class="bg-white rounded-xl border border-gray-200 p-6">
         <div class="animate-pulse bg-gray-200 rounded h-8 w-20 mb-2" />
         <div class="animate-pulse bg-gray-200 rounded h-4 w-24" />
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Grid Variant -->
-    <div v-else-if="variant === 'grid'" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div v-else-if="variant === 'grid'" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       <div v-for="i in count" :key="i" class="bg-white rounded-xl border border-gray-200 p-4">
         <div class="animate-pulse bg-gray-200 rounded-lg h-32 w-full mb-3" />
         <div class="animate-pulse bg-gray-200 rounded h-4 w-3/4 mb-2" />
@@ -30,7 +30,7 @@
     </div>
 
     <!-- Study Variant -->
-    <div v-else-if="variant === 'study'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div v-else-if="variant === 'study'" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
       <div v-for="i in count" :key="i" class="bg-white rounded-xl border border-gray-200 p-5">
         <div class="animate-pulse bg-gray-200 rounded h-5 w-32 mb-2" />
         <div class="flex gap-3">

@@ -4,7 +4,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Dashboard Overview</h3>
       <p class="text-slate-600 mb-6">Your parent dashboard provides a central hub for managing your family's educational activities.</p>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-3">Overview Tab</h4>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid lg:grid-cols-2 gap-6">
           <div class="rounded-xl bg-slate-50 p-5">
             <h5 class="font-medium text-slate-800 mb-3">Individual Tracking</h5>
             <ul class="text-sm text-slate-600 space-y-2">
@@ -78,7 +78,7 @@
 
         <div>
           <h4 class="font-medium text-slate-800 mb-4">How Credits Work ($1 = 100 credits)</h4>
-          <div class="grid md:grid-cols-3 gap-4">
+          <div class="grid lg:grid-cols-3 gap-4">
             <div class="rounded-xl bg-slate-50 p-5">
               <h5 class="font-medium text-slate-800 mb-2">1. Pledge Credits</h5>
               <p class="text-sm text-slate-600">Set aside virtual credits for your children</p>
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h5 class="font-medium text-slate-800 mb-3">Approving Orders</h5>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -136,7 +136,7 @@
     <!-- Task Management -->
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Task Creation & Management</h3>
-      <div class="grid md:grid-cols-3 gap-4">
+      <div class="grid lg:grid-cols-3 gap-4">
         <div class="rounded-xl bg-slate-50 p-5">
           <h5 class="font-medium text-slate-800 mb-3">Quiz Tasks</h5>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -171,7 +171,7 @@
     <!-- Tips for Success -->
     <div class="rounded-2xl bg-slate-50 p-8 ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Tips for Success</h3>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div>
           <h4 class="font-medium text-slate-800 mb-3">Best Practices</h4>
           <ul class="text-sm text-slate-600 space-y-2">

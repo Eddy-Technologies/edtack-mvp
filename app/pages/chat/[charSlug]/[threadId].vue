@@ -9,16 +9,17 @@
     >
       <!-- Fixed Width Sidebar -->
       <div
+        v-if="!isMobile || !collapsed"
         ref="sidebar"
         :class="[
           'flex-shrink-0 border-r flex flex-col z-30',
           isMobile ? 'fixed top-0 left-0 h-full shadow-lg' : '',
         ]"
-        :style="{ width: collapsed ? '80px' : '400px' }"
+        :style="{ width: collapsed ? '80px' : sidebarExpandedWidth }"
       >
         <Sidebar
           :collapsed="collapsed"
-          :sidebar-width="collapsed ? 80 : 400"
+          :sidebar-width="collapsed ? 80 : sidebarExpandedWidthNumber"
           :is-mobile="isMobile"
           :active-thread-id="threadId"
           :is-connected="connectionStatus.isConnected"
@@ -39,9 +40,22 @@
       />
 
       <!-- Main Content Area -->
-      <div :class="['flex flex-1 h-full overflow-hidden', isMobile && collapsed ? 'ml-[80px]' : '']">
+      <div class="flex flex-1 h-full overflow-hidden">
         <!-- Chat Column -->
         <div class="flex-1 flex flex-col h-full relative min-w-0">
+          <!-- Mobile Header with Hamburger -->
+          <div
+            v-if="isMobile"
+            class="flex items-center h-12 px-3 border-b border-gray-200 bg-white flex-shrink-0"
+          >
+            <button
+              class="p-2 -ml-2 rounded-lg hover:bg-gray-100 transition-colors"
+              @click="toggleSidebar"
+            >
+              <UIcon name="i-heroicons-bars-3" class="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+
           <!-- Chat Content Area - takes remaining space -->
           <div class="flex-1 overflow-hidden relative">
             <!-- Loading state during thread creation or loading -->
@@ -71,18 +85,19 @@
           <div
             v-if="shouldShowChatInput"
             :class="[
-              'absolute bottom-0 left-0 right-0 z-20',
+              'absolute bottom-0 left-0 right-0 z-10',
               isChatCentered
-                ? 'top-0 bg-white/95 backdrop-blur-sm'
+                ? `${isMobile ? 'top-12' : 'top-0'} bg-white/95 backdrop-blur-sm`
                 : 'p-4 bg-white/95 backdrop-blur-sm',
             ]"
           >
             <!-- Centered layout: Single container with carousel and input -->
             <div v-if="isChatCentered" class="absolute inset-0 overflow-y-auto">
-              <div class="min-h-full flex flex-col items-center justify-start pt-[15vh] pb-8 px-4">
+              <div class="min-h-full flex flex-col items-center justify-start pt-6 sm:pt-[15vh] pb-8 px-4">
                 <div class="w-full max-w-4xl flex flex-col gap-6">
                   <!-- Character Carousel - fixed height -->
                   <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                    <!-- Header - hidden on mobile for cleaner look -->
                     <div class="px-6 py-4 border-b border-gray-100">
                       <div class="flex items-center justify-between">
                         <div>
@@ -113,7 +128,7 @@
                         </UTooltip>
                       </div>
                     </div>
-                    <div class="p-4">
+                    <div :class="isMobile ? 'p-2' : 'p-4'">
                       <CharacterCarousel
                         v-model="currentCharacter"
                         :initial-character-slug="charSlug"
@@ -176,6 +191,9 @@ import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { useMessageQueueStore } from '~/stores/messageQueue';
 import { useAnalytics } from '~/composables/useAnalytics';
+import { useResponsive } from '~/composables/useResponsive';
+import { useTour } from '~/composables/useTour';
+import { useMeStore } from '~/stores/me';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
 import type { _height } from '#tailwind-config/theme';
 
@@ -193,7 +211,8 @@ definePageMeta({
 const isLoading = ref(true);
 const isCreatingThread = ref(false);
 const collapsed = ref(true);
-const isMobile = ref(false);
+const { isMobile } = useResponsive();
+const windowWidth = ref(768);
 const currentCharacter = ref(null);
 const showContentTransitions = ref(true);
 const hasStartedChat = ref(false);
@@ -224,6 +243,8 @@ const toast = useToast();
 const messageQueueStore = useMessageQueueStore();
 const analytics = useAnalytics();
 const { fetchThread, createThread, reset, setPendingMessage, consumeCreatedThread, isLoadingThread } = useThreads();
+const { startTour, isTourCompleted } = useTour();
+const meStore = useMeStore();
 
 // Analytics tracking state
 const sessionMessageCount = ref(0);
@@ -247,6 +268,19 @@ const isChatCentered = computed(() => {
 
 const shouldShowChatInput = computed(() => {
   return true;
+});
+
+// Responsive sidebar width - on mobile, fit within viewport with some margin
+const sidebarExpandedWidthNumber = computed(() => {
+  if (isMobile.value) {
+    // On mobile, use 85% of viewport width or 300px max
+    return Math.min(windowWidth.value * 0.85, 300);
+  }
+  return 400;
+});
+
+const sidebarExpandedWidth = computed(() => {
+  return `${sidebarExpandedWidthNumber.value}px`;
 });
 
 // Route update guard - prevent thread changes during WebSocket response
@@ -285,6 +319,11 @@ const preventNavigation = () => {
   return true;
 };
 
+// Handler for tour to open sidebar (works for both mobile and desktop)
+const handleOpenSidebarForTour = () => {
+  collapsed.value = false;
+};
+
 // Initialize character based on route
 onMounted(async () => {
   // Initialize character store
@@ -292,6 +331,7 @@ onMounted(async () => {
 
   handleResize();
   window.addEventListener('resize', handleResize);
+  window.addEventListener('openChatSidebar', handleOpenSidebarForTour);
 
   // Set sidebar collapsed if user is logged in but hasn't started chatting
   if (supabaseUser.value && !hasStartedChat.value) {
@@ -310,6 +350,13 @@ onMounted(async () => {
       subject: selectedCharacter.value?.subject || 'unknown',
       isNewThread: false,
     });
+  }
+
+  // Start chat tour for new users who completed onboarding
+  if (meStore.onboarding_completed && !isTourCompleted('chat-tour')) {
+    setTimeout(() => {
+      startTour('chat-tour', isMobile.value);
+    }, 800);
   }
 });
 
@@ -553,11 +600,12 @@ const handleStudyPromptInjection = async () => {
 };
 
 const handleResize = () => {
-  isMobile.value = window.innerWidth < 768;
+  windowWidth.value = window.innerWidth;
   if (isMobile.value) collapsed.value = true;
 };
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
+  window.removeEventListener('openChatSidebar', handleOpenSidebarForTour);
 });
 </script>

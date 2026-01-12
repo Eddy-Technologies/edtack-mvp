@@ -11,7 +11,7 @@
         <strong>Important:</strong> Credits are not real money. Parents pledge virtual credits and approve actual purchases when students want to "spend" them.
       </div>
 
-      <div class="grid md:grid-cols-3 gap-4">
+      <div class="grid lg:grid-cols-3 gap-4">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-2">Learn & Earn</h4>
           <p class="text-sm text-slate-600">Students complete educational activities to earn credits</p>
@@ -30,7 +30,7 @@
     <!-- How Students Earn Credits -->
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">How Students Earn Credits</h3>
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="grid lg:grid-cols-2 gap-6 mb-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-3">Parent-Assigned Quiz Tasks</h4>
           <p class="text-sm text-slate-600 mb-3">The primary way to earn credits through learning activities.</p>
@@ -55,7 +55,7 @@
 
       <div class="rounded-xl bg-slate-50 p-5">
         <h4 class="font-medium text-slate-800 mb-4 text-center">Credit Earning Examples</h4>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="text-center">
             <div class="text-lg font-semibold text-slate-800">+5</div>
             <div class="text-xs text-slate-600">Basic math quiz</div>
@@ -84,7 +84,7 @@
         <strong>Credit Pledge System:</strong> StudyWithEddy operates on a pledge system where parents commit virtual credits. No money is transferred to StudyWithEddy - it's a promise to fulfill purchases that children request.
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="grid lg:grid-cols-2 gap-6 mb-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h5 class="font-medium text-slate-800 mb-3">Credit Distribution</h5>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -145,7 +145,7 @@
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h5 class="font-medium text-slate-800 mb-3">For Students</h5>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -173,7 +173,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Credit History & Tracking</h3>
       <p class="text-slate-600 mb-6">Both students and parents can track credit activities through the dashboard.</p>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-3">Student View</h4>
           <ul class="text-sm text-slate-600 space-y-2">

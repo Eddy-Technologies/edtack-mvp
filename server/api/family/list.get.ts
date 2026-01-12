@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     // Get user's user_info_id from user_infos table
     const { data: userInfo, error: userError } = await supabase
       .from('user_infos')
-      .select('id, user_roles(role_id, roles(role_name))')
+      .select('id, email, user_roles(role_id, roles(role_name))')
       .eq('user_id', user.id)
       .single();
 
@@ -34,9 +34,9 @@ export default defineEventHandler(async (event) => {
     if (!isParent) {
       const { data: pendingMemberships, error: pendingError } = await supabase
         .from('group_members')
-        .select(`*, 
+        .select(`*,
           groups(*)`)
-        .eq('user_info_id', userInfo.id)
+        .or(`user_info_id.eq.${userInfo.id},invited_email.ilike.${userInfo.email}`)
         .eq('status', 'pending');
 
       if (pendingError) {
@@ -73,8 +73,8 @@ export default defineEventHandler(async (event) => {
     // Get user's groups (both active memberships and groups they created)
     const { data: userGroups, error: groupsError } = await supabase
       .from('group_members')
-      .select(`*, 
-        groups(*, 
+      .select(`*,
+        groups(*,
         members:group_members!group_id(*,
           user_infos!group_members_user_info_id_fkey(*, user_roles(*, roles(role_name)), user_credits(*))))`)
       .eq('user_info_id', userInfo.id)
@@ -99,23 +99,49 @@ export default defineEventHandler(async (event) => {
         // Skip self
         if (member.user_info_id === userInfo.id) return;
 
+        // Use unique key: user_info_id for registered users, invited_email for email-only invites
+        const memberKey = member.user_info_id || `email:${member.invited_email}`;
+
         // Skip if already added (user might be in multiple groups)
-        if (membersMap.has(member.user_info_id)) return;
+        if (membersMap.has(memberKey)) return;
 
         const memberUserInfo = member.user_infos;
 
-        membersMap.set(member.user_info_id, {
-          id: member.id, // Use group_member id for invitations
-          user_info_id: member.user_info_id,
-          userDisplayFullName: `${memberUserInfo.first_name || ''} ${memberUserInfo.last_name || ''}`.trim(),
-          email: memberUserInfo.email,
-          user_role: memberUserInfo.user_roles[0]?.roles.role_name, // Currently, we don't fetch member's role info, so default to student
-          status: member.status, // 'active' or 'pending'
-          credits: memberUserInfo.user_credits?.credit || 0,
-          invited_at: member.invited_at,
-          joined_at: member.joined_at,
-          created_at: member.joined_at || member.invited_at
-        });
+        // Handle email-only invitations (unregistered users)
+        if (!member.user_info_id && member.invited_email) {
+          membersMap.set(memberKey, {
+            id: member.id,
+            user_info_id: null,
+            invited_email: member.invited_email,
+            userDisplayFullName: member.invited_email, // Show email as display name
+            email: member.invited_email,
+            user_role: null,
+            status: member.status,
+            credits: 0,
+            invited_at: member.invited_at,
+            joined_at: null,
+            created_at: member.invited_at,
+            isEmailInvite: true
+          });
+          return;
+        }
+
+        // Handle registered users
+        if (memberUserInfo) {
+          membersMap.set(memberKey, {
+            id: member.id,
+            user_info_id: member.user_info_id,
+            userDisplayFullName: `${memberUserInfo.first_name || ''} ${memberUserInfo.last_name || ''}`.trim(),
+            email: memberUserInfo.email,
+            user_role: memberUserInfo.user_roles[0]?.roles.role_name,
+            status: member.status,
+            credits: memberUserInfo.user_credits?.credit || 0,
+            invited_at: member.invited_at,
+            joined_at: member.joined_at,
+            created_at: member.joined_at || member.invited_at,
+            isEmailInvite: false
+          });
+        }
       });
     });
 

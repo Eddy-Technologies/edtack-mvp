@@ -1,7 +1,7 @@
 <template>
   <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-lg shadow-xl max-w-7xl w-full max-h-[90vh] overflow-y-auto">
-      <div class="p-6">
+    <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-4 sm:p-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-bold text-gray-900">Create New Task</h2>
@@ -239,17 +239,19 @@
           </div>
 
           <!-- Actions -->
-          <div class="flex space-x-3 pt-4">
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
             <Button
               type="submit"
               variant="primary"
               text="Create Task"
+              class="w-full sm:w-auto order-1"
               :loading="isSubmitting"
               :disabled="isSubmitting"
             />
             <Button
               variant="secondary"
               text="Cancel"
+              class="w-full sm:w-auto order-2"
               :disabled="isSubmitting"
               @clicked="$emit('close')"
             />

@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     const { data: levels, error } = await supabase
       .from('level_types')
       .select('level_type, description')
+      .in('level_type', ['SECONDARY_1', 'SECONDARY_2', 'SECONDARY_3', 'SECONDARY_4', 'SECONDARY_5'])
       .order('level_type');
 
     if (error) {

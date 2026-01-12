@@ -1,13 +1,13 @@
 <template>
-  <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6" @click="closeModal">
+  <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @click="closeModal">
     <div class="bg-white rounded-lg shadow-xl max-w-md w-full" @click.stop>
       <!-- Header -->
-      <div class="p-6 border-b">
+      <div class="p-4 sm:p-6 border-b">
         <h2 class="text-xl font-bold text-gray-900">Change Password</h2>
       </div>
 
       <!-- Content -->
-      <div class="p-6">
+      <div class="p-4 sm:p-6">
         <form @submit.prevent="updatePassword">
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
@@ -71,10 +71,10 @@
           </div>
 
           <!-- Buttons -->
-          <div class="flex space-x-4">
+          <div class="flex flex-col-reverse sm:flex-row gap-3">
             <button
               type="button"
-              class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              class="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               @click="closeModal"
             >
               Cancel
@@ -83,7 +83,7 @@
               type="submit"
               :disabled="isProcessing || !isFormValid"
               :class="[
-                'flex-1 px-4 py-2 rounded-lg font-medium transition-colors',
+                'w-full sm:w-auto px-4 py-2 rounded-lg font-medium transition-colors',
                 isProcessing || !isFormValid
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : 'bg-blue-600 text-white hover:bg-blue-700'

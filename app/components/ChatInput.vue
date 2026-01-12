@@ -1,7 +1,13 @@
 <template>
   <div class="flex flex-col gap-3 relative">
     <!-- Input container -->
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4" data-tour="chat-input">
+      <!-- Keyword hint -->
+      <p class="text-sm text-gray-400 text-center mb-2">
+        Use keywords <span class="font-medium text-primary">"lesson"</span> or
+        <span class="font-medium text-secondary">"quiz"</span> to generate interactive content
+      </p>
+
       <div class="flex items-center gap-2">
         <UTextarea
           v-model="input"
@@ -34,31 +40,50 @@
     </div>
 
     <!-- Suggestions - only show on new chat, fade out when typing -->
-    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']">
+    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', isMobile ? 'justify-center' : '', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']" data-tour="chat-suggestions">
       <!-- Lesson Pill -->
       <button
-        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 transition-colors flex items-center gap-1"
+        :class="[
+          'text-white bg-primary border border-gray-200 rounded-xl hover:bg-primary-400 hover:border-gray-300 active:bg-primary-500 transition-colors flex items-center',
+          isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
+        ]"
+        :title="isMobile ? 'Give me a lesson on...' : undefined"
         @click="toggleDropdown('lesson', $event)"
       >
-        Give me a lesson on...
-        <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
+        <Icon v-if="isMobile" name="i-lucide-book-open" class="w-5 h-5" />
+        <template v-else>
+          Give me a lesson on...
+          <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
+        </template>
       </button>
 
       <!-- Quiz Pill -->
       <button
-        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 transition-colors flex items-center gap-1"
+        :class="[
+          'text-white bg-secondary border border-gray-200 rounded-xl hover:bg-secondary-400 hover:border-gray-300 active:bg-secondary-500 transition-colors flex items-center',
+          isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
+        ]"
+        :title="isMobile ? 'Quiz me on...' : undefined"
         @click="toggleDropdown('quiz', $event)"
       >
-        Quiz me on...
-        <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
+        <Icon v-if="isMobile" name="i-lucide-clipboard-list" class="w-5 h-5" />
+        <template v-else>
+          Quiz me on...
+          <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
+        </template>
       </button>
 
       <!-- Homework (no dropdown) -->
       <button
-        class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 transition-colors"
+        :class="[
+          'text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 active:bg-stone-200 transition-colors flex items-center justify-center',
+          isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm'
+        ]"
+        :title="isMobile ? 'Help me with my schoolwork on...' : undefined"
         @click="appendText('Help me with my schoolwork on ')"
       >
-        Help me with my schoolwork on...
+        <Icon v-if="isMobile" name="i-lucide-life-buoy" class="w-5 h-5" />
+        <span v-else>Help me with my schoolwork on...</span>
       </button>
     </div>
 
@@ -98,6 +123,9 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useTokenUsage } from '~/composables/useTokenUsage';
+import { useResponsive } from '~/composables/useResponsive';
+
+const { isMobile } = useResponsive();
 
 const props = defineProps({
   showSuggestions: {

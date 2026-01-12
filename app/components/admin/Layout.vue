@@ -1,7 +1,112 @@
 <template>
   <div class="flex h-screen bg-slate-50">
-    <!-- Admin Sidebar -->
-    <div class="w-72 bg-white border-r border-slate-200 flex flex-col" style="background-color: #f8f9fa; min-height: 100vh;">
+    <!-- Mobile Header with Hamburger -->
+    <div
+      v-if="isMobile"
+      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between lg:hidden"
+    >
+      <button
+        class="p-2.5 -ml-2 rounded-xl hover:bg-slate-100 active:bg-slate-200 transition-colors"
+        aria-label="Open menu"
+        @click="isDrawerOpen = true"
+      >
+        <UIcon name="i-lucide-menu" class="w-6 h-6 text-slate-700" />
+      </button>
+      <div class="flex items-center space-x-2">
+        <div class="w-7 h-7 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-xs">A</span>
+        </div>
+        <span class="text-base font-semibold text-slate-900">Admin</span>
+      </div>
+      <div class="w-10" />
+    </div>
+
+    <!-- Mobile Drawer -->
+    <MobileDrawer :visible="isDrawerOpen && isMobile" @close="isDrawerOpen = false">
+      <div class="flex flex-col h-full bg-white">
+        <!-- Drawer Header -->
+        <div class="px-4 py-4 border-b border-slate-200 flex items-center justify-between">
+          <NuxtLink to="/" class="flex items-center space-x-2" @click="isDrawerOpen = false">
+            <div class="w-7 h-7 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-xs">A</span>
+            </div>
+            <span class="text-base font-semibold text-slate-900">EdTack Admin</span>
+          </NuxtLink>
+          <button class="p-2 rounded-xl hover:bg-slate-100" @click="isDrawerOpen = false">
+            <UIcon name="i-lucide-x" class="w-5 h-5 text-slate-500" />
+          </button>
+        </div>
+
+        <!-- Drawer Navigation -->
+        <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Dashboard</p>
+          <div
+            v-for="item in navigationItems"
+            :key="item.name"
+            :class="[
+              'flex items-center justify-between px-3 py-3 text-sm font-medium rounded-xl cursor-pointer transition-all',
+              isActiveRoute(item.route) ? 'bg-red-50 text-red-700' : 'text-slate-600 hover:bg-slate-100'
+            ]"
+            @click="handleMobileNavigate(item)"
+          >
+            <div class="flex items-center space-x-3">
+              <UIcon :name="item.icon" class="w-5 h-5" />
+              <span>{{ item.name }}</span>
+            </div>
+            <span v-if="item.name === 'Orders' && pendingOrdersCount > 0" class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+              {{ pendingOrdersCount }}
+            </span>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-slate-200">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">Management</p>
+            <div
+              v-for="item in managementItems"
+              :key="item.name"
+              :class="[
+                'flex items-center px-3 py-3 text-sm font-medium rounded-xl cursor-pointer transition-all',
+                isActiveRoute(item.route) ? 'bg-red-50 text-red-700' : 'text-slate-600 hover:bg-slate-100'
+              ]"
+              @click="handleMobileNavigate(item)"
+            >
+              <UIcon :name="item.icon" class="w-5 h-5 mr-3" />
+              {{ item.name }}
+            </div>
+          </div>
+        </nav>
+
+        <!-- Drawer Footer -->
+        <div class="px-4 py-4 border-t border-slate-200 space-y-3">
+          <div class="flex items-center space-x-3 p-3 bg-slate-50 rounded-xl">
+            <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-semibold">
+              {{ userInitial }}
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-slate-900 truncate">{{ userName }}</p>
+              <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">Admin</span>
+            </div>
+          </div>
+          <NuxtLink
+            to="/"
+            class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-red-600 rounded-xl"
+            @click="isDrawerOpen = false"
+          >
+            <UIcon name="i-lucide-message-circle" class="w-4 h-4 mr-2" />
+            Back to Chat
+          </NuxtLink>
+          <button
+            :class="['w-full flex items-center justify-center px-3 py-2.5 text-sm font-medium rounded-xl', isLoggingOut ? 'text-slate-400' : 'text-red-600 hover:bg-red-50']"
+            @click="logout"
+          >
+            <UIcon v-if="!isLoggingOut" name="i-lucide-log-out" class="w-5 h-5 mr-2" />
+            {{ isLoggingOut ? 'Signing out...' : 'Sign Out' }}
+          </button>
+        </div>
+      </div>
+    </MobileDrawer>
+
+    <!-- Desktop Sidebar (hidden on mobile) -->
+    <div class="hidden lg:flex w-72 bg-white border-r border-slate-200 flex-col" style="background-color: #f8f9fa; min-height: 100vh;">
       <!-- Header -->
       <div class="px-6 py-6 border-b border-slate-200">
         <div class="flex items-center space-x-3">
@@ -111,7 +216,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main class="flex-1 p-8 overflow-auto">
+      <main :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'p-8']">
         <div class="max-w-7xl mx-auto">
           <slot />
         </div>
@@ -125,6 +230,8 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth } from '~/composables/useAuth';
 import { useMeStore } from '~/stores/me';
+import MobileDrawer from '~/components/common/MobileDrawer.vue';
+import { useResponsive } from '~/composables/useResponsive';
 
 // Check admin access
 const userStore = useMeStore();
@@ -162,6 +269,15 @@ interface NavigationItem {
   route: string;
   icon: string;
 }
+
+// Mobile responsive state
+const { isMobile } = useResponsive();
+const isDrawerOpen = ref(false);
+
+const handleMobileNavigate = (item: NavigationItem) => {
+  router.push(item.route);
+  isDrawerOpen.value = false;
+};
 
 const pendingOrdersCount = ref(0); // TODO: Get this from API
 

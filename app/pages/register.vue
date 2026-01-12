@@ -8,14 +8,14 @@
     </div>
 
     <!-- Two-column layout: Hero on left (1/3), Registration form on right (2/3) -->
-    <div class="min-h-screen grid md:grid-cols-3">
+    <div class="min-h-screen grid lg:grid-cols-3">
       <!-- Left Column: Marketing Hero (hidden on mobile) -->
-      <div class="hidden md:block md:col-span-1">
+      <div class="hidden lg:block lg:col-span-1">
         <LoginHero />
       </div>
 
       <!-- Right Column: Registration Form -->
-      <div class="md:col-span-2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+      <div class="lg:col-span-2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
         <div class="mx-auto w-full max-w-sm lg:w-96">
           <div class="space-y-6">
             <!-- Header -->
@@ -169,16 +169,17 @@
                 :disabled="isLoading"
               >
 
-              <input
-                v-if="userRole === USER_ROLE.STUDENT"
-                v-model="dateOfBirth"
-                type="date"
-                placeholder="Birthday (optional)"
-                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-                :disabled="isLoading"
-                min="1900-01-01"
-                @blur="enforceDobMin"
-              >
+              <div v-if="userRole === USER_ROLE.STUDENT" class="w-full">
+                <label class="block text-sm text-gray-500 mb-1">Birthday (optional)</label>
+                <input
+                  v-model="dateOfBirth"
+                  type="date"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                  :disabled="isLoading"
+                  min="1900-01-01"
+                  @blur="enforceDobMin"
+                >
+              </div>
 
               <!-- Terms and Conditions -->
               <div class="flex items-start space-x-3 text-left">
@@ -223,6 +224,7 @@ import { USER_ROLE } from '~/constants/User';
 import Button from '~/components/common/Button.vue';
 import LoginHero from '~/components/login/LoginHero.vue';
 import { useAuth } from '~/composables/useAuth';
+import { useTour } from '~/composables/useTour';
 import { useToast } from '#imports';
 
 useHead({
@@ -283,6 +285,9 @@ const toast = useToast();
 
 // Auth composable
 const { signUp, signInWithGoogle } = useAuth();
+
+// Tour composable
+const { resetAllTours } = useTour();
 
 // Form validation
 const canSubmit = computed(() => {
@@ -347,6 +352,9 @@ const handleRegister = async () => {
       school: school.value.trim() || undefined,
       acceptTerms: acceptTerms.value,
     });
+
+    // Clear tour state for fresh start on new registration
+    resetAllTours();
 
     if (result.hasSession) {
       // Email verification is OFF - user is auto-logged in

@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="space-y-6">
+    <!-- Instructions -->
+    <ShopInstructions :is-parent="isParent" />
+
     <!-- Search and Category Filter -->
-    <div class="mb-6 flex flex-col sm:flex-row gap-3">
+    <div class="flex flex-col sm:flex-row gap-3">
       <!-- Search Bar -->
       <div class="relative flex-1">
         <input
@@ -90,14 +93,14 @@
           </div>
           <!-- Wishlist Heart -->
           <button
-            class="absolute top-2 right-2 p-1.5 bg-white/90 rounded-full shadow-sm hover:bg-white hover:shadow-md transition-all"
+            class="absolute top-2 right-2 p-2.5 bg-white/90 rounded-full shadow-sm hover:bg-white hover:shadow-md active:bg-gray-100 transition-all"
             @click.stop="toggleWishlist(item)"
           >
             <UIcon
               name="i-lucide-heart"
               :class="[isInWishlist(item.id) ? 'text-red-500' : 'text-gray-400']"
               :style="isInWishlist(item.id) ? 'fill: currentColor' : ''"
-              size="16"
+              size="18"
             />
           </button>
           <!-- Category Badge -->
@@ -115,10 +118,10 @@
               <span class="text-lg font-bold text-primary">{{ Math.round(item.price * 100) }} credits</span>
             </div>
             <button
-              class="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+              class="p-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 active:bg-primary/80 transition-colors"
               @click.stop="addToCart(item)"
             >
-              <UIcon name="i-lucide-plus" size="16" />
+              <UIcon name="i-lucide-plus" size="18" />
             </button>
           </div>
         </div>
@@ -146,6 +149,7 @@ import { ref, computed, onMounted } from 'vue';
 import Button from '../../common/Button.vue';
 import DashboardSkeleton from '../../common/DashboardSkeleton.vue';
 import ProductModal from './ProductModal.vue';
+import ShopInstructions from './ShopInstructions.vue';
 
 const props = defineProps<{
   cart: Array<any>;
@@ -156,6 +160,10 @@ const emit = defineEmits<{
 }>();
 
 const toast = useToast();
+
+// Get user role
+const meStore = useMeStore();
+const { isParent } = storeToRefs(meStore);
 
 // Products data from database
 const items = ref<any[]>([]);

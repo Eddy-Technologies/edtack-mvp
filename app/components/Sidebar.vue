@@ -14,7 +14,7 @@
         @click="emit('toggle-sidebar')"
       >
         <Icon
-          :name="isMini ? 'i-heroicons-chevron-right' : 'i-heroicons-chevron-left'"
+          :name="props.collapsed ? 'i-heroicons-chevron-right' : 'i-heroicons-chevron-left'"
           class="w-4 h-4"
         />
       </button>
@@ -78,8 +78,57 @@
       </div>
     </div>
 
-    <!-- Avatar & Audio Player Container -->
-    <div v-if="!isMini" class="p-3">
+    <!-- Mobile Menu Items (fixed at bottom, outside scrollable area) -->
+    <div v-if="props.isMobile" class="px-3 py-3 border-t border-gray-200 space-y-1">
+      <button
+        class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        data-tour="mobile-profile"
+        @click="routeTo('/dashboard?tab=overview')"
+      >
+        <Icon name="i-heroicons-user" class="w-4 h-4" />
+        Profile
+      </button>
+      <button
+        class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        @click="routeTo('/dashboard?tab=settings')"
+      >
+        <Icon name="i-heroicons-cog-6-tooth" class="w-4 h-4" />
+        Settings
+      </button>
+      <button
+        class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        data-tour="mobile-study"
+        @click="routeTo('/dashboard?tab=study')"
+      >
+        <Icon name="i-heroicons-book-open" class="w-4 h-4" />
+        Study
+      </button>
+      <button
+        class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        @click="routeTo('/about?tab=user-guides')"
+      >
+        <Icon name="i-heroicons-document-text" class="w-4 h-4" />
+        User Guide
+      </button>
+      <button
+        v-if="subscriptionPlans"
+        class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-200/50"
+        @click="routeTo('/dashboard?tab=subscription')"
+      >
+        <Icon name="i-heroicons-sparkles" class="w-4 h-4" />
+        Upgrade Plan
+      </button>
+      <button
+        class="flex items-center gap-2 w-full px-2 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50"
+        @click="handleLogout"
+      >
+        <Icon name="i-heroicons-arrow-right-on-rectangle" class="w-4 h-4" />
+        Logout
+      </button>
+    </div>
+
+    <!-- Avatar & Audio Player Container (hidden on mobile) -->
+    <div v-if="!isMini && !props.isMobile" class="p-3">
       <!-- Show placeholder when floating and sidebar is expanded -->
       <div
         v-if="isAvatarFloating"
@@ -132,9 +181,9 @@
       </div>
     </div>
 
-    <!-- User Profile Section - Bottom -->
-    <div class="px-3 py-2 border-t border-gray-200 overflow-visible">
-      <div class="flex justify-center overflow-visible">
+    <!-- User Profile Section - Bottom (hidden on mobile since menu items are inline) -->
+    <div v-if="!props.isMobile" class="px-3 py-2 border-t border-gray-200 overflow-visible">
+      <div class="flex justify-center overflow-visible" data-tour="auth-widget">
         <AuthenticationWidget
           variant="sidebar"
           :collapsed="isMini"
@@ -155,6 +204,8 @@ import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { useMessageQueueStore } from '~/stores/messageQueue';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
+import { useAuth } from '~/composables/useAuth';
+import { useFeatureFlags } from '~/composables/useFeatureFlags';
 
 const emit = defineEmits([
   'toggle-sidebar',
@@ -245,9 +296,12 @@ const connectionTextClass = computed(() => {
 const isAudioPlayerCollapsed = ref(false);
 
 const router = useRouter();
+const toast = useToast();
 const supabaseUser = useSupabaseUser();
 const { threads: chatThreads, isLoadingThreads, fetchThreads } = useThreads();
 const messageQueueStore = useMessageQueueStore();
+const { signOut } = useAuth();
+const { subscriptionPlans } = useFeatureFlags();
 
 // Get background thread status (for non-active threads)
 const getThreadBackgroundStatus = (threadId: string) => {
@@ -288,6 +342,24 @@ const handleChatHistory = () => {
   if (props.collapsed) {
     // Expand the sidebar
     emit('toggle-sidebar');
+  }
+};
+
+const handleLogout = async () => {
+  try {
+    await signOut();
+    toast.add({
+      title: 'Logged out successfully',
+      description: 'See you next time!',
+      color: 'green',
+    });
+  } catch (error) {
+    console.error('Logout failed:', error);
+    toast.add({
+      title: 'Logout failed',
+      description: 'Please try again',
+      color: 'red',
+    });
   }
 };
 

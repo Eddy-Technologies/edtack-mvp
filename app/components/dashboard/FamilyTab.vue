@@ -1,13 +1,13 @@
 <template>
-  <div class="dashboard-family">
-    <div class="family-container">
+  <div class="h-full overflow-y-auto">
+    <div class="p-4 sm:p-6 min-h-full w-full max-w-6xl mx-auto">
       <!-- Header -->
-      <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Family</h2>
+      <div class="mb-4 sm:mb-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Family</h2>
       </div>
 
       <!-- Sub-Tab Content -->
-      <div class="family-content">
+      <div>
         <FamilyManagementTab v-if="currentSubtab === 'management'" />
         <FamilyOrderRequestsTab v-else-if="currentSubtab === 'order-requests'" />
         <FamilyTasksTab v-else-if="currentSubtab === 'tasks'" />
@@ -31,22 +31,3 @@ const currentSubtab = computed(() => {
   return (route.query.subtab as string) || 'management';
 });
 </script>
-
-<style scoped>
-.dashboard-family {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.family-container {
-  padding: 20px;
-  min-height: 100%;
-  width: 100%;
-  max-width: 6xl;
-  margin: 0 auto;
-}
-
-.family-content {
-  height: calc(100% - 120px);
-}
-</style>

@@ -8,14 +8,14 @@
     </div>
 
     <!-- Two-column layout: Hero on left (1/3), Form on right (2/3) -->
-    <div class="min-h-screen grid md:grid-cols-3">
+    <div class="min-h-screen grid lg:grid-cols-3">
       <!-- Left Column: Marketing Hero (hidden on mobile) -->
-      <div class="hidden md:block md:col-span-1">
+      <div class="hidden lg:block lg:col-span-1">
         <LoginHero />
       </div>
 
       <!-- Right Column: Onboarding Form -->
-      <div class="md:col-span-2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
+      <div class="lg:col-span-2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24">
         <div class="mx-auto w-full max-w-sm lg:w-96">
           <div class="space-y-6">
             <!-- Header -->
@@ -97,16 +97,17 @@
                 :disabled="isLoading"
               >
 
-              <input
-                v-if="userRole === USER_ROLE.STUDENT"
-                v-model="dateOfBirth"
-                type="date"
-                placeholder="Birthday (optional)"
-                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-                :disabled="isLoading"
-                min="1900-01-01"
-                @blur="enforceDobMin"
-              >
+              <div v-if="userRole === USER_ROLE.STUDENT" class="w-full">
+                <label class="block text-sm text-gray-500 mb-1">Birthday (optional)</label>
+                <input
+                  v-model="dateOfBirth"
+                  type="date"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                  :disabled="isLoading"
+                  min="1900-01-01"
+                  @blur="enforceDobMin"
+                >
+              </div>
 
               <!-- Name fields if not already filled (from OAuth) -->
               <div v-if="!firstName || !lastName" class="flex flex-row gap-4">
@@ -232,7 +233,7 @@ onMounted(async () => {
 
     // Check AFTER refreshMe - redirect if already onboarded
     if (me.onboarding_completed) {
-      await navigateTo('/dashboard');
+      await navigateTo('/chat/eddy/new');
       return;
     }
 
@@ -300,7 +301,7 @@ const completeOnboarding = async () => {
     });
 
     await me.refreshMe();
-    await navigateTo('/dashboard');
+    await navigateTo('/chat/eddy/new');
   } catch (error: any) {
     console.error('Onboarding failed:', error);
     errorMessage.value = error.data?.message || 'Failed to complete setup. Please try again.';

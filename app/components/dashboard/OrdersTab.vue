@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div class="mb-6">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">My Orders</h2>
+    <div class="mb-4 sm:mb-6">
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">My Orders</h2>
 
       <!-- Order Tabs -->
-      <div class="flex space-x-1 mb-6 bg-stone-100 rounded-xl p-1">
+      <div class="flex space-x-1 mb-4 sm:mb-6 bg-stone-100 rounded-xl p-1">
         <button
-          :class="['flex-1 px-4 py-2 rounded text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
+          :class="['flex-1 px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium transition-colors', orderTab === 'current' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
           @click="orderTab = 'current'"
         >
-          Current Orders ({{ isLoadingOrders ? '...' : currentOrders.length }})
+          Current ({{ isLoadingOrders ? '...' : currentOrders.length }})
         </button>
         <button
-          :class="['flex-1 px-4 py-2 rounded text-sm font-medium transition-colors', orderTab === 'past' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
+          :class="['flex-1 px-3 sm:px-4 py-2 rounded text-xs sm:text-sm font-medium transition-colors', orderTab === 'past' ? 'bg-white shadow-sm text-primary' : 'text-gray-600 hover:text-gray-900']"
           @click="orderTab = 'past'"
         >
-          Past Orders ({{ isLoadingOrders ? '...' : pastOrders.length }})
+          Past ({{ isLoadingOrders ? '...' : pastOrders.length }})
         </button>
       </div>
     </div>
@@ -51,33 +51,33 @@
         />
       </div>
 
-      <div v-else class="grid gap-6">
-        <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
-          <div class="flex items-center justify-between mb-4">
+      <div v-else class="grid gap-4 sm:gap-6">
+        <div v-for="order in currentOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
-              <p class="text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
+              <h3 class="text-base sm:text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
+              <p class="text-xs sm:text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
             </div>
             <span :class="['px-3 py-1 rounded-full text-sm font-medium', getOrderStatusClass(order.status)]">
               {{ formatStatus(order.status) }}
             </span>
           </div>
 
-          <div class="flex items-center space-x-4 mb-4">
-            <img :src="order.items[0]?.product?.imageUrl" :alt="order.items[0]?.product?.name" class="w-16 h-16 object-cover rounded-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:space-x-4 mb-3 sm:mb-4">
+            <img :src="order.items[0]?.product?.imageUrl" :alt="order.items[0]?.product?.name" class="w-full sm:w-16 h-32 sm:h-16 object-cover rounded-lg">
             <div class="flex-1">
-              <h4 class="font-medium text-gray-900">{{ order.items[0]?.product?.name }}</h4>
-              <p class="text-sm text-gray-600">{{ order.itemCount }} item{{ order.itemCount > 1 ? 's' : '' }}</p>
+              <h4 class="font-medium text-gray-900 text-sm sm:text-base">{{ order.items[0]?.product?.name }}</h4>
+              <p class="text-xs sm:text-sm text-gray-600">{{ order.itemCount }} item{{ order.itemCount > 1 ? 's' : '' }}</p>
             </div>
-            <div class="text-right">
-              <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
+            <div class="text-left sm:text-right">
+              <p class="text-base sm:text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
               <p class="text-xs text-gray-500">({{ Math.round(order.totalAmountSGD * 100) }} credits)</p>
             </div>
           </div>
 
           <!-- Tracking Progress -->
-          <div v-if="order.hasTracking" class="mb-4">
-            <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+          <div v-if="order.hasTracking" class="mb-3 sm:mb-4">
+            <div class="flex items-center justify-between text-xs sm:text-sm text-gray-600 mb-2">
               <span>Order Progress</span>
               <span>{{ getTrackingText(order.status) }}</span>
             </div>
@@ -86,15 +86,15 @@
             </div>
           </div>
 
-          <div class="flex space-x-3">
+          <div class="flex flex-wrap gap-2 sm:space-x-3 sm:gap-0">
             <Button
               variant="primary"
-              text="Track Items"
+              text="Track"
               size="sm"
             />
             <Button
               variant="secondary"
-              text="View Details"
+              text="Details"
               size="sm"
             />
           </div>
@@ -108,7 +108,7 @@
       <DashboardSkeleton v-if="isLoadingOrders" variant="list" :count="4" />
 
       <!-- Error State -->
-      <div v-else-if="ordersError" class="text-center py-12">
+      <div v-else-if="ordersError" class="text-center py-8 sm:py-12">
         <div class="flex items-center justify-center w-12 h-12 mx-auto text-red-400 mb-4">
           <UIcon name="i-lucide-alert-circle" size="48" />
         </div>
@@ -119,12 +119,12 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!isLoadingOrders && pastOrders.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
+      <div v-else-if="!isLoadingOrders && pastOrders.length === 0" class="text-center py-12 sm:py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-file-text" size="64" />
         </div>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">No past orders</h3>
-        <p class="text-gray-500 mb-4">You don't have any completed orders yet.</p>
+        <h3 class="text-base sm:text-lg font-medium text-gray-900 mb-2">No past orders</h3>
+        <p class="text-sm sm:text-base text-gray-500 mb-4">You don't have any completed orders yet.</p>
         <Button
           variant="primary"
           text="Start Shopping"
@@ -132,34 +132,34 @@
         />
       </div>
 
-      <div v-else class="grid gap-6">
-        <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-6">
-          <div class="flex items-center justify-between mb-4">
+      <div v-else class="grid gap-4 sm:gap-6">
+        <div v-for="order in pastOrders" :key="order.id" class="bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
-              <p class="text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
+              <h3 class="text-base sm:text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
+              <p class="text-xs sm:text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
             </div>
-            <span :class="['px-3 py-1 rounded-full text-sm font-medium', getOrderStatusClass(order.status)]">
+            <span :class="['px-3 py-1 rounded-full text-xs sm:text-sm font-medium', getOrderStatusClass(order.status)]">
               {{ formatStatus(order.status) }}
             </span>
           </div>
 
-          <div class="flex items-center space-x-4 mb-4">
-            <img :src="order.items[0]?.product?.imageUrl" :alt="order.items[0]?.product?.name" class="w-16 h-16 object-cover rounded-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:space-x-4 mb-3 sm:mb-4">
+            <img :src="order.items[0]?.product?.imageUrl" :alt="order.items[0]?.product?.name" class="w-full sm:w-16 h-32 sm:h-16 object-cover rounded-lg">
             <div class="flex-1">
-              <h4 class="font-medium text-gray-900">{{ order.items[0]?.product?.name }}</h4>
-              <p class="text-sm text-gray-600">{{ order.itemCount }} item{{ order.itemCount > 1 ? 's' : '' }}</p>
+              <h4 class="font-medium text-gray-900 text-sm sm:text-base">{{ order.items[0]?.product?.name }}</h4>
+              <p class="text-xs sm:text-sm text-gray-600">{{ order.itemCount }} item{{ order.itemCount > 1 ? 's' : '' }}</p>
             </div>
-            <div class="text-right">
-              <p class="text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
+            <div class="text-left sm:text-right">
+              <p class="text-base sm:text-lg font-semibold text-primary">S${{ order.totalAmountSGD }}</p>
               <p class="text-xs text-gray-500">({{ Math.round(order.totalAmountSGD * 100) }} credits)</p>
             </div>
           </div>
 
-          <div class="flex space-x-3">
+          <div class="flex flex-wrap gap-2 sm:space-x-3 sm:gap-0">
             <Button
               variant="primary"
-              text="View Receipt"
+              text="Receipt"
               size="sm"
             />
             <Button
@@ -169,7 +169,7 @@
             />
             <Button
               variant="secondary"
-              text="View Details"
+              text="Details"
               size="sm"
             />
           </div>

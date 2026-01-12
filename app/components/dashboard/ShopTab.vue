@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard-shop">
-    <div class="shop-container">
+  <div class="h-full overflow-y-auto">
+    <div class="p-4 sm:p-6 min-h-full w-full">
       <DashboardShop :cart="cart" @add-to-cart="addToCart" />
     </div>
   </div>
@@ -22,16 +22,3 @@ const addToCart = (updatedCart: any[]) => {
   emit('add-to-cart', updatedCart);
 };
 </script>
-
-<style scoped>
-.dashboard-shop {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.shop-container {
-  padding: 20px;
-  min-height: 100%;
-  width: 100%;
-}
-</style>

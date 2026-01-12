@@ -18,6 +18,9 @@
 
     <!-- Main Content -->
     <div v-else class="space-y-6">
+      <!-- Instructions -->
+      <FamilyOrderRequestsInstructions :is-parent="isParent" />
+
       <!-- Filters and Actions -->
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-4">
@@ -241,6 +244,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
+import FamilyOrderRequestsInstructions from './FamilyOrderRequestsInstructions.vue';
 import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';

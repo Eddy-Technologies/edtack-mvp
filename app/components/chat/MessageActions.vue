@@ -1,31 +1,31 @@
 <template>
-  <div class="flex items-center gap-1 mt-2 transition-opacity duration-200">
+  <div class="flex items-center gap-0.5 mt-2 transition-opacity duration-200">
     <!-- Copy Button -->
     <button
       v-if="!hideCopy"
-      class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
+      class="p-2.5 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-400 hover:text-gray-600"
       title="Copy to clipboard"
       @click="handleCopy"
     >
-      <Icon name="i-heroicons-clipboard" class="w-4 h-4" />
+      <Icon name="i-heroicons-clipboard" class="w-5 h-5" />
     </button>
 
     <!-- Like Button -->
     <button
-      class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
+      class="p-2.5 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-400 hover:text-gray-600"
       title="Like this message"
       @click="handleLike"
     >
-      <Icon name="i-heroicons-hand-thumb-up" class="w-4 h-4" />
+      <Icon name="i-heroicons-hand-thumb-up" class="w-5 h-5" />
     </button>
 
     <!-- Dislike Button -->
     <button
-      class="p-1.5 rounded hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
+      class="p-2.5 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-400 hover:text-gray-600"
       title="Dislike this message"
       @click="handleDislike"
     >
-      <Icon name="i-heroicons-hand-thumb-down" class="w-4 h-4" />
+      <Icon name="i-heroicons-hand-thumb-down" class="w-5 h-5" />
     </button>
 
     <!-- Feedback Modal -->

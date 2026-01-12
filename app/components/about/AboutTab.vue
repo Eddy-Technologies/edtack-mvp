@@ -45,7 +45,7 @@
         <h3 class="text-2xl font-heading font-bold text-slate-900">Key Features</h3>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Feature 1 -->
         <div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-secondary-100 transition-all duration-300">
           <div class="absolute top-6 right-6 w-8 h-8 bg-secondary-50 rounded-full flex items-center justify-center text-secondary-600 font-bold text-sm">1</div>

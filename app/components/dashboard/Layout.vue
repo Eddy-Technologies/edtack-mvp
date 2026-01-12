@@ -1,7 +1,164 @@
 <template>
   <div class="flex h-screen bg-stone-50">
-    <!-- Modern Sidebar -->
-    <div class="w-72 bg-white border-r border-gray-200 flex flex-col overflow-hidden">
+    <!-- Mobile Header with Hamburger -->
+    <div
+      v-if="isMobile"
+      class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between lg:hidden"
+    >
+      <button
+        class="p-2.5 -ml-2 rounded-xl hover:bg-stone-100 active:bg-stone-200 transition-colors"
+        aria-label="Open menu"
+        @click="isDrawerOpen = true"
+      >
+        <UIcon name="i-lucide-menu" class="w-6 h-6 text-gray-700" />
+      </button>
+      <NuxtLink to="/" class="flex items-center space-x-2">
+        <div class="w-7 h-7 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-xs">E</span>
+        </div>
+        <span class="text-base font-semibold text-gray-900">StudyWithEddy</span>
+      </NuxtLink>
+      <Button
+        size="sm"
+        variant="secondary"
+        @click="router.push('/chat/eddy/new')"
+      >
+        Back to Chat
+      </Button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <MobileDrawer :visible="isDrawerOpen && isMobile" @close="isDrawerOpen = false">
+      <div class="flex flex-col h-full bg-white">
+        <!-- Drawer Header -->
+        <div class="px-4 py-4 border-b border-gray-200 flex items-center justify-between">
+          <NuxtLink to="/" class="flex items-center space-x-2" @click="isDrawerOpen = false">
+            <div class="w-7 h-7 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-xs">E</span>
+            </div>
+            <span class="text-base font-semibold text-gray-900">StudyWithEddy</span>
+          </NuxtLink>
+          <button
+            class="p-2 rounded-xl hover:bg-stone-100 active:bg-stone-200"
+            aria-label="Close menu"
+            @click="isDrawerOpen = false"
+          >
+            <UIcon name="i-lucide-x" class="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <!-- Drawer Navigation -->
+        <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+          <div v-for="item in navigationItems" :key="item.name">
+            <!-- Simple navigation item -->
+            <div
+              v-if="!item.children"
+              :class="[
+                'flex items-center justify-between px-3 py-3 text-sm font-medium rounded-xl cursor-pointer transition-all',
+                isActiveRoute(item.route)
+                  ? 'bg-primary-50 text-primary-700'
+                  : 'text-gray-600 hover:bg-stone-100 active:bg-stone-200'
+              ]"
+              :data-tour="item.name === 'Study' ? 'study-tab' : item.name === 'Credits' ? 'credits-tab' : item.name === 'Tasks' ? 'tasks-tab' : undefined"
+              @click="handleMobileNavigate(item)"
+            >
+              <div class="flex items-center space-x-3">
+                <UIcon :name="item.icon" class="w-5 h-5" />
+                <span>{{ item.name }}</span>
+              </div>
+              <span v-if="item.name === 'Cart' && cartItemCount > 0" class="bg-primary text-white text-xs px-2 py-0.5 rounded-full">
+                {{ cartItemCount }}
+              </span>
+              <span v-if="item.name === 'Credits'" class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">
+                {{ formattedBalance }}
+              </span>
+            </div>
+
+            <!-- Expandable navigation item -->
+            <div v-else>
+              <div
+                :class="[
+                  'flex items-center justify-between px-3 py-3 text-sm font-medium rounded-xl cursor-pointer transition-all',
+                  hasActiveChild(item) ? 'bg-stone-100 text-gray-900' : 'text-gray-600 hover:bg-stone-100'
+                ]"
+                @click="toggleSubmenu(item.name)"
+              >
+                <div class="flex items-center space-x-3">
+                  <UIcon :name="item.icon" class="w-5 h-5" />
+                  <span>{{ item.name }}</span>
+                  <span v-if="item.name === 'Family' && pendingOrderRequestCount > 0" class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                    {{ pendingOrderRequestCount }}
+                  </span>
+                </div>
+                <UIcon name="i-lucide-chevron-down" :class="['w-4 h-4 transition-transform', openSubmenus.includes(item.name) ? 'rotate-180' : '']" />
+              </div>
+              <div v-if="openSubmenus.includes(item.name)" class="ml-6 mt-1 space-y-1 border-l border-gray-200 pl-3">
+                <div
+                  v-for="child in item.children"
+                  :key="child.name"
+                  :class="[
+                    'flex items-center justify-between px-3 py-2.5 text-sm rounded-xl cursor-pointer transition-all',
+                    isActiveRoute(child.route) ? 'bg-primary-50 text-primary-700 font-medium' : 'text-gray-500 hover:bg-stone-100'
+                  ]"
+                  @click="handleMobileNavigate(child)"
+                >
+                  <span>{{ child.name }}</span>
+                  <span v-if="child.name === 'Cart' && cartItemCount > 0" class="bg-primary text-white text-xs px-1.5 py-0.5 rounded-full">{{ cartItemCount }}</span>
+                  <span v-if="child.name === 'Wishlist' && wishlistCount > 0" class="bg-pink-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ wishlistCount }}</span>
+                  <span v-if="child.name === 'Orders' && currentOrdersCount > 0" class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ currentOrdersCount }}</span>
+                  <span v-if="child.name === 'Order Requests' && pendingOrderRequestCount > 0" class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ pendingOrderRequestCount }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings -->
+          <div class="pt-4 mt-4 border-t border-gray-200">
+            <div
+              v-for="item in settingsItems"
+              :key="item.name"
+              :class="[
+                'flex items-center px-3 py-3 text-sm font-medium rounded-xl cursor-pointer transition-all',
+                isActiveRoute(item.route) ? 'bg-primary-50 text-primary-700' : 'text-gray-600 hover:bg-stone-100'
+              ]"
+              @click="handleMobileNavigate(item)"
+            >
+              <UIcon :name="item.icon" class="w-5 h-5 mr-3" />
+              {{ item.name }}
+            </div>
+            <div
+              :class="['flex items-center px-3 py-3 text-sm font-medium rounded-xl cursor-pointer transition-all', isLoggingOut ? 'text-gray-400' : 'text-red-600 hover:bg-red-50']"
+              @click="logout"
+            >
+              <UIcon v-if="!isLoggingOut" name="i-lucide-log-out" class="w-5 h-5 mr-3" />
+              <div v-else class="w-5 h-5 mr-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              {{ isLoggingOut ? 'Signing out...' : 'Sign Out' }}
+            </div>
+          </div>
+        </nav>
+
+        <!-- Drawer Footer -->
+        <div class="px-4 py-4 border-t border-gray-200 space-y-3">
+          <div class="flex items-center space-x-3 p-3 bg-stone-100 rounded-xl">
+            <UserAvatar />
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-gray-900 truncate">{{ userName }}</p>
+              <p class="text-xs text-gray-500 truncate">{{ userEmail }}</p>
+            </div>
+          </div>
+          <Button
+            class="w-full"
+            icon="i-lucide-message-circle"
+            @click="handleBackToChat"
+          >
+            Back to Chat
+          </Button>
+        </div>
+      </div>
+    </MobileDrawer>
+
+    <!-- Desktop Sidebar (hidden on mobile) -->
+    <div class="hidden lg:flex w-72 bg-white border-r border-gray-200 flex-col overflow-hidden">
       <!-- Header -->
       <div class="px-6 py-6 border-b border-gray-200">
         <div class="flex items-center space-x-3">
@@ -32,6 +189,7 @@
                   ? 'bg-primary-50 text-primary-700'
                   : 'text-gray-600 hover:bg-stone-100 hover:text-gray-900'
               ]"
+              :data-tour="item.name === 'Study' ? 'study-tab' : item.name === 'Credits' ? 'credits-tab' : item.name === 'Tasks' ? 'tasks-tab' : undefined"
               @click="navigateToRoute(item)"
             >
               <div class="flex items-center space-x-3">
@@ -215,7 +373,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main class="flex-1 p-8 overflow-auto">
+      <main :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'p-8']">
         <div class="max-w-7xl mx-auto">
           <slot />
         </div>
@@ -229,9 +387,12 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 import UserAvatar from '~/components/common/UserAvatar.vue';
+import MobileDrawer from '~/components/common/MobileDrawer.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useMeStore } from '~/stores/me';
 import { useFeatureFlags } from '~/composables/useFeatureFlags';
+import { useResponsive } from '~/composables/useResponsive';
+import { useTour } from '~/composables/useTour';
 
 interface NavigationItem {
   name: string;
@@ -251,6 +412,23 @@ defineProps<Props>();
 const route = useRoute();
 const router = useRouter();
 const openSubmenus = ref<string[]>([]);
+
+// Mobile responsive state
+const { isMobile } = useResponsive();
+const isDrawerOpen = ref(false);
+
+// Mobile navigation handler
+const handleMobileNavigate = (item: NavigationItem) => {
+  if (item.route) {
+    router.push(item.route);
+    isDrawerOpen.value = false;
+  }
+};
+
+const handleBackToChat = () => {
+  router.push('/');
+  isDrawerOpen.value = false;
+};
 
 // Get cart count from localStorage
 const cartItemCount = ref(0);
@@ -526,6 +704,13 @@ const logout = async () => {
   }
 };
 
+// Handler for tour drawer open event
+const handleOpenDrawerForTour = () => {
+  if (isMobile.value) {
+    isDrawerOpen.value = true;
+  }
+};
+
 onMounted(() => {
   // Auto-expand sections with active children
   for (const item of navigationItems.value) {
@@ -545,6 +730,7 @@ onMounted(() => {
     window.addEventListener('orderRequestsUpdated', updatePendingOrderCount);
     window.addEventListener('wishlistUpdated', updateWishlistCount);
     window.addEventListener('ordersUpdated', updateCurrentOrdersCount);
+    window.addEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 
   // Load credit balance for sidebar
@@ -558,6 +744,14 @@ onMounted(() => {
 
   // Load wishlist count
   updateWishlistCount();
+
+  // Start dashboard tour for users who completed onboarding but haven't seen it
+  const { startTour, isTourCompleted } = useTour();
+  if (userStore.onboarding_completed && !isTourCompleted('dashboard-tour')) {
+    setTimeout(() => {
+      startTour('dashboard-tour', isMobile.value);
+    }, 800);
+  }
 });
 
 // Add cleanup for event listeners
@@ -568,6 +762,7 @@ onUnmounted(() => {
     window.removeEventListener('orderRequestsUpdated', updatePendingOrderCount);
     window.removeEventListener('wishlistUpdated', updateWishlistCount);
     window.removeEventListener('ordersUpdated', updateCurrentOrdersCount);
+    window.removeEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 });
 </script>

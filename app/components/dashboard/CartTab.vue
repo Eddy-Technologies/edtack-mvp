@@ -2,29 +2,34 @@
   <div class="h-full overflow-y-auto">
     <div class="p-5 sm:p-6 max-w-4xl mx-auto min-h-full">
       <!-- Header -->
-      <div class="mb-8">
-        <div class="flex items-center justify-between">
+      <div class="mb-4 sm:mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Shopping Cart</h1>
-            <p class="text-gray-600">Review and checkout your selected items</p>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Shopping Cart</h1>
+            <p class="text-sm sm:text-base text-gray-600">Review and checkout your selected items</p>
           </div>
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center">
             <!-- Credit Balance Display -->
-            <div class="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-4 py-2">
-              <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full mr-3">
+            <div class="flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg px-3 sm:px-4 py-1.5 sm:py-2">
+              <div class="flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 bg-blue-100 rounded-full mr-2 sm:mr-3">
                 <UIcon name="i-lucide-coins" class="text-blue-600" size="18" />
               </div>
               <div>
                 <p class="text-xs text-gray-600 font-medium">Available Credits</p>
-                <p class="text-lg font-bold text-blue-700">{{ formattedBalance }}</p>
+                <p class="text-base sm:text-lg font-bold text-blue-700">{{ formattedBalance }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Instructions -->
+      <div class="mb-4 sm:mb-8">
+        <CartInstructions :is-parent="isParent" />
+      </div>
+
       <!-- Empty Cart State -->
-      <div v-if="cart.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
+      <div v-if="cart.length === 0" class="text-center py-10 sm:py-16 bg-stone-50 rounded-xl">
         <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
           <UIcon name="i-lucide-shopping-cart" size="64" />
         </div>
@@ -39,17 +44,17 @@
       </div>
 
       <!-- Cart Items -->
-      <div v-else class="space-y-6">
+      <div v-else class="space-y-4 sm:space-y-6">
         <!-- Cart Items List -->
         <div class="bg-white rounded-xl border border-gray-200">
-          <div class="p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Items in Your Cart</h2>
+          <div class="p-4 sm:p-6">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Items in Your Cart</h2>
 
-            <div class="space-y-4">
+            <div class="space-y-3 sm:space-y-4">
               <div
                 v-for="item in sortedCart"
                 :key="item.id"
-                class="flex flex-col sm:flex-row gap-4 p-4 bg-white border border-gray-100 rounded-xl hover:border-primary/30 hover:shadow-sm transition-all"
+                class="flex flex-col sm:flex-row gap-3 sm:gap-4 p-3 sm:p-4 bg-white border border-gray-100 rounded-xl hover:border-primary/30 hover:shadow-sm transition-all"
               >
                 <!-- Product Image -->
                 <div class="relative w-full sm:w-24 h-32 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
@@ -78,36 +83,36 @@
 
                 <!-- Product Info -->
                 <div class="flex-1 min-w-0 flex flex-col justify-between">
-                  <h3 class="font-medium text-gray-900 line-clamp-2">{{ item.name }}</h3>
-                  <div class="flex items-center gap-2 mt-2">
-                    <span class="text-lg font-bold text-primary">{{ Math.round(item.price * 100) }} credits</span>
-                    <span class="text-sm text-gray-500">(S${{ item.price.toFixed(2) }})</span>
-                    <span class="text-sm text-gray-400">each</span>
+                  <h3 class="font-medium text-gray-900 text-sm sm:text-base line-clamp-2">{{ item.name }}</h3>
+                  <div class="flex items-center gap-1 sm:gap-2 mt-1 sm:mt-2">
+                    <span class="text-base sm:text-lg font-bold text-primary">{{ Math.round(item.price * 100) }} credits</span>
+                    <span class="text-xs sm:text-sm text-gray-500">(S${{ item.price.toFixed(2) }})</span>
+                    <span class="text-xs sm:text-sm text-gray-400">each</span>
                   </div>
                 </div>
 
                 <!-- Actions -->
-                <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-0 border-gray-100">
+                <div class="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 pt-2 sm:pt-0 border-t sm:border-0 border-gray-100">
                   <!-- Quantity Controls -->
-                  <div class="flex items-center gap-2 bg-gray-50 rounded-lg p-1">
+                  <div class="flex items-center gap-1 bg-gray-50 rounded-lg p-1">
                     <button
-                      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-200 transition-colors"
+                      class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors"
                       @click="updateQuantity(item, -1)"
                     >
-                      <UIcon name="i-lucide-minus" size="16" class="text-gray-600" />
+                      <UIcon name="i-lucide-minus" size="18" class="text-gray-600" />
                     </button>
                     <span class="w-8 text-center font-semibold text-gray-900">{{ item.quantity }}</span>
                     <button
-                      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-200 transition-colors"
+                      class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-200 active:bg-gray-300 transition-colors"
                       @click="updateQuantity(item, 1)"
                     >
-                      <UIcon name="i-lucide-plus" size="16" class="text-gray-600" />
+                      <UIcon name="i-lucide-plus" size="18" class="text-gray-600" />
                     </button>
                   </div>
 
                   <!-- Item Total -->
                   <div class="text-right">
-                    <div class="text-lg font-bold text-primary">
+                    <div class="text-base sm:text-lg font-bold text-primary">
                       {{ Math.round(item.price * item.quantity * 100) }} credits
                     </div>
                     <div class="text-xs text-gray-500">
@@ -117,10 +122,10 @@
 
                   <!-- Remove Button -->
                   <button
-                    class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    class="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors"
                     @click="removeItem(item)"
                   >
-                    <UIcon name="i-lucide-trash-2" size="18" />
+                    <UIcon name="i-lucide-trash-2" size="20" />
                   </button>
                 </div>
               </div>
@@ -130,8 +135,8 @@
 
         <!-- Order Summary -->
         <div class="bg-white rounded-xl border border-gray-200">
-          <div class="p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+          <div class="p-4 sm:p-6">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Order Summary</h2>
 
             <div class="space-y-3">
               <div class="flex justify-between text-sm">
@@ -143,11 +148,11 @@
                 <span class="text-gray-900">Free</span>
               </div>
               <div class="border-t pt-3">
-                <div class="flex justify-between text-lg font-semibold">
+                <div class="flex justify-between text-base sm:text-lg font-semibold">
                   <span class="text-gray-900">Total</span>
                   <div class="text-right">
-                    <span class="text-primary text-2xl font-bold">{{ Math.round(total * 100) }} credits</span>
-                    <span class="text-sm text-gray-500 block">(S${{ total.toFixed(2) }})</span>
+                    <span class="text-primary text-xl sm:text-2xl font-bold">{{ Math.round(total * 100) }} credits</span>
+                    <span class="text-xs sm:text-sm text-gray-500 block">(S${{ total.toFixed(2) }})</span>
                   </div>
                 </div>
               </div>
@@ -157,12 +162,12 @@
 
         <!-- Payment Method Selection -->
         <div class="bg-white rounded-xl border border-gray-200">
-          <div class="p-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-4">Payment Method</h2>
+          <div class="p-4 sm:p-6">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Payment Method</h2>
 
             <div class="space-y-3">
               <!-- Pay with Credits Option (Children only) -->
-              <label v-if="!isParent" class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
+              <label v-if="!isParent" class="flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -187,7 +192,7 @@
               </label>
 
               <!-- Pay with Card Option (Parents always, Children as alternative) -->
-              <label v-if="subscriptionPlans" class="flex items-start space-x-3 p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
+              <label v-if="subscriptionPlans" class="flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
                 <input
                   v-model="paymentMethod"
                   type="radio"
@@ -204,13 +209,24 @@
                   </p>
                 </div>
               </label>
+
+              <!-- No payment options for parents when subscriptionPlans is disabled -->
+              <div v-if="isParent && !subscriptionPlans" class="p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                <div class="flex items-start space-x-3">
+                  <UIcon name="i-lucide-info" class="text-gray-500 flex-shrink-0 mt-0.5" size="20" />
+                  <div>
+                    <p class="text-sm font-medium text-gray-700">Payment not available</p>
+                    <p class="text-sm text-gray-500 mt-1">Credit card payment is currently disabled as we are still testing the system.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Checkout Actions -->
         <div class="bg-white rounded-xl border border-gray-200">
-          <div class="p-6">
+          <div class="p-4 sm:p-6">
             <div class="flex flex-col sm:flex-row gap-4">
               <Button
                 variant="secondary"
@@ -271,6 +287,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
+import CartInstructions from './CartInstructions.vue';
 import { useFeatureFlags } from '~/composables/useFeatureFlags';
 
 const props = defineProps<{
@@ -331,6 +348,7 @@ const hasEnoughCredits = computed(() => {
 const canCheckout = computed(() => {
   if (props.cart.length === 0) return false;
   if (isLoading.value) return false; // Disable while loading credit data
+  if (!paymentMethod.value) return false; // No payment method selected
   if (paymentMethod.value === 'credits' && !hasEnoughCredits.value) return false;
   return true;
 });
@@ -382,9 +400,10 @@ const goToShop = () => {
 onMounted(async () => {
   await fetchCredits();
 
-  // Set payment method based on user type
+  // Set payment method based on user type and feature flag
   if (isParent.value) {
-    paymentMethod.value = 'card'; // Parents can only pay with card
+    // Parents can only pay with card, which requires subscriptionPlans
+    paymentMethod.value = subscriptionPlans.value ? 'card' : '';
   } else {
     paymentMethod.value = 'credits'; // Children default to credits
   }

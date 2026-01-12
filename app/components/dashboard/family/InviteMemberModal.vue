@@ -5,13 +5,47 @@
         <h3 class="text-lg font-semibold text-gray-900">Invite Family Member</h3>
         <button
           class="text-gray-400 hover:text-gray-600"
-          @click="$emit('close')"
+          @click="handleClose"
         >
           <UIcon name="i-lucide-x" size="20" />
         </button>
       </div>
 
-      <form @submit.prevent="handleInvite">
+      <!-- Success state with invite link (for unregistered users) -->
+      <div v-if="inviteLink" class="space-y-4">
+        <div class="flex items-center gap-2 text-green-600">
+          <UIcon name="i-lucide-check-circle" size="20" />
+          <span class="font-medium">Invitation created!</span>
+        </div>
+        <p class="text-sm text-gray-600">
+          Share this link with <span class="font-medium">{{ invitedEmail }}</span> to register:
+        </p>
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            :value="inviteLink"
+            readonly
+            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm text-gray-600"
+          >
+          <Button
+            variant="secondary"
+            :text="copied ? 'Copied!' : 'Copy'"
+            class="shrink-0"
+            @clicked="copyToClipboard"
+          />
+        </div>
+        <div class="pt-2">
+          <Button
+            variant="primary"
+            text="Done"
+            class="w-full"
+            @clicked="handleClose"
+          />
+        </div>
+      </div>
+
+      <!-- Invite form -->
+      <form v-else @submit.prevent="handleInvite">
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
           <input
@@ -38,16 +72,18 @@
           />
         </div>
 
-        <div class="flex space-x-3">
+        <div class="flex flex-col-reverse sm:flex-row gap-3">
           <Button
             variant="secondary"
             text="Cancel"
+            class="w-full sm:w-auto"
             :disabled="isLoading"
-            @clicked="$emit('close')"
+            @clicked="handleClose"
           />
           <Button
             variant="primary"
             text="Send Invitation"
+            class="w-full sm:w-auto"
             :loading="isLoading"
             :disabled="!email || isLoading"
             @clicked="handleInvite"
@@ -76,15 +112,34 @@ const email = ref('');
 const message = ref('');
 const isLoading = ref(false);
 const error = ref('');
+const inviteLink = ref('');
+const invitedEmail = ref('');
+const copied = ref(false);
 
 // Reset form when modal opens
 watch(() => props.isOpen, (isOpen) => {
   if (isOpen) {
-    email.value = '';
-    message.value = '';
-    error.value = '';
+    resetForm();
   }
 });
+
+const resetForm = () => {
+  email.value = '';
+  message.value = '';
+  error.value = '';
+  inviteLink.value = '';
+  invitedEmail.value = '';
+  copied.value = false;
+};
+
+const handleClose = () => {
+  // If we showed an invite link, emit member-invited to refresh the list
+  if (inviteLink.value) {
+    emit('member-invited');
+  }
+  resetForm();
+  emit('close');
+};
 
 const handleInvite = async () => {
   if (!email.value) return;
@@ -102,7 +157,14 @@ const handleInvite = async () => {
     });
 
     if (response.success) {
-      emit('member-invited');
+      // Check if this is an email-based invitation (unregistered user)
+      if (response.inviteLink) {
+        inviteLink.value = response.inviteLink;
+        invitedEmail.value = email.value;
+      } else {
+        // Registered user - close modal and refresh
+        emit('member-invited');
+      }
     } else {
       throw new Error('Failed to send invitation');
     }
@@ -111,6 +173,18 @@ const handleInvite = async () => {
     error.value = err.data?.message || 'Failed to send invitation. Please try again.';
   } finally {
     isLoading.value = false;
+  }
+};
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(inviteLink.value);
+    copied.value = true;
+    setTimeout(() => {
+      copied.value = false;
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy:', err);
   }
 };
 </script>

@@ -1,13 +1,316 @@
 <template>
-  <!-- Slides Panel - standalone column -->
+  <!-- Mobile: Full-screen overlay -->
+  <Teleport v-if="isMobile" to="body">
+    <div class="fixed inset-0 z-50 flex flex-col bg-gray-50">
+      <!-- Mobile Header -->
+      <div class="flex-shrink-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-2">
+        <!-- Close Button -->
+        <button
+          class="p-2.5 text-gray-500 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-full transition-colors"
+          title="Close slides"
+          @click="$emit('close-split-view')"
+        >
+          <Icon name="i-heroicons-x-mark" size="24" />
+        </button>
+
+        <!-- Previous Button -->
+        <button
+          class="p-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-200 active:bg-gray-300 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          :disabled="currentSlideIndex === 0"
+          @click="previousSlide"
+        >
+          <Icon name="i-heroicons-chevron-left" size="20" />
+        </button>
+
+        <!-- Title Dropdown - for easy slide navigation on mobile -->
+        <UPopover :popper="{ placement: 'bottom' }" class="flex-1 min-w-0">
+          <button class="w-full flex items-center justify-center gap-2 px-2 py-1 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors">
+            <div class="flex-1 min-w-0 text-center">
+              <div class="text-sm font-semibold text-gray-800 truncate">
+                {{ currentSlide?.part_label || 'Slide' }}
+              </div>
+              <div class="text-xs text-gray-500">
+                {{ currentSlideIndex + 1 }} / {{ totalSlides }}
+              </div>
+            </div>
+            <Icon name="i-heroicons-chevron-down" size="16" class="text-gray-400 flex-shrink-0" />
+          </button>
+
+          <template #panel="{ close }">
+            <div class="max-h-80 overflow-y-auto bg-white rounded-lg shadow-lg border border-gray-200 w-[280px]">
+              <div
+                v-for="(slide, index) in slides"
+                :key="slide.id"
+                :class="[
+                  'px-4 py-3 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors active:bg-gray-100',
+                  index === currentSlideIndex ? 'bg-primary-50' : 'hover:bg-gray-50'
+                ]"
+                @click="jumpToSlide(index); close()"
+              >
+                <div class="flex items-center gap-2">
+                  <Icon
+                    v-if="index === currentSlideIndex"
+                    name="i-heroicons-check"
+                    size="16"
+                    class="text-primary-600 flex-shrink-0"
+                  />
+                  <div v-else class="w-4 flex-shrink-0" />
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-gray-800 truncate">
+                      {{ slide.part_label || `Slide ${index + 1}` }}
+                    </div>
+                    <div v-if="slide.title" class="text-xs text-gray-500 truncate">
+                      {{ slide.title }}
+                    </div>
+                  </div>
+                  <span
+                    v-if="isSlideNew(index)"
+                    class="px-1.5 py-0.5 bg-green-500 text-white text-[10px] rounded-full flex-shrink-0"
+                  >
+                    NEW
+                  </span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </UPopover>
+
+        <!-- Next Button -->
+        <button
+          class="p-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-200 active:bg-gray-300 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          :disabled="currentSlideIndex === totalSlides - 1"
+          @click="nextSlide"
+        >
+          <Icon name="i-heroicons-chevron-right" size="20" />
+        </button>
+      </div>
+
+      <!-- Mobile Slide Content -->
+      <div
+        ref="mobileSlideContent"
+        class="flex-1 overflow-y-auto p-4"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+      >
+        <div v-if="currentSlide" ref="slideContentRef" class="bg-white rounded-lg p-4 shadow-sm">
+          <MDCRenderer
+            v-if="slideMarkdownBody"
+            :body="slideMarkdownBody"
+            tag="div"
+            class="prose prose-md max-w-none text-base"
+          />
+          <div
+            v-else-if="currentSlide.content"
+            class="text-base max-w-none"
+            v-html="processedSlideContent"
+          />
+
+          <!-- Question Options for MCQ slides (mobile) -->
+          <div v-if="currentSlide.type === 'question' && currentSlide.question_type === 'mcq' && currentSlide.options?.length" class="mt-4">
+            <div class="space-y-2">
+              <div
+                v-for="(option, index) in currentSlide.options"
+                :key="option.id"
+                :class="[
+                  'p-3 border rounded-lg cursor-pointer transition-all active:scale-[0.98]',
+                  selectedOptions[currentSlide.id]?.id === option.id
+                    ? 'border-primary-500 bg-primary-50'
+                    : 'border-gray-200 hover:bg-gray-50'
+                ]"
+                @click="selectOption(option)"
+              >
+                <span class="font-medium">{{ String.fromCharCode(65 + index) }}.</span>
+                <span v-if="containsMath(option.option_text)" v-html="renderInlineMath(option.option_text)" />
+                <span v-else>{{ option.option_text }}</span>
+              </div>
+            </div>
+
+            <!-- Check Answer Button -->
+            <div class="mt-4 flex justify-center">
+              <button
+                v-if="selectedOptions[currentSlide.id] && !answeredQuestions[currentSlide.id]"
+                class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 active:bg-primary-800 transition-colors"
+                @click="checkAnswer(currentSlide)"
+              >
+                Check Answer
+              </button>
+            </div>
+
+            <!-- Answer Feedback -->
+            <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+              <div
+                :class="[
+                  'p-3 rounded-lg',
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                    ? 'bg-green-50 border border-green-200'
+                    : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                      ? 'bg-amber-50 border border-amber-200'
+                      : 'bg-red-50 border border-red-200'
+                ]"
+              >
+                <p
+                  :class="[
+                    'text-sm font-semibold',
+                    answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                      ? 'text-green-800'
+                      : answeredQuestions[currentSlide.id]?.markingStatus === 'PARTIALLY_CORRECT'
+                        ? 'text-amber-800'
+                        : 'text-red-800'
+                  ]"
+                >
+                  {{ answeredQuestions[currentSlide.id]?.feedback }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile OPEN question (same structure, adapted padding) -->
+          <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'open'" class="mt-4">
+            <div v-if="currentSlide.userAnswer?.text || currentSlide.markingResult" class="space-y-3">
+              <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                <p class="text-sm font-medium text-gray-600 mb-1">Your Answer:</p>
+                <p class="text-gray-800 whitespace-pre-wrap">{{ currentSlide.userAnswer?.text }}</p>
+              </div>
+              <div
+                v-if="currentSlide.markingResult"
+                :class="[
+                  'p-3 rounded-lg',
+                  currentSlide.markingResult.status === 'correct'
+                    ? 'bg-green-50 border border-green-200'
+                    : currentSlide.markingResult.status === 'partially_correct'
+                      ? 'bg-amber-50 border border-amber-200'
+                      : 'bg-red-50 border border-red-200'
+                ]"
+              >
+                <div class="flex items-center gap-2 mb-2">
+                  <span
+                    :class="[
+                      'px-2 py-1 rounded-full text-xs font-semibold',
+                      currentSlide.markingResult.status === 'correct'
+                        ? 'bg-green-200 text-green-800'
+                        : currentSlide.markingResult.status === 'partially_correct'
+                          ? 'bg-amber-200 text-amber-800'
+                          : 'bg-red-200 text-red-800'
+                    ]"
+                  >
+                    {{ currentSlide.markingResult.status === 'correct' ? 'Correct' :
+                      currentSlide.markingResult.status === 'partially_correct' ? 'Partially Correct' : 'Incorrect' }}
+                  </span>
+                  <span class="text-sm text-gray-600">
+                    Score: {{ currentSlide.markingResult.score.awarded }}/{{ currentSlide.markingResult.score.total }}
+                  </span>
+                </div>
+                <p v-if="currentSlide.markingResult.feedback?.positive" class="text-sm text-green-700 mb-1">
+                  <strong>+</strong> {{ currentSlide.markingResult.feedback.positive }}
+                </p>
+                <p v-if="currentSlide.markingResult.feedback?.gaps" class="text-sm text-amber-700 mb-1">
+                  <strong>Gaps:</strong> {{ currentSlide.markingResult.feedback.gaps }}
+                </p>
+                <p v-if="currentSlide.markingResult.feedback?.improvement" class="text-sm text-blue-700">
+                  <strong>Tip:</strong> {{ currentSlide.markingResult.feedback.improvement }}
+                </p>
+              </div>
+            </div>
+            <div v-else class="space-y-3">
+              <textarea
+                v-model="textAnswers[currentSlide.id]"
+                maxlength="500"
+                class="w-full p-3 border-2 border-gray-200 rounded-lg resize-y min-h-24 focus:border-primary-500 focus:outline-none transition-colors"
+                placeholder="Enter your answer here..."
+                rows="4"
+                :disabled="isSubmitting[currentSlide.id]"
+              />
+              <div class="flex justify-center">
+                <button
+                  v-if="textAnswers[currentSlide.id]?.trim()"
+                  class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 active:bg-primary-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  :disabled="isSubmitting[currentSlide.id]"
+                  @click="submitOpenAnswer(currentSlide)"
+                >
+                  <span v-if="isSubmitting[currentSlide.id]" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                  {{ isSubmitting[currentSlide.id] ? 'Marking...' : 'Submit Answer' }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile BOOLEAN question -->
+          <div v-else-if="currentSlide.type === 'question' && currentSlide.question_type === 'boolean'" class="mt-4">
+            <div class="flex gap-4">
+              <button
+                class="flex-1 p-4 rounded-lg border-2 font-medium transition-all active:scale-[0.98]"
+                :class="{
+                  'bg-green-50 border-green-500 text-green-700': booleanAnswers[currentSlide.id] === true,
+                  'hover:bg-green-50 hover:border-green-300 border-gray-200': booleanAnswers[currentSlide.id] !== true
+                }"
+                @click="selectBoolean(currentSlide.id, true)"
+              >
+                True
+              </button>
+              <button
+                class="flex-1 p-4 rounded-lg border-2 font-medium transition-all active:scale-[0.98]"
+                :class="{
+                  'bg-red-50 border-red-500 text-red-700': booleanAnswers[currentSlide.id] === false,
+                  'hover:bg-red-50 hover:border-red-300 border-gray-200': booleanAnswers[currentSlide.id] !== false
+                }"
+                @click="selectBoolean(currentSlide.id, false)"
+              >
+                False
+              </button>
+            </div>
+            <div class="mt-4 flex justify-center">
+              <button
+                v-if="booleanAnswers[currentSlide.id] !== undefined && !answeredQuestions[currentSlide.id]"
+                class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 active:bg-primary-800 transition-colors"
+                @click="checkBooleanAnswer(currentSlide)"
+              >
+                Check Answer
+              </button>
+            </div>
+            <div v-if="answeredQuestions[currentSlide.id]" class="mt-4">
+              <div
+                :class="[
+                  'p-3 rounded-lg',
+                  answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                    ? 'bg-green-50 border border-green-200'
+                    : 'bg-red-50 border border-red-200'
+                ]"
+              >
+                <p
+                  :class="[
+                    'text-sm font-semibold',
+                    answeredQuestions[currentSlide.id]?.markingStatus === 'CORRECT'
+                      ? 'text-green-800'
+                      : 'text-red-800'
+                  ]"
+                >
+                  {{ answeredQuestions[currentSlide.id]?.feedback }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explanation (shown after answer) - mobile -->
+          <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+            <p class="text-sm text-primary-800">
+              <strong>Explanation:</strong> {{ currentSlide.explanation }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Teleport>
+
+  <!-- Desktop: Side panel (existing) -->
   <div
+    v-else
     ref="slidesPanel"
     class="flex-shrink-0 border-l border-gray-200 bg-gray-50 overflow-y-auto relative h-full"
-    :style="{ width: isMobile ? '100%' : `${panelWidth}px` }"
+    :style="{ width: `${panelWidth}px` }"
   >
     <!-- Resize Handle (Desktop only) -->
     <div
-      v-if="!isMobile"
       ref="resizeHandle"
       class="sticky left-0 top-0 h-screen w-1 bg-gray-200 hover:bg-primary-400 cursor-col-resize z-10 float-left -ml-0"
       @mousedown="startResize"
@@ -506,6 +809,14 @@ const slidesPanel = ref<HTMLElement>();
 const resizeHandle = ref<HTMLElement>();
 const selectedSlideRef = ref<HTMLElement | null>(null);
 const slideContentRef = ref<HTMLElement | null>(null);
+const mobileSlideContent = ref<HTMLElement | null>(null);
+
+// Touch swipe state for mobile slide navigation
+const touchStartX = ref(0);
+const touchStartY = ref(0);
+const touchCurrentX = ref(0);
+const isSwiping = ref(false);
+const swipeThreshold = 50; // Minimum distance for swipe navigation
 
 // Scroll content to top (called on slide change)
 function scrollContentToTop() {
@@ -911,6 +1222,44 @@ function handleKeyPress(e: KeyboardEvent) {
   if (e.key === 'ArrowLeft') previousSlide();
   if (e.key === 'ArrowRight') nextSlide();
   if (e.key === 'Escape') emit('close-split-view');
+}
+
+// Touch handlers for mobile swipe navigation
+function handleTouchStart(e: TouchEvent) {
+  touchStartX.value = e.touches[0].clientX;
+  touchStartY.value = e.touches[0].clientY;
+  touchCurrentX.value = e.touches[0].clientX;
+  isSwiping.value = false;
+}
+
+function handleTouchMove(e: TouchEvent) {
+  touchCurrentX.value = e.touches[0].clientX;
+  const diffX = Math.abs(touchCurrentX.value - touchStartX.value);
+  const diffY = Math.abs(e.touches[0].clientY - touchStartY.value);
+
+  // Only consider horizontal swipes (prevent conflict with scrolling)
+  if (diffX > diffY && diffX > 10) {
+    isSwiping.value = true;
+  }
+}
+
+function handleTouchEnd() {
+  if (!isSwiping.value) return;
+
+  const diff = touchCurrentX.value - touchStartX.value;
+  if (diff > swipeThreshold) {
+    // Swiped right - go to previous slide
+    previousSlide();
+  } else if (diff < -swipeThreshold) {
+    // Swiped left - go to next slide
+    nextSlide();
+  }
+
+  // Reset
+  isSwiping.value = false;
+  touchStartX.value = 0;
+  touchStartY.value = 0;
+  touchCurrentX.value = 0;
 }
 
 // Check if any submission is in progress

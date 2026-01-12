@@ -6,7 +6,7 @@ Schema-first workflow using Supabase CLI migrations.
 | Env | Project ID | URL |
 |-----|------------|-----|
 | dev | `qfzqwbwwzqmacnhtihov` | https://qfzqwbwwzqmacnhtihov.supabase.co |
-| prod | `yxbebpfjblokjxvroebw` | https://yxbebpfjblokjxvroebw.supabase.co |
+| prod | `lqgsbofjkfduqcxbmdxn` | https://lqgsbofjkfduqcxbmdxn.supabase.co |
 
 ## Directory Structure
 
@@ -59,7 +59,7 @@ supabase link --project-ref qfzqwbwwzqmacnhtihov
 supabase db push
 
 # 5. Push to prod (when ready)
-supabase link --project-ref yxbebpfjblokjxvroebw
+supabase link --project-ref lqgsbofjkfduqcxbmdxn
 supabase db push
 
 # 6. Commit
@@ -90,7 +90,7 @@ NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
 node supabase/scripts/init-admin.js
 
 # Prod
-NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
+NUXT_PUBLIC_SUPABASE_URL=https://lqgsbofjkfduqcxbmdxn.supabase.co \
 NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
 node supabase/scripts/init-admin.js
 ```
@@ -103,7 +103,7 @@ NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<dev-service-role-key> \
 node supabase/scripts/upload-assets.js
 
 # Prod
-NUXT_PUBLIC_SUPABASE_URL=https://yxbebpfjblokjxvroebw.supabase.co \
+NUXT_PUBLIC_SUPABASE_URL=https://lqgsbofjkfduqcxbmdxn.supabase.co \
 NUXT_PRIVATE_SUPABASE_SERVICE_ROLE_KEY=<prod-service-role-key> \
 node supabase/scripts/upload-assets.js
 ```

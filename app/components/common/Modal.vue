@@ -2,23 +2,23 @@
   <Transition name="fade-scale">
     <div
       v-if="props.visible"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
       tabindex="0"
       @keydown.esc="emitClose"
     >
       <!-- Modal Panel -->
       <div
         ref="modalRef"
-        class="relative bg-white rounded-3xl shadow-xl p-8 max-w-full"
+        class="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 max-w-[calc(100vw-2rem)] max-h-[90vh] overflow-y-auto"
         :class="sizeClass"
       >
         <!-- Close Button -->
         <button
-          class="absolute top-5 right-8 text-gray-400 hover:text-gray-600 focus:outline-none"
+          class="absolute top-3 right-3 sm:top-5 sm:right-8 p-1.5 text-gray-400 hover:text-gray-600 active:text-gray-800 focus:outline-none rounded-lg hover:bg-gray-100"
           @click="emitClose"
         >
           <span class="sr-only">Close</span>
-          ✕
+          <UIcon name="i-lucide-x" class="w-5 h-5" />
         </button>
 
         <header v-if="$slots.header">

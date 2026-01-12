@@ -40,7 +40,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Account Creation</h3>
       <p class="text-slate-600 mb-6">You have two options to create your account:</p>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-3">Email Registration</h4>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -66,7 +66,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Choose Your Role</h3>
       <p class="text-slate-600 mb-6">Select whether you're signing up as a parent or student:</p>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="rounded-xl bg-slate-50 p-5">
           <h4 class="font-medium text-slate-800 mb-3">Parent Account</h4>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -108,7 +108,7 @@
     <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">Start Learning with Eddy</h3>
       <p class="text-slate-600 mb-6">Once your profile is complete, you'll be redirected to the chat interface.</p>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div>
           <h4 class="font-medium text-slate-800 mb-3">For Students</h4>
           <ul class="text-sm text-slate-600 space-y-2">
@@ -133,7 +133,7 @@
     <!-- What's Next -->
     <div class="rounded-2xl bg-slate-50 p-8 ring-1 ring-slate-100">
       <h3 class="text-xl font-semibold text-slate-800 mb-4">What's Next?</h3>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div>
           <h4 class="font-medium text-slate-800 mb-3">Explore More Guides</h4>
           <ul class="text-sm text-slate-600 space-y-2">
