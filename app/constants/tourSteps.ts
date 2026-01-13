@@ -29,6 +29,13 @@ export const CHAT_TOUR_MOBILE: TourConfig = {
       position: 'bottom',
     },
     {
+      id: 'character-selector',
+      element: '[data-tour="character-selector"]',
+      title: 'Quick Select',
+      description: 'Use this dropdown to quickly switch between characters without scrolling.',
+      position: 'bottom',
+    },
+    {
       id: 'chat-input',
       element: '[data-tour="chat-input"]',
       title: 'Start a Conversation',
@@ -68,6 +75,13 @@ export const CHAT_TOUR_DESKTOP: TourConfig = {
       element: '[data-tour="character-carousel"]',
       title: 'Choose Your Character',
       description: 'Select a character to help you learn. Each specializes in different subjects.',
+      position: 'bottom',
+    },
+    {
+      id: 'character-selector',
+      element: '[data-tour="character-selector"]',
+      title: 'Quick Select',
+      description: 'Use this dropdown to quickly switch between characters without scrolling.',
       position: 'bottom',
     },
     {

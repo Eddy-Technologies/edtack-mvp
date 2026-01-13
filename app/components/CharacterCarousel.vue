@@ -11,9 +11,9 @@
       v-else
       class="flex-1 flex items-center justify-center relative w-full outline-none"
       tabindex="0"
+      :class="isFocused ? 'ring-2 ring-primary-400 ring-offset-2 rounded-lg' : ''"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      :class="isFocused ? 'ring-2 ring-primary-400 ring-offset-2 rounded-lg' : ''"
     >
       <!-- Gradient overlays for blur effect (smaller on mobile) -->
       <div class="absolute left-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
@@ -239,9 +239,9 @@ const selectAvatar = (avatar, index) => {
   // The clicked index is into 'infiniteAvatars' which has 3 copies
   // adjustedIndex = currentIndex + length
   // So: currentIndex = index - length
-  
+
   const targetCurrentIndex = index - allAvatars.value.length;
-  
+
   isTransitioning.value = true;
   currentIndex.value = targetCurrentIndex;
 
@@ -253,10 +253,10 @@ const selectAvatar = (avatar, index) => {
       // Use modulo arithmetic that handles negative numbers correctly for index
       const length = allAvatars.value.length;
       const normalizedIndex = ((targetCurrentIndex % length) + length) % length;
-      
+
       if (currentIndex.value === targetCurrentIndex) { // Only reset if user hasn't moved again
-         isTransitioning.value = false;
-         currentIndex.value = normalizedIndex;
+        isTransitioning.value = false;
+        currentIndex.value = normalizedIndex;
       }
     }, 500);
   }
@@ -303,7 +303,7 @@ const previousCard = () => {
 const handleKeydown = (event) => {
   // Only handle keyboard navigation when carousel is focused
   if (!isFocused.value) return;
-  
+
   if (event.key === 'ArrowRight') {
     event.preventDefault();
     nextCard();

@@ -117,7 +117,7 @@
                         </div>
 
                         <!-- Character Dropdown Selector -->
-                        <div class="relative">
+                        <div class="relative" data-tour="character-selector">
                           <button
                             class="px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-colors flex items-center gap-2 min-w-[200px]"
                             @click="toggleCharacterDropdown"
