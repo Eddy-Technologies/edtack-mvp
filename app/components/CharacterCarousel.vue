@@ -6,8 +6,15 @@
       <span class="ml-3 text-gray-600">Loading characters...</span>
     </div>
 
-    <!-- Carousel Content -->
-    <template v-else>
+    <!-- Carousel Content with focus management -->
+    <div
+      v-else
+      class="flex-1 flex items-center justify-center relative w-full outline-none"
+      tabindex="0"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+      :class="isFocused ? 'ring-2 ring-primary-400 ring-offset-2 rounded-lg' : ''"
+    >
       <!-- Gradient overlays for blur effect (smaller on mobile) -->
       <div class="absolute left-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
       <div class="absolute right-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
@@ -113,7 +120,7 @@
       >
         <UIcon name="i-lucide-chevron-right" class="w-5 h-5 lg:w-6 lg:h-6 text-gray-800" />
       </button>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -153,6 +160,9 @@ const wasDragging = ref(false);
 const dragStartX = ref(0);
 const dragOffset = ref(0);
 const dragThreshold = 50; // Minimum distance to trigger card change
+
+// Focus state for keyboard navigation
+const isFocused = ref(false);
 
 // Responsive card width - smaller cards on mobile/tablet
 const currentCardWidth = computed(() => {
@@ -224,8 +234,32 @@ const selectAvatar = (avatar, index) => {
   // Ignore clicks that happened during drag
   if (wasDragging.value) return;
 
-  // Convert infinite array index back to original array index
-  currentIndex.value = index % allAvatars.value.length;
+  // We need to calculate the target currentIndex directly from the clicked index
+  // currentIndex is 0-indexed relative to the middle array
+  // The clicked index is into 'infiniteAvatars' which has 3 copies
+  // adjustedIndex = currentIndex + length
+  // So: currentIndex = index - length
+  
+  const targetCurrentIndex = index - allAvatars.value.length;
+  
+  isTransitioning.value = true;
+  currentIndex.value = targetCurrentIndex;
+
+  // Check if we are out of bounds (in the duplicate sections) and need to reset later
+  if (targetCurrentIndex >= allAvatars.value.length || targetCurrentIndex < 0) {
+    setTimeout(() => {
+      // Normalize to [0, length-1]
+      // We disable transition for the seamless reset
+      // Use modulo arithmetic that handles negative numbers correctly for index
+      const length = allAvatars.value.length;
+      const normalizedIndex = ((targetCurrentIndex % length) + length) % length;
+      
+      if (currentIndex.value === targetCurrentIndex) { // Only reset if user hasn't moved again
+         isTransitioning.value = false;
+         currentIndex.value = normalizedIndex;
+      }
+    }, 500);
+  }
 
   // Emit select event (like the modal does)
   emit('select', avatar);
@@ -265,11 +299,16 @@ const previousCard = () => {
   }
 };
 
-// Handle keyboard navigation
+// Handle keyboard navigation - only when carousel is focused
 const handleKeydown = (event) => {
+  // Only handle keyboard navigation when carousel is focused
+  if (!isFocused.value) return;
+  
   if (event.key === 'ArrowRight') {
+    event.preventDefault();
     nextCard();
   } else if (event.key === 'ArrowLeft') {
+    event.preventDefault();
     previousCard();
   }
 };
