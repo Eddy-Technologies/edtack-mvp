@@ -115,7 +115,7 @@
                             </p>
                           </div>
                         </div>
-                        
+
                         <!-- Character Dropdown Selector -->
                         <div class="relative">
                           <button
@@ -150,7 +150,7 @@
                             </button>
                           </div>
                         </div>
-                        
+
                         <UTooltip
                           :ui="{ base: 'h-auto px-2 py-1 text-xs font-normal', width: 'max-w-[200px]' }"
                           :popper="{ placement: 'bottom-end' }"
@@ -295,9 +295,9 @@ const sessionSlideCount = ref(0);
 const { fetchCharacters } = useCharacters();
 
 const dropdownButtonText = computed(() => {
-  return selectedCharacter.value 
-    ? `${selectedCharacter.value.name} - ${constantCaseToTitleCase(selectedCharacter.value.subject)}`
-    : 'Select Character';
+  return selectedCharacter.value ?
+    `${selectedCharacter.value.name} - ${constantCaseToTitleCase(selectedCharacter.value.subject)}` :
+    'Select Character';
 });
 
 const toggleCharacterDropdown = (event: MouseEvent) => {
@@ -311,12 +311,12 @@ const closeCharacterDropdown = () => {
 
 const selectCharacterFromDropdown = async (character: any) => {
   closeCharacterDropdown();
-  
+
   // Scroll carousel to the selected character
   if (characterCarouselRef.value && characterCarouselRef.value.scrollToCharacter) {
     characterCarouselRef.value.scrollToCharacter(character.slug);
   }
-  
+
   // Handle character selection
   await handleCharacterSelection(character);
 };
@@ -399,7 +399,7 @@ const handleOpenSidebarForTour = () => {
 onMounted(async () => {
   // Initialize character store
   await initializeStore();
-  
+
   // Load all characters for dropdown
   try {
     const characters = await fetchCharacters(false);
