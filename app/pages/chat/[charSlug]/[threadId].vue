@@ -115,6 +115,42 @@
                             </p>
                           </div>
                         </div>
+                        
+                        <!-- Character Dropdown Selector -->
+                        <div class="relative">
+                          <button
+                            class="px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-colors flex items-center gap-2 min-w-[200px]"
+                            @click="toggleCharacterDropdown"
+                          >
+                            <span class="truncate flex-1 text-left">{{ dropdownButtonText }}</span>
+                            <UIcon name="i-heroicons-chevron-down" class="w-4 h-4 flex-shrink-0 transition-transform" :class="characterDropdownOpen ? 'rotate-180' : ''" />
+                          </button>
+
+                          <!-- Dropdown menu -->
+                          <div
+                            v-if="characterDropdownOpen"
+                            class="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto z-50 min-w-[250px]"
+                            @click.stop
+                          >
+                            <button
+                              v-for="character in availableCharacters"
+                              :key="character.id"
+                              class="w-full px-4 py-3 text-left text-sm transition-colors first:rounded-t-xl last:rounded-b-xl"
+                              :class="[
+                                character.slug === selectedCharacter?.slug
+                                  ? 'bg-primary-50 text-primary-700 font-medium'
+                                  : 'text-gray-700 hover:bg-gray-50'
+                              ]"
+                              @click="selectCharacterFromDropdown(character)"
+                            >
+                              <div class="font-medium">{{ character.name }}</div>
+                              <div class="text-xs" :class="character.slug === selectedCharacter?.slug ? 'text-primary-600' : 'text-gray-500'">
+                                {{ constantCaseToTitleCase(character.subject) }}
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                        
                         <UTooltip
                           :ui="{ base: 'h-auto px-2 py-1 text-xs font-normal', width: 'max-w-[200px]' }"
                           :popper="{ placement: 'bottom-end' }"
@@ -130,6 +166,7 @@
                     </div>
                     <div :class="isMobile ? 'p-2' : 'p-4'">
                       <CharacterCarousel
+                        ref="characterCarouselRef"
                         v-model="currentCharacter"
                         :initial-character-slug="charSlug"
                         :go-to-chat-on-click="true"
@@ -219,7 +256,12 @@ const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
 const chatInputRef = ref<any>(null);
 const slideContainerRef = ref<any>(null);
+const characterCarouselRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
+
+// Character dropdown state
+const characterDropdownOpen = ref(false);
+const availableCharacters = ref<any[]>([]);
 
 // Connection status state (reactive tracking from child component)
 const connectionStatus = ref({
@@ -249,6 +291,35 @@ const meStore = useMeStore();
 // Analytics tracking state
 const sessionMessageCount = ref(0);
 const sessionSlideCount = ref(0);
+
+const { fetchCharacters } = useCharacters();
+
+const dropdownButtonText = computed(() => {
+  return selectedCharacter.value 
+    ? `${selectedCharacter.value.name} - ${constantCaseToTitleCase(selectedCharacter.value.subject)}`
+    : 'Select Character';
+});
+
+const toggleCharacterDropdown = (event: MouseEvent) => {
+  event.stopPropagation();
+  characterDropdownOpen.value = !characterDropdownOpen.value;
+};
+
+const closeCharacterDropdown = () => {
+  characterDropdownOpen.value = false;
+};
+
+const selectCharacterFromDropdown = async (character: any) => {
+  closeCharacterDropdown();
+  
+  // Scroll carousel to the selected character
+  if (characterCarouselRef.value && characterCarouselRef.value.scrollToCharacter) {
+    characterCarouselRef.value.scrollToCharacter(character.slug);
+  }
+  
+  // Handle character selection
+  await handleCharacterSelection(character);
+};
 
 const {
   selectedCharacter,
@@ -328,10 +399,19 @@ const handleOpenSidebarForTour = () => {
 onMounted(async () => {
   // Initialize character store
   await initializeStore();
+  
+  // Load all characters for dropdown
+  try {
+    const characters = await fetchCharacters(false);
+    availableCharacters.value = characters;
+  } catch (error) {
+    console.error('Failed to load characters for dropdown:', error);
+  }
 
   handleResize();
   window.addEventListener('resize', handleResize);
   window.addEventListener('openChatSidebar', handleOpenSidebarForTour);
+  document.addEventListener('click', closeCharacterDropdown);
 
   // Set sidebar collapsed if user is logged in but hasn't started chatting
   if (supabaseUser.value && !hasStartedChat.value) {
@@ -607,5 +687,6 @@ const handleResize = () => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
   window.removeEventListener('openChatSidebar', handleOpenSidebarForTour);
+  document.removeEventListener('click', closeCharacterDropdown);
 });
 </script>

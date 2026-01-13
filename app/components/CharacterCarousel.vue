@@ -352,6 +352,20 @@ const handleResize = () => {
   windowWidth.value = window.innerWidth;
 };
 
+// Scroll to character by slug (programmatically)
+const scrollToCharacter = (slug) => {
+  const index = allAvatars.value.findIndex(char => char.slug === slug);
+  if (index !== -1) {
+    currentIndex.value = index;
+    isTransitioning.value = true;
+  }
+};
+
+// Expose methods for parent component
+defineExpose({
+  scrollToCharacter,
+});
+
 // Add/remove event listeners
 onMounted(async () => {
   document.addEventListener('keydown', handleKeydown);
