@@ -313,8 +313,11 @@
 
               <!-- Explanation -->
               <div v-if="questions[index]?.explanation" class="ml-9 mt-3 p-3 bg-white rounded border border-gray-200">
-                <h6 class="text-sm font-semibold text-gray-700 mb-1">Explanation:</h6>
-                <p class="text-sm text-gray-600">{{ questions[index].explanation }}</p>
+                <h6 class="text-sm font-semibold text-gray-700 mb-2">Explanation:</h6>
+                <div v-if="explanationBodies[index]" class="prose prose-sm max-w-none prose-slate">
+                  <MDCRenderer :body="explanationBodies[index]" tag="div" />
+                </div>
+                <p v-else class="text-sm text-gray-600">{{ questions[index].explanation }}</p>
               </div>
             </div>
           </div>
@@ -409,6 +412,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import QuizQuestion from '~/components/playback/QuizQuestion.vue';
 import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
 
@@ -433,6 +437,32 @@ const error = ref<string | null>(null);
 const showResults = ref(false);
 const quizResults = ref<any>(null);
 const questionRefs = ref<HTMLElement[]>([]);
+const explanationBodies = ref<Record<number, any>>({});
+
+// Helper function to parse explanations as markdown
+const formatQuestionExplanation = async (explanation: string) => {
+  if (!explanation) return null;
+
+  try {
+    // Parse markdown directly - backend manages formatting
+    const parsed = await parseMarkdown(explanation);
+    return parsed?.body;
+  } catch (e) {
+    console.error('Error parsing explanation:', e);
+    return null;
+  }
+};
+
+// Watch questions and parse explanations
+watch(questions, async (newQuestions) => {
+  if (!newQuestions || newQuestions.length === 0) return;
+
+  for (let i = 0; i < newQuestions.length; i++) {
+    if (newQuestions[i]?.explanation) {
+      explanationBodies.value[i] = await formatQuestionExplanation(newQuestions[i].explanation);
+    }
+  }
+}, { immediate: true });
 
 // Computed
 const allQuestionsAnswered = computed(() => {

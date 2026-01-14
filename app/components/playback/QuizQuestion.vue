@@ -164,7 +164,7 @@
           v-if="explanationMarkdownBody"
           :body="explanationMarkdownBody"
           tag="div"
-          class="prose prose-md max-w-none"
+          class="prose prose-sm max-w-none prose-slate"
         />
         <div v-else v-html="processedExplanationHtml" />
         <div v-if="markingStatus" class="mt-3 flex items-center gap-2">
@@ -216,7 +216,11 @@ const showExplanation = ref(false);
 const markingStatus = ref<string | undefined>(undefined);
 
 const processedContentHtml = computed(() => convertHighlights(convertImages(props.question.content || '', 'Question image')));
-const processedExplanationHtml = computed(() => convertHighlights(convertImages(props.question.explanation || '', 'Explanation image')));
+const processedExplanationHtml = computed(() => {
+  if (!props.question.explanation) return '';
+  // Just return raw explanation - backend manages formatting
+  return props.question.explanation;
+});
 
 // Markdown parsing for content and explanation
 const contentMarkdownBody = ref();
@@ -429,3 +433,21 @@ onMounted(() => {
   emit('finish');
 });
 </script>
+
+<style scoped>
+.prose :deep(ul),
+.prose :deep(ol) {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose :deep(li) {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose :deep(p) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+</style>
