@@ -205,13 +205,13 @@ const subjectSuggestions: Record<string, { lesson: string[]; quiz: string[] }> =
   GENERAL: {
     lesson: [
       'Give me a lesson on a topic of your choice',
-      'Give me a lesson on study techniques',
-      'Give me a lesson on time management',
+      'How can I do well in exams?',
+      'How can I memorise things faster?',
     ],
     quiz: [
-      'Quiz me on general knowledge',
-      'Quiz me on something fun',
-      'Quiz me on a random topic',
+      'Quiz me on World War II',
+      'Quiz me on the work and energy concepts',
+      'Quiz me on a parts of a flower',
     ],
   },
 };
