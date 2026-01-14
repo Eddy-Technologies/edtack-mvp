@@ -12,26 +12,9 @@
             <span class="text-white font-bold text-3xl">E</span>
           </div>
         </div>
-        <h2 class="text-3xl font-heading font-bold text-slate-900 mb-4">Welcome to StudyWithEddy</h2>
+        <h2 class="text-3xl font-heading font-bold text-slate-900 mb-4">StudyWithEddy</h2>
         <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-          An AI powered chat platform where Singapore Students can learn through interactive conversations and personalized learning experiences.
-        </p>
-      </div>
-    </div>
-
-    <!-- Technology Card -->
-    <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-primary-100 transition-all duration-300">
-      <div class="absolute inset-0 bg-gradient-to-br from-primary-500/[0.02] to-transparent pointer-events-none" />
-      <div class="relative z-10">
-        <div class="flex items-center gap-4 mb-5">
-          <div class="w-14 h-14 bg-gradient-to-br from-primary-100 to-primary-50 rounded-xl flex items-center justify-center">
-            <UIcon name="i-lucide-lightbulb" class="w-7 h-7 text-primary-600" />
-          </div>
-          <h3 class="text-xl font-heading font-semibold text-slate-900">Technology</h3>
-        </div>
-        <p class="text-slate-600 leading-relaxed">
-          Our platform is using an underlying LLM model from major LLM providers such as OpenAI, Anthropic, and more. We then improve on those models and
-          processes by fine-tuning them with our proprietary dataset and incorporating feedback from our users.
+          Designed to accelerate learning for Singapore students using interactive lessons, quizzes and rewards.
         </p>
       </div>
     </div>
@@ -46,51 +29,20 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Feature 1 -->
-        <div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-secondary-100 transition-all duration-300">
+        <!-- Map content -->
+        <div v-for="(item, index) in copy.keyFeatures" :key="index" class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-secondary-100 transition-all duration-300">
           <div class="absolute top-6 right-6 w-8 h-8 bg-secondary-50 rounded-full flex items-center justify-center text-secondary-600 font-bold text-sm">1</div>
           <div class="w-12 h-12 bg-gradient-to-br from-secondary-100 to-secondary-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
             <UIcon name="i-lucide-book-check" class="w-6 h-6 text-secondary-600" />
           </div>
-          <h4 class="text-lg font-heading font-semibold text-slate-900 mb-2">Curriculum-aware Content</h4>
+          <h4 class="text-lg font-heading font-semibold text-slate-900 mb-2">{{ item.title }}</h4>
           <p class="text-sm text-slate-600 leading-relaxed">
-            We make use of up to date syllabus, curriculum notes, and exam papers to ensure that the generated content is strictly within the boundaries of the curriculum.
-          </p>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-secondary-100 transition-all duration-300">
-          <div class="absolute top-6 right-6 w-8 h-8 bg-secondary-50 rounded-full flex items-center justify-center text-secondary-600 font-bold text-sm">2</div>
-          <div class="w-12 h-12 bg-gradient-to-br from-secondary-100 to-secondary-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-            <UIcon name="i-lucide-clipboard-check" class="w-6 h-6 text-secondary-600" />
-          </div>
-          <h4 class="text-lg font-heading font-semibold text-slate-900 mb-2">Lessons, Quizzes & Marking</h4>
-          <p class="text-sm text-slate-600 leading-relaxed">
-            Our platform provides a variety of lessons and quizzes, complete with automated marking to give students instant feedback. We can adjust the difficulty and content level based on the student's proficiency and progress.
-          </p>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-secondary-100 transition-all duration-300">
-          <div class="absolute top-6 right-6 w-8 h-8 bg-secondary-50 rounded-full flex items-center justify-center text-secondary-600 font-bold text-sm">3</div>
-          <div class="w-12 h-12 bg-gradient-to-br from-secondary-100 to-secondary-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-            <UIcon name="i-lucide-heart" class="w-6 h-6 text-secondary-600" />
-          </div>
-          <h4 class="text-lg font-heading font-semibold text-slate-900 mb-2">Student Motivation & Engagement</h4>
-          <p class="text-sm text-slate-600 leading-relaxed">
-            We use AI characters, text-to-speech technology, credit-reward systems and other elements to keep students motivated and engaged.
-          </p>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 hover:shadow-lg hover:ring-secondary-100 transition-all duration-300">
-          <div class="absolute top-6 right-6 w-8 h-8 bg-secondary-50 rounded-full flex items-center justify-center text-secondary-600 font-bold text-sm">4</div>
-          <div class="w-12 h-12 bg-gradient-to-br from-secondary-100 to-secondary-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-            <UIcon name="i-lucide-users" class="w-6 h-6 text-secondary-600" />
-          </div>
-          <h4 class="text-lg font-heading font-semibold text-slate-900 mb-2">Parents in the Loop</h4>
-          <p class="text-sm text-slate-600 leading-relaxed">
-            Beyond our AI systems providing feedback to students, our platform includes features that keep parents informed about their child's progress and learning journey. Parents can also reward students through our platform.
+            {{ item.content }}
+            <ul v-if="item.description">
+              <li v-for="(point, pIndex) in item.description" :key="pIndex" class="list-disc list-inside mt-1">
+                {{ point }}
+              </li>
+            </ul>
           </p>
         </div>
       </div>
@@ -142,16 +94,11 @@
 </template>
 
 <script setup lang="ts">
+import { copy } from './copy';
+
 const subjects = [
-  'Mathematics',
-  'Additional Mathematics',
   'Biology',
   'Chemistry',
   'Physics',
-  'English',
-  'Literature',
-  'History',
-  'Geography',
-  'Social Studies'
 ];
 </script>
