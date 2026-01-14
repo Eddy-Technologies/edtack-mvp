@@ -101,20 +101,6 @@
         </div>
       </div>
 
-      <!-- Note (Optional) -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-2">
-          Note (Optional)
-        </label>
-        <input
-          v-model="note"
-          type="text"
-          placeholder="Add a note..."
-          class="block w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-200 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all duration-200"
-          :disabled="isLoading"
-        >
-      </div>
-
       <!-- Action Buttons -->
       <div class="flex gap-3">
         <button
@@ -176,7 +162,6 @@ const emit = defineEmits<{
   transfer: [{
     toUserInfoId: string;
     amount: number;
-    note?: string;
     recipientName: string;
   }];
   cancel: [];
@@ -185,7 +170,6 @@ const emit = defineEmits<{
 // Reactive state
 const selectedMemberId = ref('');
 const transferAmount = ref<number>();
-const note = ref('');
 const error = ref('');
 
 const quickTransferAmounts = [50, 100, 250, 500];
@@ -218,7 +202,6 @@ const canTransfer = computed(() => {
 // Reset form when pre-selected member changes
 watch(() => props.preSelectedMember, () => {
   transferAmount.value = undefined;
-  note.value = '';
   error.value = '';
   selectedMemberId.value = '';
 });
@@ -244,7 +227,6 @@ const handleTransfer = () => {
   const transferData = {
     toUserInfoId: selectedMember.value.userInfoId!,
     amount: transferAmount.value!,
-    note: note.value || `Transfer to ${selectedMember.value.name}`,
     recipientName: selectedMember.value.name
   };
 
@@ -255,7 +237,6 @@ const handleTransfer = () => {
     selectedMemberId.value = '';
   }
   transferAmount.value = undefined;
-  note.value = '';
   error.value = '';
 };
 </script>

@@ -530,7 +530,6 @@ const onTransferCompleted = () => {
 const handleTransfer = async (transferData: {
   toUserInfoId: string;
   amount: number;
-  note?: string;
   recipientName: string;
 }) => {
   isTransferLoading.value = true;
@@ -540,8 +539,7 @@ const handleTransfer = async (transferData: {
       method: 'POST',
       body: {
         toUserInfoId: transferData.toUserInfoId,
-        amountInCents: transferData.amount,
-        note: transferData.note
+        amountInCents: transferData.amount
       },
     });
 

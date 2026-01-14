@@ -37,7 +37,6 @@ const emit = defineEmits<{
   transfer: [{
     toUserInfoId: string;
     amount: number;
-    note?: string;
     recipientName: string;
   }];
 }>();
@@ -66,7 +65,6 @@ watch(() => props.isOpen, (isOpen) => {
 const handleTransfer = (transferData: {
   toUserInfoId: string;
   amount: number;
-  note?: string;
   recipientName: string;
 }) => {
   emit('transfer', transferData);
