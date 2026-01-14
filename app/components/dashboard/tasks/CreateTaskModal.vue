@@ -163,26 +163,26 @@
             <p class="text-sm text-gray-500 mt-1">Currently, only quizzes are allowed be assigned as tasks to earn credits.</p>
           </div>
 
-          <!-- Credits per Quiz -->
+          <!-- Credits per Chapter -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Credits per Quiz *
+              Credits per Chapter *
             </label>
             <UInput
-              v-model.number="form.creditsPerQuiz"
+              v-model.number="form.creditsPerChapter"
               type="number"
               min="1"
               :max="userBalance"
               step="1"
               pattern="[0-9]*"
               required
-              placeholder="Enter credits per quiz"
+              placeholder="Enter credits per chapter"
               size="md"
             />
-            <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive for completing each quiz</p>
+            <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive for completing each chapter</p>
 
             <!-- Credit Validation Display -->
-            <div v-if="form.chapters?.length && form.creditsPerQuiz" class="mt-3 p-3 rounded-lg border" :class="creditValidation.valid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'">
+            <div v-if="form.chapters?.length && form.creditsPerChapter" class="mt-3 p-3 rounded-lg border" :class="creditValidation.valid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'">
               <div class="flex items-start">
                 <UIcon
                   :name="creditValidation.valid ? 'i-lucide-check-circle' : 'i-lucide-alert-triangle'"
@@ -194,7 +194,7 @@
                     {{ creditValidation.message }}
                   </p>
                   <p :class="creditValidation.valid ? 'text-green-700' : 'text-yellow-700'" class="mt-1">
-                    {{ form.chapters.length }} chapters × {{ form.creditsPerQuiz }} credits = {{ totalCreditsNeeded }} total credits needed
+                    {{ form.chapters.length }} chapters × {{ form.creditsPerChapter }} credits = {{ totalCreditsNeeded }} total credits needed
                   </p>
                   <Button
                     v-if="!creditValidation.valid"
@@ -221,10 +221,10 @@
               min="0"
               max="100"
               required
-              placeholder="70"
+              placeholder="Enter score (e.g., 70)"
               size="md"
             />
-            <p class="text-sm text-gray-500 mt-1">Minimum score percentage (0-100) required to earn credit</p>
+            <p class="text-sm text-gray-500 mt-1">Minimum score percentage (0-100) required to earn credit. Use 0 to give credits upon attempt.</p>
           </div>
 
           <!-- Number of Questions -->
@@ -307,8 +307,8 @@ const getInitialForm = () => {
     subject: '',
     chapters: [] as string[],
     lessonGenerationType: LESSON_GENERATION_TYPE.QUIZ, // Default to QUIZ
-    creditsPerQuiz: null as number | null,
-    requiredScore: 80,
+    creditsPerChapter: null as number | null,
+    requiredScore: null as number | null,
     questionsPerQuiz: 10,
   };
 };
@@ -338,13 +338,13 @@ const lessonGenerationTypeOptions = computed(() => codesStore.lessonGenerationTy
 
 // Credit validation logic
 const totalCreditsNeeded = computed(() => {
-  if (!form.value.chapters?.length || !form.value.creditsPerQuiz) return 0;
-  return form.value.chapters.length * form.value.creditsPerQuiz;
+  if (!form.value.chapters?.length || !form.value.creditsPerChapter) return 0;
+  return form.value.chapters.length * form.value.creditsPerChapter;
 });
 
 const creditValidation = computed(() => {
-  if (!form.value.chapters?.length || !form.value.creditsPerQuiz) {
-    return { valid: false, message: 'Select chapters and enter credits per quiz' };
+  if (!form.value.chapters?.length || !form.value.creditsPerChapter) {
+    return { valid: false, message: 'Select chapters and enter credits per chapter' };
   }
 
   const needed = totalCreditsNeeded.value;
@@ -468,13 +468,13 @@ const createTask = async () => {
     }
 
     // Validate quiz fields
-    if (form.value.requiredScore < 0 || form.value.requiredScore > 100) {
+    if (form.value.requiredScore === null || form.value.requiredScore === undefined || form.value.requiredScore < 0 || form.value.requiredScore > 100) {
       error.value = 'Required score must be between 0 and 100';
       return;
     }
 
-    if (!form.value.creditsPerQuiz || form.value.creditsPerQuiz < 1) {
-      error.value = 'Credits per quiz must be at least 1';
+    if (!form.value.creditsPerChapter || form.value.creditsPerChapter < 1) {
+      error.value = 'Credits per chapter must be at least 1';
       return;
     }
 

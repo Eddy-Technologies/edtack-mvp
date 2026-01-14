@@ -48,7 +48,7 @@
               </div>
               <div class="flex items-start gap-2">
                 <div class="w-5 h-5 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
-                <span class="text-sm text-slate-600">Set credits per quiz and required passing score</span>
+                <span class="text-sm text-slate-600">Set credits per chapter and required passing score</span>
               </div>
               <div class="flex items-start gap-2">
                 <div class="w-5 h-5 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>

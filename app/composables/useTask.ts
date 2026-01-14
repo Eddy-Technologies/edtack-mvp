@@ -2,7 +2,7 @@ export interface CreateTaskReq {
   assigneeUserInfoId: string;
   subject: string;
   lessonGenerationType: string;
-  creditsPerQuiz: number;
+  creditsPerChapter: number;
   requiredScore: number;
   questionsPerQuiz: number;
   chapters: string[];

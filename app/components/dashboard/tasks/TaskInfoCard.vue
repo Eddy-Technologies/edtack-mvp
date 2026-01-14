@@ -18,7 +18,7 @@
           <div class="flex items-center space-x-1 text-secondary">
             <UIcon name="i-lucide-coins" size="16" />
             <span class="text-black">
-              {{ task.credit }} credits per quiz • {{ task.chapters.length }} chapter{{ task.chapters.length === 1 ? '' : 's' }} assigned
+              {{ task.credit }} credits per chapter • {{ task.chapters.length }} chapter{{ task.chapters.length === 1 ? '' : 's' }} assigned
             </span>
           </div>
 
@@ -33,14 +33,31 @@
           <p class="text-sm text-primary-800 font-medium mb-2">
             Chapters:
           </p>
-          <div class="flex flex-wrap gap-2 mb-2">
-            <span
+          <div class="space-y-2">
+            <div
               v-for="chapter in task.chapters"
-              :key="chapter.name"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium  text-primary-800 border border-primary bg-white"
+              :key="chapter.id || chapter.name"
+              class="flex items-center justify-between bg-white rounded-md p-2 border border-primary-200"
             >
-              {{ chapter.display_name || chapter.name }}
-            </span>
+              <span class="text-xs font-medium text-primary-800">
+                {{ chapter.display_name || chapter.name }}
+              </span>
+              <!-- View Attempts Button for Parents -->
+              <Button
+                v-if="isParent && chapter.completed_at"
+                variant="secondary"
+                text="View Attempts"
+                size="xs"
+                icon="i-lucide-eye"
+                @clicked="$emit('view-attempts', chapter, task)"
+              />
+              <span
+                v-else-if="isParent && !chapter.completed_at"
+                class="text-xs text-gray-500"
+              >
+                Not attempted
+              </span>
+            </div>
           </div>
         </div>
 
@@ -86,6 +103,7 @@ withDefaults(defineProps<Props>(), {
 
 defineEmits<{
   (e: 'close-task', task: any): void;
+  (e: 'view-attempts', chapter: any, task: any): void;
 }>();
 
 // Utility functions
