@@ -222,14 +222,23 @@ const removeFromWishlist = async (productId: string) => {
       // Notify sidebar to update badge
       window.dispatchEvent(new CustomEvent('wishlistUpdated'));
 
-      // Show success message briefly
-      console.log(response.message);
+      // Show success toast
+      toast.add({
+        title: 'Removed from Wishlist',
+        description: 'Item has been removed from your wishlist',
+        color: 'green',
+        icon: 'i-lucide-heart-off'
+      });
     } else {
       throw new Error('Failed to remove item from wishlist');
     }
   } catch (err: any) {
     console.error('Failed to remove from wishlist:', err);
-    alert(err.data?.message || 'Failed to remove item from wishlist');
+    toast.add({
+      title: 'Error',
+      description: err.data?.message || 'Failed to remove item from wishlist',
+      color: 'red'
+    });
   }
 };
 
@@ -291,10 +300,20 @@ const clearAllItems = async () => {
     // Notify sidebar to update badge
     window.dispatchEvent(new CustomEvent('wishlistUpdated'));
 
-    console.log('All items removed from wishlist');
+    // Show success toast
+    toast.add({
+      title: 'Wishlist Cleared',
+      description: 'All items have been removed from your wishlist',
+      color: 'green',
+      icon: 'i-lucide-trash-2'
+    });
   } catch (err: any) {
     console.error('Failed to clear wishlist:', err);
-    alert('Failed to clear wishlist. Please try again.');
+    toast.add({
+      title: 'Error',
+      description: 'Failed to clear wishlist. Please try again.',
+      color: 'red'
+    });
   }
 };
 

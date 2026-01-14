@@ -271,12 +271,24 @@ const toggleWishlist = async (item: any) => {
       if (index > -1) {
         wishlist.value.splice(index, 1);
       }
+      toast.add({
+        title: 'Removed from Wishlist',
+        description: `${item.name} has been removed from your wishlist`,
+        color: 'green',
+        icon: 'i-lucide-heart-off'
+      });
     } else {
       await $fetch('/api/wishlist/add', {
         method: 'POST',
         body: { product_id: item.id }
       });
       wishlist.value.push(item);
+      toast.add({
+        title: 'Added to Wishlist',
+        description: `${item.name} has been added to your wishlist`,
+        color: 'green',
+        icon: 'i-lucide-heart'
+      });
     }
     // Notify sidebar to update badge
     window.dispatchEvent(new CustomEvent('wishlistUpdated'));
