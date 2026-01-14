@@ -25,6 +25,7 @@
               :options="childrenOptions"
               placeholder="Select a child"
               :disabled="isSubmitting"
+              size="md"
               required
             />
           </div>
@@ -44,6 +45,7 @@
               :options="subjects"
               placeholder="Select a subject"
               :disabled="isSubmitting"
+              size="md"
               required
             />
           </div>
@@ -153,7 +155,8 @@
               v-model="form.lessonGenerationType"
               :options="lessonGenerationTypeOptions"
               placeholder="Select generation type"
-              :disabled="true"
+              disabled
+              size="md"
               class="bg-gray-300 cursor-not-allowed"
               required
             />
@@ -165,7 +168,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">
               Credits per Quiz *
             </label>
-            <input
+            <UInput
               v-model.number="form.creditsPerQuiz"
               type="number"
               min="1"
@@ -174,8 +177,8 @@
               pattern="[0-9]*"
               required
               placeholder="Enter credits per quiz"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+              size="md"
+            />
             <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive for completing each quiz</p>
 
             <!-- Credit Validation Display -->
@@ -186,13 +189,22 @@
                   :class="creditValidation.valid ? 'text-green-600' : 'text-yellow-600'"
                   class="w-4 h-4 mt-0.5 mr-2"
                 />
-                <div class="text-sm">
+                <div class="text-sm flex-1">
                   <p :class="creditValidation.valid ? 'text-green-800' : 'text-yellow-800'" class="font-medium">
                     {{ creditValidation.message }}
                   </p>
                   <p :class="creditValidation.valid ? 'text-green-700' : 'text-yellow-700'" class="mt-1">
                     {{ form.chapters.length }} chapters × {{ form.creditsPerQuiz }} credits = {{ totalCreditsNeeded }} total credits needed
                   </p>
+                  <Button
+                    v-if="!creditValidation.valid"
+                    variant="secondary"
+                    size="sm"
+                    icon="i-lucide-wallet"
+                    text="Top Up Credits"
+                    class="mt-2"
+                    @clicked="goToCredits"
+                  />
                 </div>
               </div>
             </div>
@@ -203,15 +215,15 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">
               Required Score for Credit *
             </label>
-            <input
+            <UInput
               v-model.number="form.requiredScore"
               type="number"
               min="0"
               max="100"
               required
               placeholder="70"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+              size="md"
+            />
             <p class="text-sm text-gray-500 mt-1">Minimum score percentage (0-100) required to earn credit</p>
           </div>
 
@@ -220,7 +232,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">
               Number of Questions *
             </label>
-            <input
+            <UInput
               v-model.number="form.questionsPerQuiz"
               type="number"
               min="1"
@@ -228,14 +240,24 @@
               step="1"
               required
               placeholder="10"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+              size="md"
+            />
             <p class="text-sm text-gray-500 mt-1">Number of questions per quiz (1-50)</p>
           </div>
 
           <!-- Error Message -->
           <div v-if="error" class="bg-red-50 border border-red-200 rounded-lg p-3">
             <p class="text-red-600 text-sm">{{ error }}</p>
+            <Button
+              v-if="isInsufficientBalanceError"
+              variant="primary"
+              size="sm"
+              icon="i-lucide-wallet"
+              text="Go to Credits"
+              :disabled="isSubmitting"
+              class="mt-3"
+              @clicked="goToCredits"
+            />
           </div>
 
           <!-- Actions -->
@@ -264,6 +286,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from '../../common/Button.vue';
 import { LESSON_GENERATION_TYPE } from '~~/shared/constants';
 import { useTask, type CreateTaskReq } from '~/composables/useTask';
@@ -291,6 +314,7 @@ const getInitialForm = () => {
 };
 
 const form = ref<CreateTaskReq>(getInitialForm());
+const router = useRouter();
 const codesStore = useCodesStore();
 const { balance: userBalance, refreshCredits } = useCredit();
 const children = ref<any[]>([]);
@@ -338,6 +362,11 @@ const creditValidation = computed(() => {
     valid: true,
     message: `Credit allocation looks good! You have ${available} credits available.`
   };
+});
+
+// Check if error is due to insufficient balance
+const isInsufficientBalanceError = computed(() => {
+  return error.value?.includes('Insufficient balance') ?? false;
 });
 
 // Load children when modal opens
@@ -416,6 +445,11 @@ const clearAllChapters = () => {
 };
 
 const { createTask: createTaskAPI } = useTask();
+
+// Navigate to credits tab
+const goToCredits = () => {
+  router.push({ query: { tab: 'credits' } });
+};
 
 const createTask = async () => {
   try {

@@ -1,128 +1,146 @@
 <template>
-  <div>
-    <!-- Loading State -->
-    <DashboardSkeleton v-if="isLoading" variant="list" :count="4" />
-
-    <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12">
-      <div class="flex items-center justify-center w-12 h-12 mx-auto text-red-400 mb-4">
-        <UIcon name="i-lucide-alert-circle" size="48" />
-      </div>
-      <p class="text-red-600 mb-4">{{ error }}</p>
+  <div class="space-y-6">
+    <!-- Action Button -->
+    <div v-if="isParent" class="flex justify-end">
       <Button
         variant="primary"
-        text="Try Again"
-        @clicked="loadTasks"
+        text="Create Task"
+        icon="i-lucide-plus"
+        @clicked="showCreateModal = true"
       />
     </div>
 
-    <!-- Main Content -->
-    <div v-else class="space-y-6">
-      <!-- Action Button -->
-      <div v-if="isParent" class="flex justify-end">
-        <Button
-          variant="primary"
-          text="Create Task"
-          icon="i-lucide-plus"
-          @clicked="showCreateModal = true"
-        />
-      </div>
+    <!-- Instructions -->
+    <TaskInstructions :is-parent="isParent" />
 
-      <!-- Instructions -->
-      <TaskInstructions :is-parent="isParent" />
-
-      <!-- Filters and Stats -->
-      <div class="bg-white rounded-xl border border-gray-200 p-4">
-        <div class="flex flex-wrap items-center justify-between gap-4">
+    <!-- Filters and Stats -->
+    <div class="bg-white rounded-xl border border-gray-200 p-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Left: All filters grouped together -->
+        <div class="flex flex-wrap items-center gap-3">
           <!-- Sort Dropdown -->
           <div class="flex items-center space-x-2">
             <label class="text-sm font-medium text-gray-700">Sort by:</label>
             <select
               v-model="sortBy"
               class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-              @change="handleSortChange"
             >
               <option value="created_at">Newest First</option>
               <option value="created_at_asc">Oldest First</option>
-              <option value="due_date">Due Date</option>
               <option value="credit_asc">Credits (High to Low)</option>
               <option value="credit">Credits (Low to High)</option>
             </select>
           </div>
 
+          <!-- Child Filter -->
+          <div v-if="isParent" class="flex items-center space-x-2">
+            <label class="text-sm font-medium text-gray-700">Child:</label>
+            <select
+              v-model="selectedChildId"
+              class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
+            >
+              <option value="">All Children</option>
+              <option v-for="child in children" :key="child.id" :value="child.id">
+                {{ child.name }}
+              </option>
+            </select>
+          </div>
+
           <!-- Status Filter -->
-          <div class="flex items-center gap-4">
+          <div class="flex items-center space-x-2">
+            <label class="text-sm font-medium text-gray-700">Status:</label>
             <select
               v-model="selectedStatus"
-              class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
-              @change="() => { currentPage = 1; loadTasks(1); }"
+              class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900"
             >
               <option value="">All Tasks</option>
               <option value="OPEN">Open</option>
               <option value="COMPLETED">Completed</option>
               <option value="EXPIRED">Expired</option>
             </select>
-
-            <!-- Clear Filter -->
-            <Button
-              v-if="selectedStatus"
-              variant="secondary"
-              text="Clear Filter"
-              size="sm"
-              @clicked="clearFilters"
-            />
           </div>
 
-          <!-- Stats -->
-          <div class="flex items-center space-x-4 text-sm text-gray-600">
-            <span>{{ pagination?.totalCount || 0 }} total tasks</span>
-            <span v-if="pendingCredits > 0" class="text-green-600 font-medium">
-              {{ pendingCredits }} credits pending
-            </span>
-          </div>
+          <!-- Clear Filters -->
+          <Button
+            v-if="selectedStatus || selectedChildId"
+            variant="secondary"
+            text="Clear Filters"
+            size="sm"
+            @clicked="clearFilters"
+          />
+        </div>
+
+        <!-- Right: Stats -->
+        <div class="flex items-center space-x-4 text-sm text-gray-600">
+          <span>{{ pagination?.totalCount || 0 }} total tasks</span>
+          <span v-if="pendingCredits > 0" class="text-green-600 font-medium">
+            {{ pendingCredits }} credits pending
+          </span>
         </div>
       </div>
+    </div>
 
-      <!-- Pagination Top -->
-      <Pagination
-        v-if="!isLoading && pagination"
-        :pagination="pagination"
-        :is-loading="isLoading"
-        item-label="tasks"
-        @go-to-page="goToPage"
-        @change-limit="changeItemsPerPage"
-      />
+    <!-- Dynamic Content Area -->
+    <div class="min-h-[600px]">
+      <!-- Loading State -->
+      <DashboardSkeleton v-if="isLoading" variant="list" :count="4" />
 
-      <!-- Empty State -->
-      <div v-if="!isLoading && tasks.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
-        <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
-          <UIcon name="i-lucide-clipboard-list" size="64" />
+      <!-- Error State -->
+      <div v-else-if="error" class="text-center py-12">
+        <div class="flex items-center justify-center w-12 h-12 mx-auto text-red-400 mb-4">
+          <UIcon name="i-lucide-alert-circle" size="48" />
         </div>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">
-          {{ isParent ? 'No tasks created yet' : 'No tasks assigned yet' }}
-        </h3>
-        <p class="text-gray-500 mb-6">
-          {{ isParent ? 'Create your first task to get started!' : 'Ask your parent to create some tasks for you.' }}
-        </p>
+        <p class="text-red-600 mb-4">{{ error }}</p>
         <Button
-          v-if="isParent"
           variant="primary"
-          text="Create First Task"
-          icon="i-lucide-plus"
-          @clicked="showCreateModal = true"
+          text="Try Again"
+          @clicked="loadTasks"
         />
       </div>
 
-      <!-- Tasks List -->
-      <div v-else-if="tasks.length > 0" class="space-y-4">
-        <TaskInfoCard
-          v-for="task in tasks"
-          :key="task.id"
-          :task="task"
-          :is-parent="isParent"
-          :show-assignee-info="isParent"
-          @close-task="closeTask"
+      <!-- Main Content -->
+      <div v-else class="space-y-6">
+        <!-- Pagination Top -->
+        <Pagination
+          v-if="pagination"
+          :pagination="pagination"
+          :is-loading="isLoading"
+          item-label="tasks"
+          @go-to-page="goToPage"
+          @change-limit="changeItemsPerPage"
         />
+
+        <!-- Empty State -->
+        <div v-if="tasks.length === 0" class="text-center py-16 bg-stone-50 rounded-xl">
+          <div class="flex items-center justify-center w-16 h-16 mx-auto text-gray-300 mb-4">
+            <UIcon name="i-lucide-clipboard-list" size="64" />
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">
+            {{ isParent ? 'No tasks created yet' : 'No tasks assigned yet' }}
+          </h3>
+          <p class="text-gray-500 mb-6">
+            {{ isParent ? 'Create your first task to get started!' : 'Ask your parent to create some tasks for you.' }}
+          </p>
+          <Button
+            v-if="isParent"
+            variant="primary"
+            text="Create First Task"
+            icon="i-lucide-plus"
+            @clicked="showCreateModal = true"
+          />
+        </div>
+
+        <!-- Tasks List -->
+        <div v-else class="space-y-4">
+          <TaskInfoCard
+            v-for="task in tasks"
+            :key="task.id"
+            :task="task"
+            :is-parent="isParent"
+            :show-assignee-info="isParent"
+            @close-task="closeTask"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -136,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import CreateTaskModal from '~/components/dashboard/tasks/CreateTaskModal.vue';
@@ -160,6 +178,8 @@ const showCreateModal = ref(false);
 
 // Filter state
 const selectedStatus = ref('');
+const children = ref<any[]>([]);
+const selectedChildId = ref('');
 
 // Pagination and sorting states
 const currentPage = ref(1);
@@ -175,7 +195,40 @@ const pendingCredits = computed(() => {
     .reduce((total, task) => total + task.credit, 0);
 });
 
+// Watch for filter changes (only trigger after initial load)
+watch(sortBy, (newVal, oldVal) => {
+  if (oldVal !== undefined) {
+    currentPage.value = 1;
+    loadTasks(1);
+  }
+});
+
+watch(selectedChildId, (newVal, oldVal) => {
+  if (oldVal !== undefined) {
+    currentPage.value = 1;
+    loadTasks(1);
+  }
+});
+
+watch(selectedStatus, (newVal, oldVal) => {
+  if (oldVal !== undefined) {
+    currentPage.value = 1;
+    loadTasks(1);
+  }
+});
+
 // Functions
+const loadChildren = async () => {
+  try {
+    const response = await $fetch('/api/children/list');
+    if (response.success) {
+      children.value = response.children || [];
+    }
+  } catch (err) {
+    console.error('Failed to load children:', err);
+  }
+};
+
 const loadTasks = async (page = 1) => {
   try {
     isLoading.value = true;
@@ -192,6 +245,7 @@ const loadTasks = async (page = 1) => {
     const response = await $fetch(endpoint, {
       query: {
         status: selectedStatus.value,
+        child_user_info_id: selectedChildId.value,
         limit: itemsPerPage.value,
         offset,
         sortBy: actualSortBy,
@@ -247,6 +301,7 @@ const onTaskCreated = () => {
 
 const clearFilters = () => {
   selectedStatus.value = '';
+  selectedChildId.value = '';
   currentPage.value = 1;
   loadTasks(1);
 };
@@ -263,13 +318,11 @@ const changeItemsPerPage = (newLimit: number) => {
   loadTasks(1);
 };
 
-const handleSortChange = () => {
-  currentPage.value = 1;
-  loadTasks(1);
-};
-
 // Load tasks on mount
 onMounted(() => {
+  if (isParent.value) {
+    loadChildren();
+  }
   loadTasks(1);
 });
 </script>
