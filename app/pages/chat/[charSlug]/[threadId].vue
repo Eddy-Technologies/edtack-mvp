@@ -99,27 +99,13 @@
                   <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                     <!-- Header - hidden on mobile for cleaner look -->
                     <div class="px-6 py-4 border-b border-gray-100">
-                      <div class="flex items-center justify-between">
-                        <div>
-                          <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
-                          <div class="flex items-center gap-2 mt-1">
-                            <p class="text-sm text-gray-600">
-                              <span v-if="selectedCharacter">
-                                Currently:
-                                <span class="font-medium text-gray-800">{{
-                                  selectedCharacter.name
-                                }}</span>
-                                <span class="text-gray-500">({{ constantCaseToTitleCase(selectedCharacter.subject) }})</span>
-                              </span>
-                              <span v-else>Select a character to start chatting</span>
-                            </p>
-                          </div>
-                        </div>
+                      <div class="flex items-center justify-between gap-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
 
                         <!-- Character Dropdown Selector -->
-                        <div class="relative" data-tour="character-selector">
+                        <div class="relative flex-1 max-w-xs" data-tour="character-selector">
                           <button
-                            class="px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-colors flex items-center gap-2 min-w-[200px]"
+                            class="w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-colors flex items-center gap-2"
                             @click="toggleCharacterDropdown"
                           >
                             <span class="truncate flex-1 text-left">{{ dropdownButtonText }}</span>
@@ -129,7 +115,7 @@
                           <!-- Dropdown menu -->
                           <div
                             v-if="characterDropdownOpen"
-                            class="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto z-50 min-w-[250px]"
+                            class="absolute left-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto z-50 min-w-[250px]"
                             @click.stop
                           >
                             <button
