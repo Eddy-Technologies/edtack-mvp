@@ -373,7 +373,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'p-8']">
+      <main ref="mainContentRef" :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'p-8']">
         <div class="max-w-7xl mx-auto">
           <slot />
         </div>
@@ -383,7 +383,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 import UserAvatar from '~/components/common/UserAvatar.vue';
@@ -412,6 +412,20 @@ defineProps<Props>();
 const route = useRoute();
 const router = useRouter();
 const openSubmenus = ref<string[]>([]);
+
+// Main content ref for scroll-to-top functionality
+const mainContentRef = ref<HTMLElement | null>(null);
+
+// Watch for tab changes and scroll to top instantly
+watch(
+  () => route.query.tab,
+  async () => {
+    await nextTick();
+    if (mainContentRef.value) {
+      mainContentRef.value.scrollTop = 0;
+    }
+  }
+);
 
 // Mobile responsive state
 const { isMobile } = useResponsive();

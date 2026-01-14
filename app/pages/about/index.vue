@@ -212,7 +212,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'px-8 py-10']">
+      <main ref="mainContentRef" :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'px-8 py-10']">
         <div class="max-w-5xl mx-auto">
           <!-- Tab Content -->
           <AboutTab v-if="activeTab === 'about'" />
@@ -228,7 +228,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import Button from '~/components/common/Button.vue';
 import { useRouter, useRoute } from '#vue-router';
 import AboutTab from '~/components/about/AboutTab.vue';
@@ -245,6 +245,20 @@ const route = useRoute();
 // Mobile responsive state
 const { isMobile } = useResponsive();
 const isDrawerOpen = ref(false);
+
+// Main content ref for scroll-to-top functionality
+const mainContentRef = ref<HTMLElement | null>(null);
+
+// Watch for tab or guide changes and scroll to top instantly
+watch(
+  () => [route.query.tab, route.query.guide] as const,
+  async () => {
+    await nextTick();
+    if (mainContentRef.value) {
+      mainContentRef.value.scrollTop = 0;
+    }
+  }
+);
 
 // Tabs functionality
 const activeTab = ref('about');
