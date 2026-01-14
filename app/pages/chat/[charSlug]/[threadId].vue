@@ -247,7 +247,15 @@ definePageMeta({
 
 const isLoading = ref(true);
 const isCreatingThread = ref(false);
-const collapsed = ref(true);
+
+// Initialize collapsed state from localStorage, default to true
+const getInitialCollapsedState = () => {
+  if (typeof window === 'undefined') return true;
+  const stored = localStorage.getItem('sidebar-collapsed');
+  return stored !== null ? stored === 'true' : true;
+};
+
+const collapsed = ref(getInitialCollapsedState());
 const { isMobile } = useResponsive();
 const windowWidth = ref(768);
 const currentCharacter = ref(null);
@@ -280,7 +288,6 @@ const showSlides = computed(() => selectedSlides.value.length > 0);
 
 const router = useRouter();
 const route = useRoute();
-const supabaseUser = useSupabaseUser();
 const toast = useToast();
 const messageQueueStore = useMessageQueueStore();
 const analytics = useAnalytics();
@@ -413,10 +420,11 @@ onMounted(async () => {
   window.addEventListener('openChatSidebar', handleOpenSidebarForTour);
   document.addEventListener('click', closeCharacterDropdown);
 
-  // Set sidebar collapsed if user is logged in but hasn't started chatting
-  if (supabaseUser.value && !hasStartedChat.value) {
+  // On mobile, always start collapsed regardless of saved preference
+  if (isMobile.value) {
     collapsed.value = true;
   }
+  // On desktop, use saved preference (already loaded from localStorage)
 
   // Handle study prompt injection from query parameters
   if (isNewChat.value && route.query.study_prompt) {
@@ -602,6 +610,8 @@ const handleNewChat = () => {
 
 const toggleSidebar = () => {
   collapsed.value = !collapsed.value;
+  // Persist sidebar state to localStorage
+  localStorage.setItem('sidebar-collapsed', String(collapsed.value));
 };
 
 const handleChatSend = async (text: string) => {
