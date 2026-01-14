@@ -1,133 +1,242 @@
-<template>
-  <div class="bg-white rounded-lg border transition-shadow p-6">
-    <div class="flex items-start justify-between">
-      <!-- Task Info -->
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center space-x-3 mb-2">
-          <h3 class="text-lg font-semibold text-gray-900">{{ task.name }}</h3>
-          <span :class="getStatusBadgeClass(task.status)" class="px-2 py-1 rounded-full text-xs font-medium">
-            {{ getStatusText(task.status) }}
-          </span>
-        </div>
-
-        <p v-if="task.subtitle" class="text-gray-600 mb-2">{{ task.subtitle }}</p>
-        <p v-if="task.description" class="text-gray-700 mb-3">{{ task.description }}</p>
-
-        <!-- Task Details -->
-        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
-          <div class="flex items-center space-x-1 text-secondary">
-            <UIcon name="i-lucide-coins" size="16" />
-            <span class="text-black">
-              {{ task.credit }} credits per chapter • {{ task.chapters.length }} chapter{{ task.chapters.length === 1 ? '' : 's' }} assigned
-            </span>
-          </div>
-
-          <div v-if="showAssigneeInfo" class="flex items-center space-x-1">
-            <UIcon name="i-lucide-user" size="16" />
-            <span>{{ task.assigneeInfo?.firstName }} {{ task.assigneeInfo?.lastName || 'Unknown Child' }}</span>
-          </div>
-        </div>
-
-        <!-- Chapter Information -->
-        <div v-if="task.chapters?.length" class="p-3 rounded-lg mb-3 border border-primary bg-primary-50">
-          <p class="text-sm text-primary-800 font-medium mb-2">
-            Chapters:
-          </p>
-          <div class="space-y-2">
-            <div
-              v-for="chapter in task.chapters"
-              :key="chapter.id || chapter.name"
-              class="flex items-center justify-between bg-white rounded-md p-2 border border-primary-200"
-            >
-              <span class="text-xs font-medium text-primary-800">
-                {{ chapter.display_name || chapter.name }}
-              </span>
-              <!-- View Attempts Button for Parents -->
-              <Button
-                v-if="isParent && chapter.completed_at"
-                variant="secondary"
-                text="View Attempts"
-                size="xs"
-                icon="i-lucide-eye"
-                @clicked="$emit('view-attempts', chapter, task)"
-              />
-              <span
-                v-else-if="isParent && !chapter.completed_at"
-                class="text-xs text-gray-500"
-              >
-                Not attempted
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recurring Task Info -->
-        <div v-if="!task.isThread && task.isRecurring" class="bg-purple-50 p-3 rounded-lg mb-3">
-          <p class="text-sm text-purple-800">
-            <strong>Recurring:</strong> {{ task.recurrenceFrequency?.toLowerCase().replace('_', ' ') || 'Unknown frequency' }}
-          </p>
-        </div>
-
-        <!-- Actions -->
-        <div class="flex flex-col space-y-2 ml-4">
-          <!-- Parent Actions -->
-          <template v-if="isParent">
-            <div v-if="!task.isThread">
-              <Button
-                v-if="task.status === 'OPEN'"
-                variant="secondary"
-                text="Close Task"
-                size="sm"
-                @clicked="$emit('close-task', task)"
-              />
-            </div>
-          </template>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import Button from '~/components/common/Button.vue';
+import { ref, watch, computed } from 'vue';
+
+interface Chapter {
+  id: string;
+  name: string;
+  displayName: string;
+  status: string;
+  score?: number;
+  bestScore?: number;
+  totalScore?: number;
+  completedAt?: string | null;
+  generationStartedAt?: string | null;
+  credit: number;
+  hasQuiz?: boolean;
+}
+
+interface Task {
+  id: string;
+  name: string;
+  status: string;
+  credit: number;
+  creditPerChapter: number;
+  totalCredits: number;
+  requiredScore: number;
+  questionsPerQuiz: number;
+  assigneeUserInfoId: string;
+  chapters: Chapter[];
+  assigneeInfo?: {
+    firstName: string;
+    lastName: string;
+  };
+}
 
 interface Props {
-  task: any;
+  task: Task;
   isParent: boolean;
   showAssigneeInfo?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   showAssigneeInfo: true
 });
 
-defineEmits<{
-  (e: 'close-task', task: any): void;
-  (e: 'view-attempts', chapter: any, task: any): void;
+const emit = defineEmits<{
+  (e: 'close-task' | 'edit-task'): void;
+  (e: 'view-attempts', chapterId: string, assigneeId: string): void;
+  (e: 'start-quiz', task: Task, chapter: Chapter): void;
 }>();
+
+const showAllChapters = ref(false);
+
+const toggleChapters = () => {
+  showAllChapters.value = !showAllChapters.value;
+};
+
+const displayedChapters = computed(() => {
+  if (showAllChapters.value || props.task.chapters.length <= 3) {
+    return props.task.chapters;
+  }
+  return props.task.chapters.slice(0, 3);
+});
+
+const hasMoreChapters = computed(() => props.task.chapters.length > 3);
 
 // Utility functions
 const getStatusText = (status: string) => {
-  const statusMap = {
-    // Task thread statuses (uppercase)
+  const statusMap: Record<string, string> = {
     OPEN: 'Open',
     COMPLETED: 'Completed',
     EXPIRED: 'Expired',
-    // Task statuses (uppercase)
     CLOSED: 'Closed',
+    GENERATING: 'Generating'
   };
-  return statusMap[status as keyof typeof statusMap] || status;
+  return statusMap[status] || status;
 };
 
-const getStatusBadgeClass = (status: string) => {
-  const classMap = {
-    // Task thread statuses (uppercase)
-    OPEN: 'bg-primary-100 text-primary-800',
-    COMPLETED: 'bg-green-100 text-green-800',
-    EXPIRED: 'bg-red-100 text-red-800',
-    // Task statuses (uppercase)
-    CLOSED: 'bg-gray-100 text-gray-800',
+const getStatusColor = (status: string) => {
+  const colorMap: Record<string, string> = {
+    OPEN: 'primary',
+    COMPLETED: 'green',
+    EXPIRED: 'red',
+    CLOSED: 'gray',
+    GENERATING: 'blue'
   };
-  return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
+  return colorMap[status] || 'gray';
+};
+
+const getStatusVariant = (status: string) => {
+  return status === 'OPEN' ? 'outline' : 'solid';
 };
 </script>
+
+<template>
+  <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+    <!-- Header Section -->
+    <div class="space-y-2 mb-4">
+      <!-- Row 1: Task Name + Status + Actions -->
+      <div class="flex items-center justify-between gap-4">
+        <h3 class="text-lg font-semibold text-gray-900">{{ task.name }}</h3>
+
+        <div class="flex items-center gap-2">
+          <UBadge :color="getStatusColor(task.status)" :variant="getStatusVariant(task.status)">
+            {{ getStatusText(task.status) }}
+          </UBadge>
+
+          <!-- Action Buttons (Parent Only) -->
+          <template v-if="isParent">
+            <UButton
+              variant="ghost"
+              size="sm"
+              icon="i-lucide-edit"
+              @click.stop="emit('edit-task')"
+            >
+              Edit
+            </UButton>
+            <UButton
+              v-if="task.status === 'OPEN'"
+              variant="ghost"
+              size="sm"
+              color="red"
+              icon="i-lucide-x-circle"
+              @click.stop="emit('close-task')"
+            >
+              Close Task
+            </UButton>
+          </template>
+        </div>
+      </div>
+
+      <!-- Row 2: Assignee + Credits + Chapters -->
+      <div class="flex items-center gap-3">
+        <!-- Assignee Info (Parent View) -->
+        <span v-if="showAssigneeInfo && isParent && task.assigneeInfo" class="text-sm text-gray-600">
+          Assigned to: {{ task.assigneeInfo.firstName }} {{ task.assigneeInfo.lastName }}
+        </span>
+
+        <!-- Credits and Chapters -->
+        <span class="text-sm text-gray-600">
+          {{ task.totalCredits }} credits
+        </span>
+        <span class="text-sm text-gray-600">
+          {{ task.chapters.length }} {{ task.chapters.length === 1 ? 'chapter' : 'chapters' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Chapter List -->
+    <div class="space-y-3">
+        <div
+          v-for="chapter in displayedChapters"
+          :key="chapter.id"
+          class="flex items-center justify-between py-2 px-4 bg-gray-50 rounded-lg"
+        >
+          <div class="flex items-center gap-3 flex-1 min-w-0">
+            <span class="font-medium text-gray-900">{{ chapter.displayName }}</span>
+            <span class="text-sm text-gray-600">
+              {{ chapter.credit }} credits • {{ task.requiredScore }}% required
+            </span>
+
+            <!-- Progress Info -->
+            <span v-if="chapter.completedAt" class="text-sm text-green-600">
+              ✓ Completed • Best: {{ chapter.bestScore }}%
+            </span>
+            <span v-else-if="chapter.status === 'GENERATING'" class="text-sm text-blue-600">
+              Generating quiz...
+            </span>
+          </div>
+
+          <!-- Inline Actions -->
+          <div class="flex items-center gap-2">
+            <!-- Student Actions -->
+            <template v-if="!isParent">
+              <!-- Start Quiz -->
+              <UButton
+                v-if="!chapter.hasQuiz"
+                color="primary"
+                size="sm"
+                :disabled="task.status === 'CLOSED'"
+                @click.stop="emit('start-quiz', task, chapter)"
+              >
+                Start Quiz
+              </UButton>
+
+              <!-- Review -->
+              <UButton
+                v-else-if="chapter.completedAt"
+                variant="outline"
+                size="sm"
+                @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
+              >
+                Review
+              </UButton>
+
+              <!-- Reattempt -->
+              <UButton
+                v-if="chapter.hasQuiz && task.status !== 'CLOSED'"
+                color="primary"
+                size="sm"
+                :loading="chapter.status === 'GENERATING'"
+                :disabled="chapter.status === 'GENERATING'"
+                @click.stop="emit('start-quiz', task, chapter)"
+              >
+                {{ chapter.status === 'GENERATING' ? 'Generating quiz...' : (chapter.completedAt ? 'Reattempt' : 'Continue') }}
+              </UButton>
+            </template>
+
+            <!-- Parent Actions -->
+            <template v-else>
+              <!-- View Attempts -->
+              <UButton
+                v-if="chapter.completedAt"
+                variant="outline"
+                size="sm"
+                icon="i-lucide-eye"
+                @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
+              >
+                View Attempts
+              </UButton>
+              <span v-else class="text-sm text-gray-500">
+                Not attempted
+              </span>
+            </template>
+          </div>
+        </div>
+
+        <!-- Show More/Less Button -->
+        <div v-if="hasMoreChapters" class="flex justify-center pt-2">
+          <button
+            class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            @click.stop="toggleChapters"
+          >
+            <span>{{ showAllChapters ? 'Show less' : `Show ${task.chapters.length - 3} more` }}</span>
+            <UIcon
+              :name="showAllChapters ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+              class="w-4 h-4"
+            />
+          </button>
+        </div>
+      </div>
+  </div>
+</template>

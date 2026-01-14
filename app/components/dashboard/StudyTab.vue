@@ -783,6 +783,18 @@ const checkQuizExistence = async (chapters: any[]) => {
 const handleQuizClick = async (taskChapter: any, chapter: any, subjectName: string) => {
   const userTasksChapterId = taskChapter.id;
 
+  // Permission check: Prevent parents from attempting their own assigned quizzes
+  const isCreator = taskChapter.user_tasks?.creator_user_info_id === meStore.user_info_id;
+  if (isCreator && meStore.isParent) {
+    toast.add({
+      title: 'Cannot Attempt Quiz',
+      description: 'This quiz is assigned to your child. Use "View Attempts" in the Family > Tasks tab to review their progress.',
+      color: 'orange',
+      timeout: 5000,
+    });
+    return;
+  }
+
   // Check if already generating
   if (generatingStatus[userTasksChapterId]) {
     toast.add({

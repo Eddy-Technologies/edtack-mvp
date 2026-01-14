@@ -630,12 +630,13 @@ const allNavigationItems: NavigationItem[] = [
   }
 ];
 
-// Filter navigation items based on feature flags
+// Filter navigation items based on feature flags and user role
 const navigationItems = computed(() => {
   return allNavigationItems.filter((item) => {
     if (item.name === 'Subscription') {
       return subscriptionPlans.value;
     }
+    // Tasks tab now visible to all roles (unified interface)
     return true;
   });
 });

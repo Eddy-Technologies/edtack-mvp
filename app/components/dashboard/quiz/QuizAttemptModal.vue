@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between mb-6">
           <div>
             <h2 class="text-xl font-semibold text-gray-900">
-              {{ showResults ? 'Quiz Results' : chapterDisplayName }}
+              {{ mode === 'parent-review' && childName ? `${childName}'s Quiz Results` : showResults ? 'Quiz Results' : chapterDisplayName }}
             </h2>
             <p v-if="!isLoading && !showResults && questions.length > 0" class="text-sm text-gray-500 mt-1">
               {{ questions.length }} questions
@@ -420,7 +420,8 @@ const props = defineProps<{
   isOpen: boolean;
   userTasksChapterId: string;
   chapterDisplayName: string;
-  mode?: 'attempt' | 'review';
+  mode?: 'attempt' | 'review' | 'parent-review';
+  assigneeUserInfoId?: string; // For parent review mode
 }>();
 
 const emit = defineEmits<{
@@ -432,6 +433,7 @@ const emit = defineEmits<{
 const questions = ref<any[]>([]);
 const userAnswers = ref<Record<number, any>>({});
 const isLoading = ref(false);
+const childName = ref<string>(''); // For parent review mode
 const isSubmitting = ref(false);
 const error = ref<string | null>(null);
 const showResults = ref(false);
@@ -560,9 +562,20 @@ const loadResults = async () => {
   error.value = null;
 
   try {
-    const resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/results`, {
-      method: 'GET',
-    });
+    let resultsResponse;
+
+    // Use different endpoint for parent review mode
+    if (props.mode === 'parent-review' && props.assigneeUserInfoId) {
+      resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/attempts/${props.assigneeUserInfoId}`, {
+        method: 'GET',
+      });
+      // Store child name from response
+      childName.value = resultsResponse.childName || 'Child';
+    } else {
+      resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/results`, {
+        method: 'GET',
+      });
+    }
 
     if (resultsResponse.isCompleted) {
       questions.value = resultsResponse.questions || [];
@@ -589,10 +602,11 @@ watch(() => props.isOpen, async (newValue) => {
     error.value = null;
     showResults.value = false;
     quizResults.value = null;
+    childName.value = '';
 
     // Handle based on mode
-    if (props.mode === 'review') {
-      // Review mode: Load results immediately
+    if (props.mode === 'review' || props.mode === 'parent-review') {
+      // Review/Parent-review mode: Load results immediately
       await loadResults();
     } else {
       // Attempt mode: Check if quiz is completed, if yes show results, else load questions

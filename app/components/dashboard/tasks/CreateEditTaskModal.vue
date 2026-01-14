@@ -171,6 +171,20 @@
             </p>
           </div>
 
+          <!-- Task Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Task Name *
+            </label>
+            <UInput
+              v-model="form.name"
+              placeholder="Enter task name (e.g., Biology Quiz Chapter 1-5)"
+              :disabled="isSubmitting"
+              size="md"
+              required
+            />
+          </div>
+
           <!-- Lesson Generation Type Selection -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -378,6 +392,7 @@ const getInitialForm = () => {
   if (props.task) {
     // Edit mode - pre-populate from task
     return {
+      name: props.task.name,
       assigneeUserInfoId: props.task.assigneeUserInfoId,
       subject: props.task.subjectName,
       chapters: props.task.chapters.map((c) => c.id),
@@ -390,6 +405,7 @@ const getInitialForm = () => {
   } else {
     // Create mode - empty form
     return {
+      name: '',  // Will be set by watcher
       assigneeUserInfoId: '',
       subject: '',
       chapters: [] as string[],
@@ -448,6 +464,27 @@ const childrenOptions = computed(() => {
 
 // Get options from codes store and API
 const lessonGenerationTypeOptions = computed(() => codesStore.lessonGenerationTypes);
+
+// Generate default task name from selected subject and lesson type
+const defaultTaskName = computed(() => {
+  if (!form.value.subject) {
+    return 'New Task';
+  }
+
+  // Find the subject's display name
+  const subject = subjects.value.find((s) => s.value === form.value.subject);
+  if (!subject) {
+    return 'New Task';
+  }
+
+  // Get the lesson generation type label
+  const lessonType = lessonGenerationTypeOptions.value.find(
+    (t) => t.value === form.value.lessonGenerationType
+  );
+  const typeLabel = lessonType?.label || 'Quiz';
+
+  return `${subject.label} ${typeLabel}`;
+});
 
 // Credit validation logic
 const totalCreditsNeeded = computed(() => {
@@ -525,6 +562,17 @@ const creditValidation = computed(() => {
 const isInsufficientBalanceError = computed(() => {
   return error.value?.includes('Insufficient balance') ?? false;
 });
+
+// Auto-generate task name when subject changes (create mode only)
+watch(
+  () => form.value.subject,
+  (newSubject) => {
+    if (!isEditMode.value && newSubject) {
+      form.value.name = defaultTaskName.value;
+    }
+  },
+  { immediate: true }
+);
 
 // Load children when modal opens
 const loadChildren = async () => {
@@ -643,6 +691,11 @@ const handleSubmit = async () => {
     error.value = null;
 
     // Validate required fields
+    if (!form.value.name || form.value.name.trim() === '') {
+      error.value = 'Please enter a task name';
+      return;
+    }
+
     if (!form.value.subject || !form.value.lessonGenerationType) {
       error.value = 'Please select both subject and generation type';
       return;
@@ -680,6 +733,7 @@ const handleSubmit = async () => {
       await $fetch(`/api/tasks/user-tasks/${props.task!.id}`, {
         method: 'PATCH',
         body: {
+          name: form.value.name,
           creditPerChapter: form.value.creditsPerChapter,
           requiredScore: form.value.requiredScore,
           questionsPerQuiz: form.value.questionsPerQuiz,
@@ -711,6 +765,11 @@ watch(() => props.isOpen, (newValue) => {
     // Reset form based on mode
     form.value = getInitialForm();
     error.value = null;
+
+    // Set default name for create mode
+    if (!isEditMode.value) {
+      form.value.name = defaultTaskName.value || 'New Task';
+    }
 
     // Build chapter ID to name mapping for edit mode
     if (isEditMode.value && props.task) {
