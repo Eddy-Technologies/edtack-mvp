@@ -14,8 +14,8 @@
         <div class="grid md:grid-cols-2 gap-3">
           <a
             href="#adding-children"
-            @click.prevent="scrollToSection('adding-children')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('adding-children')"
           >
             <UIcon name="i-lucide-user-plus" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Adding Children</span>
@@ -23,8 +23,8 @@
           </a>
           <a
             href="#transferring-credits"
-            @click.prevent="scrollToSection('transferring-credits')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('transferring-credits')"
           >
             <UIcon name="i-lucide-coins" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Transferring Credits</span>
@@ -32,8 +32,8 @@
           </a>
           <a
             href="#assigning-tasks"
-            @click.prevent="scrollToSection('assigning-tasks')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('assigning-tasks')"
           >
             <UIcon name="i-lucide-clipboard-check" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Assigning Tasks & Review</span>
@@ -41,8 +41,8 @@
           </a>
           <a
             href="#order-approval"
-            @click.prevent="scrollToSection('order-approval')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('order-approval')"
           >
             <UIcon name="i-lucide-shopping-cart" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Order Approval</span>

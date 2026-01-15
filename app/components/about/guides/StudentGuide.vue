@@ -13,8 +13,8 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           <a
             href="#chat"
-            @click.prevent="scrollToSection('chat')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('chat')"
           >
             <UIcon name="i-lucide-message-circle" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Chat</span>
@@ -22,8 +22,8 @@
           </a>
           <a
             href="#family-management"
-            @click.prevent="scrollToSection('family-management')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('family-management')"
           >
             <UIcon name="i-lucide-users" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Family Management</span>
@@ -31,8 +31,8 @@
           </a>
           <a
             href="#study-tab"
-            @click.prevent="scrollToSection('study-tab')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('study-tab')"
           >
             <UIcon name="i-lucide-book-open" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Study Tab</span>
@@ -40,8 +40,8 @@
           </a>
           <a
             href="#task-tab"
-            @click.prevent="scrollToSection('task-tab')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('task-tab')"
           >
             <UIcon name="i-lucide-clipboard-check" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Task Tab</span>
@@ -49,8 +49,8 @@
           </a>
           <a
             href="#shop-tabs"
-            @click.prevent="scrollToSection('shop-tabs')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('shop-tabs')"
           >
             <UIcon name="i-lucide-shopping-bag" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Shop Tabs</span>
@@ -58,8 +58,8 @@
           </a>
           <a
             href="#credits"
-            @click.prevent="scrollToSection('credits')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+            @click.prevent="scrollToSection('credits')"
           >
             <UIcon name="i-lucide-coins" class="w-5 h-5 flex-shrink-0" />
             <span class="text-sm font-medium">Credits</span>
