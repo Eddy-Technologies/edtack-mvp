@@ -56,7 +56,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
             <div>
               <h3 class="text-base sm:text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
-              <p class="text-xs sm:text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
+              <p class="text-xs sm:text-sm text-gray-600">{{ formatDate(order.createdAt) }}</p>
             </div>
             <span :class="['px-3 py-1 rounded-full text-sm font-medium', getOrderStatusClass(order.status)]">
               {{ formatStatus(order.status) }}
@@ -137,7 +137,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
             <div>
               <h3 class="text-base sm:text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
-              <p class="text-xs sm:text-sm text-gray-600">{{ new Date(order.createdAt).toLocaleDateString() }}</p>
+              <p class="text-xs sm:text-sm text-gray-600">{{ formatDate(order.createdAt) }}</p>
             </div>
             <span :class="['px-3 py-1 rounded-full text-xs sm:text-sm font-medium', getOrderStatusClass(order.status)]">
               {{ formatStatus(order.status) }}
@@ -184,6 +184,8 @@ import { ref, onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import { ORDER_STATUS } from '~~/shared/constants';
+
+const { formatDate } = useDateFormat();
 
 // Order tab state
 const orderTab = ref('current');

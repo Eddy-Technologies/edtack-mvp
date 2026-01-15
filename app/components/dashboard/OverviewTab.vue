@@ -324,11 +324,12 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
-import OverviewHeader from './overview/OverviewHeader.vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
 import { ORDER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
+
+const { formatDate } = useDateFormat();
 
 const user = useMeStore();
 
@@ -412,16 +413,6 @@ const getInitials = (name: string) => {
     .join('')
     .substring(0, 2)
     .toUpperCase();
-};
-
-const formatDate = (dateString: string) => {
-  if (!dateString) return 'N/A';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  });
 };
 
 // Get status display text for orders

@@ -189,7 +189,7 @@
                 <div class="text-sm font-medium text-gray-900">{{ formatNumber(user.totalTokens) }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ formatDate(user.lastActive) }}</div>
+                <div class="text-sm text-gray-900">{{ formatDateRelative(user.lastActive) }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm font-medium text-gray-900">${{ user.estimatedCost }}</div>
@@ -204,6 +204,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+
+const { formatDateRelative } = useDateFormat();
 
 // State
 const loading = ref(true);
@@ -260,24 +262,6 @@ const formatNumber = (num) => {
     return (num / 1000).toFixed(1) + 'K';
   }
   return num.toLocaleString();
-};
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-  const diffDays = Math.floor(diffHours / 24);
-
-  if (diffHours < 1) {
-    return 'Just now';
-  } else if (diffHours < 24) {
-    return `${diffHours}h ago`;
-  } else if (diffDays < 7) {
-    return `${diffDays}d ago`;
-  } else {
-    return date.toLocaleDateString();
-  }
 };
 
 const getRoleBadgeClass = (role) => {

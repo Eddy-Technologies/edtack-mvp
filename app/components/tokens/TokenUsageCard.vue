@@ -83,6 +83,8 @@ import { computed, onMounted } from 'vue';
 import { useTokenUsage } from '~/composables/useTokenUsage';
 import Button from '~/components/common/Button.vue';
 
+const { formatDate } = useDateFormat();
+
 const {
   tokenUsageData,
   isLoading,
@@ -126,11 +128,4 @@ const warningTextClass = computed(() => {
   if (isLimitExceeded.value) return 'text-red-700 dark:text-red-300';
   return 'text-yellow-700 dark:text-yellow-300';
 });
-
-// Format date helper
-const formatDate = (dateString: string) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-};
 </script>

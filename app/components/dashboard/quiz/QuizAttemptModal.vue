@@ -164,7 +164,7 @@
                       {{ attempt.percentage }}%
                     </span>
                     <span class="text-xs text-gray-500">
-                      {{ new Date(attempt.submittedAt).toLocaleDateString() }}
+                      {{ formatDate(attempt.submittedAt) }}
                     </span>
                   </div>
                 </div>
@@ -415,6 +415,8 @@ import { ref, computed, watch } from 'vue';
 import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import QuizQuestion from '~/components/playback/QuizQuestion.vue';
 import { MARKING_STATUS, QUESTION_TYPE } from '~~/shared/constants';
+
+const { formatDate } = useDateFormat();
 
 const props = defineProps<{
   isOpen: boolean;

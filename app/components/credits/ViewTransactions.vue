@@ -80,7 +80,7 @@
                   {{ transaction.description || 'No description' }}
                 </div>
                 <div class="text-xs text-gray-400 mt-0.5">
-                  {{ formatDate(transaction.created_at) }}
+                  {{ formatDateWithTime(transaction.created_at) }}
                 </div>
               </div>
             </div>
@@ -140,6 +140,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 
+const { formatDateWithTime } = useDateFormat();
+
 // Get transaction version for refresh trigger
 const { transactionVersion } = useCredit();
 
@@ -179,18 +181,6 @@ const goToPage = (page: number) => {
   if (page >= 1 && pagination.value && page <= pagination.value.totalPages) {
     fetchTransactions(page);
   }
-};
-
-// Format date
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
 };
 
 // Get transaction type label

@@ -83,11 +83,11 @@
                 <h3 class="text-lg font-semibold text-gray-900">Order #{{ order.orderNumber }}</h3>
                 <p class="text-sm text-gray-600">
                   <template v-if="isStudent">
-                    Your order • {{ new Date(order.createdAt).toLocaleDateString() }}
+                    Your order • {{ formatDate(order.createdAt) }}
                   </template>
                   <template v-else>
                     Requested by <span class="font-medium text-gray-900">{{ order.child.name }}</span>
-                    • {{ new Date(order.createdAt).toLocaleDateString() }}
+                    • {{ formatDate(order.createdAt) }}
                   </template>
                 </p>
               </div>
@@ -193,7 +193,7 @@
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Request Date:</span>
-                <span class="font-medium">{{ new Date(selectedOrder.createdAt).toLocaleDateString() }}</span>
+                <span class="font-medium">{{ formatDate(selectedOrder.createdAt) }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Total Amount:</span>
@@ -250,6 +250,8 @@ import Pagination from '~/components/common/Pagination.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 import { useMeStore } from '~/stores/me';
 import { ORDER_STATUS } from '~~/shared/constants/codes';
+
+const { formatDate } = useDateFormat();
 
 // Reactive state
 const pendingOrders = ref<any[]>([]);
