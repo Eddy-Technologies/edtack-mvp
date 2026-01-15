@@ -142,6 +142,43 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // Check family status for students
+    const familyStatus = {
+      hasActiveParents: false,
+      parentCount: 0,
+      isOrphanedStudent: false
+    };
+
+    const isStudent = userInfo.user_roles?.some((userRole) =>
+      userRole.roles.role_name === 'STUDENT'
+    );
+
+    if (isStudent) {
+      // Check if student has active parents
+      const { data: studentGroups } = await supabase
+        .from('group_members')
+        .select(`
+          groups!inner(
+            created_by,
+            creator:user_infos!groups_created_by_fkey(id, email)
+          )
+        `)
+        .eq('user_info_id', userInfo.id)
+        .eq('status', 'active');
+
+      const parentSet = new Set();
+      studentGroups?.forEach((groupMember) => {
+        const creator = groupMember.groups.creator;
+        if (creator && creator.id !== userInfo.id) {
+          parentSet.add(creator.id);
+        }
+      });
+
+      familyStatus.hasActiveParents = parentSet.size > 0;
+      familyStatus.parentCount = parentSet.size;
+      familyStatus.isOrphanedStudent = !familyStatus.hasActiveParents;
+    }
+
     // Build response
     const userReserved = userCredits.reserved_credit || 0;
     const response = {
@@ -153,6 +190,7 @@ export default defineEventHandler(async (event) => {
         currency: 'SGD',
         updatedAt: userCredits.updated_at
       },
+      familyStatus,
       fetchedAt: new Date().toISOString()
     };
 

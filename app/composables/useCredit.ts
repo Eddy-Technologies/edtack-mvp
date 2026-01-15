@@ -17,6 +17,11 @@ const creditData = ref<{
     currency: string;
     updatedAt: string;
   }>;
+  familyStatus?: {
+    hasActiveParents: boolean;
+    parentCount: number;
+    isOrphanedStudent: boolean;
+  };
   fetchedAt: string;
 } | null>(null);
 

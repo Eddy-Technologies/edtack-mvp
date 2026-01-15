@@ -105,7 +105,23 @@ export default defineEventHandler(async (event) => {
     const paidAt = null;
 
     if (use_credits) {
-      // Check if user is a parent or child
+      // STEP 1: Get user's actual role from user_roles table
+      const { data: userRoleData, error: roleError } = await supabase
+        .from('user_roles')
+        .select('roles(role_name)')
+        .eq('user_info_id', userInfo.id)
+        .single();
+
+      if (roleError || !userRoleData) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'User role not found'
+        });
+      }
+
+      const actualUserRole = userRoleData.roles.role_name; // 'PARENT' or 'STUDENT'
+
+      // STEP 2: Check group membership to see if student has active parents
       const { data: groupCheck } = await supabase
         .from('group_members')
         .select(`
@@ -122,11 +138,9 @@ export default defineEventHandler(async (event) => {
         .eq('user_info_id', userInfo.id)
         .eq('status', 'active');
 
-      // Determine if user is a parent (no parents found) or child (has parents)
-      const hasParents = groupCheck?.some((groupMember) =>
+      const hasActiveParents = groupCheck?.some((groupMember) =>
         groupMember.groups.creator && groupMember.groups.creator.id !== userInfo.id
       );
-      const isParent = !hasParents;
 
       // Get user's internal credit balance (including reserved credits)
       const { data: userCredits, error: creditsError } = await supabase
@@ -151,14 +165,21 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      if (isParent) {
+      // STEP 3: Validate based on user role and family status
+      if (actualUserRole === 'PARENT') {
         // Parents should not be able to use credits directly - they should pay with credit card
         throw createError({
           statusCode: 400,
           statusMessage: 'Parents cannot purchase with credits. Please use credit card payment.'
         });
+      } else if (actualUserRole === 'STUDENT' && !hasActiveParents) {
+        // Student without active parents cannot use credits
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'You must be part of a family to use credits. Please ask your parent to add you to the family group.'
+        });
       } else {
-        // FLOW 1: Child Credit Purchase → Parent Approval Required
+        // FLOW 1: Student with active parents - Credit Purchase → Parent Approval Required
         const newReservedCredit = (userCredits.reserved_credit || 0) + totalCostCents;
         // Reserve credits for parent approval (don't deduct yet)
         const { error: reserveError } = await supabase
