@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 
 interface Chapter {
   id: string;
@@ -147,96 +147,96 @@ const getStatusVariant = (status: string) => {
 
     <!-- Chapter List -->
     <div class="space-y-3">
-        <div
-          v-for="chapter in displayedChapters"
-          :key="chapter.id"
-          class="flex items-center justify-between py-2 px-4 bg-gray-50 rounded-lg"
-        >
-          <div class="flex items-center gap-3 flex-1 min-w-0">
-            <span class="font-medium text-gray-900">{{ chapter.displayName }}</span>
-            <span class="text-sm text-gray-600">
-              {{ chapter.credit }} credits • {{ task.requiredScore }}% required
-            </span>
+      <div
+        v-for="chapter in displayedChapters"
+        :key="chapter.id"
+        class="flex items-center justify-between py-2 px-4 bg-gray-50 rounded-lg"
+      >
+        <div class="flex items-center gap-3 flex-1 min-w-0">
+          <span class="font-medium text-gray-900">{{ chapter.displayName }}</span>
+          <span class="text-sm text-gray-600">
+            {{ chapter.credit }} credits • {{ task.requiredScore }}% required
+          </span>
 
-            <!-- Progress Info -->
-            <span v-if="chapter.completedAt" class="text-sm text-green-600">
-              ✓ Completed • Best: {{ chapter.bestScore }}%
-            </span>
-            <span v-else-if="chapter.status === 'GENERATING'" class="text-sm text-blue-600">
-              Generating quiz...
-            </span>
-          </div>
-
-          <!-- Inline Actions -->
-          <div class="flex items-center gap-2">
-            <!-- Student Actions -->
-            <template v-if="!isParent">
-              <!-- Start Quiz -->
-              <UButton
-                v-if="!chapter.hasQuiz"
-                color="primary"
-                size="sm"
-                :disabled="task.status === 'CLOSED'"
-                @click.stop="emit('start-quiz', task, chapter)"
-              >
-                Start Quiz
-              </UButton>
-
-              <!-- Review -->
-              <UButton
-                v-else-if="chapter.completedAt"
-                variant="outline"
-                size="sm"
-                @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
-              >
-                Review
-              </UButton>
-
-              <!-- Reattempt -->
-              <UButton
-                v-if="chapter.hasQuiz && task.status !== 'CLOSED'"
-                color="primary"
-                size="sm"
-                :loading="chapter.status === 'GENERATING'"
-                :disabled="chapter.status === 'GENERATING'"
-                @click.stop="emit('start-quiz', task, chapter)"
-              >
-                {{ chapter.status === 'GENERATING' ? 'Generating quiz...' : (chapter.completedAt ? 'Reattempt' : 'Continue') }}
-              </UButton>
-            </template>
-
-            <!-- Parent Actions -->
-            <template v-else>
-              <!-- View Attempts -->
-              <UButton
-                v-if="chapter.completedAt"
-                variant="outline"
-                size="sm"
-                icon="i-lucide-eye"
-                @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
-              >
-                View Attempts
-              </UButton>
-              <span v-else class="text-sm text-gray-500">
-                Not attempted
-              </span>
-            </template>
-          </div>
+          <!-- Progress Info -->
+          <span v-if="chapter.completedAt" class="text-sm text-green-600">
+            ✓ Completed • Best: {{ chapter.bestScore }}%
+          </span>
+          <span v-else-if="chapter.status === 'GENERATING'" class="text-sm text-blue-600">
+            Generating quiz...
+          </span>
         </div>
 
-        <!-- Show More/Less Button -->
-        <div v-if="hasMoreChapters" class="flex justify-center pt-2">
-          <button
-            class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
-            @click.stop="toggleChapters"
-          >
-            <span>{{ showAllChapters ? 'Show less' : `Show ${task.chapters.length - 3} more` }}</span>
-            <UIcon
-              :name="showAllChapters ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
-              class="w-4 h-4"
-            />
-          </button>
+        <!-- Inline Actions -->
+        <div class="flex items-center gap-2">
+          <!-- Student Actions -->
+          <template v-if="!isParent">
+            <!-- Start Quiz -->
+            <UButton
+              v-if="!chapter.hasQuiz"
+              color="primary"
+              size="sm"
+              :disabled="task.status === 'CLOSED'"
+              @click.stop="emit('start-quiz', task, chapter)"
+            >
+              Start Quiz
+            </UButton>
+
+            <!-- Review -->
+            <UButton
+              v-else-if="chapter.completedAt"
+              variant="outline"
+              size="sm"
+              @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
+            >
+              Review
+            </UButton>
+
+            <!-- Reattempt -->
+            <UButton
+              v-if="chapter.hasQuiz && task.status !== 'CLOSED'"
+              color="primary"
+              size="sm"
+              :loading="chapter.status === 'GENERATING'"
+              :disabled="chapter.status === 'GENERATING'"
+              @click.stop="emit('start-quiz', task, chapter)"
+            >
+              {{ chapter.status === 'GENERATING' ? 'Generating quiz...' : (chapter.completedAt ? 'Reattempt' : 'Continue') }}
+            </UButton>
+          </template>
+
+          <!-- Parent Actions -->
+          <template v-else>
+            <!-- View Attempts -->
+            <UButton
+              v-if="chapter.completedAt"
+              variant="outline"
+              size="sm"
+              icon="i-lucide-eye"
+              @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
+            >
+              View Attempts
+            </UButton>
+            <span v-else class="text-sm text-gray-500">
+              Not attempted
+            </span>
+          </template>
         </div>
       </div>
+
+      <!-- Show More/Less Button -->
+      <div v-if="hasMoreChapters" class="flex justify-center pt-2">
+        <button
+          class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          @click.stop="toggleChapters"
+        >
+          <span>{{ showAllChapters ? 'Show less' : `Show ${task.chapters.length - 3} more` }}</span>
+          <UIcon
+            :name="showAllChapters ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+            class="w-4 h-4"
+          />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
