@@ -348,6 +348,14 @@ import Button from '../../common/Button.vue';
 import { LESSON_GENERATION_TYPE } from '~~/shared/constants';
 import { useTask, type CreateTaskReq } from '~/composables/useTask';
 import { useCredit } from '~/composables/useCredit';
+import { getDisplayFullName } from '~/utils/avatarUtils';
+
+interface Child {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 interface Chapter {
   id: string;
@@ -424,7 +432,7 @@ const codesStore = useCodesStore();
 const { balance: userBalance, refreshCredits } = useCredit();
 // Map chapter IDs to display names for edit mode
 const taskChapterMap = ref<Map<string, string>>(new Map());
-const children = ref<any[]>([]);
+const children = ref<Child[]>([]);
 const subjects = ref<any[]>([]);
 const chapterOptions = ref<any[]>([]);
 const isSubmitting = ref(false);
@@ -458,7 +466,7 @@ const hasAttemptedChapters = computed(() =>
 const childrenOptions = computed(() => {
   return children.value.map((child) => ({
     value: child.id,
-    label: child.name
+    label: getDisplayFullName(child.firstName, child.lastName, child.email)
   }));
 });
 

@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { getDisplayFullName } from '~/utils/avatarUtils';
+
 interface Child {
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
 }
 
 interface Props {
@@ -41,7 +44,7 @@ const handleClear = () => {
       :options="[
         { label: 'All Children', value: 'all' },
         ...children.map(c => ({
-          label: `${c.firstName} ${c.lastName}`,
+          label: getDisplayFullName(c.firstName, c.lastName, c.email),
           value: c.id
         }))
       ]"

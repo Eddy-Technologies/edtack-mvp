@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Extract children from groups where the current user is the creator
-    const childrenMap = new Map<string, { id: string; name: string; email: string }>();
+    const childrenMap = new Map<string, { id: string; firstName: string; lastName: string; email: string }>();
 
     // TODO: create a map of all children to avoid duplicates
     groupMembers.forEach((member) => {
@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
           if (!childrenMap.has(member.user_info_id)) {
             childrenMap.set(member.user_info_id, {
               id: member.user_info_id,
-              name: `${member.user.first_name || ''} ${member.user.last_name || ''}`.trim() || member.user.email,
+              firstName: member.user.first_name || '',
+              lastName: member.user.last_name || '',
               email: member.user.email
             });
           }
