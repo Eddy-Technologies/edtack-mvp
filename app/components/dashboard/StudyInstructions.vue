@@ -19,16 +19,10 @@
     <!-- Collapsible Content -->
     <div v-show="isExpanded" class="border-t border-gray-100 p-4">
       <div class="rounded-xl bg-slate-50 p-4">
-        <ul v-if="variant === 'study'" class="text-sm text-slate-600 space-y-2">
-          <li>• Browse subjects and chapters to learn at your own pace</li>
-          <li>• Take <strong>lessons</strong> to learn, <strong>practice</strong> to test yourself, or <strong>quizzes</strong> to earn credits</li>
-          <li>• Credits are earned on quizzes assigned through Tasks</li>
-        </ul>
-        <ul v-else-if="variant === 'tasks'" class="text-sm text-slate-600 space-y-2">
-          <li>• Complete quizzes assigned by your parent to earn credits</li>
-          <li>• Each task shows the number of credits you can earn</li>
-          <li>• You need to meet the required score percentage to unlock credits</li>
-          <li>• You can reattempt quizzes to improve your score</li>
+        <ul class="text-sm text-slate-600 space-y-2">
+          <li>Subjects are organised by chapters, and each chapter contains:</li>
+          <li><Strong>Lessons</Strong>: MOE aligned slides to aid your learning in a particular chapter. </li>
+          <li><Strong>Practice</Strong>: Generate questions to help reinforce your understanding. </li>
         </ul>
       </div>
     </div>
