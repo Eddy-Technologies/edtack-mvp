@@ -64,7 +64,8 @@ export default defineEventHandler(async (event) => {
           status,
           required_score,
           credit,
-          creator_user_info_id
+          creator_user_info_id,
+          assignee_user_info_id
         )
       `)
       .eq('id', userTasksChapterId)
@@ -85,6 +86,21 @@ export default defineEventHandler(async (event) => {
         message: 'Cannot submit quiz attempt for a closed or expired task. You can still review past attempts.',
       });
     }
+
+    // PERMISSION CHECK: Verify user is assignee of this task
+    if (chapterData.user_tasks.assignee_user_info_id !== userInfo.id) {
+      console.warn(
+        `[attempt] SECURITY: Permission denied - ` +
+        `User ${userInfo.id} attempted to submit for task-chapter ${userTasksChapterId} ` +
+        `assigned to ${chapterData.user_tasks.assignee_user_info_id}`
+      );
+      throw createError({
+        statusCode: 403,
+        message: 'Unauthorized: You can only submit quiz attempts for tasks assigned to you',
+      });
+    }
+
+    console.log('[attempt] Permission check passed - user is task assignee');
 
     const requiredScore = chapterData.user_tasks.required_score || 70;
     const creditReward = chapterData.user_tasks.credit || 0;

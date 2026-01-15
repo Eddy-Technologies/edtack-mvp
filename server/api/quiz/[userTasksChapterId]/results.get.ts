@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
         user_task_id,
         user_tasks!inner(
           id,
+          assignee_user_info_id,
           required_score,
           credit
         )
@@ -71,6 +72,21 @@ export default defineEventHandler(async (event) => {
         message: chapterError ? 'Failed to fetch quiz data' : 'Quiz not found',
       });
     }
+
+    // PERMISSION CHECK: Verify user is assignee of this task
+    if (chapterData.user_tasks.assignee_user_info_id !== userInfo.id) {
+      console.warn(
+        `[results] SECURITY: Permission denied - ` +
+        `User ${userInfo.id} attempted to view results for task-chapter ${userTasksChapterId} ` +
+        `assigned to ${chapterData.user_tasks.assignee_user_info_id}`
+      );
+      throw createError({
+        statusCode: 403,
+        message: 'Unauthorized: You can only view results for quizzes assigned to you',
+      });
+    }
+
+    console.log('[results] Permission check passed - user is task assignee');
 
     // If not completed, return not completed status
     if (!chapterData.completed_at) {
