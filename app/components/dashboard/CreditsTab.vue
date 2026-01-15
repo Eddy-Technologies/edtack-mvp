@@ -50,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import Button from '../common/Button.vue';
 import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import CreditBalance from '~/components/credits/CreditBalance.vue';
@@ -60,16 +59,11 @@ import TransferSection from '~/components/credits/TransferSection.vue';
 import ViewTransactions from '~/components/credits/ViewTransactions.vue';
 
 // Single fetch point for all credit data
-const { fetchCredits, refreshCredits, isLoading } = useCredit();
+const { refreshCredits, isLoading } = useCredit();
 
 // Use me store for user role
 const meStore = useMeStore();
 const { isParent } = storeToRefs(meStore);
-
-// Fetch credit data when Credits tab loads
-onMounted(async () => {
-  await fetchCredits();
-});
 
 // Handle refresh button click
 const handleRefresh = async () => {

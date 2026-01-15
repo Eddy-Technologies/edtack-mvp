@@ -151,6 +151,7 @@ const pagination = ref<any>(null);
 const isLoading = ref(false);
 const error = ref<string | null>(null);
 const currentPage = ref(1);
+const isMounted = ref(false);
 
 // Fetch transactions function
 const fetchTransactions = async (page = 1) => {
@@ -235,10 +236,14 @@ const getTransactionIcon = (type: string) => {
 // Load transactions on component mount
 onMounted(() => {
   fetchTransactions();
+  isMounted.value = true; // Mark as mounted after first fetch
 });
 
 // Watch for transaction version changes (triggered after transfers)
+// Skip initial trigger if it happens during mount
 watch(transactionVersion, () => {
-  fetchTransactions();
+  if (isMounted.value) {
+    fetchTransactions();
+  }
 });
 </script>

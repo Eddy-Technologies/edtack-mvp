@@ -29,6 +29,9 @@ const isLoading = ref(false);
 const error = ref<string | null>(null);
 const lastFetchTime = ref(0);
 
+// Pending request promise for deduplication
+let pendingRequest: Promise<void> | null = null;
+
 // Transaction version - increment to trigger transaction history refresh
 const transactionVersion = ref(0);
 
@@ -76,21 +79,33 @@ export const useCredit = () => {
       return;
     }
 
+    // If there's already a pending request, return that promise
+    if (pendingRequest) {
+      console.log('[useCredit] Reusing pending request for credit data');
+      return pendingRequest;
+    }
+
     isLoading.value = true;
     error.value = null;
 
-    try {
-      // Use the unified API that handles both individual and family scenarios
-      const response = await $fetch('/api/credits/unified');
+    // Create new pending request
+    pendingRequest = (async () => {
+      try {
+        // Use the unified API that handles both individual and family scenarios
+        const response = await $fetch('/api/credits/unified');
 
-      creditData.value = response;
-      lastFetchTime.value = Date.now();
-    } catch (err) {
-      console.error('Failed to fetch credit data:', err);
-      error.value = 'Failed to load credit data. Please try again.';
-    } finally {
-      isLoading.value = false;
-    }
+        creditData.value = response;
+        lastFetchTime.value = Date.now();
+      } catch (err) {
+        console.error('Failed to fetch credit data:', err);
+        error.value = 'Failed to load credit data. Please try again.';
+      } finally {
+        isLoading.value = false;
+        pendingRequest = null; // Clear pending request
+      }
+    })();
+
+    return pendingRequest;
   };
 
   /**

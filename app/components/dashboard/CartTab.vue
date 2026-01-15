@@ -321,7 +321,7 @@ const emit = defineEmits<{
 const router = useRouter();
 
 // Use credit composable
-const { formattedBalance, balance, fetchCredits, isLoading, creditData } = useCredit();
+const { formattedBalance, balance, isLoading, creditData } = useCredit();
 
 // Use me store for user role
 const meStore = useMeStore();
@@ -430,10 +430,8 @@ const goToShop = () => {
   router.push('/dashboard?tab=shop');
 };
 
-// Fetch credit data when cart loads
-onMounted(async () => {
-  await fetchCredits();
-
+// Initialize payment method on mount - credit data already available from Layout
+onMounted(() => {
   // Set payment method based on user type, family status, and feature flag
   if (isParent.value) {
     // Parents can only pay with card, which requires subscriptionPlans
