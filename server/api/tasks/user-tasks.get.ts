@@ -41,7 +41,8 @@ export default defineEventHandler(async (event) => {
           total_score,
           completed_at,
           generation_started_at,
-          chapters!inner(name, display_name, subject_id)
+          chapters!inner(name, display_name, subject_id, sort_order),
+          user_tasks_chapters_questions(id)
         )
       `);
 
@@ -120,6 +121,7 @@ export default defineEventHandler(async (event) => {
         name: utc.chapters.name,
         displayName: utc.chapters.display_name,
         subjectName: utc.chapters.subject_id,
+        sortOrder: utc.chapters.sort_order,
         status: utc.status,
         score: utc.score,
         bestScore: utc.score && utc.total_score ? Math.round((utc.score / utc.total_score) * 100) : 0,
@@ -127,8 +129,11 @@ export default defineEventHandler(async (event) => {
         completedAt: utc.completed_at,
         generationStartedAt: utc.generation_started_at,
         credit: task.credit, // Credit per chapter
-        hasQuiz: !!utc.completed_at || utc.status === 'GENERATING' // Simplified check
+        hasQuiz: (utc.user_tasks_chapters_questions?.length || 0) > 0
       })) || [];
+
+      // Sort chapters by their defined sort_order from chapters table
+      chapters.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
       const totalCredits = task.credit * chapters.length;
 

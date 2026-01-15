@@ -185,7 +185,15 @@ export default defineEventHandler(async (event) => {
     const latestTotalScore = latestAttempt?.totalScore || 0;
     const latestPercentage = latestAttempt?.percentage || 0;
 
-    const requiredScore = chapterData.user_tasks.required_score || 70;
+    // Validate required_score is set
+    if (chapterData.user_tasks.required_score === null || chapterData.user_tasks.required_score === undefined) {
+      throw createError({
+        statusCode: 500,
+        message: 'Task configuration error: required_score is not set'
+      });
+    }
+
+    const requiredScore = chapterData.user_tasks.required_score;
     const passedThreshold = bestPercentage >= requiredScore;
     const attemptCount = attempts.length;
 

@@ -36,10 +36,12 @@ interface Props {
   task: Task;
   isParent: boolean;
   showAssigneeInfo?: boolean;
+  isChapterGenerating?: (chapterId: string) => boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showAssigneeInfo: true
+  showAssigneeInfo: true,
+  isChapterGenerating: () => () => false
 });
 
 const emit = defineEmits<{
@@ -176,10 +178,11 @@ const getStatusVariant = (status: string) => {
               v-if="!chapter.hasQuiz"
               color="primary"
               size="sm"
-              :disabled="task.status === 'CLOSED'"
+              :loading="props.isChapterGenerating(chapter.id)"
+              :disabled="task.status === 'CLOSED' || props.isChapterGenerating(chapter.id)"
               @click.stop="emit('start-quiz', task, chapter)"
             >
-              Start Quiz
+              {{ props.isChapterGenerating(chapter.id) ? 'Generating quiz...' : 'Start Quiz' }}
             </UButton>
 
             <!-- Review -->
@@ -197,11 +200,15 @@ const getStatusVariant = (status: string) => {
               v-if="chapter.hasQuiz && task.status !== 'CLOSED'"
               color="primary"
               size="sm"
-              :loading="chapter.status === 'GENERATING'"
-              :disabled="chapter.status === 'GENERATING'"
+              :loading="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
+              :disabled="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
               @click.stop="emit('start-quiz', task, chapter)"
             >
-              {{ chapter.status === 'GENERATING' ? 'Generating quiz...' : (chapter.completedAt ? 'Reattempt' : 'Continue') }}
+              {{
+                chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)
+                  ? 'Generating quiz...'
+                  : (chapter.completedAt ? 'Reattempt' : 'Attempt Quizz')
+              }}
             </UButton>
           </template>
 

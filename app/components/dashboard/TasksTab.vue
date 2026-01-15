@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, watch } from 'vue';
+import { computed, ref, onMounted, watch, nextTick } from 'vue';
 import TaskInstructions from './tasks/TaskInstructions.vue';
 import TaskFilters from './tasks/TaskFilters.vue';
 import TaskInfoCard from './tasks/TaskInfoCard.vue';
 import CreateEditTaskModal from './tasks/CreateEditTaskModal.vue';
+import QuizAttemptModal from './quiz/QuizAttemptModal.vue';
 import { useMeStore } from '~/stores/me';
 
 // Types
@@ -12,6 +13,7 @@ interface Chapter {
   name: string;
   displayName: string;
   subjectName: string;
+  sortOrder: number;
   status: string;
   score?: number;
   bestScore?: number;
@@ -67,11 +69,29 @@ const currentPage = ref(1);
 const itemsPerPage = ref(10);
 const showTaskModal = ref(false);
 const editingTask = ref<Task | null>(null);
-const pollingChapters = ref<Set<string>>(new Set());
+const generatingChapters = ref<Set<string>>(new Set());
 
 // Computed
 const isParent = computed(() => meStore.isParent);
 const _isStudent = computed(() => meStore.isStudent);
+
+// Quiz modal state
+const showQuizModal = computed(() => route.query.modal === 'quiz-attempt');
+const selectedChapterId = computed(() => route.query.chapterId as string);
+const modalMode = computed(() => (route.query.mode as 'attempt' | 'review' | 'parent-review') || 'attempt');
+const modalAssigneeId = computed(() => route.query.assigneeId as string);
+
+// Get chapter display name from tasks data
+const selectedChapterName = computed(() => {
+  if (!selectedChapterId.value) return '';
+
+  for (const task of tasks.value) {
+    const chapter = task.chapters.find((c) => c.id === selectedChapterId.value);
+    if (chapter) return chapter.displayName;
+  }
+
+  return '';
+});
 
 // Filtered tasks
 const filteredTasks = computed(() => {
@@ -138,6 +158,7 @@ const fetchTasks = async () => {
     });
 
     tasks.value = response.tasks || [];
+    console.log('[fetchTasks] Fetched', tasks.value.length, 'tasks');
 
     // Extract unique subjects
     const subjectSet = new Set<string>();
@@ -187,6 +208,32 @@ const closeTaskModal = () => {
   editingTask.value = null;
 };
 
+const closeQuizModal = () => {
+  const { modal, chapterId, mode, assigneeId, ...remainingQuery } = route.query;
+  router.push({ query: remainingQuery });
+};
+
+const handleReattempt = async (chapterId: string) => {
+  // Get current query params
+  const { modal, mode, assigneeId, ...otherQuery } = route.query;
+
+  // Step 1: Close modal by removing 'modal' query param
+  await router.push({ query: otherQuery });
+
+  // Step 2: Wait for next tick to ensure modal closes
+  await nextTick();
+
+  // Step 3: Reopen modal in attempt mode
+  await router.push({
+    query: {
+      ...otherQuery,
+      modal: 'quiz-attempt',
+      chapterId: chapterId,
+      mode: 'attempt'
+    }
+  });
+};
+
 const handleCloseTask = async (task: Task) => {
   // Confirm before closing
   const confirmed = confirm(`Are you sure you want to close the task "${task.name}"?`);
@@ -219,7 +266,7 @@ const handleViewAttempts = (userTasksChapterId: string, assigneeId: string) => {
   router.push({
     query: {
       ...route.query,
-      modal: 'quiz-review',
+      modal: 'quiz-attempt',
       chapterId: userTasksChapterId,
       mode: isParent.value ? 'parent-review' : 'review',
       assigneeId: isParent.value ? assigneeId : undefined
@@ -230,18 +277,23 @@ const handleViewAttempts = (userTasksChapterId: string, assigneeId: string) => {
 const handleStartQuiz = async (task: Task, chapter: Chapter) => {
   // Check if quiz exists or needs generation
   if (!chapter.hasQuiz && chapter.status !== 'GENERATING') {
-    // Need to generate quiz
-    await generateQuiz(task, chapter);
+    // Show loading immediately
+    generatingChapters.value.add(chapter.id);
+
+    try {
+      // Need to generate quiz
+      await generateQuiz(task, chapter);
+    } catch (error) {
+      console.error('[handleStartQuiz] Quiz generation failed:', error);
+      generatingChapters.value.delete(chapter.id);
+    }
   } else if (chapter.status === 'GENERATING') {
-    // Quiz is currently generating - start polling and wait
+    // Quiz is currently generating - inform user to wait
     toast.add({
       title: 'Quiz Generating',
-      description: 'Your quiz is being generated. Please wait...',
+      description: 'Your quiz is being generated. Please wait and refresh the page.',
       color: 'blue'
     });
-
-    // Start polling (pollQuizGeneration already handles opening modal on completion)
-    pollQuizGeneration(chapter.id);
   } else {
     // Quiz exists and is ready - open modal
     router.push({
@@ -266,6 +318,7 @@ const generateQuiz = async (task: Task, chapter: Chapter) => {
     );
 
     // Send complete request with all required fields
+    // This is SYNCHRONOUS - waits for entire generation to complete
     await $fetch('/api/quiz/generate', {
       method: 'POST',
       body: {
@@ -280,75 +333,43 @@ const generateQuiz = async (task: Task, chapter: Chapter) => {
       }
     });
 
-    toast.add({
-      title: 'Generating Quiz',
-      description: 'Your quiz is being generated. This may take a moment...',
-      color: 'blue'
-    });
+    console.log('[generateQuiz] Quiz generated successfully, refreshing tasks');
 
-    // Refresh tasks to show GENERATING status
+    // Refresh tasks to get updated quiz data
     await fetchTasks();
 
-    // Poll for completion (simple approach)
-    pollQuizGeneration(chapter.id);
+    // Wait for Vue to update DOM with new data
+    await nextTick();
+
+    console.log('[generateQuiz] Tasks refreshed, quiz ready');
+
+    // Quiz is ready - show success and open modal
+    toast.add({
+      title: 'Quiz Ready!',
+      description: 'Your quiz has been generated and is ready to attempt.',
+      color: 'green'
+    });
+
+    // Open quiz modal directly (no polling needed)
+    router.push({
+      query: {
+        ...route.query,
+        modal: 'quiz-attempt',
+        chapterId: chapter.id
+      }
+    });
   } catch (error: any) {
-    console.error('Failed to generate quiz:', error);
+    console.error('[generateQuiz] Failed to generate quiz:', error);
     toast.add({
       title: 'Error',
       description: error.message || 'Failed to generate quiz',
       color: 'red'
     });
+  } finally {
+    // Remove loading state AFTER everything completes (including fetchTasks)
+    // This prevents button from becoming enabled before UI updates
+    generatingChapters.value.delete(chapter.id);
   }
-};
-
-const pollQuizGeneration = (userTasksChapterId: string) => {
-  // Prevent duplicate polling for same chapter
-  if (pollingChapters.value.has(userTasksChapterId)) {
-    return;
-  }
-
-  pollingChapters.value.add(userTasksChapterId);
-
-  const interval = setInterval(async () => {
-    try {
-      const response = await $fetch(`/api/quiz/${userTasksChapterId}/status`);
-
-      if (response.status !== 'GENERATING') {
-        clearInterval(interval);
-        pollingChapters.value.delete(userTasksChapterId);
-
-        if (response.hasQuiz) {
-          toast.add({
-            title: 'Quiz Ready!',
-            description: 'Your quiz has been generated and is ready to attempt.',
-            color: 'green'
-          });
-
-          // Refresh tasks
-          await fetchTasks();
-
-          // Open quiz modal
-          router.push({
-            query: {
-              ...route.query,
-              modal: 'quiz-attempt',
-              chapterId: userTasksChapterId
-            }
-          });
-        }
-      }
-    } catch (error) {
-      clearInterval(interval);
-      pollingChapters.value.delete(userTasksChapterId);
-      console.error('Error polling quiz status:', error);
-    }
-  }, 3000);
-
-  // Stop polling after 5 minutes
-  setTimeout(() => {
-    clearInterval(interval);
-    pollingChapters.value.delete(userTasksChapterId);
-  }, 300000);
 };
 
 const sortTasks = (taskList: Task[], sortOption: string) => {
@@ -480,6 +501,7 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
           :task="task"
           :is-parent="isParent"
           :show-assignee-info="isParent"
+          :is-chapter-generating="(chapterId) => generatingChapters.has(chapterId)"
           @close-task="handleCloseTask(task)"
           @edit-task="handleEditTask(task)"
           @view-attempts="handleViewAttempts"
@@ -521,6 +543,18 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
       :task="editingTask"
       @close="closeTaskModal"
       @task-saved="handleTaskSaved"
+    />
+
+    <!-- Quiz Attempt Modal -->
+    <QuizAttemptModal
+      :is-open="showQuizModal"
+      :user-tasks-chapter-id="selectedChapterId"
+      :chapter-display-name="selectedChapterName"
+      :mode="modalMode"
+      :assignee-user-info-id="modalAssigneeId"
+      @close="closeQuizModal"
+      @quiz-completed="fetchTasks"
+      @reattempt="handleReattempt"
     />
   </div>
 </template>

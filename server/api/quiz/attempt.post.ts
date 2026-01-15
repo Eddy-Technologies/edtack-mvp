@@ -102,8 +102,16 @@ export default defineEventHandler(async (event) => {
 
     console.log('[attempt] Permission check passed - user is task assignee');
 
-    const requiredScore = chapterData.user_tasks.required_score || 70;
-    const creditReward = chapterData.user_tasks.credit || 0;
+    // Validate required_score is set
+    if (chapterData.user_tasks.required_score === null || chapterData.user_tasks.required_score === undefined) {
+      throw createError({
+        statusCode: 500,
+        message: 'Task configuration error: required_score is not set'
+      });
+    }
+
+    const requiredScore = chapterData.user_tasks.required_score;
+    const creditReward = chapterData.user_tasks.credit ?? 0;
 
     // Fetch questions with correct answers
     const { data: questionLinks, error: fetchError } = await supabase

@@ -333,6 +333,7 @@
               Close
             </UButton>
             <UButton
+              v-if="props.mode === 'review'"
               color="primary"
               size="lg"
               @click="handleReattempt"
@@ -353,16 +354,7 @@
               :ref="el => { if (el) questionRefs[index] = el as HTMLElement }"
               class="border border-gray-200 rounded-lg p-4 scroll-mt-32"
             >
-              <div class="flex items-start mb-3">
-                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-sm font-medium mr-3 flex-shrink-0">
-                  {{ index + 1 }}
-                </span>
-                <div class="flex-1">
-                  <h3 class="font-medium text-gray-900">{{ question.title }}</h3>
-                </div>
-              </div>
-
-              <!-- Question Display Component -->
+              <!-- Question Display Component (includes title) -->
               <QuizQuestion
                 :question="question"
                 :start-playback="() => {}"
@@ -387,7 +379,7 @@
               :disabled="isSubmitting || !allQuestionsAnswered"
               @click="submitQuiz"
             >
-              Submit Quiz
+              {{ isSubmitting ? 'Marking Quiz' : 'Submit Quiz' }}
             </UButton>
           </div>
         </div>
@@ -420,7 +412,7 @@ const { formatDate } = useDateFormat();
 
 const props = defineProps<{
   isOpen: boolean;
-  userTasksChapterId: string;
+  userTasksChapterId?: string;
   chapterDisplayName: string;
   mode?: 'attempt' | 'review' | 'parent-review';
   assigneeUserInfoId?: string; // For parent review mode
@@ -429,6 +421,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void;
   (e: 'quiz-submitted', score: number, totalScore: number): void;
+  (e: 'reattempt', chapterId: string): void;
 }>();
 
 // State
@@ -550,13 +543,8 @@ const handleClose = () => {
 };
 
 const handleReattempt = () => {
-  // Reset to attempt mode
-  showResults.value = false;
-  userAnswers.value = {};
-  quizResults.value = null;
-
-  // Reload questions for new attempt
-  loadQuestions();
+  // Emit event to parent to handle reattempt
+  emit('reattempt', props.userTasksChapterId);
 };
 
 const loadResults = async () => {
