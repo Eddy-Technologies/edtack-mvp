@@ -93,17 +93,19 @@
           >
             <!-- Centered layout: Single container with carousel and input -->
             <div v-if="isChatCentered" class="absolute inset-0 overflow-y-auto">
-              <div class="min-h-full flex flex-col items-center justify-start pt-6 sm:pt-[15vh] pb-8 px-4">
-                <div class="w-full max-w-4xl flex flex-col gap-6">
+              <div class="min-h-full flex flex-col items-center justify-start pt-4 sm:pt-8 pb-8 px-4">
+                <div class="w-full max-w-4xl flex flex-col gap-4">
                   <!-- Character Carousel - fixed height -->
-                  <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                  <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 overflow-visible">
                     <!-- Header - hidden on mobile for cleaner look -->
-                    <div class="px-6 py-4 border-b border-gray-100">
-                      <div class="flex items-center justify-between gap-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Choose Your Character</h3>
+                    <div class="px-3 py-3 md:px-6 md:py-4 border-b border-gray-100">
+                      <div class="flex items-center justify-between gap-2 md:gap-4">
+                        <!-- Group heading and dropdown together -->
+                        <div class="flex items-center gap-2 md:gap-3">
+                          <h3 class="text-base md:text-lg font-semibold text-gray-800">Choose Your Character</h3>
 
-                        <!-- Character Dropdown Selector -->
-                        <div class="relative flex-1 max-w-xs" data-tour="character-selector">
+                          <!-- Character Dropdown Selector -->
+                          <div class="relative w-full sm:w-56 md:w-64 max-w-[calc(100vw-6rem)] z-50" data-tour="character-selector">
                           <button
                             class="w-full px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-colors flex items-center gap-2"
                             @click="toggleCharacterDropdown"
@@ -115,7 +117,7 @@
                           <!-- Dropdown menu -->
                           <div
                             v-if="characterDropdownOpen"
-                            class="absolute left-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto z-50 min-w-[250px]"
+                            class="absolute left-0 top-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg max-h-64 overflow-y-auto z-50 w-full min-w-[200px] max-w-[calc(100vw-2rem)]"
                             @click.stop
                           >
                             <button
@@ -136,6 +138,7 @@
                             </button>
                           </div>
                         </div>
+                        </div>
 
                         <UTooltip
                           :ui="{ base: 'h-auto px-2 py-1 text-xs font-normal', width: 'max-w-[200px]' }"
@@ -150,11 +153,12 @@
                         </UTooltip>
                       </div>
                     </div>
-                    <div :class="isMobile ? 'p-2' : 'p-4'">
+                    <div v-show="!isChapterDropdownOpen" :class="isMobile ? 'p-2' : 'p-4'">
                       <CharacterCarousel
                         ref="characterCarouselRef"
                         v-model="currentCharacter"
                         :initial-character-slug="charSlug"
+                        :collapsed="isChapterDropdownOpen"
                         :go-to-chat-on-click="true"
                         @select="handleCharacterSelection"
                       />
@@ -164,10 +168,12 @@
                   <!-- ChatInput - expands downward -->
                   <ChatInput
                     ref="chatInputRef"
-                    :show-suggestions="!hasStartedChat && isNewChat"
+                    :show-suggestions="isNewChat"
                     :subject="selectedCharacter?.subject || 'GENERAL'"
                     :is-processing="connectionStatus.isWaitingForResponse"
                     @send="handleChatSend"
+                    @dropdown-opened="handleDropdownOpened"
+                    @dropdown-closed="handleDropdownClosed"
                   />
                 </div>
               </div>
@@ -177,10 +183,12 @@
             <div v-if="!isChatCentered" class="w-full max-w-4xl px-4 mx-auto">
               <ChatInput
                 ref="chatInputRef"
-                :show-suggestions="!hasStartedChat && isNewChat"
+                :show-suggestions="isNewChat"
                 :subject="selectedCharacter?.subject || 'GENERAL'"
                 :is-processing="connectionStatus.isWaitingForResponse"
                 @send="handleChatSend"
+                @dropdown-opened="handleDropdownOpened"
+                @dropdown-closed="handleDropdownClosed"
               />
             </div>
           </div>
@@ -257,6 +265,9 @@ const threadData = ref<any>(null); // Store thread data
 const characterDropdownOpen = ref(false);
 const availableCharacters = ref<any[]>([]);
 
+// Chapter dropdown state for carousel collapse coordination
+const isChapterDropdownOpen = ref(false);
+
 // Connection status state (reactive tracking from child component)
 const connectionStatus = ref({
   isConnected: false,
@@ -312,6 +323,16 @@ const selectCharacterFromDropdown = async (character: any) => {
 
   // Handle character selection
   await handleCharacterSelection(character);
+};
+
+// Handler for chapter dropdown opened event
+const handleDropdownOpened = () => {
+  isChapterDropdownOpen.value = true;
+};
+
+// Handler for chapter dropdown closed event
+const handleDropdownClosed = () => {
+  isChapterDropdownOpen.value = false;
 };
 
 const {

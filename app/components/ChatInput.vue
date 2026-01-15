@@ -39,12 +39,13 @@
       </div>
     </div>
 
-    <!-- Suggestions - only show on new chat, fade out when typing -->
-    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 transition-opacity duration-200', isMobile ? 'justify-center' : '', shouldShowPills ? 'opacity-100' : 'opacity-0 pointer-events-none']" data-tour="chat-suggestions">
-      <!-- Lesson Pill -->
+    <!-- Suggestions - only show on new chat -->
+    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2', isMobile ? 'justify-center' : '']" data-tour="chat-suggestions">
+      <!-- Lesson Pill (with chapter dropdown) -->
       <button
         :class="[
-          'text-white bg-primary border border-gray-200 rounded-xl hover:bg-primary-400 hover:border-gray-300 active:bg-primary-500 transition-colors flex items-center',
+          'text-white border border-gray-200 rounded-xl hover:bg-primary-400 hover:border-gray-300 active:bg-primary-500 transition-colors flex items-center',
+          openDropdown === 'lesson' ? 'bg-primary-600' : 'bg-primary',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
         ]"
         :title="isMobile ? 'Give me a lesson on...' : undefined"
@@ -57,10 +58,11 @@
         </template>
       </button>
 
-      <!-- Quiz Pill -->
+      <!-- Quiz Pill (with chapter dropdown) -->
       <button
         :class="[
-          'text-white bg-secondary border border-gray-200 rounded-xl hover:bg-secondary-400 hover:border-gray-300 active:bg-secondary-500 transition-colors flex items-center',
+          'text-white border border-gray-200 rounded-xl hover:bg-secondary-400 hover:border-gray-300 active:bg-secondary-500 transition-colors flex items-center',
+          openDropdown === 'quiz' ? 'bg-secondary-600' : 'bg-secondary',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
         ]"
         :title="isMobile ? 'Quiz me on...' : undefined"
@@ -87,43 +89,79 @@
       </button>
     </div>
 
-    <!-- Dropdown menus (positioned relative to parent container) -->
+    <!-- Chapter Dropdown Menu (for subject-specific characters) -->
     <div
-      v-if="openDropdown === 'lesson'"
+      v-if="(openDropdown === 'lesson' || openDropdown === 'quiz') && showChapterDropdown"
+      ref="dropdownRef"
       class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-10"
+      :style="{ maxHeight: `${maxDropdownHeight}px` }"
       @click.stop
     >
-      <button
-        v-for="(suggestion, index) in currentSuggestions.lesson"
-        :key="index"
-        class="w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl"
-        @click="selectSuggestion(suggestion)"
-      >
-        {{ suggestion }}
-      </button>
+      <!-- Loading state -->
+      <div v-if="chaptersLoading" class="px-4 py-8 text-center">
+        <Icon name="i-heroicons-arrow-path" class="w-6 h-6 mx-auto mb-2 animate-spin text-primary" />
+        <p class="text-sm text-gray-500">Loading chapters...</p>
+      </div>
+
+      <!-- Empty state -->
+      <div v-else-if="chapters.length === 0" class="px-4 py-8 text-center">
+        <p class="text-sm text-gray-500">No chapters available for this subject</p>
+      </div>
+
+      <!-- Chapters list -->
+      <div v-else class="overflow-y-auto" :style="{ maxHeight: `${maxDropdownHeight}px` }">
+        <button
+          v-for="chapter in chapters"
+          :key="chapter.value"
+          class="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
+          @click="selectChapter(chapter)"
+        >
+          <div class="flex flex-col gap-1">
+            <div class="text-sm text-gray-900">
+              <span>{{ dropdownPrefix }} {{ chapter.label }}</span>
+              <span v-if="chapter.chapterNumber !== undefined">
+                (Chapter {{ chapter.chapterNumber + 1 }})
+              </span>
+            </div>
+            <p v-if="chapter.description" class="text-xs text-gray-500 line-clamp-2">
+              {{ chapter.description }}
+            </p>
+          </div>
+        </button>
+      </div>
     </div>
 
+    <!-- Suggestion Dropdown Menu (for GENERAL/Eddy character) -->
     <div
-      v-if="openDropdown === 'quiz'"
+      v-if="(openDropdown === 'lesson' || openDropdown === 'quiz') && showSuggestionDropdown"
+      ref="dropdownRef"
       class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-10"
+      :style="{ maxHeight: `${maxDropdownHeight}px` }"
       @click.stop
     >
-      <button
-        v-for="(suggestion, index) in currentSuggestions.quiz"
-        :key="index"
-        class="w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl"
-        @click="selectSuggestion(suggestion)"
-      >
-        {{ suggestion }}
-      </button>
+      <!-- Suggestions list -->
+      <div class="overflow-y-auto" :style="{ maxHeight: `${maxDropdownHeight}px` }">
+        <button
+          v-for="(suggestion, index) in currentSuggestions"
+          :key="index"
+          class="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
+          @click="selectSuggestion(suggestion)"
+        >
+          <div class="text-sm text-gray-900">
+            {{ suggestion }}
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect, watch, nextTick } from 'vue';
 import { useTokenUsage } from '~/composables/useTokenUsage';
 import { useResponsive } from '~/composables/useResponsive';
+import { useChapters } from '~/composables/useChapters';
+import { mapCharacterSubjectToChapterSubjectId } from '~/utils/subjectMapping';
 
 const { isMobile } = useResponsive();
 
@@ -142,17 +180,51 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['send']);
+const emit = defineEmits(['send', 'dropdown-opened', 'dropdown-closed']);
 const input = ref('');
 const toast = useToast();
 
-// Hide pills when input has 5+ chars or multiple lines
-const shouldShowPills = computed(() => input.value.length < 5 && !input.value.includes('\n'));
+// Hardcoded suggestions for GENERAL subject (Eddy)
+const subjectSuggestions: Record<string, { lesson: string[]; quiz: string[] }> = {
+  GENERAL: {
+    lesson: [
+      'Give me a lesson on world war II',
+      'Teach me about time management during exams',
+      'How can I overcome my weakest subjects?',
+    ],
+    quiz: [
+      'Quiz me on world war II',
+      'Quiz me on the photosynthesis process',
+      'Quiz me on newtons laws of motion',
+    ],
+  },
+};
+
 const isSending = ref(false);
 const DEBOUNCE_MS = 2000; // 2 second cooldown to prevent spam
 
 // Combined disabled state: local debounce OR parent processing state
 const isDisabled = computed(() => isSending.value || props.isProcessing);
+
+// Dynamic dropdown height calculation
+const dropdownRef = ref<HTMLElement | null>(null);
+const maxDropdownHeight = ref<number>(400); // Default fallback
+
+const calculateDropdownHeight = () => {
+  if (!dropdownRef.value) return;
+
+  const rect = dropdownRef.value.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const spaceBelow = viewportHeight - rect.top;
+
+  // Reserve some padding (e.g., 20px from bottom)
+  const padding = 20;
+  const availableHeight = spaceBelow - padding;
+
+  // Set minimum height (e.g., 200px) and maximum based on available space
+  const minHeight = 200;
+  maxDropdownHeight.value = Math.max(minHeight, Math.min(availableHeight, 600));
+};
 
 const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
 
@@ -164,78 +236,113 @@ const resetSendState = () => {
 // Expose methods for parent component
 defineExpose({ resetSendState });
 
-// Hardcoded suggestions by subject
-const subjectSuggestions: Record<string, { lesson: string[]; quiz: string[] }> = {
-  BIOLOGY: {
-    lesson: [
-      'Give me a lesson on photosynthesis and chlorophyll',
-      'Give me a lesson on the human digestive system',
-      'Give me a lesson on cell division and mitosis',
-    ],
-    quiz: [
-      'Quiz me on the parts of a plant cell',
-      'Quiz me on the respiratory system',
-      'Quiz me on DNA and genetics',
-    ],
-  },
-  CHEMISTRY: {
-    lesson: [
-      'Give me a lesson on the periodic table',
-      'Give me a lesson on chemical bonding',
-      'Give me a lesson on acids and bases',
-    ],
-    quiz: [
-      'Quiz me on balancing chemical equations',
-      'Quiz me on atomic structure',
-      'Quiz me on oxidation and reduction',
-    ],
-  },
-  PHYSICS: {
-    lesson: [
-      'Give me a lesson on Newton\'s laws of motion',
-      'Give me a lesson on electricity and circuits',
-      'Give me a lesson on waves and sound',
-    ],
-    quiz: [
-      'Quiz me on forces and motion',
-      'Quiz me on energy and work',
-      'Quiz me on light and optics',
-    ],
-  },
-  GENERAL: {
-    lesson: [
-      'Give me a lesson on a topic of your choice',
-      'How can I do well in exams?',
-      'How can I memorise things faster?',
-    ],
-    quiz: [
-      'Quiz me on World War II',
-      'Quiz me on the work and energy concepts',
-      'Quiz me on a parts of a flower',
-    ],
-  },
-};
+// Chapter management
+const { fetchChaptersBySubject } = useChapters();
+const chapters = ref<Array<{ value: string; label: string; description?: string; level: number; chapterNumber?: number }>>([]);
+const chaptersLoading = ref(false);
+
+// Computed properties to control which dropdown shows
+const showChapterDropdown = computed(() => {
+  return props.subject !== 'GENERAL' && chapters.value.length > 0;
+});
+
+const showSuggestionDropdown = computed(() => {
+  return props.subject === 'GENERAL';
+});
+
+// Get suggestions for current dropdown type
+const currentSuggestions = computed(() => {
+  if (props.subject === 'GENERAL' && openDropdown.value) {
+    const type = openDropdown.value as 'lesson' | 'quiz';
+    return subjectSuggestions.GENERAL[type] || [];
+  }
+  return [];
+});
+
+// Get the prefix based on which dropdown is open
+const dropdownPrefix = computed(() => {
+  if (openDropdown.value === 'quiz') {
+    return 'Quiz me on';
+  }
+  return 'Give me a lesson on';
+});
+
+// Fetch chapters when subject changes
+watchEffect(async () => {
+  // Map character subject to chapter subject_id
+  const subjectId = mapCharacterSubjectToChapterSubjectId(props.subject);
+
+  if (subjectId) {
+    chaptersLoading.value = true;
+    try {
+      chapters.value = await fetchChaptersBySubject(subjectId);
+    } catch (err) {
+      console.error('Failed to load chapters:', err);
+      chapters.value = [];
+    } finally {
+      chaptersLoading.value = false;
+    }
+  } else {
+    // For subjects without chapter mapping (e.g., GENERAL), clear chapters
+    chapters.value = [];
+    chaptersLoading.value = false;
+  }
+});
 
 // Dropdown state
 const openDropdown = ref<string | null>(null);
 
+// Watch for dropdown open/close to calculate height
+watch(openDropdown, (newValue) => {
+  if (newValue) {
+    // Wait for next tick to ensure dropdown is rendered
+    nextTick(() => {
+      calculateDropdownHeight();
+    });
+  }
+});
+
 const toggleDropdown = (key: string, event: MouseEvent) => {
   event.stopPropagation();
-  openDropdown.value = openDropdown.value === key ? null : key;
+  const wasOpen = openDropdown.value === key;
+  openDropdown.value = wasOpen ? null : key;
+
+  // Emit events for parent to coordinate carousel collapse
+  if (wasOpen) {
+    emit('dropdown-closed');
+  } else {
+    emit('dropdown-opened');
+  }
 };
 
 const closeDropdown = () => {
+  const wasOpen = openDropdown.value !== null;
   openDropdown.value = null;
+  if (wasOpen) {
+    emit('dropdown-closed');
+  }
 };
 
-const selectSuggestion = (text: string) => {
-  input.value = text;
+const selectChapter = (chapter: { value: string; label: string; description?: string; level: number; chapterNumber?: number }) => {
+  // Build the chapter text with number in parentheses if available
+  const chapterText = chapter.chapterNumber !== undefined ?
+    `${chapter.label} (Chapter ${chapter.chapterNumber + 1})` :
+    chapter.label;
+
+  // Use different text based on which pill opened the dropdown
+  if (openDropdown.value === 'quiz') {
+    input.value = `Quiz me on ${chapterText}`;
+  } else {
+    input.value = `Give me a lesson on ${chapterText}`;
+  }
   closeDropdown();
 };
 
-const currentSuggestions = computed(() => {
-  return subjectSuggestions[props.subject] || subjectSuggestions.GENERAL;
-});
+const selectSuggestion = (text: string) => {
+  // For hardcoded suggestions, use exact text
+  input.value = text;
+  closeDropdown();
+};
 
 // Click outside handler
 const handleClickOutside = () => {
@@ -244,10 +351,12 @@ const handleClickOutside = () => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
+  window.addEventListener('resize', calculateDropdownHeight);
 });
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
+  window.removeEventListener('resize', calculateDropdownHeight);
 });
 
 const handleEnterKey = (event: KeyboardEvent) => {

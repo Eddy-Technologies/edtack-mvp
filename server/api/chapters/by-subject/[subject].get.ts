@@ -34,7 +34,8 @@ export default defineEventHandler(async (event) => {
       value: chapter.name,
       label: chapter.display_name,
       description: chapter.description,
-      level: chapter.level
+      level: chapter.level,
+      chapterNumber: chapter.sort_order
     })) || [];
 
     return {
