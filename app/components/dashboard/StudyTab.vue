@@ -38,18 +38,9 @@
           />
         </div>
 
-        <!-- Has Credits Filter -->
-        <div class="flex items-center h-[34px]">
-          <UCheckbox
-            v-model="filters.hasCreditsOnly"
-            label="Credits only"
-            @update:model-value="fetchSubjects"
-          />
-        </div>
-
         <!-- Clear Button -->
         <button
-          v-if="filters.syllabusType || filters.subject || filters.hasCreditsOnly"
+          v-if="filters.syllabusType || filters.subject"
           class="text-sm text-gray-500 hover:text-gray-700 h-[34px]"
           @click="clearFilters"
         >
@@ -304,8 +295,7 @@ const selectedSubjectData = computed(() => {
 // Filters
 const filters = reactive({
   syllabusType: '',
-  subject: '',
-  hasCreditsOnly: false
+  subject: ''
 });
 
 // Filter options (will be populated from data)
@@ -338,7 +328,6 @@ const fetchSubjects = async () => {
     const queryParams = new URLSearchParams();
     if (filters.syllabusType) queryParams.append('syllabus_type', filters.syllabusType);
     if (filters.subject) queryParams.append('subject', filters.subject);
-    if (filters.hasCreditsOnly) queryParams.append('has_credits', 'true');
     // Pass role to avoid redundant DB query on backend
     if (meStore.user_role) queryParams.append('role', meStore.user_role);
 
@@ -461,7 +450,6 @@ const selectSubject = async (subjectName: string) => {
 const clearFilters = () => {
   filters.syllabusType = '';
   filters.subject = '';
-  filters.hasCreditsOnly = false;
   fetchSubjects();
 };
 

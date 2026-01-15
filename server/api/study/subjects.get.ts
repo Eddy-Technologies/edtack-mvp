@@ -11,7 +11,6 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event);
     const syllabusType = query.syllabus_type as string;
     const subjectFilter = query.subject as string;
-    const hasCreditsOnly = query.has_credits === 'true';
     // Role is passed from frontend (already available in meStore) to avoid extra DB query
     const role = query.role as string;
 
@@ -85,11 +84,6 @@ export default defineEventHandler(async (event) => {
       userTasksQuery = userTasksQuery.eq('user_tasks.assignee_user_info_id', userInfo.id);
     }
 
-    // Apply credits filter at database level (if hasCreditsOnly)
-    if (hasCreditsOnly) {
-      userTasksQuery = userTasksQuery.gt('user_tasks.credit', 0);
-    }
-
     // Execute both queries in parallel
     const [subjectsResult, userTasksResult] = await Promise.all([
       subjectsQuery,
@@ -130,17 +124,9 @@ export default defineEventHandler(async (event) => {
       })),
     }));
 
-    // Filter subjects that have no tasks when hasCreditsOnly is true
-    let filteredSubjects = subjects;
-    if (hasCreditsOnly) {
-      filteredSubjects = subjects.filter((subject: any) =>
-        subject.chapters.some((chapter: any) => chapter.user_tasks_chapters.length > 0)
-      );
-    }
-
     return {
       success: true,
-      subjects: filteredSubjects,
+      subjects: subjects,
     };
   } catch (error: any) {
     console.error('Error in study subjects endpoint:', error);
