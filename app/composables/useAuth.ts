@@ -18,6 +18,7 @@ export const useAuth = () => {
   const supabase = useSupabaseClient();
   const meStore = useMeStore();
   const baseUrl = useRuntimeConfig().public.baseUrl;
+  const { clearCache: clearCreditCache } = useCredit();
 
   const signUp = async (input: SignUpReq) => {
     const response = await $fetch('/api/auth/register', {
@@ -70,6 +71,9 @@ export const useAuth = () => {
     // Sign out from Supabase client side
     await supabase.auth.signOut();
     meStore.resetMe();
+    // Clear credit cache to prevent showing previous user's credits
+    clearCreditCache();
+
     console.log('User signed out');
     return;
   };
