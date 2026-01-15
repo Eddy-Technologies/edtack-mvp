@@ -10,7 +10,6 @@ interface Chapter {
   bestScore?: number;
   totalScore?: number;
   completedAt?: string | null;
-  generationStartedAt?: string | null;
   credit: number;
   hasQuiz?: boolean;
 }
@@ -154,9 +153,6 @@ const getStatusVariant = (status: string) => {
           <span v-if="chapter.completedAt" class="text-sm text-green-600">
             ✓ Completed • Best: {{ chapter.bestScore }}%
           </span>
-          <span v-else-if="chapter.status === 'GENERATING'" class="text-sm text-blue-600">
-            Generating quiz...
-          </span>
         </div>
 
         <!-- Inline Actions -->
@@ -168,11 +164,11 @@ const getStatusVariant = (status: string) => {
               v-if="!chapter.hasQuiz && task.status !== 'CLOSED'"
               color="primary"
               size="sm"
-              :loading="props.isChapterGenerating(chapter.id)"
-              :disabled="props.isChapterGenerating(chapter.id)"
+              :loading="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
+              :disabled="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
               @click.stop="emit('start-quiz', task, chapter)"
             >
-              {{ props.isChapterGenerating(chapter.id) ? 'Generating quiz...' : 'Start Quiz' }}
+              {{ chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id) ? 'Generating quiz...' : 'Start Quiz' }}
             </UButton>
 
             <!-- Review -->
@@ -197,7 +193,7 @@ const getStatusVariant = (status: string) => {
               {{
                 chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)
                   ? 'Generating quiz...'
-                  : (chapter.completedAt ? 'Reattempt' : 'Attempt Quizz')
+                  : (chapter.completedAt ? 'Reattempt' : 'Attempt Quiz')
               }}
             </UButton>
           </template>

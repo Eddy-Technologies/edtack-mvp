@@ -333,7 +333,7 @@
               Close
             </UButton>
             <UButton
-              v-if="props.mode === 'review'"
+              v-if="localMode === 'review'"
               color="primary"
               size="lg"
               @click="handleReattempt"
@@ -436,6 +436,9 @@ const quizResults = ref<any>(null);
 const questionRefs = ref<HTMLElement[]>([]);
 const explanationBodies = ref<Record<number, any>>({});
 
+// Internal mode state (synced from props)
+const localMode = ref<'attempt' | 'review' | 'parent-review'>(props.mode || 'attempt');
+
 // Helper function to parse explanations as markdown
 const formatQuestionExplanation = async (explanation: string) => {
   if (!explanation) return null;
@@ -520,6 +523,8 @@ const submitQuiz = async () => {
       // Store results and show results view
       quizResults.value = response;
       showResults.value = true;
+      // Change mode to review
+      localMode.value = 'review';
 
       // Emit event to refresh subjects list
       emit('quiz-submitted', response.latestScore, response.latestTotalScore);
@@ -555,7 +560,7 @@ const loadResults = async () => {
     let resultsResponse;
 
     // Use different endpoint for parent review mode
-    if (props.mode === 'parent-review' && props.assigneeUserInfoId) {
+    if (localMode.value === 'parent-review' && props.assigneeUserInfoId) {
       resultsResponse = await $fetch(`/api/quiz/${props.userTasksChapterId}/attempts/${props.assigneeUserInfoId}`, {
         method: 'GET',
       });
@@ -604,6 +609,13 @@ watch(() => props.isOpen, async (newValue) => {
     }
   }
 });
+
+// Sync localMode with props.mode changes
+watch(() => props.mode, (newMode) => {
+  if (newMode) {
+    localMode.value = newMode;
+  }
+}, { immediate: true });
 
 // Check if quiz is completed and decide what to load
 const checkAndLoadQuiz = async () => {

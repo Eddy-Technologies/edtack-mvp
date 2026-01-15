@@ -19,7 +19,6 @@ interface Chapter {
   bestScore?: number;
   totalScore?: number;
   completedAt?: string | null;
-  generationStartedAt?: string | null;
   credit: number;
   hasQuiz?: boolean;
 }
@@ -180,6 +179,10 @@ const fetchTasks = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const handleQuizSubmitted = async () => {
+  await fetchTasks();
 };
 
 const fetchChildren = async () => {
@@ -553,7 +556,7 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
       :mode="modalMode"
       :assignee-user-info-id="modalAssigneeId"
       @close="closeQuizModal"
-      @quiz-completed="fetchTasks"
+      @quiz-submitted="handleQuizSubmitted"
       @reattempt="handleReattempt"
     />
   </div>

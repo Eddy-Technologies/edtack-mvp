@@ -40,7 +40,6 @@ export default defineEventHandler(async (event) => {
           score,
           total_score,
           completed_at,
-          generation_started_at,
           chapters!inner(name, display_name, subject_id, sort_order),
           user_tasks_chapters_questions(id)
         )
@@ -127,7 +126,6 @@ export default defineEventHandler(async (event) => {
         bestScore: utc.score && utc.total_score ? Math.round((utc.score / utc.total_score) * 100) : 0,
         totalScore: utc.total_score,
         completedAt: utc.completed_at,
-        generationStartedAt: utc.generation_started_at,
         credit: task.credit, // Credit per chapter
         hasQuiz: (utc.user_tasks_chapters_questions?.length || 0) > 0
       })) || [];

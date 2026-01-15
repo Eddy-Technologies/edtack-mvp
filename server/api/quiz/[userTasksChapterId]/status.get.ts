@@ -6,7 +6,6 @@
  *
  * Returns:
  * - status: 'OPEN' | 'GENERATING' | 'COMPLETED' | 'EXPIRED'
- * - generationStartedAt: ISO timestamp (if GENERATING)
  * - hasQuiz: boolean (whether questions exist)
  */
 
@@ -32,7 +31,7 @@ export default defineEventHandler(async (event) => {
     const [chapterResult, countResult] = await Promise.all([
       supabase
         .from('user_tasks_chapters')
-        .select('status, generation_started_at')
+        .select('status')
         .eq('id', userTasksChapterId)
         .single(),
       supabase
@@ -57,28 +56,9 @@ export default defineEventHandler(async (event) => {
 
     const hasQuiz = (count || 0) > 0;
 
-    // Auto-reset stale generations (>10 minutes)
-    const GENERATION_TIMEOUT_MS = 10 * 60 * 1000;
-    let status = chapterData.status;
-
-    if (status === TASK_CHAPTER_STATUS.GENERATING && chapterData.generation_started_at) {
-      const startedAt = new Date(chapterData.generation_started_at).getTime();
-      const isStale = Date.now() - startedAt > GENERATION_TIMEOUT_MS;
-
-      if (isStale) {
-        console.log('[status] Auto-resetting stale generation for:', userTasksChapterId);
-        await supabase
-          .from('user_tasks_chapters')
-          .update({ status: TASK_CHAPTER_STATUS.OPEN, generation_started_at: null })
-          .eq('id', userTasksChapterId);
-        status = TASK_CHAPTER_STATUS.OPEN;
-      }
-    }
-
     return {
       success: true,
-      status,
-      generationStartedAt: chapterData.generation_started_at,
+      status: chapterData.status,
       hasQuiz,
     };
   } catch (error: any) {
