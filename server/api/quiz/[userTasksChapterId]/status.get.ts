@@ -10,7 +10,6 @@
  */
 
 import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 
 export default defineEventHandler(async (event) => {
   try {
