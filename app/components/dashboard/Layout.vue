@@ -13,9 +13,7 @@
         <UIcon name="i-lucide-menu" class="w-6 h-6 text-gray-700" />
       </button>
       <NuxtLink to="/" class="flex items-center space-x-2">
-        <div class="w-7 h-7 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
-          <span class="text-white font-bold text-xs">E</span>
-        </div>
+        <AppLogo size="sm" />
         <span class="text-base font-semibold text-gray-900">StudyWithEddy</span>
       </NuxtLink>
       <Button
@@ -33,9 +31,7 @@
         <!-- Drawer Header -->
         <div class="px-4 py-4 border-b border-gray-200 flex items-center justify-between">
           <NuxtLink to="/" class="flex items-center space-x-2" @click="isDrawerOpen = false">
-            <div class="w-7 h-7 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-xs">E</span>
-            </div>
+            <AppLogo size="sm" />
             <span class="text-base font-semibold text-gray-900">StudyWithEddy</span>
           </NuxtLink>
           <button
@@ -163,9 +159,7 @@
       <div class="px-6 py-6 border-b border-gray-200">
         <div class="flex items-center space-x-3">
           <NuxtLink to="/" class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">E</span>
-            </div>
+            <AppLogo size="md" />
             <div>
               <h1 class="text-lg font-semibold text-gray-900">StudyWithEddy</h1>
               <p class="text-xs text-gray-500">Dashboard</p>
@@ -388,6 +382,7 @@ import { useRoute, useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 import UserAvatar from '~/components/common/UserAvatar.vue';
 import MobileDrawer from '~/components/common/MobileDrawer.vue';
+import AppLogo from '~/components/common/AppLogo.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useMeStore } from '~/stores/me';
 import { useFeatureFlags } from '~/composables/useFeatureFlags';

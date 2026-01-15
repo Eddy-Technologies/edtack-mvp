@@ -8,9 +8,7 @@
 
       <div class="relative z-10 text-center">
         <div class="flex justify-center mb-6">
-          <div class="w-20 h-20 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-2xl shadow-lg shadow-secondary-500/20 flex items-center justify-center">
-            <span class="text-white font-bold text-3xl">E</span>
-          </div>
+          <AppLogo size="xl" />
         </div>
         <h2 class="text-3xl font-heading font-bold text-slate-900 mb-4">StudyWithEddy</h2>
         <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
@@ -95,6 +93,7 @@
 
 <script setup lang="ts">
 import { copy } from './copy';
+import AppLogo from '~/components/common/AppLogo.vue';
 
 const subjects = [
   'Biology',
