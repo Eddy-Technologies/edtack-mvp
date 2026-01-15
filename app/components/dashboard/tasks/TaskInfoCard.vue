@@ -165,11 +165,11 @@ const getStatusVariant = (status: string) => {
           <template v-if="!isParent">
             <!-- Start Quiz -->
             <UButton
-              v-if="!chapter.hasQuiz"
+              v-if="!chapter.hasQuiz && task.status !== 'CLOSED'"
               color="primary"
               size="sm"
               :loading="props.isChapterGenerating(chapter.id)"
-              :disabled="task.status === 'CLOSED' || props.isChapterGenerating(chapter.id)"
+              :disabled="props.isChapterGenerating(chapter.id)"
               @click.stop="emit('start-quiz', task, chapter)"
             >
               {{ props.isChapterGenerating(chapter.id) ? 'Generating quiz...' : 'Start Quiz' }}
