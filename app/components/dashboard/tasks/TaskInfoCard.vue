@@ -99,35 +99,25 @@ const getStatusVariant = (status: string) => {
     <div class="space-y-2 mb-4">
       <!-- Row 1: Task Name + Status + Actions -->
       <div class="flex items-center justify-between gap-4">
-        <h3 class="text-lg font-semibold text-gray-900">{{ task.name }}</h3>
-
+        <!-- Left: Task Name + Status Badge -->
         <div class="flex items-center gap-2">
+          <h3 class="text-lg font-semibold text-gray-900">{{ task.name }}</h3>
           <UBadge :color="getStatusColor(task.status)" :variant="getStatusVariant(task.status)">
             {{ getStatusText(task.status) }}
           </UBadge>
-
-          <!-- Action Buttons (Parent Only) -->
-          <template v-if="isParent">
-            <UButton
-              variant="ghost"
-              size="sm"
-              icon="i-lucide-edit"
-              @click.stop="emit('edit-task')"
-            >
-              Edit
-            </UButton>
-            <UButton
-              v-if="task.status === 'OPEN'"
-              variant="ghost"
-              size="sm"
-              color="red"
-              icon="i-lucide-x-circle"
-              @click.stop="emit('close-task')"
-            >
-              Close Task
-            </UButton>
-          </template>
         </div>
+
+        <!-- Right: Action Buttons (Parent Only) -->
+        <template v-if="isParent">
+          <UButton
+            variant="ghost"
+            size="sm"
+            icon="i-lucide-edit"
+            @click.stop="emit('edit-task')"
+          >
+            Edit
+          </UButton>
+        </template>
       </div>
 
       <!-- Row 2: Assignee + Credits + Chapters -->

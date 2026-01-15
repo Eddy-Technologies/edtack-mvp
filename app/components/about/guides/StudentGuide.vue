@@ -13,6 +13,7 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           <a
             href="#chat"
+            @click.prevent="scrollToSection('chat')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-message-circle" class="w-5 h-5 flex-shrink-0" />
@@ -20,7 +21,17 @@
             <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
           <a
+            href="#family-management"
+            @click.prevent="scrollToSection('family-management')"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
+          >
+            <UIcon name="i-lucide-users" class="w-5 h-5 flex-shrink-0" />
+            <span class="text-sm font-medium">Family Management</span>
+            <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
             href="#study-tab"
+            @click.prevent="scrollToSection('study-tab')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-book-open" class="w-5 h-5 flex-shrink-0" />
@@ -29,6 +40,7 @@
           </a>
           <a
             href="#task-tab"
+            @click.prevent="scrollToSection('task-tab')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-clipboard-check" class="w-5 h-5 flex-shrink-0" />
@@ -37,6 +49,7 @@
           </a>
           <a
             href="#shop-tabs"
+            @click.prevent="scrollToSection('shop-tabs')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-shopping-bag" class="w-5 h-5 flex-shrink-0" />
@@ -45,6 +58,7 @@
           </a>
           <a
             href="#credits"
+            @click.prevent="scrollToSection('credits')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-primary-50 hover:text-primary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-coins" class="w-5 h-5 flex-shrink-0" />
@@ -79,11 +93,8 @@
           Select from different AI personalities - Eddy, Pooh, Snorlax, or Einstein. Each has a unique teaching style!
         </p>
 
-        <!-- Screenshot Placeholder -->
-        <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-          <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-          <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: AI Tutor Selection</p>
-        </div>
+        <!-- Screenshot -->
+        <img src="/assets/guide-screenshots/student-chat-menu-expanded.png" alt="AI Tutor Selection" class="w-full rounded-lg shadow-md">
       </div>
 
       <!-- Chat Features -->
@@ -120,10 +131,16 @@
         </div>
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Chat Interface</p>
+      <!-- Screenshots -->
+      <div class="space-y-4">
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Chat Interface</h5>
+          <img src="/assets/guide-screenshots/student-default-chat.png" alt="Chat Interface" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Auto-Complete Suggestions</h5>
+          <img src="/assets/guide-screenshots/student-chat-autocomplete expanded.png" alt="Chat Auto-Complete" class="w-full rounded-lg shadow-md">
+        </div>
       </div>
     </div>
 
@@ -188,11 +205,8 @@
         </div>
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Study Tab Interface</p>
-      </div>
+      <!-- Screenshot -->
+      <img src="/assets/guide-screenshots/student-study-tab.png" alt="Study Tab Interface" class="w-full rounded-lg shadow-md">
     </div>
 
     <!-- 3. Task Tab -->
@@ -259,11 +273,8 @@
         </div>
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Task Tab Interface</p>
-      </div>
+      <!-- Screenshot -->
+      <img src="/assets/guide-screenshots/student-task-tab.png" alt="Task Tab Interface" class="w-full rounded-lg shadow-md">
     </div>
 
     <!-- 4. Shop Tabs -->
@@ -293,11 +304,8 @@
           Explore items from various categories - toys, games, books, electronics, and more. Each item shows its credit cost.
         </p>
 
-        <!-- Screenshot Placeholder -->
-        <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-6 flex flex-col items-center justify-center">
-          <UIcon name="i-lucide-image" class="w-10 h-10 text-slate-400 mb-2" />
-          <p class="text-xs text-slate-500 font-medium">Screenshot Placeholder: Shop Browse</p>
-        </div>
+        <!-- Screenshot -->
+        <img src="/assets/guide-screenshots/student-products-tab.png" alt="Shop Browse" class="w-full rounded-lg shadow-md">
       </div>
 
       <!-- Cart & Wishlist -->
@@ -311,11 +319,8 @@
             Add items to your cart and review before submitting for parent approval.
           </p>
 
-          <!-- Screenshot Placeholder -->
-          <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-4 flex flex-col items-center justify-center">
-            <UIcon name="i-lucide-image" class="w-8 h-8 text-slate-400 mb-2" />
-            <p class="text-xs text-slate-500 font-medium">Screenshot: Cart</p>
-          </div>
+          <!-- Screenshot -->
+          <img src="/assets/guide-screenshots/student-cart-tab.png" alt="Shopping Cart" class="w-full rounded-lg shadow-md">
         </div>
 
         <div class="rounded-xl bg-slate-50 p-6">
@@ -327,11 +332,8 @@
             Save items you're interested in for later when you have enough credits.
           </p>
 
-          <!-- Screenshot Placeholder -->
-          <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-4 flex flex-col items-center justify-center">
-            <UIcon name="i-lucide-image" class="w-8 h-8 text-slate-400 mb-2" />
-            <p class="text-xs text-slate-500 font-medium">Screenshot: Wishlist</p>
-          </div>
+          <!-- Screenshot -->
+          <img src="/assets/guide-screenshots/student-wishlist-tab.png" alt="Wishlist" class="w-full rounded-lg shadow-md">
         </div>
       </div>
 
@@ -363,12 +365,6 @@
             <span class="text-sm text-slate-600">Track your order status in Orders tab</span>
           </div>
         </div>
-
-        <!-- Screenshot Placeholder -->
-        <div class="mt-4 rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-6 flex flex-col items-center justify-center">
-          <UIcon name="i-lucide-image" class="w-10 h-10 text-slate-400 mb-2" />
-          <p class="text-xs text-slate-500 font-medium">Screenshot Placeholder: Checkout</p>
-        </div>
       </div>
 
       <!-- Orders Tracking -->
@@ -387,11 +383,8 @@
           Check the status of your submitted orders - pending, approved, or declined. Declined orders return credits automatically.
         </p>
 
-        <!-- Screenshot Placeholder -->
-        <div class="mt-4 rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-6 flex flex-col items-center justify-center">
-          <UIcon name="i-lucide-image" class="w-10 h-10 text-slate-400 mb-2" />
-          <p class="text-xs text-slate-500 font-medium">Screenshot Placeholder: Orders</p>
-        </div>
+        <!-- Screenshot -->
+        <img src="/assets/guide-screenshots/student-orders-tab.png" alt="Orders Tracking" class="w-full rounded-lg shadow-md mt-4">
       </div>
     </div>
 
@@ -413,12 +406,6 @@
         <p class="text-sm text-slate-600 mb-4">
           Check your credit balance anytime in the top navigation bar or on your dashboard. See available credits and pending credits from submitted orders.
         </p>
-
-        <!-- Screenshot Placeholder -->
-        <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-          <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-          <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Credit Balance Display</p>
-        </div>
       </div>
 
       <!-- How to Earn -->
@@ -465,8 +452,108 @@
         </ul>
       </div>
     </div>
+
+    <!-- 6. Family Management -->
+    <div id="family-management" class="scroll-mt-6 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 space-y-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-slate-800">6. Family Management</h3>
+        <NuxtLink
+          to="/dashboard?tab=settings"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
+        >
+          <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+          Open Settings
+        </NuxtLink>
+      </div>
+
+      <p class="text-base text-slate-600">
+        Connect with your parent account to enable family features like task assignments, credit transfers, and order approvals.
+      </p>
+
+      <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800 mb-4">
+        <strong>Getting Started:</strong> Your parent will send you a family invitation. Accept it to link your accounts!
+      </div>
+
+      <!-- Family Connection Process -->
+      <div class="rounded-xl bg-slate-50 p-5">
+        <h4 class="text-base font-semibold text-slate-800 mb-3">How to Connect</h4>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">1</div>
+            <span class="text-sm text-slate-600">Your parent sends you a family invitation from their Family Management dashboard</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
+            <span class="text-sm text-slate-600">You'll see a pending invitation notification in your account</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
+            <span class="text-sm text-slate-600">Click "Accept" to link your accounts and enable family features</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
+            <span class="text-sm text-slate-600">Once connected, your parent can assign tasks, transfer credits, and approve your shop orders</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="rounded-xl bg-slate-50 p-6">
+        <h4 class="text-base font-semibold text-slate-800 mb-4">Family Features</h4>
+        <div class="grid lg:grid-cols-2 gap-4">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <UIcon name="i-lucide-clipboard-check" class="w-4 h-4 text-primary-600" />
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Receive Tasks</h5>
+              <p class="text-sm text-slate-600">Get learning assignments from your parent with credit rewards</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <UIcon name="i-lucide-coins" class="w-4 h-4 text-primary-600" />
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Get Credits</h5>
+              <p class="text-sm text-slate-600">Receive credit transfers and rewards from your parent</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <UIcon name="i-lucide-shopping-bag" class="w-4 h-4 text-primary-600" />
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Shop Orders</h5>
+              <p class="text-sm text-slate-600">Submit orders for parent approval using your earned credits</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <UIcon name="i-lucide-bar-chart" class="w-4 h-4 text-primary-600" />
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Track Progress</h5>
+              <p class="text-sm text-slate-600">Your parent can monitor your learning progress and achievements</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screenshot -->
+      <div>
+        <h5 class="text-sm font-medium text-slate-700 mb-2">Pending Family Invitation</h5>
+        <img src="/assets/guide-screenshots/student-pending-family-invite.png" alt="Pending Family Invitation" class="w-full rounded-lg shadow-md">
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const scrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
 </script>

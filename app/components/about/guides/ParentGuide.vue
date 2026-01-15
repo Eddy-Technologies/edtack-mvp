@@ -14,6 +14,7 @@
         <div class="grid md:grid-cols-2 gap-3">
           <a
             href="#adding-children"
+            @click.prevent="scrollToSection('adding-children')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-user-plus" class="w-5 h-5 flex-shrink-0" />
@@ -22,6 +23,7 @@
           </a>
           <a
             href="#transferring-credits"
+            @click.prevent="scrollToSection('transferring-credits')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-coins" class="w-5 h-5 flex-shrink-0" />
@@ -30,6 +32,7 @@
           </a>
           <a
             href="#assigning-tasks"
+            @click.prevent="scrollToSection('assigning-tasks')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-clipboard-check" class="w-5 h-5 flex-shrink-0" />
@@ -38,6 +41,7 @@
           </a>
           <a
             href="#order-approval"
+            @click.prevent="scrollToSection('order-approval')"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
           >
             <UIcon name="i-lucide-shopping-cart" class="w-5 h-5 flex-shrink-0" />
@@ -87,10 +91,20 @@
         </div>
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Adding Children Process</p>
+      <!-- Screenshots -->
+      <div class="space-y-4">
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Family Management Tab</h5>
+          <img src="/assets/guide-screenshots/parent-family-management-tab.png" alt="Family Management Tab" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Invite Family Member Modal</h5>
+          <img src="/assets/guide-screenshots/parent-invite-family-modal.png" alt="Invite Family Member" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Pending Invitation</h5>
+          <img src="/assets/guide-screenshots/parent-pending-invite-family-management-tab.png" alt="Pending Invitation" class="w-full rounded-lg shadow-md">
+        </div>
       </div>
     </div>
 
@@ -167,11 +181,8 @@
         </div>
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Credit Transfer Interface</p>
-      </div>
+      <!-- Screenshot -->
+      <img src="/assets/guide-screenshots/parent-credit-tab.png" alt="Credit Transfer Interface" class="w-full rounded-lg shadow-md">
     </div>
 
     <!-- 3. Assigning Tasks and Review -->
@@ -241,6 +252,15 @@
               <p class="text-sm text-slate-600">View completion status, scores, and provide feedback in your dashboard</p>
             </div>
           </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">6</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Close Task</h5>
+              <p class="text-sm text-slate-600">Once reviewed, you can close the task to mark it as complete and clear it from the active task list</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -255,10 +275,28 @@
         </div>
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Task Assignment Interface</p>
+      <!-- Screenshots -->
+      <div class="space-y-4">
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Tasks Tab Overview</h5>
+          <img src="/assets/guide-screenshots/parent-task-tab.png" alt="Tasks Tab" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Assign Task - Select Subject & Chapters</h5>
+          <img src="/assets/guide-screenshots/parent-assign-task-modal-1.png" alt="Assign Task Step 1" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Assign Task - Set Rewards & Assign Students</h5>
+          <img src="/assets/guide-screenshots/parent-assign-task-modal-2.png" alt="Assign Task Step 2" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Edit Task - to make changes to the task details</h5>
+          <img src="/assets/guide-screenshots/parent-edit-task.png" alt="Edit Task" class="w-full rounded-lg shadow-md">
+        </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Close Task - students will not be able to attempt task once close</h5>
+          <img src="/assets/guide-screenshots/parents-close-task.png" alt="Close Task d" class="w-full rounded-lg shadow-md">
+        </div>
       </div>
     </div>
 
@@ -305,14 +343,17 @@
         <strong>Note:</strong> Declined orders automatically return credits to your child's account. No money has been transferred - this is a pledge system.
       </div>
 
-      <!-- Screenshot Placeholder -->
-      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
-        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
-        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Order Approval Interface</p>
-      </div>
+      <!-- Screenshot -->
+      <img src="/assets/guide-screenshots/parent-order-request-tab.png" alt="Order Approval Interface" class="w-full rounded-lg shadow-md">
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const scrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
 </script>
