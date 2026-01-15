@@ -1,19 +1,76 @@
 <template>
-  <div class="space-y-6">
-    <!-- Dashboard Overview -->
-    <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Your Dashboard</h3>
-      <p class="text-slate-600 mb-4">Access Dashboard → Family to manage your children, approve orders, create tasks, and transfer credits.</p>
+  <div class="space-y-8">
+    <!-- Header Section -->
+    <div class="rounded-2xl bg-gradient-to-br from-secondary-50 to-white p-8 shadow-sm ring-1 ring-slate-100">
+      <h2 class="text-2xl font-bold text-slate-800 mb-4">Parent Guide</h2>
+      <p class="text-base text-slate-600 mb-6">
+        Welcome to the Parent Guide! Here you'll learn how to manage your children's learning journey,
+        assign tasks, transfer credits, and approve their shop orders. Use the quick links below to jump
+        to any section.
+      </p>
+
+      <!-- Table of Contents with Quick Links -->
+      <div class="rounded-xl bg-white p-6 shadow-sm">
+        <div class="grid md:grid-cols-2 gap-3">
+          <a
+            href="#adding-children"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+          >
+            <UIcon name="i-lucide-user-plus" class="w-5 h-5 flex-shrink-0" />
+            <span class="text-sm font-medium">Adding Children</span>
+            <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
+            href="#transferring-credits"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+          >
+            <UIcon name="i-lucide-coins" class="w-5 h-5 flex-shrink-0" />
+            <span class="text-sm font-medium">Transferring Credits</span>
+            <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
+            href="#assigning-tasks"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+          >
+            <UIcon name="i-lucide-clipboard-check" class="w-5 h-5 flex-shrink-0" />
+            <span class="text-sm font-medium">Assigning Tasks & Review</span>
+            <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
+            href="#order-approval"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-50 hover:bg-secondary-50 hover:text-secondary-700 text-slate-700 transition-all group"
+          >
+            <UIcon name="i-lucide-shopping-cart" class="w-5 h-5 flex-shrink-0" />
+            <span class="text-sm font-medium">Order Approval</span>
+            <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+        </div>
+      </div>
     </div>
 
-    <!-- Adding Children -->
-    <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Adding Children</h3>
+    <!-- 1. Adding Children -->
+    <div id="adding-children" class="scroll-mt-6 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 space-y-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-slate-800">1. Adding Children</h3>
+        <NuxtLink
+          to="/dashboard?tab=family&subtab=management"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
+        >
+          <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+          Open Management
+        </NuxtLink>
+      </div>
+
+      <p class="text-base text-slate-600">
+        Connect your children's student accounts to your parent account to manage their learning and approve orders.
+      </p>
+
       <div class="rounded-xl bg-slate-50 p-5">
+        <h4 class="text-base font-semibold text-slate-800 mb-3">Step-by-Step Process</h4>
         <div class="space-y-3">
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">1</div>
-            <span class="text-sm text-slate-600">Child creates student account</span>
+            <span class="text-sm text-slate-600">Child creates a student account at StudyWithEddy</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
@@ -21,82 +78,237 @@
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
-            <span class="text-sm text-slate-600">Click "Add Family Member" and enter child's email</span>
+            <span class="text-sm text-slate-600">Click "Add Family Member" and enter child's email address</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
-            <span class="text-sm text-slate-600">Child accepts invitation</span>
+            <span class="text-sm text-slate-600">Child accepts the invitation from their account</span>
           </div>
         </div>
       </div>
+
+      <!-- Screenshot Placeholder -->
+      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
+        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
+        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Adding Children Process</p>
+      </div>
     </div>
 
-    <!-- Credit System -->
-    <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Credit System ($1 = 100 credits)</h3>
+    <!-- 2. Transferring Credits -->
+    <div id="transferring-credits" class="scroll-mt-6 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 space-y-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-slate-800">2. Transferring Credits</h3>
+        <NuxtLink
+          to="/dashboard?tab=family"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
+        >
+          <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+          Open Dashboard
+        </NuxtLink>
+      </div>
+
+      <p class="text-base text-slate-600">
+        Transfer credits to your children so they can use them to shop for items or as rewards for completing tasks.
+      </p>
 
       <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800 mb-4">
-        <strong>Pledge System:</strong> StudyWithEddy doesn't handle money. You pledge virtual credits and complete real purchases directly with vendors.
+        <strong>Remember:</strong> $1 = 100 credits. StudyWithEddy uses a pledge system - these are virtual credits,
+        not real money transfers.
       </div>
 
-      <div class="grid lg:grid-cols-3 gap-4">
-        <div class="rounded-xl bg-slate-50 p-4 text-center">
-          <h5 class="font-medium text-slate-800 mb-1">Pledge</h5>
-          <p class="text-sm text-slate-600">Set aside virtual credits</p>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4 text-center">
-          <h5 class="font-medium text-slate-800 mb-1">Earn</h5>
-          <p class="text-sm text-slate-600">Children earn via tasks</p>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4 text-center">
-          <h5 class="font-medium text-slate-800 mb-1">Approve</h5>
-          <p class="text-sm text-slate-600">Review & complete purchases</p>
+      <!-- Credit Flow Visualization -->
+      <div class="rounded-xl bg-slate-50 p-6">
+        <h4 class="text-base font-semibold text-slate-800 mb-4">Credit Flow</h4>
+        <div class="grid lg:grid-cols-3 gap-4">
+          <div class="rounded-xl bg-white p-4 text-center shadow-sm">
+            <div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <UIcon name="i-lucide-wallet" class="w-6 h-6 text-secondary-600" />
+            </div>
+            <h5 class="font-medium text-slate-800 mb-1">1. Pledge Credits</h5>
+            <p class="text-sm text-slate-600">Set aside virtual credits for your children</p>
+          </div>
+          <div class="rounded-xl bg-white p-4 text-center shadow-sm">
+            <div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <UIcon name="i-lucide-arrow-right-left" class="w-6 h-6 text-secondary-600" />
+            </div>
+            <h5 class="font-medium text-slate-800 mb-1">2. Transfer</h5>
+            <p class="text-sm text-slate-600">Send credits to specific children</p>
+          </div>
+          <div class="rounded-xl bg-white p-4 text-center shadow-sm">
+            <div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <UIcon name="i-lucide-shopping-bag" class="w-6 h-6 text-secondary-600" />
+            </div>
+            <h5 class="font-medium text-slate-800 mb-1">3. Children Use</h5>
+            <p class="text-sm text-slate-600">Children shop and submit orders</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Order Approval -->
-    <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Order Approval</h3>
-
-      <div class="rounded-xl bg-slate-50 p-5 mb-4">
+      <!-- Transfer Steps -->
+      <div class="rounded-xl bg-slate-50 p-5">
+        <h4 class="text-base font-semibold text-slate-800 mb-3">How to Transfer</h4>
         <div class="space-y-3">
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">1</div>
-            <span class="text-sm text-slate-600">Child submits order using credits</span>
+            <span class="text-sm text-slate-600">Navigate to Dashboard → Family</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
-            <span class="text-sm text-slate-600">Order appears in Family → Order Requests</span>
+            <span class="text-sm text-slate-600">Find the child you want to transfer credits to</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
-            <span class="text-sm text-slate-600">Review and approve/decline</span>
+            <span class="text-sm text-slate-600">Click "Transfer Credits" and enter the amount</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
-            <span class="text-sm text-slate-600">If approved, complete real purchase with vendor</span>
+            <span class="text-sm text-slate-600">Confirm the transfer - credits appear instantly in child's account</span>
           </div>
         </div>
       </div>
 
-      <p class="text-sm text-slate-600">Declined orders return credits to child automatically.</p>
+      <!-- Screenshot Placeholder -->
+      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
+        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
+        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Credit Transfer Interface</p>
+      </div>
     </div>
 
-    <!-- Task Creation -->
-    <div class="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">Creating Tasks</h3>
-      <p class="text-slate-600 mb-4">Assign quiz-based tasks with credit rewards. Children earn credits automatically when they pass (70%+ score).</p>
+    <!-- 3. Assigning Tasks and Review -->
+    <div id="assigning-tasks" class="scroll-mt-6 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 space-y-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-slate-800">3. Assigning Tasks & Review</h3>
+        <NuxtLink
+          to="/dashboard?tab=family&subtab=tasks"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
+        >
+          <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+          Open Tasks
+        </NuxtLink>
+      </div>
+
+      <p class="text-base text-slate-600">
+        Create quiz-based learning tasks for your children with credit rewards. Children earn credits automatically
+        when they pass (70%+ score).
+      </p>
+
+      <!-- Task Flow -->
+      <div class="rounded-xl bg-slate-50 p-6">
+        <h4 class="text-base font-semibold text-slate-800 mb-4">Task Workflow</h4>
+        <div class="space-y-4">
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">1</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Create Task</h5>
+              <p class="text-sm text-slate-600">Select subject, chapters, passing score (default 70%), and credit reward amount</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">2</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Assign to Children</h5>
+              <p class="text-sm text-slate-600">Choose which children receive the task - appears in their Tasks tab</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">3</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Children Complete</h5>
+              <p class="text-sm text-slate-600">Children take the quiz and submit their answers</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">4</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Auto-Reward</h5>
+              <p class="text-sm text-slate-600">If passing score is met, credits are automatically transferred</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">5</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Review Results</h5>
+              <p class="text-sm text-slate-600">View completion status, scores, and provide feedback in your dashboard</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="grid lg:grid-cols-2 gap-4">
         <div class="rounded-xl bg-slate-50 p-4">
-          <h5 class="font-medium text-slate-800 mb-2">Setup</h5>
-          <p class="text-sm text-slate-600">Select subject, chapters, passing score, and credit reward amount.</p>
+          <h5 class="font-medium text-slate-800 mb-2">Task Setup</h5>
+          <p class="text-sm text-slate-600">Customize subject, difficulty, question count, and reward amounts to match your child's learning level.</p>
         </div>
         <div class="rounded-xl bg-slate-50 p-4">
-          <h5 class="font-medium text-slate-800 mb-2">Assignment</h5>
-          <p class="text-sm text-slate-600">Assign to specific children and track completion status in dashboard.</p>
+          <h5 class="font-medium text-slate-800 mb-2">Track Progress</h5>
+          <p class="text-sm text-slate-600">Monitor completion rates and review detailed results to understand your child's strengths and areas for improvement.</p>
         </div>
+      </div>
+
+      <!-- Screenshot Placeholder -->
+      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
+        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
+        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Task Assignment Interface</p>
+      </div>
+    </div>
+
+    <!-- 4. Order Approval -->
+    <div id="order-approval" class="scroll-mt-6 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 space-y-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-slate-800">4. Order Approval (Checking Out)</h3>
+        <NuxtLink
+          to="/dashboard?tab=family&subtab=orders"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
+        >
+          <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+          View Order Requests
+        </NuxtLink>
+      </div>
+
+      <p class="text-base text-slate-600">
+        Review and approve your children's shop orders. When approved, you complete the real purchase directly with the vendor.
+      </p>
+
+      <div class="rounded-xl bg-slate-50 p-5 mb-4">
+        <h4 class="text-base font-semibold text-slate-800 mb-3">Order Approval Process</h4>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">1</div>
+            <span class="text-sm text-slate-600">Child browses shop and submits an order using their credits</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
+            <span class="text-sm text-slate-600">Order appears in Dashboard → Family → Order Requests</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
+            <span class="text-sm text-slate-600">Review order details and decide to approve or decline</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
+            <span class="text-sm text-slate-600">If approved, complete the real purchase with the vendor using the provided link</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
+        <strong>Note:</strong> Declined orders automatically return credits to your child's account. No money has been transferred - this is a pledge system.
+      </div>
+
+      <!-- Screenshot Placeholder -->
+      <div class="rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center">
+        <UIcon name="i-lucide-image" class="w-12 h-12 text-slate-400 mb-3" />
+        <p class="text-sm text-slate-500 font-medium">Screenshot Placeholder: Order Approval Interface</p>
       </div>
     </div>
   </div>

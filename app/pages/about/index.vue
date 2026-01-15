@@ -272,8 +272,6 @@ const userGuides = ref([
   { id: 'getting-started', name: 'Getting Started', icon: 'i-lucide-play-circle' },
   { id: 'for-parents', name: 'For Parents', icon: 'i-lucide-users' },
   { id: 'for-students', name: 'For Students', icon: 'i-lucide-graduation-cap' },
-  { id: 'credits-rewards', name: 'Credits & Rewards', icon: 'i-lucide-coins' },
-  { id: 'family-features', name: 'Family Features', icon: 'i-lucide-home' },
 ]);
 
 // Function to switch tabs and update URL
@@ -333,7 +331,7 @@ onMounted(() => {
 
   // Handle guide parameter
   const guideParam = route.query.guide as string;
-  if (guideParam && ['getting-started', 'for-parents', 'for-students', 'credits-rewards', 'family-features'].includes(guideParam)) {
+  if (guideParam && ['getting-started', 'for-parents', 'for-students'].includes(guideParam)) {
     activeTab.value = 'user-guides';
     activeGuide.value = guideParam;
     isUserGuidesOpen.value = true;
