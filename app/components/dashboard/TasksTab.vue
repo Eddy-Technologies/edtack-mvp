@@ -401,11 +401,19 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
 <template>
   <div class="space-y-6">
     <!-- Instructions -->
-    <TaskInstructions />
+    <TaskInstructions :is-parent="isParent" />
 
     <!-- Action Bar -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <!-- Create Task Button (Parent Only) -->
+      <!-- Left side: Title for students -->
+      <div v-if="!isParent" class="text-lg font-semibold text-gray-900">
+        My Tasks
+      </div>
+
+      <!-- Spacer: pushes content to edges -->
+      <div class="flex-1" />
+
+      <!-- Right side: Button for parents -->
       <UButton
         v-if="isParent"
         color="primary"
@@ -415,26 +423,22 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
       >
         Create Task
       </UButton>
-
-      <div v-else class="text-lg font-semibold text-gray-900">
-        My Tasks
-      </div>
-
-      <div class="flex-1" />
     </div>
 
     <!-- Filters -->
-    <TaskFilters
-      v-model:child="selectedChild"
-      v-model:subject="selectedSubject"
-      v-model:status="selectedStatus"
-      v-model:credit-range="creditRange"
-      v-model:sort="sortBy"
-      :show-child-filter="isParent"
-      :children="children"
-      :subjects="subjects"
-      @clear="handleClearFilters"
-    />
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4">
+      <TaskFilters
+        v-model:child="selectedChild"
+        v-model:subject="selectedSubject"
+        v-model:status="selectedStatus"
+        v-model:credit-range="creditRange"
+        v-model:sort="sortBy"
+        :show-child-filter="isParent"
+        :children="children"
+        :subjects="subjects"
+        @clear="handleClearFilters"
+      />
+    </div>
 
     <!-- Stats -->
     <div class="flex items-center gap-4 text-sm text-gray-600">

@@ -405,7 +405,7 @@ const getInitialForm = () => {
   } else {
     // Create mode - empty form
     return {
-      name: '',  // Will be set by watcher
+      name: '', // Will be set by watcher
       assigneeUserInfoId: '',
       subject: '',
       chapters: [] as string[],
