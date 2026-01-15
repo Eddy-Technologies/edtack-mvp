@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4 sm:space-y-6">
     <!-- Overview Header -->
-    <OverviewHeader />
+    <!-- <OverviewHeader /> -->
 
     <!-- Parent/Student conditional - wrapped in ClientOnly to prevent SSR hydration mismatch -->
     <ClientOnly>
