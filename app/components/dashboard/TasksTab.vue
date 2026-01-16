@@ -13,6 +13,7 @@ interface Chapter {
   name: string;
   displayName: string;
   subjectName: string;
+  subjectDisplayName: string;
   sortOrder: number;
   status: string;
   score?: number;
@@ -58,7 +59,7 @@ const router = useRouter();
 const loading = ref(false);
 const tasks = ref<Task[]>([]);
 const children = ref<Child[]>([]);
-const subjects = ref<string[]>([]);
+const subjects = ref<Array<{ code: string; displayName: string }>>([]);
 const selectedChild = ref<string>('all');
 const selectedSubject = ref<string>('all');
 const selectedStatus = ref<string>('all');
@@ -159,16 +160,18 @@ const fetchTasks = async () => {
     tasks.value = response.tasks || [];
     console.log('[fetchTasks] Fetched', tasks.value.length, 'tasks');
 
-    // Extract unique subjects
-    const subjectSet = new Set<string>();
+    // Extract unique subjects with display names
+    const subjectMap = new Map<string, string>();
     tasks.value.forEach((task) => {
       task.chapters.forEach((chapter) => {
-        if (chapter.subjectName) {
-          subjectSet.add(chapter.subjectName);
+        if (chapter.subjectName && chapter.subjectDisplayName) {
+          subjectMap.set(chapter.subjectName, chapter.subjectDisplayName);
         }
       });
     });
-    subjects.value = Array.from(subjectSet).sort();
+    subjects.value = Array.from(subjectMap.entries())
+      .map(([code, displayName]) => ({ code, displayName }))
+      .sort((a, b) => a.displayName.localeCompare(b.displayName));
   } catch (error: any) {
     console.error('Failed to load tasks:', error);
     toast.add({

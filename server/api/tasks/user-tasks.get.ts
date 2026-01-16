@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
           score,
           total_score,
           completed_at,
-          chapters!inner(name, display_name, subject_id, sort_order),
+          chapters!inner(name, display_name, subject_id, sort_order, subjects(display_name)),
           user_tasks_chapters_questions(id)
         )
       `);
@@ -120,6 +120,7 @@ export default defineEventHandler(async (event) => {
         name: utc.chapters.name,
         displayName: utc.chapters.display_name,
         subjectName: utc.chapters.subject_id,
+        subjectDisplayName: utc.chapters.subjects?.display_name || utc.chapters.subject_id,
         sortOrder: utc.chapters.sort_order,
         status: utc.status,
         score: utc.score,

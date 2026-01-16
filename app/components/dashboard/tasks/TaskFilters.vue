@@ -11,7 +11,7 @@ interface Child {
 interface Props {
   showChildFilter: boolean;
   children: Child[];
-  subjects: string[];
+  subjects: Array<{ code: string; displayName: string }>;
 }
 
 defineProps<Props>();
@@ -57,7 +57,7 @@ const handleClear = () => {
       v-model="subject"
       :options="[
         { label: 'All Subjects', value: 'all' },
-        ...subjects.map(s => ({ label: s, value: s }))
+        ...subjects.map(s => ({ label: s.displayName, value: s.code }))
       ]"
       placeholder="Filter by subject"
       class="min-w-[200px]"
