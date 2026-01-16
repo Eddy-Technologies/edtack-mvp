@@ -325,7 +325,7 @@
               :text="submitButtonText"
               class="w-full sm:w-auto order-1"
               :loading="isSubmitting"
-              :disabled="isSubmitting"
+              :disabled="isSubmitting || !hasChanges"
             />
             <Button
               variant="secondary"
@@ -440,6 +440,7 @@ const isLoadingSubjects = ref(false);
 const isLoadingChapters = ref(false);
 const showChapterList = ref(false);
 const error = ref<string | null>(null);
+const initialFormData = ref<typeof form.value | null>(null);
 
 // Field locking for edit mode
 const isFieldLocked = (fieldName: string) => {
@@ -462,6 +463,36 @@ const isChapterAttempted = (chapterId: string) => {
 const hasAttemptedChapters = computed(() =>
   props.task?.chapters.some((c) => c.completedAt) || false
 );
+
+// Change detection for edit mode
+const hasChanges = computed(() => {
+  // In create mode, always allow submission
+  if (!isEditMode.value || !initialFormData.value) {
+    return true;
+  }
+
+  const current = form.value;
+  const initial = initialFormData.value;
+
+  // Check simple fields
+  if (current.name !== initial.name) return true;
+  if (current.creditPerChapter !== initial.creditPerChapter) return true;
+  if (current.requiredScore !== initial.requiredScore) return true;
+  if (current.questionsPerQuiz !== initial.questionsPerQuiz) return true;
+  if (current.status !== initial.status) return true;
+
+  // Check chapters (compare sorted arrays)
+  const currentChapters = [...current.chapters].sort();
+  const initialChapters = [...initial.chapters].sort();
+
+  if (currentChapters.length !== initialChapters.length) return true;
+
+  for (let i = 0; i < currentChapters.length; i++) {
+    if (currentChapters[i] !== initialChapters[i]) return true;
+  }
+
+  return false;
+});
 
 const childrenOptions = computed(() => {
   return children.value.map((child) => ({
@@ -777,6 +808,13 @@ watch(() => props.isOpen, (newValue) => {
     // Set default name for create mode
     if (!isEditMode.value) {
       form.value.name = defaultTaskName.value || 'New Task';
+    }
+
+    // Capture initial state for change detection (edit mode only)
+    if (isEditMode.value) {
+      initialFormData.value = JSON.parse(JSON.stringify(form.value));
+    } else {
+      initialFormData.value = null;
     }
 
     // Build chapter ID to name mapping for edit mode
