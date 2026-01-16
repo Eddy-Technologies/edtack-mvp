@@ -148,7 +148,7 @@
 
           <!-- Date -->
           <div class="text-xs text-gray-500 mb-3">
-            {{ formatDate(order.created_at) }}
+            {{ formatDateWithTime(order.created_at) }}
           </div>
 
           <!-- Actions -->
@@ -232,7 +232,7 @@
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{ formatDate(order.created_at) }}</div>
+                <div class="text-sm text-gray-900">{{ formatDateWithTime(order.created_at) }}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button
@@ -274,6 +274,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useResponsive } from '~/composables/useResponsive';
+
+const { formatDateWithTime } = useDateFormat();
 
 // Responsive state
 const { isMobile } = useResponsive();
@@ -411,16 +413,6 @@ const getStatusBadgeClass = (status) => {
     default:
       return `${baseClass} bg-gray-100 text-gray-700`;
   }
-};
-
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
 };
 
 // Load orders on mount

@@ -170,6 +170,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 
+const { formatDate } = useDateFormat();
+
 // State
 const characters = ref([]);
 const loading = ref(true);
@@ -299,10 +301,6 @@ const getStatusBadgeClass = (isActive) => {
   return isActive ?
     `${baseClass} bg-green-100 text-green-700` :
     `${baseClass} bg-red-100 text-red-700`;
-};
-
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString();
 };
 
 // Load characters on mount

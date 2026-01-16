@@ -293,9 +293,13 @@
 
           <!-- Explanation (shown after answer) - mobile -->
           <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
-            <p class="text-sm text-primary-800">
-              <strong>Explanation:</strong> {{ currentSlide.explanation }}
-            </p>
+            <div class="text-sm text-primary-800">
+              <strong class="block mb-2">Explanation:</strong>
+              <div v-if="currentSlideExplanation" class="prose prose-sm max-w-none prose-slate">
+                <MDCRenderer :body="currentSlideExplanation" tag="div" />
+              </div>
+              <p v-else>{{ currentSlide.explanation }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -712,9 +716,13 @@
 
         <!-- Explanation (shown after answer) -->
         <div v-if="showExplanation && currentSlide.explanation" class="mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
-          <p class="text-sm text-primary-800">
-            <strong>Explanation:</strong> {{ currentSlide.explanation }}
-          </p>
+          <div class="text-sm text-primary-800">
+            <strong class="block mb-2">Explanation:</strong>
+            <div v-if="currentSlideExplanation" class="prose prose-sm max-w-none prose-slate">
+              <MDCRenderer :body="currentSlideExplanation" tag="div" />
+            </div>
+            <p v-else>{{ currentSlide.explanation }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -913,6 +921,24 @@ watchEffect(async () => {
     }
   } else {
     slideMarkdownBody.value = null;
+  }
+});
+
+// Parse markdown for slide explanation
+const currentSlideExplanation = ref();
+
+watchEffect(async () => {
+  if (currentSlide.value?.explanation) {
+    try {
+      // Parse markdown directly - backend manages formatting
+      const parsed = await parseMarkdown(currentSlide.value.explanation);
+      currentSlideExplanation.value = parsed?.body;
+    } catch (e) {
+      console.error('Error parsing explanation:', e);
+      currentSlideExplanation.value = null;
+    }
+  } else {
+    currentSlideExplanation.value = null;
   }
 });
 

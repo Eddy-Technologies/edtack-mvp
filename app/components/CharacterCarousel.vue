@@ -1,16 +1,29 @@
 <template>
-  <div class="flex-1 flex items-center justify-center relative overflow-hidden py-4 lg:py-6 min-h-[180px] lg:min-h-[220px]" data-tour="character-carousel">
+  <div
+    class="flex-1 flex items-center justify-center relative overflow-hidden transition-all duration-300"
+    :class="[
+      collapsed ? 'py-2 min-h-[80px]' : 'py-4 lg:py-6 min-h-[180px] lg:min-h-[220px]'
+    ]"
+    data-tour="character-carousel"
+  >
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center items-center py-12">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
       <span class="ml-3 text-gray-600">Loading characters...</span>
     </div>
 
-    <!-- Carousel Content -->
-    <template v-else>
-      <!-- Gradient overlays for blur effect (smaller on mobile) -->
-      <div class="absolute left-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
-      <div class="absolute right-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none" />
+    <!-- Carousel Content with focus management -->
+    <div
+      v-else
+      class="flex-1 flex items-center justify-center relative w-full outline-none"
+      tabindex="0"
+      :class="isFocused ? 'ring-2 ring-primary-400 ring-offset-2 rounded-lg' : ''"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
+    >
+      <!-- Gradient overlays for blur effect (smaller on mobile, hidden when collapsed) -->
+      <div v-show="!collapsed" class="absolute left-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none transition-opacity duration-300" />
+      <div v-show="!collapsed" class="absolute right-0 top-0 w-12 lg:w-32 h-full z-10 pointer-events-none transition-opacity duration-300" />
 
       <!-- Carousel container -->
       <div
@@ -39,11 +52,15 @@
         >
           <div class="cursor-pointer" @click="selectAvatar(avatar, index)">
             <div
-              class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl h-[240px] lg:h-[320px] flex flex-col"
-              :class="{
-                'ring-4 ring-primary-500 ring-opacity-75':
-                  avatar.slug === props.initialCharacterSlug,
-              }"
+              v-show="!collapsed"
+              class="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex flex-col"
+              :class="[
+                collapsed ? 'h-[60px]' : 'h-[240px] lg:h-[320px]',
+                {
+                  'ring-4 ring-primary-500 ring-opacity-75':
+                    avatar.slug === props.initialCharacterSlug,
+                }
+              ]"
             >
               <!-- Blurred background with gradient to primary -->
               <div
@@ -61,8 +78,8 @@
                 class="absolute inset-0 bg-gradient-to-br from-gray via-transparent to-gray-600"
               />
 
-              <!-- Image container - top 70% -->
-              <div class="relative z-10 flex-grow overflow-hidden" style="height: 90%">
+              <!-- Image container - hidden when collapsed -->
+              <div v-show="!collapsed" class="relative z-10 flex-grow overflow-hidden transition-opacity duration-300" style="height: 90%">
                 <img
                   :src="avatar.image"
                   :alt="avatar.name"
@@ -74,23 +91,24 @@
                 >
               </div>
 
-              <!-- Text area - bottom 30% -->
+              <!-- Text area - adjusted for collapsed state -->
               <div
-                class="relative z-10 p-4 flex flex-col justify-center items-center text-center"
-                style="height: 20%"
+                class="relative z-10 flex flex-col justify-center items-center text-center"
+                :class="collapsed ? 'p-2 h-full' : 'p-4'"
+                :style="collapsed ? '' : 'height: 20%'"
               >
-                <div class="flex items-center gap-2 mb-1">
-                  <h5 class="text-white text-base font-semibold drop-shadow-lg">
+                <div class="flex items-center gap-2" :class="collapsed ? '' : 'mb-1'">
+                  <h5 class="text-white font-semibold drop-shadow-lg" :class="collapsed ? 'text-sm' : 'text-base'">
                     {{ avatar.name }}
                   </h5>
                   <span
-                    v-if="avatar.slug === props.initialCharacterSlug"
-                    class="px-2 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full shadow-lg"
+                    v-show="avatar.slug === props.initialCharacterSlug && !collapsed"
+                    class="px-2 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full shadow-lg transition-opacity duration-300"
                   >
                     Selected
                   </span>
                 </div>
-                <p class="text-white/90 text-sm drop-shadow-md">
+                <p v-show="!collapsed" class="text-white/90 text-sm drop-shadow-md transition-opacity duration-300">
                   {{ constantCaseToTitleCase(avatar.subject) }}
                 </p>
               </div>
@@ -99,8 +117,9 @@
         </div>
       </div>
 
-      <!-- Navigation buttons (responsive positioning, larger touch targets on mobile) -->
+      <!-- Navigation buttons (responsive positioning, larger touch targets on mobile, hidden when collapsed) -->
       <button
+        v-if="!collapsed"
         class="absolute left-1 lg:left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 lg:p-3 bg-white/80 lg:bg-transparent rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
         @click="previousCard"
       >
@@ -108,12 +127,13 @@
       </button>
 
       <button
+        v-if="!collapsed"
         class="absolute right-1 lg:right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 lg:p-3 bg-white/80 lg:bg-transparent rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
         @click="nextCard"
       >
         <UIcon name="i-lucide-chevron-right" class="w-5 h-5 lg:w-6 lg:h-6 text-gray-800" />
       </button>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -136,6 +156,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  collapsed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['update:modelValue', 'select']);
@@ -153,6 +177,9 @@ const wasDragging = ref(false);
 const dragStartX = ref(0);
 const dragOffset = ref(0);
 const dragThreshold = 50; // Minimum distance to trigger card change
+
+// Focus state for keyboard navigation
+const isFocused = ref(false);
 
 // Responsive card width - smaller cards on mobile/tablet
 const currentCardWidth = computed(() => {
@@ -224,8 +251,32 @@ const selectAvatar = (avatar, index) => {
   // Ignore clicks that happened during drag
   if (wasDragging.value) return;
 
-  // Convert infinite array index back to original array index
-  currentIndex.value = index % allAvatars.value.length;
+  // We need to calculate the target currentIndex directly from the clicked index
+  // currentIndex is 0-indexed relative to the middle array
+  // The clicked index is into 'infiniteAvatars' which has 3 copies
+  // adjustedIndex = currentIndex + length
+  // So: currentIndex = index - length
+
+  const targetCurrentIndex = index - allAvatars.value.length;
+
+  isTransitioning.value = true;
+  currentIndex.value = targetCurrentIndex;
+
+  // Check if we are out of bounds (in the duplicate sections) and need to reset later
+  if (targetCurrentIndex >= allAvatars.value.length || targetCurrentIndex < 0) {
+    setTimeout(() => {
+      // Normalize to [0, length-1]
+      // We disable transition for the seamless reset
+      // Use modulo arithmetic that handles negative numbers correctly for index
+      const length = allAvatars.value.length;
+      const normalizedIndex = ((targetCurrentIndex % length) + length) % length;
+
+      if (currentIndex.value === targetCurrentIndex) { // Only reset if user hasn't moved again
+        isTransitioning.value = false;
+        currentIndex.value = normalizedIndex;
+      }
+    }, 500);
+  }
 
   // Emit select event (like the modal does)
   emit('select', avatar);
@@ -265,11 +316,16 @@ const previousCard = () => {
   }
 };
 
-// Handle keyboard navigation
+// Handle keyboard navigation - only when carousel is focused
 const handleKeydown = (event) => {
+  // Only handle keyboard navigation when carousel is focused
+  if (!isFocused.value) return;
+
   if (event.key === 'ArrowRight') {
+    event.preventDefault();
     nextCard();
   } else if (event.key === 'ArrowLeft') {
+    event.preventDefault();
     previousCard();
   }
 };
@@ -351,6 +407,20 @@ const handleTouchEnd = () => {
 const handleResize = () => {
   windowWidth.value = window.innerWidth;
 };
+
+// Scroll to character by slug (programmatically)
+const scrollToCharacter = (slug) => {
+  const index = allAvatars.value.findIndex((char) => char.slug === slug);
+  if (index !== -1) {
+    currentIndex.value = index;
+    isTransitioning.value = true;
+  }
+};
+
+// Expose methods for parent component
+defineExpose({
+  scrollToCharacter,
+});
 
 // Add/remove event listeners
 onMounted(async () => {

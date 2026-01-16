@@ -13,9 +13,7 @@
         <UIcon name="i-lucide-menu" class="w-6 h-6 text-slate-700" />
       </button>
       <div class="flex items-center gap-2">
-        <div class="w-7 h-7 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-lg flex items-center justify-center">
-          <span class="text-white font-bold text-xs">E</span>
-        </div>
+        <AppLogo size="sm" />
         <span class="text-base font-semibold text-slate-900">About</span>
       </div>
       <div class="w-10" />
@@ -27,9 +25,7 @@
         <!-- Drawer Header -->
         <div class="px-4 py-4 border-b border-slate-200 flex items-center justify-between">
           <NuxtLink to="/" class="flex items-center gap-2" @click="isDrawerOpen = false">
-            <div class="w-7 h-7 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-xs">E</span>
-            </div>
+            <AppLogo size="sm" />
             <span class="text-base font-semibold text-slate-900">StudyWithEddy</span>
           </NuxtLink>
           <button class="p-2 rounded-xl hover:bg-slate-100" @click="isDrawerOpen = false">
@@ -110,9 +106,7 @@
       <!-- Header -->
       <div class="px-6 py-5 border-b border-slate-200/60 bg-gradient-to-b from-white to-slate-50/50">
         <NuxtLink to="/" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-xl shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
-            <span class="text-white font-bold text-base">E</span>
-          </div>
+          <AppLogo size="lg" />
           <div>
             <h1 class="text-lg font-heading font-semibold text-slate-900">StudyWithEddy</h1>
             <p class="text-xs text-slate-400 font-medium tracking-wide">About</p>
@@ -212,7 +206,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
-      <main :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'px-8 py-10']">
+      <main ref="mainContentRef" :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'px-8 py-10']">
         <div class="max-w-5xl mx-auto">
           <!-- Tab Content -->
           <AboutTab v-if="activeTab === 'about'" />
@@ -228,8 +222,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import Button from '~/components/common/Button.vue';
+import AppLogo from '~/components/common/AppLogo.vue';
 import { useRouter, useRoute } from '#vue-router';
 import AboutTab from '~/components/about/AboutTab.vue';
 import UserGuidesTab from '~/components/about/UserGuidesTab.vue';
@@ -245,6 +240,20 @@ const route = useRoute();
 // Mobile responsive state
 const { isMobile } = useResponsive();
 const isDrawerOpen = ref(false);
+
+// Main content ref for scroll-to-top functionality
+const mainContentRef = ref<HTMLElement | null>(null);
+
+// Watch for tab or guide changes and scroll to top instantly
+watch(
+  () => [route.query.tab, route.query.guide] as const,
+  async () => {
+    await nextTick();
+    if (mainContentRef.value) {
+      mainContentRef.value.scrollTop = 0;
+    }
+  }
+);
 
 // Tabs functionality
 const activeTab = ref('about');
@@ -263,8 +272,6 @@ const userGuides = ref([
   { id: 'getting-started', name: 'Getting Started', icon: 'i-lucide-play-circle' },
   { id: 'for-parents', name: 'For Parents', icon: 'i-lucide-users' },
   { id: 'for-students', name: 'For Students', icon: 'i-lucide-graduation-cap' },
-  { id: 'credits-rewards', name: 'Credits & Rewards', icon: 'i-lucide-coins' },
-  { id: 'family-features', name: 'Family Features', icon: 'i-lucide-home' },
 ]);
 
 // Function to switch tabs and update URL
@@ -324,7 +331,7 @@ onMounted(() => {
 
   // Handle guide parameter
   const guideParam = route.query.guide as string;
-  if (guideParam && ['getting-started', 'for-parents', 'for-students', 'credits-rewards', 'family-features'].includes(guideParam)) {
+  if (guideParam && ['getting-started', 'for-parents', 'for-students'].includes(guideParam)) {
     activeTab.value = 'user-guides';
     activeGuide.value = guideParam;
     isUserGuidesOpen.value = true;

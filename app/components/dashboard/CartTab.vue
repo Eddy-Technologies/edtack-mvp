@@ -167,22 +167,41 @@
 
             <div class="space-y-3">
               <!-- Pay with Credits Option (Children only) -->
-              <label v-if="!isParent" class="flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-stone-100 transition-colors">
+              <label
+                v-if="!isParent"
+                :class="[
+                  'flex items-start space-x-2 sm:space-x-3 p-3 sm:p-4 border rounded-xl transition-colors',
+                  canUseCredits
+                    ? 'border-gray-200 cursor-pointer hover:bg-stone-100'
+                    : 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-60'
+                ]"
+              >
                 <input
                   v-model="paymentMethod"
                   type="radio"
                   value="credits"
+                  :disabled="!canUseCredits"
                   class="mt-1"
                 >
                 <div class="flex-1">
                   <div class="flex items-center space-x-2">
                     <UIcon name="i-lucide-coins" class="text-blue-600" size="20" />
                     <span class="font-medium text-gray-900">Pay with Credits</span>
+                    <UIcon
+                      v-if="isOrphanedStudent"
+                      v-tooltip="'You must be part of a family to use credits'"
+                      name="i-lucide-info"
+                      class="text-amber-500"
+                      size="18"
+                    />
                   </div>
                   <p class="text-sm text-gray-600 mt-1">
-                    Use your earned credits (requires parent approval)
+                    {{ canUseCredits
+                      ? 'Use your earned credits (requires parent approval)'
+                      : 'Not available - you must be part of a family to use credits'
+                    }}
                   </p>
-                  <div class="text-sm mt-2">
+                  <div v-if="canUseCredits" class="text-sm mt-2">
                     <span class="text-gray-600">Available: </span>
                     <span :class="hasEnoughCredits ? 'text-green-600 font-medium' : 'text-red-600 font-medium'">
                       {{ formattedBalance }}
@@ -302,7 +321,7 @@ const emit = defineEmits<{
 const router = useRouter();
 
 // Use credit composable
-const { formattedBalance, balance, fetchCredits, isLoading } = useCredit();
+const { formattedBalance, balance, isLoading, creditData } = useCredit();
 
 // Use me store for user role
 const meStore = useMeStore();
@@ -349,7 +368,10 @@ const canCheckout = computed(() => {
   if (props.cart.length === 0) return false;
   if (isLoading.value) return false; // Disable while loading credit data
   if (!paymentMethod.value) return false; // No payment method selected
-  if (paymentMethod.value === 'credits' && !hasEnoughCredits.value) return false;
+  if (paymentMethod.value === 'credits') {
+    if (!canUseCredits.value) return false; // Orphaned students cannot checkout with credits
+    if (!hasEnoughCredits.value) return false;
+  }
   return true;
 });
 
@@ -362,6 +384,18 @@ const checkoutButtonText = computed(() => {
   } else {
     return isParent.value ? 'Purchase Now' : 'Proceed to Payment';
   }
+});
+
+// Family status computed properties
+const isOrphanedStudent = computed(() => {
+  if (isParent.value) return false;
+  return creditData.value?.familyStatus?.isOrphanedStudent ?? false;
+});
+
+const canUseCredits = computed(() => {
+  if (isParent.value) return false; // Parents cannot use credits
+  if (isOrphanedStudent.value) return false; // Orphaned students cannot use credits
+  return true;
 });
 
 // Functions
@@ -396,16 +430,15 @@ const goToShop = () => {
   router.push('/dashboard?tab=shop');
 };
 
-// Fetch credit data when cart loads
-onMounted(async () => {
-  await fetchCredits();
-
-  // Set payment method based on user type and feature flag
+// Initialize payment method on mount - credit data already available from Layout
+onMounted(() => {
+  // Set payment method based on user type, family status, and feature flag
   if (isParent.value) {
     // Parents can only pay with card, which requires subscriptionPlans
     paymentMethod.value = subscriptionPlans.value ? 'card' : '';
   } else {
-    paymentMethod.value = 'credits'; // Children default to credits
+    // Children default to credits only if they can use them
+    paymentMethod.value = canUseCredits.value ? 'credits' : '';
   }
 });
 

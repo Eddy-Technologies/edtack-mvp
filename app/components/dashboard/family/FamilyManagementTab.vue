@@ -117,7 +117,7 @@
                   <p class="text-xs sm:text-sm text-gray-500">You've been invited to join this family</p>
                   <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
                     <UIcon name="i-lucide-clock" size="12" />
-                    <span>{{ formatDate(invitation.invited_at) }}</span>
+                    <span>{{ formatDateRelative(invitation.invited_at) }}</span>
                   </div>
                 </div>
               </div>
@@ -171,7 +171,7 @@
                       <UIcon name="i-lucide-loader-2" size="10" />
                       {{ invitation.isEmailInvite ? 'Not registered' : 'Awaiting response' }}
                     </span>
-                    <span class="text-xs text-gray-400">{{ formatDate(invitation.invited_at) }}</span>
+                    <span class="text-xs text-gray-400">{{ formatDateRelative(invitation.invited_at) }}</span>
                   </div>
                 </div>
               </div>
@@ -366,6 +366,8 @@ import FamilyManagementInstructions from './FamilyManagementInstructions.vue';
 import Button from '~/components/common/Button.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 
+const { formatDate, formatDateRelative } = useDateFormat();
+
 // Use me store for user role
 const meStore = useMeStore();
 const { isParent } = storeToRefs(meStore);
@@ -530,7 +532,6 @@ const onTransferCompleted = () => {
 const handleTransfer = async (transferData: {
   toUserInfoId: string;
   amount: number;
-  note?: string;
   recipientName: string;
 }) => {
   isTransferLoading.value = true;
@@ -540,8 +541,7 @@ const handleTransfer = async (transferData: {
       method: 'POST',
       body: {
         toUserInfoId: transferData.toUserInfoId,
-        amountInCents: transferData.amount,
-        note: transferData.note
+        amountInCents: transferData.amount
       },
     });
 
@@ -600,18 +600,6 @@ const formatRole = (role: string) => {
     admin: 'Admin'
   };
   return roleMap[role.toLowerCase()] || role.charAt(0).toUpperCase() + role.slice(1);
-};
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 1) return 'today';
-  if (diffDays === 2) return 'yesterday';
-  if (diffDays <= 30) return `${diffDays - 1} days ago`;
-  return date.toLocaleDateString();
 };
 
 // Load family on mount

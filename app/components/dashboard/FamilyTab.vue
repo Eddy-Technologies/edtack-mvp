@@ -10,7 +10,6 @@
       <div>
         <FamilyManagementTab v-if="currentSubtab === 'management'" />
         <FamilyOrderRequestsTab v-else-if="currentSubtab === 'order-requests'" />
-        <FamilyTasksTab v-else-if="currentSubtab === 'tasks'" />
         <FamilyManagementTab v-else />
       </div>
     </div>
@@ -22,7 +21,6 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import FamilyManagementTab from './family/FamilyManagementTab.vue';
 import FamilyOrderRequestsTab from './family/FamilyOrderRequestsTab.vue';
-import FamilyTasksTab from './family/FamilyTasksTab.vue';
 
 const route = useRoute();
 

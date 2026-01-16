@@ -94,7 +94,6 @@ export default defineEventHandler(async (event) => {
         .from('user_tasks_chapters')
         .update({
           status: TASK_CHAPTER_STATUS.GENERATING,
-          generation_started_at: new Date().toISOString(),
         })
         .eq('id', userTasksChapterId);
       console.log('[generate] Set status to GENERATING for:', userTasksChapterId);
@@ -150,7 +149,6 @@ export default defineEventHandler(async (event) => {
         .from('user_tasks_chapters')
         .update({
           status: TASK_CHAPTER_STATUS.OPEN,
-          generation_started_at: null,
         })
         .eq('id', userTasksChapterId);
       console.log('[generate] Reset status to OPEN for:', userTasksChapterId);
@@ -170,7 +168,7 @@ export default defineEventHandler(async (event) => {
         const supabase = await getSupabaseClient(event);
         await supabase
           .from('user_tasks_chapters')
-          .update({ status: TASK_CHAPTER_STATUS.OPEN, generation_started_at: null })
+          .update({ status: TASK_CHAPTER_STATUS.OPEN })
           .eq('id', userTasksChapterId);
         console.log('[generate] Reset status on error for:', userTasksChapterId);
       } catch (resetError) {

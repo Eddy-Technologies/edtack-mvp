@@ -8,7 +8,7 @@ export interface CreateTaskReq {
   assigneeUserInfoId: string;
   subject: string;
   lessonGenerationType: string;
-  creditsPerQuiz: number;
+  creditsPerChapter: number;
   requiredScore: number;
   questionsPerQuiz: number;
   chapters: string[];
@@ -19,13 +19,13 @@ export default defineEventHandler(async (event) => {
     const supabase = await getSupabaseClient(event);
     const body: CreateTaskReq = await readBody(event);
 
-    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, requiredScore, questionsPerQuiz, chapters } = body;
+    const { assigneeUserInfoId, subject, lessonGenerationType, creditsPerChapter, requiredScore, questionsPerQuiz, chapters } = body;
 
     // Validate required fields
-    if (!assigneeUserInfoId || !subject || !lessonGenerationType || creditsPerQuiz === undefined || !chapters?.length) {
+    if (!assigneeUserInfoId || !subject || !lessonGenerationType || creditsPerChapter === undefined || !chapters?.length) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'assigneeUserInfoId, subject, lessonGenerationType, creditsPerQuiz, and chapters are required'
+        statusMessage: 'assigneeUserInfoId, subject, lessonGenerationType, creditsPerChapter, and chapters are required'
       });
     }
 
@@ -78,10 +78,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Validate quiz fields
-    if (creditsPerQuiz < 1) {
+    if (creditsPerChapter < 1) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'creditsPerQuiz must be at least 1'
+        statusMessage: 'creditsPerChapter must be at least 1'
       });
     }
 
@@ -117,7 +117,7 @@ export default defineEventHandler(async (event) => {
         name,
         subject,
         lesson_generation_type: lessonGenerationType,
-        credit: creditsPerQuiz,
+        credit: creditsPerChapter,
         questions_per_quiz: questionsPerQuiz || 10,
         required_score: requiredScore || 0,
         due_date: null,

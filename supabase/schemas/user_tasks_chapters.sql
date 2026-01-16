@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS user_tasks_chapters (
   score INTEGER,
   total_score INTEGER,
   completed_at TIMESTAMPTZ,
-  generation_started_at TIMESTAMPTZ,
 
   -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),

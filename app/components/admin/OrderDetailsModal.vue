@@ -42,7 +42,7 @@
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-600">Date:</span>
-                  <span class="font-medium">{{ formatDate(order.created_at) }}</span>
+                  <span class="font-medium">{{ formatDateWithTime(order.created_at) }}</span>
                 </div>
                 <div v-if="order.tracking_number" class="flex justify-between">
                   <span class="text-gray-600">Tracking:</span>
@@ -179,6 +179,8 @@
 <script setup lang="ts">
 import { ORDER_STATUS, ORDER_FULFILLMENT } from '~~/shared/constants';
 
+const { formatDateWithTime } = useDateFormat();
+
 defineProps({
   isOpen: {
     type: Boolean,
@@ -214,15 +216,5 @@ const getStatusBadgeClass = (status) => {
     default:
       return `${baseClass} bg-gray-100 text-gray-700`;
   }
-};
-
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
 };
 </script>

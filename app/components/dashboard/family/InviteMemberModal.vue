@@ -46,7 +46,7 @@
 
       <!-- Invite form -->
       <form v-else @submit.prevent="handleInvite">
-        <div class="mb-4">
+        <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
           <input
             v-model="email"
@@ -57,19 +57,6 @@
             required
           >
           <p v-if="error" class="mt-2 text-sm text-red-600">{{ error }}</p>
-        </div>
-
-        <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            Message (Optional)
-          </label>
-          <textarea
-            v-model="message"
-            rows="3"
-            placeholder="Add a personal message to your invitation..."
-            class="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            :disabled="isLoading"
-          />
         </div>
 
         <div class="flex flex-col-reverse sm:flex-row gap-3">
@@ -109,7 +96,6 @@ const emit = defineEmits<{
 
 // Reactive state
 const email = ref('');
-const message = ref('');
 const isLoading = ref(false);
 const error = ref('');
 const inviteLink = ref('');
@@ -125,7 +111,6 @@ watch(() => props.isOpen, (isOpen) => {
 
 const resetForm = () => {
   email.value = '';
-  message.value = '';
   error.value = '';
   inviteLink.value = '';
   invitedEmail.value = '';
@@ -151,8 +136,7 @@ const handleInvite = async () => {
     const response = await $fetch('/api/family/invite-child', {
       method: 'POST',
       body: {
-        email: email.value,
-        message: message.value
+        email: email.value
       }
     });
 

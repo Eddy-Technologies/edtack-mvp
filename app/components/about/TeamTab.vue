@@ -44,9 +44,9 @@
           <h4 class="text-xl font-heading font-semibold text-slate-900">Our Mission</h4>
         </div>
         <p class="text-slate-600 leading-relaxed">
-          To inspire children through rewards, engagement and targeted learning while
-          empowering parents to take charge of their children's education using
-          cutting-edge AI technology.
+          Our mission is to make quality education accessible and engaging for all students
+          in Singapore. By leveraging the power of AI, we aim to provide personalized
+          learning experiences that adapt to each student's unique needs and pace.
         </p>
       </div>
 

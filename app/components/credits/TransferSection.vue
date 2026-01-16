@@ -100,21 +100,19 @@ const formattedChildren = computed(() => {
 const handleTransfer = async (transferData: {
   toUserInfoId: string;
   amount: number;
-  note?: string;
   recipientName: string;
 }) => {
   isLoading.value = true;
 
   // Optimistic update - update credit balances immediately
-  handleCreditTransfer('parent', transferData.toUserInfoId, transferData.amount, transferData.note || `Transfer to ${transferData.recipientName}`);
+  handleCreditTransfer('parent', transferData.toUserInfoId, transferData.amount, `Transfer to ${transferData.recipientName}`);
 
   try {
     const transferResponse = await $fetch('/api/credits/internal-transfer', {
       method: 'POST',
       body: {
         toUserInfoId: transferData.toUserInfoId,
-        amountInCents: transferData.amount,
-        note: transferData.note
+        amountInCents: transferData.amount
       },
     });
 

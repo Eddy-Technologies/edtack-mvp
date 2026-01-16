@@ -52,14 +52,14 @@ export async function requireAdmin(event: H3Event): Promise<UserInfo> {
   return userInfo;
 }
 
-export async function getUserInfo(event: H3Event): Promise<UserInfo> {
+export async function getUserInfo(event: H3Event): Promise<UserInfo & { user_role?: string }> {
   const supabase = await getSupabaseClient(event);
 
   const user = await requireAuth(event);
 
   const { data: userInfo, error } = await supabase
     .from('user_infos')
-    .select('*')
+    .select('*, user_roles(role_name)')
     .eq('user_id', user.id)
     .single();
 
@@ -70,5 +70,10 @@ export async function getUserInfo(event: H3Event): Promise<UserInfo> {
     });
   }
 
-  return userInfo;
+  // Extract role_name from user_roles array and add it as user_role
+  const roleName = userInfo.user_roles?.[0]?.role_name;
+  return {
+    ...userInfo,
+    user_role: roleName
+  };
 }

@@ -30,6 +30,12 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const isAvatarPlaying = ref(false);
 
+// Cache to prevent redundant API calls
+const characterCache = new Map<string, Character[]>();
+
+// Generate cache key based on includeInactive parameter
+const getCacheKey = (includeInactive: boolean) => `characters_${includeInactive}`;
+
 export const useCharacters = () => {
   const supabase = useSupabaseClient();
 
@@ -51,6 +57,15 @@ export const useCharacters = () => {
 
   // API Methods
   const fetchCharacters = async (includeInactive: boolean = false): Promise<Character[]> => {
+    const cacheKey = getCacheKey(includeInactive);
+
+    // Return cached data if available
+    if (characterCache.has(cacheKey)) {
+      const cachedCharacters = characterCache.get(cacheKey)!;
+      characters.value = cachedCharacters;
+      return cachedCharacters;
+    }
+
     loading.value = true;
     error.value = null;
 
@@ -66,6 +81,9 @@ export const useCharacters = () => {
         }));
 
         characters.value = charactersWithImages;
+
+        // Cache the results
+        characterCache.set(cacheKey, charactersWithImages);
 
         // Set default character if none selected
         if (!selectedCharacter.value && charactersWithImages.length > 0) {
@@ -202,6 +220,13 @@ export const useCharacters = () => {
     return characters.value.find((char) => char.subject === subject);
   };
 
+  /**
+   * Clear the character cache (useful for forced refresh)
+   */
+  const clearCharacterCache = () => {
+    characterCache.clear();
+  };
+
   return {
     // State (only what's actually used)
     selectedCharacter: readonly(selectedCharacter),
@@ -209,6 +234,7 @@ export const useCharacters = () => {
 
     // API Methods (only what's actually used)
     fetchCharacters,
+    clearCharacterCache,
 
     // State Management (only what's actually used)
     selectCharacterBySlug,

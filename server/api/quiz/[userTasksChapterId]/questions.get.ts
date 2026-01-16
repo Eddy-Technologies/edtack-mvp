@@ -9,13 +9,13 @@
  * - questions: array of question objects with options and correct answers
  */
 
-import { requireAuth } from '~~/server/utils/auth';
+import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 export default defineEventHandler(async (event) => {
   try {
     // Get authenticated user
-    await requireAuth(event);
+    const userInfo = await getUserInfo(event);
 
     // Get userTasksChapterId from route params
     const userTasksChapterId = getRouterParam(event, 'userTasksChapterId');
@@ -30,6 +30,37 @@ export default defineEventHandler(async (event) => {
     console.log('[questions] Fetching questions for task-chapter:', userTasksChapterId);
 
     const supabase = await getSupabaseClient(event);
+
+    // Fetch task-chapter with user_tasks to verify assignee
+    const { data: taskCheck, error: taskError } = await supabase
+      .from('user_tasks_chapters')
+      .select(`
+        id,
+        user_tasks!inner(
+          assignee_user_info_id
+        )
+      `)
+      .eq('id', userTasksChapterId)
+      .single();
+
+    if (taskError || !taskCheck) {
+      throw createError({
+        statusCode: taskError ? 500 : 404,
+        message: taskError ? 'Failed to fetch quiz data' : 'Quiz not found',
+      });
+    }
+
+    // PERMISSION CHECK: Verify user is assignee
+    if (taskCheck.user_tasks.assignee_user_info_id !== userInfo.id) {
+      console.warn(
+        `[questions] SECURITY: Permission denied - ` +
+        `User ${userInfo.id} attempted to access task-chapter ${userTasksChapterId}`
+      );
+      throw createError({
+        statusCode: 403,
+        message: 'Unauthorized: You can only access quizzes assigned to you',
+      });
+    }
 
     // Fetch questions linked to this task-chapter via junction table
     // Only select fields that are actually used by the frontend

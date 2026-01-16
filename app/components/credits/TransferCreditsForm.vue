@@ -48,9 +48,9 @@
           <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center flex-shrink-0">
             <UIcon name="i-lucide-user" class="text-purple-600" size="24" />
           </div>
-          <div>
-            <p class="font-semibold text-gray-900">{{ preSelectedMember.name }}</p>
-            <p class="text-sm text-gray-600">{{ preSelectedMember.email }}</p>
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold text-gray-900 truncate">{{ preSelectedMember.name }}</p>
+            <p class="text-sm text-gray-600 truncate">{{ preSelectedMember.email }}</p>
           </div>
         </div>
       </div>
@@ -68,12 +68,13 @@
             class="block w-full pl-4 pr-20 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-200 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all duration-200"
             :disabled="isLoading"
             required
+            @input="enforceMaxAmount"
           >
           <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
             <span class="text-gray-400 text-sm font-medium">credits</span>
           </div>
         </div>
-        <p class="mt-2 text-sm text-gray-500">
+        <p class="mt-2 text-sm text-gray-500 truncate">
           Available: <span class="font-medium text-gray-700">{{ (parentBalance || 0).toLocaleString() }}</span> credits
         </p>
       </div>
@@ -101,20 +102,6 @@
         </div>
       </div>
 
-      <!-- Note (Optional) -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-2">
-          Note (Optional)
-        </label>
-        <input
-          v-model="note"
-          type="text"
-          placeholder="Add a note..."
-          class="block w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-200 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all duration-200"
-          :disabled="isLoading"
-        >
-      </div>
-
       <!-- Action Buttons -->
       <div class="flex gap-3">
         <button
@@ -133,7 +120,7 @@
         >
           <div v-if="isLoading" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
           <UIcon v-else name="i-lucide-send" size="18" />
-          <span>{{ isLoading ? 'Transferring...' : `Transfer ${(transferAmount || 0).toLocaleString()} credits` }}</span>
+          <span class="truncate">{{ isLoading ? 'Transferring...' : `Transfer ${(transferAmount || 0).toLocaleString()} credits` }}</span>
         </button>
       </div>
     </form>
@@ -176,7 +163,6 @@ const emit = defineEmits<{
   transfer: [{
     toUserInfoId: string;
     amount: number;
-    note?: string;
     recipientName: string;
   }];
   cancel: [];
@@ -185,7 +171,6 @@ const emit = defineEmits<{
 // Reactive state
 const selectedMemberId = ref('');
 const transferAmount = ref<number>();
-const note = ref('');
 const error = ref('');
 
 const quickTransferAmounts = [50, 100, 250, 500];
@@ -218,7 +203,6 @@ const canTransfer = computed(() => {
 // Reset form when pre-selected member changes
 watch(() => props.preSelectedMember, () => {
   transferAmount.value = undefined;
-  note.value = '';
   error.value = '';
   selectedMemberId.value = '';
 });
@@ -229,6 +213,13 @@ watch([selectedMemberId, transferAmount], () => {
     error.value = '';
   }
 });
+
+// Enforce maximum amount constraint
+const enforceMaxAmount = () => {
+  if (transferAmount.value && transferAmount.value > props.parentBalance) {
+    transferAmount.value = props.parentBalance;
+  }
+};
 
 const handleTransfer = () => {
   if (!canTransfer.value || !selectedMember.value) {
@@ -244,7 +235,6 @@ const handleTransfer = () => {
   const transferData = {
     toUserInfoId: selectedMember.value.userInfoId!,
     amount: transferAmount.value!,
-    note: note.value || `Transfer to ${selectedMember.value.name}`,
     recipientName: selectedMember.value.name
   };
 
@@ -255,7 +245,6 @@ const handleTransfer = () => {
     selectedMemberId.value = '';
   }
   transferAmount.value = undefined;
-  note.value = '';
   error.value = '';
 };
 </script>

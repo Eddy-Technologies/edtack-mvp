@@ -5,7 +5,7 @@
  * - userTasksChapterIds: string[] - Array of user task-chapter assignment identifiers
  *
  * Returns:
- * - results: { [id]: { exists: boolean, questionCount: number, status: string, generationStartedAt: string | null } }
+ * - results: { [id]: { exists: boolean, questionCount: number, status: string } }
  */
 
 import { getSupabaseClient } from '~~/server/utils/authConfig';
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
         .in('user_tasks_chapters_id', userTasksChapterIds),
       supabase
         .from('user_tasks_chapters')
-        .select('id, status, generation_started_at')
+        .select('id, status')
         .in('id', userTasksChapterIds),
     ]);
 
@@ -70,11 +70,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Build status map
-    const statusMap: Record<string, { status: string; generationStartedAt: string | null }> = {};
+    const statusMap: Record<string, { status: string }> = {};
     for (const chapter of chaptersData || []) {
       statusMap[chapter.id] = {
         status: chapter.status,
-        generationStartedAt: chapter.generation_started_at,
       };
     }
 
@@ -88,7 +87,7 @@ export default defineEventHandler(async (event) => {
     // Build results for all requested IDs
     const results: Record<
       string,
-      { exists: boolean; questionCount: number; status: string; generationStartedAt: string | null }
+      { exists: boolean; questionCount: number; status: string }
     > = {};
     for (const id of userTasksChapterIds) {
       const questionCount = countMap[id] || 0;
@@ -96,7 +95,6 @@ export default defineEventHandler(async (event) => {
         exists: questionCount > 0,
         questionCount,
         status: statusMap[id]?.status || TASK_CHAPTER_STATUS.OPEN,
-        generationStartedAt: statusMap[id]?.generationStartedAt || null,
       };
     }
 

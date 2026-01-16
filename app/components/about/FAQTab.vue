@@ -82,18 +82,17 @@ const faqs = ref([
   },
   {
     question: 'Which Singapore curriculum levels and subjects are supported?',
-    answer:
-      'We support the full range of Singapore education levels following MOE syllabus including Primary, Secondary (O-Level), and Pre-University (A-Level). Our subjects include Mathematics, Additional Mathematics, Biology, Chemistry, Physics, English, Literature, History, Geography, and Social Studies - all aligned with the latest MOE curriculum guidelines.',
+    answer: 'Currently, only O level physics, chemistry and biology are supported. We are actively working to expand our offerings to include additional subjects and education levels in the near future.',
   },
   {
     question: 'How do I get started with StudyWithEddy?',
     answer:
-      'Simply sign up for an account, choose your education level and subjects, then select an AI character that matches your learning style. You can start with a free trial to explore our interactive lessons, quizzes, and chat-based learning before choosing a subscription plan.',
+      'Simply sign up for an account, choose your education level and subjects, then select an AI character that matches your learning style. '
   },
   {
     question: 'How do the AI tutors personalize learning for Singapore students?',
     answer:
-      'Our AI tutors analyze your responses, learning patterns, and progress to adapt content difficulty and teaching methods. They use Singapore-specific examples, incorporate local context, and follow MOE curriculum progression to ensure relevant and effective learning experiences tailored to each student.',
+      'We are using a RAG based system with a proprietary data set that comprises of MOE based content, syllabus and exam questions. Combined with user inputs, we are able to generate adaptive and personalised content for students',
   },
   {
     question: 'What makes the lessons and quizzes effective for exam preparation?',
@@ -101,24 +100,19 @@ const faqs = ref([
       'Our platform provides curriculum-aware lessons with automated marking that gives instant feedback. We use up-to-date syllabus content, past exam papers, and practice questions that mirror PSLE, O-Level, and A-Level formats. The difficulty adjusts based on your proficiency to optimize learning outcomes.',
   },
   {
-    question: 'How do AI characters keep students motivated and engaged?',
-    answer:
-      'Each AI character has a unique personality and teaching style. We use text-to-speech technology, interactive conversations, gamified learning experiences, and a credit-reward system to maintain student engagement. Characters remember your progress and celebrate achievements to keep you motivated.',
-  },
-  {
     question: 'How can parents monitor their child\'s learning progress?',
     answer:
-      'Parents have access to comprehensive dashboards showing detailed progress tracking, study hours, quiz scores, topic mastery, and learning analytics. You can set learning goals, receive progress reports, and even reward your child through our platform to encourage continued learning.',
+      'Parents have access to comprehensive dashboards where they can give tasks to their children and monitor their work. Parents can also reward their child through our platform to encourage continued learning. We are planning to introduce more analytics and features to support parents in the future.',
   },
   {
     question: 'How does the credit and reward system work?',
     answer:
-      'Students earn credits by completing lessons, quizzes, and learning challenges. Credits can be used in our reward system for educational materials, achievements, and motivational rewards. Parents can also add bonus credits to encourage consistent learning habits.',
+      'Students earn credits by completing tasks, which are quizzes. Parents then provide credits attached to these tasks. Accumulated credits can be used to request for purchases from our in-app store.',
   },
   {
     question: 'Is StudyWithEddy safe and appropriate for children?',
     answer:
-      'Absolutely! Child safety is our top priority. Our AI includes content safety filters, bias prevention measures, and age-appropriate responses. We have strict data protection policies, comprehensive parental controls, and all content is designed specifically for young learners in Singapore.',
+      'Child safety is our top priority. We have strict guardrails in place to keep prompts focused on safe usage and learning in Singapore.',
   },
   {
     question: 'How often is the curriculum content updated?',

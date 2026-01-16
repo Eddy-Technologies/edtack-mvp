@@ -49,7 +49,7 @@ import { useFeatureFlags } from '~/composables/useFeatureFlags';
 import WishlistTab from '~/components/dashboard/WishlistTab.vue';
 import CartTab from '~/components/dashboard/CartTab.vue';
 import FamilyTab from '~/components/dashboard/FamilyTab.vue';
-import TasksTab from '~/components/dashboard/family/FamilyTasksTab.vue';
+import TasksTab from '~/components/dashboard/TasksTab.vue';
 import OrdersTab from '~/components/dashboard/OrdersTab.vue';
 import CreditsTab from '~/components/dashboard/CreditsTab.vue';
 import SettingsTab from '~/components/dashboard/SettingsTab.vue';

@@ -20,19 +20,23 @@
         <div
           v-for="option in question.options"
           :key="option.id"
-          class="flex items-center gap-3 p-3 rounded-lg border-2 transition-all cursor-pointer"
+          class="flex items-center gap-3 p-3 rounded-lg border-2 transition-all"
           :class="{
             'bg-blue-50 border-blue-500': isSelected(option.id),
-            'hover:bg-blue-50 hover:border-blue-300 border-gray-200': !isSelected(option.id)
+            'hover:bg-blue-50 hover:border-blue-300 border-gray-200': !isSelected(option.id) && !disabled,
+            'cursor-pointer': !disabled,
+            'cursor-not-allowed opacity-60 pointer-events-none': disabled
           }"
-          @click="selectMCQOption(option.id)"
+          @click="disabled ? undefined : selectMCQOption(option.id)"
         >
           <input
             type="radio"
             :value="option.id"
             :name="`question-${question.id}`"
             :checked="isSelected(option.id)"
+            :disabled="disabled"
             class="appearance-none w-4 h-4 rounded border-2 border-current grid place-content-center relative before:content-[''] before:w-2 before:h-2 before:rounded-full before:bg-blue-500 before:scale-0 checked:before:scale-100 transition-transform"
+            :class="{ 'opacity-50 cursor-not-allowed': disabled }"
             @change="selectMCQOption(option.id)"
           >
           <div v-if="option.option_text" class="flex-1">
@@ -52,8 +56,10 @@
       <div v-if="question.question_type === QUESTION_TYPE.OPEN" class="space-y-3">
         <textarea
           v-model="userAnswer"
+          :disabled="disabled"
           maxlength="500"
           class="w-full p-3 border-2 border-gray-200 rounded-lg resize-y min-h-24 focus:border-blue-500 focus:outline-none"
+          :class="{ 'bg-gray-100 cursor-not-allowed': disabled }"
           placeholder="Enter your answer here..."
           rows="4"
         />
@@ -64,9 +70,11 @@
         <div v-if="question.answer.length === 1">
           <input
             v-model="userAnswer"
+            :disabled="disabled"
             maxlength="500"
             type="text"
             class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none"
+            :class="{ 'bg-gray-100 cursor-not-allowed': disabled }"
             placeholder="Fill in the blank..."
           >
         </div>
@@ -75,8 +83,10 @@
             <span class="font-medium">{{ index + 1 }}.</span>
             <input
               v-model="fillAnswers[index]"
+              :disabled="disabled"
               type="text"
               class="flex-1 p-2 border-2 border-gray-200 rounded focus:border-blue-500 focus:outline-none"
+              :class="{ 'bg-gray-100 cursor-not-allowed': disabled }"
               :placeholder="`Answer ${index + 1}...`"
             >
           </div>
@@ -86,20 +96,24 @@
       <!-- Boolean Questions -->
       <div v-if="question.question_type === QUESTION_TYPE.BOOLEAN" class="flex gap-4">
         <button
+          :disabled="disabled"
           class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
           :class="{
             'bg-green-50 border-green-500 text-green-700': userAnswer === 'true',
-            'hover:bg-green-50 hover:border-green-300 border-gray-200': userAnswer !== 'true'
+            'hover:bg-green-50 hover:border-green-300 border-gray-200': userAnswer !== 'true',
+            'opacity-50 cursor-not-allowed': disabled
           }"
           @click="selectBoolean(true)"
         >
           True
         </button>
         <button
+          :disabled="disabled"
           class="flex-1 p-3 rounded-lg border-2 font-medium transition-all"
           :class="{
             'bg-red-50 border-red-500 text-red-700': userAnswer === 'false',
-            'hover:bg-red-50 hover:border-red-300 border-gray-200': userAnswer !== 'false'
+            'hover:bg-red-50 hover:border-red-300 border-gray-200': userAnswer !== 'false',
+            'opacity-50 cursor-not-allowed': disabled
           }"
           @click="selectBoolean(false)"
         >
@@ -116,11 +130,14 @@
               ref="fileInput"
               type="file"
               accept="image/*"
+              :disabled="disabled"
               class="hidden"
               @change="handleFileUpload"
             >
             <button
+              :disabled="disabled"
               class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              :class="{ 'opacity-50 cursor-not-allowed': disabled }"
               @click="$refs.fileInput.click()"
             >
               Upload Image
@@ -129,7 +146,9 @@
           <div v-else>
             <img :src="drawingFile" alt="Uploaded drawing" class="max-w-full h-auto rounded mb-2">
             <button
+              :disabled="disabled"
               class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              :class="{ 'opacity-50 cursor-not-allowed': disabled }"
               @click="clearDrawing"
             >
               Clear
@@ -164,7 +183,7 @@
           v-if="explanationMarkdownBody"
           :body="explanationMarkdownBody"
           tag="div"
-          class="prose prose-md max-w-none"
+          class="prose prose-sm max-w-none prose-slate"
         />
         <div v-else v-html="processedExplanationHtml" />
         <div v-if="markingStatus" class="mt-3 flex items-center gap-2">
@@ -203,6 +222,7 @@ const props = defineProps<{
   question: QuizQuestion;
   startPlayback: boolean;
   hideSubmitButton?: boolean;
+  disabled?: boolean;
 }>();
 
 const emit = defineEmits(['finish', 'answer-submitted']);
@@ -216,7 +236,11 @@ const showExplanation = ref(false);
 const markingStatus = ref<string | undefined>(undefined);
 
 const processedContentHtml = computed(() => convertHighlights(convertImages(props.question.content || '', 'Question image')));
-const processedExplanationHtml = computed(() => convertHighlights(convertImages(props.question.explanation || '', 'Explanation image')));
+const processedExplanationHtml = computed(() => {
+  if (!props.question.explanation) return '';
+  // Just return raw explanation - backend manages formatting
+  return props.question.explanation;
+});
 
 // Markdown parsing for content and explanation
 const contentMarkdownBody = ref();
@@ -429,3 +453,21 @@ onMounted(() => {
   emit('finish');
 });
 </script>
+
+<style scoped>
+.prose :deep(ul),
+.prose :deep(ol) {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose :deep(li) {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose :deep(p) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+</style>

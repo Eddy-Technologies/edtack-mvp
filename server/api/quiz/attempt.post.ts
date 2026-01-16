@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
     const supabase = await getSupabaseClient(event);
 
-    // Fetch quiz data with task info
+    // Fetch quiz data with task info, chapter, and subject
     const { data: chapterData, error: chapterError } = await supabase
       .from('user_tasks_chapters')
       .select(`
@@ -59,12 +59,21 @@ export default defineEventHandler(async (event) => {
         status,
         completed_at,
         user_task_id,
+        chapter_name,
+        chapters!inner(
+          display_name,
+          subject_id,
+          subjects!inner(
+            display_name
+          )
+        ),
         user_tasks!inner(
           id,
           status,
           required_score,
           credit,
-          creator_user_info_id
+          creator_user_info_id,
+          assignee_user_info_id
         )
       `)
       .eq('id', userTasksChapterId)
@@ -86,8 +95,31 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const requiredScore = chapterData.user_tasks.required_score || 70;
-    const creditReward = chapterData.user_tasks.credit || 0;
+    // PERMISSION CHECK: Verify user is assignee of this task
+    if (chapterData.user_tasks.assignee_user_info_id !== userInfo.id) {
+      console.warn(
+        `[attempt] SECURITY: Permission denied - ` +
+        `User ${userInfo.id} attempted to submit for task-chapter ${userTasksChapterId} ` +
+        `assigned to ${chapterData.user_tasks.assignee_user_info_id}`
+      );
+      throw createError({
+        statusCode: 403,
+        message: 'Unauthorized: You can only submit quiz attempts for tasks assigned to you',
+      });
+    }
+
+    console.log('[attempt] Permission check passed - user is task assignee');
+
+    // Validate required_score is set
+    if (chapterData.user_tasks.required_score === null || chapterData.user_tasks.required_score === undefined) {
+      throw createError({
+        statusCode: 500,
+        message: 'Task configuration error: required_score is not set'
+      });
+    }
+
+    const requiredScore = chapterData.user_tasks.required_score;
+    const creditReward = chapterData.user_tasks.credit ?? 0;
 
     // Fetch questions with correct answers
     const { data: questionLinks, error: fetchError } = await supabase
@@ -205,7 +237,9 @@ export default defineEventHandler(async (event) => {
       userTasksChapterId,
       creditReward,
       passedThreshold,
-      { bestScore, bestTotalScore, bestPercentage }
+      { bestScore, bestTotalScore, bestPercentage },
+      chapterData.chapters.display_name,
+      chapterData.chapters.subjects.display_name
     );
 
     return {

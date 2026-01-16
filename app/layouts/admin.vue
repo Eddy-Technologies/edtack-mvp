@@ -6,9 +6,7 @@
       <div class="px-6 py-6 border-b border-slate-200">
         <div class="flex items-center space-x-3">
           <NuxtLink to="/" class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">A</span>
-            </div>
+            <AppLogo size="md" />
             <div>
               <h1 class="text-lg font-semibold text-slate-900">EdTack Admin</h1>
               <p class="text-xs text-slate-500">Management Panel</p>
@@ -123,6 +121,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import AppLogo from '~/components/common/AppLogo.vue';
 import { useAuth } from '~/composables/useAuth';
 import { useMeStore } from '~/stores/me';
 

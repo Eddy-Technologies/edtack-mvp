@@ -7,7 +7,7 @@
     >
       <div class="flex items-center gap-2">
         <UIcon name="i-lucide-info" class="text-blue-500" size="20" />
-        <span class="font-medium text-gray-800">How Study Works</span>
+        <span class="font-medium text-gray-800">{{ title }}</span>
       </div>
       <UIcon
         :name="isExpanded ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
@@ -20,9 +20,9 @@
     <div v-show="isExpanded" class="border-t border-gray-100 p-4">
       <div class="rounded-xl bg-slate-50 p-4">
         <ul class="text-sm text-slate-600 space-y-2">
-          <li>• Browse subjects and chapters to learn at your own pace</li>
-          <li>• Take <strong>lessons</strong> to learn, <strong>practice</strong> to test yourself, or <strong>quizzes</strong> to earn credits</li>
-          <li>• Credits are earned on quizzes assigned through Tasks</li>
+          <li>Subjects are organised by chapters, and each chapter contains:</li>
+          <li><Strong>Lessons</Strong>: MOE aligned slides to aid your learning in a particular chapter. </li>
+          <li><Strong>Practice</Strong>: Generate questions to help reinforce your understanding. </li>
         </ul>
       </div>
     </div>
@@ -30,7 +30,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+
+interface Props {
+  variant?: 'study' | 'tasks';
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variant: 'study'
+});
 
 const isExpanded = ref(false);
+
+const title = computed(() => {
+  return props.variant === 'tasks' ? 'How Tasks Work' : 'How Study Works';
+});
 </script>
