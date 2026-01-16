@@ -35,11 +35,13 @@ interface Props {
   task: Task;
   isParent: boolean;
   showAssigneeInfo?: boolean;
+  chapterFilter?: string;
   isChapterGenerating?: (chapterId: string) => boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showAssigneeInfo: true,
+  chapterFilter: 'all',
   isChapterGenerating: () => () => false
 });
 
@@ -55,14 +57,33 @@ const toggleChapters = () => {
   showAllChapters.value = !showAllChapters.value;
 };
 
-const displayedChapters = computed(() => {
-  if (showAllChapters.value || props.task.chapters.length <= 3) {
-    return props.task.chapters;
+// Filter chapters based on active chapter filter
+const filteredChapters = computed(() => {
+  const chapters = props.task.chapters;
+
+  // When credits filter is active, show only uncompleted chapters
+  if (props.chapterFilter === 'credits') {
+    return chapters.filter((c) => c.completedAt === null);
   }
-  return props.task.chapters.slice(0, 3);
+
+  // When completed filter is active, show only completed chapters
+  if (props.chapterFilter === 'completed') {
+    return chapters.filter((c) => c.completedAt !== null);
+  }
+
+  // Otherwise show all chapters
+  return chapters;
 });
 
-const hasMoreChapters = computed(() => props.task.chapters.length > 3);
+const displayedChapters = computed(() => {
+  const chapters = filteredChapters.value;
+  if (showAllChapters.value || chapters.length <= 3) {
+    return chapters;
+  }
+  return chapters.slice(0, 3);
+});
+
+const hasMoreChapters = computed(() => filteredChapters.value.length > 3);
 
 // Utility functions
 const getStatusText = (status: string) => {
@@ -131,7 +152,7 @@ const getStatusVariant = (status: string) => {
           {{ task.totalCredits }} credits
         </span>
         <span class="text-sm text-gray-600">
-          {{ task.chapters.length }} {{ task.chapters.length === 1 ? 'chapter' : 'chapters' }}
+          {{ filteredChapters.length }} {{ filteredChapters.length === 1 ? 'chapter' : 'chapters' }}
         </span>
       </div>
     </div>
@@ -141,22 +162,27 @@ const getStatusVariant = (status: string) => {
       <div
         v-for="chapter in displayedChapters"
         :key="chapter.id"
-        class="flex items-center justify-between py-2 px-4 bg-gray-50 rounded-lg"
+        class="flex items-center justify-between gap-4 py-2 px-4 bg-gray-50 rounded-lg"
       >
-        <div class="flex items-center gap-3 flex-1 min-w-0">
-          <span class="font-medium text-gray-900">{{ chapter.displayName }}</span>
-          <span class="text-sm text-gray-600">
+        <!-- Left: Chapter name only -->
+        <div class="flex items-center flex-shrink min-w-0">
+          <span class="font-medium text-gray-900 truncate">{{ chapter.displayName }}</span>
+        </div>
+
+        <!-- Center/Right: Credit/Completion info (right-aligned) -->
+        <div class="flex items-center gap-3 flex-1 justify-end">
+          <span v-if="!chapter.completedAt" class="text-sm text-gray-600 whitespace-nowrap">
             {{ chapter.credit }} credits • {{ task.requiredScore }}% required
           </span>
 
           <!-- Progress Info -->
-          <span v-if="chapter.completedAt" class="text-sm text-green-600">
+          <span v-if="chapter.completedAt" class="text-sm text-green-600 whitespace-nowrap">
             ✓ Completed • Best: {{ chapter.bestScore }}%
           </span>
         </div>
 
-        <!-- Inline Actions -->
-        <div class="flex items-center gap-2">
+        <!-- Far Right: Action buttons -->
+        <div class="flex items-center gap-2 flex-shrink-0">
           <!-- Student Actions -->
           <template v-if="!isParent">
             <!-- Start Quiz -->
@@ -223,7 +249,7 @@ const getStatusVariant = (status: string) => {
           class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
           @click.stop="toggleChapters"
         >
-          <span>{{ showAllChapters ? 'Show less' : `Show ${task.chapters.length - 3} more` }}</span>
+          <span>{{ showAllChapters ? 'Show less' : `Show ${filteredChapters.length - 3} more` }}</span>
           <UIcon
             :name="showAllChapters ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
             class="w-4 h-4"

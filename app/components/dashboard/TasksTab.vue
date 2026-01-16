@@ -63,7 +63,7 @@ const subjects = ref<Array<{ code: string; displayName: string }>>([]);
 const selectedChild = ref<string>('all');
 const selectedSubject = ref<string>('all');
 const selectedStatus = ref<string>('all');
-const creditRange = ref({ min: 0, max: 1000 });
+const chapterFilter = ref('all');
 const sortBy = ref('newest');
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
@@ -114,11 +114,19 @@ const filteredTasks = computed(() => {
     result = result.filter((t) => t.status === selectedStatus.value);
   }
 
-  // Credit range filter
-  result = result.filter((t) =>
-    t.totalCredits >= creditRange.value.min &&
-    t.totalCredits <= creditRange.value.max
-  );
+  // Chapter filter (credits/completed)
+  if (chapterFilter.value === 'credits') {
+    // Show only tasks with uncompleted chapters that have credits
+    result = result.filter((t) =>
+      t.status === 'OPEN' &&
+      t.chapters.some((c) => c.completedAt === null && c.credit > 0)
+    );
+  } else if (chapterFilter.value === 'completed') {
+    // Show only tasks with completed chapters
+    result = result.filter((t) =>
+      t.chapters.some((c) => c.completedAt !== null)
+    );
+  }
 
   // Sort
   result = sortTasks(result, sortBy.value);
@@ -389,10 +397,6 @@ const sortTasks = (taskList: Task[], sortOption: string) => {
       return sorted.sort((a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
-    case 'credits-asc':
-      return sorted.sort((a, b) => a.totalCredits - b.totalCredits);
-    case 'credits-desc':
-      return sorted.sort((a, b) => b.totalCredits - a.totalCredits);
     default:
       return sorted;
   }
@@ -402,7 +406,7 @@ const handleClearFilters = () => {
   selectedChild.value = 'all';
   selectedSubject.value = 'all';
   selectedStatus.value = 'all';
-  creditRange.value = { min: 0, max: 1000 };
+  chapterFilter.value = 'all';
   sortBy.value = 'newest';
 };
 
@@ -420,7 +424,7 @@ onMounted(async () => {
 });
 
 // Watch filters to reset page
-watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () => {
+watch([selectedChild, selectedSubject, selectedStatus, chapterFilter, sortBy], () => {
   currentPage.value = 1;
 });
 </script>
@@ -458,7 +462,7 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
         v-model:child="selectedChild"
         v-model:subject="selectedSubject"
         v-model:status="selectedStatus"
-        v-model:credit-range="creditRange"
+        v-model:chapter-filter="chapterFilter"
         v-model:sort="sortBy"
         :show-child-filter="isParent"
         :children="children"
@@ -507,6 +511,7 @@ watch([selectedChild, selectedSubject, selectedStatus, creditRange, sortBy], () 
           :task="task"
           :is-parent="isParent"
           :show-assignee-info="isParent"
+          :chapter-filter="chapterFilter"
           :is-chapter-generating="(chapterId) => generatingChapters.has(chapterId)"
           @close-task="handleCloseTask(task)"
           @edit-task="handleEditTask(task)"

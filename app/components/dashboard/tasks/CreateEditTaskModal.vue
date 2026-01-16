@@ -418,8 +418,8 @@ const getInitialForm = () => {
       subject: '',
       chapters: [] as string[],
       lessonGenerationType: LESSON_GENERATION_TYPE.QUIZ,
-      creditsPerChapter: null as number | null,
-      requiredScore: null as number | null,
+      creditsPerChapter: 100,
+      requiredScore: 70,
       questionsPerQuiz: 10,
       status: 'OPEN'
     };
