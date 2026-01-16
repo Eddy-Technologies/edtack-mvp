@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
 
     const supabase = await getSupabaseClient(event);
 
-    // Fetch quiz data with task info
+    // Fetch quiz data with task info, chapter, and subject
     const { data: chapterData, error: chapterError } = await supabase
       .from('user_tasks_chapters')
       .select(`
@@ -59,6 +59,14 @@ export default defineEventHandler(async (event) => {
         status,
         completed_at,
         user_task_id,
+        chapter_name,
+        chapters!inner(
+          display_name,
+          subject_id,
+          subjects!inner(
+            display_name
+          )
+        ),
         user_tasks!inner(
           id,
           status,
@@ -229,7 +237,9 @@ export default defineEventHandler(async (event) => {
       userTasksChapterId,
       creditReward,
       passedThreshold,
-      { bestScore, bestTotalScore, bestPercentage }
+      { bestScore, bestTotalScore, bestPercentage },
+      chapterData.chapters.display_name,
+      chapterData.chapters.subjects.display_name
     );
 
     return {

@@ -63,7 +63,9 @@ export async function disburseQuizCredits(
   toUserInfoId: string,
   amount: number,
   taskId: string,
-  metadata: CreditMetadata
+  metadata: CreditMetadata,
+  chapterDisplayName?: string,
+  subjectDisplayName?: string
 ): Promise<CreditDisbursementResult> {
   // First check if already disbursed
   const existing = await checkExistingDisbursement(
@@ -81,14 +83,19 @@ export async function disburseQuizCredits(
     };
   }
 
+  // Generate readable description
+  const quizIdentifier = chapterDisplayName && subjectDisplayName ?
+    `${subjectDisplayName} - ${chapterDisplayName}` :
+    taskId;
+
   // Transfer credits atomically
   const { data: transferResult, error: transferError } = await supabase
     .rpc('transfer_credits_atomic', {
       p_from_user_info_id: fromUserInfoId,
       p_to_user_info_id: toUserInfoId,
       p_amount: amount,
-      p_description_from: `Quiz reward transfer to student for task ${taskId}`,
-      p_description_to: `Quiz reward for completing ${taskId}`,
+      p_description_from: `Quiz reward transfer to student for ${quizIdentifier}`,
+      p_description_to: `Quiz reward for completing ${quizIdentifier}`,
       p_metadata_from: metadata,
       p_metadata_to: metadata,
     });
@@ -124,7 +131,9 @@ export async function handleQuizCreditDisbursement(
   userTasksChapterId: string,
   creditReward: number,
   passedThreshold: boolean,
-  scoreData: { bestScore: number; bestTotalScore: number; bestPercentage: number }
+  scoreData: { bestScore: number; bestTotalScore: number; bestPercentage: number },
+  chapterDisplayName?: string,
+  subjectDisplayName?: string
 ): Promise<CreditDisbursementResult> {
   // No credits to disburse
   if (!passedThreshold || creditReward <= 0) {
@@ -150,7 +159,9 @@ export async function handleQuizCreditDisbursement(
       userInfoId,
       creditReward,
       taskId,
-      metadata
+      metadata,
+      chapterDisplayName,
+      subjectDisplayName
     );
   } catch (error) {
     console.error('[creditService] Credit disbursement failed:', error);
