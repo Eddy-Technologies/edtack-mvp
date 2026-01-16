@@ -86,17 +86,6 @@
         Your AI tutor is here to help you learn! Chat naturally, ask questions, and get instant explanations.
       </p>
 
-      <!-- Character Selection -->
-      <div class="rounded-xl bg-slate-50 p-6">
-        <h4 class="text-base font-semibold text-slate-800 mb-3">Choose Your AI Tutor</h4>
-        <p class="text-sm text-slate-600 mb-4">
-          Select from different AI personalities - Eddy, Pooh, Snorlax, or Einstein. Each has a unique teaching style!
-        </p>
-
-        <!-- Screenshot -->
-        <img src="/assets/guide-screenshots/student-chat-menu-expanded.png" alt="AI Tutor Selection" class="w-full rounded-lg shadow-md">
-      </div>
-
       <!-- Chat Features -->
       <div class="rounded-xl bg-slate-50 p-6">
         <h4 class="text-base font-semibold text-slate-800 mb-3">Chat Features</h4>
@@ -141,6 +130,10 @@
           <h5 class="text-sm font-medium text-slate-700 mb-2">Auto-Complete Suggestions</h5>
           <img src="/assets/guide-screenshots/student-chat-autocomplete expanded.png" alt="Chat Auto-Complete" class="w-full rounded-lg shadow-md">
         </div>
+        <div>
+          <h5 class="text-sm font-medium text-slate-700 mb-2">Access your dashboard from the menu</h5>
+          <img src="/assets/guide-screenshots/student-chat-menu-expanded.png" alt="Chat Auto-Complete" class="w-full rounded-lg shadow-md">
+        </div>
       </div>
     </div>
 
@@ -170,14 +163,14 @@
               <UIcon name="i-lucide-book-open" class="w-5 h-5 text-secondary-600" />
               <h5 class="font-medium text-slate-800">Browse Subjects</h5>
             </div>
-            <p class="text-sm text-slate-600">Choose from Mathematics, Science, English, History, Geography, Literature, Physics, and Chemistry.</p>
+            <p class="text-sm text-slate-600">Choose from subjects such as Physics, Biology and Chemistry.</p>
           </div>
           <div class="rounded-lg bg-white p-4 shadow-sm">
             <div class="flex items-center gap-2 mb-2">
               <UIcon name="i-lucide-layers" class="w-5 h-5 text-secondary-600" />
               <h5 class="font-medium text-slate-800">Chapter-by-Chapter</h5>
             </div>
-            <p class="text-sm text-slate-600">Work through organized chapters with clear learning objectives and explanations.</p>
+            <p class="text-sm text-slate-600">Work through organized chapters according to syllabus.</p>
           </div>
         </div>
       </div>
@@ -192,15 +185,11 @@
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
-            <span class="text-sm text-slate-600">Take interactive quizzes to test your understanding</span>
+            <span class="text-sm text-slate-600">Choose full chapter lessons or generate practice questions.</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
-            <span class="text-sm text-slate-600">Get immediate scoring and detailed explanations for each answer</span>
-          </div>
-          <div class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
-            <span class="text-sm text-slate-600">Track your progress and see which areas need more practice</span>
+            <span class="text-sm text-slate-600">Instant marking from questions.</span>
           </div>
         </div>
       </div>
@@ -226,10 +215,6 @@
         Complete tasks assigned by your parent to earn credits! Each task comes with clear requirements and reward amounts.
       </p>
 
-      <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800 mb-4">
-        <strong>Tip:</strong> Score 70% or higher to automatically earn the credit reward!
-      </div>
-
       <!-- Task Workflow -->
       <div class="rounded-xl bg-slate-50 p-6">
         <h4 class="text-base font-semibold text-slate-800 mb-4">Completing Tasks</h4>
@@ -248,7 +233,7 @@
               <span class="text-secondary-700 font-semibold">2</span>
             </div>
             <div>
-              <h5 class="font-medium text-slate-800 mb-1">Read Instructions</h5>
+              <h5 class="font-medium text-slate-800 mb-1">Filter and search through the chapters</h5>
               <p class="text-sm text-slate-600">Each task shows the subject, chapters, and how many credits you can earn</p>
             </div>
           </div>
@@ -258,12 +243,21 @@
             </div>
             <div>
               <h5 class="font-medium text-slate-800 mb-1">Take the Quiz</h5>
-              <p class="text-sm text-slate-600">Click "Start Task" to begin the quiz and answer all questions</p>
+              <p class="text-sm text-slate-600">Click "Start Quiz" to begin the generating the quiz. "Attempt Quiz" will launch the quiz.</p>
             </div>
           </div>
           <div class="flex gap-4">
             <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
               <span class="text-secondary-700 font-semibold">4</span>
+            </div>
+            <div>
+              <h5 class="font-medium text-slate-800 mb-1">Reattempt or Review Quiz</h5>
+              <p class="text-sm text-slate-600">Reattempt to improve your score or review your answers.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+              <span class="text-secondary-700 font-semibold">5</span>
             </div>
             <div>
               <h5 class="font-medium text-slate-800 mb-1">Earn Credits!</h5>
@@ -390,14 +384,22 @@
 
     <!-- 5. Credits -->
     <div id="credits" class="scroll-mt-6 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-100 space-y-4">
-      <h3 class="text-xl font-semibold text-slate-800 mb-4">5. Credits</h3>
-
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-semibold text-slate-800 mb-4">5. Credits</h3>
+        <NuxtLink
+          to="/dashboard?tab=credits"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
+        >
+          <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+          Open Credits
+        </NuxtLink>
+      </div>
       <p class="text-base text-slate-600">
         Credits are your reward currency! Earn them through learning and use them to shop for real items.
       </p>
 
       <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800 mb-4">
-        <strong>Conversion:</strong> 100 credits = $1 value. Credits are virtual - your parent pledges real purchases when they approve orders.
+        <strong>Conversion:</strong> Credits are virtual - your parent pledges real purchases when they approve orders.
       </div>
 
       <!-- Viewing Balance -->
@@ -419,7 +421,7 @@
               </div>
               <h5 class="font-medium text-slate-800">Complete Tasks</h5>
             </div>
-            <p class="text-sm text-slate-600">Finish parent-assigned tasks and score 70% or higher to automatically earn credits.</p>
+            <p class="text-sm text-slate-600">Finish parent-assigned tasks and pass the score to earn credits.</p>
           </div>
           <div class="rounded-lg bg-white p-4 shadow-sm">
             <div class="flex items-center gap-2 mb-2">
@@ -443,7 +445,7 @@
           </li>
           <li class="flex items-start gap-2">
             <span class="text-secondary-600">•</span>
-            <span>Complete more tasks to earn more credits faster</span>
+            <span>Complete more tasks to earn more credits</span>
           </li>
           <li class="flex items-start gap-2">
             <span class="text-secondary-600">•</span>
@@ -458,11 +460,11 @@
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-xl font-semibold text-slate-800">6. Family Management</h3>
         <NuxtLink
-          to="/dashboard?tab=settings"
+          to="/dashboard?tab=family&subtab=managementsettings"
           class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
         >
           <UIcon name="i-lucide-external-link" class="w-4 h-4" />
-          Open Settings
+          Open Family Management
         </NuxtLink>
       </div>
 

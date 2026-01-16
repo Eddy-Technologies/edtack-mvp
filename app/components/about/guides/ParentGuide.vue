@@ -82,7 +82,7 @@
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
-            <span class="text-sm text-slate-600">Click "Add Family Member" and enter child's email address</span>
+            <span class="text-sm text-slate-600">Click "Invite Member" and enter child's email address</span>
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
@@ -113,11 +113,11 @@
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-xl font-semibold text-slate-800">2. Transferring Credits</h3>
         <NuxtLink
-          to="/dashboard?tab=family"
+          to="/dashboard?tab=credits"
           class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
         >
           <UIcon name="i-lucide-external-link" class="w-4 h-4" />
-          Open Dashboard
+          Open Credits
         </NuxtLink>
       </div>
 
@@ -126,7 +126,7 @@
       </p>
 
       <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800 mb-4">
-        <strong>Remember:</strong> $1 = 100 credits. StudyWithEddy uses a pledge system - these are virtual credits,
+        <strong>Remember:</strong> We try to maintain a $1 to approximately 100 credits ratio. StudyWithEddy uses a pledge system - these are virtual credits,
         not real money transfers.
       </div>
 
@@ -160,22 +160,29 @@
 
       <!-- Transfer Steps -->
       <div class="rounded-xl bg-slate-50 p-5">
-        <h4 class="text-base font-semibold text-slate-800 mb-3">How to Transfer</h4>
+        <h4 class="text-base font-semibold text-slate-800 mb-3">Pledge Credits</h4>
+        <div class="space-y-3 mb-3">
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">1</div>
+            <span class="text-sm text-slate-600">Navigate to Dashboard → Credits</span>
+          </div>
+          <div class="flex items-start gap-3 mb-4">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
+            <span class="text-sm text-slate-600">Top up virtual credits</span>
+          </div>
+        </div>
+        <h4 class="text-base font-semibold text-slate-800 mb-3">Transfer Credits</h4>
         <div class="space-y-3">
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">1</div>
-            <span class="text-sm text-slate-600">Navigate to Dashboard → Family</span>
-          </div>
-          <div class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
             <span class="text-sm text-slate-600">Find the child you want to transfer credits to</span>
           </div>
           <div class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">2</div>
             <span class="text-sm text-slate-600">Click "Transfer Credits" and enter the amount</span>
           </div>
           <div class="flex items-start gap-3">
-            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">3</div>
             <span class="text-sm text-slate-600">Confirm the transfer - credits appear instantly in child's account</span>
           </div>
         </div>
@@ -200,7 +207,7 @@
 
       <p class="text-base text-slate-600">
         Create quiz-based learning tasks for your children with credit rewards. Children earn credits automatically
-        when they pass (70%+ score).
+        when they pass.
       </p>
 
       <!-- Task Flow -->
@@ -213,7 +220,7 @@
             </div>
             <div>
               <h5 class="font-medium text-slate-800 mb-1">Create Task</h5>
-              <p class="text-sm text-slate-600">Select subject, chapters, passing score (default 70%), and credit reward amount</p>
+              <p class="text-sm text-slate-600">Select subject, chapters, passing score and credit reward amount</p>
             </div>
           </div>
           <div class="flex gap-4">
@@ -258,7 +265,7 @@
             </div>
             <div>
               <h5 class="font-medium text-slate-800 mb-1">Close Task</h5>
-              <p class="text-sm text-slate-600">Once reviewed, you can close the task to mark it as complete and clear it from the active task list</p>
+              <p class="text-sm text-slate-600">You may wish to close the task to stop the child from any new attempts and prevent further credit transfers.</p>
             </div>
           </div>
         </div>
@@ -305,7 +312,7 @@
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-xl font-semibold text-slate-800">4. Order Approval (Checking Out)</h3>
         <NuxtLink
-          to="/dashboard?tab=family&subtab=orders"
+          to="/dashboard?tab=family&subtab=order-requests"
           class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-secondary-50 hover:bg-secondary-100 text-secondary-700 font-medium transition-all"
         >
           <UIcon name="i-lucide-external-link" class="w-4 h-4" />
@@ -314,7 +321,7 @@
       </div>
 
       <p class="text-base text-slate-600">
-        Review and approve your children's shop orders. When approved, you complete the real purchase directly with the vendor.
+        Review and approve your children's shop orders. When approved, you complete the actual purchase through stripe.
       </p>
 
       <div class="rounded-xl bg-slate-50 p-5 mb-4">
@@ -334,13 +341,13 @@
           </div>
           <div class="flex items-start gap-3">
             <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">4</div>
-            <span class="text-sm text-slate-600">If approved, complete the real purchase with the vendor using the provided link</span>
+            <span class="text-sm text-slate-600">If approved, complete the actual purchase through stripe</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 text-xs font-semibold flex-shrink-0 mt-0.5">5</div>
+            <span class="text-sm text-slate-600">If declined, credits are refunded to students</span>
           </div>
         </div>
-      </div>
-
-      <div class="rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
-        <strong>Note:</strong> Declined orders automatically return credits to your child's account. No money has been transferred - this is a pledge system.
       </div>
 
       <!-- Screenshot -->
