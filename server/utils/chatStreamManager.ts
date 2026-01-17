@@ -134,15 +134,28 @@ class ChatStreamManager {
     // Check if stream already exists and is active
     const existing = this.activeStreams.get(threadId);
     if (existing?.status === 'active') {
-      console.log(`[ChatStreamManager] Stream already active for ${threadId}`);
+      // If queryId is different, this is a NEW query - clear old buffer and update queryId
+      if (queryId && existing.queryId !== queryId) {
+        console.log(`[ChatStreamManager] Stream active for ${threadId} but queryId changed from ${existing.queryId} to ${queryId} - clearing buffer`);
+        existing.buffer = [];
+        existing.queryId = queryId;
+      } else {
+        console.log(`[ChatStreamManager] Stream already active for ${threadId}`);
+      }
       return true;
     }
 
-    // Create new stream entry
+    // If existing stream is not active (completed/error/cancelled), clear it before creating new
+    // This prevents old events from leaking into new queries
+    if (existing) {
+      console.log(`[ChatStreamManager] Clearing old ${existing.status} stream for ${threadId} (had ${existing.buffer.length} buffered events)`);
+    }
+
+    // Create new stream entry with fresh buffer
     const stream: ActiveStream = {
       threadId,
       pythonAbortController: new AbortController(),
-      buffer: [],
+      buffer: [], // Always start with empty buffer for new query
       clients: new Map(),
       status: 'active',
       lastActivity: Date.now(),
@@ -309,12 +322,9 @@ class ChatStreamManager {
     // Convert to standardized format
     const normalizedEvent = this.normalizeEvent(event);
 
-    // Add queryId to slide-related events for message association
-    if (stream.queryId && (
-      normalizedEvent.type === 'slide_batch_ready' ||
-      normalizedEvent.type === 'slide_generation_start' ||
-      normalizedEvent.type === 'slide_generation_complete'
-    )) {
+    // Add queryId to ALL events for message association and filtering
+    // This allows clients to filter out events from previous queries on the same thread
+    if (stream.queryId) {
       normalizedEvent.queryId = stream.queryId;
     }
 

@@ -103,7 +103,18 @@ const messageRefs = ref<Record<string, HTMLElement>>({});
 const isSyncingFromThreadData = ref(false);
 
 // Track how many responses we've processed to avoid re-processing on return
-const lastProcessedResponseIndex = ref(-1);
+// IMPORTANT: This is per-thread to prevent cross-thread response skipping when switching threads
+// Bug fix: If Thread A has 5 responses (index=4) and Thread B has 10, a single index would skip B's first 5
+const lastProcessedResponseIndexMap = ref<Map<string, number>>(new Map());
+
+// Helper to get/set the index for current thread
+const getLastProcessedIndex = (threadId: string): number => {
+  return lastProcessedResponseIndexMap.value.get(threadId) ?? -1;
+};
+
+const setLastProcessedIndex = (threadId: string, index: number): void => {
+  lastProcessedResponseIndexMap.value.set(threadId, index);
+};
 
 // Chat integration (supports both WebSocket and SSE modes via env config)
 // CRITICAL: Must use shallowRef here. Using ref() causes Vue to auto-unwrap nested refs,
@@ -164,7 +175,7 @@ const processPendingResponses = () => {
   console.log('[ChatContent] processPendingResponses called:', {
     hasStoreConn: !!storeConn,
     responsesLength: responses?.length || 0,
-    lastProcessedIndex: lastProcessedResponseIndex.value,
+    lastProcessedIndex: getLastProcessedIndex(props.threadId),
     messageStreamLength: messageStream.value.length,
   });
 
@@ -185,7 +196,7 @@ const processPendingResponses = () => {
   console.log('[ChatContent] Existing message timestamps:', existingTimestamps.size);
 
   // Process responses from where we left off, but skip any already in messageStream
-  const startIndex = lastProcessedResponseIndex.value + 1;
+  const startIndex = getLastProcessedIndex(props.threadId) + 1;
   if (startIndex >= responses.length) {
     console.log('[ChatContent] All responses already processed');
     return;
@@ -209,7 +220,7 @@ const processPendingResponses = () => {
     processedCount++;
   }
 
-  lastProcessedResponseIndex.value = responses.length - 1;
+  setLastProcessedIndex(props.threadId, responses.length - 1);
 
   console.log('[ChatContent] Processed pending responses:', {
     startIndex,
@@ -312,8 +323,8 @@ const initializeChat = async () => {
     console.log('[ChatContent] Store has active connection, reusing');
     currentThreadId.value = props.threadId;
     chat.value = useChat(props.threadId);
-    // Reset response tracking for this thread (will be set properly in processPendingResponses)
-    lastProcessedResponseIndex.value = -1;
+    // Note: Per-thread lastProcessedResponseIndexMap preserves index for this thread
+    // No reset needed - returning to a thread should not reprocess already-handled responses
 
     // Populate messageStream even when reusing connection (fixes empty messages on thread switch)
     // Preserve existing statuses (failed, cancelled, etc.)
@@ -411,8 +422,8 @@ const initializeChat = async () => {
       // Set lastProcessedResponseIndex to prevent the response watcher from
       // re-processing ALL historical responses.
       const responseCount = storeConnection?.chat.response.value?.length || 0;
-      lastProcessedResponseIndex.value = responseCount - 1;
-      console.log('[ChatContent] Thread complete with threadData, skipping processPendingResponses. Set lastProcessedResponseIndex to:', lastProcessedResponseIndex.value);
+      setLastProcessedIndex(props.threadId, responseCount - 1);
+      console.log('[ChatContent] Thread complete with threadData, skipping processPendingResponses. Set lastProcessedResponseIndex to:', getLastProcessedIndex(props.threadId));
     }
 
     return;
@@ -491,8 +502,8 @@ const initializeChat = async () => {
   if (chat.value && currentThreadId.value !== props.threadId) {
     console.log('[ChatContent] Switching threads, releasing local chat reference (NOT disconnecting)');
     chat.value = null;
-    // Reset response tracking for new thread
-    lastProcessedResponseIndex.value = -1;
+    // Note: Per-thread lastProcessedResponseIndexMap handles thread-specific tracking
+    // New threads start at -1 automatically via getLastProcessedIndex default
   } else if (chat.value) {
     // Same thread - just reuse existing chat instance, don't reconnect
     console.log('[ChatContent] Same thread, reusing existing chat instance');
@@ -593,23 +604,26 @@ onMounted(() => {
       return { responses: resp, version, length: resp?.length || 0 };
     },
     ({ responses: newMessages, length: newLength }: { responses: any[] | undefined; version: number; length: number }) => {
+      const threadId = props.threadId;
+      const currentIndex = getLastProcessedIndex(threadId);
+
       // Detect buffer reset: if array is smaller than expected, reset tracking
       // This happens when clearMessages() is called before a new request
-      if (newLength <= lastProcessedResponseIndex.value) {
-        console.log('[ChatContent] Buffer was reset (length', newLength, '<= lastProcessedIndex', lastProcessedResponseIndex.value, '), resetting index');
-        lastProcessedResponseIndex.value = -1;
+      if (newLength <= currentIndex) {
+        console.log('[ChatContent] Buffer was reset (length', newLength, '<= lastProcessedIndex', currentIndex, '), resetting index for thread:', threadId);
+        setLastProcessedIndex(threadId, -1);
       }
 
       if (newMessages && newMessages.length > 0) {
         // Process only messages we haven't processed yet
-        const startIndex = lastProcessedResponseIndex.value + 1;
+        const startIndex = getLastProcessedIndex(threadId) + 1;
         if (startIndex < newMessages.length) {
-          console.log('[ChatContent] Processing messages from index:', startIndex, 'to:', newMessages.length - 1);
+          console.log('[ChatContent] Processing messages from index:', startIndex, 'to:', newMessages.length - 1, 'for thread:', threadId);
           for (let i = startIndex; i < newMessages.length; i++) {
             handleWebSocketMessage(newMessages[i]);
             // CRITICAL: Update index IMMEDIATELY after each message to prevent duplicates.
             // If watcher triggers again mid-loop, we won't reprocess already-handled messages.
-            lastProcessedResponseIndex.value = i;
+            setLastProcessedIndex(threadId, i);
           }
         }
       }
@@ -1521,7 +1535,7 @@ const handleWebSocketMessage = (message: any) => {
 
     // Reset lastProcessedResponseIndex so future responses can be processed
     // Note: Response buffer is cleared when connection is closed above
-    lastProcessedResponseIndex.value = -1;
+    setLastProcessedIndex(props.threadId, -1);
     return;
   }
 };
@@ -1971,8 +1985,8 @@ const clearChat = () => {
   activeStreamingMessage.value = null;
   streamingProgress.value = null;
 
-  // Reset response tracking
-  lastProcessedResponseIndex.value = -1;
+  // Reset response tracking for current thread
+  setLastProcessedIndex(props.threadId, -1);
 
   // NOTE: We intentionally do NOT clear thread state or disconnect here.
   // When switching threads or starting new chat, the old thread's connection

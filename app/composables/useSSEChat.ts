@@ -40,6 +40,9 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   const onTerminalEvent = options.onTerminalEvent; // Direct callback for terminal events
   const onResponse = options.onResponse; // Callback for all response events (triggers reactivity)
 
+  // Track current queryId to filter out events from previous queries on same thread
+  let currentQueryId: string | null = null;
+
   // Track page unload to prevent treating AbortError as timeout
   // When user refreshes, we don't want to stop the RAG stream - just silently disconnect
   let isPageUnloading = false;
@@ -127,6 +130,13 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     // Handle heartbeat - don't add to messages
     if (eventType === 'heartbeat') {
+      return;
+    }
+
+    // Filter out events from different queries (prevents stale message leakage)
+    // This handles the case where buffer contains events from Query A when Query B connects
+    if (data.queryId && currentQueryId && data.queryId !== currentQueryId) {
+      console.log('[SSEChat] Skipping event from different query:', data.queryId, 'current:', currentQueryId);
       return;
     }
 
@@ -353,6 +363,12 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     isStreaming.value = true;
     isConnected.value = true;
     hasReceivedTerminalEvent = false; // Reset for new request
+
+    // Set current queryId to filter out events from previous queries
+    if (queryId) {
+      currentQueryId = queryId;
+      console.log('[SSEChat] Set currentQueryId:', queryId);
+    }
 
     // Create new abort controller for this request
     abortController = new AbortController();
