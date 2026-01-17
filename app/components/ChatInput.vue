@@ -77,44 +77,59 @@
 
     <!-- Suggestions - only show on new chat -->
     <div v-if="showSuggestions" :class="['flex flex-wrap gap-2', isMobile ? 'justify-center' : '']" data-tour="chat-suggestions">
-      <!-- Lesson Pill (with chapter dropdown) -->
+      <!-- Text Book button (for subject-specific characters) -->
       <button
+        v-if="showStudyButton"
         :class="[
-          'text-white border border-gray-200 rounded-xl hover:bg-primary-400 hover:border-gray-300 active:bg-primary-500 transition-colors flex items-center',
-          openDropdown === 'lesson' ? 'bg-primary-600' : 'bg-primary',
+          'text-white border border-gray-200 rounded-xl transition-colors flex items-center',
+          studyDropdownOpen ? 'bg-primary-600' : 'bg-primary hover:bg-primary-400 active:bg-primary-500',
+          isCreatingLesson ? 'border-gray-300 text-gray-400 cursor-not-allowed' : '',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
         ]"
-        :title="isMobile ? 'Give me a lesson on...' : undefined"
-        @click="toggleDropdown('lesson', $event)"
+        :disabled="isCreatingLesson"
+        :title="isMobile ? 'Text Book' : undefined"
+        @click="toggleStudyDropdown"
       >
-        <Icon v-if="isMobile" name="i-lucide-book-open" class="w-5 h-5" />
-        <template v-else>
-          Give me a lesson on...
+        <Icon
+          :name="isCreatingLesson ? 'i-heroicons-arrow-path' : 'i-lucide-book'"
+          :class="['w-5 h-5', isCreatingLesson ? 'animate-spin' : '']"
+        />
+        <template v-if="!isMobile">
+          Text Book
           <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
         </template>
       </button>
 
-      <!-- Quiz Pill (with chapter dropdown) -->
+      <!-- Lesson Pill -->
       <button
         :class="[
-          'text-white border border-gray-200 rounded-xl hover:bg-secondary-400 hover:border-gray-300 active:bg-secondary-500 transition-colors flex items-center',
-          openDropdown === 'quiz' ? 'bg-secondary-600' : 'bg-secondary',
+          'bg-white text-primary border-2 border-primary rounded-xl hover:bg-primary-50 transition-colors flex items-center',
+          isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
+        ]"
+        :title="isMobile ? 'Give me a lesson on...' : undefined"
+        @click="appendText('Give me a lesson on ')"
+      >
+        <Icon v-if="isMobile" name="i-lucide-book-open" class="w-5 h-5" />
+        <span v-else>Give me a lesson on...</span>
+      </button>
+
+      <!-- Quiz Pill -->
+      <button
+        :class="[
+          'bg-white text-primary border-2 border-primary rounded-xl hover:bg-primary-50 transition-colors flex items-center',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
         ]"
         :title="isMobile ? 'Quiz me on...' : undefined"
-        @click="toggleDropdown('quiz', $event)"
+        @click="appendText('Quiz me on ')"
       >
         <Icon v-if="isMobile" name="i-lucide-clipboard-list" class="w-5 h-5" />
-        <template v-else>
-          Quiz me on...
-          <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
-        </template>
+        <span v-else>Quiz me on...</span>
       </button>
 
       <!-- Homework (no dropdown) -->
       <button
         :class="[
-          'text-gray-600 bg-white border border-gray-200 rounded-xl hover:bg-stone-100 hover:border-gray-300 active:bg-stone-200 transition-colors flex items-center justify-center',
+          'bg-white text-primary border-2 border-primary rounded-xl hover:bg-primary-50 transition-colors flex items-center justify-center',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm'
         ]"
         :title="isMobile ? 'Help me with my schoolwork on...' : undefined"
@@ -125,11 +140,11 @@
       </button>
     </div>
 
-    <!-- Chapter Dropdown Menu (for subject-specific characters) -->
+    <!-- Text Book Dropdown Menu (for subject-specific characters) -->
     <div
-      v-if="(openDropdown === 'lesson' || openDropdown === 'quiz') && showChapterDropdown"
+      v-if="studyDropdownOpen && showStudyDropdown"
       ref="dropdownRef"
-      class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-10"
+      class="absolute top-full left-0 right-0 mt-2 bg-white border border-primary-200 rounded-xl shadow-lg z-10"
       :style="{ maxHeight: `${maxDropdownHeight}px` }"
       @click.stop
     >
@@ -141,7 +156,7 @@
 
       <!-- Empty state -->
       <div v-else-if="chapters.length === 0" class="px-4 py-8 text-center">
-        <p class="text-sm text-gray-500">No chapters available for this subject</p>
+        <p class="text-sm text-gray-500">No chapters available</p>
       </div>
 
       <!-- Chapters list -->
@@ -149,42 +164,19 @@
         <button
           v-for="chapter in chapters"
           :key="chapter.value"
-          class="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
-          @click="selectChapter(chapter)"
+          class="w-full px-4 py-3 text-left hover:bg-primary-50 first:rounded-t-xl last:rounded-b-xl border-b border-primary-100 last:border-b-0 transition-colors"
+          @click="selectStudyChapter(chapter)"
         >
           <div class="flex flex-col gap-1">
-            <div class="text-sm text-gray-900">
-              <span>{{ dropdownPrefix }} {{ chapter.label }}</span>
-              <span v-if="chapter.chapterNumber !== undefined">
+            <div class="text-sm font-medium text-gray-900">
+              {{ chapter.label }}
+              <span v-if="chapter.chapterNumber !== undefined" class="text-gray-500 font-normal">
                 (Chapter {{ chapter.chapterNumber + 1 }})
               </span>
             </div>
             <p v-if="chapter.description" class="text-xs text-gray-500 line-clamp-2">
               {{ chapter.description }}
             </p>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- Suggestion Dropdown Menu (for GENERAL/Eddy character) -->
-    <div
-      v-if="(openDropdown === 'lesson' || openDropdown === 'quiz') && showSuggestionDropdown"
-      ref="dropdownRef"
-      class="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-10"
-      :style="{ maxHeight: `${maxDropdownHeight}px` }"
-      @click.stop
-    >
-      <!-- Suggestions list -->
-      <div class="overflow-y-auto" :style="{ maxHeight: `${maxDropdownHeight}px` }">
-        <button
-          v-for="(suggestion, index) in currentSuggestions"
-          :key="index"
-          class="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
-          @click="selectSuggestion(suggestion)"
-        >
-          <div class="text-sm text-gray-900">
-            {{ suggestion }}
           </div>
         </button>
       </div>
@@ -200,6 +192,7 @@ import { useChapters } from '~/composables/useChapters';
 import { useFileUpload } from '~/composables/useFileUpload';
 import { mapCharacterSubjectToChapterSubjectId } from '~/utils/subjectMapping';
 import { useMeStore } from '~/stores/me';
+import { useLessonStart } from '~/composables/useLessonStart';
 
 const { isMobile } = useResponsive();
 const meStore = useMeStore();
@@ -287,27 +280,16 @@ const userEducationInfo = computed(() => {
   return '';
 });
 
-// Hardcoded suggestions for GENERAL subject (Eddy)
-const subjectSuggestions: Record<string, { lesson: string[]; quiz: string[] }> = {
-  GENERAL: {
-    lesson: [
-      'Give me a lesson on world war II',
-      'Teach me about time management during exams',
-      'How can I overcome my weakest subjects?',
-    ],
-    quiz: [
-      'Quiz me on world war II',
-      'Quiz me on the photosynthesis process',
-      'Quiz me on newtons laws of motion',
-    ],
-  },
-};
-
 const isSending = ref(false);
 const DEBOUNCE_MS = 2000; // 2 second cooldown to prevent spam
 
 // Combined disabled state: local debounce OR parent processing state
 const isDisabled = computed(() => isSending.value || props.isProcessing);
+
+// Text Book button state
+const studyDropdownOpen = ref(false);
+const isCreatingLesson = ref(false);
+const { startLesson } = useLessonStart();
 
 // Dynamic dropdown height calculation
 const dropdownRef = ref<HTMLElement | null>(null);
@@ -344,31 +326,11 @@ const { fetchChaptersBySubject } = useChapters();
 const chapters = ref<Array<{ value: string; label: string; description?: string; level: number; chapterNumber?: number }>>([]);
 const chaptersLoading = ref(false);
 
-// Computed properties to control which dropdown shows
-const showChapterDropdown = computed(() => {
-  return props.subject !== 'GENERAL' && chapters.value.length > 0;
-});
-
-const showSuggestionDropdown = computed(() => {
-  return props.subject === 'GENERAL';
-});
-
-// Get suggestions for current dropdown type
-const currentSuggestions = computed(() => {
-  if (props.subject === 'GENERAL' && openDropdown.value) {
-    const type = openDropdown.value as 'lesson' | 'quiz';
-    return subjectSuggestions.GENERAL[type] || [];
-  }
-  return [];
-});
-
-// Get the prefix based on which dropdown is open
-const dropdownPrefix = computed(() => {
-  if (openDropdown.value === 'quiz') {
-    return 'Quiz me on';
-  }
-  return 'Give me a lesson on';
-});
+// Text Book button visibility
+const showStudyButton = computed(() => props.subject !== 'GENERAL');
+const showStudyDropdown = computed(() =>
+  props.subject !== 'GENERAL' && chapters.value.length > 0
+);
 
 // Fetch chapters when subject changes
 watchEffect(async () => {
@@ -392,11 +354,8 @@ watchEffect(async () => {
   }
 });
 
-// Dropdown state
-const openDropdown = ref<string | null>(null);
-
-// Watch for dropdown open/close to calculate height
-watch(openDropdown, (newValue) => {
+// Watch for study dropdown open/close to calculate height
+watch(studyDropdownOpen, (newValue) => {
   if (newValue) {
     // Wait for next tick to ensure dropdown is rendered
     nextTick(() => {
@@ -405,10 +364,11 @@ watch(openDropdown, (newValue) => {
   }
 });
 
-const toggleDropdown = (key: string, event: MouseEvent) => {
+// Text Book dropdown handlers
+const toggleStudyDropdown = (event: MouseEvent) => {
   event.stopPropagation();
-  const wasOpen = openDropdown.value === key;
-  openDropdown.value = wasOpen ? null : key;
+  const wasOpen = studyDropdownOpen.value;
+  studyDropdownOpen.value = !wasOpen;
 
   // Emit events for parent to coordinate carousel collapse
   if (wasOpen) {
@@ -418,38 +378,45 @@ const toggleDropdown = (key: string, event: MouseEvent) => {
   }
 };
 
-const closeDropdown = () => {
-  const wasOpen = openDropdown.value !== null;
-  openDropdown.value = null;
+const closeStudyDropdown = () => {
+  const wasOpen = studyDropdownOpen.value;
+  studyDropdownOpen.value = false;
   if (wasOpen) {
     emit('dropdown-closed');
   }
 };
 
-const selectChapter = (chapter: { value: string; label: string; description?: string; level: number; chapterNumber?: number }) => {
-  // Build the chapter text with number in parentheses if available
-  const chapterText = chapter.chapterNumber !== undefined ?
-    `${chapter.label} (Chapter ${chapter.chapterNumber + 1})` :
-    chapter.label;
+const selectStudyChapter = async (chapter: { value: string; label: string; description?: string; level: number; chapterNumber?: number }) => {
+  isCreatingLesson.value = true;
+  closeStudyDropdown();
 
-  // Use different text based on which pill opened the dropdown
-  if (openDropdown.value === 'quiz') {
-    input.value = `Quiz me on ${chapterText}`;
-  } else {
-    input.value = `Give me a lesson on ${chapterText}`;
+  try {
+    // Map character subject to chapter subject_id for API
+    const subjectId = mapCharacterSubjectToChapterSubjectId(props.subject);
+
+    if (!subjectId) {
+      throw new Error('Invalid subject mapping');
+    }
+
+    // Use character subject as display name
+    const subjectDisplayName = props.subject;
+
+    await startLesson({
+      chapterName: chapter.value,
+      chapterDisplayName: chapter.label,
+      subject: subjectId,
+      subjectDisplayName
+    });
+  } catch (error) {
+    console.error('Error selecting study chapter:', error);
+  } finally {
+    isCreatingLesson.value = false;
   }
-  closeDropdown();
-};
-
-const selectSuggestion = (text: string) => {
-  // For hardcoded suggestions, use exact text
-  input.value = text;
-  closeDropdown();
 };
 
 // Click outside handler
 const handleClickOutside = () => {
-  closeDropdown();
+  closeStudyDropdown();
 };
 
 onMounted(async () => {

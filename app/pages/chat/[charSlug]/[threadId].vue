@@ -578,6 +578,18 @@ watch(threadId, async (newThreadId, oldThreadId) => {
   }
 }, { immediate: true });
 
+// Watch for study_prompt query parameter changes (for navigation-based injection)
+watch(
+  () => route.query.study_prompt,
+  async (newStudyPrompt) => {
+    // Only trigger if we have a study prompt and we're on a new chat
+    if (newStudyPrompt && isNewChat.value) {
+      await handleStudyPromptInjection();
+    }
+  },
+  { immediate: false } // Don't run immediately since onMounted handles initial load
+);
+
 const handleCharacterSelection = async (character) => {
   // Close slides panel when changing character
   selectedSlides.value = [];
