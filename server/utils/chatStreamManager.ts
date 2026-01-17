@@ -12,7 +12,12 @@
  * - Buffers events in memory for reconnecting clients
  * - Supports multiple browser clients per thread (e.g., multiple tabs)
  * - Falls back to Python /state API if buffer is empty
+ * - **CRITICAL**: Saves slides to DB when generation completes, ensuring no data loss
+ *   even if client disconnects during streaming
  */
+
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '~~/types/supabase';
 
 export interface ChatEvent {
   type: string;
@@ -57,10 +62,145 @@ const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // Clean up every 5 minutes
 class ChatStreamManager {
   private activeStreams: Map<string, ActiveStream> = new Map();
   private cleanupInterval: NodeJS.Timeout | null = null;
+  private supabaseClient: SupabaseClient<Database> | null = null;
+  private savedSlideQueries: Set<string> = new Set(); // Track which queries have been saved
 
   constructor() {
     // Start periodic cleanup
     this.startCleanup();
+  }
+
+  /**
+   * Get or create Supabase service role client for server-side DB operations
+   */
+  private getSupabaseClient(): SupabaseClient<Database> | null {
+    if (this.supabaseClient) return this.supabaseClient;
+
+    try {
+      const config = useRuntimeConfig();
+      if (!config.private?.supabaseUrl || !config.private?.supabaseServiceRoleKey) {
+        console.error('[ChatStreamManager] Missing Supabase config for server-side saving');
+        return null;
+      }
+
+      this.supabaseClient = createClient<Database>(
+        config.private.supabaseUrl,
+        config.private.supabaseServiceRoleKey
+      );
+      return this.supabaseClient;
+    } catch (err) {
+      console.error('[ChatStreamManager] Failed to create Supabase client:', err);
+      return null;
+    }
+  }
+
+  /**
+   * Save slides to database server-side.
+   * Called when slide_generation_complete arrives or on terminal state.
+   * This ensures slides are persisted even if client is disconnected.
+   */
+  private async saveSlidesToDatabase(threadId: string): Promise<boolean> {
+    const stream = this.activeStreams.get(threadId);
+    if (!stream || !stream.queryId) {
+      console.log('[ChatStreamManager] saveSlidesToDatabase: No stream or queryId for:', threadId);
+      return false;
+    }
+
+    // Deduplication: Skip if already saved for this query
+    const dedupKey = `${threadId}_${stream.queryId}`;
+    if (this.savedSlideQueries.has(dedupKey)) {
+      console.log('[ChatStreamManager] Slides already saved for query:', dedupKey);
+      return true;
+    }
+
+    // Collect all slides from buffer
+    const allSlides: any[] = [];
+    let contentType: 'lesson' | 'quiz' | null = null;
+    let summaryMessage: string | null = null;
+    let timestamp: string | null = null;
+
+    for (const event of stream.buffer) {
+      if (event.type === 'slide_batch_ready' && event.batch?.slides) {
+        allSlides.push(...event.batch.slides);
+        if (!contentType && event.batch.slides[0]) {
+          contentType = event.batch.slides[0].type === 'question' ? 'quiz' : 'lesson';
+        }
+      }
+      // Capture user_message summary if present
+      if (event.status === 'user_message' && event.message) {
+        summaryMessage = event.message;
+        timestamp = event.timestamp || null;
+      }
+    }
+
+    // Nothing to save if no slides AND no summary message
+    if (allSlides.length === 0 && !summaryMessage) {
+      console.log('[ChatStreamManager] saveSlidesToDatabase: No content to save for:', threadId);
+      return true;
+    }
+
+    const supabase = this.getSupabaseClient();
+    if (!supabase) {
+      console.error('[ChatStreamManager] Cannot save message: No Supabase client');
+      return false;
+    }
+
+    // Build the message content - slides + summary OR standalone text
+    const messageContent = allSlides.length > 0 ?
+        {
+          slides: allSlides,
+          contentType: contentType || 'lesson',
+          status: 'completed',
+          isStreaming: false,
+          ...(summaryMessage && { message: summaryMessage }),
+          ...(timestamp && { timestamp }),
+        } :
+        {
+        // Standalone text message (no slides)
+          message: summaryMessage,
+          status: 'user_message',
+          ...(timestamp && { timestamp }),
+        };
+
+    console.log('[ChatStreamManager] Saving AI response to DB:', {
+      threadId,
+      queryId: stream.queryId,
+      slidesCount: allSlides.length,
+      hasTextOnly: allSlides.length === 0 && !!summaryMessage,
+      contentType: allSlides.length > 0 ? contentType : 'text',
+    });
+
+    try {
+      const { error } = await supabase
+        .from('thread_messages')
+        .upsert({
+          id: stream.queryId,
+          thread_id: threadId,
+          sender: null, // AI message
+          content: JSON.stringify(messageContent),
+          type: 'json',
+        }, { onConflict: 'id' });
+
+      if (error) {
+        console.error('[ChatStreamManager] Failed to save slides:', error);
+        return false;
+      }
+
+      // Mark as saved
+      this.savedSlideQueries.add(dedupKey);
+      console.log('[ChatStreamManager] AI response saved successfully:', dedupKey);
+
+      // Clean up old entries periodically (keep last 1000)
+      if (this.savedSlideQueries.size > 1000) {
+        const entries = Array.from(this.savedSlideQueries);
+        entries.slice(0, entries.length - 500).forEach((key) => this.savedSlideQueries.delete(key));
+      }
+
+      return true;
+    } catch (err) {
+      console.error('[ChatStreamManager] Error saving slides:', err);
+      return false;
+    }
   }
 
   /**
@@ -247,6 +387,10 @@ class ChatStreamManager {
       if (stream.status === 'active') {
         stream.status = 'completed';
       }
+
+      // Save slides when stream ends (final fallback)
+      console.log('[ChatStreamManager] Stream ended naturally, ensuring slides are saved');
+      await this.saveSlidesToDatabase(threadId);
     } catch (err: any) {
       console.error(`[ChatStreamManager] Python connection error for ${threadId}:`, err);
 
@@ -262,6 +406,10 @@ class ChatStreamManager {
           timestamp: new Date().toISOString(),
         });
       }
+
+      // Save any slides that were received before error/abort
+      console.log('[ChatStreamManager] Stream ended with error/abort, saving any partial slides');
+      await this.saveSlidesToDatabase(threadId);
     }
   }
 
@@ -331,9 +479,25 @@ class ChatStreamManager {
     // Buffer the event
     this.pushEvent(threadId, normalizedEvent);
 
+    // CRITICAL: Save slides to DB when generation completes
+    // This ensures slides are persisted even if client disconnects
+    if (event.type === 'slide_generation_complete') {
+      console.log('[ChatStreamManager] slide_generation_complete received, saving to DB');
+      this.saveSlidesToDatabase(threadId).catch((err) => {
+        console.error('[ChatStreamManager] Error in slide save:', err);
+      });
+    }
+
     // Update stream status on terminal events
     if (['completed', 'cancelled', 'error'].includes(event.type)) {
       stream.status = event.type as 'completed' | 'cancelled' | 'error';
+
+      // Also save slides on terminal state as fallback
+      // (in case slide_generation_complete was missed or stream ended abruptly)
+      console.log('[ChatStreamManager] Terminal state', event.type, '- ensuring slides are saved');
+      this.saveSlidesToDatabase(threadId).catch((err) => {
+        console.error('[ChatStreamManager] Error in terminal state slide save:', err);
+      });
     }
   }
 

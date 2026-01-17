@@ -826,7 +826,8 @@ onMounted(() => {
 
 // Send message directly to WebSocket
 // skipConnectionCheck: trust caller's connection state (avoids Vue reactivity timing issues)
-const sendMessage = async (text: string, skipConnectionCheck = false) => {
+// queryId: UUID to associate the AI response (slides) with this message in DB
+const sendMessage = async (text: string, skipConnectionCheck = false, queryId?: string) => {
   console.log('[ChatContent] sendMessage called, isConnected:', chat.value?.isConnected.value, 'skipCheck:', skipConnectionCheck);
   const isConnected = chat.value?.isConnected.value;
   if ((!isConnected && !skipConnectionCheck) || !text.trim()) {
@@ -880,11 +881,13 @@ const sendMessage = async (text: string, skipConnectionCheck = false) => {
     if (needsFreshStart) {
       messageQueueStore.setNeedsFreshStart(props.threadId, false);
     }
-    success = await chat.value.startChat(text, userInfo);
+    // Pass queryId so server can associate slides with this message
+    success = await chat.value.startChat(text, userInfo, queryId);
     isFirstMessage.value = false;
   } else {
     console.log('[ChatContent] Calling sendUserResponse (isFirstMessage=false)');
-    success = await chat.value.sendUserResponse(text, userInfo);
+    // Pass queryId so server can associate slides with this message
+    success = await chat.value.sendUserResponse(text, userInfo, queryId);
   }
 
   console.log('[ChatContent] sendMessage success:', success);
@@ -929,26 +932,20 @@ const processMessageQueue = () => {
     messageQueue.value = [];
 
     messages.forEach((queuedMsg) => {
-      nextTick(() => {
+      nextTick(async () => {
         // Update status to 'sending' before actually sending
         if (queuedMsg.messageId) {
           updateMessageStatus(queuedMsg.messageId, 'sending');
         }
         // Skip connection check - we verified isConnected at start of processMessageQueue
-        const success = sendMessage(queuedMsg.text, true);
+        // Pass messageId as queryId so server can associate slides with this message
+        const success = await sendMessage(queuedMsg.text, true, queuedMsg.messageId);
         if (!success && queuedMsg.messageId) {
           updateMessageStatus(queuedMsg.messageId, 'failed');
         }
       });
     });
   }
-};
-
-// Async save helper - fire and forget, no blocking UI
-const saveMessageAsync = (obj: { thread_id: string; content: any; type: string; isUser: boolean; uuid: string }) => {
-  addMessage(obj).catch((err) => {
-    console.error('[saveMessageAsync] Failed:', err);
-  });
 };
 
 // Handle slide batch streaming
@@ -1157,42 +1154,15 @@ const handleStreamingComplete = (completionMessage: any) => {
   const streamingMessage = messageStream.value[messageIndex];
 
   if (streamingMessage) {
-    // Update message to final state
+    // Update message to final state (UI only - server handles DB save)
     streamingMessage.status = 'completed';
     streamingMessage.isStreaming = false;
     streamingMessage.message = completionMessage.message || streamingMessage.message;
 
     // Trigger final update
     messageStream.value = [...messageStream.value];
-
-    // Check dedup before saving - slides may have been saved by slide_generation_complete
-    const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
-    if (queryId) {
-      const dedupKey = `slides_${props.threadId}_${queryId}`;
-      const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, dedupKey);
-      if (!shouldSave) {
-        console.log('[ChatContent] handleStreamingComplete: Slides already saved, skipping');
-      } else {
-        // Save with updated status (slides already saved incrementally)
-        saveMessageAsync({
-          thread_id: props.threadId,
-          content: streamingMessage,
-          type: 'json',
-          isUser: false,
-          uuid: streamingMessage.id
-        });
-      }
-    } else {
-      // No queryId - fallback save (shouldn't happen normally)
-      console.warn('[ChatContent] handleStreamingComplete: No queryId, saving anyway');
-      saveMessageAsync({
-        thread_id: props.threadId,
-        content: streamingMessage,
-        type: 'json',
-        isUser: false,
-        uuid: streamingMessage.id
-      });
-    }
+    // NOTE: Slides are saved by Nuxt server on slide_generation_complete/terminal state
+    // FE only handles UI state updates, not DB persistence for AI responses
   }
 
   // Clear streaming state
@@ -1261,26 +1231,8 @@ const handleWebSocketMessage = (message: any) => {
         streamingMessage.isStreaming = false;
         streamingMessage.status = 'completed';
 
-        // CRITICAL: Mark slides as saved BEFORE saving to prevent duplicates from:
-        // 1. The 'completed' status handler (handleStreamingComplete)
-        // 2. messageQueue.saveSlidesFromBuffer (background save)
-        // Use the current queryId as dedup key (same as messageQueue uses)
-        const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
-        if (queryId) {
-          const dedupKey = `slides_${props.threadId}_${queryId}`;
-          messageQueueStore.markResponseAsSaving(props.threadId, dedupKey);
-          console.log('[ChatContent] Marked slides as saved with dedupKey:', dedupKey);
-        }
-
-        // Save the bundled slides to DB (only on completion)
-        console.log('[ChatContent] Saving bundled slides to DB:', streamingMessage.id, 'slides:', streamingMessage.slides?.length);
-        saveMessageAsync({
-          thread_id: props.threadId,
-          content: streamingMessage,
-          type: 'json',
-          isUser: false,
-          uuid: streamingMessage.id
-        });
+        // NOTE: Slides are saved by Nuxt server on slide_generation_complete
+        // FE only handles UI state updates, not DB persistence for AI responses
 
         messageStream.value = [...messageStream.value]; // Trigger reactivity
       }
@@ -1334,17 +1286,8 @@ const handleWebSocketMessage = (message: any) => {
     return;
   }
 
-  // Display summary message from user_message status
+  // Display summary message from user_message status (UI only - server handles DB save)
   if (message.status === 'user_message') {
-    // CRITICAL: Use markResponseAsSaving() to atomically check-and-mark before saving.
-    // This prevents race conditions where both store watcher and ChatContent watcher
-    // try to save the same response simultaneously.
-    const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, message.timestamp);
-
-    if (!shouldSave) {
-      console.log('[ChatContent] Response already marked for saving, skipping DB save');
-    }
-
     // MERGE summary text into slides message from CURRENT streaming session only.
     // Only merge if we have an active streaming session - this prevents overwriting
     // seeded lesson messages when the AI responds with just text (no new slides).
@@ -1354,7 +1297,7 @@ const handleWebSocketMessage = (message: any) => {
       null;
 
     if (existingSlidesMessage && existingSlidesMessage.id) {
-      // Merge: add summary text to existing slides message
+      // Merge: add summary text to existing slides message (UI only)
       console.log('[ChatContent] Merging user_message into existing slides message:', existingSlidesMessage.id);
       existingSlidesMessage.message = message.message;
       existingSlidesMessage.status = 'user_message';
@@ -1362,42 +1305,19 @@ const handleWebSocketMessage = (message: any) => {
 
       // Trigger reactivity
       messageStream.value = [...messageStream.value];
-
-      // Update the existing DB record with the merged content (upsert by id)
-      if (shouldSave) {
-        saveMessageAsync({
-          thread_id: props.threadId,
-          content: existingSlidesMessage,
-          type: 'json',
-          isUser: false,
-          uuid: existingSlidesMessage.id
-        });
-      }
+      // NOTE: Slides + summary are saved together by Nuxt server
     } else {
-      // No slides message to merge with - create standalone text message
-      console.log('[ChatContent] No slides message found, creating standalone text message');
-      const cleanMessage = {
+      // No slides message to merge with - display standalone text message (UI only)
+      // NOTE: Server saves standalone text messages via chatStreamManager
+      console.log('[ChatContent] No slides message found, displaying standalone text message');
+      const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
+      const displayId = queryId || crypto.randomUUID();
+      messageStream.value.push({
         message: message.message,
         status: 'user_message',
-        timestamp: message.timestamp
-      };
-
-      if (shouldSave) {
-        const newUuid = crypto.randomUUID();
-        messageQueueStore.trackLocalMessage(newUuid);
-
-        addMessage({
-          thread_id: props.threadId,
-          content: JSON.stringify(cleanMessage),
-          type: 'json',
-          isUser: false,
-          uuid: newUuid
-        });
-        messageStream.value.push({ ...cleanMessage, id: newUuid });
-      } else {
-        const displayUuid = crypto.randomUUID();
-        messageStream.value.push({ ...cleanMessage, id: displayUuid });
-      }
+        timestamp: message.timestamp,
+        id: displayId
+      });
     }
 
     // Update state flags
@@ -1417,43 +1337,14 @@ const handleWebSocketMessage = (message: any) => {
       ready_for_new_message: message.ready_for_new_message,
       tokens_saved: message.tokens_saved,
     });
-    // If we have streaming slides, mark as complete and SAVE to DB
-    // This handles the case where slides were received but slide_generation_complete never arrived
+    // If we have streaming slides, mark as complete (UI only - server handles DB save)
     if (activeStreamingMessage.value) {
       const messageIndex = activeStreamingMessage.value.messageIndex;
       const streamingMessage = messageStream.value[messageIndex];
       if (streamingMessage && streamingMessage.slides?.length > 0) {
         streamingMessage.status = 'completed';
         streamingMessage.isStreaming = false;
-
-        // Check dedup before saving - slides may have been saved by slide_generation_complete
-        const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
-        if (queryId) {
-          const dedupKey = `slides_${props.threadId}_${queryId}`;
-          const shouldSave = messageQueueStore.markResponseAsSaving(props.threadId, dedupKey);
-          if (!shouldSave) {
-            console.log('[ChatContent] Terminal state: Slides already saved, skipping');
-          } else {
-            console.log('[ChatContent] Saving slides on terminal state:', streamingMessage.id, 'slides:', streamingMessage.slides.length);
-            saveMessageAsync({
-              thread_id: props.threadId,
-              content: streamingMessage,
-              type: 'json',
-              isUser: false,
-              uuid: streamingMessage.id
-            });
-          }
-        } else {
-          // No queryId - fallback save
-          console.log('[ChatContent] Saving slides on terminal state (no queryId):', streamingMessage.id, 'slides:', streamingMessage.slides.length);
-          saveMessageAsync({
-            thread_id: props.threadId,
-            content: streamingMessage,
-            type: 'json',
-            isUser: false,
-            uuid: streamingMessage.id
-          });
-        }
+        // NOTE: Slides are saved by Nuxt server on terminal state
       }
       activeStreamingMessage.value = null;
       streamingProgress.value = null;
@@ -1702,7 +1593,7 @@ const handleSend = async (text: string, isRetryCall = false) => {
   // Try to send, reconnecting if needed
   if (isConnectedNow) {
     console.log('[ChatContent] Already connected, sending directly');
-    let sendResult = await sendMessage(text);
+    let sendResult = await sendMessage(text, false, messageUuid);
     console.log('[ChatContent] sendMessage result:', sendResult);
 
     // If send failed, connection might be stale - try to reconnect and resend
@@ -1717,7 +1608,7 @@ const handleSend = async (text: string, isRetryCall = false) => {
         const reconnected = await chat.value?.connect();
         if (reconnected) {
           console.log('[ChatContent] Reconnected, retrying send');
-          sendResult = await sendMessage(text, true);
+          sendResult = await sendMessage(text, true, messageUuid);
         }
       } catch (err) {
         console.error('[ChatContent] Reconnect attempt failed:', err);
@@ -1769,7 +1660,7 @@ const handleSend = async (text: string, isRetryCall = false) => {
       }
 
       // Now try to send - skip connection check since we just verified it
-      const sendResult = await sendMessage(text, true);
+      const sendResult = await sendMessage(text, true, messageUuid);
       console.log('[ChatContent] sendMessage result after reconnect:', sendResult);
       if (!sendResult && !wasAlreadyCancelled()) {
         updateStatus('failed');
@@ -1836,19 +1727,7 @@ const handleCancelRequest = async () => {
       streamingMessage.isStreaming = false;
       streamingMessage.status = 'cancelled';
       messageStream.value = [...messageStream.value]; // Trigger reactivity
-
-      // CRITICAL: Save any slides that were already generated to DB
-      // Without this, slides are lost when user navigates away after cancel
-      if (streamingMessage.slides?.length > 0) {
-        console.log('[ChatContent] Saving cancelled slides to DB:', streamingMessage.id, 'slides:', streamingMessage.slides.length);
-        saveMessageAsync({
-          thread_id: props.threadId,
-          content: streamingMessage,
-          type: 'json',
-          isUser: false,
-          uuid: streamingMessage.id
-        });
-      }
+      // NOTE: Slides are saved by Nuxt server on cancelled state
     }
     activeStreamingMessage.value = null;
     streamingProgress.value = null;
