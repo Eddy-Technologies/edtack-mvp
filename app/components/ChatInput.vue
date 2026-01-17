@@ -3,10 +3,15 @@
     <!-- Input container -->
     <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4" data-tour="chat-input">
       <!-- Keyword hint -->
-      <p class="text-sm text-gray-400 text-center mb-2">
-        Use keywords <span class="font-medium text-primary">"lesson"</span> or
-        <span class="font-medium text-secondary">"quiz"</span> to generate interactive content
-      </p>
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm text-gray-400">
+          Use keywords <span class="font-medium text-primary">"lesson"</span> or
+          <span class="font-medium text-secondary">"quiz"</span> to generate interactive content
+        </p>
+        <p v-if="userEducationInfo" class="text-sm text-gray-400 whitespace-nowrap ml-4">
+          {{ userEducationInfo }}
+        </p>
+      </div>
 
       <div class="flex items-center gap-2">
         <UTextarea
@@ -162,8 +167,10 @@ import { useTokenUsage } from '~/composables/useTokenUsage';
 import { useResponsive } from '~/composables/useResponsive';
 import { useChapters } from '~/composables/useChapters';
 import { mapCharacterSubjectToChapterSubjectId } from '~/utils/subjectMapping';
+import { useMeStore } from '~/stores/me';
 
 const { isMobile } = useResponsive();
+const meStore = useMeStore();
 
 const props = defineProps({
   showSuggestions: {
@@ -183,6 +190,21 @@ const props = defineProps({
 const emit = defineEmits(['send', 'dropdown-opened', 'dropdown-closed']);
 const input = ref('');
 const toast = useToast();
+
+// Education options for label mapping
+const levelOptions = ref<Array<{ value: string; label: string }>>([]);
+const syllabusOptions = ref<Array<{ value: string; label: string }>>([]);
+
+// Computed property for user education info display
+const userEducationInfo = computed(() => {
+  const levelLabel = levelOptions.value.find(opt => opt.value === meStore.level_type)?.label;
+  const syllabusLabel = syllabusOptions.value.find(opt => opt.value === meStore.syllabus_type)?.label;
+
+  if (levelLabel && syllabusLabel) {
+    return `${levelLabel} • ${syllabusLabel}`;
+  }
+  return '';
+});
 
 // Hardcoded suggestions for GENERAL subject (Eddy)
 const subjectSuggestions: Record<string, { lesson: string[]; quiz: string[] }> = {
@@ -349,9 +371,21 @@ const handleClickOutside = () => {
   closeDropdown();
 };
 
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('click', handleClickOutside);
   window.addEventListener('resize', calculateDropdownHeight);
+
+  // Fetch education options for label mapping
+  try {
+    const [levelsResponse, syllabusResponse] = await Promise.all([
+      $fetch('/api/options/levels'),
+      $fetch('/api/options/syllabus')
+    ]);
+    levelOptions.value = levelsResponse.levels || [];
+    syllabusOptions.value = syllabusResponse.syllabus || [];
+  } catch (error) {
+    console.error('Failed to fetch education options:', error);
+  }
 });
 
 onUnmounted(() => {
