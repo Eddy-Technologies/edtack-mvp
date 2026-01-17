@@ -197,8 +197,8 @@ const syllabusOptions = ref<Array<{ value: string; label: string }>>([]);
 
 // Computed property for user education info display
 const userEducationInfo = computed(() => {
-  const levelLabel = levelOptions.value.find(opt => opt.value === meStore.level_type)?.label;
-  const syllabusLabel = syllabusOptions.value.find(opt => opt.value === meStore.syllabus_type)?.label;
+  const levelLabel = levelOptions.value.find((opt) => opt.value === meStore.level_type)?.label;
+  const syllabusLabel = syllabusOptions.value.find((opt) => opt.value === meStore.syllabus_type)?.label;
 
   if (levelLabel && syllabusLabel) {
     return `${levelLabel} • ${syllabusLabel}`;
