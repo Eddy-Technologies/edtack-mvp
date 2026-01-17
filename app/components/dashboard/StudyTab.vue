@@ -263,7 +263,6 @@ const router = useRouter();
 const { generateStudyPrompt } = useStudy();
 const meStore = useMeStore();
 const { getCharacterBySubject, fetchCharacters } = useCharacters();
-const { addThreadToList } = useThreads();
 const toast = useToast();
 const analytics = useAnalytics();
 
@@ -393,8 +392,9 @@ const handleStudyAction = async (chapter: any, subjectName: string, subjectDispl
             subjectId: subjectName,
             lessonType: 'seeded',
           });
-          // Add thread to local list so sidebar updates
-          addThreadToList(lessonResponse.thread as any);
+          // Refresh thread list from database to include newly created thread
+          const { fetchThreads } = useThreads();
+          await fetchThreads(true); // forceRefresh = true to reload from DB
           // Navigate directly to the created thread with seeded lesson
           await router.push(`/chat/${characterSlug}/${lessonResponse.thread.id}`);
           return;
