@@ -750,18 +750,16 @@ onMounted(() => {
         // Build a set of DB message IDs for quick lookup
         const dbMessageIds = new Set(newThreadData.thread_messages.map((m: any) => m.id));
 
-        // Build a set of DB timestamps for AI messages (to detect duplicates by timestamp)
-        const dbTimestamps = new Set(
-          newThreadData.thread_messages
-            .filter((m: any) => !m.sender) // AI messages only
-            .map((m: any) => {
-              try {
-                const content = JSON.parse(m.content);
-                return content.timestamp?.toString();
-              } catch { return null; }
-            })
-            .filter(Boolean)
-        );
+        // Build set of DB timestamps for AI message deduplication (primary method)
+        const dbTimestamps = new Set<string>();
+        newThreadData.thread_messages
+          .filter((m: any) => !m.sender) // AI messages only
+          .forEach((m: any) => {
+            try {
+              const content = JSON.parse(m.content);
+              if (content.timestamp) dbTimestamps.add(content.timestamp.toString());
+            } catch { /* ignore parse errors */ }
+          });
 
         // Collect local-only messages (failed/retried/cancelled that never made it to DB)
         const localOnlyMessages = messageStream.value.filter(
@@ -770,6 +768,7 @@ onMounted(() => {
 
         // Find AI messages added by processPendingResponses that aren't in DB yet
         // These could be from chat.response but not yet persisted to DB
+        // Deduplication by: ID first, then timestamp (unique per response)
         const pendingAiMessages = messageStream.value.filter((msg: any) => {
           if (msg.isUser) return false; // Only AI messages
           if (dbMessageIds.has(msg.id)) return false; // Already in DB by ID
@@ -786,6 +785,9 @@ onMounted(() => {
           }
         }
 
+        // Check if there are AI responses after user messages (pending or in DB)
+        const hasAiResponse = newThreadData.thread_messages.some((m: any) => !m.sender) || pendingAiMessages.length > 0;
+
         // Map DB messages
         const dbMessages = newThreadData.thread_messages.map((msg: any, index: number) => {
           // Priority: local status > DB status (local might be more recent)
@@ -797,6 +799,10 @@ onMounted(() => {
           // This overrides any stale 'sending'/'queued' status from DB
           const isLastMessage = index === newThreadData.thread_messages.length - 1;
           if (!isLastMessage) {
+            status = 'sent';
+          } else if (isLastMessage && hasAiResponse) {
+            // Last user message but there's an AI response after it (in DB or pending)
+            // This means the request succeeded - don't show as failed
             status = 'sent';
           }
           // Last message keeps its status (could be in progress, failed, etc.)

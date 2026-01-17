@@ -190,6 +190,13 @@ class ChatStreamManager {
       this.savedSlideQueries.add(dedupKey);
       console.log('[ChatStreamManager] AI response saved successfully:', dedupKey);
 
+      // CRITICAL: Clear buffer after successful save to prevent duplicate messages on reconnect
+      // Reconnecting clients will get messages from DB instead of buffer
+      if (stream) {
+        console.log('[ChatStreamManager] Clearing buffer after successful save (had', stream.buffer.length, 'events)');
+        stream.buffer = [];
+      }
+
       // Clean up old entries periodically (keep last 1000)
       if (this.savedSlideQueries.size > 1000) {
         const entries = Array.from(this.savedSlideQueries);
