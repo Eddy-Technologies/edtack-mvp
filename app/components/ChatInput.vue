@@ -1,46 +1,77 @@
 <template>
-  <div class="flex flex-col gap-3 relative">
-    <!-- Input container -->
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-4" data-tour="chat-input">
-      <!-- Keyword hint -->
-      <div class="flex items-center justify-between mb-2">
-        <p class="text-sm text-gray-400">
-          Use keywords <span class="font-medium text-primary">"lesson"</span> or
-          <span class="font-medium text-secondary">"quiz"</span> to generate interactive content
-        </p>
-        <p v-if="userEducationInfo" class="text-sm text-gray-400 whitespace-nowrap ml-4">
-          {{ userEducationInfo }}
-        </p>
+  <div
+    class="flex flex-col gap-3 relative"
+    @dragenter.prevent="handleDragEnter"
+    @dragover.prevent="handleDragOver"
+    @dragleave.prevent="handleDragLeave"
+    @drop.prevent="handleDrop"
+  >
+    <!-- Drag overlay -->
+    <div
+      v-if="isDragging"
+      class="absolute inset-0 bg-primary-50 border-2 border-dashed border-primary-400 rounded-xl z-20 flex items-center justify-center"
+    >
+      <div class="text-center">
+        <Icon name="i-heroicons-arrow-up-tray" class="w-8 h-8 text-primary-500 mb-2" />
+        <p class="text-primary-600 font-medium">Drop files here</p>
       </div>
+    </div>
 
-      <div class="flex items-center gap-2">
-        <UTextarea
-          v-model="input"
-          placeholder="How can I help you today?"
-          :maxlength="1000"
-          :rows="2"
-          :autoresize="true"
-          :resize="false"
-          class="flex-1"
-          style="max-height: 7.5rem; font-size: 16px;"
-          textarea-class="text-gray-600 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
-          @keydown.enter="handleEnterKey"
-        />
-        <button
-          :class="[
-            'p-3 rounded-lg transition-colors duration-200 flex items-center justify-center',
-            isDisabled
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-primary hover:bg-blue-700 text-white'
-          ]"
-          :disabled="isDisabled"
-          @click="emitMessage"
-        >
-          <Icon
-            :name="isDisabled ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
-            :class="['w-5 h-5', isDisabled ? 'animate-spin text-white' : '']"
+    <!-- Input container -->
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden" data-tour="chat-input">
+      <!-- File preview area -->
+      <ChatFilePreviewArea
+        :files="stagedFiles"
+        @remove="removeFile"
+        @retry="retryUpload"
+        @clear="clearFiles"
+      />
+      <!-- Keyword hint and input -->
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-sm text-gray-400">
+            Use keywords <span class="font-medium text-primary">"lesson"</span> or
+            <span class="font-medium text-secondary">"quiz"</span> to generate interactive content
+          </p>
+          <p v-if="userEducationInfo" class="text-sm text-gray-400 whitespace-nowrap ml-4">
+            {{ userEducationInfo }}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <UTextarea
+            v-model="input"
+            placeholder="How can I help you today?"
+            :maxlength="1000"
+            :rows="2"
+            :autoresize="true"
+            :resize="false"
+            class="flex-1"
+            style="max-height: 7.5rem; font-size: 16px;"
+            textarea-class="text-gray-600 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+            @keydown.enter="handleEnterKey"
           />
-        </button>
+          <!-- File upload button -->
+          <ChatFileUploadButton
+            :disabled="isUploading"
+            @files-selected="handleFilesSelected"
+          />
+          <button
+            :class="[
+              'p-3 rounded-lg transition-colors duration-200 flex items-center justify-center',
+              isDisabled
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-primary hover:bg-blue-700 text-white'
+            ]"
+            :disabled="isDisabled"
+            @click="emitMessage"
+          >
+            <Icon
+              :name="isDisabled ? 'i-heroicons-arrow-path' : 'i-heroicons-paper-airplane'"
+              :class="['w-5 h-5', isDisabled ? 'animate-spin text-white' : '']"
+            />
+          </button>
+        </div>
       </div>
     </div>
 
@@ -162,10 +193,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted, watchEffect, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watchEffect, watch, nextTick, toRef } from 'vue';
 import { useTokenUsage } from '~/composables/useTokenUsage';
 import { useResponsive } from '~/composables/useResponsive';
 import { useChapters } from '~/composables/useChapters';
+import { useFileUpload } from '~/composables/useFileUpload';
 import { mapCharacterSubjectToChapterSubjectId } from '~/utils/subjectMapping';
 import { useMeStore } from '~/stores/me';
 
@@ -185,11 +217,60 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  threadId: {
+    type: String,
+    default: '',
+  },
 });
 
-const emit = defineEmits(['send', 'dropdown-opened', 'dropdown-closed']);
+const emit = defineEmits<{
+  (e: 'send', payload: { text: string; fileIds: string[]; pendingFiles?: File[] }): void;
+  (e: 'dropdown-opened' | 'dropdown-closed'): void;
+}>();
 const input = ref('');
 const toast = useToast();
+
+// File upload
+const threadIdRef = toRef(props, 'threadId');
+const {
+  stagedFiles,
+  isUploading,
+  isDragging,
+  uploadedFileIds,
+  addFiles,
+  removeFile,
+  clearFiles,
+  uploadFiles,
+  handleDragEnter,
+  handleDragOver,
+  handleDragLeave,
+  handleDrop,
+} = useFileUpload(threadIdRef);
+
+async function handleFilesSelected(files: File[]) {
+  const result = await addFiles(files);
+  if (result.errors.length > 0) {
+    toast.add({
+      title: 'File error',
+      description: result.errors[0],
+      color: 'red',
+      timeout: 5000,
+    });
+  }
+}
+
+async function retryUpload(fileId: string) {
+  // Find the file and re-upload
+  const file = stagedFiles.value.find((f: { id: string }) => f.id === fileId);
+  if (file && file.status === 'error') {
+    file.status = 'pending';
+    file.error = undefined;
+    // Only upload if we have a threadId, otherwise file stays pending until send
+    if (props.threadId) {
+      await uploadFiles();
+    }
+  }
+}
 
 // Education options for label mapping
 const levelOptions = ref<Array<{ value: string; label: string }>>([]);
@@ -419,9 +500,37 @@ const emitMessage = async () => {
   // Set sending state to prevent spam clicks
   isSending.value = true;
 
+  // Handle file upload based on whether we have a threadId
+  let fileIds: string[] = [];
+  let pendingFiles: File[] | undefined;
+
+  if (stagedFiles.value.length > 0) {
+    if (props.threadId) {
+      // Existing chat - upload files first
+      const uploadSuccess = await uploadFiles();
+      if (!uploadSuccess) {
+        toast.add({
+          title: 'Upload failed',
+          description: 'Some files failed to upload. Please retry or remove them.',
+          color: 'red',
+          timeout: 5000,
+        });
+        isSending.value = false;
+        return;
+      }
+      fileIds = uploadedFileIds.value;
+    } else {
+      // New chat - pass files to parent for upload after thread creation
+      pendingFiles = stagedFiles.value.map((f: { file: File }) => f.file);
+    }
+  }
+
   // Proceed with message (soft limit - always allow)
-  emit('send', input.value);
+  emit('send', { text: input.value, fileIds, pendingFiles });
   input.value = '';
+
+  // Clear files after successful send
+  clearFiles();
 
   // Auto-reset after cooldown (in case parent doesn't call resetSendState)
   setTimeout(() => {

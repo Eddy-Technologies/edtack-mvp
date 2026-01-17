@@ -171,6 +171,7 @@
                     :show-suggestions="isNewChat"
                     :subject="selectedCharacter?.subject || 'GENERAL'"
                     :is-processing="connectionStatus.isWaitingForResponse"
+                    :thread-id="threadId !== 'new' ? threadId : ''"
                     @send="handleChatSend"
                     @dropdown-opened="handleDropdownOpened"
                     @dropdown-closed="handleDropdownClosed"
@@ -186,6 +187,7 @@
                 :show-suggestions="isNewChat"
                 :subject="selectedCharacter?.subject || 'GENERAL'"
                 :is-processing="connectionStatus.isWaitingForResponse"
+                :thread-id="threadId !== 'new' ? threadId : ''"
                 @send="handleChatSend"
                 @dropdown-opened="handleDropdownOpened"
                 @dropdown-closed="handleDropdownClosed"
@@ -621,7 +623,8 @@ const toggleSidebar = () => {
   localStorage.setItem('sidebar-collapsed', String(collapsed.value));
 };
 
-const handleChatSend = async (text: string) => {
+const handleChatSend = async (payload: { text: string; fileIds: string[]; pendingFiles?: File[] }) => {
+  const { text, pendingFiles } = payload;
   hasStartedChat.value = true;
 
   // If new chat, generate thread ID and update URL
@@ -636,6 +639,24 @@ const handleChatSend = async (text: string) => {
       });
 
       const newThreadUuid = newThread.id;
+
+      // If there are pending files, upload them to the new thread before redirect
+      if (pendingFiles && pendingFiles.length > 0) {
+        try {
+          const formData = new FormData();
+          pendingFiles.forEach((file) => formData.append('files', file));
+
+          await $fetch(`/api/chat/${newThreadUuid}/files/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+          console.log(`[handleChatSend] Uploaded ${pendingFiles.length} files to new thread ${newThreadUuid}`);
+        } catch (uploadErr) {
+          console.error('File upload error for new thread:', uploadErr);
+          // Continue even if upload fails - user can re-add files
+        }
+      }
+
       await router.replace(`/chat/${charSlug.value}/${newThreadUuid}`);
     } catch (err) {
       console.error('Thread creation error', err);
@@ -645,7 +666,7 @@ const handleChatSend = async (text: string) => {
     return;
   }
 
-  // Existing chat - send directly
+  // Existing chat - send directly (files are already staged on backend)
   if (chatContentRef.value && chatContentRef.value.handleSend) {
     await chatContentRef.value.handleSend(text);
   }
@@ -683,7 +704,7 @@ const handleStudyPromptInjection = async () => {
   try {
     // Add a brief delay to ensure smooth UX
     setTimeout(async () => {
-      await handleChatSend(studyPrompt);
+      await handleChatSend({ text: studyPrompt, fileIds: [] });
 
       // Clear the query parameters from URL after injection to keep URL clean
       await router.replace({
