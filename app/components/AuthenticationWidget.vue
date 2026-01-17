@@ -62,18 +62,18 @@
               </button>
               <button
                 class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                @click="routeTo('/dashboard?tab=settings')"
-              >
-                <Icon name="i-heroicons-cog-6-tooth" class="w-4 h-4" />
-                Settings
-              </button>
-              <button
-                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
                 data-tour="desktop-study"
                 @click="routeTo('/dashboard?tab=study')"
               >
                 <Icon name="i-heroicons-book-open" class="w-4 h-4" />
                 Study
+              </button>
+              <button
+                class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                @click="routeTo('/dashboard?tab=settings')"
+              >
+                <Icon name="i-heroicons-cog-6-tooth" class="w-4 h-4" />
+                Settings
               </button>
               <button
                 class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
