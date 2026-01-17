@@ -46,6 +46,7 @@ export interface ActiveStream {
   startedAt: number;
   userInfo?: any;
   initialMessage?: string;
+  queryId?: string; // ID of the message this stream is generating content for
 }
 
 // Configuration
@@ -127,7 +128,8 @@ class ChatStreamManager {
     threadId: string,
     message: string,
     token: string,
-    userInfo?: any
+    userInfo?: any,
+    queryId?: string
   ): Promise<boolean> {
     // Check if stream already exists and is active
     const existing = this.activeStreams.get(threadId);
@@ -147,6 +149,7 @@ class ChatStreamManager {
       startedAt: Date.now(),
       userInfo,
       initialMessage: message,
+      queryId, // Store queryId to include in events
     };
 
     this.activeStreams.set(threadId, stream);
@@ -305,6 +308,15 @@ class ChatStreamManager {
 
     // Convert to standardized format
     const normalizedEvent = this.normalizeEvent(event);
+
+    // Add queryId to slide-related events for message association
+    if (stream.queryId && (
+      normalizedEvent.type === 'slide_batch_ready' ||
+      normalizedEvent.type === 'slide_generation_start' ||
+      normalizedEvent.type === 'slide_generation_complete'
+    )) {
+      normalizedEvent.queryId = stream.queryId;
+    }
 
     // Buffer the event
     this.pushEvent(threadId, normalizedEvent);

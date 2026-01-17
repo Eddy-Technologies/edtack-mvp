@@ -219,6 +219,47 @@ const processPendingResponses = () => {
   });
 };
 
+/**
+ * Check server-side status and reconnect to active stream if needed.
+ * Used after page refresh when local Pinia state may be lost but server still has an active stream.
+ */
+const checkAndReconnectToActiveStream = async () => {
+  try {
+    const statusResponse = await $fetch<{ active: boolean; status: string; bufferedEvents: number }>(`/api/chat/${props.threadId}/status`);
+    // ONLY reconnect when stream is ACTIVE. For completed streams, data is already in DB.
+    // Don't reconnect just because there are buffered events - that causes duplicate messages.
+    if (statusResponse?.active) {
+      console.log('[ChatContent] Server reports ACTIVE stream with', statusResponse.bufferedEvents, 'buffered events - reconnecting');
+      isWaitingForResponse.value = true;
+      isPlayingAllowed.value = false;
+      messageQueueStore.setThreadState(props.threadId, { status: 'processing' });
+
+      // CRITICAL: Call reconnectToStream() to actually receive the buffered events.
+      // The SSE connect() is a no-op - it just sets isConnected=true without reading the stream.
+      // reconnectToStream() creates the actual EventSource connection to receive events.
+      const conn = messageQueueStore.getConnection(props.threadId);
+      if (conn?.chat.reconnectToStream) {
+        console.log('[ChatContent] Calling reconnectToStream to receive buffered events');
+        const reconnected = await conn.chat.reconnectToStream();
+        console.log('[ChatContent] reconnectToStream result:', reconnected);
+
+        // CRITICAL: reconnectToStream adds events to response.value but doesn't increment
+        // responseVersions, so the watcher won't trigger. Manually process pending responses.
+        if (reconnected) {
+          nextTick(() => {
+            processPendingResponses();
+          });
+        }
+      } else {
+        console.log('[ChatContent] No reconnectToStream available on connection');
+      }
+    }
+  } catch (err) {
+    // Status endpoint may not exist or stream may not be active - that's fine
+    console.log('[ChatContent] Could not check server stream status:', err);
+  }
+};
+
 // Initialize chat - simplified approach
 const initializeChat = async () => {
   // Skip if 'new' thread ID (invalid)
@@ -340,6 +381,10 @@ const initializeChat = async () => {
         isWaitingForResponse.value = false;
         isPlayingAllowed.value = true;
       }
+    } else {
+      // Thread state is NOT processing locally (e.g., after page refresh).
+      // Check server-side status endpoint to detect active streams we don't know about.
+      await checkAndReconnectToActiveStream();
     }
 
     // Process any responses that arrived while user was away (e.g., slide batches)
@@ -487,6 +532,10 @@ const initializeChat = async () => {
         console.log('[ChatContent] Resuming processing state - backend may still be generating');
         isWaitingForResponse.value = true;
         isPlayingAllowed.value = false;
+      } else {
+        // Thread state is NOT processing locally (possibly after page refresh where Pinia state was lost).
+        // Check server-side status endpoint to detect active streams.
+        await checkAndReconnectToActiveStream();
       }
 
       // Check for pending message
@@ -906,50 +955,104 @@ const handleSlideBatch = (batchMessage: any) => {
 
   // Case 1: First batch - initialize streaming message
   if (!activeStreamingMessage.value) {
-    // Detect content type from first slide
-    const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
+    // FIX: Check if there's already a streaming slide message in messageStream
+    // This happens after page refresh - DB sync loaded the existing message but
+    // activeStreamingMessage was reset by slide_generation_start event
 
-    // CRITICAL: Use queryId as the message ID (set when user sends message).
-    // This ensures ChatContent and messageQueue.saveSlidesFromBuffer use the SAME UUID,
-    // so if both try to save, they upsert the same DB row (no duplicates).
-    const queryId = messageQueueStore.getCurrentQueryId(props.threadId);
-    const newMessageId = queryId || crypto.randomUUID(); // Fallback to random if no queryId
-    // Track this UUID locally for deduplication with Realtime
-    messageQueueStore.trackLocalMessage(newMessageId);
-    const newMessage = {
-      status: 'streaming',
-      slides: [...slides],
-      contentType,
-      isStreaming: true,
-      id: newMessageId,
-    };
+    // First, determine the queryId for this batch to match against existing messages
+    const eventQueryId = batchMessage.queryId;
+    const storeQueryId = messageQueueStore.getCurrentQueryId(props.threadId);
+    const queryId = eventQueryId || storeQueryId;
 
-    // Add to message stream
-    messageStream.value.push(newMessage);
-    const messageIndex = messageStream.value.length - 1;
-    console.log('[ChatContent] Added new slide message to messageStream at index:', messageIndex, 'total messages:', messageStream.value.length, 'slides in message:', newMessage.slides.length);
+    // DEBUG: Log all messages to understand their structure
+    console.log('[ChatContent] handleSlideBatch - no activeStreamingMessage, queryId:', queryId, 'checking existing messages:');
+    messageStream.value.forEach((m: any, idx: number) => {
+      console.log(`  [${idx}] id=${m.id}, isUser=${m.isUser}, isStreaming=${m.isStreaming}, status=${m.status}, hasSlides=${!!m.slides}, slidesCount=${m.slides?.length || 0}`);
+    });
 
-    // Initialize streaming state
-    activeStreamingMessage.value = {
-      id: newMessageId,
-      messageIndex,
-      totalSlides: total_slides_so_far,
-      contentType,
-      startTime: Date.now(),
-    };
+    // Look for existing slide message to link to (must match current queryId)
+    // After page refresh, the DB-loaded message may have status=completed but we should
+    // still append new slides to it instead of creating a duplicate
+    // CRITICAL: Only match if the message ID equals the current queryId, otherwise
+    // we might link new slides to a completely different message's slide card!
+    const existingSlideIndex = messageStream.value.findIndex(
+      (m: any) => {
+        // Must be an AI message with slides
+        if (m.isUser) return false;
+        if (!m.slides || m.slides.length === 0) return false;
+        // Must match the current query's ID (if we have one)
+        if (queryId && m.id !== queryId) return false;
+        return true;
+      }
+    );
 
-    streamingProgress.value = {
-      slidesReceived: total_slides_so_far,
-      totalExpected: null, // Unknown until completion
-      estimatedTimeRemaining: null,
-    };
+    if (existingSlideIndex !== -1) {
+      // Found existing slide message - link to it instead of creating new
+      const existingMessage = messageStream.value[existingSlideIndex] as any;
+      console.log('[ChatContent] Found existing slide message at index:', existingSlideIndex, 'with', existingMessage.slides?.length, 'slides - linking instead of creating new');
 
-    // Emit to parent to open slides panel with messageId for marking persistence
-    emit('openSlides', [...slides], newMessageId);
+      // Initialize activeStreamingMessage to point to existing
+      activeStreamingMessage.value = {
+        id: existingMessage.id,
+        messageIndex: existingSlideIndex,
+        totalSlides: existingMessage.slides?.length || 0,
+        contentType: existingMessage.contentType || (slides[0]?.type === 'question' ? 'quiz' : 'lesson'),
+        startTime: Date.now(),
+      };
 
-    isWaitingForResponse.value = true;
+      // Mark existing message as streaming again since we're appending
+      existingMessage.isStreaming = true;
+      existingMessage.status = 'streaming';
+      isWaitingForResponse.value = true;
 
-    return;
+      // IMPORTANT: Don't return here! Fall through to Case 2 to process this batch.
+      // The batch might contain NEW slides that weren't saved to DB yet (e.g., user
+      // clicked away while streaming and came back - buffered events have new slides).
+      // Case 2's deduplication logic will skip slides already in the message.
+    } else {
+      // No existing slide message - create new one (original logic)
+      const contentType = slides[0]?.type === 'question' ? 'quiz' : 'lesson';
+
+      // Use queryId (already determined above) as the message ID
+      const newMessageId = queryId || crypto.randomUUID();
+      console.log('[ChatContent] Creating new slide message with queryId:', { eventQueryId, storeQueryId, final: newMessageId });
+      // Track this UUID locally for deduplication with Realtime
+      messageQueueStore.trackLocalMessage(newMessageId);
+      const newMessage = {
+        status: 'streaming',
+        slides: [...slides],
+        contentType,
+        isStreaming: true,
+        id: newMessageId,
+      };
+
+      // Add to message stream
+      messageStream.value.push(newMessage);
+      const messageIndex = messageStream.value.length - 1;
+      console.log('[ChatContent] Added new slide message to messageStream at index:', messageIndex, 'total messages:', messageStream.value.length, 'slides in message:', newMessage.slides.length);
+
+      // Initialize streaming state
+      activeStreamingMessage.value = {
+        id: newMessageId,
+        messageIndex,
+        totalSlides: total_slides_so_far,
+        contentType,
+        startTime: Date.now(),
+      };
+
+      streamingProgress.value = {
+        slidesReceived: total_slides_so_far,
+        totalExpected: null, // Unknown until completion
+        estimatedTimeRemaining: null,
+      };
+
+      // Emit to parent to open slides panel with messageId for marking persistence
+      emit('openSlides', [...slides], newMessageId);
+
+      isWaitingForResponse.value = true;
+
+      return;
+    }
   }
 
   // Case 2: Subsequent batches - append to existing message
@@ -962,8 +1065,50 @@ const handleSlideBatch = (batchMessage: any) => {
     return;
   }
 
-  // Append new slides to existing message
-  existingMessage.slides = [...existingMessage.slides, ...slides];
+  // DEDUPLICATION: Only append slides that are truly new
+  // After page refresh, the existing message may already have some slides from DB.
+  // Buffered events may include slides we already have, so skip them.
+  const existingCount = existingMessage.slides?.length || 0;
+  if (total_slides_so_far <= existingCount) {
+    console.log('[ChatContent] Skipping slide batch - already have', existingCount, 'slides, batch total_slides_so_far:', total_slides_so_far);
+    return;
+  }
+
+  // Calculate how many slides from this batch are actually new
+  // For example: existing has 2 slides, batch has 1 slide with total_so_far=3 → append 1 slide
+  // Or: existing has 1 slide, batch has 1 slide with total_so_far=1 → append 0 slides (skip)
+  let slidesToAdd = slides.slice(-(total_slides_so_far - existingCount));
+  if (slidesToAdd.length === 0) {
+    console.log('[ChatContent] No new slides to add after count-based deduplication');
+    return;
+  }
+
+  // CONTENT-BASED DEDUPLICATION: Filter out slides that already exist by title
+  // This catches edge cases where count-based dedup passes but content is duplicated
+  const existingTitles = new Set(
+    (existingMessage.slides || []).map((s: any) => s.title?.toLowerCase().trim())
+  );
+  const originalCount = slidesToAdd.length;
+  slidesToAdd = slidesToAdd.filter((slide: any) => {
+    const title = slide.title?.toLowerCase().trim();
+    if (!title) return true; // Keep slides without titles
+    if (existingTitles.has(title)) {
+      console.log('[ChatContent] Skipping duplicate slide by title:', title);
+      return false;
+    }
+    existingTitles.add(title); // Prevent duplicates within the batch too
+    return true;
+  });
+
+  if (slidesToAdd.length === 0) {
+    console.log('[ChatContent] No new slides to add after content-based deduplication (filtered', originalCount, 'slides)');
+    return;
+  }
+
+  console.log('[ChatContent] Appending', slidesToAdd.length, 'new slides (existing:', existingCount, ', batch total:', total_slides_so_far, ', filtered:', originalCount - slidesToAdd.length, ')');
+
+  // Append only new slides to existing message
+  existingMessage.slides = [...existingMessage.slides, ...slidesToAdd];
 
   // Update streaming state
   activeStreamingMessage.value.totalSlides = total_slides_so_far;

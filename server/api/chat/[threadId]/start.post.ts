@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
   const authHeader = getHeader(event, 'authorization');
   const token = authHeader?.replace('Bearer ', '') || '';
 
-  console.log(`[Start Chat] Starting stream for thread ${threadId}`);
+  console.log(`[Start Chat] Starting stream for thread ${threadId}, queryId: ${body.queryId || 'none'}`);
 
   try {
     // Check if stream already exists
@@ -67,7 +67,8 @@ export default defineEventHandler(async (event) => {
       threadId,
       body.message,
       token,
-      body.userInfo
+      body.userInfo,
+      body.queryId // Pass queryId to associate stream with message
     );
 
     if (!success) {

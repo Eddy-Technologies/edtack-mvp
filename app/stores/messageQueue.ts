@@ -717,7 +717,14 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         this.handleChatResponse(threadId, response);
       };
 
-      const chat = useChatConnection(threadId, { onTerminalEvent });
+      // CALLBACK: Increment responseVersions when events are received to trigger watchers.
+      // This is needed because response.value changes during reconnection aren't picked up by watchers
+      // that rely on responseVersions for reactivity.
+      const onResponse = (_response: ChatResponse) => {
+        this.responseVersions[threadId] = (this.responseVersions[threadId] || 0) + 1;
+      };
+
+      const chat = useChatConnection(threadId, { onTerminalEvent, onResponse });
 
       conn = {
         threadId,

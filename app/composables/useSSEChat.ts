@@ -13,6 +13,11 @@ export interface UseSSEChatOptions extends ChatOptions {
    * Bypasses the unreliable watcher chain for more reliable end-state detection.
    */
   onTerminalEvent?: (status: string, response: ChatResponse) => void;
+  /**
+   * Callback fired whenever a response event is received.
+   * Used to trigger reactivity for watchers that may not detect response array changes.
+   */
+  onResponse?: (response: ChatResponse) => void;
 }
 
 /**
@@ -33,6 +38,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   let abortController: AbortController | null = null;
   let hasReceivedTerminalEvent = false; // Track if we've received a terminal event (completed, error, cancelled)
   const onTerminalEvent = options.onTerminalEvent; // Direct callback for terminal events
+  const onResponse = options.onResponse; // Callback for all response events (triggers reactivity)
 
   // Track page unload to prevent treating AbortError as timeout
   // When user refreshes, we don't want to stop the RAG stream - just silently disconnect
@@ -132,6 +138,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         timestamp: data.timestamp,
       };
       response.value.push(responseData);
+      if (onResponse) onResponse(responseData);
       console.log('[SSEChat] Pushed slide_generation_start');
       return;
     }
@@ -144,6 +151,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         timestamp: data.timestamp,
       };
       response.value.push(responseData);
+      if (onResponse) onResponse(responseData);
       console.log('[SSEChat] Pushed slide_generation_complete');
       return;
     }
@@ -162,6 +170,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
       if (data.status === 'status_update') {
         // Already normalized by Nuxt proxy - use directly
         response.value.push(data as ChatResponse);
+        if (onResponse) onResponse(data as ChatResponse);
       } else {
         // Raw from Python - normalize
         const responseData: ChatResponse = {
@@ -171,6 +180,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           timestamp: data.timestamp,
         };
         response.value.push(responseData);
+        if (onResponse) onResponse(responseData);
       }
       console.log('[SSEChat] Pushed status_update, phase:', phaseMessage, 'response.length:', response.value.length);
       return;
@@ -183,6 +193,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         // Already normalized by Nuxt proxy - use directly
         console.log('[SSEChat] Using pre-normalized slide_batch_ready, slides:', data.batch.slides?.length);
         response.value.push(data as ChatResponse);
+        if (onResponse) onResponse(data as ChatResponse);
       } else {
         // Raw from Python (legacy/direct connection) - normalize
         const responseData: ChatResponse = {
@@ -197,6 +208,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           },
         };
         response.value.push(responseData);
+        if (onResponse) onResponse(responseData);
       }
       return;
     }
@@ -208,6 +220,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
         // Already normalized by Nuxt proxy - use directly
         console.log('[SSEChat] Using pre-normalized quiz_batch_ready, slides:', data.batch.slides?.length);
         response.value.push(data as ChatResponse);
+        if (onResponse) onResponse(data as ChatResponse);
       } else {
         // Raw from Python (legacy/direct connection) - normalize
         const responseData: ChatResponse = {
@@ -222,6 +235,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           },
         };
         response.value.push(responseData);
+        if (onResponse) onResponse(responseData);
       }
       return;
     }
@@ -326,7 +340,8 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   const startChatInternal = async (
     initialMessage: string,
     userInfo?: ChatUserInfo,
-    isRetry: boolean = false
+    isRetry: boolean = false,
+    queryId?: string
   ): Promise<boolean> => {
     if (isStreaming.value && !isRetry) {
       console.warn('Already streaming');
@@ -366,6 +381,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
           body: JSON.stringify({
             message: initialMessage,
             userInfo: userInfo,
+            queryId: queryId, // Pass queryId to associate stream with message
           }),
           signal: abortController.signal,
         });
@@ -627,9 +643,10 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
    */
   const startChat = async (
     initialMessage: string,
-    userInfo?: ChatUserInfo
+    userInfo?: ChatUserInfo,
+    queryId?: string
   ): Promise<boolean> => {
-    return startChatInternal(initialMessage, userInfo, false);
+    return startChatInternal(initialMessage, userInfo, false, queryId);
   };
 
   /**
@@ -638,10 +655,11 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
    */
   const sendUserResponse = async (
     message: string,
-    userInfo?: ChatUserInfo
+    userInfo?: ChatUserInfo,
+    queryId?: string
   ): Promise<boolean> => {
     // SSE uses same endpoint for continuation
-    return startChat(message, userInfo);
+    return startChat(message, userInfo, queryId);
   };
 
   /**

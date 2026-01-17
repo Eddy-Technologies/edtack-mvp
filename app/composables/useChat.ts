@@ -15,6 +15,11 @@ export interface UseChatOptions {
    * Bypasses the unreliable watcher chain for more reliable end-state detection.
    */
   onTerminalEvent?: (status: string, response: ChatResponse) => void;
+  /**
+   * Callback fired whenever a response event is received.
+   * Used to trigger reactivity for watchers that may not detect response array changes.
+   */
+  onResponse?: (response: ChatResponse) => void;
 }
 
 /**
@@ -51,6 +56,7 @@ export function useChatConnection(threadId: string, options: UseChatOptions = {}
       authToken: options.authToken,
       autoCleanup: false,
       onTerminalEvent: options.onTerminalEvent,
+      onResponse: options.onResponse,
     };
     const sseChat = useSSEChat(threadId, sseOptions);
 
@@ -334,8 +340,8 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     store.enqueuePendingMessage(queuedMessage);
 
     // Send via WebSocket/SSE
-    console.log('[useChat] Calling currentConn.chat.startChat...');
-    const success = await currentConn.chat.startChat(message, userInfo);
+    console.log('[useChat] Calling currentConn.chat.startChat with queryId:', uuid);
+    const success = await currentConn.chat.startChat(message, userInfo, uuid);
     console.log('[useChat] startChat result:', success);
 
     if (success) {
@@ -439,7 +445,7 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
     };
     store.enqueuePendingMessage(queuedMessage);
 
-    const success = await currentConn.chat.sendUserResponse(responseText, userInfo);
+    const success = await currentConn.chat.sendUserResponse(responseText, userInfo, uuid);
 
     if (success) {
       store.updatePendingMessage(tid, uuid, { status: 'sent' });

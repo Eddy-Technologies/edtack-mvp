@@ -23,6 +23,7 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
   const ws = ref<WebSocket | null>(null);
   const isConnected = ref(false);
   const isConnecting = ref(false);
+  const isStreaming = ref(false); // Stub for SSE compatibility (WebSocket doesn't use this)
   const response = ref<ChatResponse[]>([]);
   const error = ref<string | null>(null);
   const isWaitingForResponse = ref(false);
@@ -419,6 +420,24 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
     });
   }
 
+  // Stub for SSE-only method (no-op for WebSocket)
+  // WebSocket doesn't support reconnection to buffered events
+  const reconnectToStream = async (): Promise<boolean> => {
+    console.log('[WebSocketChat] reconnectToStream called but not supported for WebSocket mode');
+    return false;
+  };
+
+  // Stub for SSE-only method (no-op for WebSocket)
+  const getStatus = async (): Promise<{
+    active: boolean;
+    status: string;
+    bufferedEvents: number;
+    connectedClients: number;
+  } | null> => {
+    // WebSocket doesn't have server-side buffering
+    return null;
+  };
+
   return {
     connect,
     disconnect,
@@ -429,9 +448,12 @@ export function useWebSocketChat(threadId: string, options: UseWebSocketChatOpti
     sendUserResponse,
     cancelRequest,
     clearMessages,
+    getStatus,
+    reconnectToStream,
     response,
     isConnected,
     isConnecting,
+    isStreaming,
     isWaitingForResponse,
     error,
     responsePhase,
