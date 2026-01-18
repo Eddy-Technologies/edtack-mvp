@@ -90,12 +90,20 @@ export default defineEventHandler(async (event) => {
 
     // Mark as GENERATING before calling Python backend
     if (userTasksChapterId) {
-      await supabase
+      const { error: statusError } = await supabase
         .from('user_tasks_chapters')
         .update({
           status: TASK_CHAPTER_STATUS.GENERATING,
         })
         .eq('id', userTasksChapterId);
+
+      if (statusError) {
+        console.error('[generate] Failed to set GENERATING status:', statusError);
+        throw createError({
+          statusCode: 500,
+          message: 'Failed to update task status',
+        });
+      }
       console.log('[generate] Set status to GENERATING for:', userTasksChapterId);
     }
 
@@ -145,13 +153,18 @@ export default defineEventHandler(async (event) => {
       console.log('[generate] Successfully linked questions to task-chapter');
 
       // Reset status after successful generation
-      await supabase
+      const { error: resetError } = await supabase
         .from('user_tasks_chapters')
         .update({
           status: TASK_CHAPTER_STATUS.OPEN,
         })
         .eq('id', userTasksChapterId);
-      console.log('[generate] Reset status to OPEN for:', userTasksChapterId);
+
+      if (resetError) {
+        console.error('[generate] Failed to reset status to OPEN:', resetError);
+      } else {
+        console.log('[generate] Reset status to OPEN for:', userTasksChapterId);
+      }
     }
 
     return {
@@ -166,13 +179,18 @@ export default defineEventHandler(async (event) => {
     if (userTasksChapterId) {
       try {
         const supabase = await getSupabaseClient(event);
-        await supabase
+        const { error: resetStatusError } = await supabase
           .from('user_tasks_chapters')
           .update({ status: TASK_CHAPTER_STATUS.OPEN })
           .eq('id', userTasksChapterId);
-        console.log('[generate] Reset status on error for:', userTasksChapterId);
+
+        if (resetStatusError) {
+          console.error('[generate] Failed to reset status:', resetStatusError);
+        } else {
+          console.log('[generate] Reset status on error for:', userTasksChapterId);
+        }
       } catch (resetError) {
-        console.error('[generate] Failed to reset status:', resetError);
+        console.error('[generate] Exception resetting status:', resetError);
       }
     }
 
