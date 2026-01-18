@@ -349,7 +349,7 @@ const initializeChat = async () => {
     const isThreadProcessing = threadState?.status === 'processing';
     const isThreadError = threadState?.status === 'error';
 
-    messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus }: { content: string; id: string; sender: string | null; status?: string }, index: number) => {
+    messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus, file_attachments }: { content: string; id: string; sender: string | null; status?: string; file_attachments?: any[] }, index: number) => {
       const preservedStatus = existingStatuses.get(id);
       if (!sender) {
         return { ...JSON.parse(content), isUser: false, id };
@@ -376,7 +376,7 @@ const initializeChat = async () => {
         }
         // If none of the above, leave status undefined (shows no indicator)
       }
-      return { text: content, isUser: true, id, ...(status && { status }) };
+      return { text: content, isUser: true, id, ...(status && { status }), fileAttachments: file_attachments };
     });
 
     // If thread was processing, check if SSE is still active before resuming loading state
@@ -480,7 +480,7 @@ const initializeChat = async () => {
   const isThreadProcessing = threadStateBefore?.status === 'processing';
 
   // Insert messageHistory to messageStream with proper status
-  messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus }: { content: string; id: string; sender: string | null; status?: string }, index: number) => {
+  messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus, file_attachments }: { content: string; id: string; sender: string | null; status?: string; file_attachments?: any[] }, index: number) => {
     if (!sender) {
       return { ...JSON.parse(content), isUser: false, id };
     }
@@ -504,7 +504,7 @@ const initializeChat = async () => {
       }
       // If none of the above, leave status undefined (shows no indicator)
     }
-    return { text: content, isUser: true, id, ...(status && { status }) };
+    return { text: content, isUser: true, id, ...(status && { status }), fileAttachments: file_attachments };
   });
 
   // When switching to a different thread, just release our local reference
@@ -817,7 +817,7 @@ onMounted(() => {
           }
           // Last message keeps its status (could be in progress, failed, etc.)
           // Include status from DB or local state for user messages
-          return { text: msg.content, isUser: true, id: msg.id, ...(status && { status }) };
+          return { text: msg.content, isUser: true, id: msg.id, ...(status && { status }), fileAttachments: msg.file_attachments };
         });
 
         // Merge: local-only failed messages + DB messages + pending AI messages
@@ -1477,6 +1477,8 @@ const flattenedPlaybackUnits = computed(() => {
           messageId: block.id?.toString(),
           status: block.status, // Pass message status for visual indicators
           showRetry, // Only true for most recent retryable message
+          fileAttachments: block.fileAttachments, // File attachments for user messages
+          threadId: props.threadId, // Thread ID for file URLs
         },
       });
     }
@@ -1533,8 +1535,8 @@ function handleFinish() {
 }
 
 // Handle user sending a message or lesson request
-const handleSend = async (text: string, isRetryCall = false) => {
-  console.log('[ChatContent] handleSend called, text:', text.substring(0, 50), 'isRetry:', isRetryCall);
+const handleSend = async (text: string, isRetryCall = false, fileAttachments?: any[]) => {
+  console.log('[ChatContent] handleSend called, text:', text.substring(0, 50), 'isRetry:', isRetryCall, 'files:', fileAttachments?.length || 0);
   if (!text.trim()) return;
 
   // SAFETY: If thread is in a terminal state, reset stuck flags before the guard.
@@ -1575,7 +1577,8 @@ const handleSend = async (text: string, isRetryCall = false) => {
     type: 'text',
     isUser: true,
     uuid: messageUuid,
-    status: 'sending' as const
+    status: 'sending' as const,
+    file_attachments: fileAttachments
   };
   addMessage(addMessageObj);
 
@@ -1584,7 +1587,14 @@ const handleSend = async (text: string, isRetryCall = false) => {
   console.log('[ChatContent] isConnectedNow:', isConnectedNow, 'chat.value:', !!chat.value, 'isFirstMessage:', isFirstMessage.value);
 
   const initialStatus = isConnectedNow ? 'sending' : 'queued';
-  messageStream.value.push({ type: 'text', text, isUser: true, id: messageUuid, status: initialStatus });
+  messageStream.value.push({
+    type: 'text',
+    text,
+    isUser: true,
+    id: messageUuid,
+    status: initialStatus,
+    fileAttachments: fileAttachments
+  });
 
   // Helper to update message status by index (also persists to DB for failed status)
   const updateStatus = (status: 'sending' | 'sent' | 'failed') => {

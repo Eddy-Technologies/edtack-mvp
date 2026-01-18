@@ -226,8 +226,10 @@ const props = defineProps({
   },
 });
 
+import type { MessageAttachment } from '~/types/fileUpload';
+
 const emit = defineEmits<{
-  (e: 'send', payload: { text: string; fileIds: string[]; pendingFiles?: File[] }): void;
+  (e: 'send', payload: { text: string; fileIds: string[]; pendingFiles?: File[]; fileAttachments?: MessageAttachment[] }): void;
   (e: 'dropdown-opened' | 'dropdown-closed'): void;
 }>();
 const input = ref('');
@@ -243,6 +245,7 @@ const {
   addFiles,
   removeFile,
   clearFiles,
+  clearAfterSend,
   uploadFiles,
   handleDragEnter,
   handleDragOver,
@@ -294,7 +297,8 @@ const isSending = ref(false);
 const DEBOUNCE_MS = 2000; // 2 second cooldown to prevent spam
 
 // Combined disabled state: local debounce OR parent processing state
-const isDisabled = computed(() => isSending.value || props.isProcessing);
+// Disable send when: sending, processing response, or files are still uploading
+const isDisabled = computed(() => isSending.value || props.isProcessing || isUploading.value);
 
 // Text Book button state
 const studyDropdownOpen = ref(false);
@@ -481,10 +485,38 @@ const emitMessage = async () => {
   let fileIds: string[] = [];
   let pendingFiles: File[] | undefined;
 
+  console.log('[ChatInput] Sending message, stagedFiles:', stagedFiles.value.length, 'threadId:', props.threadId);
+
   if (stagedFiles.value.length > 0) {
     if (props.threadId) {
-      // Existing chat - upload files first
+      // Existing chat - upload files first (or wait for ongoing upload)
+      console.log('[ChatInput] Uploading files for existing chat...');
+
+      // Wait for any ongoing uploads to complete
+      const hasUploadingFiles = stagedFiles.value.some((f: { status: string }) => f.status === 'uploading');
+      if (hasUploadingFiles) {
+        console.log('[ChatInput] Waiting for ongoing upload to complete...');
+        // Poll until upload completes (with timeout)
+        const maxWait = 30000; // 30 seconds
+        const startTime = Date.now();
+        while (stagedFiles.value.some((f: { status: string }) => f.status === 'uploading')) {
+          if (Date.now() - startTime > maxWait) {
+            toast.add({
+              title: 'Upload timeout',
+              description: 'File upload is taking too long. Please try again.',
+              color: 'red',
+              timeout: 5000,
+            });
+            isSending.value = false;
+            return;
+          }
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
+
+      // Upload any remaining pending files
       const uploadSuccess = await uploadFiles();
+      console.log('[ChatInput] Upload result:', uploadSuccess, 'uploadedFileIds:', uploadedFileIds.value);
       if (!uploadSuccess) {
         toast.add({
           title: 'Upload failed',
@@ -498,16 +530,29 @@ const emitMessage = async () => {
       fileIds = uploadedFileIds.value;
     } else {
       // New chat - pass files to parent for upload after thread creation
+      console.log('[ChatInput] New chat - passing files to parent');
       pendingFiles = stagedFiles.value.map((f: { file: File }) => f.file);
     }
   }
 
+  // Build file attachments metadata from successfully uploaded files
+  const fileAttachments: MessageAttachment[] = stagedFiles.value
+    .filter((f: { status: string; uploadedId?: string }) => f.status === 'uploaded' && f.uploadedId)
+    .map((f: { uploadedId: string; name: string; size: number; type: string }) => ({
+      id: f.uploadedId,
+      name: f.name,
+      size: f.size,
+      type: f.type,
+      uploadedAt: new Date().toISOString(),
+    }));
+
   // Proceed with message (soft limit - always allow)
-  emit('send', { text: input.value, fileIds, pendingFiles });
+  console.log('[ChatInput] Emitting send with fileIds:', fileIds, 'fileAttachments:', fileAttachments.length);
+  emit('send', { text: input.value, fileIds, pendingFiles, fileAttachments: fileAttachments.length > 0 ? fileAttachments : undefined });
   input.value = '';
 
-  // Clear files after successful send
-  clearFiles();
+  // Clear staged files locally (don't delete from backend - files are now attached to message)
+  clearAfterSend();
 
   // Auto-reset after cooldown (in case parent doesn't call resetSendState)
   setTimeout(() => {

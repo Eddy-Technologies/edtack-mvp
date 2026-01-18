@@ -17,6 +17,13 @@
           'bg-stone-100 p-3 rounded-xl'
         ]"
       >
+        <!-- File attachments (shown above text) -->
+        <MessageFileAttachments
+          v-if="fileAttachments && fileAttachments.length > 0"
+          :attachments="fileAttachments"
+          :thread-id="threadId"
+          class="mb-2"
+        />
         <MDCRenderer
           v-if="mdcBody"
           :body="mdcBody"
@@ -88,6 +95,8 @@
 import { parseMarkdown } from '@nuxtjs/mdc/runtime';
 import UserAvatar from '../common/UserAvatar.vue';
 import MessageActions from '../chat/MessageActions.vue';
+import MessageFileAttachments from '../chat/MessageFileAttachments.vue';
+import type { MessageAttachment } from '~/types/fileUpload';
 
 const props = defineProps<{
   text: string;
@@ -97,6 +106,8 @@ const props = defineProps<{
   messageId?: string;
   status?: 'queued' | 'sending' | 'sent' | 'failed' | 'cancelled' | 'retried';
   showRetry?: boolean; // Only show retry for most recent failed/cancelled message
+  fileAttachments?: MessageAttachment[]; // File attachments for user messages
+  threadId?: string; // Thread ID for file URLs
 }>();
 
 defineEmits(['finish', 'retry']);

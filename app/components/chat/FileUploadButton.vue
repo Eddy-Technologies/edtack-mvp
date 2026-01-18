@@ -1,11 +1,12 @@
 <template>
   <div class="relative">
     <!-- Hidden file inputs -->
+    <!-- Note: No accept attribute on mobile to ensure file manager opens instead of media picker -->
+    <!-- File type validation happens in useFileUpload composable on selection -->
     <input
       ref="fileInput"
       type="file"
       multiple
-      :accept="acceptAttribute"
       class="hidden"
       @change="handleFileSelect"
     >
@@ -78,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { FILE_UPLOAD_CONFIG, compressImage, isImageType } from '~/constants/fileUpload';
+import { compressImage, isImageType } from '~/constants/fileUpload';
 import { useResponsive } from '~/composables/useResponsive';
 
 defineProps<{
@@ -96,8 +97,6 @@ const cameraInput = ref<HTMLInputElement | null>(null);
 const buttonRef = ref<HTMLButtonElement | null>(null);
 const menuRef = ref<HTMLDivElement | null>(null);
 const showMenu = ref(false);
-
-const acceptAttribute = FILE_UPLOAD_CONFIG.ACCEPT_ATTRIBUTE;
 
 // On mobile/tablet, show menu with options; on desktop, directly open file picker
 function handleClick() {

@@ -5,6 +5,7 @@ CREATE TABLE thread_messages (
                                type VARCHAR(20) NOT NULL,
                                content TEXT NOT NULL,
                                status VARCHAR(20) DEFAULT NULL, -- Message delivery status: sending, sent, failed, cancelled. NULL = legacy (treated as sent)
+                               file_attachments JSONB DEFAULT NULL, -- JSON array of file metadata: [{id, name, size, type, uploadedAt, status}]
                                created_at TIMESTAMP DEFAULT NOW()
 );
 

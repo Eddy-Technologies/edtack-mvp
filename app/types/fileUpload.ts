@@ -58,3 +58,20 @@ export interface FileValidationError {
   file: File;
   error: string;
 }
+
+/**
+ * Minimal file metadata stored with messages
+ * Only includes successfully uploaded files
+ */
+export interface MessageAttachment {
+  /** Backend file ID */
+  id: string;
+  /** File name */
+  name: string;
+  /** File size in bytes */
+  size: number;
+  /** MIME type */
+  type: string;
+  /** When the file was uploaded */
+  uploadedAt: string;
+}

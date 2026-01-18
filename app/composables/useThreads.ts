@@ -162,8 +162,8 @@ export function useThreads() {
   };
 
   // Add message to current thread (handles all message types)
-  const addMessage = async ({ thread_id, content, type, isUser, uuid, status }: PostMessageReq) => {
-    const body: PostMessageReq = { thread_id, content, type, isUser, uuid, status };
+  const addMessage = async ({ thread_id, content, type, isUser, uuid, status, file_attachments }: PostMessageReq) => {
+    const body: PostMessageReq = { thread_id, content, type, isUser, uuid, status, file_attachments };
 
     // Track the UUID in the message queue store for deduplication with Realtime
     if (uuid) {

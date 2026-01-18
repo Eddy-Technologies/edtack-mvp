@@ -1,5 +1,6 @@
 import { getUserInfo } from '../../utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import type { MessageAttachment } from '~/types/fileUpload';
 
 export interface PostMessageReq {
   thread_id: string;
@@ -8,13 +9,14 @@ export interface PostMessageReq {
   type?: string;
   uuid?: string;
   status?: 'sending' | 'sent' | 'failed' | 'cancelled';
+  file_attachments?: MessageAttachment[];
 }
 
 export default defineEventHandler(async (event) => {
   try {
     const supabase = await getSupabaseClient(event);
     const userInfo = await getUserInfo(event);
-    const { thread_id, content, isUser, type, uuid, status } = await readBody<PostMessageReq>(event);
+    const { thread_id, content, isUser, type, uuid, status, file_attachments } = await readBody<PostMessageReq>(event);
 
     if (!thread_id || !content) {
       console.error('Missing required fields:', { thread_id: !!thread_id, content: !!content });
@@ -29,7 +31,8 @@ export default defineEventHandler(async (event) => {
       type: type || (isUser ? 'text' : 'json'),
       contentLength: serializedContent.length,
       isUser,
-      uuid
+      uuid,
+      fileCount: file_attachments?.length || 0
     });
 
     const { data, error } = await supabase
@@ -40,7 +43,8 @@ export default defineEventHandler(async (event) => {
         sender: isUser ? userInfo.id : null,
         content: serializedContent,
         type: type ? type : isUser ? 'text' : 'json',
-        status: status || null
+        status: status || null,
+        file_attachments: file_attachments && file_attachments.length > 0 ? file_attachments : null
       }, { onConflict: 'id' })
       .select('*')
       .single();

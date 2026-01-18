@@ -230,6 +230,7 @@ import { useResponsive } from '~/composables/useResponsive';
 import { useTour } from '~/composables/useTour';
 import { useMeStore } from '~/stores/me';
 import { constantCaseToTitleCase } from '~/utils/stringUtils';
+import { getSupabaseAccessToken } from '~/utils/authToken';
 import type { _height } from '#tailwind-config/theme';
 
 // Set page title
@@ -675,8 +676,8 @@ const toggleSidebar = () => {
   localStorage.setItem('sidebar-collapsed', String(collapsed.value));
 };
 
-const handleChatSend = async (payload: { text: string; fileIds: string[]; pendingFiles?: File[] }) => {
-  const { text, pendingFiles } = payload;
+const handleChatSend = async (payload: { text: string; fileIds: string[]; pendingFiles?: File[]; fileAttachments?: any[] }) => {
+  const { text, pendingFiles, fileAttachments } = payload;
   hasStartedChat.value = true;
 
   // If new chat, generate thread ID and update URL
@@ -695,12 +696,19 @@ const handleChatSend = async (payload: { text: string; fileIds: string[]; pendin
       // If there are pending files, upload them to the new thread before redirect
       if (pendingFiles && pendingFiles.length > 0) {
         try {
+          const token = await getSupabaseAccessToken();
+          const headers: Record<string, string> = {};
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
+
           const formData = new FormData();
           pendingFiles.forEach((file) => formData.append('files', file));
 
           await $fetch(`/api/chat/${newThreadUuid}/files/upload`, {
             method: 'POST',
             body: formData,
+            headers,
           });
           console.log(`[handleChatSend] Uploaded ${pendingFiles.length} files to new thread ${newThreadUuid}`);
         } catch (uploadErr) {
@@ -720,7 +728,7 @@ const handleChatSend = async (payload: { text: string; fileIds: string[]; pendin
 
   // Existing chat - send directly (files are already staged on backend)
   if (chatContentRef.value && chatContentRef.value.handleSend) {
-    await chatContentRef.value.handleSend(text);
+    await chatContentRef.value.handleSend(text, false, fileAttachments);
   }
 };
 

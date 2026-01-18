@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue';
 import type { StagedFile, UploadResponse } from '~/types/fileUpload';
 import { FILE_UPLOAD_CONFIG, formatFileSize, isImageType } from '~/constants/fileUpload';
+import { getSupabaseAccessToken } from '~/utils/authToken';
 
 /**
  * Composable for managing file uploads in chat
@@ -96,10 +97,13 @@ export function useFileUpload(threadId: Ref<string>) {
     const errors: string[] = [];
     let added = 0;
 
+    console.log('[useFileUpload] addFiles called:', files.map(f => ({ name: f.name, type: f.type, size: f.size })));
+
     for (const file of files) {
       const validation = validateFile(file);
 
       if (!validation.valid) {
+        console.log('[useFileUpload] Validation failed for', file.name, ':', validation.error);
         errors.push(`${file.name}: ${validation.error}`);
         continue;
       }
@@ -143,8 +147,14 @@ export function useFileUpload(threadId: Ref<string>) {
     // If already uploaded, delete from backend
     if (file.uploadedId) {
       try {
+        const token = await getSupabaseAccessToken();
+        const headers: Record<string, string> = {};
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
         await $fetch(`/api/chat/${threadId.value}/files/${file.uploadedId}`, {
           method: 'DELETE',
+          headers,
         });
       } catch (err) {
         console.error('[useFileUpload] Failed to delete from backend:', err);
@@ -160,12 +170,20 @@ export function useFileUpload(threadId: Ref<string>) {
    * Clear all staged files
    */
   async function clearFiles(): Promise<void> {
+    // Get auth token once for all delete requests
+    const token = await getSupabaseAccessToken();
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     // Delete uploaded files from backend
     for (const file of stagedFiles.value) {
       if (file.uploadedId) {
         try {
           await $fetch(`/api/chat/${threadId.value}/files/${file.uploadedId}`, {
             method: 'DELETE',
+            headers,
           });
         } catch (err) {
           console.error('[useFileUpload] Failed to delete from backend:', err);
@@ -180,6 +198,8 @@ export function useFileUpload(threadId: Ref<string>) {
    * Upload pending files to backend
    */
   async function uploadFiles(): Promise<boolean> {
+    console.log('[useFileUpload] uploadFiles called, threadId:', threadId.value, 'stagedFiles:', stagedFiles.value.length);
+
     // Don't upload if no threadId (for new chats, files stay pending)
     if (!threadId.value) {
       console.log('[useFileUpload] No threadId, skipping upload');
@@ -187,6 +207,7 @@ export function useFileUpload(threadId: Ref<string>) {
     }
 
     const pendingFiles = stagedFiles.value.filter((f) => f.status === 'pending');
+    console.log('[useFileUpload] Pending files to upload:', pendingFiles.length, 'statuses:', stagedFiles.value.map(f => f.status));
     if (pendingFiles.length === 0) return true;
 
     isUploading.value = true;
@@ -199,11 +220,20 @@ export function useFileUpload(threadId: Ref<string>) {
     });
 
     try {
+      // Get fresh auth token
+      const token = await getSupabaseAccessToken();
+
       // Create FormData
       const formData = new FormData();
       pendingFiles.forEach((f) => {
         formData.append('files', f.file);
       });
+
+      // Build headers with auth token
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
 
       // Upload to backend
       const response = await $fetch<UploadResponse>(
@@ -211,16 +241,19 @@ export function useFileUpload(threadId: Ref<string>) {
         {
           method: 'POST',
           body: formData,
+          headers,
         }
       );
 
       // Update staged files with backend IDs
+      console.log('[useFileUpload] Upload response:', response);
       if (response.files) {
         response.files.forEach((uploadedFile, index) => {
           if (pendingFiles[index]) {
             pendingFiles[index].uploadedId = uploadedFile.file_id;
             pendingFiles[index].status = 'uploaded';
             pendingFiles[index].progress = 100;
+            console.log('[useFileUpload] File uploaded:', uploadedFile.file_id, pendingFiles[index].name);
           }
         });
       }
