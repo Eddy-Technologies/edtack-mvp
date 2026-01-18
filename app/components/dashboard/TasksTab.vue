@@ -21,6 +21,7 @@ interface Chapter {
   totalScore?: number;
   completedAt?: string | null;
   credit: number;
+  creditEarned?: number;
   hasQuiz?: boolean;
 }
 
@@ -194,6 +195,10 @@ const fetchTasks = async () => {
 
 const handleQuizSubmitted = async () => {
   await fetchTasks();
+  // Notify other components that tasks have been updated
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('tasksUpdated'));
+  }
 };
 
 const fetchChildren = async () => {
@@ -265,6 +270,10 @@ const handleCloseTask = async (task: Task) => {
     });
 
     await fetchTasks();
+    // Notify other components that tasks have been updated
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('tasksUpdated'));
+    }
   } catch (error: any) {
     console.error('Failed to close task:', error);
     toast.add({
@@ -413,6 +422,10 @@ const handleClearFilters = () => {
 const handleTaskSaved = async () => {
   closeTaskModal();
   await fetchTasks();
+  // Notify other components that tasks have been updated
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('tasksUpdated'));
+  }
 };
 
 // Lifecycle

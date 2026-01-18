@@ -11,7 +11,9 @@ interface Chapter {
   totalScore?: number;
   completedAt?: string | null;
   credit: number;
+  creditEarned?: number;
   hasQuiz?: boolean;
+  sortOrder?: number;
 }
 
 interface Task {
@@ -162,11 +164,18 @@ const getStatusVariant = (status: string) => {
       <div
         v-for="chapter in displayedChapters"
         :key="chapter.id"
-        class="flex items-center justify-between gap-4 py-2 px-4 bg-gray-50 rounded-lg"
+        :class="[
+          'flex items-center justify-between gap-4 py-2 px-4 rounded-lg',
+          !chapter.completedAt
+            ? 'bg-gray-50'
+            : (chapter.bestScore ?? 0) >= task.requiredScore
+              ? 'border border-primary'
+              : 'border border-secondary'
+        ]"
       >
         <!-- Left: Chapter name only -->
         <div class="flex items-center flex-shrink min-w-0">
-          <span class="font-medium text-gray-900 truncate">{{ chapter.displayName }}</span>
+          <span class="font-medium text-gray-900 truncate">Chapter {{ chapter.sortOrder + 1 }} - {{ chapter.displayName }}</span>
         </div>
 
         <!-- Center/Right: Credit/Completion info (right-aligned) -->
@@ -176,8 +185,13 @@ const getStatusVariant = (status: string) => {
           </span>
 
           <!-- Progress Info -->
-          <span v-if="chapter.completedAt" class="text-sm text-green-600 whitespace-nowrap">
+          <!-- Passed: score >= required -->
+          <span v-if="chapter.completedAt && (chapter.bestScore ?? 0) >= task.requiredScore" class="text-sm text-green-600 whitespace-nowrap">
             ✓ Completed • Best: {{ chapter.bestScore }}%
+          </span>
+          <!-- Attempted but not passed -->
+          <span v-else-if="chapter.completedAt" class="text-sm text-amber-600 whitespace-nowrap">
+            Attempted • Best Score: {{ chapter.bestScore }}% • {{ chapter.credit }} credits • {{ task.requiredScore }}% required
           </span>
         </div>
 

@@ -113,6 +113,35 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Collect all completed chapter IDs to query credit transactions
+    const completedChapterIds: string[] = [];
+    filteredTasks.forEach((task) => {
+      task.user_tasks_chapters?.forEach((utc: any) => {
+        if (utc.completed_at) {
+          completedChapterIds.push(utc.id);
+        }
+      });
+    });
+
+    // Query credit transactions for completed chapters
+    const creditDisbursements = new Map<string, number>();
+    if (completedChapterIds.length > 0) {
+      const { data: creditTxns } = await supabase
+        .from('credit_transactions')
+        .select('amount, metadata')
+        .eq('metadata->>source', 'quiz_completion')
+        .in('metadata->>userTasksChapterId', completedChapterIds);
+
+      if (creditTxns) {
+        creditTxns.forEach((txn: any) => {
+          const chapterId = txn.metadata?.userTasksChapterId;
+          if (chapterId) {
+            creditDisbursements.set(chapterId, txn.amount || 0);
+          }
+        });
+      }
+    }
+
     // Format tasks for frontend consumption with enhanced chapter data
     const formattedTasks = filteredTasks.map((task) => {
       const chapters = task.user_tasks_chapters?.map((utc: any) => ({
@@ -128,6 +157,7 @@ export default defineEventHandler(async (event) => {
         totalScore: utc.total_score,
         completedAt: utc.completed_at,
         credit: task.credit, // Credit per chapter
+        creditEarned: creditDisbursements.get(utc.id) || 0,
         hasQuiz: (utc.user_tasks_chapters_questions?.length || 0) > 0
       })) || [];
 
@@ -154,7 +184,6 @@ export default defineEventHandler(async (event) => {
         updatedAt: task.updated_at,
         questionsPerQuiz: task.questions_per_quiz,
         requiredScore: task.required_score,
-        recurrenceFrequency: task.recurrence_frequency,
         chapters,
         creatorInfo: {
           firstName: task.creator?.first_name,

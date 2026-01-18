@@ -65,6 +65,9 @@
               <span v-if="item.name === 'Cart' && cartItemCount > 0" class="bg-primary text-white text-xs px-2 py-0.5 rounded-full">
                 {{ cartItemCount }}
               </span>
+              <span v-if="item.name === 'Tasks' && availableTasksCount > 0" class="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">
+                {{ availableTasksCount }}
+              </span>
               <span v-if="item.name === 'Credits'" class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">
                 {{ formattedBalance }}
               </span>
@@ -82,7 +85,7 @@
                 <div class="flex items-center space-x-3">
                   <UIcon :name="item.icon" class="w-5 h-5" />
                   <span>{{ item.name }}</span>
-                  <span v-if="item.name === 'Family' && pendingOrderRequestCount > 0" class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+                  <span v-if="item.name === 'Family' && pendingOrderRequestCount > 0" class="bg-yellow-500 text-white text-xs px-2 py-0.5 rounded-full">
                     {{ pendingOrderRequestCount }}
                   </span>
                 </div>
@@ -99,10 +102,10 @@
                   @click="handleMobileNavigate(child)"
                 >
                   <span>{{ child.name }}</span>
-                  <span v-if="child.name === 'Cart' && cartItemCount > 0" class="bg-primary text-white text-xs px-1.5 py-0.5 rounded-full">{{ cartItemCount }}</span>
-                  <span v-if="child.name === 'Wishlist' && wishlistCount > 0" class="bg-pink-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ wishlistCount }}</span>
-                  <span v-if="child.name === 'Orders' && currentOrdersCount > 0" class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ currentOrdersCount }}</span>
-                  <span v-if="child.name === 'Order Requests' && pendingOrderRequestCount > 0" class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full">{{ pendingOrderRequestCount }}</span>
+                  <span v-if="child.name === 'Cart' && cartItemCount > 0" class="bg-primary text-white text-xs px-2 py-0.5 rounded-full">{{ cartItemCount }}</span>
+                  <span v-if="child.name === 'Wishlist' && wishlistCount > 0" class="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">{{ wishlistCount }}</span>
+                  <span v-if="child.name === 'Orders' && currentOrdersCount > 0" class="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">{{ currentOrdersCount }}</span>
+                  <span v-if="child.name === 'Order Requests' && pendingOrderRequestCount > 0" class="bg-yellow-500 text-white text-xs px-2 py-0.5 rounded-full">{{ pendingOrderRequestCount }}</span>
                 </div>
               </div>
             </div>
@@ -197,6 +200,13 @@
               >
                 {{ cartItemCount }}
               </span>
+              <!-- Badge for tasks (students only) -->
+              <span
+                v-if="item.name === 'Tasks' && availableTasksCount > 0"
+                class="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium"
+              >
+                {{ availableTasksCount }}
+              </span>
               <!-- Credits amount for Credits tab -->
               <span
                 v-if="item.name === 'Credits'"
@@ -224,7 +234,7 @@
                   <!-- Badge for Family nav item showing pending order requests -->
                   <span
                     v-if="item.name === 'Family' && pendingOrderRequestCount > 0"
-                    class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                    class="bg-yellow-500 text-white text-xs px-2 py-0.5 rounded-full font-medium"
                   >
                     {{ pendingOrderRequestCount }}
                   </span>
@@ -267,28 +277,28 @@
                       <!-- Badge for cart in submenu -->
                       <span
                         v-if="child.name === 'Cart' && cartItemCount > 0"
-                        class="bg-primary text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                        class="bg-primary text-white text-xs px-2 py-0.5 rounded-full font-medium"
                       >
                         {{ cartItemCount }}
                       </span>
                       <!-- Badge for order requests in submenu -->
                       <span
                         v-if="child.name === 'Order Requests' && pendingOrderRequestCount > 0"
-                        class="bg-yellow-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                        class="bg-yellow-500 text-white text-xs px-2 py-0.5 rounded-full font-medium"
                       >
                         {{ pendingOrderRequestCount }}
                       </span>
                       <!-- Badge for wishlist in submenu -->
                       <span
                         v-if="child.name === 'Wishlist' && wishlistCount > 0"
-                        class="bg-pink-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                        class="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full font-medium"
                       >
                         {{ wishlistCount }}
                       </span>
                       <!-- Badge for orders in submenu -->
                       <span
                         v-if="child.name === 'Orders' && currentOrdersCount > 0"
-                        class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full font-medium"
+                        class="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full font-medium"
                       >
                         {{ currentOrdersCount }}
                       </span>
@@ -482,6 +492,42 @@ const updateCurrentOrdersCount = async () => {
   } catch (error) {
     console.error('Failed to fetch current orders count:', error);
     currentOrdersCount.value = 0;
+  }
+};
+
+// Get incomplete chapters count (for students - counts incomplete chapters across all OPEN tasks)
+const availableTasksCount = ref(0);
+
+const updateAvailableTasksCount = async () => {
+  // Only fetch for students
+  if (userStore.user_role?.toLowerCase() !== 'student') {
+    availableTasksCount.value = 0;
+    return;
+  }
+
+  try {
+    const response = await $fetch('/api/tasks/user-tasks', {
+      query: {
+        status: 'OPEN',
+        limit: 100,
+        offset: 0
+      }
+    });
+
+    // Count total incomplete chapters across all OPEN tasks
+    const tasks = response?.tasks || [];
+    let incompleteChaptersCount = 0;
+    for (const task of tasks) {
+      if (task.chapters) {
+        incompleteChaptersCount += task.chapters.filter(
+          (chapter: any) => chapter.completedAt === null
+        ).length;
+      }
+    }
+    availableTasksCount.value = incompleteChaptersCount;
+  } catch (error) {
+    console.error('Failed to fetch available tasks count:', error);
+    availableTasksCount.value = 0;
   }
 };
 
@@ -740,6 +786,7 @@ onMounted(() => {
     window.addEventListener('orderRequestsUpdated', updatePendingOrderCount);
     window.addEventListener('wishlistUpdated', updateWishlistCount);
     window.addEventListener('ordersUpdated', updateCurrentOrdersCount);
+    window.addEventListener('tasksUpdated', updateAvailableTasksCount);
     window.addEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 
@@ -754,6 +801,9 @@ onMounted(() => {
 
   // Load wishlist count
   updateWishlistCount();
+
+  // Load available tasks count for students
+  updateAvailableTasksCount();
 
   // Start dashboard tour for users who completed onboarding but haven't seen it
   const { startTour, isTourCompleted } = useTour();
@@ -772,6 +822,7 @@ onUnmounted(() => {
     window.removeEventListener('orderRequestsUpdated', updatePendingOrderCount);
     window.removeEventListener('wishlistUpdated', updateWishlistCount);
     window.removeEventListener('ordersUpdated', updateCurrentOrdersCount);
+    window.removeEventListener('tasksUpdated', updateAvailableTasksCount);
     window.removeEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 });

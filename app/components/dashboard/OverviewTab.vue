@@ -59,7 +59,7 @@
                 </div>
                 <h3 class="text-sm sm:text-base font-semibold text-gray-900">Pending Tasks</h3>
               </div>
-              <NuxtLink to="/dashboard?tab=family&subtab=tasks">
+              <NuxtLink to="/dashboard?tab=tasks">
                 <Button variant="secondary" text="View More" size="sm" />
               </NuxtLink>
             </div>
@@ -81,7 +81,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <p class="font-medium text-emerald-600">+{{ task.credit }} credits</p>
+                <p class="text-sm">{{ task.credit }} credits/chapter</p>
                 <p class="text-xs text-gray-400">{{ formatDate(task.createdAt) }}</p>
               </div>
             </div>
@@ -253,7 +253,7 @@
                 </div>
                 <h3 class="text-sm sm:text-base font-semibold text-gray-900">My Pending Tasks</h3>
               </div>
-              <NuxtLink to="/dashboard?tab=family&subtab=tasks">
+              <NuxtLink to="/dashboard?tab=tasks">
                 <Button variant="secondary" text="View More" size="sm" />
               </NuxtLink>
             </div>
@@ -265,17 +265,18 @@
                   <UIcon name="i-lucide-clipboard-list" class="text-blue-600" size="18" />
                 </div>
                 <div>
-                  <h4 class="font-medium text-gray-900 text-sm sm:text-base">{{ task.name }}</h4>
-                  <div class="flex items-center gap-2 mt-1">
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">{{ task.name }}</h4>
                     <span class="px-2 py-0.5 rounded-md text-xs font-medium" :class="getTaskStatusBadgeClass(task.status)">
                       {{ task.status }}
                     </span>
                   </div>
                 </div>
               </div>
-              <div class="text-right">
-                <p class="font-medium text-emerald-600">+{{ task.credit }} credits</p>
-                <p class="text-xs text-gray-400">{{ formatDate(task.createdAt) }}</p>
+              <div class="text-right text-xs text-gray-500">
+                <p>{{ task.chapters?.length || 0 }} chapters</p>
+                <p>{{ task.credit }} credits/quiz</p>
+                <p class="text-gray-400">{{ formatDate(task.createdAt) }}</p>
               </div>
             </div>
           </div>
@@ -448,11 +449,9 @@ const getOrderStatusBadgeClass = (status: string) => {
 // Get badge classes for task status
 const getTaskStatusBadgeClass = (status: string) => {
   const classMap = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    in_progress: 'bg-blue-100 text-blue-800',
-    completed: 'bg-green-100 text-green-800',
-    approved: 'bg-green-100 text-green-800',
-    cancelled: 'bg-gray-100 text-gray-800'
+    OPEN: 'bg-blue-100 text-blue-800',
+    CLOSED: 'bg-gray-100 text-gray-800',
+    EXPIRED: 'bg-red-100 text-red-800'
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
