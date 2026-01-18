@@ -476,7 +476,7 @@ const hasChanges = computed(() => {
 
   // Check simple fields
   if (current.name !== initial.name) return true;
-  if (current.creditPerChapter !== initial.creditPerChapter) return true;
+  if (current.creditsPerChapter !== initial.creditsPerChapter) return true;
   if (current.requiredScore !== initial.requiredScore) return true;
   if (current.questionsPerQuiz !== initial.questionsPerQuiz) return true;
   if (current.status !== initial.status) return true;
