@@ -43,6 +43,12 @@
         </div>
 
         <div class="flex items-center gap-2">
+          <!-- File upload button (always visible) -->
+          <ChatFileUploadButton
+            :disabled="isUploading"
+            class="flex-shrink-0"
+            @files-selected="handleFilesSelected"
+          />
           <UTextarea
             v-model="input"
             placeholder="How can I help you today?"
@@ -71,8 +77,8 @@
             />
           </button>
         </div>
-        <!-- Feedback link (shows on sm-xl screens, hidden on xs and xl+) -->
-        <div class="hidden sm:flex xl:hidden justify-end mt-2">
+        <!-- Feedback link (shows on all screens except xl+) -->
+        <div class="flex xl:hidden justify-end mt-2">
           <NuxtLink
             to="/about?tab=feedback"
             class="inline-flex items-center gap-1 text-sm text-primary font-medium hover:text-primary-600 transition-colors"
@@ -86,11 +92,6 @@
 
     <!-- Suggestions - only show on new chat -->
     <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 items-center', isMobile ? 'justify-center' : '']" data-tour="chat-suggestions">
-      <!-- File upload button -->
-      <ChatFileUploadButton
-        :disabled="isUploading"
-        @files-selected="handleFilesSelected"
-      />
       <!-- Text Book button (for subject-specific characters) -->
       <button
         v-if="showStudyButton"

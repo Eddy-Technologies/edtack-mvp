@@ -19,18 +19,18 @@
       @change="handleCameraSelect"
     >
 
-    <!-- Upload button -->
+    <!-- Upload button - matches send button size (p-3 + w-5 h-5 icon) -->
     <button
       ref="buttonRef"
       type="button"
-      class="p-1 bg-white text-primary border-2 border-primary rounded-md hover:bg-primary-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      class="p-3 flex items-center justify-center text-gray-500 hover:text-primary hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       :disabled="disabled"
       :title="disabled ? 'Upload in progress...' : 'Attach files'"
       @click="handleClick"
     >
       <Icon
         name="i-heroicons-paper-clip"
-        class="w-4 h-4 -rotate-45"
+        class="w-5 h-5 -rotate-45"
       />
     </button>
 
