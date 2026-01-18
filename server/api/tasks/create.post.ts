@@ -78,10 +78,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Validate quiz fields
-    if (creditsPerChapter < 1) {
+    if (creditsPerChapter < 0) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'creditsPerChapter must be at least 1'
+        statusMessage: 'creditsPerChapter must be at least 0'
       });
     }
 

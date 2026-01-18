@@ -210,7 +210,7 @@
             <UInput
               v-model.number="form.creditsPerChapter"
               type="number"
-              min="1"
+              min="0"
               :max="userBalance"
               step="1"
               pattern="[0-9]*"
@@ -221,7 +221,7 @@
             <p class="text-sm text-gray-500 mt-1">Amount of credits student will receive for completing each chapter</p>
 
             <!-- Credit Validation Display -->
-            <div v-if="form.chapters?.length && form.creditsPerChapter" class="mt-3 p-3 rounded-lg border" :class="creditValidation.valid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'">
+            <div v-if="form.chapters?.length && form.creditsPerChapter != null" class="mt-3 p-3 rounded-lg border" :class="creditValidation.valid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'">
               <div class="flex items-start">
                 <UIcon
                   :name="creditValidation.valid ? 'i-lucide-check-circle' : 'i-lucide-alert-triangle'"
@@ -527,7 +527,7 @@ const defaultTaskName = computed(() => {
 
 // Credit validation logic
 const totalCreditsNeeded = computed(() => {
-  if (!form.value.chapters?.length || !form.value.creditsPerChapter) return 0;
+  if (!form.value.chapters?.length || form.value.creditsPerChapter == null) return 0;
 
   if (isEditMode.value) {
     // Only count new chapters
@@ -542,7 +542,7 @@ const totalCreditsNeeded = computed(() => {
 });
 
 const creditValidation = computed(() => {
-  if (!form.value.chapters?.length || !form.value.creditsPerChapter) {
+  if (!form.value.chapters?.length || form.value.creditsPerChapter == null) {
     return {
       valid: false,
       message: 'Select chapters and enter credits per chapter',
@@ -751,13 +751,13 @@ const handleSubmit = async () => {
       return;
     }
 
-    if (!form.value.creditsPerChapter || form.value.creditsPerChapter < 1) {
-      error.value = 'Credits per chapter must be at least 1';
+    if (!form.value.questionsPerQuiz || form.value.questionsPerQuiz < 1 || form.value.questionsPerQuiz > 50) {
+      error.value = 'Number of questions must be between 1 and 50';
       return;
     }
 
-    if (!form.value.questionsPerQuiz || form.value.questionsPerQuiz < 1 || form.value.questionsPerQuiz > 50) {
-      error.value = 'Number of questions must be between 1 and 50';
+    if (form.value.creditsPerChapter == null || form.value.creditsPerChapter < 0) {
+      error.value = 'Credits per chapter must be 0 or greater';
       return;
     }
 
