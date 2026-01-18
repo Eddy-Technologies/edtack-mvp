@@ -18,7 +18,7 @@
     </div>
 
     <!-- Input container -->
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl overflow-hidden" data-tour="chat-input">
+    <div class="bg-white border border-gray-200 shadow-sm rounded-xl overflow-visible" data-tour="chat-input">
       <!-- File preview area -->
       <ChatFilePreviewArea
         :files="stagedFiles"
@@ -39,6 +39,11 @@
         </div>
 
         <div class="flex items-center gap-2">
+          <!-- File upload button (left side) -->
+          <ChatFileUploadButton
+            :disabled="isUploading"
+            @files-selected="handleFilesSelected"
+          />
           <UTextarea
             v-model="input"
             placeholder="How can I help you today?"
@@ -50,11 +55,6 @@
             style="max-height: 7.5rem; font-size: 16px;"
             textarea-class="text-gray-600 focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
             @keydown.enter="handleEnterKey"
-          />
-          <!-- File upload button -->
-          <ChatFileUploadButton
-            :disabled="isUploading"
-            @files-selected="handleFilesSelected"
           />
           <button
             :class="[
@@ -71,6 +71,16 @@
               :class="['w-5 h-5', isDisabled ? 'animate-spin text-white' : '']"
             />
           </button>
+        </div>
+        <!-- Feedback link (shows on sm-xl screens, hidden on xs and xl+) -->
+        <div class="hidden sm:flex xl:hidden justify-end mt-2">
+          <NuxtLink
+            to="/about?tab=feedback"
+            class="inline-flex items-center gap-1 text-sm text-primary font-medium hover:text-primary-600 transition-colors"
+          >
+            <Icon name="i-heroicons-chat-bubble-left-ellipsis" class="w-4 h-4" />
+            Send Feedback
+          </NuxtLink>
         </div>
       </div>
     </div>

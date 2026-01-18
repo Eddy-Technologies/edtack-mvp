@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-full bg-white overflow-hidden">
     <!-- Messages Stream -->
-    <div ref="scrollArea" class="flex-1 overflow-y-auto pt-8 py-6 px-4 sm:px-8 md:px-16 lg:px-24 pb-20 md:pb-32 space-y-8">
+    <div ref="scrollArea" class="flex-1 overflow-y-auto pt-8 py-6 px-4 sm:px-8 md:px-16 lg:px-24 pb-48 space-y-8" :style="scrollAreaStyle">
       <div
         v-for="(unit, index) in flattenedPlaybackUnits"
         :key="index"
@@ -59,10 +59,20 @@ interface ChatContentProps {
   threadId: string;
   character: any;
   threadData: any;
+  chatInputHeight?: number; // Dynamic height from parent for scroll padding
 }
 
 // Component props
 const props = defineProps<ChatContentProps>();
+
+// Computed style for dynamic bottom padding based on chat input height
+const scrollAreaStyle = computed(() => {
+  if (props.chatInputHeight && props.chatInputHeight > 0) {
+    // Add extra padding (32px) for breathing room
+    return { paddingBottom: `${props.chatInputHeight + 32}px` };
+  }
+  return {};
+});
 
 // Component events
 const emit = defineEmits<{

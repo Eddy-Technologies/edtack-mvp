@@ -13,7 +13,8 @@
     </NuxtLayout>
     <UNotifications />
 
-    <FeedbackButton />
+    <!-- Feedback Button (only on xl+ screens where there's space outside chat) -->
+    <FeedbackButton class="hidden xl:block" />
 
     <!-- Onboarding Tour Overlay -->
     <TourOverlay />
@@ -22,8 +23,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
-import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import AppLoadingScreen from '~/components/common/AppLoadingScreen.vue';
+import FeedbackButton from '~/components/feedback/FeedbackButton.vue';
 import TourOverlay from '~/components/tour/TourOverlay.vue';
 import { useCodesStore } from '~/stores/codes';
 

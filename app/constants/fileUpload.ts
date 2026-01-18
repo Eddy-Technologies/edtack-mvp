@@ -66,3 +66,92 @@ export function getFileCategory(mimeType: string): 'image' | 'document' | 'text'
   if (isPdfType(mimeType)) return 'document';
   return 'text';
 }
+
+/**
+ * Image compression configuration
+ */
+export const IMAGE_COMPRESSION_CONFIG = {
+  /** Max dimension (width or height) for compressed images */
+  MAX_DIMENSION: 2048,
+  /** JPEG quality (0-1) */
+  QUALITY: 0.85,
+  /** Only compress if file exceeds this size (2MB) */
+  COMPRESS_THRESHOLD: 2 * 1024 * 1024,
+} as const;
+
+/**
+ * Compress an image file to reduce size
+ * Returns the original file if compression is not needed or fails
+ */
+export async function compressImage(file: File): Promise<File> {
+  // Only compress images
+  if (!isImageType(file.type)) {
+    return file;
+  }
+
+  // Skip small files
+  if (file.size < IMAGE_COMPRESSION_CONFIG.COMPRESS_THRESHOLD) {
+    return file;
+  }
+
+  try {
+    // Create image element
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = objectUrl;
+    });
+
+    URL.revokeObjectURL(objectUrl);
+
+    // Calculate new dimensions
+    let { width, height } = img;
+    const maxDim = IMAGE_COMPRESSION_CONFIG.MAX_DIMENSION;
+
+    if (width > maxDim || height > maxDim) {
+      if (width > height) {
+        height = Math.round((height * maxDim) / width);
+        width = maxDim;
+      } else {
+        width = Math.round((width * maxDim) / height);
+        height = maxDim;
+      }
+    }
+
+    // Draw to canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return file;
+    }
+
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // Convert to blob
+    const blob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, 'image/jpeg', IMAGE_COMPRESSION_CONFIG.QUALITY);
+    });
+
+    if (!blob) {
+      return file;
+    }
+
+    // Only use compressed version if it's smaller
+    if (blob.size >= file.size) {
+      return file;
+    }
+
+    // Create new file with original name but .jpg extension for compressed
+    const newName = file.name.replace(/\.[^.]+$/, '.jpg');
+    return new File([blob], newName, { type: 'image/jpeg' });
+  } catch (error) {
+    console.warn('[compressImage] Compression failed, using original:', error);
+    return file;
+  }
+}

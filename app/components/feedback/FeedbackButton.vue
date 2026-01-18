@@ -1,7 +1,7 @@
 <template>
   <Button
     variant="primary"
-    class="fixed bottom-4 right-4 font-bold py-2 px-4 rounded-full shadow-lg z-50"
+    class="fixed bottom-6 right-6 text-sm py-2 px-4 rounded-full shadow-lg z-50"
     @click="handleClick"
   >
     Feedback

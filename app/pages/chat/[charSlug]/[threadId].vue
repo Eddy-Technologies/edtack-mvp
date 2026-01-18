@@ -76,6 +76,7 @@
               :messages="[]"
               :character="selectedCharacter"
               :thread-data="threadData"
+              :chat-input-height="chatInputHeight"
               @response-received="handleResponseReceived"
               @open-slides="handleOpenSlides"
             />
@@ -84,6 +85,7 @@
           <!-- Floating Chat Input -->
           <div
             v-if="shouldShowChatInput"
+            ref="chatInputWrapperRef"
             :class="[
               'absolute bottom-0 left-0 right-0 z-10',
               isChatCentered
@@ -259,9 +261,11 @@ const showContentTransitions = ref(true);
 const hasStartedChat = ref(false);
 const chatContentRef = ref<any>(null);
 const chatInputRef = ref<any>(null);
+const chatInputWrapperRef = ref<HTMLElement | null>(null);
 const slideContainerRef = ref<any>(null);
 const characterCarouselRef = ref<any>(null);
 const threadData = ref<any>(null); // Store thread data
+const chatInputHeight = ref(0); // Dynamic chat input height for scroll padding
 
 // Character dropdown state
 const characterDropdownOpen = ref(false);
@@ -460,6 +464,36 @@ onMounted(async () => {
 // Connection status polling interval
 let connectionStatusInterval: ReturnType<typeof setInterval> | null = null;
 
+// ResizeObserver for chat input height
+let chatInputResizeObserver: ResizeObserver | null = null;
+
+// Set up ResizeObserver to track chat input height
+const setupChatInputHeightObserver = () => {
+  if (chatInputResizeObserver) {
+    chatInputResizeObserver.disconnect();
+  }
+
+  chatInputResizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      // Only update when not in centered mode (new chat)
+      if (!isChatCentered.value) {
+        chatInputHeight.value = entry.contentRect.height;
+      }
+    }
+  });
+
+  if (chatInputWrapperRef.value) {
+    chatInputResizeObserver.observe(chatInputWrapperRef.value);
+  }
+};
+
+// Watch for chatInputWrapperRef changes
+watch(chatInputWrapperRef, (newRef: HTMLElement | null) => {
+  if (newRef) {
+    setupChatInputHeightObserver();
+  }
+}, { immediate: true });
+
 // Watch for connection status changes from ChatContent
 watch(
   () => chatContentRef.value,
@@ -505,6 +539,12 @@ onBeforeUnmount(() => {
   if (connectionStatusInterval) {
     clearInterval(connectionStatusInterval);
     connectionStatusInterval = null;
+  }
+
+  // Clean up ResizeObserver
+  if (chatInputResizeObserver) {
+    chatInputResizeObserver.disconnect();
+    chatInputResizeObserver = null;
   }
 
   // Track chat session end
