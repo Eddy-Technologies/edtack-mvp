@@ -1,16 +1,26 @@
 /**
  * File Upload Configuration Constants
+ *
+ * Default values - can be overridden via environment variables:
+ * - NUXT_PUBLIC_FILE_UPLOAD_MAX_SIZE (bytes, default: 10MB)
+ * - NUXT_PUBLIC_FILE_UPLOAD_MAX_TOTAL_SIZE (bytes, default: 50MB)
+ * - NUXT_PUBLIC_FILE_UPLOAD_MAX_FILES (default: 10)
  */
 
+// Default values (used as fallbacks and for non-Vue contexts)
+const DEFAULT_MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+const DEFAULT_MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50 MB
+const DEFAULT_MAX_FILES = 10;
+
 export const FILE_UPLOAD_CONFIG = {
-  /** Maximum file size per file (10 MB) */
-  MAX_FILE_SIZE: 10 * 1024 * 1024,
+  /** Maximum file size per file (10 MB default) */
+  MAX_FILE_SIZE: DEFAULT_MAX_FILE_SIZE,
 
-  /** Maximum total size across all files (50 MB) */
-  MAX_TOTAL_SIZE: 50 * 1024 * 1024,
+  /** Maximum total size across all files (50 MB default) */
+  MAX_TOTAL_SIZE: DEFAULT_MAX_TOTAL_SIZE,
 
-  /** Maximum number of files per upload */
-  MAX_FILES: 10,
+  /** Maximum number of files per upload (10 default) */
+  MAX_FILES: DEFAULT_MAX_FILES,
 
   /** Accepted MIME types */
   ACCEPTED_TYPES: [
@@ -32,6 +42,27 @@ export const FILE_UPLOAD_CONFIG = {
   /** File input accept attribute */
   ACCEPT_ATTRIBUTE: '.jpg,.jpeg,.png,.gif,.webp,.pdf,.txt,.md',
 } as const;
+
+/**
+ * Get file upload config with runtime config values (for use in Vue components/composables)
+ * Falls back to defaults if called outside Nuxt context
+ */
+export function getFileUploadConfig() {
+  try {
+    const runtimeConfig = useRuntimeConfig();
+    const configFromEnv = runtimeConfig.public.fileUpload;
+
+    return {
+      ...FILE_UPLOAD_CONFIG,
+      MAX_FILE_SIZE: configFromEnv?.maxFileSize || DEFAULT_MAX_FILE_SIZE,
+      MAX_TOTAL_SIZE: configFromEnv?.maxTotalSize || DEFAULT_MAX_TOTAL_SIZE,
+      MAX_FILES: configFromEnv?.maxFiles || DEFAULT_MAX_FILES,
+    };
+  } catch {
+    // Outside Nuxt context, return defaults
+    return FILE_UPLOAD_CONFIG;
+  }
+}
 
 /**
  * Format bytes to human readable string

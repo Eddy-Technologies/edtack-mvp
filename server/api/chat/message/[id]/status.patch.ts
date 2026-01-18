@@ -1,7 +1,7 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 
 export interface UpdateMessageStatusReq {
-  status: 'sending' | 'sent' | 'failed' | 'cancelled';
+  status: 'sending' | 'sent' | 'failed' | 'cancelled' | 'retried';
 }
 
 export default defineEventHandler(async (event) => {
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'Message ID is required' });
     }
 
-    if (!status || !['sending', 'sent', 'failed', 'cancelled'].includes(status)) {
+    if (!status || !['sending', 'sent', 'failed', 'cancelled', 'retried'].includes(status)) {
       throw createError({ statusCode: 400, statusMessage: 'Valid status is required' });
     }
 

@@ -183,8 +183,8 @@ export function useThreads() {
     messageHistory.value.push(response.data);
   };
 
-  // Update message status (for marking messages as failed/sent)
-  const updateMessageStatus = async (messageId: string, status: 'sending' | 'sent' | 'failed' | 'cancelled') => {
+  // Update message status (for marking messages as failed/sent/retried)
+  const updateMessageStatus = async (messageId: string, status: 'sending' | 'sent' | 'failed' | 'cancelled' | 'retried') => {
     try {
       const response = await $fetch(`/api/chat/message/${messageId}/status`, {
         method: 'PATCH',
@@ -205,6 +205,31 @@ export function useThreads() {
       return true;
     } catch (err) {
       console.error('Error updating message status:', err);
+      return false;
+    }
+  };
+
+  // Delete a message from database and local state
+  const deleteMessage = async (messageId: string) => {
+    try {
+      const response = await $fetch(`/api/chat/message/${messageId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.success) {
+        console.error('Failed to delete message');
+        return false;
+      }
+
+      // Remove from local state
+      const msgIndex = messageHistory.value.findIndex((m) => m.id === messageId);
+      if (msgIndex !== -1) {
+        messageHistory.value.splice(msgIndex, 1);
+      }
+
+      return true;
+    } catch (err) {
+      console.error('Error deleting message:', err);
       return false;
     }
   };
@@ -266,6 +291,7 @@ export function useThreads() {
     addThreadToList,
     addMessage,
     updateMessageStatus,
+    deleteMessage,
     reset,
 
     // Pending message management

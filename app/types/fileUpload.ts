@@ -42,6 +42,10 @@ export interface UploadResponse {
   file_count: number;
   total_size_bytes: number;
   files: UploadedFile[];
+  /** Filenames of files that were auto-removed due to limit exceeded */
+  auto_removed?: string[];
+  /** Filenames of files that were replaced due to duplicate content */
+  replaced_duplicates?: string[];
 }
 
 export interface ListFilesResponse {

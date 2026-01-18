@@ -25,10 +25,14 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  // Get auth token from header
+  const authHeader = getHeader(event, 'authorization');
+  const token = authHeader?.replace('Bearer ', '') || '';
+
   console.log(`[Stop Chat] Stopping stream for thread ${threadId}`);
 
   try {
-    const success = await chatStreamManager.stopStream(threadId);
+    const success = await chatStreamManager.stopStream(threadId, token);
 
     return {
       success,

@@ -639,7 +639,7 @@ class ChatStreamManager {
   /**
    * Stop a stream (cancel Python backend request)
    */
-  async stopStream(threadId: string): Promise<boolean> {
+  async stopStream(threadId: string, token?: string): Promise<boolean> {
     const stream = this.activeStreams.get(threadId);
     if (!stream) return false;
 
@@ -656,10 +656,22 @@ class ChatStreamManager {
 
     // Also call Python stop endpoint
     const config = useRuntimeConfig();
+    const stopUrl = `${config.public.pythonApiUrl}/api/v1/chat/${threadId}/stop`;
+    console.log(`[ChatStreamManager] Calling Python stop endpoint: ${stopUrl}`);
     try {
-      await fetch(`${config.public.pythonApiUrl}/api/v1/chat/${threadId}/stop`, {
+      const headers: Record<string, string> = {};
+      if (token && config.public.chatAuthEnabled) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      const response = await fetch(stopUrl, {
         method: 'POST',
+        headers,
       });
+      console.log(`[ChatStreamManager] Python stop response: ${response.status} ${response.statusText}`);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`[ChatStreamManager] Python stop endpoint error: ${errorText}`);
+      }
     } catch (err) {
       console.error(`[ChatStreamManager] Error calling Python stop endpoint:`, err);
     }

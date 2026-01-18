@@ -22,9 +22,13 @@
       <!-- File preview area -->
       <ChatFilePreviewArea
         :files="stagedFiles"
+        :auto-removed="lastAutoRemoved"
+        :replaced-duplicates="lastReplacedDuplicates"
+        :validation-errors="validationErrors"
         @remove="removeFile"
         @retry="retryUpload"
         @clear="clearFiles"
+        @dismiss-notification="handleDismissNotification"
       />
       <!-- Keyword hint and input -->
       <div class="p-4">
@@ -204,6 +208,8 @@ import { mapCharacterSubjectToChapterSubjectId } from '~/utils/subjectMapping';
 import { useMeStore } from '~/stores/me';
 import { useLessonStart } from '~/composables/useLessonStart';
 
+import type { MessageAttachment } from '~/types/fileUpload';
+
 const { isMobile } = useResponsive();
 const meStore = useMeStore();
 
@@ -226,8 +232,6 @@ const props = defineProps({
   },
 });
 
-import type { MessageAttachment } from '~/types/fileUpload';
-
 const emit = defineEmits<{
   (e: 'send', payload: { text: string; fileIds: string[]; pendingFiles?: File[]; fileAttachments?: MessageAttachment[] }): void;
   (e: 'dropdown-opened' | 'dropdown-closed'): void;
@@ -242,26 +246,36 @@ const {
   isUploading,
   isDragging,
   uploadedFileIds,
+  lastAutoRemoved,
+  lastReplacedDuplicates,
   addFiles,
   removeFile,
   clearFiles,
   clearAfterSend,
   uploadFiles,
+  clearUploadFeedback,
   handleDragEnter,
   handleDragOver,
   handleDragLeave,
   handleDrop,
 } = useFileUpload(threadIdRef);
 
+// Local state for validation errors (from addFiles)
+const validationErrors = ref<string[]>([]);
+
 async function handleFilesSelected(files: File[]) {
   const result = await addFiles(files);
   if (result.errors.length > 0) {
-    toast.add({
-      title: 'File error',
-      description: result.errors[0],
-      color: 'red',
-      timeout: 5000,
-    });
+    // Store errors for inline display instead of toast
+    validationErrors.value = result.errors;
+  }
+}
+
+function handleDismissNotification(type: 'autoRemoved' | 'replacedDuplicates' | 'validationErrors') {
+  if (type === 'autoRemoved' || type === 'replacedDuplicates') {
+    clearUploadFeedback();
+  } else if (type === 'validationErrors') {
+    validationErrors.value = [];
   }
 }
 
@@ -551,7 +565,8 @@ const emitMessage = async () => {
   emit('send', { text: input.value, fileIds, pendingFiles, fileAttachments: fileAttachments.length > 0 ? fileAttachments : undefined });
   input.value = '';
 
-  // Clear staged files locally (don't delete from backend - files are now attached to message)
+  // Clear staged files from both local state and backend
+  // Note: Files metadata is already saved with the message, so we delete from backend staging
   clearAfterSend();
 
   // Auto-reset after cooldown (in case parent doesn't call resetSendState)

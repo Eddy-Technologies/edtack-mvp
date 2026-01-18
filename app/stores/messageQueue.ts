@@ -442,8 +442,10 @@ export const useMessageQueueStore = defineStore('messageQueue', {
 
       console.log('[MessageQueue] Saving AI response to DB:', { threadId, key });
 
-      // Generate UUID for the database record
-      const uuid = crypto.randomUUID();
+      // Generate DETERMINISTIC UUID based on threadId + timestamp
+      // This ensures the same response always gets the same ID across page refreshes,
+      // so upsert will overwrite instead of creating duplicates (fixes duplicate message bug)
+      const uuid = `ai-msg-${threadId.slice(0, 8)}-${key}`;
       this.trackLocalMessage(uuid); // Prevent Realtime sync from re-adding this message
 
       const content = {

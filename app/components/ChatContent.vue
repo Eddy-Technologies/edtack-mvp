@@ -81,7 +81,7 @@ const emit = defineEmits<{
 }>();
 
 // Use global thread state instead of local state
-const { messageHistory, addMessage, updateMessageStatus: persistMessageStatus, getPendingMessage, clearPendingMessage } = useThreads();
+const { messageHistory, addMessage, updateMessageStatus: persistMessageStatus, deleteMessage, getPendingMessage, clearPendingMessage } = useThreads();
 const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
@@ -255,6 +255,15 @@ const checkAndReconnectToActiveStream = async () => {
       isPlayingAllowed.value = false;
       messageQueueStore.setThreadState(props.threadId, { status: 'processing' });
 
+      // Update last user message status to 'sent' since stream is still active
+      // This fixes the issue where the last message shows as 'failed' before reconnecting
+      const lastUserMsgIdx = messageStream.value.findLastIndex((m: any) => m.isUser);
+      if (lastUserMsgIdx !== -1 && messageStream.value[lastUserMsgIdx].status !== 'sent') {
+        console.log('[ChatContent] Updating last user message status to sent (stream is active)');
+        messageStream.value[lastUserMsgIdx] = { ...messageStream.value[lastUserMsgIdx], status: 'sent' };
+        messageStream.value = [...messageStream.value]; // Force reactivity
+      }
+
       // CRITICAL: Call reconnectToStream() to actually receive the buffered events.
       // The SSE connect() is a no-op - it just sets isConnected=true without reading the stream.
       // reconnectToStream() creates the actual EventSource connection to receive events.
@@ -349,7 +358,8 @@ const initializeChat = async () => {
     const isThreadProcessing = threadState?.status === 'processing';
     const isThreadError = threadState?.status === 'error';
 
-    messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus, file_attachments }: { content: string; id: string; sender: string | null; status?: string; file_attachments?: any[] }, index: number) => {
+    // First, map all messages
+    const mappedMessages = messageHistory.value.map(({ content, id, sender, status: dbStatus, file_attachments }: { content: string; id: string; sender: string | null; status?: string; file_attachments?: any[] }, index: number) => {
       const preservedStatus = existingStatuses.get(id);
       if (!sender) {
         return { ...JSON.parse(content), isUser: false, id };
@@ -362,9 +372,12 @@ const initializeChat = async () => {
       const isLastMessage = index === messageHistory.value.length - 1;
       let status = preservedStatus || dbStatus;
 
-      // If message is NOT last (has response after it), it definitely succeeded
-      // Override any stale 'sending'/'queued' status from DB
-      if (!isLastMessage) {
+      // If message has 'retried' status, keep it (don't override)
+      if (dbStatus === 'retried' || preservedStatus === 'retried') {
+        status = 'retried';
+      } else if (!isLastMessage) {
+        // If message is NOT last (has response after it), it definitely succeeded
+        // Override any stale 'sending'/'queued' status from DB
         status = 'sent';
       } else if (!status) {
         // Last message without status - check thread state
@@ -377,6 +390,21 @@ const initializeChat = async () => {
         // If none of the above, leave status undefined (shows no indicator)
       }
       return { text: content, isUser: true, id, ...(status && { status }), fileAttachments: file_attachments };
+    });
+
+    // Filter out AI responses that immediately follow 'retried' user messages
+    messageStream.value = mappedMessages.filter((msg: any, index: number) => {
+      // Keep all user messages
+      if (msg.isUser) return true;
+      // For AI messages, check if previous message was 'retried'
+      if (index > 0) {
+        const prevMsg = mappedMessages[index - 1];
+        if (prevMsg.isUser && prevMsg.status === 'retried') {
+          // Skip this AI response - it belongs to the retried request
+          return false;
+        }
+      }
+      return true;
     });
 
     // If thread was processing, check if SSE is still active before resuming loading state
@@ -480,7 +508,8 @@ const initializeChat = async () => {
   const isThreadProcessing = threadStateBefore?.status === 'processing';
 
   // Insert messageHistory to messageStream with proper status
-  messageStream.value = messageHistory.value.map(({ content, id, sender, status: dbStatus, file_attachments }: { content: string; id: string; sender: string | null; status?: string; file_attachments?: any[] }, index: number) => {
+  // First, map all messages
+  const mappedMessages = messageHistory.value.map(({ content, id, sender, status: dbStatus, file_attachments }: { content: string; id: string; sender: string | null; status?: string; file_attachments?: any[] }, index: number) => {
     if (!sender) {
       return { ...JSON.parse(content), isUser: false, id };
     }
@@ -491,9 +520,12 @@ const initializeChat = async () => {
     const isLastMessage = index === messageHistory.value.length - 1;
     let status: string | undefined = dbStatus;
 
-    // If message is NOT last (has response after it), it definitely succeeded
-    // Override any stale 'sending'/'queued' status from DB
-    if (!isLastMessage) {
+    // If message has 'retried' status, keep it (don't override)
+    if (dbStatus === 'retried') {
+      status = 'retried';
+    } else if (!isLastMessage) {
+      // If message is NOT last (has response after it), it definitely succeeded
+      // Override any stale 'sending'/'queued' status from DB
       status = 'sent';
     } else if (!status) {
       // Last message without status - check thread state
@@ -505,6 +537,21 @@ const initializeChat = async () => {
       // If none of the above, leave status undefined (shows no indicator)
     }
     return { text: content, isUser: true, id, ...(status && { status }), fileAttachments: file_attachments };
+  });
+
+  // Filter out AI responses that immediately follow 'retried' user messages
+  messageStream.value = mappedMessages.filter((msg: any, index: number) => {
+    // Keep all user messages
+    if (msg.isUser) return true;
+    // For AI messages, check if previous message was 'retried'
+    if (index > 0) {
+      const prevMsg = mappedMessages[index - 1];
+      if (prevMsg.isUser && prevMsg.status === 'retried') {
+        // Skip this AI response - it belongs to the retried request
+        return false;
+      }
+    }
+    return true;
   });
 
   // When switching to a different thread, just release our local reference
@@ -799,7 +846,7 @@ onMounted(() => {
         const hasAiResponse = newThreadData.thread_messages.some((m: any) => !m.sender) || pendingAiMessages.length > 0;
 
         // Map DB messages
-        const dbMessages = newThreadData.thread_messages.map((msg: any, index: number) => {
+        const mappedDbMessages = newThreadData.thread_messages.map((msg: any, index: number) => {
           // Priority: local status > DB status (local might be more recent)
           let status = existingStatuses.get(msg.id) || msg.status;
           if (!msg.sender) {
@@ -808,7 +855,11 @@ onMounted(() => {
           // For user messages: force 'sent' for non-last messages (they have responses = succeeded)
           // This overrides any stale 'sending'/'queued' status from DB
           const isLastMessage = index === newThreadData.thread_messages.length - 1;
-          if (!isLastMessage) {
+
+          // If message has 'retried' status, keep it (don't override)
+          if (msg.status === 'retried' || existingStatuses.get(msg.id) === 'retried') {
+            status = 'retried';
+          } else if (!isLastMessage) {
             status = 'sent';
           } else if (isLastMessage && hasAiResponse) {
             // Last user message but there's an AI response after it (in DB or pending)
@@ -818,6 +869,21 @@ onMounted(() => {
           // Last message keeps its status (could be in progress, failed, etc.)
           // Include status from DB or local state for user messages
           return { text: msg.content, isUser: true, id: msg.id, ...(status && { status }), fileAttachments: msg.file_attachments };
+        });
+
+        // Filter out AI responses that immediately follow 'retried' user messages
+        const dbMessages = mappedDbMessages.filter((msg: any, index: number) => {
+          // Keep all user messages
+          if (msg.isUser) return true;
+          // For AI messages, check if previous message was 'retried'
+          if (index > 0) {
+            const prevMsg = mappedDbMessages[index - 1];
+            if (prevMsg.isUser && prevMsg.status === 'retried') {
+              // Skip this AI response - it belongs to the retried request
+              return false;
+            }
+          }
+          return true;
         });
 
         // Merge: local-only failed messages + DB messages + pending AI messages
@@ -1467,7 +1533,8 @@ const flattenedPlaybackUnits = computed(() => {
     // Add text messages
     if (block.text) {
       // Only show retry button for the most recent failed/cancelled message
-      const showRetry = blockIndex === retryableIdx;
+      // AND only when not currently processing a response
+      const showRetry = blockIndex === retryableIdx && !isWaitingForResponse.value && !isSendingMessage.value;
       units.push({
         component: TextBubble,
         props: {
@@ -1476,7 +1543,7 @@ const flattenedPlaybackUnits = computed(() => {
           isUser: !!block.isUser,
           messageId: block.id?.toString(),
           status: block.status, // Pass message status for visual indicators
-          showRetry, // Only true for most recent retryable message
+          showRetry, // Only true for most recent retryable message when not processing
           fileAttachments: block.fileAttachments, // File attachments for user messages
           threadId: props.threadId, // Thread ID for file URLs
         },
@@ -1783,36 +1850,40 @@ const handleCancelRequest = async () => {
 const handleRetry = async (payload: { messageId?: string; text: string }) => {
   const { messageId, text } = payload;
   console.log('[ChatContent] handleRetry called, messageId:', messageId, 'text:', text?.substring(0, 30));
-  console.log('[ChatContent] Current messageStream:', messageStream.value.map((m: any) => ({ id: m.id, status: m.status, isUser: m.isUser, text: m.text?.substring(0, 20) })));
 
-  // Mark the failed/cancelled message as 'retried' to show user attempted retry
-  // Find by messageId AND status, or fallback to text matching
+  // Find the failed/cancelled message
   const failedIndex = messageStream.value.findIndex(
     (m: { id?: string; isUser?: boolean; text?: string; status?: string }) => {
       const isFailed = m.status === 'failed' || m.status === 'cancelled';
-      // Match by messageId + failed status
       if (messageId && m.id === messageId && isFailed) return true;
-      // Fallback: match by text + user + failed status
       return m.isUser && m.text === text && isFailed;
     }
   );
 
-  console.log('[ChatContent] failedIndex:', failedIndex);
+  // Get file attachments from the original failed message before deleting
+  let originalFileAttachments: any[] | undefined;
   if (failedIndex !== -1) {
     const oldMsg = messageStream.value[failedIndex];
-    console.log('[ChatContent] Marking message as retried at index:', failedIndex, 'oldStatus:', oldMsg.status);
-    messageStream.value[failedIndex] = { ...oldMsg, status: 'retried' };
+    originalFileAttachments = oldMsg.fileAttachments;
+    console.log('[ChatContent] Found failed message at index:', failedIndex, 'files:', originalFileAttachments?.length || 0);
+
+    // Delete the old message from DB to prevent duplicates after refresh
+    if (oldMsg.id) {
+      console.log('[ChatContent] Deleting old message from DB:', oldMsg.id);
+      await deleteMessage(oldMsg.id);
+    }
+
+    // Remove from local messageStream
+    messageStream.value.splice(failedIndex, 1);
     messageStream.value = [...messageStream.value]; // Force reactivity
-    console.log('[ChatContent] After update, message status:', messageStream.value[failedIndex].status);
   } else {
-    console.warn('[ChatContent] Could not find failed message to mark as retried! messageId:', messageId, 'text:', text);
+    console.warn('[ChatContent] Could not find failed message! messageId:', messageId, 'text:', text);
   }
 
   // Clear error state from store before retrying
   messageQueueStore.setThreadState(props.threadId, { status: 'idle', error: undefined });
 
-  // IMPORTANT: Close the old connection before retrying to ensure fresh reconnect
-  // After timeout/error, the old connection may be in a bad state
+  // Close the old connection before retrying to ensure fresh reconnect
   const existingConn = messageQueueStore.getConnection(props.threadId);
   if (existingConn && !existingConn.chat.isConnected.value) {
     console.log('[ChatContent] Closing stale connection before retry');
@@ -1820,17 +1891,14 @@ const handleRetry = async (payload: { messageId?: string; text: string }) => {
     chat.value = null;
   }
 
-  // CRITICAL: Recreate chat reference before calling handleSend
-  // If chat.value is null (we just closed stale connection), handleSend's
-  // chat.value?.connect() would fail since chat.value is null
+  // Recreate chat reference if needed
   if (!chat.value) {
     console.log('[ChatContent] Recreating chat reference for retry');
     chat.value = useChat(props.threadId);
   }
 
-  // Send a new message (the retried one stays visible showing retry history)
-  // Pass isRetryCall=true to bypass the concurrent send guard
-  await handleSend(text, true);
+  // Send as new message (old one is deleted, no duplicates)
+  await handleSend(text, true, originalFileAttachments);
 };
 
 const handleOpenSplitView = (slides: any[], messageId?: string, startIndex?: number) => {

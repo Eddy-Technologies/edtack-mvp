@@ -101,6 +101,12 @@ export default defineNuxtConfig({
         subscriptionPlans: process.env.NUXT_PUBLIC_FEATURES_SUBSCRIPTION_PLANS === 'true',
         analytics: process.env.NUXT_PUBLIC_FEATURES_ANALYTICS !== 'false', // Default enabled
       },
+      // File upload settings
+      fileUpload: {
+        maxFileSize: parseInt(process.env.NUXT_PUBLIC_FILE_UPLOAD_MAX_SIZE || String(10 * 1024 * 1024)), // 10 MB
+        maxTotalSize: parseInt(process.env.NUXT_PUBLIC_FILE_UPLOAD_MAX_TOTAL_SIZE || String(50 * 1024 * 1024)), // 50 MB
+        maxFiles: parseInt(process.env.NUXT_PUBLIC_FILE_UPLOAD_MAX_FILES || '10'),
+      },
     },
     private: {
       GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
