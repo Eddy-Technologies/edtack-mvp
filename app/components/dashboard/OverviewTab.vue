@@ -328,7 +328,7 @@ import { computed, ref, onMounted } from 'vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
-import { ORDER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
+import { ORDER_FULFILLMENT, ORDER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
 
 const { formatDate } = useDateFormat();
 
@@ -419,14 +419,14 @@ const getInitials = (name: string) => {
 // Get status display text for orders
 const getStatusText = (status: string) => {
   const statusMap = {
-    pending_parent_approval: 'Awaiting Approval',
-    paid: 'Paid',
-    confirmed: 'Confirmed',
-    processing: 'Processing',
-    shipped: 'Shipped',
-    delivered: 'Delivered',
-    cancelled: 'Cancelled',
-    rejected: 'Rejected'
+    [ORDER_STATUS.PENDING_PARENT_APPROVAL]: 'Awaiting Approval',
+    [ORDER_STATUS.PAID]: 'Paid',
+    [ORDER_STATUS.CONFIRMED]: 'Confirmed',
+    [ORDER_FULFILLMENT.PROCESSING]: 'Processing',
+    [ORDER_FULFILLMENT.SHIPPED]: 'Shipped',
+    [ORDER_FULFILLMENT.DELIVERED]: 'Delivered',
+    [ORDER_STATUS.CANCELLED]: 'Cancelled',
+    [ORDER_STATUS.REJECTED]: 'Rejected'
   };
   return statusMap[status as keyof typeof statusMap] || status;
 };
@@ -434,14 +434,14 @@ const getStatusText = (status: string) => {
 // Get badge classes for order status
 const getOrderStatusBadgeClass = (status: string) => {
   const classMap = {
-    pending_parent_approval: 'bg-yellow-100 text-yellow-800',
-    paid: 'bg-blue-100 text-blue-800',
-    confirmed: 'bg-green-100 text-green-800',
-    processing: 'bg-purple-100 text-purple-800',
-    shipped: 'bg-indigo-100 text-indigo-800',
-    delivered: 'bg-green-100 text-green-800',
-    cancelled: 'bg-gray-100 text-gray-800',
-    rejected: 'bg-red-100 text-red-800'
+    [ORDER_STATUS.PENDING_PARENT_APPROVAL]: 'bg-yellow-100 text-yellow-800',
+    [ORDER_STATUS.PAID]: 'bg-blue-100 text-blue-800',
+    [ORDER_STATUS.CONFIRMED]: 'bg-green-100 text-green-800',
+    [ORDER_FULFILLMENT.PROCESSING]: 'bg-purple-100 text-purple-800',
+    [ORDER_FULFILLMENT.SHIPPED]: 'bg-indigo-100 text-indigo-800',
+    [ORDER_FULFILLMENT.DELIVERED]: 'bg-green-100 text-green-800',
+    [ORDER_STATUS.CANCELLED]: 'bg-gray-100 text-gray-800',
+    [ORDER_STATUS.REJECTED]: 'bg-red-100 text-red-800'
   };
   return classMap[status as keyof typeof classMap] || 'bg-gray-100 text-gray-800';
 };
