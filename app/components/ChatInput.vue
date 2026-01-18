@@ -43,11 +43,6 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <!-- File upload button (left side) -->
-          <ChatFileUploadButton
-            :disabled="isUploading"
-            @files-selected="handleFilesSelected"
-          />
           <UTextarea
             v-model="input"
             placeholder="How can I help you today?"
@@ -90,12 +85,17 @@
     </div>
 
     <!-- Suggestions - only show on new chat -->
-    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2', isMobile ? 'justify-center' : '']" data-tour="chat-suggestions">
+    <div v-if="showSuggestions" :class="['flex flex-wrap gap-2 items-center', isMobile ? 'justify-center' : '']" data-tour="chat-suggestions">
+      <!-- File upload button -->
+      <ChatFileUploadButton
+        :disabled="isUploading"
+        @files-selected="handleFilesSelected"
+      />
       <!-- Text Book button (for subject-specific characters) -->
       <button
         v-if="showStudyButton"
         :class="[
-          'text-white border border-gray-200 rounded-xl transition-colors flex items-center',
+          'text-white border border-gray-200 rounded-md transition-colors flex items-center',
           studyDropdownOpen ? 'bg-primary-600' : 'bg-primary hover:bg-primary-400 active:bg-primary-500',
           isCreatingLesson ? 'border-gray-300 text-gray-400 cursor-not-allowed' : '',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
@@ -109,7 +109,7 @@
           :class="['w-5 h-5', isCreatingLesson ? 'animate-spin' : '']"
         />
         <template v-if="!isMobile">
-          Text Book
+          TextBook
           <Icon name="i-heroicons-chevron-down" class="w-3 h-3" />
         </template>
       </button>
@@ -117,7 +117,7 @@
       <!-- Lesson Pill -->
       <button
         :class="[
-          'bg-white text-primary border-2 border-primary rounded-xl hover:bg-primary-50 transition-colors flex items-center',
+          'bg-white text-primary border-2 border-primary rounded-md hover:bg-primary-50 transition-colors flex items-center',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
         ]"
         :title="isMobile ? 'Give me a lesson on...' : undefined"
@@ -130,7 +130,7 @@
       <!-- Quiz Pill -->
       <button
         :class="[
-          'bg-white text-primary border-2 border-primary rounded-xl hover:bg-primary-50 transition-colors flex items-center',
+          'bg-white text-primary border-2 border-primary rounded-md hover:bg-primary-50 transition-colors flex items-center',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm gap-1'
         ]"
         :title="isMobile ? 'Quiz me on...' : undefined"
@@ -143,7 +143,7 @@
       <!-- Homework (no dropdown) -->
       <button
         :class="[
-          'bg-white text-primary border-2 border-primary rounded-xl hover:bg-primary-50 transition-colors flex items-center justify-center',
+          'bg-white text-primary border-2 border-primary rounded-md hover:bg-primary-50 transition-colors flex items-center justify-center',
           isMobile ? 'p-2.5' : 'px-3 py-1.5 text-sm'
         ]"
         :title="isMobile ? 'Help me with my schoolwork on...' : undefined"
