@@ -30,9 +30,10 @@ export enum TASK_STATUS {
 
 // Task chapter statuses for user_tasks_chapters (per-chapter within a task)
 export enum TASK_CHAPTER_STATUS {
-  OPEN = 'OPEN', // Chapter quiz not yet started or completed
+  OPEN = 'OPEN', // Chapter quiz not yet started
   GENERATING = 'GENERATING', // Quiz is being generated
-  COMPLETED = 'COMPLETED', // Quiz has been completed at least once
+  ATTEMPTED = 'ATTEMPTED', // Quiz submitted but score < required_score
+  COMPLETED = 'COMPLETED', // Quiz submitted and score >= required_score
   EXPIRED = 'EXPIRED' // Parent task expired
 }
 

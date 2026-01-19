@@ -11,7 +11,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { QuestionResult } from './quizScoringService';
 import type { QuizQuestion } from '~/types/quiz.types';
-import { QUESTION_TYPE } from '~~/shared/constants';
+import { QUESTION_TYPE, TASK_CHAPTER_STATUS } from '~~/shared/constants';
 
 // Types
 export interface AttemptRecord {
@@ -325,19 +325,75 @@ export async function fetchAllAttempts(
 }
 
 /**
- * Update task-chapter with score and completion status
+ * Fetch all attempts with answers in a single query
+ * Used for parent review to reduce query count
+ */
+export async function fetchAllAttemptsWithAnswers(
+  supabase: SupabaseClient,
+  questionIds: string[],
+  userInfoId: string
+): Promise<any[]> {
+  const { data, error } = await supabase
+    .from('user_question_attempts')
+    .select(`
+      question_id,
+      attempt_number,
+      score,
+      max_score,
+      submitted_at,
+      marking_status,
+      feedback_positive,
+      feedback_gaps,
+      feedback_improvement,
+      key_concepts_assessed,
+      user_question_answers(*)
+    `)
+    .in('question_id', questionIds)
+    .eq('user_info_id', userInfoId);
+
+  if (error) {
+    console.error('[quizPersistenceService] Error fetching attempts with answers:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * Update task-chapter with score and status
+ *
+ * Status determination:
+ * - COMPLETED: score >= requiredScore (passed)
+ * - ATTEMPTED: score < requiredScore (not passed)
+ * - Never downgrades from COMPLETED to ATTEMPTED
  */
 export async function updateChapterScore(
   supabase: SupabaseClient,
   userTasksChapterId: string,
   bestScore: number,
   bestTotalScore: number,
-  isFirstAttempt: boolean
+  isFirstAttempt: boolean,
+  requiredScore: number,
+  currentStatus?: string
 ): Promise<void> {
+  // Calculate best percentage
+  const bestPercentage =
+    bestTotalScore > 0 ? Math.round((bestScore / bestTotalScore) * 100) : 0;
+
+  // Determine new status: never downgrade from COMPLETED
+  let newStatus: TASK_CHAPTER_STATUS;
+  if (currentStatus === TASK_CHAPTER_STATUS.COMPLETED) {
+    newStatus = TASK_CHAPTER_STATUS.COMPLETED;
+  } else if (bestPercentage >= requiredScore) {
+    newStatus = TASK_CHAPTER_STATUS.COMPLETED;
+  } else {
+    newStatus = TASK_CHAPTER_STATUS.ATTEMPTED;
+  }
+
   const updateData: any = {
     score: bestScore,
     total_score: bestTotalScore,
-    status: 'COMPLETED',
+    status: newStatus,
   };
 
   if (isFirstAttempt) {

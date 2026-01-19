@@ -18,6 +18,8 @@
  * - creditEarned: number
  * - questions: array of questions with results
  * - childName: string (child's name for display)
+ *
+ * Optimized: Uses 3 queries instead of 6 by merging related data fetches
  */
 
 import { getUserInfo } from '~~/server/utils/auth';
@@ -26,11 +28,8 @@ import {
   calculateAttemptScores,
   formatAttemptsForResponse,
 } from '~~/server/services/quizScoringService';
-import {
-  fetchAllAttempts,
-  fetchLatestAttemptResults,
-} from '~~/server/services/quizPersistenceService';
-import { getQuizCreditTransaction } from '~~/server/services/creditService';
+import { fetchAllAttemptsWithAnswers } from '~~/server/services/quizPersistenceService';
+import { TASK_CHAPTER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -50,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
     const supabase = await getSupabaseClient(event);
 
-    // Fetch task-chapter data with user_tasks info
+    // Query 1: Fetch task-chapter data with user_tasks info AND child name (merged)
     const { data: chapterData, error: chapterError } = await supabase
       .from('user_tasks_chapters')
       .select(`
@@ -65,7 +64,8 @@ export default defineEventHandler(async (event) => {
           creator_user_info_id,
           assignee_user_info_id,
           required_score,
-          credit
+          credit,
+          assignee:user_infos!assignee_user_info_id(first_name, last_name)
         )
       `)
       .eq('id', userTasksChapterId)
@@ -97,31 +97,26 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Fetch child's name for display
-    const { data: childData, error: childError } = await supabase
-      .from('user_infos')
-      .select('first_name, last_name')
-      .eq('id', targetUserInfoId)
-      .single();
-
-    if (childError) {
-      console.error('[parent-review] Error fetching child data:', childError);
-    }
-
-    const childName = childData ?
-        `${childData.first_name} ${childData.last_name}`.trim() :
+    // Get child name from joined data
+    const assignee = chapterData.user_tasks.assignee;
+    const childName = assignee ?
+        `${assignee.first_name} ${assignee.last_name}`.trim() :
       'Child';
 
-    // If not completed, return not completed status
-    if (!chapterData.completed_at) {
+    // If not attempted, return not attempted status
+    if (
+      chapterData.status === TASK_CHAPTER_STATUS.OPEN ||
+      chapterData.status === TASK_CHAPTER_STATUS.GENERATING
+    ) {
       return {
         success: true,
         isCompleted: false,
+        isAttempted: false,
         childName,
       };
     }
 
-    // Fetch questions for this task-chapter
+    // Query 2: Fetch questions for this task-chapter
     const { data: questionLinks, error: fetchError } = await supabase
       .from('user_tasks_chapters_questions')
       .select(`
@@ -167,14 +162,23 @@ export default defineEventHandler(async (event) => {
 
     const questionIds = questions.map((q) => q.id);
 
-    // Fetch all attempts for the CHILD (not current user)
-    const allAttempts = await fetchAllAttempts(supabase, questionIds, targetUserInfoId);
-    const attemptScores = calculateAttemptScores(allAttempts);
+    // Query 3: Fetch ALL attempts with answers in single query (merged)
+    const allAttemptsWithAnswers = await fetchAllAttemptsWithAnswers(
+      supabase,
+      questionIds,
+      targetUserInfoId
+    );
+
+    // Calculate attempt scores from the data
+    const attemptScores = calculateAttemptScores(allAttemptsWithAnswers);
     const attempts = formatAttemptsForResponse(attemptScores);
 
-    // Find latest attempt
+    // Find latest attempt number
+    const latestAttemptNumber = allAttemptsWithAnswers.length > 0 ?
+        Math.max(...allAttemptsWithAnswers.map((a) => a.attempt_number)) :
+      1;
+
     const latestAttempt = attempts.length > 0 ? attempts[attempts.length - 1] : null;
-    const latestAttemptNumber = latestAttempt?.attemptNumber || 1;
 
     // Use stored best score from user_tasks_chapters
     const bestScore = chapterData.score || 0;
@@ -189,7 +193,7 @@ export default defineEventHandler(async (event) => {
     if (chapterData.user_tasks.required_score === null || chapterData.user_tasks.required_score === undefined) {
       throw createError({
         statusCode: 500,
-        message: 'Task configuration error: required_score is not set'
+        message: 'Task configuration error: required_score is not set',
       });
     }
 
@@ -197,20 +201,18 @@ export default defineEventHandler(async (event) => {
     const passedThreshold = bestPercentage >= requiredScore;
     const attemptCount = attempts.length;
 
-    // Check if credits were earned
-    const creditEarned = await getQuizCreditTransaction(supabase, userTasksChapterId);
-    const creditDisbursed = creditEarned > 0;
+    // Derive credit status from chapter status (no separate query needed)
     const creditReward = chapterData.user_tasks.credit || 0;
+    const creditDisbursed = chapterData.status === TASK_CHAPTER_STATUS.COMPLETED;
+    const creditEarned = creditDisbursed ? creditReward : 0;
 
-    // Fetch latest attempt results for the CHILD
-    console.log('[parent-review] Fetching child attempt (#' + latestAttemptNumber + ') for parent review');
-
-    const attemptsByQuestion = await fetchLatestAttemptResults(
-      supabase,
-      questionIds,
-      targetUserInfoId, // Child's ID
-      latestAttemptNumber
-    );
+    // Build attemptsByQuestion map from allAttemptsWithAnswers (filter to latest attempt)
+    const attemptsByQuestion = new Map<string, any>();
+    allAttemptsWithAnswers
+      .filter((a) => a.attempt_number === latestAttemptNumber)
+      .forEach((attempt) => {
+        attemptsByQuestion.set(attempt.question_id, attempt);
+      });
 
     // Build results from batch query data
     const results = questions.map((question, index) => {

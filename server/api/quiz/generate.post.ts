@@ -94,6 +94,7 @@ export default defineEventHandler(async (event) => {
         .from('user_tasks_chapters')
         .update({
           status: TASK_CHAPTER_STATUS.GENERATING,
+          generation_started_at: new Date().toISOString(),
         })
         .eq('id', userTasksChapterId);
 
@@ -157,6 +158,7 @@ export default defineEventHandler(async (event) => {
         .from('user_tasks_chapters')
         .update({
           status: TASK_CHAPTER_STATUS.OPEN,
+          generation_started_at: null,
         })
         .eq('id', userTasksChapterId);
 
@@ -181,7 +183,10 @@ export default defineEventHandler(async (event) => {
         const supabase = await getSupabaseClient(event);
         const { error: resetStatusError } = await supabase
           .from('user_tasks_chapters')
-          .update({ status: TASK_CHAPTER_STATUS.OPEN })
+          .update({
+            status: TASK_CHAPTER_STATUS.OPEN,
+            generation_started_at: null,
+          })
           .eq('id', userTasksChapterId);
 
         if (resetStatusError) {

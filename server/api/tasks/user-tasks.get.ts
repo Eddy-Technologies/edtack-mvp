@@ -30,16 +30,21 @@ export default defineEventHandler(async (event) => {
     let tasksQuery = supabase
       .from('user_tasks')
       .select(`
-        *,
-        creator:user_infos!creator_user_info_id(*),
-        assignee:user_infos!assignee_user_info_id(*),
+        id,
+        name,
+        status,
+        credit,
+        required_score,
+        questions_per_quiz,
+        assignee_user_info_id,
+        created_at,
+        assignee:user_infos!assignee_user_info_id(first_name, last_name),
         user_tasks_chapters(
           id,
           chapter_name,
           status,
           score,
           total_score,
-          completed_at,
           chapters!inner(name, display_name, subject_id, sort_order, subjects(display_name)),
           user_tasks_chapters_questions(id)
         )
@@ -113,36 +118,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Collect all completed chapter IDs to query credit transactions
-    const completedChapterIds: string[] = [];
-    filteredTasks.forEach((task) => {
-      task.user_tasks_chapters?.forEach((utc: any) => {
-        if (utc.completed_at) {
-          completedChapterIds.push(utc.id);
-        }
-      });
-    });
-
-    // Query credit transactions for completed chapters
-    const creditDisbursements = new Map<string, number>();
-    if (completedChapterIds.length > 0) {
-      const { data: creditTxns } = await supabase
-        .from('credit_transactions')
-        .select('amount, metadata')
-        .eq('metadata->>source', 'quiz_completion')
-        .in('metadata->>userTasksChapterId', completedChapterIds);
-
-      if (creditTxns) {
-        creditTxns.forEach((txn: any) => {
-          const chapterId = txn.metadata?.userTasksChapterId;
-          if (chapterId) {
-            creditDisbursements.set(chapterId, txn.amount || 0);
-          }
-        });
-      }
-    }
-
-    // Format tasks for frontend consumption with enhanced chapter data
+    // Format tasks for frontend consumption
     const formattedTasks = filteredTasks.map((task) => {
       const chapters = task.user_tasks_chapters?.map((utc: any) => ({
         id: utc.id,
@@ -152,12 +128,8 @@ export default defineEventHandler(async (event) => {
         subjectDisplayName: utc.chapters.subjects?.display_name || utc.chapters.subject_id,
         sortOrder: utc.chapters.sort_order,
         status: utc.status,
-        score: utc.score,
         bestScore: utc.score && utc.total_score ? Math.round((utc.score / utc.total_score) * 100) : 0,
-        totalScore: utc.total_score,
-        completedAt: utc.completed_at,
-        credit: task.credit, // Credit per chapter
-        creditEarned: creditDisbursements.get(utc.id) || 0,
+        credit: task.credit,
         hasQuiz: (utc.user_tasks_chapters_questions?.length || 0) > 0
       })) || [];
 
@@ -168,35 +140,20 @@ export default defineEventHandler(async (event) => {
 
       return {
         id: task.id,
-        parentTaskId: task.id,
-        creatorUserInfoId: task.creator_user_info_id,
-        assigneeUserInfoId: task.assignee_user_info_id,
         name: task.name,
-        credit: task.credit,
-        creditPerChapter: task.credit,
-        totalCredits,
         status: task.status,
-        dueDate: task.due_date,
-        subject: task.subject,
-        subjectName: task.subject,
-        category: task.subject,
-        createdAt: task.created_at,
-        updatedAt: task.updated_at,
-        questionsPerQuiz: task.questions_per_quiz,
+        totalCredits,
         requiredScore: task.required_score,
+        questionsPerQuiz: task.questions_per_quiz,
+        assigneeUserInfoId: task.assignee_user_info_id,
+        createdAt: task.created_at,
         chapters,
-        creatorInfo: {
-          firstName: task.creator?.first_name,
-          lastName: task.creator?.last_name,
-          email: task.creator?.email
-        },
-        assigneeInfo: {
-          firstName: task.assignee?.first_name,
-          lastName: task.assignee?.last_name,
-          email: task.assignee?.email
-        },
-        userRole: task.creator_user_info_id === userInfo.id ? 'creator' : 'assignee',
-        isThread: false
+        assigneeInfo: task.assignee ?
+            {
+              firstName: task.assignee.first_name,
+              lastName: task.assignee.last_name
+            } :
+          null
       };
     });
 

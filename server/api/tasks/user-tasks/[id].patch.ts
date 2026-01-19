@@ -20,6 +20,7 @@
 
 import { getUserInfo } from '~~/server/utils/auth';
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { TASK_CHAPTER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -39,7 +40,7 @@ export default defineEventHandler(async (event) => {
     // Verify user is the creator (parent) of this task
     const { data: task, error: fetchError } = await supabase
       .from('user_tasks')
-      .select('creator_user_info_id, user_tasks_chapters(id, completed_at)')
+      .select('creator_user_info_id, user_tasks_chapters(id, status)')
       .eq('id', taskId)
       .single();
 
@@ -126,7 +127,7 @@ export default defineEventHandler(async (event) => {
       // Get current chapters for this task
       const { data: currentChapters, error: fetchChaptersError } = await supabase
         .from('user_tasks_chapters')
-        .select('id, chapter_name, completed_at')
+        .select('id, chapter_name, status')
         .eq('user_task_id', taskId);
 
       if (fetchChaptersError) {
@@ -150,7 +151,10 @@ export default defineEventHandler(async (event) => {
         );
 
         // Validate: Cannot remove chapters that have been attempted
-        const attemptedChaptersToRemove = chaptersToRemove.filter((c) => c.completed_at !== null);
+        // Use status instead of completed_at for logic
+        const attemptedChaptersToRemove = chaptersToRemove.filter(
+          (c) => c.status !== TASK_CHAPTER_STATUS.OPEN && c.status !== TASK_CHAPTER_STATUS.GENERATING
+        );
         if (attemptedChaptersToRemove.length > 0) {
           throw createError({
             statusCode: 400,

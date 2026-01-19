@@ -27,6 +27,7 @@ import {
   fetchLatestAttemptResults,
 } from '~~/server/services/quizPersistenceService';
 import { getQuizCreditTransaction } from '~~/server/services/creditService';
+import { TASK_CHAPTER_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -88,11 +89,15 @@ export default defineEventHandler(async (event) => {
 
     console.log('[results] Permission check passed - user is task assignee');
 
-    // If not completed, return not completed status
-    if (!chapterData.completed_at) {
+    // If not attempted, return not attempted status
+    if (
+      chapterData.status === TASK_CHAPTER_STATUS.OPEN ||
+      chapterData.status === TASK_CHAPTER_STATUS.GENERATING
+    ) {
       return {
         success: true,
         isCompleted: false,
+        isAttempted: false,
       };
     }
 

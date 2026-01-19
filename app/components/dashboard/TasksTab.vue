@@ -147,6 +147,7 @@ import TaskInfoCard from './tasks/TaskInfoCard.vue';
 import CreateEditTaskModal from './tasks/CreateEditTaskModal.vue';
 import QuizAttemptModal from './quiz/QuizAttemptModal.vue';
 import { useMeStore } from '~/stores/me';
+import { TASK_CHAPTER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
 
 // Types
 interface Chapter {
@@ -157,12 +158,8 @@ interface Chapter {
   subjectDisplayName: string;
   sortOrder: number;
   status: string;
-  score?: number;
   bestScore?: number;
-  totalScore?: number;
-  completedAt?: string | null;
   credit: number;
-  creditEarned?: number;
   hasQuiz?: boolean;
 }
 
@@ -170,18 +167,15 @@ interface Task {
   id: string;
   name: string;
   status: string;
-  credit: number;
-  creditPerChapter: number;
   totalCredits: number;
   requiredScore: number;
   questionsPerQuiz: number;
   assigneeUserInfoId: string;
-  subjectName: string;
   chapters: Chapter[];
   assigneeInfo?: {
     firstName: string;
     lastName: string;
-  };
+  } | null;
   createdAt: string;
 }
 
@@ -256,17 +250,21 @@ const filteredTasks = computed(() => {
     result = result.filter((t) => t.status === selectedStatus.value);
   }
 
-  // Chapter filter (credits/completed)
-  if (chapterFilter.value === 'credits') {
-    // Show only tasks with uncompleted chapters that have credits
+  // Chapter filter (OPEN/ATTEMPTED/COMPLETED)
+  if (chapterFilter.value === TASK_CHAPTER_STATUS.OPEN) {
+    // Show only tasks with OPEN chapters
     result = result.filter((t) =>
-      t.status === 'OPEN' &&
-      t.chapters.some((c) => c.completedAt === null && c.credit > 0)
+      t.chapters.some((c) => c.status === TASK_CHAPTER_STATUS.OPEN)
     );
-  } else if (chapterFilter.value === 'completed') {
-    // Show only tasks with completed chapters
+  } else if (chapterFilter.value === TASK_CHAPTER_STATUS.ATTEMPTED) {
+    // Show only tasks with ATTEMPTED chapters
     result = result.filter((t) =>
-      t.chapters.some((c) => c.completedAt !== null)
+      t.chapters.some((c) => c.status === TASK_CHAPTER_STATUS.ATTEMPTED)
+    );
+  } else if (chapterFilter.value === TASK_CHAPTER_STATUS.COMPLETED) {
+    // Show only tasks with COMPLETED chapters
+    result = result.filter((t) =>
+      t.chapters.some((c) => c.status === TASK_CHAPTER_STATUS.COMPLETED)
     );
   }
 
@@ -290,7 +288,7 @@ const totalPages = computed(() =>
 const totalPendingCredits = computed(() => {
   if (!isParent.value) return 0;
   return filteredTasks.value.reduce((sum, task) => {
-    if (task.status === 'OPEN') {
+    if (task.status === TASK_STATUS.OPEN) {
       return sum + task.totalCredits;
     }
     return sum;
@@ -440,7 +438,7 @@ const handleViewAttempts = (userTasksChapterId: string, assigneeId: string) => {
 
 const handleStartQuiz = async (task: Task, chapter: Chapter) => {
   // Check if quiz exists or needs generation
-  if (!chapter.hasQuiz && chapter.status !== 'GENERATING') {
+  if (!chapter.hasQuiz && chapter.status !== TASK_CHAPTER_STATUS.GENERATING) {
     // Show loading immediately
     generatingChapters.value.add(chapter.id);
 
@@ -451,7 +449,7 @@ const handleStartQuiz = async (task: Task, chapter: Chapter) => {
       console.error('[handleStartQuiz] Quiz generation failed:', error);
       generatingChapters.value.delete(chapter.id);
     }
-  } else if (chapter.status === 'GENERATING') {
+  } else if (chapter.status === TASK_CHAPTER_STATUS.GENERATING) {
     // Quiz is currently generating - inform user to wait
     toast.add({
       title: 'Quiz Generating',

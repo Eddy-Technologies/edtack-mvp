@@ -49,11 +49,13 @@
         :key="chapter.id"
         :class="[
           'flex items-center justify-between gap-4 py-2 px-4 rounded-lg',
-          !chapter.completedAt
+          chapter.status === ChapterStatus.OPEN || chapter.status === ChapterStatus.GENERATING
             ? 'bg-gray-50'
-            : (chapter.bestScore ?? 0) >= task.requiredScore
+            : chapter.status === ChapterStatus.COMPLETED
               ? 'border border-primary'
-              : 'border border-secondary'
+              : chapter.status === ChapterStatus.ATTEMPTED
+                ? 'border border-secondary'
+                : 'bg-gray-50'
         ]"
       >
         <!-- Left: Chapter name only -->
@@ -63,18 +65,19 @@
 
         <!-- Center/Right: Credit/Completion info (right-aligned) -->
         <div class="flex items-center gap-3 flex-1 justify-end">
-          <span v-if="!chapter.completedAt" class="text-sm text-gray-600 whitespace-nowrap">
+          <!-- Not started -->
+          <span v-if="chapter.status === ChapterStatus.OPEN || chapter.status === ChapterStatus.GENERATING" class="text-sm text-gray-600 whitespace-nowrap">
             {{ chapter.credit }} credits • {{ task.requiredScore }}% required
           </span>
 
-          <!-- Progress Info -->
-          <!-- Passed: score >= required -->
-          <span v-if="chapter.completedAt && (chapter.bestScore ?? 0) >= task.requiredScore" class="text-sm text-green-600 whitespace-nowrap">
+          <!-- Completed (passed) -->
+          <span v-else-if="chapter.status === ChapterStatus.COMPLETED" class="text-sm text-green-600 whitespace-nowrap">
             ✓ Completed • Best: {{ chapter.bestScore }}%
           </span>
-          <!-- Attempted but not passed -->
-          <span v-else-if="chapter.completedAt" class="text-sm text-amber-600 whitespace-nowrap">
-            Attempted • Best Score: {{ chapter.bestScore }}% • {{ chapter.credit }} credits • {{ task.requiredScore }}% required
+
+          <!-- Attempted (not passed) -->
+          <span v-else-if="chapter.status === ChapterStatus.ATTEMPTED" class="text-sm text-amber-600 whitespace-nowrap">
+            Attempted • Best: {{ chapter.bestScore }}% • {{ task.requiredScore }}% required
           </span>
         </div>
 
@@ -84,19 +87,19 @@
           <template v-if="!isParent">
             <!-- Start Quiz -->
             <UButton
-              v-if="!chapter.hasQuiz && task.status !== 'CLOSED'"
+              v-if="!chapter.hasQuiz && task.status !== TaskStatus.CLOSED"
               color="primary"
               size="sm"
-              :loading="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
-              :disabled="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
+              :loading="chapter.status === ChapterStatus.GENERATING || props.isChapterGenerating(chapter.id)"
+              :disabled="chapter.status === ChapterStatus.GENERATING || props.isChapterGenerating(chapter.id)"
               @click.stop="emit('start-quiz', task, chapter)"
             >
-              {{ chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id) ? 'Generating quiz...' : 'Start Quiz' }}
+              {{ chapter.status === ChapterStatus.GENERATING || props.isChapterGenerating(chapter.id) ? 'Generating quiz...' : 'Start Quiz' }}
             </UButton>
 
             <!-- Review -->
             <UButton
-              v-else-if="chapter.completedAt"
+              v-else-if="isAttempted(chapter)"
               variant="outline"
               size="sm"
               @click.stop="emit('view-attempts', chapter.id, task.assigneeUserInfoId)"
@@ -106,17 +109,17 @@
 
             <!-- Reattempt -->
             <UButton
-              v-if="chapter.hasQuiz && task.status !== 'CLOSED'"
+              v-if="chapter.hasQuiz && task.status !== TaskStatus.CLOSED"
               color="primary"
               size="sm"
-              :loading="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
-              :disabled="chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)"
+              :loading="chapter.status === ChapterStatus.GENERATING || props.isChapterGenerating(chapter.id)"
+              :disabled="chapter.status === ChapterStatus.GENERATING || props.isChapterGenerating(chapter.id)"
               @click.stop="emit('start-quiz', task, chapter)"
             >
               {{
-                chapter.status === 'GENERATING' || props.isChapterGenerating(chapter.id)
+                chapter.status === ChapterStatus.GENERATING || props.isChapterGenerating(chapter.id)
                   ? 'Generating quiz...'
-                  : (chapter.completedAt ? 'Reattempt' : 'Attempt Quiz')
+                  : (isAttempted(chapter) ? 'Reattempt' : 'Attempt Quiz')
               }}
             </UButton>
           </template>
@@ -125,7 +128,7 @@
           <template v-else>
             <!-- View Attempts -->
             <UButton
-              v-if="chapter.completedAt"
+              v-if="isAttempted(chapter)"
               variant="outline"
               size="sm"
               icon="i-lucide-eye"
@@ -159,18 +162,19 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { TASK_CHAPTER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
+
+// Expose enums for template usage
+const ChapterStatus = TASK_CHAPTER_STATUS;
+const TaskStatus = TASK_STATUS;
 
 interface Chapter {
   id: string;
   name: string;
   displayName: string;
   status: string;
-  score?: number;
   bestScore?: number;
-  totalScore?: number;
-  completedAt?: string | null;
   credit: number;
-  creditEarned?: number;
   hasQuiz?: boolean;
   sortOrder?: number;
 }
@@ -179,8 +183,6 @@ interface Task {
   id: string;
   name: string;
   status: string;
-  credit: number;
-  creditPerChapter: number;
   totalCredits: number;
   requiredScore: number;
   questionsPerQuiz: number;
@@ -189,7 +191,7 @@ interface Task {
   assigneeInfo?: {
     firstName: string;
     lastName: string;
-  };
+  } | null;
 }
 
 interface Props {
@@ -222,14 +224,19 @@ const toggleChapters = () => {
 const filteredChapters = computed(() => {
   const chapters = props.task.chapters;
 
-  // When credits filter is active, show only uncompleted chapters
-  if (props.chapterFilter === 'credits') {
-    return chapters.filter((c) => c.completedAt === null);
+  // When OPEN filter is active, show only OPEN chapters
+  if (props.chapterFilter === TASK_CHAPTER_STATUS.OPEN) {
+    return chapters.filter((c) => c.status === TASK_CHAPTER_STATUS.OPEN);
   }
 
-  // When completed filter is active, show only completed chapters
-  if (props.chapterFilter === 'completed') {
-    return chapters.filter((c) => c.completedAt !== null);
+  // When ATTEMPTED filter is active, show only ATTEMPTED chapters
+  if (props.chapterFilter === TASK_CHAPTER_STATUS.ATTEMPTED) {
+    return chapters.filter((c) => c.status === TASK_CHAPTER_STATUS.ATTEMPTED);
+  }
+
+  // When COMPLETED filter is active, show only COMPLETED chapters
+  if (props.chapterFilter === TASK_CHAPTER_STATUS.COMPLETED) {
+    return chapters.filter((c) => c.status === TASK_CHAPTER_STATUS.COMPLETED);
   }
 
   // Otherwise show all chapters
@@ -246,30 +253,38 @@ const displayedChapters = computed(() => {
 
 const hasMoreChapters = computed(() => filteredChapters.value.length > 3);
 
+// Helper: chapter has been attempted (either ATTEMPTED or COMPLETED)
+const isAttempted = (chapter: Chapter) => {
+  return chapter.status === TASK_CHAPTER_STATUS.ATTEMPTED ||
+    chapter.status === TASK_CHAPTER_STATUS.COMPLETED;
+};
+
 // Utility functions
 const getStatusText = (status: string) => {
   const statusMap: Record<string, string> = {
-    OPEN: 'Open',
-    COMPLETED: 'Completed',
-    EXPIRED: 'Expired',
-    CLOSED: 'Closed',
-    GENERATING: 'Generating'
+    [TASK_CHAPTER_STATUS.OPEN]: 'Open',
+    [TASK_CHAPTER_STATUS.ATTEMPTED]: 'Attempted',
+    [TASK_CHAPTER_STATUS.COMPLETED]: 'Completed',
+    [TASK_CHAPTER_STATUS.EXPIRED]: 'Expired',
+    [TASK_STATUS.CLOSED]: 'Closed',
+    [TASK_CHAPTER_STATUS.GENERATING]: 'Generating'
   };
   return statusMap[status] || status;
 };
 
 const getStatusColor = (status: string) => {
   const colorMap: Record<string, string> = {
-    OPEN: 'primary',
-    COMPLETED: 'green',
-    EXPIRED: 'red',
-    CLOSED: 'gray',
-    GENERATING: 'blue'
+    [TASK_CHAPTER_STATUS.OPEN]: 'primary',
+    [TASK_CHAPTER_STATUS.ATTEMPTED]: 'amber',
+    [TASK_CHAPTER_STATUS.COMPLETED]: 'green',
+    [TASK_CHAPTER_STATUS.EXPIRED]: 'red',
+    [TASK_STATUS.CLOSED]: 'gray',
+    [TASK_CHAPTER_STATUS.GENERATING]: 'blue'
   };
   return colorMap[status] || 'gray';
 };
 
 const getStatusVariant = (status: string) => {
-  return status === 'OPEN' ? 'outline' : 'solid';
+  return status === TASK_CHAPTER_STATUS.OPEN ? 'outline' : 'solid';
 };
 </script>

@@ -219,13 +219,15 @@ export default defineEventHandler(async (event) => {
       creditReward,
     });
 
-    // Update task-chapter with best score
+    // Update task-chapter with best score and status
     await updateChapterScore(
       supabase,
       userTasksChapterId,
       bestScore,
       bestTotalScore,
-      nextAttemptNumber === 1
+      nextAttemptNumber === 1,
+      requiredScore,
+      chapterData.status
     );
 
     // Disburse credits if threshold is met using credit service

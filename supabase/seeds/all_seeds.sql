@@ -41,6 +41,14 @@ INSERT INTO codes (code, name, description, category, sort_order, is_active, cre
 ('CLOSED', 'Closed', 'Task has been manually closed/disabled', 'TASK_STATUS', 20, true, NOW(), NOW()),
 ('EXPIRED', 'Expired', 'Task has reached its end date or been automatically expired', 'TASK_STATUS', 30, true, NOW(), NOW());
 
+-- Task Chapter Status Constants (for user_tasks_chapters - per-chapter progress)
+INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
+('OPEN', 'Open', 'Chapter quiz not yet started', 'TASK_CHAPTER_STATUS', 10, true, NOW(), NOW()),
+('GENERATING', 'Generating', 'Quiz is being generated', 'TASK_CHAPTER_STATUS', 20, true, NOW(), NOW()),
+('ATTEMPTED', 'Attempted', 'Quiz submitted but score below required threshold', 'TASK_CHAPTER_STATUS', 30, true, NOW(), NOW()),
+('COMPLETED', 'Completed', 'Quiz completed with score at or above required threshold', 'TASK_CHAPTER_STATUS', 40, true, NOW(), NOW()),
+('EXPIRED', 'Expired', 'Parent task has expired', 'TASK_CHAPTER_STATUS', 50, true, NOW(), NOW());
+
 -- Order Fulfillment Constants
 INSERT INTO codes (code, name, description, category, sort_order, is_active, created_at, updated_at) VALUES
 ('PENDING_FULFILLMENT', 'Pending Fulfillment', 'Order is awaiting fulfillment', 'ORDER_FULFILLMENT', 10, true, NOW(), NOW()),

@@ -31,8 +31,8 @@
       v-model="status"
       :options="[
         { label: 'All Statuses', value: 'all' },
-        { label: 'Open', value: 'OPEN' },
-        { label: 'Closed', value: 'CLOSED' }
+        { label: 'Open', value: TASK_STATUS.OPEN },
+        { label: 'Closed', value: TASK_STATUS.CLOSED }
       ]"
       placeholder="Filter by status"
       class="min-w-[200px]"
@@ -42,8 +42,9 @@
       v-model="chapterFilter"
       :options="[
         { label: 'All Chapters', value: 'all' },
-        { label: 'Credits Available', value: 'credits' },
-        { label: 'Completed', value: 'completed' }
+        { label: 'Open', value: TASK_CHAPTER_STATUS.OPEN },
+        { label: 'Attempted', value: TASK_CHAPTER_STATUS.ATTEMPTED },
+        { label: 'Completed', value: TASK_CHAPTER_STATUS.COMPLETED }
       ]"
       placeholder="Filter chapters"
       class="min-w-[200px]"
@@ -75,6 +76,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { getDisplayFullName } from '~/utils/avatarUtils';
+import { TASK_STATUS, TASK_CHAPTER_STATUS } from '~~/shared/constants/codes';
 
 interface Child {
   id: string;
