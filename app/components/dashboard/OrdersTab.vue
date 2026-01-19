@@ -180,10 +180,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import Button from '../common/Button.vue';
 import DashboardSkeleton from '../common/DashboardSkeleton.vue';
 import { ORDER_STATUS } from '~~/shared/constants';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
 
 const { formatDate } = useDateFormat();
 
@@ -343,6 +344,13 @@ const getTrackingText = (status: string) => {
 
 onMounted(() => {
   // Load orders from database APIs
+  loadOrders();
+});
+
+// Watch for realtime order updates
+const { ordersVersion } = useGlobalUserRealtimeSync();
+watch(ordersVersion, () => {
+  console.log('[OrdersTab] Orders changed via realtime, refreshing...');
   loadOrders();
 });
 </script>

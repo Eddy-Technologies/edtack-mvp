@@ -147,6 +147,7 @@ import TaskInfoCard from './tasks/TaskInfoCard.vue';
 import CreateEditTaskModal from './tasks/CreateEditTaskModal.vue';
 import QuizAttemptModal from './quiz/QuizAttemptModal.vue';
 import { useMeStore } from '~/stores/me';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
 import { TASK_CHAPTER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
 
 // Types
@@ -578,5 +579,12 @@ onMounted(async () => {
 // Watch filters to reset page
 watch([selectedChild, selectedSubject, selectedStatus, chapterFilter, sortBy], () => {
   currentPage.value = 1;
+});
+
+// Watch for realtime task updates
+const { tasksVersion } = useGlobalUserRealtimeSync();
+watch(tasksVersion, () => {
+  console.log('[TasksTab] Tasks changed via realtime, refreshing...');
+  fetchTasks();
 });
 </script>

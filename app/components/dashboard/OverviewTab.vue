@@ -324,10 +324,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import TokenUsageCard from '~/components/tokens/TokenUsageCard.vue';
 import { useMeStore } from '~/stores/me';
 import Button from '~/components/common/Button.vue';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
 import { ORDER_FULFILLMENT, ORDER_STATUS, TASK_STATUS } from '~~/shared/constants/codes';
 
 const { formatDate } = useDateFormat();
@@ -350,8 +351,8 @@ const pendingTasks = ref<any[]>([]);
 const myPendingOrders = ref<any[]>([]);
 const myPendingTasks = ref<any[]>([]);
 
-// Load family data for parents or personal data for students
-onMounted(async () => {
+// Load overview data function
+const loadOverviewData = async () => {
   try {
     if (isParent.value) {
       // Load all parent data in parallel
@@ -397,6 +398,18 @@ onMounted(async () => {
   } catch (error) {
     console.error('Failed to load overview data:', error);
   }
+};
+
+// Load family data for parents or personal data for students
+onMounted(() => {
+  loadOverviewData();
+});
+
+// Watch for realtime updates
+const { tasksVersion, ordersVersion, orderRequestsVersion, creditsVersion } = useGlobalUserRealtimeSync();
+watch([tasksVersion, ordersVersion, orderRequestsVersion, creditsVersion], () => {
+  console.log('[OverviewTab] Data changed via realtime, refreshing...');
+  loadOverviewData();
 });
 
 const stats = computed(() => {

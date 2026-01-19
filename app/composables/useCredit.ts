@@ -1,4 +1,5 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
 
 // Unified credit state - updated for internal credit system
 const creditData = ref<{
@@ -242,6 +243,13 @@ export const useCredit = () => {
   };
 
   // No automatic initialization - only fetch when explicitly called
+
+  // Watch for realtime credit updates
+  const { creditsVersion } = useGlobalUserRealtimeSync();
+  watch(creditsVersion, () => {
+    console.log('[useCredit] Credits changed via realtime, refreshing...');
+    fetchCredits(true);
+  });
 
   return {
     // State

@@ -242,13 +242,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import FamilyOrderRequestsInstructions from './FamilyOrderRequestsInstructions.vue';
 import Button from '~/components/common/Button.vue';
 import Pagination from '~/components/common/Pagination.vue';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 import { useMeStore } from '~/stores/me';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
 import { ORDER_STATUS } from '~~/shared/constants/codes';
 
 const { formatDate } = useDateFormat();
@@ -446,6 +447,13 @@ const onStatusChange = () => {
 };
 
 onMounted(() => {
+  loadPendingOrders(1);
+});
+
+// Watch for realtime order request updates
+const { orderRequestsVersion } = useGlobalUserRealtimeSync();
+watch(orderRequestsVersion, () => {
+  console.log('[FamilyOrderRequestsTab] Order requests changed via realtime, refreshing...');
   loadPendingOrders(1);
 });
 </script>

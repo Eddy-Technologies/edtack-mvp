@@ -398,6 +398,8 @@ import { useMeStore } from '~/stores/me';
 import { useFeatureFlags } from '~/composables/useFeatureFlags';
 import { useResponsive } from '~/composables/useResponsive';
 import { useTour } from '~/composables/useTour';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
+import { TASK_CHAPTER_STATUS } from '~~/shared/constants';
 
 interface NavigationItem {
   name: string;
@@ -520,7 +522,7 @@ const updateAvailableTasksCount = async () => {
     for (const task of tasks) {
       if (task.chapters) {
         incompleteChaptersCount += task.chapters.filter(
-          (chapter: any) => chapter.completedAt === null
+          (chapter: any) => chapter.status === TASK_CHAPTER_STATUS.OPEN
         ).length;
       }
     }
@@ -573,7 +575,33 @@ const isLoggingOut = ref(false);
 const { subscriptionPlans } = useFeatureFlags();
 
 // Get credit balance for sidebar display
-const { formattedBalance, fetchCredits } = useCredit();
+const { formattedBalance, fetchCredits, children } = useCredit();
+
+// Get realtime sync for badge updates
+const {
+  subscribe: subscribeToRealtime,
+  tasksVersion,
+  ordersVersion,
+  orderRequestsVersion,
+  wishlistVersion,
+} = useGlobalUserRealtimeSync();
+
+// Watch realtime version counters for badge updates
+watch(tasksVersion, () => {
+  updateAvailableTasksCount();
+});
+
+watch(ordersVersion, () => {
+  updateCurrentOrdersCount();
+});
+
+watch(orderRequestsVersion, () => {
+  updatePendingOrderCount();
+});
+
+watch(wishlistVersion, () => {
+  updateWishlistCount();
+});
 
 // Get user account type
 const userStore = useMeStore();
@@ -767,7 +795,7 @@ const handleOpenDrawerForTour = () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   // Auto-expand sections with active children
   for (const item of navigationItems.value) {
     if (item.children) {
@@ -790,8 +818,14 @@ onMounted(() => {
     window.addEventListener('openDashboardDrawer', handleOpenDrawerForTour);
   }
 
-  // Load credit balance for sidebar
-  fetchCredits();
+  // Load credit balance for sidebar (await to get children data for realtime)
+  await fetchCredits();
+
+  // Initialize realtime subscriptions for badge updates
+  if (userStore.user_info_id) {
+    const childIds = children.value.map((c) => c.userInfoId);
+    subscribeToRealtime(userStore.user_info_id, userStore.isParent, childIds);
+  }
 
   // Load pending order request count for parents
   updatePendingOrderCount();

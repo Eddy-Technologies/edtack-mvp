@@ -152,10 +152,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../common/Button.vue';
 import DashboardSkeleton from '../common/DashboardSkeleton.vue';
+import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
 
 const router = useRouter();
 const toast = useToast();
@@ -337,6 +338,13 @@ const nextPage = () => {
 
 // Load wishlist on mount
 onMounted(() => {
+  loadWishlist();
+});
+
+// Watch for realtime wishlist updates
+const { wishlistVersion } = useGlobalUserRealtimeSync();
+watch(wishlistVersion, () => {
+  console.log('[WishlistTab] Wishlist changed via realtime, refreshing...');
   loadWishlist();
 });
 </script>
