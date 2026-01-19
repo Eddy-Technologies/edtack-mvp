@@ -3,8 +3,6 @@ import type { RealtimeChannel } from '@supabase/supabase-js';
 import { useSupabaseClient } from '#imports';
 import type { Database } from '~~/types/supabase';
 
-type Order = Database['public']['Tables']['orders']['Row'];
-
 // Module-level singleton state - version counters for reactive updates
 const creditsVersion = ref(0);
 const tasksVersion = ref(0);
