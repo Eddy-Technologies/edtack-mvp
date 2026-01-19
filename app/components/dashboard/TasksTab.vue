@@ -169,9 +169,11 @@ interface Task {
   name: string;
   status: string;
   totalCredits: number;
+  creditPerChapter: number;
   requiredScore: number;
   questionsPerQuiz: number;
   assigneeUserInfoId: string;
+  subjectName: string;
   chapters: Chapter[];
   assigneeInfo?: {
     firstName: string;

@@ -143,10 +143,12 @@ export default defineEventHandler(async (event) => {
         name: task.name,
         status: task.status,
         totalCredits,
+        creditPerChapter: task.credit,
         requiredScore: task.required_score,
         questionsPerQuiz: task.questions_per_quiz,
         assigneeUserInfoId: task.assignee_user_info_id,
         createdAt: task.created_at,
+        subjectName: chapters[0]?.subjectName || '',
         chapters,
         assigneeInfo: task.assignee ?
             {
