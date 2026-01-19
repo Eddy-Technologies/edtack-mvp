@@ -1,5 +1,6 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { getUserInfo } from '~~/server/utils/auth';
+import { validateCreditBalance } from '~~/server/services/creditService';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -51,17 +52,12 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Check sender's balance
-    const { data: senderCredits, error: senderCreditsError } = await supabase
-      .from('user_credits')
-      .select('credit')
-      .eq('user_info_id', senderInfo.id)
-      .single();
-
-    if (senderCreditsError || !senderCredits || senderCredits.credit < amountInCents) {
+    // Check sender's balance (accounting for reserved credits)
+    const balance = await validateCreditBalance(supabase, senderInfo.id, amountInCents);
+    if (!balance.valid) {
       throw createError({
         statusCode: 400,
-        statusMessage: `Insufficient credits. You have ${(senderCredits?.credit || 0) / 100} SGD available.`
+        statusMessage: `Insufficient credits. You have ${balance.available / 100} credits available.`
       });
     }
 

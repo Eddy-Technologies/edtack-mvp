@@ -6,6 +6,8 @@ const creditData = ref<{
   user: {
     email: string;
     balance: number;
+    reservedCredits: number;
+    totalCredits: number;
     currency: string;
     updatedAt: string;
   };
@@ -15,6 +17,8 @@ const creditData = ref<{
     firstName: string;
     lastName: string;
     balance: number;
+    reservedCredits: number;
+    totalCredits: number;
     currency: string;
     updatedAt: string;
   }>;
@@ -42,6 +46,8 @@ const CACHE_DURATION = 5 * 60 * 1000;
 export const useCredit = () => {
   // Computed values
   const balance = computed(() => creditData.value?.user?.balance || 0);
+  const reservedCredits = computed(() => creditData.value?.user?.reservedCredits || 0);
+  const totalCredits = computed(() => creditData.value?.user?.totalCredits || 0);
   const formattedBalance = computed(() => {
     return `${balance.value} credits`;
   });
@@ -260,6 +266,8 @@ export const useCredit = () => {
 
     // Individual balance
     balance: readonly(balance),
+    reservedCredits: readonly(reservedCredits),
+    totalCredits: readonly(totalCredits),
     formattedBalance: readonly(formattedBalance),
     currency: readonly(currency),
 

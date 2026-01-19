@@ -3,6 +3,7 @@ import { TASK_STATUS } from '~~/shared/constants';
 import { getUserInfo } from '~~/server/utils/auth';
 import { codeService } from '~~/server/services/codeService';
 import { CODE_CATEGORIES } from '~/stores/codes';
+import { validateCreditBalance, reserveTaskCredits } from '~~/server/services/creditService';
 
 export interface CreateTaskReq {
   assigneeUserInfoId: string;
@@ -77,6 +78,20 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Calculate total credits to reserve
+    const totalCredits = creditsPerChapter * chapters.length;
+
+    // Validate parent has sufficient available credits (if credits > 0)
+    if (totalCredits > 0) {
+      const balance = await validateCreditBalance(supabase, creatorInfo.id, totalCredits);
+      if (!balance.valid) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Insufficient credits. Available: ${balance.available / 100} credits, Required: ${totalCredits / 100} credits`
+        });
+      }
+    }
+
     // Validate quiz fields
     if (creditsPerChapter < 0) {
       throw createError({
@@ -132,6 +147,22 @@ export default defineEventHandler(async (event) => {
         statusCode: 500,
         statusMessage: 'Failed to create task'
       });
+    }
+
+    // Reserve credits for the task (if credits > 0)
+    if (totalCredits > 0) {
+      try {
+        await reserveTaskCredits(supabase, creatorInfo.id, task.id, totalCredits);
+        console.log(`Reserved ${totalCredits} credits for task ${task.id}`);
+      } catch (reserveError) {
+        // Rollback: delete the task if credit reservation fails
+        console.error('Failed to reserve credits, rolling back task:', reserveError);
+        await supabase.from('user_tasks').delete().eq('id', task.id);
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Failed to reserve credits for task'
+        });
+      }
     }
 
     // Create chapter associations for this task

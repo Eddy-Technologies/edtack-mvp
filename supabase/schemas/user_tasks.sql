@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   subject VARCHAR(100) NOT NULL REFERENCES subjects(name) ON DELETE CASCADE,
   lesson_generation_type TEXT NOT NULL,
   credit INTEGER NOT NULL DEFAULT 0, -- Credit reward in cents
+  credits_disbursed INTEGER DEFAULT 0, -- Credits already disbursed to student
   questions_per_quiz INTEGER DEFAULT 10, -- Number of questions per quiz (for quiz tasks)
   required_score INTEGER DEFAULT 70, -- Required score percentage (0-100) to earn credit
   due_date TIMESTAMPTZ,

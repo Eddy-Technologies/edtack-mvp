@@ -57,20 +57,48 @@
           </span>
         </div>
       </div>
+
+      <!-- Reserved Credits Breakdown -->
+      <div v-if="hasReservedCredits" class="mt-6 pt-4 border-t border-white/20">
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center justify-between text-white/80">
+            <div class="flex items-center gap-2">
+              <UIcon :name="isParent ? 'i-lucide-clipboard-list' : 'i-lucide-shopping-bag'" size="16" />
+              <span>{{ isParent ? 'Reserved for open tasks' : 'Reserved for pending orders' }}</span>
+            </div>
+            <span class="font-medium">{{ reservedCredits.toLocaleString() }}</span>
+          </div>
+          <div class="flex items-center justify-between text-white/90 pt-2 border-t border-white/10">
+            <span class="font-medium">Total balance</span>
+            <span class="font-bold">{{ totalCredits.toLocaleString() }} credits</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
+
+// Use me store for user role
+const meStore = useMeStore();
+const { isParent } = storeToRefs(meStore);
 
 // Use unified credit management - consume shared state only
 const {
   balance,
+  reservedCredits,
+  totalCredits,
   isLoading,
   error,
   refreshCredits
 } = useCredit();
+
+// Computed to check if there are any reserved credits to show
+const hasReservedCredits = computed(() => {
+  return reservedCredits.value > 0;
+});
 
 // Alias for template consistency
 const loadBalance = refreshCredits;

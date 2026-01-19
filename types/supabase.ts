@@ -1025,24 +1025,30 @@ export type Database = {
         Row: {
           content: string;
           created_at: string | null;
+          file_attachments: Json | null;
           id: string;
           sender: string | null;
+          status: string | null;
           thread_id: string;
           type: string;
         };
         Insert: {
           content: string;
           created_at?: string | null;
+          file_attachments?: Json | null;
           id?: string;
           sender?: string | null;
+          status?: string | null;
           thread_id: string;
           type: string;
         };
         Update: {
           content?: string;
           created_at?: string | null;
+          file_attachments?: Json | null;
           id?: string;
           sender?: string | null;
+          status?: string | null;
           thread_id?: string;
           type?: string;
         };
@@ -1208,18 +1214,21 @@ export type Database = {
         Row: {
           credit: number;
           reserved_credit: number | null;
+          task_reserved_credit: number | null;
           updated_at: string | null;
           user_info_id: string;
         };
         Insert: {
           credit?: number;
           reserved_credit?: number | null;
+          task_reserved_credit?: number | null;
           updated_at?: string | null;
           user_info_id: string;
         };
         Update: {
           credit?: number;
           reserved_credit?: number | null;
+          task_reserved_credit?: number | null;
           updated_at?: string | null;
           user_info_id?: string;
         };
@@ -1533,6 +1542,7 @@ export type Database = {
           created_at: string | null;
           creator_user_info_id: string;
           credit: number;
+          credits_disbursed: number | null;
           due_date: string | null;
           id: string;
           lesson_generation_type: string;
@@ -1541,6 +1551,7 @@ export type Database = {
           required_score: number | null;
           status: string;
           subject: string;
+          total_reserved_credit: number | null;
           updated_at: string | null;
         };
         Insert: {
@@ -1548,6 +1559,7 @@ export type Database = {
           created_at?: string | null;
           creator_user_info_id: string;
           credit?: number;
+          credits_disbursed?: number | null;
           due_date?: string | null;
           id?: string;
           lesson_generation_type: string;
@@ -1556,6 +1568,7 @@ export type Database = {
           required_score?: number | null;
           status: string;
           subject: string;
+          total_reserved_credit?: number | null;
           updated_at?: string | null;
         };
         Update: {
@@ -1563,6 +1576,7 @@ export type Database = {
           created_at?: string | null;
           creator_user_info_id?: string;
           credit?: number;
+          credits_disbursed?: number | null;
           due_date?: string | null;
           id?: string;
           lesson_generation_type?: string;
@@ -1571,6 +1585,7 @@ export type Database = {
           required_score?: number | null;
           status?: string;
           subject?: string;
+          total_reserved_credit?: number | null;
           updated_at?: string | null;
         };
         Relationships: [
@@ -1602,6 +1617,7 @@ export type Database = {
           chapter_name: string;
           completed_at: string | null;
           created_at: string | null;
+          generation_started_at: string | null;
           id: string;
           score: number | null;
           status: string;
@@ -1613,6 +1629,7 @@ export type Database = {
           chapter_name: string;
           completed_at?: string | null;
           created_at?: string | null;
+          generation_started_at?: string | null;
           id?: string;
           score?: number | null;
           status?: string;
@@ -1624,6 +1641,7 @@ export type Database = {
           chapter_name?: string;
           completed_at?: string | null;
           created_at?: string | null;
+          generation_started_at?: string | null;
           id?: string;
           score?: number | null;
           status?: string;
@@ -1731,6 +1749,7 @@ export type Database = {
       [_ in never]: never
     };
     Functions: {
+      reset_stuck_generating_chapters: { Args: never; Returns: number };
       rollup_token_usage: {
         Args: never;
         Returns: {

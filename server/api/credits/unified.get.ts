@@ -129,10 +129,11 @@ export default defineEventHandler(async (event) => {
             const creditsMap = new Map(childCredits.map((c) => [c.user_info_id, c]));
             childrenData = childrenData.map((child) => {
               const credits = creditsMap.get(child.userInfoId);
+              const reserved = credits?.reserved_credit || 0;
               return {
                 ...child,
-                balance: (credits?.credit || 0) - (credits?.reserved_credit || 0),
-                reservedCredits: credits?.reserved_credit || 0,
+                balance: (credits?.credit || 0) - reserved,
+                reservedCredits: reserved,
                 totalCredits: credits?.credit || 0,
                 updatedAt: credits?.updated_at
               };
@@ -180,12 +181,12 @@ export default defineEventHandler(async (event) => {
     }
 
     // Build response
-    const userReserved = userCredits.reserved_credit || 0;
+    const reserved = userCredits.reserved_credit || 0;
     const response = {
       user: {
         email: user.email,
-        balance: userCredits.credit - userReserved,
-        reservedCredits: userReserved,
+        balance: userCredits.credit - reserved,
+        reservedCredits: reserved,
         totalCredits: userCredits.credit,
         currency: 'SGD',
         updatedAt: userCredits.updated_at

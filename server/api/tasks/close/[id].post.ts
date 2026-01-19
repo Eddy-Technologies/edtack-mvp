@@ -1,6 +1,7 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
 import { TASK_STATUS } from '~~/shared/constants';
 import { getUserInfo } from '~~/server/utils/auth';
+import { releaseTaskCredits } from '~~/server/services/creditService';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -40,6 +41,20 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    // Release unreleased credits back to parent
+    let creditsReleased = 0;
+    try {
+      const releaseResult = await releaseTaskCredits(supabase, taskId, userInfo.id);
+      creditsReleased = releaseResult.released;
+      if (creditsReleased > 0) {
+        console.log(`Released ${creditsReleased} credits back to parent for task ${taskId}`);
+      }
+    } catch (releaseError) {
+      console.error('Failed to release task credits:', releaseError);
+      // Continue with closing the task even if credit release fails
+      // The credits will remain reserved but task will be closed
+    }
+
     // Close the task
     const { data: updatedTask, error: updateError } = await supabase
       .from('user_tasks')
@@ -62,7 +77,10 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      message: 'Task closed successfully. No new instances will be created.',
+      message: creditsReleased > 0 ?
+        `Task closed successfully. ${creditsReleased / 100} credits returned.` :
+        'Task closed successfully.',
+      creditsReleased,
       task: {
         id: updatedTask.id,
         name: updatedTask.name,
