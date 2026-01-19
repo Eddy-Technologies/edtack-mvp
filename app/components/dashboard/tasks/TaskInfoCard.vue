@@ -1,120 +1,3 @@
-<script setup lang="ts">
-import { ref, computed } from 'vue';
-
-interface Chapter {
-  id: string;
-  name: string;
-  displayName: string;
-  status: string;
-  score?: number;
-  bestScore?: number;
-  totalScore?: number;
-  completedAt?: string | null;
-  credit: number;
-  creditEarned?: number;
-  hasQuiz?: boolean;
-  sortOrder?: number;
-}
-
-interface Task {
-  id: string;
-  name: string;
-  status: string;
-  credit: number;
-  creditPerChapter: number;
-  totalCredits: number;
-  requiredScore: number;
-  questionsPerQuiz: number;
-  assigneeUserInfoId: string;
-  chapters: Chapter[];
-  assigneeInfo?: {
-    firstName: string;
-    lastName: string;
-  };
-}
-
-interface Props {
-  task: Task;
-  isParent: boolean;
-  showAssigneeInfo?: boolean;
-  chapterFilter?: string;
-  isChapterGenerating?: (chapterId: string) => boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  showAssigneeInfo: true,
-  chapterFilter: 'all',
-  isChapterGenerating: () => () => false
-});
-
-const emit = defineEmits<{
-  (e: 'close-task' | 'edit-task'): void;
-  (e: 'view-attempts', chapterId: string, assigneeId: string): void;
-  (e: 'start-quiz', task: Task, chapter: Chapter): void;
-}>();
-
-const showAllChapters = ref(false);
-
-const toggleChapters = () => {
-  showAllChapters.value = !showAllChapters.value;
-};
-
-// Filter chapters based on active chapter filter
-const filteredChapters = computed(() => {
-  const chapters = props.task.chapters;
-
-  // When credits filter is active, show only uncompleted chapters
-  if (props.chapterFilter === 'credits') {
-    return chapters.filter((c) => c.completedAt === null);
-  }
-
-  // When completed filter is active, show only completed chapters
-  if (props.chapterFilter === 'completed') {
-    return chapters.filter((c) => c.completedAt !== null);
-  }
-
-  // Otherwise show all chapters
-  return chapters;
-});
-
-const displayedChapters = computed(() => {
-  const chapters = filteredChapters.value;
-  if (showAllChapters.value || chapters.length <= 3) {
-    return chapters;
-  }
-  return chapters.slice(0, 3);
-});
-
-const hasMoreChapters = computed(() => filteredChapters.value.length > 3);
-
-// Utility functions
-const getStatusText = (status: string) => {
-  const statusMap: Record<string, string> = {
-    OPEN: 'Open',
-    COMPLETED: 'Completed',
-    EXPIRED: 'Expired',
-    CLOSED: 'Closed',
-    GENERATING: 'Generating'
-  };
-  return statusMap[status] || status;
-};
-
-const getStatusColor = (status: string) => {
-  const colorMap: Record<string, string> = {
-    OPEN: 'primary',
-    COMPLETED: 'green',
-    EXPIRED: 'red',
-    CLOSED: 'gray',
-    GENERATING: 'blue'
-  };
-  return colorMap[status] || 'gray';
-};
-
-const getStatusVariant = (status: string) => {
-  return status === 'OPEN' ? 'outline' : 'solid';
-};
-</script>
-
 <template>
   <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
     <!-- Header Section -->
@@ -273,3 +156,120 @@ const getStatusVariant = (status: string) => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+
+interface Chapter {
+  id: string;
+  name: string;
+  displayName: string;
+  status: string;
+  score?: number;
+  bestScore?: number;
+  totalScore?: number;
+  completedAt?: string | null;
+  credit: number;
+  creditEarned?: number;
+  hasQuiz?: boolean;
+  sortOrder?: number;
+}
+
+interface Task {
+  id: string;
+  name: string;
+  status: string;
+  credit: number;
+  creditPerChapter: number;
+  totalCredits: number;
+  requiredScore: number;
+  questionsPerQuiz: number;
+  assigneeUserInfoId: string;
+  chapters: Chapter[];
+  assigneeInfo?: {
+    firstName: string;
+    lastName: string;
+  };
+}
+
+interface Props {
+  task: Task;
+  isParent: boolean;
+  showAssigneeInfo?: boolean;
+  chapterFilter?: string;
+  isChapterGenerating?: (chapterId: string) => boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showAssigneeInfo: true,
+  chapterFilter: 'all',
+  isChapterGenerating: () => () => false
+});
+
+const emit = defineEmits<{
+  (e: 'close-task' | 'edit-task'): void;
+  (e: 'view-attempts', chapterId: string, assigneeId: string): void;
+  (e: 'start-quiz', task: Task, chapter: Chapter): void;
+}>();
+
+const showAllChapters = ref(false);
+
+const toggleChapters = () => {
+  showAllChapters.value = !showAllChapters.value;
+};
+
+// Filter chapters based on active chapter filter
+const filteredChapters = computed(() => {
+  const chapters = props.task.chapters;
+
+  // When credits filter is active, show only uncompleted chapters
+  if (props.chapterFilter === 'credits') {
+    return chapters.filter((c) => c.completedAt === null);
+  }
+
+  // When completed filter is active, show only completed chapters
+  if (props.chapterFilter === 'completed') {
+    return chapters.filter((c) => c.completedAt !== null);
+  }
+
+  // Otherwise show all chapters
+  return chapters;
+});
+
+const displayedChapters = computed(() => {
+  const chapters = filteredChapters.value;
+  if (showAllChapters.value || chapters.length <= 3) {
+    return chapters;
+  }
+  return chapters.slice(0, 3);
+});
+
+const hasMoreChapters = computed(() => filteredChapters.value.length > 3);
+
+// Utility functions
+const getStatusText = (status: string) => {
+  const statusMap: Record<string, string> = {
+    OPEN: 'Open',
+    COMPLETED: 'Completed',
+    EXPIRED: 'Expired',
+    CLOSED: 'Closed',
+    GENERATING: 'Generating'
+  };
+  return statusMap[status] || status;
+};
+
+const getStatusColor = (status: string) => {
+  const colorMap: Record<string, string> = {
+    OPEN: 'primary',
+    COMPLETED: 'green',
+    EXPIRED: 'red',
+    CLOSED: 'gray',
+    GENERATING: 'blue'
+  };
+  return colorMap[status] || 'gray';
+};
+
+const getStatusVariant = (status: string) => {
+  return status === 'OPEN' ? 'outline' : 'solid';
+};
+</script>

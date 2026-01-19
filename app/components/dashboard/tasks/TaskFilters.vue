@@ -1,49 +1,3 @@
-<script setup lang="ts">
-import { computed } from 'vue';
-import { getDisplayFullName } from '~/utils/avatarUtils';
-
-interface Child {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
-interface Props {
-  showChildFilter: boolean;
-  children: Child[];
-  subjects: Array<{ code: string; displayName: string }>;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits(['clear']);
-
-const child = defineModel('child', { type: String, default: 'all' });
-const subject = defineModel('subject', { type: String, default: 'all' });
-const status = defineModel('status', { type: String, default: 'all' });
-const chapterFilter = defineModel('chapterFilter', { type: String, default: 'all' });
-const sort = defineModel('sort', { type: String, default: 'newest' });
-
-const hasActiveFilters = computed(() => {
-  const hasChild = props.showChildFilter && child.value !== 'all';
-  const hasSubject = subject.value !== 'all';
-  const hasStatus = status.value !== 'all';
-  const hasChapterFilter = chapterFilter.value !== 'all';
-  const hasSort = sort.value !== 'newest';
-
-  return hasChild || hasSubject || hasStatus || hasChapterFilter || hasSort;
-});
-
-const handleClear = () => {
-  child.value = 'all';
-  subject.value = 'all';
-  status.value = 'all';
-  chapterFilter.value = 'all';
-  sort.value = 'newest';
-  emit('clear');
-};
-</script>
-
 <template>
   <div class="flex flex-wrap items-center gap-3">
     <!-- Child Filter (Parent Only) -->
@@ -117,3 +71,49 @@ const handleClear = () => {
     </UButton>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { getDisplayFullName } from '~/utils/avatarUtils';
+
+interface Child {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+interface Props {
+  showChildFilter: boolean;
+  children: Child[];
+  subjects: Array<{ code: string; displayName: string }>;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(['clear']);
+
+const child = defineModel('child', { type: String, default: 'all' });
+const subject = defineModel('subject', { type: String, default: 'all' });
+const status = defineModel('status', { type: String, default: 'all' });
+const chapterFilter = defineModel('chapterFilter', { type: String, default: 'all' });
+const sort = defineModel('sort', { type: String, default: 'all' });
+
+const hasActiveFilters = computed(() => {
+  const hasChild = props.showChildFilter && child.value !== 'all';
+  const hasSubject = subject.value !== 'all';
+  const hasStatus = status.value !== 'all';
+  const hasChapterFilter = chapterFilter.value !== 'all';
+  const hasSort = sort.value !== 'newest';
+
+  return hasChild || hasSubject || hasStatus || hasChapterFilter || hasSort;
+});
+
+const handleClear = () => {
+  child.value = 'all';
+  subject.value = 'all';
+  status.value = 'all';
+  chapterFilter.value = 'all';
+  sort.value = 'newest';
+  emit('clear');
+};
+</script>

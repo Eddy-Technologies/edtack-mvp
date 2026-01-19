@@ -1,3 +1,144 @@
+<template>
+  <div class="space-y-6">
+    <!-- Instructions -->
+    <TaskInstructions :is-parent="isParent" />
+
+    <!-- Action Bar -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <!-- Left side: Title for students -->
+      <div v-if="!isParent" class="text-lg font-semibold text-gray-900">
+        My Tasks
+      </div>
+
+      <!-- Spacer: pushes content to edges -->
+      <div class="flex-1" />
+
+      <!-- Right side: Button for parents -->
+      <UButton
+        v-if="isParent"
+        color="primary"
+        size="lg"
+        icon="i-lucide-plus"
+        @click="handleCreateTask"
+      >
+        Create Task
+      </UButton>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4">
+      <TaskFilters
+        v-model:child="selectedChild"
+        v-model:subject="selectedSubject"
+        v-model:status="selectedStatus"
+        v-model:chapter-filter="chapterFilter"
+        v-model:sort="sortBy"
+        :show-child-filter="isParent"
+        :children="children"
+        :subjects="subjects"
+        @clear="handleClearFilters"
+      />
+    </div>
+
+    <!-- Stats -->
+    <div class="flex items-center gap-4 text-sm text-gray-600">
+      <span>Total: {{ filteredTasks.length }} {{ filteredTasks.length === 1 ? 'task' : 'tasks' }}</span>
+      <span v-if="isParent && totalPendingCredits > 0">
+        Pending Credits: {{ totalPendingCredits }}
+      </span>
+    </div>
+
+    <!-- Task List -->
+    <div class="space-y-4">
+      <!-- Loading State -->
+      <div v-if="loading" class="space-y-4">
+        <USkeleton v-for="i in 3" :key="i" class="h-48" />
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="filteredTasks.length === 0" class="text-center py-12">
+        <UIcon name="i-lucide-clipboard-list" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">No tasks found</h3>
+        <p class="text-gray-600">
+          {{ isParent ? 'Create a task to get started' : 'No tasks have been assigned to you yet' }}
+        </p>
+        <UButton
+          v-if="isParent"
+          color="primary"
+          class="mt-4"
+          @click="handleCreateTask"
+        >
+          Create Your First Task
+        </UButton>
+      </div>
+
+      <!-- Task Cards -->
+      <div v-else class="space-y-4">
+        <TaskInfoCard
+          v-for="task in paginatedTasks"
+          :key="task.id"
+          :task="task"
+          :is-parent="isParent"
+          :show-assignee-info="isParent"
+          :chapter-filter="chapterFilter"
+          :is-chapter-generating="(chapterId) => generatingChapters.has(chapterId)"
+          @close-task="handleCloseTask(task)"
+          @edit-task="handleEditTask(task)"
+          @view-attempts="handleViewAttempts"
+          @start-quiz="handleStartQuiz"
+        />
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div v-if="totalPages > 1" class="flex justify-center gap-2">
+      <UButton
+        variant="outline"
+        size="sm"
+        icon="i-lucide-chevron-left"
+        :disabled="currentPage === 1"
+        @click="currentPage--"
+      >
+        Previous
+      </UButton>
+
+      <span class="px-4 py-2 text-sm text-gray-700">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+
+      <UButton
+        variant="outline"
+        size="sm"
+        icon="i-lucide-chevron-right"
+        :disabled="currentPage === totalPages"
+        @click="currentPage++"
+      >
+        Next
+      </UButton>
+    </div>
+
+    <!-- Unified Modal for Create/Edit -->
+    <CreateEditTaskModal
+      :is-open="showTaskModal"
+      :task="editingTask"
+      @close="closeTaskModal"
+      @task-saved="handleTaskSaved"
+    />
+
+    <!-- Quiz Attempt Modal -->
+    <QuizAttemptModal
+      :is-open="showQuizModal"
+      :user-tasks-chapter-id="selectedChapterId"
+      :chapter-display-name="selectedChapterName"
+      :mode="modalMode"
+      :assignee-user-info-id="modalAssigneeId"
+      @close="closeQuizModal"
+      @quiz-submitted="handleQuizSubmitted"
+      @reattempt="handleReattempt"
+    />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed, ref, onMounted, watch, nextTick } from 'vue';
 import TaskInstructions from './tasks/TaskInstructions.vue';
@@ -441,144 +582,3 @@ watch([selectedChild, selectedSubject, selectedStatus, chapterFilter, sortBy], (
   currentPage.value = 1;
 });
 </script>
-
-<template>
-  <div class="space-y-6">
-    <!-- Instructions -->
-    <TaskInstructions :is-parent="isParent" />
-
-    <!-- Action Bar -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <!-- Left side: Title for students -->
-      <div v-if="!isParent" class="text-lg font-semibold text-gray-900">
-        My Tasks
-      </div>
-
-      <!-- Spacer: pushes content to edges -->
-      <div class="flex-1" />
-
-      <!-- Right side: Button for parents -->
-      <UButton
-        v-if="isParent"
-        color="primary"
-        size="lg"
-        icon="i-lucide-plus"
-        @click="handleCreateTask"
-      >
-        Create Task
-      </UButton>
-    </div>
-
-    <!-- Filters -->
-    <div class="bg-white rounded-xl border border-gray-200 p-3 sm:p-4">
-      <TaskFilters
-        v-model:child="selectedChild"
-        v-model:subject="selectedSubject"
-        v-model:status="selectedStatus"
-        v-model:chapter-filter="chapterFilter"
-        v-model:sort="sortBy"
-        :show-child-filter="isParent"
-        :children="children"
-        :subjects="subjects"
-        @clear="handleClearFilters"
-      />
-    </div>
-
-    <!-- Stats -->
-    <div class="flex items-center gap-4 text-sm text-gray-600">
-      <span>Total: {{ filteredTasks.length }} {{ filteredTasks.length === 1 ? 'task' : 'tasks' }}</span>
-      <span v-if="isParent && totalPendingCredits > 0">
-        Pending Credits: {{ totalPendingCredits }}
-      </span>
-    </div>
-
-    <!-- Task List -->
-    <div class="space-y-4">
-      <!-- Loading State -->
-      <div v-if="loading" class="space-y-4">
-        <USkeleton v-for="i in 3" :key="i" class="h-48" />
-      </div>
-
-      <!-- Empty State -->
-      <div v-else-if="filteredTasks.length === 0" class="text-center py-12">
-        <UIcon name="i-lucide-clipboard-list" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">No tasks found</h3>
-        <p class="text-gray-600">
-          {{ isParent ? 'Create a task to get started' : 'No tasks have been assigned to you yet' }}
-        </p>
-        <UButton
-          v-if="isParent"
-          color="primary"
-          class="mt-4"
-          @click="handleCreateTask"
-        >
-          Create Your First Task
-        </UButton>
-      </div>
-
-      <!-- Task Cards -->
-      <div v-else class="space-y-4">
-        <TaskInfoCard
-          v-for="task in paginatedTasks"
-          :key="task.id"
-          :task="task"
-          :is-parent="isParent"
-          :show-assignee-info="isParent"
-          :chapter-filter="chapterFilter"
-          :is-chapter-generating="(chapterId) => generatingChapters.has(chapterId)"
-          @close-task="handleCloseTask(task)"
-          @edit-task="handleEditTask(task)"
-          @view-attempts="handleViewAttempts"
-          @start-quiz="handleStartQuiz"
-        />
-      </div>
-    </div>
-
-    <!-- Pagination -->
-    <div v-if="totalPages > 1" class="flex justify-center gap-2">
-      <UButton
-        variant="outline"
-        size="sm"
-        icon="i-lucide-chevron-left"
-        :disabled="currentPage === 1"
-        @click="currentPage--"
-      >
-        Previous
-      </UButton>
-
-      <span class="px-4 py-2 text-sm text-gray-700">
-        Page {{ currentPage }} of {{ totalPages }}
-      </span>
-
-      <UButton
-        variant="outline"
-        size="sm"
-        icon="i-lucide-chevron-right"
-        :disabled="currentPage === totalPages"
-        @click="currentPage++"
-      >
-        Next
-      </UButton>
-    </div>
-
-    <!-- Unified Modal for Create/Edit -->
-    <CreateEditTaskModal
-      :is-open="showTaskModal"
-      :task="editingTask"
-      @close="closeTaskModal"
-      @task-saved="handleTaskSaved"
-    />
-
-    <!-- Quiz Attempt Modal -->
-    <QuizAttemptModal
-      :is-open="showQuizModal"
-      :user-tasks-chapter-id="selectedChapterId"
-      :chapter-display-name="selectedChapterName"
-      :mode="modalMode"
-      :assignee-user-info-id="modalAssigneeId"
-      @close="closeQuizModal"
-      @quiz-submitted="handleQuizSubmitted"
-      @reattempt="handleReattempt"
-    />
-  </div>
-</template>
