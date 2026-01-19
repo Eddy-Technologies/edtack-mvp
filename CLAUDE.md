@@ -44,6 +44,21 @@ SUPABASE_WORKDIR=<path-from-your-env> pnpm db:reset
 SUPABASE_WORKDIR=<path-from-your-env> pnpm db:types
 ```
 
+### Troubleshooting
+
+**Storage migration error ("duplicate key violates unique constraint 'migrations_name_key'")**
+```bash
+supabase stop --no-backup && supabase start
+```
+The `--no-backup` flag clears storage volumes with stale migration data.
+
+**RLS error on startup when linked to remote project**
+```bash
+supabase unlink
+supabase start
+```
+Linking to a remote project can cause storage RLS conflicts during local startup.
+
 ### Apply Migration Locally (Without Wiping Data)
 ```bash
 # Run a single migration file directly
