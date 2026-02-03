@@ -448,10 +448,10 @@ const handleMobileNavigate = (item: NavigationItem) => {
 };
 
 // Get last active character for navigation
-const { getLastActiveCharacterSlug } = useCharacters();
+const { getLastActiveCharacterSlug, selectedCharacter } = useCharacters();
 
 const handleBackToChat = () => {
-  const lastSlug = getLastActiveCharacterSlug() || 'eddy';
+  const lastSlug = getLastActiveCharacterSlug() || selectedCharacter.value?.slug || 'eddy';
   router.push(`/chat/${lastSlug}/new`);
   isDrawerOpen.value = false;
 };

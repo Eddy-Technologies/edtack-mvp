@@ -662,7 +662,8 @@ const handleCharacterSelection = async (character) => {
 
 const handleNewChat = () => {
   // Navigate to new chat - use charSlug from URL to avoid stale state
-  const slug = charSlug.value || selectedCharacter.value?.slug || 'eddy';
+  const slug = charSlug.value || selectedCharacter.value?.slug;
+  if (!slug) return;
   router.replace(`/chat/${slug}/new`);
 
   // Reset chat state
