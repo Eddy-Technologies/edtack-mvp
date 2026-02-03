@@ -611,6 +611,15 @@ watch(threadId, async (newThreadId, oldThreadId) => {
       reset();
       hasStartedChat.value = false;
 
+      // Sync character to match URL's charSlug
+      if (charSlug.value && charSlug.value !== selectedCharacter.value?.slug) {
+        await selectCharacterBySlug(charSlug.value);
+        // If URL slug was invalid and we fell back, update URL to match
+        if (selectedCharacter.value && selectedCharacter.value.slug !== charSlug.value) {
+          router.replace(`/chat/${selectedCharacter.value.slug}/new`);
+        }
+      }
+
       // Clear chat content if available
       if (chatContentRef.value && chatContentRef.value.clearChat) {
         chatContentRef.value.clearChat();
@@ -652,10 +661,9 @@ const handleCharacterSelection = async (character) => {
 };
 
 const handleNewChat = () => {
-  // Navigate to new chat with current character
-  if (selectedCharacter.value) {
-    router.replace(`/chat/${selectedCharacter.value.slug}/new`);
-  }
+  // Navigate to new chat - use charSlug from URL to avoid stale state
+  const slug = charSlug.value || selectedCharacter.value?.slug || 'eddy';
+  router.replace(`/chat/${slug}/new`);
 
   // Reset chat state
   hasStartedChat.value = false;

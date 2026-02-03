@@ -19,7 +19,7 @@
       <Button
         size="sm"
         variant="secondary"
-        @click="router.push('/chat/eddy/new')"
+        @click="handleBackToChat"
       >
         Back to Chat
       </Button>
@@ -367,7 +367,7 @@
         <Button
           class="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-xl hover:bg-primary-700 transition-colors"
           icon="i-lucide-message-circle"
-          @click="router.push('/')"
+          @click="handleBackToChat"
         >
           Back to Chat
         </Button>
@@ -399,6 +399,7 @@ import { useFeatureFlags } from '~/composables/useFeatureFlags';
 import { useResponsive } from '~/composables/useResponsive';
 import { useTour } from '~/composables/useTour';
 import { useGlobalUserRealtimeSync } from '~/composables/useUserRealtimeSync';
+import { useCharacters } from '~/composables/useCharacters';
 import { TASK_CHAPTER_STATUS } from '~~/shared/constants';
 
 interface NavigationItem {
@@ -446,8 +447,12 @@ const handleMobileNavigate = (item: NavigationItem) => {
   }
 };
 
+// Get last active character for navigation
+const { getLastActiveCharacterSlug } = useCharacters();
+
 const handleBackToChat = () => {
-  router.push('/');
+  const lastSlug = getLastActiveCharacterSlug() || 'eddy';
+  router.push(`/chat/${lastSlug}/new`);
   isDrawerOpen.value = false;
 };
 

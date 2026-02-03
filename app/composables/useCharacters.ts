@@ -156,8 +156,16 @@ export const useCharacters = () => {
     if (character) {
       selectedCharacter.value = character;
       persistSelectedCharacter();
+      persistLastActiveCharacterSlug(character.slug);
     } else {
-      console.warn(`Character with slug "${slug}" not found`);
+      // Fallback to first available character
+      const fallback = characters.value[0];
+      if (fallback) {
+        selectedCharacter.value = fallback;
+        persistSelectedCharacter();
+        persistLastActiveCharacterSlug(fallback.slug);
+      }
+      console.warn(`Character with slug "${slug}" not found, using fallback`);
     }
   };
 
@@ -169,6 +177,19 @@ export const useCharacters = () => {
         slug: selectedCharacter.value.slug
       }));
     }
+  };
+
+  const persistLastActiveCharacterSlug = (slug: string) => {
+    if (import.meta.client) {
+      localStorage.setItem('lastActiveCharacterSlug', slug);
+    }
+  };
+
+  const getLastActiveCharacterSlug = (): string | null => {
+    if (import.meta.client) {
+      return localStorage.getItem('lastActiveCharacterSlug');
+    }
+    return null;
   };
 
   const loadPersistedCharacter = () => {
@@ -240,6 +261,7 @@ export const useCharacters = () => {
     selectCharacterBySlug,
     getCharacterBySubject,
     initializeStore,
+    getLastActiveCharacterSlug,
 
     // Avatar Playback Management
     startAvatarPlayback,

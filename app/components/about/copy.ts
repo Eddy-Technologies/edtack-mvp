@@ -1,7 +1,7 @@
 export const copy = {
   keyFeatures: [
     {
-      title: 'O Level Preparation',
+      title: 'O level textbooks and questions in 1 place',
       content: 'Vetted content used to generate tailored learning materials'
 
     },
