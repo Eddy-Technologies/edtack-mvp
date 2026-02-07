@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { convertAnonymousToUser } from '~~/server/services/anonymousConversionService';
 
 // This file handles the OAuth callback from an external authentication provider
 export default defineEventHandler(async (event) => {
@@ -31,10 +32,18 @@ export default defineEventHandler(async (event) => {
       .eq('user_id', user.id)
       .single();
 
+    // Convert any anonymous threads to this user
+    if (userInfo?.id) {
+      const conversionResult = await convertAnonymousToUser(event, userInfo.id);
+      if (conversionResult.convertedThreads > 0) {
+        console.log(`[OAuth Callback] Converted ${conversionResult.convertedThreads} anonymous threads`);
+      }
+    }
+
     // Set session cookies (this happens automatically with serverSupabaseClient)
     // Redirect to protected page or chat
     if (userInfo?.onboarding_completed) {
-      await sendRedirect(event, '/chat/eddy/new', 302);
+      await sendRedirect(event, '/chat/new', 302);
     } else {
       await sendRedirect(event, '/onboarding', 302);
     }

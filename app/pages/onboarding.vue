@@ -233,7 +233,7 @@ onMounted(async () => {
 
     // Check AFTER refreshMe - redirect if already onboarded
     if (me.onboarding_completed) {
-      await navigateTo('/chat/eddy/new');
+      await navigateTo('/chat/new');
       return;
     }
 
@@ -301,7 +301,7 @@ const completeOnboarding = async () => {
     });
 
     await me.refreshMe();
-    await navigateTo('/chat/eddy/new');
+    await navigateTo('/chat/new');
   } catch (error: any) {
     console.error('Onboarding failed:', error);
     errorMessage.value = error.data?.message || 'Failed to complete setup. Please try again.';

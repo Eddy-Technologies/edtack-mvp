@@ -3,6 +3,7 @@ import type { SignUpReq } from '~~/app/composables/useAuth';
 import { USER_ROLE } from '~~/app/constants/User';
 import { validateEmail, validatePassword } from '~~/shared/utils/validation';
 import { createStripeCustomer, createFreeSubscription } from '~~/server/utils/stripe';
+import { convertAnonymousToUser } from '~~/server/services/anonymousConversionService';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
@@ -96,6 +97,12 @@ export default defineEventHandler(async (event) => {
     // Create subscription AFTER DB has payment_customer_id (avoids webhook race condition)
     if (paymentCustomerId) {
       await createFreeSubscription(paymentCustomerId, uuid);
+    }
+
+    // Convert any anonymous threads to this new user
+    const conversionResult = await convertAnonymousToUser(event, uuid);
+    if (conversionResult.convertedThreads > 0) {
+      console.log(`[Register] Converted ${conversionResult.convertedThreads} anonymous threads`);
     }
 
     return { user };

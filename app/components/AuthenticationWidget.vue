@@ -114,21 +114,18 @@
       </div>
 
       <!-- Not logged in - sidebar variant -->
-      <div v-else class="flex flex-col gap-2 p-2">
-        <Button
-          variant="primary"
-          text="Login"
-          size="sm"
-          class="w-full"
+      <div v-else class="p-2">
+        <button
+          :class="[
+            'flex items-center rounded-lg bg-primary hover:bg-primary/75 text-white transition-colors',
+            collapsed ? 'p-2 justify-center w-full' : 'gap-2 px-3 py-2 w-full'
+          ]"
+          :title="collapsed ? 'Sign in' : undefined"
           @click="login"
-        />
-        <Button
-          variant="secondary"
-          text="Register"
-          size="sm"
-          class="w-full"
-          @click="register"
-        />
+        >
+          <Icon name="i-heroicons-arrow-right-end-on-rectangle" class="w-5 h-5" />
+          <span v-if="!collapsed" class="text-sm font-medium">Sign in</span>
+        </button>
       </div>
 
       <template #fallback>

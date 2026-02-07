@@ -20,6 +20,10 @@ export interface UseChatOptions {
    * Used to trigger reactivity for watchers that may not detect response array changes.
    */
   onResponse?: (response: ChatResponse) => void;
+  /**
+   * If true, use anonymous endpoints (/api/chat/anon/...) for users not logged in.
+   */
+  isAnonymous?: boolean;
 }
 
 /**
@@ -57,6 +61,7 @@ export function useChatConnection(threadId: string, options: UseChatOptions = {}
       autoCleanup: false,
       onTerminalEvent: options.onTerminalEvent,
       onResponse: options.onResponse,
+      isAnonymous: options.isAnonymous,
     };
     const sseChat = useSSEChat(threadId, sseOptions);
 
@@ -157,9 +162,12 @@ export interface UseChatReturn {
  * chat.startChat('Hello!', { subject: 'math', level: 'secondary' });
  * ```
  */
-export function useChat(threadId: MaybeRef<string>): UseChatReturn {
+export function useChat(threadId: MaybeRef<string>, options: { isAnonymous?: boolean } = {}): UseChatReturn {
   const store = useMessageQueueStore();
   const realtimeSync = useGlobalRealtimeSync();
+
+  // Track if this is an anonymous user
+  const isAnonymous = options.isAnonymous || false;
 
   // Initialize store if not already
   store.init();
@@ -216,9 +224,9 @@ export function useChat(threadId: MaybeRef<string>): UseChatReturn {
    */
   async function connect(): Promise<boolean> {
     const tid = resolvedThreadId.value;
-    console.log('[useChat] connect() called for threadId:', tid);
+    console.log('[useChat] connect() called for threadId:', tid, 'isAnonymous:', isAnonymous);
 
-    const success = await store.connect(tid);
+    const success = await store.connect(tid, isAnonymous);
     console.log('[useChat] store.connect() result:', success);
 
     if (success) {

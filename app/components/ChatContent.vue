@@ -60,6 +60,7 @@ interface ChatContentProps {
   character: any;
   threadData: any;
   chatInputHeight?: number; // Dynamic height from parent for scroll padding
+  isAnonymous?: boolean; // Whether user is in anonymous mode (not logged in)
 }
 
 // Component props
@@ -82,6 +83,28 @@ const emit = defineEmits<{
 
 // Use global thread state instead of local state
 const { messageHistory, addMessage, updateMessageStatus: persistMessageStatus, deleteMessage, getPendingMessage, clearPendingMessage } = useThreads();
+
+// Anonymous message sending - uses anonymous endpoint
+const addAnonymousMessage = async ({ thread_id, content, type, isUser, uuid, status, file_attachments }: {
+  thread_id: string;
+  content: string;
+  type: string;
+  isUser: boolean;
+  uuid?: string;
+  status?: 'sending' | 'sent' | 'failed' | 'cancelled';
+  file_attachments?: any[];
+}) => {
+  const response = await $fetch('/api/chat/anon/message', {
+    method: 'POST',
+    body: JSON.stringify({ thread_id, content, type, isUser, uuid, status, file_attachments }),
+  });
+
+  if (!response.success || !response.data) {
+    throw new Error('Failed to send anonymous message');
+  }
+  return response.data;
+};
+
 const messageStream = ref<any[]>([]);
 
 const bottomAnchor = ref<HTMLElement | null>(null);
@@ -246,7 +269,8 @@ const processPendingResponses = () => {
  */
 const checkAndReconnectToActiveStream = async () => {
   try {
-    const statusResponse = await $fetch<{ active: boolean; status: string; bufferedEvents: number }>(`/api/chat/${props.threadId}/status`);
+    const statusBase = props.isAnonymous ? `/api/chat/anon` : `/api/chat`;
+    const statusResponse = await $fetch<{ active: boolean; status: string; bufferedEvents: number }>(`${statusBase}/${props.threadId}/status`);
     // ONLY reconnect when stream is ACTIVE. For completed streams, data is already in DB.
     // Don't reconnect just because there are buffered events - that causes duplicate messages.
     if (statusResponse?.active) {
@@ -341,7 +365,7 @@ const initializeChat = async () => {
   if (currentStoreConnection?.chat.isConnected.value || currentStoreConnection?.chat.isConnecting?.value) {
     console.log('[ChatContent] Store has active connection, reusing');
     currentThreadId.value = props.threadId;
-    chat.value = useChat(props.threadId);
+    chat.value = useChat(props.threadId, { isAnonymous: props.isAnonymous });
     // Note: Per-thread lastProcessedResponseIndexMap preserves index for this thread
     // No reset needed - returning to a thread should not reprocess already-handled responses
 
@@ -470,18 +494,21 @@ const initializeChat = async () => {
   // Check if thread was processing in background (user returning to active thread)
   // Cached messages will be loaded from the store automatically via computed properties
 
-  const userId = meStore.user_info_id || meStore.id;
+  // Skip auth checks for anonymous users — they don't need userId
+  if (!props.isAnonymous) {
+    const userId = meStore.user_info_id || meStore.id;
 
-  // Wait for profile to load
-  if (!meStore.user_role && meStore.isLoading) {
-    setTimeout(initializeChat, 500);
-    return;
-  }
+    // Wait for profile to load
+    if (!meStore.user_role && meStore.isLoading) {
+      setTimeout(initializeChat, 500);
+      return;
+    }
 
-  if (!userId) {
-    console.warn('No user ID available - user may not be logged in');
-    setTimeout(initializeChat, 2000);
-    return;
+    if (!userId) {
+      console.warn('No user ID available - user may not be logged in');
+      setTimeout(initializeChat, 2000);
+      return;
+    }
   }
 
   if (!props.character) {
@@ -574,7 +601,7 @@ const initializeChat = async () => {
       // threadStateBefore and isThreadProcessing already captured above
       console.log('[ChatContent] initializeChat - thread state before connect:', threadStateBefore?.status);
 
-      chat.value = useChat(props.threadId);
+      chat.value = useChat(props.threadId, { isAnonymous: props.isAnonymous });
       // store.connect() already waits for connection internally via doConnect()
       // so we don't need to call waitForConnection() separately
       const connected = await chat.value.connect();
@@ -784,7 +811,8 @@ onMounted(() => {
       character: props.character?.id, // Watch ID, not full object
     }),
     (state) => {
-      if (state.hasUser && state.profileLoaded && state.threadId && state.character) {
+      const authReady = props.isAnonymous || (state.hasUser && state.profileLoaded);
+      if (authReady && state.threadId && state.character) {
         initializeChat();
       }
     },
@@ -799,6 +827,20 @@ onMounted(() => {
   watch(
     () => props.threadData,
     (newThreadData) => {
+      // Skip syncing DB messages for anonymous users, EXCEPT for recent threads
+      // Recent threads (created within 30s) should sync - they have seeded lesson content
+      if (props.isAnonymous && newThreadData) {
+        const threadCreatedAt = new Date(newThreadData.created_at).getTime();
+        const now = Date.now();
+        const isRecentThread = now - threadCreatedAt < 30000; // 30 seconds
+
+        if (!isRecentThread) {
+          console.log('[ChatContent] Skipping message sync for anonymous user (old thread)');
+          return;
+        }
+        console.log('[ChatContent] Allowing message sync for anonymous user (recent thread)');
+      }
+
       if (newThreadData?.thread_messages && props.threadId !== 'new') {
         console.log('[ChatContent] Syncing messageStream from threadData prop');
         // Set flag to prevent slides auto-open during sync
@@ -1647,7 +1689,15 @@ const handleSend = async (text: string, isRetryCall = false, fileAttachments?: a
     status: 'sending' as const,
     file_attachments: fileAttachments
   };
-  addMessage(addMessageObj);
+
+  // Save message to database - use anonymous endpoint for anonymous users
+  if (props.isAnonymous) {
+    addAnonymousMessage(addMessageObj).catch((err: Error) => {
+      console.error('[ChatContent] Failed to save anonymous message:', err);
+    });
+  } else {
+    addMessage(addMessageObj);
+  }
 
   // Determine initial status based on connection state
   const isConnectedNow = chat.value?.isConnected.value || false;
@@ -1696,7 +1746,7 @@ const handleSend = async (text: string, isRetryCall = false, fileAttachments?: a
         // Close stale connection and recreate
         await messageQueueStore.closeConnection(props.threadId);
         chat.value = null;
-        chat.value = useChat(props.threadId);
+        chat.value = useChat(props.threadId, { isAnonymous: props.isAnonymous });
 
         const reconnected = await chat.value?.connect();
         if (reconnected) {
@@ -1739,7 +1789,7 @@ const handleSend = async (text: string, isRetryCall = false, fileAttachments?: a
       // This happens after first message completes and connection is closed
       if (!chat.value) {
         console.log('[ChatContent] Recreating chat reference (was null after connection closed)');
-        chat.value = useChat(props.threadId);
+        chat.value = useChat(props.threadId, { isAnonymous: props.isAnonymous });
       }
 
       console.log('[ChatContent] Calling chat.value?.connect()...');
@@ -1894,7 +1944,7 @@ const handleRetry = async (payload: { messageId?: string; text: string }) => {
   // Recreate chat reference if needed
   if (!chat.value) {
     console.log('[ChatContent] Recreating chat reference for retry');
-    chat.value = useChat(props.threadId);
+    chat.value = useChat(props.threadId, { isAnonymous: props.isAnonymous });
   }
 
   // Send as new message (old one is deleted, no duplicates)

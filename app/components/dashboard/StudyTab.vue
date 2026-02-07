@@ -250,9 +250,7 @@ import { useRouter } from 'vue-router';
 import { useMeStore } from '~/stores/me';
 import { useStudy } from '~/composables/useStudy';
 import { useCharacters } from '~/composables/useCharacters';
-import { useTokenUsage } from '~/composables/useTokenUsage';
-import { useThreads } from '~/composables/useThreads';
-import { useAnalytics } from '~/composables/useAnalytics';
+import { useLessonStart } from '~/composables/useLessonStart';
 import { useResponsive } from '~/composables/useResponsive';
 import DashboardSkeleton from '~/components/common/DashboardSkeleton.vue';
 import StudyInstructions from '~/components/dashboard/StudyInstructions.vue';
@@ -262,9 +260,8 @@ const { isMobile } = useResponsive();
 const router = useRouter();
 const { generateStudyPrompt } = useStudy();
 const meStore = useMeStore();
-const { getCharacterBySubject, fetchCharacters } = useCharacters();
-const toast = useToast();
-const analytics = useAnalytics();
+const { fetchCharacters } = useCharacters();
+const { startLesson } = useLessonStart();
 
 interface Subject {
   name: string;
@@ -346,97 +343,30 @@ const fetchSubjects = async () => {
 };
 
 const handleStudyAction = async (chapter: any, subjectName: string, subjectDisplayName: string, actionType: 'lesson' | 'practice' | 'quiz') => {
-  // Set loading state for lesson button
+  // For lessons, use the shared composable
   if (actionType === 'lesson') {
     lessonButtonLoading[chapter.name] = true;
-  }
-
-  try {
-    // Check token limits - show toast if exceeded but allow action (soft limit)
-    const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
-    await fetchTokenUsage();
-
-    if (isLimitExceeded.value) {
-      toast.add({
-        title: 'Token limit reached',
-        description: 'You have exceeded your token limit for this billing period.',
-        color: 'red',
-        timeout: 5000
+    try {
+      await startLesson({
+        chapterName: chapter.name,
+        chapterDisplayName: chapter.display_name,
+        subject: subjectName,
+        subjectDisplayName: subjectDisplayName,
       });
-    }
-
-    const upperCaseSubject = subjectName.toUpperCase();
-    const character = getCharacterBySubject(upperCaseSubject);
-    const characterSlug = character?.slug || 'eddy';
-
-    // For lessons, try seeded lesson first
-    if (actionType === 'lesson') {
-      try {
-        const lessonResponse = await $fetch<{
-          success: boolean;
-          hasSeededLesson: boolean;
-          thread?: { id: string; title: string; subject: string | null; created_at?: string; updated_at?: string };
-          slideCount?: number;
-        }>('/api/lesson/start', {
-          method: 'POST',
-          body: {
-            chapterName: chapter.name,
-            subject: subjectName,
-          },
-        });
-
-        if (lessonResponse.success && lessonResponse.hasSeededLesson && lessonResponse.thread) {
-          // Track lesson start
-          analytics.learning.lessonStart({
-            chapterId: chapter.name,
-            subjectId: subjectName,
-            lessonType: 'seeded',
-          });
-          // Refresh thread list from database to include newly created thread
-          const { fetchThreads } = useThreads();
-          await fetchThreads(true); // forceRefresh = true to reload from DB
-          // Navigate directly to the created thread with seeded lesson
-          await router.push(`/chat/${characterSlug}/${lessonResponse.thread.id}`);
-          return;
-        }
-        // If no seeded lesson, fall through to AI generation
-      } catch (lessonError) {
-        console.warn('Seeded lesson not available, falling back to AI generation:', lessonError);
-        toast.add({
-          title: 'Generating lesson',
-          description: 'Creating a fresh lesson for you...',
-          color: 'blue',
-          timeout: 3000,
-        });
-        // Fall through to AI generation
-      }
-    }
-
-    // Proceed with AI generation (fallback for lessons, default for practice/quiz)
-    const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
-
-    // Track AI-generated lesson/practice start
-    if (actionType === 'lesson') {
-      analytics.learning.lessonStart({
-        chapterId: chapter.name,
-        subjectId: subjectName,
-        lessonType: 'ai',
-      });
-    }
-
-    const queryParams = new URLSearchParams({
-      study_prompt: studyResult.prompt
-    });
-
-    await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
-  } catch (error) {
-    console.error('Error handling study action:', error);
-  } finally {
-    // Clear loading state for lesson button
-    if (actionType === 'lesson') {
+    } finally {
       lessonButtonLoading[chapter.name] = false;
     }
+    return;
   }
+
+  // For practice/quiz, use AI generation
+  const studyResult = generateStudyPrompt(chapter.display_name, subjectDisplayName, actionType);
+
+  const queryParams = new URLSearchParams({
+    study_prompt: studyResult.prompt
+  });
+
+  await router.push(`/chat/new?${queryParams.toString()}`);
 };
 
 const selectSubject = async (subjectName: string) => {

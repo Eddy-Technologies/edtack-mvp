@@ -1,5 +1,6 @@
-import { getUserInfo } from '../../utils/auth';
+import { tryGetUserInfo } from '../../utils/auth';
 import { getPrivilegedSupabaseClient } from '~~/server/utils/authConfig';
+import { getOrCreateAnonymousSession } from '~~/server/utils/anonymousSession';
 
 interface StartLessonRequest {
   chapterName: string;
@@ -40,8 +41,15 @@ interface LessonSlide {
 export default defineEventHandler(async (event) => {
   try {
     const supabase = getPrivilegedSupabaseClient(event);
-    const userInfo = await getUserInfo(event);
+    const userInfo = await tryGetUserInfo(event);
     const body = await readBody<StartLessonRequest>(event);
+
+    // Get anonymous session if no authenticated user
+    let anonSessionId: string | null = null;
+    if (!userInfo) {
+      const { sessionId } = getOrCreateAnonymousSession(event);
+      anonSessionId = sessionId;
+    }
 
     if (!body.chapterName) {
       throw createError({
@@ -98,7 +106,9 @@ export default defineEventHandler(async (event) => {
     const { data: thread, error: threadError } = await supabase
       .from('threads')
       .insert({
-        user_infos_id: userInfo.id,
+        user_infos_id: userInfo?.id ?? null,
+        is_anonymous: !userInfo,
+        anon_session_id: anonSessionId,
         title: `[Lesson] ${chapter.display_name}`,
         subject: body.subject || null,
       })

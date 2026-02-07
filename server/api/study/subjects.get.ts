@@ -1,10 +1,12 @@
-import { getSupabaseClient } from '~~/server/utils/authConfig';
-import { getUserInfo } from '~~/server/utils/auth';
+import { getPrivilegedSupabaseClient } from '~~/server/utils/authConfig';
+import { tryGetUserInfo } from '~~/server/utils/auth';
 import { TASK_STATUS } from '~~/shared/constants';
 
 export default defineEventHandler(async (event) => {
-  const supabase = await getSupabaseClient(event);
-  const userInfo = await getUserInfo(event);
+  // Use privileged client so anonymous users can access subjects
+  const supabase = getPrivilegedSupabaseClient(event);
+  // Try to get user info - returns null for anonymous users
+  const userInfo = await tryGetUserInfo(event);
 
   try {
     // Get query parameters for filtering
@@ -14,7 +16,8 @@ export default defineEventHandler(async (event) => {
     // Role is passed from frontend (already available in meStore) to avoid extra DB query
     const role = query.role as string;
 
-    const isParent = role === 'PARENT';
+    // Only check role if user is authenticated
+    const isParent = userInfo ? role === 'PARENT' : false;
 
     // Query 1: Get subjects with curriculum info and chapters (no deeply nested task data)
     let subjectsQuery = supabase
@@ -52,43 +55,54 @@ export default defineEventHandler(async (event) => {
       subjectsQuery = subjectsQuery.eq('name', subjectFilter);
     }
 
-    // Query 2: Get user's tasks with chapters - focused query on just user's data
-    let userTasksQuery = supabase
-      .from('user_tasks_chapters')
-      .select(`
-        id,
-        user_task_id,
-        chapter_name,
-        status,
-        score,
-        total_score,
-        completed_at,
-        user_tasks!inner(
-          id,
-          name,
-          creator_user_info_id,
-          assignee_user_info_id,
-          status,
-          credit,
-          required_score,
-          questions_per_quiz,
-          lesson_generation_type
-        )
-      `)
-      .neq('user_tasks.status', TASK_STATUS.EXPIRED);
+    // Query 2: Get user's tasks with chapters - only for authenticated users
+    // Anonymous users don't have tasks, so we skip this query
+    let userTasksData: any[] = [];
 
-    // Apply role-based filtering
-    if (isParent) {
-      userTasksQuery = userTasksQuery.eq('user_tasks.creator_user_info_id', userInfo.id);
-    } else {
-      userTasksQuery = userTasksQuery.eq('user_tasks.assignee_user_info_id', userInfo.id);
+    if (userInfo) {
+      let userTasksQuery = supabase
+        .from('user_tasks_chapters')
+        .select(`
+          id,
+          user_task_id,
+          chapter_name,
+          status,
+          score,
+          total_score,
+          completed_at,
+          user_tasks!inner(
+            id,
+            name,
+            creator_user_info_id,
+            assignee_user_info_id,
+            status,
+            credit,
+            required_score,
+            questions_per_quiz,
+            lesson_generation_type
+          )
+        `)
+        .neq('user_tasks.status', TASK_STATUS.EXPIRED);
+
+      // Apply role-based filtering
+      if (isParent) {
+        userTasksQuery = userTasksQuery.eq('user_tasks.creator_user_info_id', userInfo.id);
+      } else {
+        userTasksQuery = userTasksQuery.eq('user_tasks.assignee_user_info_id', userInfo.id);
+      }
+
+      const userTasksResult = await userTasksQuery;
+
+      if (userTasksResult.error) {
+        console.error('Error fetching user tasks:', userTasksResult.error);
+        // Non-fatal for anonymous browsing - continue without tasks
+      } else {
+        userTasksData = userTasksResult.data || [];
+      }
     }
 
-    // Execute both queries in parallel
-    const [subjectsResult, userTasksResult] = await Promise.all([
-      subjectsQuery,
-      userTasksQuery,
-    ]);
+    // Execute subjects query
+    const subjectsResult = await subjectsQuery;
 
     if (subjectsResult.error) {
       console.error('Error fetching subjects:', subjectsResult.error);
@@ -98,17 +112,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (userTasksResult.error) {
-      console.error('Error fetching user tasks:', userTasksResult.error);
-      throw createError({
-        statusCode: 500,
-        statusMessage: 'Failed to fetch user tasks'
-      });
-    }
-
     // Build a map of chapter_name -> user_tasks_chapters for O(1) lookup
     const tasksByChapter = new Map<string, any[]>();
-    for (const utc of userTasksResult.data || []) {
+    for (const utc of userTasksData) {
       if (!tasksByChapter.has(utc.chapter_name)) {
         tasksByChapter.set(utc.chapter_name, []);
       }

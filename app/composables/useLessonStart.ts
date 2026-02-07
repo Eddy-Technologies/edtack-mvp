@@ -1,6 +1,5 @@
 import { useStudy } from '~/composables/useStudy';
 import { useTokenUsage } from '~/composables/useTokenUsage';
-import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
 import { useAnalytics } from '~/composables/useAnalytics';
 
@@ -29,7 +28,6 @@ export const useLessonStart = () => {
   const toast = useToast();
   const { generateStudyPrompt } = useStudy();
   const { isLimitExceeded, fetchTokenUsage } = useTokenUsage();
-  const { getCharacterBySubject } = useCharacters();
   const { fetchThreads } = useThreads();
   const analytics = useAnalytics();
 
@@ -48,10 +46,6 @@ export const useLessonStart = () => {
           timeout: 5000
         });
       }
-
-      const upperCaseSubject = subject.toUpperCase();
-      const character = getCharacterBySubject(upperCaseSubject);
-      const characterSlug = character?.slug || 'eddy';
 
       // Try seeded lesson first
       try {
@@ -75,7 +69,7 @@ export const useLessonStart = () => {
           await fetchThreads(true); // forceRefresh = true to reload from DB
 
           // Navigate directly to the created thread with seeded lesson
-          await router.push(`/chat/${characterSlug}/${lessonResponse.thread.id}`);
+          await router.push(`/chat/${lessonResponse.thread.id}`);
           return;
         }
         // If no seeded lesson, fall through to AI generation
@@ -104,7 +98,7 @@ export const useLessonStart = () => {
         study_prompt: studyResult.prompt
       });
 
-      await router.push(`/chat/${characterSlug}/new?${queryParams.toString()}`);
+      await router.push(`/chat/new?${queryParams.toString()}`);
     } catch (error) {
       console.error('Error starting lesson:', error);
       toast.add({

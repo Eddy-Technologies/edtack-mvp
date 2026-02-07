@@ -686,7 +686,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     /**
      * Get or create a connection from the pool
      */
-    async getOrCreateConnection(threadId: string): Promise<PooledConnection> {
+    async getOrCreateConnection(threadId: string, isAnonymous: boolean = false): Promise<PooledConnection> {
       // Check if connection exists
       let conn = connectionPool[threadId];
       if (conn) {
@@ -726,7 +726,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
         this.responseVersions[threadId] = (this.responseVersions[threadId] || 0) + 1;
       };
 
-      const chat = useChatConnection(threadId, { onTerminalEvent, onResponse });
+      const chat = useChatConnection(threadId, { onTerminalEvent, onResponse, isAnonymous });
 
       conn = {
         threadId,
@@ -918,8 +918,8 @@ export const useMessageQueueStore = defineStore('messageQueue', {
     /**
      * Connect to chat for a thread
      */
-    async connect(threadId: string): Promise<boolean> {
-      console.log('[MessageQueue] connect() called for threadId:', threadId);
+    async connect(threadId: string, isAnonymous: boolean = false): Promise<boolean> {
+      console.log('[MessageQueue] connect() called for threadId:', threadId, 'isAnonymous:', isAnonymous);
 
       // Check if already connected
       const existingConn = connectionPool[threadId];
@@ -935,7 +935,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
       }
 
       // Create a new connection promise
-      const connectionPromise = this.doConnect(threadId);
+      const connectionPromise = this.doConnect(threadId, isAnonymous);
       pendingConnectionPromises[threadId] = connectionPromise;
 
       try {
@@ -950,7 +950,7 @@ export const useMessageQueueStore = defineStore('messageQueue', {
      * Internal connect implementation
      * IMPORTANT: Preserves 'processing' status to avoid losing state on page refresh
      */
-    async doConnect(threadId: string): Promise<boolean> {
+    async doConnect(threadId: string, isAnonymous: boolean = false): Promise<boolean> {
       try {
         // CRITICAL FIX: Capture original status BEFORE any state changes
         // This prevents the bug where 'processing' gets overwritten to 'connecting'
@@ -966,8 +966,8 @@ export const useMessageQueueStore = defineStore('messageQueue', {
           this.setThreadState(threadId, { status: 'connecting' });
         }
 
-        console.log('[MessageQueue] Getting or creating connection...', { originalStatus, wasInProgress });
-        const conn = await this.getOrCreateConnection(threadId);
+        console.log('[MessageQueue] Getting or creating connection...', { originalStatus, wasInProgress, isAnonymous });
+        const conn = await this.getOrCreateConnection(threadId, isAnonymous);
         console.log('[MessageQueue] Connection obtained, mode:', conn.mode);
 
         // Fetch fresh auth token before connecting

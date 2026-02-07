@@ -256,6 +256,7 @@ export const useCharacters = () => {
     // API Methods (only what's actually used)
     fetchCharacters,
     clearCharacterCache,
+    getCharacterImageUrl,
 
     // State Management (only what's actually used)
     selectCharacterBySlug,

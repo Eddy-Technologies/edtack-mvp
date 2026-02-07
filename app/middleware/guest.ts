@@ -5,6 +5,6 @@ export default defineNuxtRouteMiddleware(() => {
 
   // If user is already authenticated, redirect them away from auth pages
   if (user.value) {
-    return navigateTo('/chat/eddy/new');
+    return navigateTo('/chat/new');
   }
 });

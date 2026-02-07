@@ -1,5 +1,6 @@
 import { isAuthError } from '@supabase/supabase-js';
-import { getSupabaseClient } from '~~/server/utils/authConfig';
+import { getSupabaseClient, getPrivilegedSupabaseClient } from '~~/server/utils/authConfig';
+import { convertAnonymousToUser } from '~~/server/services/anonymousConversionService';
 
 export default defineEventHandler(async (event) => {
   const supabase = await getSupabaseClient(event);
@@ -31,6 +32,23 @@ export default defineEventHandler(async (event) => {
 
     if (error || !data) {
       throw error; // This will be caught by the catch block
+    }
+
+    // Convert any anonymous threads to this user
+    if (data.user) {
+      const privilegedSupabase = getPrivilegedSupabaseClient(event);
+      const { data: userInfo } = await privilegedSupabase
+        .from('user_infos')
+        .select('id')
+        .eq('user_id', data.user.id)
+        .single();
+
+      if (userInfo?.id) {
+        const conversionResult = await convertAnonymousToUser(event, userInfo.id);
+        if (conversionResult.convertedThreads > 0) {
+          console.log(`[Login] Converted ${conversionResult.convertedThreads} anonymous threads`);
+        }
+      }
     }
 
     return { data, error };

@@ -282,9 +282,12 @@ const selectAvatar = (avatar, index) => {
   emit('select', avatar);
   emit('update:modelValue', avatar);
 
-  // Navigate to chat using character slug
+  // Navigate to chat, character selection is persisted via localStorage
   if (props.goToChatOnClick && avatar.slug) {
-    router.replace(`/chat/${avatar.slug}/new`);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('lastActiveCharacterSlug', avatar.slug);
+    }
+    router.replace('/chat/new');
   }
 };
 

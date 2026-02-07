@@ -18,6 +18,11 @@ export interface UseSSEChatOptions extends ChatOptions {
    * Used to trigger reactivity for watchers that may not detect response array changes.
    */
   onResponse?: (response: ChatResponse) => void;
+  /**
+   * If true, use anonymous endpoints (/api/chat/anon/...) instead of authenticated ones.
+   * Anonymous users have rate limits and threads tied to session cookies.
+   */
+  isAnonymous?: boolean;
 }
 
 /**
@@ -39,6 +44,10 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
   let hasReceivedTerminalEvent = false; // Track if we've received a terminal event (completed, error, cancelled)
   const onTerminalEvent = options.onTerminalEvent; // Direct callback for terminal events
   const onResponse = options.onResponse; // Callback for all response events (triggers reactivity)
+  const isAnonymous = options.isAnonymous || false;
+
+  // Build API base URL - anonymous users use different endpoints
+  const apiBaseUrl = isAnonymous ? `/api/chat/anon/${threadId}` : `/api/chat/${threadId}`;
 
   // Track current queryId to filter out events from previous queries on same thread
   let currentQueryId: string | null = null;
@@ -374,8 +383,8 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     abortController = new AbortController();
 
     // Use Nuxt proxy endpoints for resilient streaming
-    const startUrl = `/api/chat/${threadId}/start`;
-    const streamUrl = `/api/chat/${threadId}/stream`;
+    const startUrl = `${apiBaseUrl}/start`;
+    const streamUrl = `${apiBaseUrl}/stream`;
     const INITIAL_TIMEOUT_MS = 30 * 1000; // 30 seconds for initial connection
 
     try {
@@ -705,7 +714,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     }
 
     // Call Nuxt stop endpoint (which also stops Python backend)
-    const stopUrl = `/api/chat/${threadId}/stop`;
+    const stopUrl = `${apiBaseUrl}/stop`;
     console.log('[SSEChat] Calling stop endpoint:', stopUrl);
 
     try {
@@ -740,7 +749,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
     bufferedEvents: number;
     connectedClients: number;
   } | null> => {
-    const statusUrl = `/api/chat/${threadId}/status`;
+    const statusUrl = `${apiBaseUrl}/status`;
 
     try {
       const statusResponse = await fetch(statusUrl, {
@@ -780,7 +789,7 @@ export function useSSEChat(threadId: string, options: UseSSEChatOptions = {}) {
 
     abortController = new AbortController();
 
-    const streamUrl = `/api/chat/${threadId}/stream`;
+    const streamUrl = `${apiBaseUrl}/stream`;
     const INITIAL_TIMEOUT_MS = 30 * 1000;
 
     try {

@@ -77,3 +77,33 @@ export async function getUserInfo(event: H3Event): Promise<UserInfo & { user_rol
     user_role: roleName
   };
 }
+
+/**
+ * Try to get user info without throwing if not authenticated.
+ * Returns null for anonymous users.
+ * Use this for endpoints that should work for both authenticated and anonymous users.
+ */
+export async function tryGetUserInfo(event: H3Event): Promise<(UserInfo & { user_role?: string }) | null> {
+  try {
+    const supabase = await getSupabaseClient(event);
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) return null;
+
+    const { data: userInfo, error } = await supabase
+      .from('user_infos')
+      .select('*, user_roles(role_name)')
+      .eq('user_id', user.id)
+      .single();
+
+    if (error || !userInfo) return null;
+
+    const roleName = userInfo.user_roles?.[0]?.role_name;
+    return {
+      ...userInfo,
+      user_role: roleName
+    };
+  } catch {
+    return null;
+  }
+}
