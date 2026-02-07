@@ -147,7 +147,6 @@
         <span v-else>Help me with my schoolwork on...</span>
       </button>
     </div>
-
   </div>
 </template>
 
