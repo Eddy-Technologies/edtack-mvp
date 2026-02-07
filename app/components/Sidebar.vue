@@ -255,25 +255,7 @@ const { subscriptionPlans } = useFeatureFlags();
 const { isAnonymousMode } = useAnonymousMode();
 
 // Anonymous threads state
-const anonymousThreads = ref<Array<{ id: string; title: string | null; subject: string | null; updated_at: string }>>([]);
 const isLoadingAnonymousThreads = ref(false);
-
-// Fetch anonymous threads
-const fetchAnonymousThreads = async () => {
-  if (!isAnonymousMode.value) return;
-
-  isLoadingAnonymousThreads.value = true;
-  try {
-    const response = await $fetch<{ success: boolean; data: typeof anonymousThreads.value }>('/api/chat/anon/threads');
-    if (response.success) {
-      anonymousThreads.value = response.data || [];
-    }
-  } catch (err) {
-    console.error('[Sidebar] Failed to fetch anonymous threads:', err);
-  } finally {
-    isLoadingAnonymousThreads.value = false;
-  }
-};
 
 // Computed: threads to display (authenticated or anonymous)
 // Anonymous users always see empty thread list - history is not displayed

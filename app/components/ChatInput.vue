@@ -183,8 +183,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'send', payload: { text: string; fileIds: string[]; pendingFiles?: File[]; fileAttachments?: MessageAttachment[] }): void;
-  (e: 'dropdown-opened' | 'dropdown-closed'): void;
-  (e: 'open-study-panel'): void;
+  (e: 'dropdown-opened' | 'dropdown-closed' | 'open-study-panel'): void;
 }>();
 const input = ref('');
 const toast = useToast();
