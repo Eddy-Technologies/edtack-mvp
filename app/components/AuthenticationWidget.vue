@@ -114,19 +114,18 @@
       </div>
 
       <!-- Not logged in - sidebar variant -->
-      <div v-else class="p-2">
-        <button
-          :class="[
-            'flex items-center rounded-lg bg-primary hover:bg-primary/75 text-white transition-colors',
-            collapsed ? 'p-2 justify-center w-full' : 'gap-2 px-3 py-2 w-full'
-          ]"
-          :title="collapsed ? 'Sign in' : undefined"
-          @click="login"
-        >
-          <Icon name="i-heroicons-arrow-right-end-on-rectangle" class="w-5 h-5" />
-          <span v-if="!collapsed" class="text-sm font-medium">Sign in</span>
-        </button>
-      </div>
+      <button
+        v-else
+        :class="[
+          'flex items-center rounded-lg hover:bg-gray-100 text-gray-700 transition-colors w-full',
+          collapsed ? 'p-2 justify-center' : 'gap-3 p-2'
+        ]"
+        :title="collapsed ? 'Sign in' : undefined"
+        @click="login"
+      >
+        <Icon name="i-heroicons-arrow-right-end-on-rectangle" class="w-5 h-5" />
+        <span v-if="!collapsed" class="text-sm font-medium">Sign in</span>
+      </button>
 
       <template #fallback>
         <div class="p-2">
