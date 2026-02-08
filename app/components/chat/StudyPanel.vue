@@ -61,7 +61,17 @@
             @click="toggleSubject(subject.name)"
           >
             <div class="flex items-center justify-between">
-              <span class="text-sm font-medium truncate">{{ subject.display_name }}</span>
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="text-sm font-medium truncate">{{ subject.display_name }}</span>
+                <UBadge
+                  v-if="subjectsWithTasks.has(subject.name)"
+                  color="primary"
+                  variant="subtle"
+                  size="xs"
+                >
+                  Task available
+                </UBadge>
+              </div>
               <UIcon
                 :name="selectedSubject === subject.name ? 'i-lucide-chevron-down' : 'i-lucide-chevron-right'"
                 class="w-4 h-4 text-gray-400 flex-shrink-0"
@@ -79,6 +89,15 @@
             leave-to-class="opacity-0 max-h-0"
           >
             <div v-if="selectedSubject === subject.name" class="ml-2 space-y-1 overflow-hidden">
+              <!-- View Tasks button -->
+              <NuxtLink
+                v-if="subjectsWithTasks.has(subject.name)"
+                to="/dashboard?tab=tasks"
+                class="flex items-center gap-2 w-full px-2 py-1.5 rounded-lg text-xs font-medium text-secondary-700 bg-secondary-50 hover:bg-secondary-100 transition-colors"
+              >
+                <UIcon name="i-lucide-clipboard-list" class="w-3.5 h-3.5" />
+                View Tasks
+              </NuxtLink>
               <div
                 v-for="chapter in subject.chapters"
                 :key="chapter.name"
@@ -210,7 +229,17 @@
                 @click="toggleSubject(subject.name)"
               >
                 <div class="flex items-center justify-between">
-                  <span class="text-sm font-medium truncate">{{ subject.display_name }}</span>
+                  <div class="flex items-center gap-1.5 min-w-0">
+                    <span class="text-sm font-medium truncate">{{ subject.display_name }}</span>
+                    <UBadge
+                      v-if="subjectsWithTasks.has(subject.name)"
+                      color="secondary"
+                      variant="subtle"
+                      size="xs"
+                    >
+                      Tasks
+                    </UBadge>
+                  </div>
                   <div class="flex items-center gap-2">
                     <span class="text-xs text-gray-400">{{ subject.chapters.length }}</span>
                     <UIcon
@@ -231,6 +260,15 @@
                 leave-to-class="opacity-0 max-h-0"
               >
                 <div v-if="selectedSubject === subject.name" class="ml-2 space-y-1 overflow-hidden">
+                  <!-- View Tasks button -->
+                  <NuxtLink
+                    v-if="subjectsWithTasks.has(subject.name)"
+                    to="/dashboard?tab=tasks"
+                    class="flex items-center gap-2 w-full px-2.5 py-2 rounded-lg text-xs font-medium text-secondary-700 bg-secondary-50 hover:bg-secondary-100 active:bg-secondary-200 transition-colors"
+                  >
+                    <UIcon name="i-lucide-clipboard-list" class="w-3.5 h-3.5" />
+                    View Tasks
+                  </NuxtLink>
                   <div
                     v-for="chapter in subject.chapters"
                     :key="chapter.name"
@@ -313,6 +351,7 @@ const isLoading = ref(true);
 const error = ref<string | null>(null);
 const selectedSubject = ref<string | null>(null);
 const loadingChapter = ref<string | null>(null);
+const subjectsWithTasks = ref<Set<string>>(new Set());
 
 // Filters
 const filters = reactive({
@@ -411,6 +450,29 @@ const startStudy = async (chapter: any, subject: Subject, actionType: StudyActio
   }
 };
 
+const fetchTaskSubjects = async () => {
+  // Skip for anonymous users
+  if (!meStore.user_info_id) return;
+
+  try {
+    const response = await $fetch<{ tasks: any[] }>('/api/tasks/user-tasks', {
+      query: { status: 'open', limit: 100 },
+    });
+
+    const subjectNames = new Set<string>();
+    for (const task of response.tasks || []) {
+      for (const chapter of task.chapters || []) {
+        if (chapter.subjectName) {
+          subjectNames.add(chapter.subjectName);
+        }
+      }
+    }
+    subjectsWithTasks.value = subjectNames;
+  } catch (err) {
+    console.error('[StudyPanel] Error fetching task subjects:', err);
+  }
+};
+
 // Initialize
 onMounted(async () => {
   await fetchFilterOptions();
@@ -420,7 +482,7 @@ onMounted(async () => {
     filters.syllabusType = meStore.syllabus_type;
   }
 
-  await fetchSubjects();
+  await Promise.all([fetchSubjects(), fetchTaskSubjects()]);
 });
 
 // Refresh when panel is opened

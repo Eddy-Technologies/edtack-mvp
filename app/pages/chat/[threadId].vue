@@ -1,14 +1,5 @@
 <template>
   <div class="h-screen flex flex-col overflow-hidden">
-    <!-- Rate Limit Banner for Anonymous Users -->
-    <RateLimitBanner
-      v-if="isAnonymousMode && (isRateLimited || isNearLimit)"
-      :remaining="remainingMessages"
-      :reset-time="formattedResetTime"
-      :is-limited="isRateLimited"
-      @signup="navigateToSignup"
-    />
-
     <!-- Signup Nudge Modal -->
     <SignupNudge
       v-if="showSignupNudge"
@@ -26,37 +17,41 @@
       ]"
     >
       <!-- Fixed Width Sidebar -->
-      <div
-        v-if="!isMobile || !collapsed"
-        ref="sidebar"
-        :class="[
-          'flex-shrink-0 border-r flex flex-col z-30',
-          isMobile ? 'fixed top-0 left-0 h-full shadow-lg' : '',
-        ]"
-        :style="{ width: collapsed ? '80px' : sidebarExpandedWidth }"
-      >
-        <Sidebar
-          :collapsed="collapsed"
-          :sidebar-width="collapsed ? 80 : sidebarExpandedWidthNumber"
-          :is-mobile="isMobile"
-          :active-thread-id="threadId"
-          :is-connected="connectionStatus.isConnected"
-          :is-connecting="connectionStatus.isConnecting"
-          :has-error="connectionStatus.hasError"
-          :is-waiting-for-response="connectionStatus.isWaitingForResponse"
-          :response-phase="connectionStatus.responsePhase"
-          :is-anonymous="isAnonymousMode"
-          @toggle-sidebar="toggleSidebar"
-          @new-chat="handleNewChat"
-        />
-      </div>
+      <ClientOnly>
+        <div
+          v-if="!isMobile || !collapsed"
+          ref="sidebar"
+          :class="[
+            'flex-shrink-0 border-r flex flex-col z-30',
+            isMobile ? 'fixed top-0 left-0 h-full shadow-lg' : '',
+          ]"
+          :style="{ width: collapsed ? '80px' : sidebarExpandedWidth }"
+        >
+          <Sidebar
+            :collapsed="collapsed"
+            :sidebar-width="collapsed ? 80 : sidebarExpandedWidthNumber"
+            :is-mobile="isMobile"
+            :active-thread-id="threadId"
+            :is-connected="connectionStatus.isConnected"
+            :is-connecting="connectionStatus.isConnecting"
+            :has-error="connectionStatus.hasError"
+            :is-waiting-for-response="connectionStatus.isWaitingForResponse"
+            :response-phase="connectionStatus.responsePhase"
+            :is-anonymous="isAnonymousMode"
+            @toggle-sidebar="toggleSidebar"
+            @new-chat="handleNewChat"
+          />
+        </div>
+      </ClientOnly>
 
       <!-- Backdrop for mobile -->
-      <div
-        v-if="isMobile && !collapsed"
-        class="fixed inset-0 z-20 bg-black bg-opacity-40"
-        @click="toggleSidebar"
-      />
+      <ClientOnly>
+        <div
+          v-if="isMobile && !collapsed"
+          class="fixed inset-0 z-20 bg-black bg-opacity-40"
+          @click="toggleSidebar"
+        />
+      </ClientOnly>
 
       <!-- Main Content Area -->
       <div class="flex flex-1 h-full overflow-hidden">
@@ -122,7 +117,7 @@
           >
             <!-- Centered layout: Welcome message and input -->
             <div v-if="isChatCentered" class="absolute inset-0 overflow-y-auto">
-              <div class="min-h-full flex flex-col items-center justify-start pt-4 sm:pt-8 pb-8 px-4">
+              <div class="min-h-full flex flex-col items-center justify-center pb-8 px-4">
                 <div class="w-full max-w-4xl flex flex-col gap-4">
                   <!-- Welcome Card -->
                   <div class="flex-shrink-0 bg-white rounded-xl shadow-lg border border-gray-200 p-4 md:p-6">
@@ -140,7 +135,7 @@
                           Hi! I'm Eddy
                         </h2>
                         <p class="text-sm md:text-base text-gray-600 mt-1">
-                          I'm here to help you learn. Ask me anything or use the Study panel to start a lesson!
+                          I'm here to help you learn. Ask me anything or 'Browse Subjects' to start a lesson or quiz!
                         </p>
                       </div>
                     </div>
@@ -231,7 +226,6 @@ import ChatContent from '@/components/ChatContent.vue';
 import ChatInput from '@/components/ChatInput.vue';
 import SlideContainer from '@/components/chat/SlideContainer.vue';
 import StudyPanel from '@/components/chat/StudyPanel.vue';
-import RateLimitBanner from '@/components/RateLimitBanner.vue';
 import SignupNudge from '@/components/SignupNudge.vue';
 import { useCharacters } from '~/composables/useCharacters';
 import { useThreads } from '~/composables/useThreads';
@@ -308,10 +302,6 @@ const meStore = useMeStore();
 // Anonymous mode
 const {
   isAnonymousMode,
-  remainingMessages,
-  isRateLimited,
-  isNearLimit,
-  formattedResetTime,
   showSignupNudge,
   signupNudgeReason,
   fetchRateLimitStatus,
