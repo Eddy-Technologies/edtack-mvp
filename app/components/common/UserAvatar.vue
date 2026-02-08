@@ -7,7 +7,8 @@
     :title="`Welcome, ${user?.userDisplayFullName || 'User'}`"
     @click="$emit('click')"
   >
-    {{ user?.userInitials || '?' }}
+    <template v-if="user?.userInitials">{{ user.userInitials }}</template>
+    <Icon v-else name="i-heroicons-user" :class="iconSizeClasses" />
   </div>
 </template>
 
@@ -43,6 +44,18 @@ const sizeClasses = computed(() => {
     case 'default':
     default:
       return 'w-10 h-10 text-sm';
+  }
+});
+
+const iconSizeClasses = computed(() => {
+  switch (props.size) {
+    case 'small':
+      return 'w-4 h-4';
+    case 'large':
+      return 'w-12 h-12';
+    case 'default':
+    default:
+      return 'w-5 h-5';
   }
 });
 </script>

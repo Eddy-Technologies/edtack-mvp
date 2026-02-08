@@ -964,8 +964,8 @@ const sendMessage = async (text: string, skipConnectionCheck = false, queryId?: 
 
   const userInfo = {
     subject: subjectForBackend,
-    level: meStore.level_type,
-    country: meStore.country_code,
+    level: meStore.level_type || 'o_level', // default to 'o_level' for anon users
+    country: meStore.country_code || 'SG', // default to 'SG' for anon users
     character_slug: character?.slug,
     personality_prompt: character?.personality_prompt
   };
