@@ -6,4 +6,4 @@ ALTER TABLE user_tasks_chapters
 
 ALTER TABLE user_tasks_chapters
   ADD CONSTRAINT chk_user_tasks_chapters_status
-  CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED', 'GENERATING'));
+  CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED', 'GENERATING', 'ATTEMPTED'));

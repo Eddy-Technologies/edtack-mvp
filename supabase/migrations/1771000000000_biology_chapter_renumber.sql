@@ -17,15 +17,22 @@ UPDATE chapters SET name = 'o_level_singapore_biology_chapter_15_modes_of_reprod
 UPDATE chapters SET name = 'o_level_singapore_biology_chapter_14_molecular_genetics',       sort_order = 14 WHERE name = 'o_level_singapore_biology_chapter_13_molecular_genetics';
 UPDATE chapters SET name = 'o_level_singapore_biology_chapter_13_the_ecosystem_and_human_impact', sort_order = 13 WHERE name = 'o_level_singapore_biology_chapter_12_the_ecosystem_and_human_impact';
 
--- Step 3: Insert new chapter 12 (ON CONFLICT DO NOTHING so seeds can also insert it on db:reset)
-INSERT INTO chapters (name, display_name, subject_id, level, description, sort_order) VALUES
-('o_level_singapore_biology_chapter_12_nutrition_and_transport_in_plants',
- 'Nutrition and Transport in Plants',
- 'o_level_singapore_biology',
- 1,
- 'Photosynthesis, mineral nutrition, and transport systems in flowering plants',
- 12)
-ON CONFLICT (name) DO NOTHING;
+-- Step 3: Insert new chapter 12 only if subject already exists (live DBs with existing data).
+-- On a fresh db:reset, subjects are not seeded yet so this is skipped; seeds create the chapter.
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM subjects WHERE name = 'o_level_singapore_biology') THEN
+    INSERT INTO chapters (name, display_name, subject_id, level, description, sort_order) VALUES
+    ('o_level_singapore_biology_chapter_12_nutrition_and_transport_in_plants',
+     'Nutrition and Transport in Plants',
+     'o_level_singapore_biology',
+     1,
+     'Photosynthesis, mineral nutrition, and transport systems in flowering plants',
+     12)
+    ON CONFLICT (name) DO NOTHING;
+  END IF;
+END
+$$;
 
 -- Step 4: Re-add FK constraints
 ALTER TABLE questions

@@ -20,8 +20,11 @@ CREATE TABLE IF NOT EXISTS user_tasks_chapters (
   -- Ensure no duplicate chapter assignments per task
   CONSTRAINT unique_task_chapter UNIQUE(user_task_id, chapter_name),
 
+  -- generation tracking
+  generation_started_at TIMESTAMPTZ DEFAULT NULL,
+
   -- Ensure valid status values
-  CONSTRAINT chk_user_tasks_chapters_status CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED'))
+  CONSTRAINT chk_user_tasks_chapters_status CHECK (status IN ('OPEN', 'COMPLETED', 'EXPIRED', 'GENERATING', 'ATTEMPTED'))
 );
 
 -- Performance indexes for common query patterns
