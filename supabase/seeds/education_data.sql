@@ -87,12 +87,13 @@ INSERT INTO chapters (name, display_name, subject_id, level, description, sort_o
 ('o_level_singapore_biology_chapter_09_homeostasis_and_hormonal_control', 'Homeostasis and Hormonal Control', 'o_level_singapore_biology', 1, 'Maintaining internal environment, endocrine system and hormones', 9),
 ('o_level_singapore_biology_chapter_10_the_nervous_system_and_coordination', 'The Nervous System and Coordination', 'o_level_singapore_biology', 1, 'Structure and function of nervous system, reflexes and voluntary actions', 10),
 ('o_level_singapore_biology_chapter_11_infectious_diseases_in_humans', 'Infectious Diseases in Humans', 'o_level_singapore_biology', 1, 'Pathogens, transmission, prevention and immunity', 11),
-('o_level_singapore_biology_chapter_12_the_ecosystem_and_human_impact', 'The Ecosystem and Human Impact', 'o_level_singapore_biology', 1, 'Food chains, nutrient cycles and environmental conservation', 12),
-('o_level_singapore_biology_chapter_13_molecular_genetics', 'Molecular Genetics', 'o_level_singapore_biology', 1, 'DNA structure, protein synthesis and genetic engineering', 13),
-('o_level_singapore_biology_chapter_14_modes_of_reproduction', 'Modes of Reproduction', 'o_level_singapore_biology', 1, 'Asexual and sexual reproduction in organisms', 14),
-('o_level_singapore_biology_chapter_15_reproduction_in_plants', 'Reproduction in Plants', 'o_level_singapore_biology', 1, 'Flower structure, pollination, fertilization and seed dispersal', 15),
-('o_level_singapore_biology_chapter_16_reproduction_in_humans', 'Reproduction in Humans', 'o_level_singapore_biology', 1, 'Human reproductive systems, fertilization and development', 16),
-('o_level_singapore_biology_chapter_17_inheritance', 'Inheritance', 'o_level_singapore_biology', 1, 'Mendelian genetics, variation and natural selection', 17);
+('o_level_singapore_biology_chapter_12_nutrition_and_transport_in_plants', 'Nutrition and Transport in Plants', 'o_level_singapore_biology', 1, 'Photosynthesis, mineral nutrition, and transport systems in flowering plants', 12),
+('o_level_singapore_biology_chapter_13_the_ecosystem_and_human_impact', 'The Ecosystem and Human Impact', 'o_level_singapore_biology', 1, 'Food chains, nutrient cycles and environmental conservation', 13),
+('o_level_singapore_biology_chapter_14_molecular_genetics', 'Molecular Genetics', 'o_level_singapore_biology', 1, 'DNA structure, protein synthesis and genetic engineering', 14),
+('o_level_singapore_biology_chapter_15_modes_of_reproduction', 'Modes of Reproduction', 'o_level_singapore_biology', 1, 'Asexual and sexual reproduction in organisms', 15),
+('o_level_singapore_biology_chapter_16_reproduction_in_plants', 'Reproduction in Plants', 'o_level_singapore_biology', 1, 'Flower structure, pollination, fertilization and seed dispersal', 16),
+('o_level_singapore_biology_chapter_17_reproduction_in_humans', 'Reproduction in Humans', 'o_level_singapore_biology', 1, 'Human reproductive systems, fertilization and development', 17),
+('o_level_singapore_biology_chapter_18_inheritance', 'Inheritance', 'o_level_singapore_biology', 1, 'Mendelian genetics, variation and natural selection', 18);
 -- O-Level Mathematics Chapters
 INSERT INTO chapters (name, display_name, subject_id, level, description, sort_order) VALUES
 ('o_level_singapore_mathematics_00_introduction_e_math', 'Introduction', 'o_level_singapore_mathematics', 1, 'Introduction to Elementary Mathematics', 0),

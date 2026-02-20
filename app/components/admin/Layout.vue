@@ -211,7 +211,7 @@
     <div class="flex-1 flex flex-col min-w-0">
       <!-- Page Content -->
       <main :class="['flex-1 overflow-auto', isMobile ? 'pt-20 p-4' : 'p-8']">
-        <div class="max-w-7xl mx-auto">
+        <div :class="isFullWidthTab ? '' : 'max-w-7xl mx-auto'">
           <slot />
         </div>
       </main>
@@ -313,6 +313,11 @@ const managementItems: NavigationItem[] = [
     name: 'Subjects',
     route: '/admin?tab=subjects',
     icon: 'i-lucide-book'
+  },
+  {
+    name: 'QA Review',
+    route: '/admin?tab=qa-review',
+    icon: 'i-lucide-clipboard-check'
   }
 ];
 
@@ -326,6 +331,10 @@ const userEmail = computed(() => {
 
 const userInitial = computed(() => {
   return userName.value.charAt(0).toUpperCase();
+});
+
+const isFullWidthTab = computed(() => {
+  return route.query.tab === 'qa-review';
 });
 
 const isActiveRoute = (itemRoute: string) => {
