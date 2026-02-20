@@ -54,6 +54,17 @@ const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
 const BUCKET = 'question-images';
 const PREFIX = 'biology_mcq';
 
+// Ensure bucket exists
+const { data: buckets } = await supabase.storage.listBuckets();
+if (!buckets?.some((b) => b.name === BUCKET)) {
+  console.log(`Creating ${BUCKET} bucket...`);
+  const { error: bucketErr } = await supabase.storage.createBucket(BUCKET, { public: true });
+  if (bucketErr) {
+    console.error(`Failed to create bucket: ${bucketErr.message}`);
+    process.exit(1);
+  }
+}
+
 const files = fs.readdirSync(IMAGES_DIR).filter((f) => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
 console.log('\nUpload QA Images');

@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "prepare": "husky",
-    "db:reset": "supabase db reset --workdir ${SUPABASE_WORKDIR:-.} && node supabase/scripts/init-admin.js && node supabase/scripts/upload-assets.js && node supabase/scripts/import-lessons.js",
+    "db:reset": "supabase db reset --workdir ${SUPABASE_WORKDIR:-.} && node supabase/scripts/init-admin.js && node supabase/scripts/upload-assets.js && node supabase/scripts/import-lessons.js && node supabase/scripts/upload-qa-images.js && node supabase/scripts/import-qa-questions.js",
     "db:types": "supabase gen types typescript --local --workdir ${SUPABASE_WORKDIR:-.} > types/supabase.ts",
     "qa:prep": "node scripts/qa-prep.mjs",
     "qa:remap": "node scripts/qa-remap-chapters.mjs",
